@@ -32,9 +32,9 @@ set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4 -Werror
 set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always -rdynamic")
 
 #Generates system specific stuff (IE requires AVX)
-set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -fdevirtualize-at-ltrans -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
+set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
 #Generates safe optimization flags
-set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans")
+set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -fdevirtualize-at-ltrans")
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} ${FGL_DEBUG} -fsanitize=undefined")
 set(CMAKE_CXX_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
@@ -44,6 +44,8 @@ else()
     message("Note that you are compiling Hydrus95 with an unsupported compiler (Only GCC is offically supported) You can still make bug reports but MENTION YOUR COMPILER AND BUILD SYSTEM")
 endif()
 
+file(GLOB_RECURSE SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 if(WIN32)
     add_executable(Hydrus95 WIN32 ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
