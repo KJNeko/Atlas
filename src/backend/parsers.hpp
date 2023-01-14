@@ -44,6 +44,7 @@ The F95 parser provides the following information
 <caption id="f95_table_keys">Keys provided by F95 Parser</caption>
 <tr><th>Key					<th>Type		<th>Required	<th>Desc
 <tr><td>`title_thread`		<td>String		<td>Yes			<td> Title of the thread (raw)
+<tr><td>`f95id` 			<td>Integer		<td>Yes 		<td> f95 forum id
 <tr><td>`title`				<td>String		<td>Yes			<td>Title of the game (Processed to remove neddless information)
 <tr><td>`banner_url`		<td>String		<td>Yes			<td>URL to the banner of the thread
 <tr><td>`preview_urls`		<td>String[]	<td>Yes			<td>URLs to preview images
