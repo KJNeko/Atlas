@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['siterecord_2ehpp_0',['SiteRecord.hpp',['../SiteRecord_8hpp.html',1,'']]]
+  ['importdialog_2ecpp_0',['ImportDialog.cpp',['../ImportDialog_8cpp.html',1,'']]],
+  ['importdialog_2ehpp_1',['ImportDialog.hpp',['../ImportDialog_8hpp.html',1,'']]]
 ];

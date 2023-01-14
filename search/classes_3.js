@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['record_0',['Record',['../classRecord.html',1,'']]]
+  ['importdialog_0',['ImportDialog',['../classImportDialog.html',1,'']]]
 ];

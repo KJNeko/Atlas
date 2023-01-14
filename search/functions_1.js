@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]]
+  ['contextmenuevent_0',['contextMenuEvent',['../classFileView.html#ac5bd27558cfcc9b6bbc5722e0d2a4f1c',1,'FileView']]],
+  ['createemptyrecord_1',['createEmptyRecord',['../namespacedatabase.html#a43d0ee213f093afb1a83f49baccaed18',1,'database']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['basicwrapper_0',['BasicWrapper',['../classinternal_1_1BasicWrapper.html',1,'internal']]]
+  ['duplicatenamerecord_0',['DuplicateNameRecord',['../structDuplicateNameRecord.html',1,'']]]
 ];

@@ -1,11 +1,15 @@
 var annotated_dup =
 [
-    [ "internal", "namespaceinternal.html", [
-      [ "BasicWrapper", "classinternal_1_1BasicWrapper.html", "classinternal_1_1BasicWrapper" ]
-    ] ],
-    [ "DLSiteRecord", "classDLSiteRecord.html", null ],
-    [ "F95Record", "classF95Record.html", null ],
-    [ "Record", "classRecord.html", null ],
-    [ "SiteRecord", "classSiteRecord.html", null ],
-    [ "Tag", "classTag.html", null ]
+    [ "DuplicateNameRecord", "structDuplicateNameRecord.html", "structDuplicateNameRecord" ],
+    [ "FileTab", "classFileTab.html", "classFileTab" ],
+    [ "FileView", "classFileView.html", "classFileView" ],
+    [ "GameRecord", "structGameRecord.html", "structGameRecord" ],
+    [ "ImportDialog", "classImportDialog.html", "classImportDialog" ],
+    [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
+    [ "NormalRecord", "structNormalRecord.html", null ],
+    [ "RecordBase", "classRecordBase.html", "classRecordBase" ],
+    [ "RecordDialog", "classRecordDialog.html", "classRecordDialog" ],
+    [ "RecordEditor", "classRecordEditor.html", "classRecordEditor" ],
+    [ "RecordFlyweight", "classRecordFlyweight.html", "classRecordFlyweight" ],
+    [ "SettingsDialog", "classSettingsDialog.html", "classSettingsDialog" ]
 ];

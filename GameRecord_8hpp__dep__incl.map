@@ -1,0 +1,17 @@
+<map id="src/backend/records/GameRecord.hpp" name="src/backend/records/GameRecord.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="473,5,613,45"/>
+<area shape="rect" id="node2" href="$GameRecord_8cpp.html" title=" " alt="" coords="392,93,532,133"/>
+<area shape="rect" id="node3" href="$RecordBase_8hpp.html" title=" " alt="" coords="556,93,696,133"/>
+<area shape="rect" id="node4" href="$RecordBase_8cpp.html" title=" " alt="" coords="5,181,145,221"/>
+<area shape="rect" id="node5" href="$RecordFlyweight_8hpp.html" title=" " alt="" coords="489,181,635,221"/>
+<area shape="rect" id="node10" href="$FileTab_8cpp.html" title=" " alt="" coords="82,431,237,456"/>
+<area shape="rect" id="node11" href="$RecordEditor_8hpp.html" title=" " alt="" coords="727,357,922,383"/>
+<area shape="rect" id="node12" href="$RecordEditor_8cpp.html" title=" " alt="" coords="833,431,1027,456"/>
+<area shape="rect" id="node13" href="$FileView_8cpp.html" title=" " alt="" coords="599,431,781,456"/>
+<area shape="rect" id="node6" href="$Record_8hpp.html" title=" " alt="" coords="492,269,632,309"/>
+<area shape="rect" id="node15" href="$RecordFlyweight_8cpp.html" title=" " alt="" coords="321,269,467,309"/>
+<area shape="rect" id="node7" href="$database_8cpp.html" title=" " alt="" coords="381,431,556,456"/>
+<area shape="rect" id="node8" href="$database_8hpp.html" title=" " alt="" coords="221,357,396,383"/>
+<area shape="rect" id="node14" href="$FileView_8hpp.html" title=" " alt="" coords="471,357,653,383"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title=" " alt="" coords="261,431,357,456"/>
+</map>

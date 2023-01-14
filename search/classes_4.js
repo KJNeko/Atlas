@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['siterecord_0',['SiteRecord',['../classSiteRecord.html',1,'']]]
+  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]]
 ];

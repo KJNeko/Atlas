@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_20t_26_0',['operator T&amp;',['../classinternal_1_1BasicWrapper.html#a811d9ffce25bda8119a8053a41a8533e',1,'internal::BasicWrapper']]]
+  ['duplicatenamerecord_0',['DuplicateNameRecord',['../structDuplicateNameRecord.html#aaee978cff6ff84c22bf6ed905659a0ff',1,'DuplicateNameRecord']]]
 ];

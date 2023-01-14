@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classSiteRecord.html" title=" " alt="" coords="5,31,92,56"/>
-<area shape="rect" id="node2" href="$classDLSiteRecord.html" title=" " alt="" coords="140,5,243,31"/>
-<area shape="rect" id="node3" href="$classF95Record.html" title=" " alt="" coords="149,55,234,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,73,80"/>
+<area shape="rect" id="node2" href="$classImportDialog.html" title=" " alt="" coords="127,5,222,31"/>
+<area shape="rect" id="node3" href="$classRecordEditor.html" title=" " alt="" coords="127,55,223,80"/>
+<area shape="rect" id="node4" href="$classSettingsDialog.html" title=" " alt="" coords="121,104,228,129"/>
 </map>

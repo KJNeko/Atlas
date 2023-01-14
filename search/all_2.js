@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['f95record_0',['F95Record',['../classF95Record.html',1,'']]],
-  ['f95record_2ehpp_1',['F95Record.hpp',['../F95Record_8hpp.html',1,'']]],
-  ['f95tagid_2',['F95TagID',['../Tag_8hpp.html#a151282adecf2f5859a748185f54db8b2',1,'Tag.hpp']]]
+  ['database_0',['database',['../namespacedatabase.html',1,'']]],
+  ['database_2ecpp_1',['database.cpp',['../database_8cpp.html',1,'']]],
+  ['database_2ehpp_2',['database.hpp',['../database_8hpp.html',1,'']]],
+  ['duplicatenamerecord_3',['DuplicateNameRecord',['../structDuplicateNameRecord.html',1,'DuplicateNameRecord'],['../structDuplicateNameRecord.html#aaee978cff6ff84c22bf6ed905659a0ff',1,'DuplicateNameRecord::DuplicateNameRecord()']]]
 ];
