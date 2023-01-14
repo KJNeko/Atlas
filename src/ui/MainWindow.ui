@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1124</width>
+    <height>649</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1124</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFiles">
+    <property name="title">
+     <string>Files</string>
+    </property>
+    <addaction name="actionCreateEmptyRecord"/>
+    <addaction name="actionInstall_game"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menusettings">
+    <property name="title">
+     <string>Database</string>
+    </property>
+    <widget class="QMenu" name="menuTag_Maintnance">
+     <property name="title">
+      <string>Tag Maintnance</string>
+     </property>
+     <widget class="QMenu" name="menuClear_dead">
+      <property name="title">
+       <string>Clear Dead</string>
+      </property>
+      <addaction name="actionTags_2"/>
+      <addaction name="actionNamespaces"/>
+      <addaction name="actionSubtags"/>
+     </widget>
+     <addaction name="menuClear_dead"/>
+    </widget>
+    <addaction name="actionLock_Mutex"/>
+    <addaction name="menuTag_Maintnance"/>
+   </widget>
+   <addaction name="menuFiles"/>
+   <addaction name="menusettings"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAdd_Files">
+   <property name="text">
+    <string>Add files...</string>
+   </property>
+  </action>
+  <action name="actionAddImporter">
+   <property name="text">
+    <string>Add Importer</string>
+   </property>
+  </action>
+  <action name="actionAddFileView">
+   <property name="text">
+    <string>Add File View</string>
+   </property>
+  </action>
+  <action name="actionImportFiles">
+   <property name="text">
+    <string>Import Files</string>
+   </property>
+  </action>
+  <action name="actionCreateEmptyRecord">
+   <property name="text">
+    <string>Create empty record</string>
+   </property>
+  </action>
+  <action name="actionInstall_game">
+   <property name="text">
+    <string>Install game</string>
+   </property>
+  </action>
+  <action name="actionlock">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Lock Mutex</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_Settings">
+   <property name="text">
+    <string>Advanced Settings</string>
+   </property>
+  </action>
+  <action name="actionFile_Manager_Settings">
+   <property name="text">
+    <string>File Manager settings</string>
+   </property>
+  </action>
+  <action name="actionLock_Mutex">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Lock Mutex</string>
+   </property>
+  </action>
+  <action name="actionClear_dead_namespaces">
+   <property name="text">
+    <string>Clear dead namespaces</string>
+   </property>
+  </action>
+  <action name="actionTags_2">
+   <property name="text">
+    <string>Tags</string>
+   </property>
+  </action>
+  <action name="actionNamespaces">
+   <property name="text">
+    <string>Namespaces</string>
+   </property>
+  </action>
+  <action name="actionSubtags">
+   <property name="text">
+    <string>Subtags</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

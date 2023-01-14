@@ -4,9 +4,17 @@
 
 #include <QApplication>
 
-int main(int argc, char** argv)
-{
-    QApplication app {argv, argv};
+#include <backend/database.hpp>
+#include <ui/MainWindow.hpp>
 
-    return app.exec()
+int main( int argc, char** argv )
+{
+	QApplication app { argc, argv };
+
+	database::initalize();
+
+	MainWindow window;
+	window.show();
+
+	return app.exec();
 }
