@@ -80,6 +80,24 @@ The F95 parser provides the following information
 	</table>
  											<td>No			<td>Download links scraped
  </table>
+
+ @subsection DLSiteParser DLSite Parser
+ The DLSite parser is primarly designed for game's but can analyze anything on the DLsite
+
+<table>
+<caption id="dlsite_table_keys">Keys provided by DLSite parser</caption>
+ <tr><th>Key<th>Type<th>Required<th>Desc
+ <tr><td>`title`			<td>String			<td>Yes		<td>Title of the game
+ <tr><td>`release_date`		<td>String			<td>Yes		<td>Release date
+ <tr><td>`scenario`			<td>String			<td>No		<td>??
+ <tr><td>`illustration`		<td>String			<td>No		<td>Illustration by
+ <tr><td>`voice_actor`		<td>String[]		<td>No		<td>Voice actor list
+ <tr><td>`language`			<td>String[]		<td>No		<td>Product languages
+ <tr><td>`format`			<td>String[]		<td>No		<td>Product format.
+ <tr><td>`genre`			<td>String[]		<td>No		<td>Genre list
+ <tr><td>`preview_urls`		<td>String[]		<td>Yes		<td>Preview urls list
+
+
  */
 
 
