@@ -11,19 +11,6 @@
 namespace database
 {
 	void initalize();
-
-	/**
-	 * @param title
-	 * @param creator
-	 * @param version
-	 * @throws std::runtime_error when parameters are invalid
-	 * @throws DuplicateNameRecord when the `title` parameter already exists
-	 * @return
-	 */
-	Record createEmptyRecord();
-
-
-	GameRecord* transformToGameRecord(Record* ptr);
 }
 
 

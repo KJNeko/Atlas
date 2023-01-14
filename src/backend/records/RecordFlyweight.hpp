@@ -6,6 +6,7 @@
 #define HYDRUS95_RECORDFLYWEIGHT_HPP
 
 #include "RecordBase.hpp"
+#include <memory>
 
 class RecordFlyweight : public std::shared_ptr<RecordBase>
 {
