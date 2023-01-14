@@ -20,6 +20,8 @@
  <tr><th>Key<th>Type<th>Desc
  <tr><td>`title_thread`<td> String <td> Title of the thread (raw)
  <tr><td>`title`<td>String<td> Title of the game (Processed to remove neddless information)
+ <tr><td>`banner_url`<td>String<td>URL to the banner of the thread
+ <tr><td>`preview_url`<td>String[]<td>URLs to preview images
  <tr><td>`version`<td>String<td> Version of the game
  <tr><td>`thread_updated`<td>String<td>Date of the last thread update
  <tr><td>`release_date`<td>String<td>Release date given
