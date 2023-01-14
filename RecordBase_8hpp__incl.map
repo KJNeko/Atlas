@@ -1,12 +1,5 @@
 <map id="src/backend/records/RecordBase.hpp" name="src/backend/records/RecordBase.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="273,5,413,45"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,93,67,119"/>
-<area shape="rect" id="node3" title=" " alt="" coords="91,93,146,119"/>
-<area shape="rect" id="node4" title=" " alt="" coords="171,93,229,119"/>
-<area shape="rect" id="node5" title=" " alt="" coords="253,93,331,119"/>
-<area shape="rect" id="node6" title=" " alt="" coords="355,93,435,119"/>
-<area shape="rect" id="node7" title=" " alt="" coords="459,93,527,119"/>
-<area shape="rect" id="node8" title=" " alt="" coords="552,93,627,119"/>
-<area shape="rect" id="node9" href="$GameRecord_8hpp.html" title=" " alt="" coords="651,93,773,119"/>
-<area shape="rect" id="node10" title=" " alt="" coords="679,167,745,192"/>
+<area shape="rect" id="node1" title=" " alt="" coords="37,5,177,45"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,93,104,119"/>
+<area shape="rect" id="node3" title=" " alt="" coords="128,93,189,119"/>
 </map>

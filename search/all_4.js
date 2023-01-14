@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['filetab_0',['FileTab',['../classFileTab.html',1,'FileTab'],['../classFileTab.html#a1e3c1365a437c04fe5af2ea042065dbc',1,'FileTab::FileTab()']]],
-  ['filetab_2ecpp_1',['FileTab.cpp',['../FileTab_8cpp.html',1,'']]],
-  ['filetab_2ehpp_2',['FileTab.hpp',['../FileTab_8hpp.html',1,'']]],
-  ['fileview_3',['FileView',['../classFileView.html',1,'FileView'],['../classFileView.html#a48f0417286e36b23be4bea2b96fbe187',1,'FileView::FileView()']]],
-  ['fileview_2ecpp_4',['FileView.cpp',['../FileView_8cpp.html',1,'']]],
-  ['fileview_2ehpp_5',['FileView.hpp',['../FileView_8hpp.html',1,'']]]
+  ['idhan_5fmainwindow_5fhpp_0',['IDHAN_MAINWINDOW_HPP',['../MainWindow_8hpp.html#a3ca0605388612fdaa30ab0f1cdcc9d3e',1,'MainWindow.hpp']]],
+  ['initalize_1',['initalize',['../namespacedatabase.html#a058ce1811f450f15ef050defc0fb5a28',1,'database']]],
+  ['internal_2',['internal',['../namespaceinternal.html',1,'']]]
 ];

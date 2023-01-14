@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['execute_5fgame_0',['execute_game',['../structGameRecord.html#ae515bcd3ec72375eec75d195e1271b82',1,'GameRecord']]]
+  ['operator_3d_0',['operator=',['../classRecordFlyweight.html#ab810d0ac5649ed08efb3817dbd67bdc3',1,'RecordFlyweight']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['filetab_0',['FileTab',['../classFileTab.html',1,'']]],
-  ['fileview_1',['FileView',['../classFileView.html',1,'']]]
+  ['recordbase_0',['RecordBase',['../classRecordBase.html',1,'']]],
+  ['recordflyweight_1',['RecordFlyweight',['../classRecordFlyweight.html',1,'']]]
 ];

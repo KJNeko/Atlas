@@ -25,6 +25,12 @@
 var NAVTREE =
 [
   [ "Hydrus95", "index.html", [
+    [ "Hydrus95 Parsers", "ParserPage.html", [
+      [ "Build-in/Pre-packaged parsers", "ParserPage.html#DefaultParsers", [
+        [ "F95ParserDefault", "ParserPage.html#F95ParserDefault", null ]
+      ] ]
+    ] ],
+    [ "Record Json", "RecordJson.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -38,8 +44,7 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Functions", "functions_func.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -48,7 +53,6 @@ var NAVTREE =
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
         [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -57,7 +61,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"FileTab_8cpp.html"
+"MainWindow_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
