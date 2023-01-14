@@ -10,9 +10,34 @@
 
  @page ParserPage Hydrus95 Parsers
 
- @section DefaultParsers Build-in/Pre-packaged parsers
- @subsection F95ParserDefault
- The F95 parser is build to support searching for updated games by examining the rss feed (and main page if the rss feed moves too quickly between updates)
+@section DefaultParsers Build-in/Pre-packaged parsers
+
+@subsection ParserInfo
+H95's internals use various 'parsers' in order to accumulate information for records. Without any parsers it won't know how to handle any records.
+
+Parsers can be set to override eachother based on a number priority (1 beats 2, 2 beats 3, ect) where when parsers have a identical key the parser with the higher number will have it's information displayed.
+Parsers can also be set on a key by key basis to hide keys or force them to always display regardless of parser priority.
+There is also a `master keylist` which shows all possible keys that can populated (see @refitem MasterKeylist) which can also allow you to change the order in which keys are displayed and how they are displayed (See @refitem KeyDisplayTypes).
+
+Parsers are also able to manage their own keylist in the @refitem ParserKeylist menu. Parsers are able to change things like
+
+A parser will be given the table `parsername_parserinfo` So the F95Parser information exists in the table `f95parser_parserinfo` and the local parser info is in the table `localparser_parserinfo`
+
+During when the parser is processing input at the end when the parser is finally complete and has collected all the information it can. It will check if a key is required or not. These can be set by the user (Only recomended for advanced users and only on the local parser) which will make the parser 'fail' and abort any action it was trying to perform. This can be helpful to prevent a parser from collecting the wrong amount of information after a site's page has been updated and the parser has not been.
+
+
+@subsection LocalParserDefault Local Parser
+H95 considers local metadata as a 'local parser' which can be populated by feeding the parser folders on your local machine. This information is meant to be overriden and populated by the user.
+The user can also add any number of keys and change them to display however they see fit.
+<table>
+<caption id="local_table_keys">Local keys</caption>
+<tr>		<th>Key		<th>Type		<th>Required		<th>Desc
+<tr>		<td>`title`		<td>String		<td>Yes		<td>Title of the record
+<tr>		<td>`creator`		<td>String		<td>No		<td>Creator of the game/asset/creation the record represents.
+
+
+@subsection F95ParserDefault F95 Parser
+The F95 parser is build to support searching for updated games by examining the rss feed (and main page if the rss feed moves too quickly between updates)
 
  The F95 parser provides the following information
  <table>
