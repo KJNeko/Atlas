@@ -14,7 +14,7 @@ find_package(Qt6 COMPONENTS Widgets Core Concurrent Sql REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(OpenSSL REQUIRED)
+
 
 if(WIN32)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -63,6 +63,8 @@ target_include_directories(Hydrus95 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Sql Qt6::Concurrent)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit_tests)
 
 if(WIN32)
     add_custom_command(TARGET IDHAN POST_BUILD
