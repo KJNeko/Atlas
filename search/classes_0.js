@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]]
+  ['parser_0',['Parser',['../classParser.html',1,'']]],
+  ['parsers_1',['Parsers',['../classParsers.html',1,'']]]
 ];

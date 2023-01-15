@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: Member List</title>
+<title>Hydrus95: Parsers Specification</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -79,7 +79,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classMainWindow.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('ParserPageSpec.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -104,16 +104,70 @@ $(document).ready(function(){initNavTree('classMainWindow.html',''); initResizab
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">MainWindow Member List</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title"><a class="el" href="classParsers.html">Parsers</a> Specification </div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="classMainWindow.html">MainWindow</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classMainWindow.html#a996c5a2b6f77944776856f08ec30858d">MainWindow</a>(QWidget *parent=nullptr)</td><td class="entry"><a class="el" href="classMainWindow.html">MainWindow</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classMainWindow.html#a1f7d2c56410fc1bfa135bb907d43313f">~MainWindow</a>() override</td><td class="entry"><a class="el" href="classMainWindow.html">MainWindow</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<div class="textblock"><p>A parser contains the methods to obtain a set of keys from a domain. These keys are also displayed to the user based on the settings the user has set.</p>
+<p>The following table describes all the various keys for the parsers and how they are structured </p><a class="anchor" id="parser_table_keys"></a>
+<table class="doxtable">
+<caption>JSON Keys for parsers</caption>
+<tr>
+<th>Key </th><th>Value </th><th>Desc </th></tr>
+<tr>
+<td><code>domain_regex</code> </td><td>String[] </td><td>Regex to identify domains the parser should act on </td></tr>
+<tr>
+<td><code>content</code> </td><td><table class="doxtable">
+<tr>
+<th>Key </th><th>Type </th><th>Desc </th></tr>
+<tr>
+<td><code>key</code> </td><td>String </td><td>Key to populate with value gotten. </td></tr>
+<tr>
+<td><code>required</code> </td><td>Boolean </td><td>If the parser should fail if the value could not be found </td></tr>
+<tr>
+<td><code>steps</code> </td><td><table class="doxtable">
+<tr>
+<th>Key </th><th>Type </th><th>Desc </th></tr>
+<tr>
+<td><code>type</code> </td><td>String (See <a class="el" href="ParserPageSpec.html#ParserStepSearch">Parser search types</a>) </td><td>Type of scan to use </td></tr>
+<tr>
+<td><code>type_parameters</code> </td><td>Object. (See <a class="el" href="ParserPageSpec.html#ParserStepSearch">Parser search types</a>) </td><td>Parameters used with the given type </td></tr>
+<tr>
+<td><code>depth</code> </td><td>Integer </td><td>Depth to perform the scan (Unlimited if not provided) </td></tr>
+</table>
+</td><td>Steps to perform to acquire the key </td></tr>
+<tr>
+<td><code>type</code> </td><td>String </td><td>Type </td></tr>
+</table>
+</td><td>Content that can be acquired by parser </td></tr>
+</table>
+<h2><a class="anchor" id="ParserStepSearch"></a>
+Parser search types</h2>
+<p><code>Search</code> is the first and probably most common search type. It will search for a html tag</p>
+<a class="anchor" id="StepTypes"></a>
+<table class="doxtable">
+<caption>Step types for parsers</caption>
+<tr>
+<th>Name</th><th>Desc</th><th>Object Structure </th></tr>
+<tr>
+<td>Search</td><td>Searches for a specific html tag.</td><td><table class="doxtable">
+<tr>
+<th>Key</th><th>Type</th><th>Desc</th><th>Example(s) </th></tr>
+<tr>
+<td><code>tag</code> </td><td>String </td><td>HTML tag to look for. </td></tr>
+<tr>
+<td><code>attributes</code></td><td>key-attribute pairs store as an array <code>id=sidebar</code> -&gt; <code>id:sidebar</code> </td><td>Searches in order from first-&gt;last </td><td><code>{"attributes": [{"id":"sidebar"},{"id":"tag-list"},{"id":"sidebar"}]}</code> </td></tr>
+<tr>
+<td><code>count</code> </td><td>integer </td><td>Number of tags to return that match the filter. (Assumed unlimited if not provided) </td></tr>
+</table>
+</td></tr>
+<tr>
+<td>Regex</td><td>Searches the entire page using a regex statement.</td><td>String with regex with at least one capture group called <code>value</code>. Additional capture groups can be used for 'driveby' grabbing of values. The capture group names are 1:1 to the key-value placed into the parser's output </td></tr>
+<tr>
+<td></td></tr>
+</table>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

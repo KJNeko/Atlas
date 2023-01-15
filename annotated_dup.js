@@ -1,6 +1,7 @@
 var annotated_dup =
 [
-    [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
-    [ "RecordBase", "classRecordBase.html", null ],
+    [ "Parser", "classParser.html", null ],
+    [ "Parsers", "classParsers.html", null ],
+    [ "RecordBase", "classRecordBase.html", "classRecordBase" ],
     [ "RecordFlyweight", "classRecordFlyweight.html", "classRecordFlyweight" ]
 ];

@@ -105,79 +105,133 @@ $(document).ready(function(){initNavTree('ParserPage.html',''); initResizable();
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Hydrus95 Parsers </div></div>
+  <div class="headertitle"><div class="title">Hydrus95 <a class="el" href="classParsers.html">Parsers</a> </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="DefaultParsers"></a>
 Build-in/Pre-packaged parsers</h1>
+<h2><a class="anchor" id="ParserInfo"></a>
+ParserInfo</h2>
+<p>H95's internals use various 'parsers' in order to accumulate information for records. Without any parsers it won't know how to handle any records.</p>
+<p><a class="el" href="classParsers.html">Parsers</a> can be set to override eachother based on a number priority (1 beats 2, 2 beats 3, ect) where when parsers have a identical key the parser with the higher number will have it's information displayed. <a class="el" href="classParsers.html">Parsers</a> can also be set on a key by key basis to hide keys or force them to always display regardless of parser priority. There is also a <code>master keylist</code> which shows all possible keys that can populated (see MasterKeylist) which can also allow you to change the order in which keys are displayed and how they are displayed (See  KeyDisplayTypes).</p>
+<p><a class="el" href="classParsers.html">Parsers</a> are also able to manage their own keylist in the ParserKeylist menu. <a class="el" href="classParsers.html">Parsers</a> are able to change things like</p>
+<p>A parser will be given the table <code>parsername_parserinfo</code> So the F95Parser information exists in the table <code>f95parser_parserinfo</code> and the local parser info is in the table <code>localparser_parserinfo</code></p>
+<p>During when the parser is processing input at the end when the parser is finally complete and has collected all the information it can. It will check if a key is required or not. These can be set by the user (Only recomended for advanced users and only on the local parser) which will make the parser 'fail' and abort any action it was trying to perform. This can be helpful to prevent a parser from collecting the wrong amount of information after a site's page has been updated and the parser has not been.</p>
+<h2><a class="anchor" id="LocalParserDefault"></a>
+Local Parser</h2>
+<p>H95 considers local metadata as a 'local parser' which can be populated by feeding the parser folders on your local machine. This information is meant to be overriden and populated by the user. The user can also add any number of keys and change them to display however they see fit. </p><a class="anchor" id="local_table_keys"></a>
+<table class="doxtable">
+<caption>Local keys</caption>
+<tr>
+<th>Key </th><th>Type </th><th>Required </th><th>Desc </th></tr>
+<tr>
+<td><code>title</code> </td><td>String </td><td>Yes </td><td>Title of the record </td></tr>
+<tr>
+<td><code>creator</code> </td><td>String </td><td>No </td><td><p class="starttd">Creator of the game/asset/creation the record represents.</p>
+<p class="endtd"></p>
+</td></tr>
+</table>
 <h2><a class="anchor" id="F95ParserDefault"></a>
-F95ParserDefault</h2>
+F95 Parser</h2>
 <p>The F95 parser is build to support searching for updated games by examining the rss feed (and main page if the rss feed moves too quickly between updates)</p>
 <p>The F95 parser provides the following information </p><a class="anchor" id="f95_table_keys"></a>
 <table class="doxtable">
-<caption>F95 Keys</caption>
+<caption>Keys provided by F95 <a class="el" href="classParser.html">Parser</a></caption>
 <tr>
-<th>Key</th><th>Type</th><th>Desc </th></tr>
+<th>Key </th><th>Type </th><th>Required </th><th>Desc </th></tr>
 <tr>
-<td><code>title_thread</code></td><td>String </td><td>Title of the thread (raw) </td></tr>
+<td><code>title_thread</code> </td><td>String </td><td>Yes </td><td>Title of the thread (raw) </td></tr>
 <tr>
-<td><code>title</code></td><td>String</td><td>Title of the game (Processed to remove neddless information) </td></tr>
+<td><code>f95id</code> </td><td>Integer </td><td>Yes </td><td>f95 forum id </td></tr>
 <tr>
-<td><code>version</code></td><td>String</td><td>Version of the game </td></tr>
+<td><code>title</code> </td><td>String </td><td>Yes </td><td>Title of the game (Processed to remove neddless information) </td></tr>
 <tr>
-<td><code>thread_updated</code></td><td>String</td><td>Date of the last thread update </td></tr>
+<td><code>banner_url</code> </td><td>String </td><td>Yes </td><td>URL to the banner of the thread </td></tr>
 <tr>
-<td><code>release_date</code></td><td>String</td><td>Release date given </td></tr>
+<td><code>preview_urls</code> </td><td>String[] </td><td>Yes </td><td>URLs to preview images </td></tr>
 <tr>
-<td><code>developer</code></td><td><a class="anchor" id="f95_dev_keys"></a>
+<td><code>version</code> </td><td>String </td><td>Yes </td><td>Version of the game </td></tr>
+<tr>
+<td><code>thread_updated</code> </td><td>String </td><td>Yes </td><td>Date of the last thread update </td></tr>
+<tr>
+<td><code>release_date</code> </td><td>String </td><td>Yes </td><td>Release date given </td></tr>
+<tr>
+<td><code>developer</code> </td><td><a class="anchor" id="f95_dev_keys"></a>
 <table class="doxtable">
 <caption>F95 Dev Info</caption>
 <tr>
-<th>Key</th><th>Type</th><th>Desc </th></tr>
+<th>Key </th><th>Type </th><th>Required </th><th>Desc </th></tr>
 <tr>
-<td><code>name</code></td><td>String</td><td>Name of develeoper/producer </td></tr>
+<td><code>name</code> </td><td>String </td><td>No </td><td>Name of develeoper/producer </td></tr>
 <tr>
-<td><code>urls</code></td><td>String[]</td><td>Urls (if any) to sizes </td></tr>
+<td><code>urls</code> </td><td>String[] </td><td>No </td><td>Urls (if any) to sizes </td></tr>
 </table>
-</td><td>Developer information </td></tr>
+</td><td>Yes </td><td>Developer information </td></tr>
 <tr>
-<td><code>censored</code></td><td>String</td><td>Censor information </td></tr>
+<td><code>censored</code> </td><td>String </td><td>Yes </td><td>Censor information </td></tr>
 <tr>
-<td><code>censored_bool</code></td><td>Boolean</td><td>If censored or not (Any is true) </td></tr>
+<td><code>censored_bool</code> </td><td>Boolean </td><td>Yes </td><td>If censored or not (Any is true) </td></tr>
 <tr>
-<td><code>os_support</code></td><td>String</td><td>List of supported operating systems </td></tr>
+<td><code>os_support</code> </td><td>String </td><td>Yes </td><td>List of supported operating systems </td></tr>
 <tr>
-<td><code>linux_support</code></td><td>Boolean</td><td>If linux is supported </td></tr>
+<td><code>linux_support</code> </td><td>Boolean </td><td>Yes </td><td>If linux is supported </td></tr>
 <tr>
-<td><code>mac_support</code></td><td>Boolean</td><td>If mac os supported </td></tr>
+<td><code>mac_support</code> </td><td>Boolean </td><td>Yes </td><td>If mac os supported </td></tr>
 <tr>
-<td><code>windows_support</code></td><td>Boolean</td><td>If Windows is supported </td></tr>
+<td><code>windows_support</code> </td><td>Boolean </td><td>Yes </td><td>If Windows is supported </td></tr>
 <tr>
-<td><code>langauge</code></td><td>String[]</td><td>List of languages supported </td></tr>
+<td><code>langauge</code> </td><td>String[] </td><td>Yes </td><td>List of languages supported </td></tr>
 <tr>
-<td><code>genre</code></td><td>String[]</td><td>List of genres </td></tr>
+<td><code>genre</code> </td><td>String[] </td><td>Yes </td><td>List of genres </td></tr>
 <tr>
-<td><code>changelog</code></td><td>String</td><td>Changelog text </td></tr>
+<td><code>changelog</code> </td><td>String </td><td>Yes </td><td>Changelog text </td></tr>
 <tr>
-<td><code>dev_notes</code></td><td>String</td><td>Developer notes </td></tr>
+<td><code>dev_notes</code> </td><td>String </td><td>Yes </td><td>Developer notes </td></tr>
 <tr>
-<td><code>downloads</code></td><td><a class="anchor" id="f95_download_keys"></a>
+<td><code>downloads</code> </td><td><a class="anchor" id="f95_download_keys"></a>
 <table class="doxtable">
 <caption>F95 Download Info</caption>
 <tr>
-<th>Key</th><th>Type</th><th>Desc </th></tr>
+<th>Key </th><th>Type </th><th>Required </th><th>Desc </th></tr>
 <tr>
-<td><code>win_dl</code></td><td>String[]</td><td>Windows download links </td></tr>
+<td><code>win_dl</code> </td><td>String[] </td><td>No </td><td>Windows download links </td></tr>
 <tr>
-<td><code>linux_dl</code></td><td>String[]</td><td>Linux download links (Seems most of the time this will be the same as <code>win_dl</code>) </td></tr>
+<td><code>linux_dl</code> </td><td>String[] </td><td>No </td><td>Linux download links (Seems most of the time this will be the same as <code>win_dl</code>) </td></tr>
 <tr>
-<td><code>mac_dl</code></td><td>String[]</td><td>Mac download links </td></tr>
+<td><code>mac_dl</code> </td><td>String[] </td><td>No </td><td>Mac download links </td></tr>
 <tr>
-<td><code>android_dl</code></td><td>String[]</td><td>Android download links </td></tr>
+<td><code>android_dl</code> </td><td>String[] </td><td>No </td><td>Android download links </td></tr>
 <tr>
-<td><code>other_dl</code></td><td>String[]</td><td>Other download links </td></tr>
+<td><code>other_dl</code> </td><td>String[] </td><td>No </td><td>Other download links </td></tr>
 </table>
-</td><td>Download links scraped </td></tr>
+</td><td>No </td><td>Download links scraped </td></tr>
+</table>
+<h2><a class="anchor" id="DLSiteParser"></a>
+DLSite Parser</h2>
+<p>The DLSite parser is primarly designed for game's but can analyze anything on the DLsite</p>
+<a class="anchor" id="dlsite_table_keys"></a>
+<table class="doxtable">
+<caption>Keys provided by DLSite parser</caption>
+<tr>
+<th>Key</th><th>Type</th><th>Required</th><th>Desc </th></tr>
+<tr>
+<td><code>title</code> </td><td>String </td><td>Yes </td><td>Title of the game </td></tr>
+<tr>
+<td><code>release_date</code> </td><td>String </td><td>Yes </td><td>Release date </td></tr>
+<tr>
+<td><code>scenario</code> </td><td>String </td><td>No </td><td>?? </td></tr>
+<tr>
+<td><code>illustration</code> </td><td>String </td><td>No </td><td>Illustration by </td></tr>
+<tr>
+<td><code>voice_actor</code> </td><td>String[] </td><td>No </td><td>Voice actor list </td></tr>
+<tr>
+<td><code>language</code> </td><td>String[] </td><td>No </td><td>Product languages </td></tr>
+<tr>
+<td><code>format</code> </td><td>String[] </td><td>No </td><td>Product format. </td></tr>
+<tr>
+<td><code>genre</code> </td><td>String[] </td><td>No </td><td>Genre list </td></tr>
+<tr>
+<td><code>preview_urls</code> </td><td>String[] </td><td>Yes </td><td>Preview urls list </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
