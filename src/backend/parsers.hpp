@@ -97,6 +97,47 @@ The F95 parser provides the following information
  <tr><td>`format`			<td>String[]		<td>No		<td>Product format.
  <tr><td>`genre`			<td>String[]		<td>No		<td>Genre list
  <tr><td>`preview_urls`		<td>String[]		<td>Yes		<td>Preview urls list
+</table>
+
+ @page ParserPageSpec Parsers Specification
+ A parser contains the methods to obtain a set of keys from a domain. These keys are also displayed to the user based on the settings the user has set.
+
+ The following table describes all the various keys for the parsers and how they are structured
+ <table>
+<caption id="parser_table_keys">JSON Keys for parsers</caption>
+ <tr><th>Key			<th>Value		<th>Desc
+ <tr><td>`domain_regex`	<td>String[]	<td>Regex to identify domains the parser should act on
+ <tr><td>`content`		<td>
+ 	<table>
+	<tr><th>Key			<th>Type		<th>Desc
+ 	<tr><td>`key`		<td>String		<td>Key to populate with value gotten.
+ 	<tr><td>`required`	<td>Boolean		<td>If the parser should fail if the value could not be found
+ 	<tr><td>`steps`		<td>
+ 		<table>
+		<tr><th>Key					<th>Type									<th>Desc
+ 		<tr><td>`type`				<td>String (See @ref ParserStepSearch)		<td>Type of scan to use
+ 		<tr><td>`type_parameters`	<td>Object. (See @ref ParserStepSearch) 	<td>Parameters used with the given type
+ 		<tr><td>`depth`				<td>Integer 								<td>Depth to perform the scan (Unlimited if not provided)
+ 		</table>
+										<td>Steps to perform to acquire the key
+	<tr><td>`type`		<td>String		<td>Type
+ 	</table>							<td>Content that can be acquired by parser
+</table>
+ @subsection ParserStepSearch Parser search types
+ `Search` is the first and probably most common search type. It will search for a html tag
+
+ <table>
+ <caption id="StepTypes">Step types for parsers</caption>
+ <tr><th>Name<th>Desc<th>Object Structure
+ <tr><td>Search<td>Searches for a specific html tag.<td>
+ 	<table>
+ 		<tr><th>Key<th>Type<th>Desc<th>Example(s)
+ 		<tr><td>`tag`		<td>String 																<td>HTML tag to look for.
+ 		<tr><td>`attributes`<td> key-attribute pairs store as an array `id=sidebar` -> `id:sidebar` <td>Searches in order from first->last <td>`{"attributes": [{"id":"sidebar"},{"id":"tag-list"},{"id":"sidebar"}]}`
+ 		<tr><td>`count`		<td> integer 															<td>Number of tags to return that match the filter. (Assumed unlimited if not provided)
+	</table>
+ <tr><td>Regex<td>Searches the entire page using a regex statement.<td> String with regex with at least one capture group called `value`. Additional capture groups can be used for 'driveby' grabbing of values. The capture group names are 1:1 to the key-value placed into the parser's output
+ <tr><td>
 
 
  */
