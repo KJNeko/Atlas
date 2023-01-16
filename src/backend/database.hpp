@@ -6,7 +6,7 @@
 #define HYDRUS95_DATABASE_HPP
 
 #include <QSqlDatabase>
-#include "backend/records/Record.hpp"
+#include "Record.hpp"
 
 namespace database
 {
