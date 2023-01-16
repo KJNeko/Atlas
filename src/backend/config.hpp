@@ -10,7 +10,7 @@
 
 inline QSettings getSettingsObject()
 {
-	return { QSettings::IniFormat, QSettings::UserScope, "Future Gadget Labs", "IDHAN" };
+	return { "./data/config.ini", QSettings::IniFormat};
 }
 
 template< typename T > inline T getSettings( const QString setting_name )
