@@ -13,7 +13,7 @@ FetchContent_MakeAvailable(googletest)
 file(GLOB_RECURSE TEST_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-add_executable(Hydrus95_UNIT_TESTS ${TEST_SOURCES})
+add_executable(Hydrus95_UNIT_TESTS ${TEST_SOURCES} ${SOURCES})
 target_include_directories(Hydrus95_UNIT_TESTS PUBLIC ${CMAKE_SOURCE_DIR}/src)
 
-target_link_directories(Hydrus95_UNIT_TESTS PUBLIC ${REQUIRED_LIBS} GTest::gtest_main)
+target_link_libraries(Hydrus95_UNIT_TESTS PUBLIC ${REQUIRED_LIBS} GTest::gtest_main)

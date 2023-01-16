@@ -45,7 +45,8 @@ else()
 endif()
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/backend/*.cpp")
 
 if(WIN32)
     add_executable(Hydrus95 WIN32 ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
