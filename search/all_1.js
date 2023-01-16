@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['database_0',['database',['../namespacedatabase.html',1,'']]],
-  ['database_2ecpp_1',['database.cpp',['../database_8cpp.html',1,'']]],
-  ['database_2ehpp_2',['database.hpp',['../database_8hpp.html',1,'']]]
+  ['bindto_0',['bindTo',['../structGameMetadata.html#ada2c7d0b06ad1ef68886bdd81221cde9',1,'GameMetadata::bindTo()'],['../structRecord.html#a0fb1e490ad39369be09d2ebc82b674dd',1,'Record::bindTo()']]]
 ];

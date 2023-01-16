@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../classRecordFlyweight.html#ab810d0ac5649ed08efb3817dbd67bdc3',1,'RecordFlyweight']]]
+  ['editorevent_0',['editorEvent',['../classRecordViewDelegate.html#a1eb4a3af61864756089d32e45856892d',1,'RecordViewDelegate']]],
+  ['execgame_1',['execGame',['../structGameMetadata.html#a1cc494ae1e26aaea3bd14c21643361dd',1,'GameMetadata']]]
 ];

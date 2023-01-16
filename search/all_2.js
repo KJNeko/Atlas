@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['getsettings_0',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'getSettings(const QString setting_name):&#160;config.hpp'],['../config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e',1,'getSettings(const QString setting_name, const T default_value):&#160;config.hpp']]],
-  ['getsettingsobject_1',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]],
-  ['getsharedptr_2',['getSharedPtr',['../namespaceinternal.html#a93273af25b0292b5a6a44d60123b3cd4',1,'internal']]]
+  ['config_2ehpp_0',['config.hpp',['../config_8hpp.html',1,'']]],
+  ['create_1',['create',['../structRecord.html#af1322c91d44d918d038fa7a0b0c83d22',1,'Record']]],
+  ['creator_5fname_2',['creator_name',['../structGameMetadata.html#ac46cf06a33c60accd18b8c9f0ae9422c',1,'GameMetadata']]]
 ];

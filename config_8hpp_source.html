@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('config_8hpp_source.html',''); initResi
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">   11</a></span><span class="keyword">inline</span> QSettings <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>()</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">return</span> { QSettings::IniFormat, QSettings::UserScope, <span class="stringliteral">&quot;Future Gadget Labs&quot;</span>, <span class="stringliteral">&quot;IDHAN&quot;</span> };</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">return</span> { <span class="stringliteral">&quot;./data/config.ini&quot;</span>, QSettings::IniFormat};</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">   16</a></span><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T &gt; <span class="keyword">inline</span> T <a class="code hl_function" href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">getSettings</a>( <span class="keyword">const</span> QString setting_name )</div>

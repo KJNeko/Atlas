@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['collectjson_0',['collectJson',['../RecordBase_8hpp.html#ac0262f8012ae2e88ef35c9e1eb3f45f3',1,'RecordBase.hpp']]]
+  ['addrecord_0',['addRecord',['../classRecordViewModel.html#a90e2e31af2319a97951fdd98d351090e',1,'RecordViewModel']]],
+  ['at_1',['at',['../classRecordViewModel.html#a25f39088ddb2d5f083a1ec0f2dd7063d',1,'RecordViewModel']]]
 ];
