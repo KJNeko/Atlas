@@ -1,4 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,91,31"/>
-<area shape="rect" id="node2" href="$structMetadata.html" title=" " alt="" coords="139,5,215,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,104,77,129"/>
+<area shape="rect" id="node2" href="$classRecordView.html" title=" " alt="" coords="151,5,243,31"/>
+<area shape="rect" id="node3" href="$classRecordViewWidget.html" title=" " alt="" coords="131,55,263,80"/>
+<area shape="rect" id="node4" href="$classSelectedViewWidget.html" title=" " alt="" coords="125,104,268,129"/>
+<area shape="rect" id="node5" href="$classTagDisplayWidget.html" title=" " alt="" coords="133,153,260,179"/>
+<area shape="rect" id="node6" href="$classTagSearchWidget.html" title=" " alt="" coords="134,203,259,228"/>
 </map>

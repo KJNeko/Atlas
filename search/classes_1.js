@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html',1,'']]]
+  ['f95parser_0',['F95Parser',['../structF95Parser.html',1,'']]]
 ];

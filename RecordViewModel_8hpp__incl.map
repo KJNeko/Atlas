@@ -1,5 +1,5 @@
-<map id="src/ui/widgets/RecordViewModel.hpp" name="src/ui/widgets/RecordViewModel.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="151,5,329,45"/>
+<map id="src/ui/widgets/records/RecordViewModel.hpp" name="src/ui/widgets/records/RecordViewModel.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="163,5,317,45"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,93,144,119"/>
 <area shape="rect" id="node3" title=" " alt="" coords="169,93,311,119"/>
 <area shape="rect" id="node4" href="$Record_8hpp.html" title=" " alt="" coords="335,93,475,119"/>

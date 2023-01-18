@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mainwindow_2ecpp_1',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
-  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]],
-  ['metadata_2ecpp_3',['Metadata.cpp',['../Metadata_8cpp.html',1,'']]],
-  ['metadata_2ehpp_4',['Metadata.hpp',['../Metadata_8hpp.html',1,'']]]
+  ['gameimportdialog_2ecpp_0',['GameImportDialog.cpp',['../GameImportDialog_8cpp.html',1,'']]],
+  ['gameimportdialog_2ehpp_1',['GameImportDialog.hpp',['../GameImportDialog_8hpp.html',1,'']]],
+  ['gamemetadata_2ecpp_2',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
+  ['gamemetadata_2ehpp_3',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3d_3d_0',['operator==',['../structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa',1,'GameMetadata::operator==()'],['../structEmptyMetadata.html#a89de1ae4d5392383e645d91166abd3fa',1,'EmptyMetadata::operator==()'],['../structRecord.html#a9cc19167ed89b3b4cbe07beae54e12cb',1,'Record::operator==()']]]
+  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]]
 ];

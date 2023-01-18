@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/ui/widgets/RecordViewDelegate.hpp Source File</title>
+<title>Hydrus95: src/ui/widgets/records/RecordViewDelegate.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -119,23 +119,21 @@ $(document).ready(function(){initNavTree('RecordViewDelegate_8hpp_source.html','
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classRecordViewDelegate.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="classRecordViewDelegate.html">RecordViewDelegate</a> : QAbstractItemDelegate</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    Q_DISABLE_COPY_MOVE(<a class="code hl_class" href="classRecordViewDelegate.html">RecordViewDelegate</a>)</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">   16</a></span>    <a class="code hl_function" href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">RecordViewDelegate</a>(QObject* parent = <span class="keyword">nullptr</span>) :</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      QAbstractItemDelegate(parent) {}</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classRecordViewDelegate.html#a883289dbadbef07a2d2b4b17e7a6a98e">paint</a>(QPainter* painter, <span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">const override</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    QSize <a class="code hl_function" href="classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08">sizeHint</a>(<span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">const override</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classRecordViewDelegate.html#a1eb4a3af61864756089d32e45856892d">editorEvent</a>(QEvent* event, QAbstractItemModel* model, <span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_RECORDVIEWDELEGATE_HPP</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    Q_DISABLE_COPY_MOVE(<a class="code hl_class" href="classRecordViewDelegate.html">RecordViewDelegate</a>)</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">   15</a></span>    <a class="code hl_function" href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">RecordViewDelegate</a>(QObject* parent = <span class="keyword">nullptr</span>) :</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>      QAbstractItemDelegate(parent) {}</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classRecordViewDelegate.html#a883289dbadbef07a2d2b4b17e7a6a98e">paint</a>(QPainter* painter, <span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    QSize <a class="code hl_function" href="classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08">sizeHint</a>(<span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classRecordViewDelegate.html#a1eb4a3af61864756089d32e45856892d">editorEvent</a>(QEvent* event, QAbstractItemModel* model, <span class="keyword">const</span> QStyleOptionViewItem&amp; option, <span class="keyword">const</span> QModelIndex&amp; index) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_RECORDVIEWDELEGATE_HPP</span></div>
 <div class="ttc" id="aclassRecordViewDelegate_html"><div class="ttname"><a href="classRecordViewDelegate.html">RecordViewDelegate</a></div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.hpp:11</div></div>
-<div class="ttc" id="aclassRecordViewDelegate_html_a0c6eb4a14af49ab5e737cee1a65729e0"><div class="ttname"><a href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">RecordViewDelegate::RecordViewDelegate</a></div><div class="ttdeci">RecordViewDelegate(QObject *parent=nullptr)</div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.hpp:16</div></div>
+<div class="ttc" id="aclassRecordViewDelegate_html_a0c6eb4a14af49ab5e737cee1a65729e0"><div class="ttname"><a href="classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0">RecordViewDelegate::RecordViewDelegate</a></div><div class="ttdeci">RecordViewDelegate(QObject *parent=nullptr)</div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.hpp:15</div></div>
 <div class="ttc" id="aclassRecordViewDelegate_html_a1eb4a3af61864756089d32e45856892d"><div class="ttname"><a href="classRecordViewDelegate.html#a1eb4a3af61864756089d32e45856892d">RecordViewDelegate::editorEvent</a></div><div class="ttdeci">bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) override</div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.cpp:32</div></div>
 <div class="ttc" id="aclassRecordViewDelegate_html_a66bce4877ca46d45467628da258c8f08"><div class="ttname"><a href="classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08">RecordViewDelegate::sizeHint</a></div><div class="ttdeci">QSize sizeHint(const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const override</div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.cpp:26</div></div>
 <div class="ttc" id="aclassRecordViewDelegate_html_a883289dbadbef07a2d2b4b17e7a6a98e"><div class="ttname"><a href="classRecordViewDelegate.html#a883289dbadbef07a2d2b4b17e7a6a98e">RecordViewDelegate::paint</a></div><div class="ttdeci">void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const override</div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.cpp:13</div></div>
@@ -144,7 +142,7 @@ $(document).ready(function(){initNavTree('RecordViewDelegate_8hpp_source.html','
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_da5c6b39c0a2f54e57df6799511cd3ab.html">ui</a></li><li class="navelem"><a class="el" href="dir_f3911b9629b0e27ea480d06d47573cbf.html">widgets</a></li><li class="navelem"><a class="el" href="RecordViewDelegate_8hpp.html">RecordViewDelegate.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_da5c6b39c0a2f54e57df6799511cd3ab.html">ui</a></li><li class="navelem"><a class="el" href="dir_f3911b9629b0e27ea480d06d47573cbf.html">widgets</a></li><li class="navelem"><a class="el" href="dir_0612b598b523212c6809f172842c86fa.html">records</a></li><li class="navelem"><a class="el" href="RecordViewDelegate_8hpp.html">RecordViewDelegate.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

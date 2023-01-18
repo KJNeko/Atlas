@@ -7,6 +7,5 @@ var structGameMetadata =
     [ "executable_path", "structGameMetadata.html#ab6482679e23784ac32a629cb0489da6e", null ],
     [ "folder_path", "structGameMetadata.html#aee275ee8c5686b97fa1ec5821e7ade4d", null ],
     [ "game_name", "structGameMetadata.html#ae6d50ab8a69b4de0452d7fdde41211f4", null ],
-    [ "h95_ownerhip", "structGameMetadata.html#af16619daafefc017ae1b9858b935e9f6", null ],
     [ "version_string", "structGameMetadata.html#a7323ba5cc7949a5ad6904520829902f3", null ]
 ];
