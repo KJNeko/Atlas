@@ -16,7 +16,7 @@ enum RecordType : int
 
 struct EmptyMetadata
 {
-	bool operator==(const EmptyMetadata& other) const {return true;}
+	bool operator==([[maybe_unused]] const EmptyMetadata& other) const {return true;}
 };
 
 struct Metadata : public std::variant<EmptyMetadata, GameMetadata>

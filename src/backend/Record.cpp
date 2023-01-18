@@ -33,12 +33,12 @@ bool Record::operator==( const Record& other ) const
 	const bool value { other.m_id == this->m_id };
 
 	if ( other.m_type == this->m_type
-		 && ( std::holds_alternative< EmptyMetadata >( other.m_metadata )
-				  && std::holds_alternative< EmptyMetadata >( this->m_metadata )
-				  && std::get< EmptyMetadata >( other.m_metadata ) == std::get< EmptyMetadata >( this->m_metadata )
-			  || std::holds_alternative< GameMetadata >( other.m_metadata )
-					 && std::holds_alternative< GameMetadata >( this->m_metadata )
-					 && std::get< GameMetadata >( other.m_metadata ) == std::get< GameMetadata >( this->m_metadata ) ) )
+		 && ( ( std::holds_alternative< EmptyMetadata >( other.m_metadata )
+				&& std::holds_alternative< EmptyMetadata >( this->m_metadata )
+				&& std::get< EmptyMetadata >( other.m_metadata ) == std::get< EmptyMetadata >( this->m_metadata ) )
+			  || ( std::holds_alternative< GameMetadata >( other.m_metadata )
+				   && std::holds_alternative< GameMetadata >( this->m_metadata )
+				   && std::get< GameMetadata >( other.m_metadata ) == std::get< GameMetadata >( this->m_metadata ) ) ) )
 	{
 		std::cout << "WARN! Values of metadata with same ID are not equal!!!" << std::endl;
 	}
@@ -63,9 +63,9 @@ Record Record::create(
 	QJsonArray json_array;
 	for ( const auto& preview : previews ) json_array.push_back( preview.c_str() );
 
-	QJsonDocument doc{json_array};
+	QJsonDocument doc { json_array };
 
-	query.bindValue( ":previews", doc.toJson(QJsonDocument::Compact) );
+	query.bindValue( ":previews", doc.toJson( QJsonDocument::Compact ) );
 	query.exec();
 	query.first();
 
@@ -80,11 +80,11 @@ Record Record::select( const RecordID id )
 	QSqlQuery query;
 	query.prepare( "SELECT :type, :banner, :previews FROM records WHERE id = :id" );
 
-	RecordType type;
-	QString banner;
-	QJsonArray json;
+	RecordType type {INVALID_RECORD};
+	QString banner {};
+	QJsonArray json {};
 
-	query.bindValue( ":type", type, QSql::Out );
+	query.bindValue( ":type", static_cast<unsigned int>(type), QSql::Out );
 	query.bindValue( ":banner", banner, QSql::Out );
 	query.bindValue( ":previews", json, QSql::Out );
 	query.bindValue( ":id", id );

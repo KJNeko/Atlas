@@ -13,27 +13,18 @@ class QSqlQuery;
 
 struct GameMetadata
 {
-	QString game_name;
-	QString creator_name;
-	QString version_string;
+	QString game_name {};
+	QString creator_name {};
+	QString version_string {};
 
 	//! Path to the game folder
-	std::filesystem::path folder_path;
+	std::filesystem::path folder_path {};
 
 	//! Path to the executable
-	std::filesystem::path executable_path;
-
-	//! Indicates that h95 'owns' the folder the game is in.
-	bool h95_ownerhip;
+	std::filesystem::path executable_path {};
 
 	//! Executes the game
 	void execGame();
-
-	//! Returns a query to insert this metadata
-	static QString insertQuery();
-
-	//! Returns a query to update the metadata
-	static QString updateQuery();
 
 	//! Returns the string to generate the table.
 	static QString tableQuery();
