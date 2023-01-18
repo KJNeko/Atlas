@@ -22,21 +22,12 @@ class RecordView : public QWidget
 
 	Q_DISABLE_COPY_MOVE(RecordView)
 
-	std::vector<Tag> active_tags;
+	RecordViewBackend backend {};
 
 	public:
 	explicit RecordView( QWidget* parent = nullptr );
 	~RecordView() override;
 
-	public slots:
-	void searchSimilar(QString text);
-	void addTag(const Tag& tag);
-	void removeTag(const Tag& tag);
-
-	signals:
-	void similarTagFinished(const std::vector<Tag>& tags);
-	void tagsChanged(const std::vector<Tag>& tags);
-	void recordsUpdated(const std::vector<Record>& records);
 
 	private:
 	Ui::RecordView* ui;
