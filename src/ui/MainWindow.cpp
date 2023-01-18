@@ -7,7 +7,7 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
-#include <backend/config.hpp>
+#include "h95/config.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {

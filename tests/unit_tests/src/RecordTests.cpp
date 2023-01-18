@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 
-#include <backend/Record.hpp>
-#include <backend/database.hpp>
+#include "h95/database/Record.hpp"
+#include "h95/database/database.hpp"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QNetworkAccessManager>
@@ -16,7 +16,7 @@
 #include <QApplication>
 #include <QJsonArray>
 #include <fstream>
-#include "backend/f95parser.hpp"
+#include "h95/f95parser.hpp"
 
 class RecordCreation : public ::testing::Test
 {

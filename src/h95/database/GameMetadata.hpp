@@ -7,7 +7,7 @@
 
 #include <QString>
 #include <filesystem>
-#include "Types.hpp"
+#include "h95/Types.hpp"
 
 class QSqlQuery;
 

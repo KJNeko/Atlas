@@ -5,7 +5,7 @@
 #ifndef HYDRUS95_RECORD_HPP
 #define HYDRUS95_RECORD_HPP
 
-#include "Types.hpp"
+#include "h95/Types.hpp"
 #include "Metadata.hpp"
 #include <QVector>
 

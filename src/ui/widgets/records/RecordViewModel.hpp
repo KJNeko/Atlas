@@ -8,7 +8,7 @@
 #include <QAbstractListModel>
 #include <QAbstractItemModel>
 
-#include "backend/Record.hpp"
+#include "h95/database/Record.hpp"
 
 class RecordViewModel : public QAbstractListModel
 {

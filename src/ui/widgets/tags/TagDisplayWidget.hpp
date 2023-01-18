@@ -6,7 +6,7 @@
 #define HYDRUS95_TAGDISPLAYWIDGET_HPP
 
 #include <QWidget>
-#include "backend/Tag.hpp"
+#include "h95/database/Tag.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

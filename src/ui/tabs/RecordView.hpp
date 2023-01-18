@@ -6,8 +6,8 @@
 #define HYDRUS95_RECORDVIEW_HPP
 
 #include <QWidget>
-#include <backend/Record.hpp>
-#include <backend/Tag.hpp>
+#include "h95/database/Record.hpp"
+#include "h95/backend/RecordViewBackend.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

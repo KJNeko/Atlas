@@ -7,7 +7,7 @@
 
 #include <QWidget>
 
-#include "backend/Record.hpp"
+#include "h95/database/Record.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

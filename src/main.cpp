@@ -4,9 +4,9 @@
 
 #include <QApplication>
 
-#include <backend/database.hpp>
+#include "h95/database/database.hpp"
 
-#include <ui/MainWindow.hpp>
+#include "ui/MainWindow.hpp"
 
 int main( int argc, char** argv )
 {

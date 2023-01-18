@@ -3,7 +3,7 @@
 //
 
 #include "database.hpp"
-#include "Record.hpp"
+#include "h95/database/Record.hpp"
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlError>
