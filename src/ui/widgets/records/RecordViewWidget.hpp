@@ -7,7 +7,7 @@
 
 #include <QWidget>
 
-#include <backend/Record.hpp>
+struct Record;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,7 +26,11 @@ class RecordViewWidget : public QWidget
 	explicit RecordViewWidget( QWidget* parent = nullptr );
 	~RecordViewWidget() override;
 
-	void setViewPtr(const std::vector<Record>* const records);
+	public slots:
+	void recordsUpdated(const std::vector<Record>& records);
+
+	signals:
+	void recordSelected(const Record& record);
 
 	private:
 	Ui::RecordViewWidget* ui;

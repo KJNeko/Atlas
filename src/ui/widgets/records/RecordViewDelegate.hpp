@@ -9,13 +9,11 @@
 
 class RecordViewDelegate : QAbstractItemDelegate
 {
-
 	Q_DISABLE_COPY_MOVE(RecordViewDelegate)
 
 	public:
 	RecordViewDelegate(QObject* parent = nullptr) :
 	  QAbstractItemDelegate(parent) {}
-
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
