@@ -26,30 +26,17 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QFrame" name="frame_2">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>80</y>
-         <width>221</width>
-         <height>271</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QWidget" name="searchBox" native="true"/>
-        </item>
-        <item>
-         <widget class="QWidget" name="searchDisplay" native="true"/>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QSplitter" name="splitter_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="TagSearchWidget" name="tagView" native="true"/>
+         <widget class="TagDisplayWidget" name="tagSearch" native="true"/>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="RecordViewWidget" name="recordView" native="true"/>
      <widget class="SelectedViewWidget" name="selectedView" native="true"/>
@@ -61,13 +48,25 @@
   <customwidget>
    <class>RecordViewWidget</class>
    <extends>QWidget</extends>
-   <header>ui/widgets/RecordViewWidget.hpp</header>
+   <header>ui/widgets/records/RecordViewWidget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SelectedViewWidget</class>
    <extends>QWidget</extends>
-   <header>ui/widgets/SelectedViewWidget.hpp</header>
+   <header>ui/widgets/records/SelectedViewWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TagDisplayWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/widgets/tags/TagDisplayWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TagSearchWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/widgets/tags/TagSearchWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

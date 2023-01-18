@@ -30,15 +30,15 @@
     <widget class="QLineEdit" name="lineEdit"/>
    </item>
    <item>
-    <widget class="TagDisplay" name="widget" native="true"/>
+    <widget class="TagDisplayWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TagDisplay</class>
+   <class>TagDisplayWidget</class>
    <extends>QWidget</extends>
-   <header>ui/widgets/TagDisplay.hpp</header>
+   <header>ui/widgets/tags/TagDisplayWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
