@@ -10,7 +10,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILT_TYPE Release ... FORCE)
 endif()
 
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Sql REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Sql Network REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
