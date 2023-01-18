@@ -41,8 +41,7 @@ bool RecordViewDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, [
 
 			menu.addAction("Manage record", [=](){
 				auto* r_model{dynamic_cast<RecordViewModel*>(model)};
-				auto& record {r_model->at(index.row())};
-				record.openEditor();
+				[[maybe_unused]] auto& record {r_model->at(index.row())};
 			});
 
 			menu.exec();
