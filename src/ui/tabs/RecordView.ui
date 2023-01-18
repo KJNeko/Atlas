@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1355</width>
-    <height>888</height>
+    <width>1219</width>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,51 +26,33 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QFrame" name="frame_3">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Create new record</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_2">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Key Search</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>80</y>
+         <width>221</width>
+         <height>271</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QWidget" name="searchBox" native="true"/>
+        </item>
+        <item>
+         <widget class="QWidget" name="searchDisplay" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="RecordViewWidget" name="widget" native="true"/>
+     <widget class="RecordViewWidget" name="recordView" native="true"/>
+     <widget class="SelectedViewWidget" name="selectedView" native="true"/>
     </widget>
    </item>
   </layout>
@@ -80,6 +62,12 @@
    <class>RecordViewWidget</class>
    <extends>QWidget</extends>
    <header>ui/widgets/RecordViewWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SelectedViewWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/widgets/SelectedViewWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
