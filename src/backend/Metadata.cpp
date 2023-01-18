@@ -10,11 +10,12 @@ Metadata Metadata::select(const RecordID id, const RecordType type)
 {
 	switch(type)
 	{
+		default: [[fallthrough]];
 		case INVALID_RECORD:
-			return EmptyMetadata();
+			return {EmptyMetadata()};
 			break;
 		case GAME_RECORD:
-			return GameMetadata::select(id);
+			return {GameMetadata::select(id)};
 			break;
 	}
 
@@ -22,16 +23,13 @@ Metadata Metadata::select(const RecordID id, const RecordType type)
 
 Metadata Metadata::insert(const RecordID id, const Metadata& metadata, const RecordType type)
 {
-	if(auto ptr = std::get_if<EmptyMetadata>(&metadata); ptr) [[unlikely]]
-		return metadata;
-	else if(auto* g_ptr = std::get_if<GameMetadata>(&metadata); g_ptr)
+	switch(type)
 	{
-		GameMetadata::insert( id, std::get< GameMetadata >( metadata ) );
-		return metadata;
+		default: [[fallthrough]];
+		case INVALID_RECORD:
+			return {EmptyMetadata()};
+		case GAME_RECORD:
+			return {GameMetadata::insert(id, std::get<GameMetadata>(metadata))};
 	}
-	else
-		return metadata;
-
-	return metadata;
 }
 
