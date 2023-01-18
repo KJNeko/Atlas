@@ -45,23 +45,25 @@ else()
 endif()
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/backend/*.cpp")
 
+file(GLOB_RECURSE UI_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
+
 if(WIN32)
-    add_executable(Hydrus95 WIN32 ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(Hydrus95 WIN32 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
 else()
 if(${CMAKE_COMPILER_IS_GNUCXX})
-    add_executable(Hydrus95 ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(Hydrus95 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
     set_target_properties(Hydrus95 PROPERTIES COMPILE_FLAGS ${CMAKE_CXX_FLAGS} ${FGL_WARNINGS})
 else()
-    add_executable(Hydrus95 ${SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(Hydrus95 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
 endif()
 endif()
 
 target_include_directories(Hydrus95 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Sql Qt6::Concurrent)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Sql Qt6::Concurrent Qt6::Network)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 
