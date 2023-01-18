@@ -1,0 +1,26 @@
+Name: Unit tests
+on:
+  workflow_dispatch:
+    push:
+      branches: [testing]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      - name: cmake-configure
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          make -j8
+          cd unit_tests
+          ./Hydrus95-Unit
+
+
+
