@@ -7,6 +7,8 @@
 #include <QJsonArray>
 #include <iostream>
 #include <QSqlError>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 
 QString Record::tableQuery()
@@ -58,36 +60,39 @@ Record Record::create(
 	query.bindValue( ":type", static_cast< int >( type ) );
 	query.bindValue( ":banner", banner.c_str() );
 
-	QJsonArray json;
-	for ( const auto& preview : previews ) json.push_back( preview.c_str() );
+	QJsonArray json_array;
+	for ( const auto& preview : previews ) json_array.push_back( preview.c_str() );
 
-	query.bindValue( ":previews", json );
+	QJsonDocument doc{json_array};
+
+	query.bindValue( ":previews", doc.toJson(QJsonDocument::Compact) );
 	query.exec();
 	query.first();
 
-	const auto id {query.value(0).value<RecordID>()};
-	return { id, type, Metadata::insert(id, metadata), banner, previews };
+	std::cout << "executed: " << query.executedQuery().toStdString() << std::endl;
+
+	const auto id { query.value( 0 ).value< RecordID >() };
+	return { id, type, Metadata::insert( id, metadata, type ), banner, previews };
 }
 
 Record Record::select( const RecordID id )
 {
 	QSqlQuery query;
-	query.prepare("SELECT :type, :banner, :previews FROM records WHERE id = :id");
+	query.prepare( "SELECT :type, :banner, :previews FROM records WHERE id = :id" );
 
 	RecordType type;
 	QString banner;
 	QJsonArray json;
 
-	query.bindValue(":type", type, QSql::Out);
-	query.bindValue(":banner", banner, QSql::Out);
-	query.bindValue(":previews", json, QSql::Out);
-	query.bindValue(":id", id);
+	query.bindValue( ":type", type, QSql::Out );
+	query.bindValue( ":banner", banner, QSql::Out );
+	query.bindValue( ":previews", json, QSql::Out );
+	query.bindValue( ":id", id );
 	query.exec();
 	query.first();
 
-	std::vector<std::filesystem::path> paths;
-	for(const auto& j :json)
-		paths.emplace_back(j.toString().toStdString());
+	std::vector< std::filesystem::path > paths;
+	for ( const auto& j : json ) paths.emplace_back( j.toString().toStdString() );
 
-	return {id, type, Metadata::select(id) , banner, paths};
+	return { id, type, Metadata::select( id, type ), banner.toStdString(), paths };
 }

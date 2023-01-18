@@ -10,7 +10,6 @@
 #include <QVector>
 
 
-
 struct Record
 {
 	RecordID m_id { 0 };
@@ -35,8 +34,8 @@ struct Record
 	  m_previews( previews )
 	{
 	}
-	public:
 
+	public:
 	static QString tableQuery();
 	void bindTo( QSqlQuery& query ) const;
 
