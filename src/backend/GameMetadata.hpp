@@ -43,7 +43,7 @@ struct GameMetadata
 
 	static GameMetadata select(const RecordID id);
 	static void update(const RecordID id, const GameMetadata& metadata);
-	static void insert(const RecordID id, const GameMetadata& metadata);
+	static GameMetadata insert(const RecordID id, const GameMetadata& metadata);
 
 	bool operator==(const GameMetadata& other) const;
 };
