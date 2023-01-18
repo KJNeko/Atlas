@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include "h95/database/Tag.hpp"
+#include "ui/widgets/tags/TagDisplayWidget.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -23,6 +24,8 @@ class TagSearchWidget : public QWidget
 	public:
 	explicit TagSearchWidget( QWidget* parent = nullptr );
 	~TagSearchWidget() override;
+
+	TagDisplayWidget* view() const;
 
 	signals:
 	void searchSimilar(const QString& text);
