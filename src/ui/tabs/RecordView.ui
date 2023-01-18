@@ -32,8 +32,8 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="TagSearchWidget" name="tagView" native="true"/>
-         <widget class="TagDisplayWidget" name="tagSearch" native="true"/>
+         <widget class="TagDisplayWidget" name="tagView" native="true"/>
+         <widget class="TagSearchWidget" name="tagSearch" native="true"/>
         </widget>
        </item>
       </layout>
