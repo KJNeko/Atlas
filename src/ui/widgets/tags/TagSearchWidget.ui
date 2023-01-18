@@ -27,10 +27,10 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="searchBar"/>
    </item>
    <item>
-    <widget class="TagDisplayWidget" name="widget" native="true"/>
+    <widget class="TagDisplayWidget" name="tagDisplay" native="true"/>
    </item>
   </layout>
  </widget>
