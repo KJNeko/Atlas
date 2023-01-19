@@ -6,17 +6,8 @@
 #include "RecordViewBackend.hpp"
 
 
-void RecordViewBackend::searchSimilar( QString& text )
-{
+void RecordViewBackend::searchSimilar( const QString& text ) {}
 
-}
+void RecordViewBackend::addTag( const Tag& tag ) {}
 
-void RecordViewBackend::addTag( Tag& tag )
-{
-
-}
-
-void RecordViewBackend::removeTag( Tag& tag )
-{
-
-}
+void RecordViewBackend::removeTag( const Tag& tag ) {}

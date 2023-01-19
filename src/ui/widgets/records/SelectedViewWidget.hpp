@@ -29,7 +29,7 @@ class SelectedViewWidget : public QWidget
 	~SelectedViewWidget() override;
 
 	public slots:
-	void recordSelected(Record& record);
+	void recordSelected(const Record& record);
 
 	private:
 	Ui::SelectedViewWidget* ui;

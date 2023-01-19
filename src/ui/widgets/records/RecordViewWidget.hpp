@@ -32,10 +32,10 @@ class RecordViewWidget : public QWidget
 	~RecordViewWidget() override;
 
 	public slots:
-	void recordsUpdated(std::vector<Record>& records);
+	void recordsUpdated(const std::vector<Record>& records);
 
 	signals:
-	void recordSelected(Record& record);
+	void recordSelected(const Record& record);
 
 	private:
 	Ui::RecordViewWidget* ui;

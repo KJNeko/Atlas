@@ -28,11 +28,11 @@ class TagDisplayWidget : public QWidget
 	~TagDisplayWidget() override;
 
 	public slots:
-	void tagsChanged(std::vector<Tag>& tags) {m_tags = std::move(tags);}
+	void tagsChanged(const std::vector<Tag>& tags) {m_tags = tags;}
 
 	signals:
 	//! Emitted on T_EMIT
-	void selected(Tag& tag);
+	void selected(const Tag& tag);
 
 	private:
 	Ui::TagDisplayWidget* ui;

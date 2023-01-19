@@ -18,7 +18,7 @@ SelectedViewWidget::~SelectedViewWidget()
 	delete ui;
 }
 
-void SelectedViewWidget::recordSelected( [[maybe_unused]] Record& record )
+void SelectedViewWidget::recordSelected( [[maybe_unused]] const Record& record )
 {
 	//TODO: Make file selection view
 }
