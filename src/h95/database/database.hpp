@@ -13,5 +13,4 @@ namespace database
 	void initalize();
 }
 
-
 #endif	//HYDRUS95_DATABASE_HPP

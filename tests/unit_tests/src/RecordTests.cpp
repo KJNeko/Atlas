@@ -37,10 +37,7 @@ class RecordCreation : public ::testing::Test
 	void TearDown() override
 	{
 		if ( this->HasFailure() || this->IsSkipped() )
-		{
 			failed_last = true;
-			return;
-		}
 
 		std::filesystem::remove( "./data/config.ini" );
 		std::filesystem::remove( "./data/hydrus95.db" );
@@ -57,30 +54,21 @@ class CachePages : public ::testing::Test
 
 TEST_F( RecordCreation, GameRecord )
 {
-	GameMetadata g_metadata;
-	g_metadata.creator_name = "Test";
-	g_metadata.executable_path = "no.exe";
-	g_metadata.folder_path = "your/moms/house";
-	g_metadata.h95_ownerhip = false;
-	g_metadata.version_string = "v1.96.420";
+	const GameMetadata g_metadata {"no.exe","your/moms/house"};
 
-	Record record { Record::create( GAME_RECORD, { g_metadata } ) };
+	Record record { Record::create( "my game", "some shithead", "v1.0", g_metadata, "some_banner.jpg", {"one.jpg", "two.jpg"} ) };
 	ASSERT_GT( record.m_id, 0 );
 
 	Record db_record { Record::select( record.m_id ) };
-	ASSERT_EQ( record, db_record );
-}
+	ASSERT_EQ(db_record.m_id, record.m_id);
+	ASSERT_EQ(db_record.m_previews, record.m_previews);
+	ASSERT_EQ(db_record.m_banner, record.m_banner);
+	ASSERT_EQ(db_record.m_title, record.m_title);
+	ASSERT_EQ(db_record.m_version, record.m_version);
+	ASSERT_EQ(db_record.m_creator, record.m_creator);
+	ASSERT_EQ(db_record.m_metadata, record.m_metadata);
 
-TEST_F( RecordCreation, GameRecordIncomplete )
-{
-	GameMetadata g_metadata;
-	g_metadata.creator_name = "Test";
-	g_metadata.version_string = "v1.0";
-
-	Record record { Record::create( GAME_RECORD, { g_metadata } ) };
-	ASSERT_GT( record.m_id, 0 );
-
-	Record db_record { Record::select( record.m_id ) };
+	//Last check
 	ASSERT_EQ( record, db_record );
 }
 
@@ -88,7 +76,7 @@ TEST_F( CachePages, CacheJSON )
 {
 #ifndef TEST_NET
 	GTEST_SKIP() << "Skipping due to network tests not being allowed";
-#endif
+#else
 
 	if ( std::filesystem::exists( "./cached" ) )
 		GTEST_SKIP() << "Skipping due to pages already cached";
@@ -181,14 +169,14 @@ TEST_F( CachePages, CacheJSON )
 	const auto end { std::chrono::steady_clock::now() };
 
 	std::cout << "Collected in: " << ( end - start ) << std::endl;
+#endif
 }
 
 TEST_F( RecordCreation, MassCreation )
 {
 #ifndef TEST_NET
 	GTEST_SKIP() << "Skipping due to network tests not being allowed";
-#endif
-
+#else
 	for ( const auto& file : std::filesystem::directory_iterator( "./cached" ) )
 	{
 		std::cout << "Scanning file " << file << std::endl;
@@ -230,4 +218,5 @@ TEST_F( RecordCreation, MassCreation )
 			Record new_record { Record::create( GAME_RECORD, { metadata }, cover, previews ) };
 		}
 	}
+#endif
 }

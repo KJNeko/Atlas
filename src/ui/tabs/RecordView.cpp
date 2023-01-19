@@ -13,19 +13,39 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 	ui->setupUi( this );
 
 	// Connect backend to view
-	connect(&backend, SIGNAL(recordsUpdated(const std::vector<Record> &)), ui->recordView, SLOT(recordsUpdated(const std::vector<Record> &)));
+	connect(
+		&backend,
+		SIGNAL( recordsUpdated( std::vector< Record >& ) ),
+		ui->recordView,
+		SLOT( recordsUpdated( std::vector< Record >& ) ) );
 
 	//Connect backend to tag display
-	connect(&backend, SIGNAL(tagsChanged(const std::vector<Tag> &)), ui->tagView, SLOT(tagsChanged(const std::vector<Tag> &)));
-	connect(ui->tagView, SIGNAL(selected(const Tag &)), &backend, SLOT(removeTag(const Tag &)));
+	connect(
+		&backend,
+		SIGNAL( tagsChanged( std::vector< Tag >& ) ),
+		ui->tagView,
+		SLOT( tagsChanged( std::vector< Tag >& ) ) );
+	connect( ui->tagView, SIGNAL( selected( Tag& ) ), &backend, SLOT( removeTag( Tag& ) ) );
 
 	//Connect to search
-	connect(&backend, SIGNAL(similarTagFinished(const std::vector<Tag> &)), ui->tagSearch, SLOT(similarTagFinished(const std::vector<Tag> &)));
-	connect(ui->tagSearch, SIGNAL(searchSimilar(const QString &)), &backend, SLOT(searchSimilar(const QString&)));
-	connect(ui->tagSearch->view(), SIGNAL(tagSelected(const Tag&)), &backend, SLOT(addTag(const Tag &)));
+	connect(
+		&backend,
+		SIGNAL( similarTagFinished( std::vector< Tag >& ) ),
+		ui->tagSearch,
+		SLOT( similarTagFinished( std::vector< Tag >& ) ) );
+	connect(
+		ui->tagSearch,
+		SIGNAL( searchSimilar( QString& ) ),
+		&backend,
+		SLOT( searchSimilar( QString& ) ) );
+	connect( ui->tagSearch->view(), SIGNAL( selected( Tag& ) ), &backend, SLOT( addTag( Tag& ) ) );
 
 	//Connect intermediate pieces
-	connect(ui->recordView, SIGNAL(recordSelected(const Record &)), ui->selectedView, SLOT(recordSelected(const Record &)));
+	connect(
+		ui->recordView,
+		SIGNAL( recordSelected( Record& ) ),
+		ui->selectedView,
+		SLOT( recordSelected( Record& ) ) );
 }
 
 RecordView::~RecordView()

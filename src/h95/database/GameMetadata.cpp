@@ -12,44 +12,28 @@ void GameMetadata::execGame()
 
 }
 
-QString GameMetadata::tableQuery() {return "CREATE TABLE game_metadata (id, game_name, creator_name, version_string, folder_path, executable_path)";}
-
 void GameMetadata::bindTo(QSqlQuery& query) const
 {
-	query.bindValue(":game_name", game_name);
-	query.bindValue(":creator_name", creator_name);
-	query.bindValue(":version_string", version_string);
-	query.bindValue(":folder_path", QString::fromStdString(folder_path.string()));
-	query.bindValue(":executable_path", QString::fromStdString(executable_path.string()));
+	query.bindValue(":game_path", game_path.string().empty() ? QVariant() : QString::fromStdString(game_path.string()));
+	query.bindValue(":exec_path", exec_path.string().empty() ? QVariant() : QString::fromStdString(exec_path.string()));
 }
 
 GameMetadata GameMetadata::select(const RecordID id)
 {
 	QSqlQuery query;
-	query.prepare("SELECT :game_name, :creator_name, :version_string, :folder_path, :executable_path FROM game_metadata WHERE id = :id");
+	query.prepare("SELECT game_path, exec_path FROM game_metadata WHERE record_id = :id");
 	GameMetadata metadata;
 	query.bindValue(":id", id);
-
-	query.bindValue(":game_name",metadata.game_name, QSql::Out);
-	query.bindValue(":creator_name", metadata.creator_name, QSql::Out);
-	query.bindValue(":version_string", metadata.version_string, QSql::Out);
-	QString folder_path_str;
-	QString executable_path_str;
-	query.bindValue(":folder_path", folder_path_str, QSql::Out);
-	query.bindValue(":executable_path", executable_path_str, QSql::Out);
-
 	query.exec();
 	query.first();
 
-	metadata.folder_path = folder_path_str.toStdString();
-	metadata.executable_path = executable_path_str.toStdString();
-	return metadata;
+	return {query.value("game_path").toString().toStdString(), query.value("exec_path").toString().toStdString()};
 }
 
 void GameMetadata::update(const RecordID id, const GameMetadata& metadata)
 {
 	QSqlQuery query;
-	query.prepare("UPDATE game_metadata SET game_name = :game_name, creator_name = :creator_name, version_string = :version_string, folder_path = :folder_path, executable_path = :executable_path WHERE id = :id");
+	query.prepare("UPDATE game_metadata SET game_path = :game_path, exec_path = :exec_path WHERE record_id = :id");
 	query.bindValue(":id", id);
 	metadata.bindTo(query);
 	query.exec();
@@ -59,10 +43,11 @@ void GameMetadata::update(const RecordID id, const GameMetadata& metadata)
 GameMetadata GameMetadata::insert(const RecordID id, const GameMetadata& metadata)
 {
 	QSqlQuery query;
-	query.prepare("INSERT INTO game_metadata (id, game_name, creator_name, version_string, folder_path, executable_path) VALUES (:id, :game_name, :creator_name, :version_string, :folder_path, :executable_path)");
+	query.prepare("INSERT INTO game_metadata (record_Id, game_path, exec_path) VALUES (:id, :game_path, :exec_path)");
 	query.bindValue(":id", id);
 	metadata.bindTo(query);
-	query.exec();
+	if(!query.exec())
+		throw std::runtime_error(query.lastError().text().toStdString());
 
 	return metadata;
 }
@@ -70,5 +55,5 @@ GameMetadata GameMetadata::insert(const RecordID id, const GameMetadata& metadat
 
 bool GameMetadata::operator==( const GameMetadata& other ) const
 {
-	return game_name == other.game_name && creator_name == other.creator_name && version_string == other.version_string && folder_path == other.folder_path && executable_path == other.executable_path;
+	return game_path == other.game_path && exec_path == other.exec_path;
 }

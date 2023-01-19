@@ -21,18 +21,18 @@ class TagDisplayWidget : public QWidget
 	Q_DISABLE_COPY_MOVE(TagDisplayWidget)
 
 	QString active_text {};
-	std::vector<Tag> tags {};
+	std::vector<Tag> m_tags {};
 
 	public:
 	explicit TagDisplayWidget( QWidget* parent = nullptr );
 	~TagDisplayWidget() override;
 
 	public slots:
-	void tagsChanged(const std::vector<Tag>& tags);
+	void tagsChanged(std::vector<Tag>& tags) {m_tags = std::move(tags);}
 
 	signals:
 	//! Emitted on T_EMIT
-	void selected(const Tag& tag);
+	void selected(Tag& tag);
 
 	private:
 	Ui::TagDisplayWidget* ui;

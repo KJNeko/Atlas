@@ -19,3 +19,8 @@ TagDisplayWidget::~TagDisplayWidget()
 {
 	delete ui;
 }
+
+void TagDisplayWidget::keyPressEvent( QKeyEvent* event )
+{
+	QWidget::keyPressEvent( event );
+}

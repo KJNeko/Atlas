@@ -7,92 +7,78 @@
 #include <QJsonArray>
 #include <iostream>
 #include <QSqlError>
-#include <QJsonObject>
-#include <QJsonDocument>
 
-
-QString Record::tableQuery()
-{
-	return "CREATE TABLE IF NOT EXISTS records (id INTEGER UNIQUE PRIMARY KEY, type, banner, previews, unique(id, type))";
-}
-
-void Record::bindTo( QSqlQuery& query ) const
-{
-	query.bindValue( ":id", m_id );
-	query.bindValue( ":m_type", static_cast< int >( m_type ) );
-	query.bindValue( ":banner", m_banner.c_str() );
-
-	QJsonArray json;
-	for ( const auto& preview : m_previews ) json.push_back( preview.c_str() );
-	query.bindValue( ":previews", json );
-}
-
+#ifdef NDEBUG
 bool Record::operator==( const Record& other ) const
 {
-#ifndef NDEBUG
-	const bool value { other.m_id == this->m_id };
-
-	if ( other.m_type == this->m_type
-		 && ( ( std::holds_alternative< EmptyMetadata >( other.m_metadata )
-				&& std::holds_alternative< EmptyMetadata >( this->m_metadata )
-				&& std::get< EmptyMetadata >( other.m_metadata ) == std::get< EmptyMetadata >( this->m_metadata ) )
-			  || ( std::holds_alternative< GameMetadata >( other.m_metadata )
-				   && std::holds_alternative< GameMetadata >( this->m_metadata )
-				   && std::get< GameMetadata >( other.m_metadata ) == std::get< GameMetadata >( this->m_metadata ) ) ) )
-	{
-		std::cout << "WARN! Values of metadata with same ID are not equal!!!" << std::endl;
-	}
-
-	return value;
-#else
 	return other.m_id == this->m_id;
-#endif
 }
+#endif
 
 Record Record::create(
-	const RecordType type,
-	const Metadata& metadata,
+	const QString& title,
+	const QString& creator,
+	const QString& version,
+	const GameMetadata& metadata,
 	const std::filesystem::path& banner,
 	const std::vector< std::filesystem::path >& previews )
 {
 	QSqlQuery query;
-	query.prepare( "INSERT INTO records (type, banner, previews) VALUES (:type, :banner, :previews) RETURNING id" );
-	query.bindValue( ":type", static_cast< int >( type ) );
-	query.bindValue( ":banner", banner.c_str() );
+	query.prepare(
+		"INSERT INTO records (title, creator, version) VALUES (:title, :creator, :version) RETURNING record_id" );
 
-	QJsonArray json_array;
-	for ( const auto& preview : previews ) json_array.push_back( preview.c_str() );
-
-	QJsonDocument doc { json_array };
-
-	query.bindValue( ":previews", doc.toJson( QJsonDocument::Compact ) );
+	query.bindValue( ":title", title );
+	query.bindValue( ":creator", creator );
+	query.bindValue( ":version", version );
 	query.exec();
 	query.first();
+	RecordID record_id { query.value(0).value<RecordID>() };
 
-	std::cout << "executed: " << query.executedQuery().toStdString() << std::endl;
+	std::vector< std::pair< QString, QString > > image_paths;
+	if ( !banner.empty() ) image_paths.emplace_back( QString::fromStdString( banner.string() ), "banner" );
+	for ( const auto& preview : previews )
+		image_paths.emplace_back( QString::fromStdString( preview.string() ), "preview" );
 
-	const auto id { query.value( 0 ).value< RecordID >() };
-	return { id, type, Metadata::insert( id, metadata, type ), banner, previews };
+	QSqlQuery banner_query;
+	banner_query.prepare( "INSERT INTO previews (record_id, type, path) VALUES (:id, :type, :path)" );
+	for ( const auto& [path, type] : image_paths )
+	{
+		banner_query.bindValue(":id", record_id);
+		banner_query.bindValue( ":type", type );
+		banner_query.bindValue( ":path", path );
+		banner_query.exec();
+	}
+
+	return { record_id, title, creator, version, GameMetadata::insert( record_id, metadata ), banner, previews };
 }
 
 Record Record::select( const RecordID id )
 {
 	QSqlQuery query;
-	query.prepare( "SELECT :type, :banner, :previews FROM records WHERE id = :id" );
-
-	RecordType type {INVALID_RECORD};
-	QString banner {};
-	QJsonArray json {};
-
-	query.bindValue( ":type", static_cast<unsigned int>(type), QSql::Out );
-	query.bindValue( ":banner", banner, QSql::Out );
-	query.bindValue( ":previews", json, QSql::Out );
+	query.prepare( "SELECT title, creator, version FROM records WHERE record_id = :id" );
 	query.bindValue( ":id", id );
 	query.exec();
 	query.first();
 
-	std::vector< std::filesystem::path > paths;
-	for ( const auto& j : json ) paths.emplace_back( j.toString().toStdString() );
+	QSqlQuery banner_query;
+	banner_query.prepare( "SELECT path, type FROM previews WHERE record_id = :id" );
 
-	return { id, type, Metadata::select( id, type ), banner.toStdString(), paths };
+	banner_query.bindValue( ":id", id );
+	banner_query.exec();
+
+	std::filesystem::path banner_path { ":invalid_banner.jpg" };
+	std::vector< std::filesystem::path > preview_paths;
+
+	while ( banner_query.next() )
+	{
+		const auto path {banner_query.value(0).toString()};
+		const auto type {banner_query.value(1).toString()};
+
+		if ( type == "banner" )
+			banner_path = path.toStdString();
+		else
+			preview_paths.emplace_back( path.toStdString() );
+	}
+
+	return { id, query.value("title").toString(), query.value("creator").toString(), query.value("version").toString(), GameMetadata::select( id ), banner_path, preview_paths };
 }

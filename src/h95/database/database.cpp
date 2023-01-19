@@ -33,22 +33,20 @@ namespace database
 			std::abort();
 		}
 
-		const std::vector<QString> table_strs{
-			Record::tableQuery(),
-			GameMetadata::tableQuery()
-		};
+		const std::vector< QString > table_strs {
+			"CREATE TABLE records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, version TEXT, unique(title, creator, version))",
+			"CREATE TABLE game_metadata (record_id INTEGER REFERENCES records(record_id), game_path TEXT, exec_path TEXT)",
+			"CREATE TABLE previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
+			"CREATE TABLE flags (record_id INTEGER REFERENCES records(record_id), installed INTEGER, played INTEGER, wanted INTEGER)" };
 
 		QSqlQuery query;
-		for(const auto& query_str : table_strs)
-		{
-			query.exec(query_str);
-		}
+		for ( const auto& query_str : table_strs ) query.exec( query_str );
 
-		if(db.driver()->hasFeature(QSqlDriver::NamedPlaceholders))
+		if ( !db.driver()->hasFeature( QSqlDriver::NamedPlaceholders ) )
 		{
-			std::cout << "All good "<< std::endl;
+			QMessageBox::critical( nullptr, "Database error", "No named placeholder support in SQLITE driver" );
+			std::abort();
 		}
-
 	}
 
 

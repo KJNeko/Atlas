@@ -17,3 +17,13 @@ TagSearchWidget::~TagSearchWidget()
 {
 	delete ui;
 }
+
+void TagSearchWidget::similarTagFinished( std::vector< Tag >& tags )
+{
+	ui->tagDisplay->tagsChanged(tags);
+}
+
+TagDisplayWidget* TagSearchWidget::view() const
+{
+	return ui->tagDisplay;
+}

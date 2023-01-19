@@ -13,21 +13,14 @@ class QSqlQuery;
 
 struct GameMetadata
 {
-	QString game_name {};
-	QString creator_name {};
-	QString version_string {};
-
 	//! Path to the game folder
-	std::filesystem::path folder_path {};
+	std::filesystem::path game_path {};
 
 	//! Path to the executable
-	std::filesystem::path executable_path {};
+	std::filesystem::path exec_path {};
 
 	//! Executes the game
 	void execGame();
-
-	//! Returns the string to generate the table.
-	static QString tableQuery();
 
 	//! Binds values needed for a query
 	void bindTo(QSqlQuery& query) const;

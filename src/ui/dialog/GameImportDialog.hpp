@@ -27,6 +27,13 @@ class GameImportDialog : public QDialog
 
 	private:
 	Ui::GameImportDialog* ui;
+
+	private slots:
+	void on_cancelButton_pressed();
+	void on_importButton_pressed();
+
+	void on_selectPath_pressed();
+	void on_selectExec_pressed();
 };
 
 

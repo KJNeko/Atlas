@@ -6,6 +6,8 @@
 #define HYDRUS95_RECORDVIEWWIDGET_HPP
 
 #include <QWidget>
+#include "RecordViewModel.hpp"
+#include "RecordViewDelegate.hpp"
 
 struct Record;
 
@@ -22,15 +24,18 @@ class RecordViewWidget : public QWidget
 
 	Q_DISABLE_COPY_MOVE(RecordViewWidget)
 
+	RecordViewDelegate delegate {this};
+	RecordViewModel model {this};
+
 	public:
 	explicit RecordViewWidget( QWidget* parent = nullptr );
 	~RecordViewWidget() override;
 
 	public slots:
-	void recordsUpdated(const std::vector<Record>& records);
+	void recordsUpdated(std::vector<Record>& records);
 
 	signals:
-	void recordSelected(const Record& record);
+	void recordSelected(Record& record);
 
 	private:
 	Ui::RecordViewWidget* ui;

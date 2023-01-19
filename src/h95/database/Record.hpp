@@ -6,47 +6,55 @@
 #define HYDRUS95_RECORD_HPP
 
 #include "h95/Types.hpp"
-#include "Metadata.hpp"
-#include <QVector>
-
+#include "GameMetadata.hpp"
 
 struct Record
 {
-	RecordID m_id { 0 };
-	RecordType m_type { INVALID_RECORD };
-	Metadata m_metadata { EmptyMetadata() };
+	RecordID m_id;
+	GameMetadata m_metadata;
+	QString m_title;
+	QString m_creator;
+	QString m_version;
 
-	std::filesystem::path m_banner { ":/banner/invalid_banner.png" };
-	std::vector< std::filesystem::path > m_previews {};
+	std::filesystem::path m_banner;
+	std::vector< std::filesystem::path > m_previews;
 
 	private:
 	Record() = delete;
 	Record(
 		const RecordID id,
-		const RecordType type,
-		const Metadata& metadata,
-		const std::filesystem::path& banner = ":/banner/invalid_banner.png",
-		const std::vector< std::filesystem::path >& previews = {} ) :
+		const QString title,
+		const QString creator,
+		const QString version,
+		const GameMetadata& metadata,
+		const std::filesystem::path& banner,
+		const std::vector< std::filesystem::path >& previews ) :
 	  m_id( id ),
-	  m_type( type ),
 	  m_metadata( metadata ),
+	  m_title( title ),
+	  m_creator( creator ),
+	  m_version( version ),
 	  m_banner( banner ),
 	  m_previews( previews )
 	{
 	}
 
 	public:
-	static QString tableQuery();
-	void bindTo( QSqlQuery& query ) const;
-
 	static Record select( const RecordID id );
 	static Record create(
-		const RecordType type,
-		const Metadata& metadata,
-		const std::filesystem::path& path = ":/banner_invalid.png",
-		const std::vector< std::filesystem::path >& previews = {} );
+		const QString& title,
+		const QString& creator,
+		const QString& version,
+		const GameMetadata& metadata,
+		const std::filesystem::path& banner,
+		const std::vector< std::filesystem::path >& previews );
 
-	bool operator==( const Record& other ) const;
+
+#ifndef NDEBUG
+	bool operator==( const Record& other ) const = default;
+#else
+	bool operator==(const Record& other) const;
+#endif
 };
 
 #endif	//HYDRUS95_RECORD_HPP
