@@ -45,7 +45,7 @@ else()
 endif()
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/backend/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/h95/*.cpp")
 
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
