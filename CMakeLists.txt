@@ -50,6 +50,8 @@ file(GLOB_RECURSE SOURCES
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
+
 if(WIN32)
     add_executable(Hydrus95 WIN32 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
 else()
