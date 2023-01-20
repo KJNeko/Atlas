@@ -14,10 +14,27 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 {
 	painter->save();
 
-	const auto* record { index.data().value< Record* >() };
+	const auto data { index.data().value< ModelData >() };
+	if ( data.record != nullptr )
+	{
+		const auto& record { *data.record };
 
-	painter->drawText( option.rect, "Testing." );
-	painter->drawText( option.rect, "\n" + QString::number( record->m_id ) );
+		QPixmap banner { QString::fromStdString( record.m_banner.string() ) };
+		painter->drawPixmap( option.rect, banner );
+
+		painter->drawRect( option.rect );
+		painter->drawText(
+			option.rect,
+			record.m_title + " [" + record.m_version + "]",
+			Qt::AlignHCenter | Qt::AlignTop );
+		painter->drawText(
+			option.rect,
+			"by " + record.m_creator + ( record.m_engine.isEmpty() ? "" : " in " + record.m_engine ),
+			Qt::AlignHCenter | Qt::AlignBottom );
+	}
+	else
+		qDebug() << "Record was nullptr when trying to paint";
+
 
 	painter->restore();
 }
@@ -27,7 +44,7 @@ QSize RecordViewDelegate::sizeHint(
 	[[maybe_unused]] const QStyleOptionViewItem& option,
 	[[maybe_unused]] const QModelIndex& index ) const
 {
-	return { 300, 200 };
+	return { 400, 200 };
 }
 
 
@@ -45,13 +62,7 @@ bool RecordViewDelegate::editorEvent(
 		{
 			QMenu menu;
 
-			menu.addAction(
-				"Manage record",
-				[=]()
-				{
-					auto* r_model { dynamic_cast< RecordViewModel* >( model ) };
-					[[maybe_unused]] auto& record { r_model->at( index.row() ) };
-				} );
+			menu.addAction( "Manage record", [=]() {} );
 
 			menu.exec();
 

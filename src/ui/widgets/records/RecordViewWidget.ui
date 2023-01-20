@@ -15,7 +15,26 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListView" name="listView"/>
+    <widget class="QListView" name="listView">
+     <property name="alternatingRowColors">
+      <bool>false</bool>
+     </property>
+     <property name="flow">
+      <enum>QListView::LeftToRight</enum>
+     </property>
+     <property name="isWrapping" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <property name="selectionRectVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

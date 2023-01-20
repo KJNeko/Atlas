@@ -46,6 +46,8 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 		SIGNAL( recordSelected( const Record& ) ),
 		ui->selectedView,
 		SLOT( recordSelected( const Record& ) ) );
+
+	backend.refresh();
 }
 
 RecordView::~RecordView()

@@ -10,6 +10,13 @@
 
 #include "h95/database/Record.hpp"
 
+struct ModelData
+{
+	const Record* record{nullptr};
+};
+
+Q_DECLARE_METATYPE(ModelData)
+
 class RecordViewModel : public QAbstractListModel
 {
 	std::vector< Record > records {};
@@ -22,12 +29,8 @@ class RecordViewModel : public QAbstractListModel
 	int rowCount( const QModelIndex& parent = QModelIndex() ) const override;
 	QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const override;
 
-	inline Record& at( const int index )
-	{
-		return records.at( static_cast< decltype( records )::size_type >( index ) );
-	}
-	inline void setRecords( const std::vector< Record >& records_in ) { records = records_in; }
-	inline void addRecord( const Record& record ) { records.insert( records.begin(), record ); }
+	void setRecords( const std::vector< Record >& records_in );
+	void addRecord( const Record& record );
 };
 
 

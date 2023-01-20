@@ -11,6 +11,9 @@
 RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordViewWidget )
 {
 	ui->setupUi( this );
+
+	ui->listView->setItemDelegate(&delegate);
+	ui->listView->setModel(&model);
 }
 
 RecordViewWidget::~RecordViewWidget()
@@ -20,5 +23,7 @@ RecordViewWidget::~RecordViewWidget()
 
 void RecordViewWidget::recordsUpdated( const std::vector< Record >& records )
 {
+	qDebug() << "Records updated";
+	qDebug() << "Updated " << records.size() << " records";
 	model.setRecords( records );
 }

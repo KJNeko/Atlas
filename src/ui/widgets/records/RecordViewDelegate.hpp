@@ -7,7 +7,7 @@
 
 #include <QAbstractItemDelegate>
 
-class RecordViewDelegate : QAbstractItemDelegate
+class RecordViewDelegate : public QAbstractItemDelegate
 {
 	Q_DISABLE_COPY_MOVE( RecordViewDelegate )
 
