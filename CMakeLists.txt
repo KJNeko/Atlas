@@ -14,7 +14,7 @@ find_package(Qt6 COMPONENTS Widgets Core Concurrent Network REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
-
+find_package(SQLite3 REQUIRED)
 
 if(WIN32)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -64,8 +64,9 @@ endif()
 endif()
 
 target_include_directories(Hydrus95 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network sqlite3)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 
