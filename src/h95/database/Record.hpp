@@ -15,6 +15,7 @@ struct Record
 	QString m_title;
 	QString m_creator;
 	QString m_version;
+	QString m_engine;
 
 	std::filesystem::path m_banner;
 	std::vector< std::filesystem::path > m_previews;
@@ -26,6 +27,7 @@ struct Record
 		const QString title,
 		const QString creator,
 		const QString version,
+		const QString engine,
 		const GameMetadata& metadata,
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews ) :
@@ -34,6 +36,7 @@ struct Record
 	  m_title( title ),
 	  m_creator( creator ),
 	  m_version( version ),
+	  m_engine(engine),
 	  m_banner( banner ),
 	  m_previews( previews )
 	{
@@ -45,6 +48,7 @@ struct Record
 		const QString& title,
 		const QString& creator,
 		const QString& version,
+		const QString& engine,
 		const GameMetadata& metadata,
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews );

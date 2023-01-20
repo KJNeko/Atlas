@@ -3,10 +3,9 @@
 //
 
 #include "Record.hpp"
-#include <QSqlQuery>
 #include <QJsonArray>
 #include <iostream>
-#include <QSqlError>
+#include "h95/database/database.hpp"
 
 #ifdef NDEBUG
 bool Record::operator==( const Record& other ) const
@@ -19,66 +18,57 @@ Record Record::create(
 	const QString& title,
 	const QString& creator,
 	const QString& version,
+	const QString& engine,
 	const GameMetadata& metadata,
 	const std::filesystem::path& banner,
 	const std::vector< std::filesystem::path >& previews )
 {
-	QSqlQuery query;
-	query.prepare(
-		"INSERT INTO records (title, creator, version) VALUES (:title, :creator, :version) RETURNING record_id" );
 
-	query.bindValue( ":title", title );
-	query.bindValue( ":creator", creator );
-	query.bindValue( ":version", version );
-	query.exec();
-	query.first();
-	RecordID record_id { query.value(0).value<RecordID>() };
-
-	std::vector< std::pair< QString, QString > > image_paths;
-	if ( !banner.empty() ) image_paths.emplace_back( QString::fromStdString( banner.string() ), "banner" );
-	for ( const auto& preview : previews )
-		image_paths.emplace_back( QString::fromStdString( preview.string() ), "preview" );
-
-	QSqlQuery banner_query;
-	banner_query.prepare( "INSERT INTO previews (record_id, type, path) VALUES (:id, :type, :path)" );
-	for ( const auto& [path, type] : image_paths )
+	RecordID id { 0 };
+	database::db_ref() << "INSERT INTO records (title, creator, version) VALUES (?, ?, ?) RETURNING record_id"
+					   << title.toStdString() << creator.toStdString() << version.toStdString()
+		>> [&]( const RecordID record_id )
 	{
-		banner_query.bindValue(":id", record_id);
-		banner_query.bindValue( ":type", type );
-		banner_query.bindValue( ":path", path );
-		banner_query.exec();
-	}
+		id = record_id;
+	};
 
-	return { record_id, title, creator, version, GameMetadata::insert( record_id, metadata ), banner, previews };
+	std::vector< std::pair< std::string, std::string > > image_paths;
+	if ( !banner.empty() ) image_paths.emplace_back( banner.string(), "banner" );
+	for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), "preview" );
+
+	for ( const auto& [path, type] : image_paths )
+		database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id << type << path;
+
+	return { id, title, creator, version, engine, GameMetadata::insert( id, metadata ), banner, previews };
 }
 
 Record Record::select( const RecordID id )
 {
-	QSqlQuery query;
-	query.prepare( "SELECT title, creator, version FROM records WHERE record_id = :id" );
-	query.bindValue( ":id", id );
-	query.exec();
-	query.first();
+	QString title;
+	QString creator;
+	QString version;
+	QString engine;
 
-	QSqlQuery banner_query;
-	banner_query.prepare( "SELECT path, type FROM previews WHERE record_id = :id" );
-
-	banner_query.bindValue( ":id", id );
-	banner_query.exec();
+	database::db_ref() << "SELECT title, creator, version, engine FROM records WHERE record_id = ?" << id >>
+		[&]( const std::string title_in, const std::string creator_in, const std::string version_in, const std::string engine_in )
+	{
+		title = QString::fromStdString( title_in );
+		creator = QString::fromStdString( creator_in );
+		version = QString::fromStdString( version_in );
+		engine = QString::fromStdString(engine_in);
+	};
 
 	std::filesystem::path banner_path { ":invalid_banner.jpg" };
 	std::vector< std::filesystem::path > preview_paths;
 
-	while ( banner_query.next() )
+	database::db_ref() << "SELECT path, type FROM previews WHERE record_id = ?" << id >>
+		[&]( const std::string path, const std::string type )
 	{
-		const auto path {banner_query.value(0).toString()};
-		const auto type {banner_query.value(1).toString()};
-
 		if ( type == "banner" )
-			banner_path = path.toStdString();
+			banner_path = path;
 		else
-			preview_paths.emplace_back( path.toStdString() );
-	}
+			preview_paths.emplace_back( path );
+	};
 
-	return { id, query.value("title").toString(), query.value("creator").toString(), query.value("version").toString(), GameMetadata::select( id ), banner_path, preview_paths };
+	return { id, title, creator, version, engine, GameMetadata::select( id ), banner_path, preview_paths };
 }
