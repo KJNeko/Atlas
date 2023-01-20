@@ -22,9 +22,6 @@ struct GameMetadata
 	//! Executes the game
 	void execGame();
 
-	//! Binds values needed for a query
-	void bindTo(QSqlQuery& query) const;
-
 	static GameMetadata select(const RecordID id);
 	static void update(const RecordID id, const GameMetadata& metadata);
 	static GameMetadata insert(const RecordID id, const GameMetadata& metadata);
