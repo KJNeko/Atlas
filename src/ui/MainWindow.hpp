@@ -27,6 +27,9 @@ class MainWindow : public QMainWindow
 
 	private:
 	Ui::MainWindow* ui;
+
+	private slots:
+	void on_actionImportGame_triggered();
 };
 
 

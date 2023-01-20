@@ -28,3 +28,10 @@ MainWindow::~MainWindow()
 {
 	delete ui;
 }
+
+void MainWindow::on_actionImportGame_triggered()
+{
+	GameImportDialog dialog;
+	connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
+	dialog.exec();
+}
