@@ -9,15 +9,18 @@
 
 class RecordViewDelegate : QAbstractItemDelegate
 {
-	Q_DISABLE_COPY_MOVE(RecordViewDelegate)
+	Q_DISABLE_COPY_MOVE( RecordViewDelegate )
 
 	public:
-	RecordViewDelegate(QObject* parent = nullptr) :
-	  QAbstractItemDelegate(parent) {}
+	RecordViewDelegate( QObject* parent = nullptr ) : QAbstractItemDelegate( parent ) {}
 
-	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-	bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
+	void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const override;
+	QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const override;
+	bool editorEvent(
+		QEvent* event,
+		QAbstractItemModel* model,
+		const QStyleOptionViewItem& option,
+		const QModelIndex& index ) override;
 };
 
 

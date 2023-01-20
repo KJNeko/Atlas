@@ -10,16 +10,20 @@ namespace database
 {
 	namespace internal
 	{
-		sqlite::database* db {nullptr};
+		sqlite::database* db { nullptr };
 	}
 
-	sqlite::database& db_ref() {return *internal::db;}
+	sqlite::database& db_ref()
+	{
+		return *internal::db;
+	}
 
-	void initalize() try
+	void initalize()
+	try
 	{
 		std::filesystem::create_directory( "./data" );
 
-		internal::db = new sqlite::database("./data/hydrus95.db");
+		internal::db = new sqlite::database( "./data/hydrus95.db" );
 
 		const std::vector< std::string > table_strs {
 			"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, version TEXT, engine TEXT, unique(title, creator, version, engine))",
@@ -27,12 +31,9 @@ namespace database
 			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 			"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id), installed INTEGER, played INTEGER, wanted INTEGER)" };
 
-		for ( const auto& query_str : table_strs )
-		{
-			db_ref() << query_str;
-		}
+		for ( const auto& query_str : table_strs ) { db_ref() << query_str; }
 	}
-	catch(sqlite::sqlite_exception& e)
+	catch ( sqlite::sqlite_exception& e )
 	{
 		std::cout << "Shit: " << e.get_code() << ": " << e.what() << " during " << e.get_sql() << std::endl;
 	}

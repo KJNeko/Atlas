@@ -15,10 +15,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 {
 	ui->setupUi( this );
 
-	if(getSettings<bool>("first_launch", true))
+	if ( getSettings< bool >( "first_launch", true ) )
 	{
 		qDebug() << "First launch";
-		setSettings("first_launch", false);
+		setSettings( "first_launch", false );
 	}
 
 	database::initalize();

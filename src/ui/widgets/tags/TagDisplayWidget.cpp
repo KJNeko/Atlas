@@ -8,9 +8,7 @@
 #include "ui_TagDisplayWidget.h"
 
 
-TagDisplayWidget::TagDisplayWidget( QWidget* parent ) :
-  QWidget( parent ),
-  ui( new Ui::TagDisplayWidget )
+TagDisplayWidget::TagDisplayWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::TagDisplayWidget )
 {
 	ui->setupUi( this );
 }

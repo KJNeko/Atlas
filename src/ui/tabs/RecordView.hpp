@@ -20,7 +20,7 @@ class RecordView : public QWidget
 {
 	Q_OBJECT
 
-	Q_DISABLE_COPY_MOVE(RecordView)
+	Q_DISABLE_COPY_MOVE( RecordView )
 
 	RecordViewBackend backend {};
 

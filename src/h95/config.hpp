@@ -10,7 +10,7 @@
 
 inline QSettings getSettingsObject()
 {
-	return { "./data/config.ini", QSettings::IniFormat};
+	return { "./data/config.ini", QSettings::IniFormat };
 }
 
 template< typename T > inline T getSettings( const QString setting_name )
@@ -19,7 +19,8 @@ template< typename T > inline T getSettings( const QString setting_name )
 	const auto variant { settings.value( setting_name ) };
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
-	else return {};
+	else
+		return {};
 }
 
 template< typename T > inline T getSettings( const QString setting_name, const T default_value )
@@ -28,7 +29,8 @@ template< typename T > inline T getSettings( const QString setting_name, const T
 	const auto variant { settings.value( setting_name, default_value ) };
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
-	else return {};
+	else
+		return {};
 }
 
 template< typename T > inline void setSettings( const QString settings_name, const T value )

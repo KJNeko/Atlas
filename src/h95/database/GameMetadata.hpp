@@ -22,13 +22,12 @@ struct GameMetadata
 	//! Executes the game
 	void execGame();
 
-	static GameMetadata select(const RecordID id);
-	static void update(const RecordID id, const GameMetadata& metadata);
-	static GameMetadata insert(const RecordID id, const GameMetadata& metadata);
+	static GameMetadata select( const RecordID id );
+	static void update( const RecordID id, const GameMetadata& metadata );
+	static GameMetadata insert( const RecordID id, const GameMetadata& metadata );
 
-	bool operator==(const GameMetadata& other) const;
+	bool operator==( const GameMetadata& other ) const;
 };
-
 
 
 #endif	//HYDRUS95_GAMEMETADATA_HPP

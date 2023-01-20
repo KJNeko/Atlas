@@ -10,6 +10,6 @@ namespace database
 {
 	sqlite::database& db_ref();
 	void initalize();
-}
+}  // namespace database
 
 #endif	//HYDRUS95_DATABASE_HPP

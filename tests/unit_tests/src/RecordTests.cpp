@@ -36,8 +36,7 @@ class RecordCreation : public ::testing::Test
 
 	void TearDown() override
 	{
-		if ( this->HasFailure() || this->IsSkipped() )
-			failed_last = true;
+		if ( this->HasFailure() || this->IsSkipped() ) failed_last = true;
 
 		std::filesystem::remove( "./data/config.ini" );
 		std::filesystem::remove( "./data/hydrus95.db" );
@@ -54,19 +53,20 @@ class CachePages : public ::testing::Test
 
 TEST_F( RecordCreation, GameRecord )
 {
-	const GameMetadata g_metadata {"no.exe","your/moms/house"};
+	const GameMetadata g_metadata { "no.exe", "your/moms/house" };
 
-	Record record { Record::create( "my game", "some shithead", "v1.0", g_metadata, "some_banner.jpg", {"one.jpg", "two.jpg"} ) };
+	Record record {
+		Record::create( "my game", "some shithead", "v1.0", g_metadata, "some_banner.jpg", { "one.jpg", "two.jpg" } ) };
 	ASSERT_GT( record.m_id, 0 );
 
 	Record db_record { Record::select( record.m_id ) };
-	ASSERT_EQ(db_record.m_id, record.m_id);
-	ASSERT_EQ(db_record.m_previews, record.m_previews);
-	ASSERT_EQ(db_record.m_banner, record.m_banner);
-	ASSERT_EQ(db_record.m_title, record.m_title);
-	ASSERT_EQ(db_record.m_version, record.m_version);
-	ASSERT_EQ(db_record.m_creator, record.m_creator);
-	ASSERT_EQ(db_record.m_metadata, record.m_metadata);
+	ASSERT_EQ( db_record.m_id, record.m_id );
+	ASSERT_EQ( db_record.m_previews, record.m_previews );
+	ASSERT_EQ( db_record.m_banner, record.m_banner );
+	ASSERT_EQ( db_record.m_title, record.m_title );
+	ASSERT_EQ( db_record.m_version, record.m_version );
+	ASSERT_EQ( db_record.m_creator, record.m_creator );
+	ASSERT_EQ( db_record.m_metadata, record.m_metadata );
 
 	//Last check
 	ASSERT_EQ( record, db_record );

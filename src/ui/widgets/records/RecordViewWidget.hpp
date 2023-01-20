@@ -22,20 +22,20 @@ class RecordViewWidget : public QWidget
 {
 	Q_OBJECT
 
-	Q_DISABLE_COPY_MOVE(RecordViewWidget)
+	Q_DISABLE_COPY_MOVE( RecordViewWidget )
 
-	RecordViewDelegate delegate {this};
-	RecordViewModel model {this};
+	RecordViewDelegate delegate { this };
+	RecordViewModel model { this };
 
 	public:
 	explicit RecordViewWidget( QWidget* parent = nullptr );
 	~RecordViewWidget() override;
 
 	public slots:
-	void recordsUpdated(const std::vector<Record>& records);
+	void recordsUpdated( const std::vector< Record >& records );
 
 	signals:
-	void recordSelected(const Record& record);
+	void recordSelected( const Record& record );
 
 	private:
 	Ui::RecordViewWidget* ui;

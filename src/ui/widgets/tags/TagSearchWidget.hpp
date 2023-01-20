@@ -19,7 +19,7 @@ QT_END_NAMESPACE
 class TagSearchWidget : public QWidget
 {
 	Q_OBJECT
-	Q_DISABLE_COPY_MOVE(TagSearchWidget)
+	Q_DISABLE_COPY_MOVE( TagSearchWidget )
 
 	public:
 	explicit TagSearchWidget( QWidget* parent = nullptr );
@@ -28,12 +28,12 @@ class TagSearchWidget : public QWidget
 	TagDisplayWidget* view() const;
 
 	signals:
-	void searchSimilar(const QString& text);
-	void addTag(const Tag& tag);
-	void tagsChanged(const std::vector<Tag>& tags);
+	void searchSimilar( const QString& text );
+	void addTag( const Tag& tag );
+	void tagsChanged( const std::vector< Tag >& tags );
 
 	public slots:
-	void similarTagFinished(const std::vector<Tag>& tags);
+	void similarTagFinished( const std::vector< Tag >& tags );
 
 	private:
 	Ui::TagSearchWidget* ui;

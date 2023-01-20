@@ -20,7 +20,7 @@ class GameImportDialog : public QDialog
 {
 	Q_OBJECT
 
-	Q_DISABLE_COPY_MOVE(GameImportDialog)
+	Q_DISABLE_COPY_MOVE( GameImportDialog )
 
 	public:
 	explicit GameImportDialog( QWidget* parent = nullptr );
@@ -41,13 +41,13 @@ class GameImportDialog : public QDialog
 	void on_selectPath_pressed();
 	void on_selectExec_pressed();
 
-	void on_title_textChanged(const QString text);
-	void on_creator_textChanged(const QString text);
-	void on_version_textChanged(const QString text);
-	void on_engine_textChanged(const QString text);
-	void on_folderPath_textChanged(const QString text);
-	void on_execPath_textChanged(const QString text);
-	void on_dest_textChanged(const QString text);
+	void on_title_textChanged( const QString text );
+	void on_creator_textChanged( const QString text );
+	void on_version_textChanged( const QString text );
+	void on_engine_textChanged( const QString text );
+	void on_folderPath_textChanged( const QString text );
+	void on_execPath_textChanged( const QString text );
+	void on_dest_textChanged( const QString text );
 };
 
 

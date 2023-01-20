@@ -36,7 +36,7 @@ struct Record
 	  m_title( title ),
 	  m_creator( creator ),
 	  m_version( version ),
-	  m_engine(engine),
+	  m_engine( engine ),
 	  m_banner( banner ),
 	  m_previews( previews )
 	{
@@ -57,7 +57,7 @@ struct Record
 #ifndef NDEBUG
 	bool operator==( const Record& other ) const = default;
 #else
-	bool operator==(const Record& other) const;
+	bool operator==( const Record& other ) const;
 #endif
 };
 

@@ -18,7 +18,7 @@ RecordViewWidget::~RecordViewWidget()
 	delete ui;
 }
 
-void RecordViewWidget::recordsUpdated(const std::vector< Record >& records )
+void RecordViewWidget::recordsUpdated( const std::vector< Record >& records )
 {
-	model.setRecords(records);
+	model.setRecords( records );
 }

@@ -11,6 +11,4 @@
 using RecordID = uint32_t;
 
 
-
-
 #endif	//HYDRUS95_TYPES_HPP

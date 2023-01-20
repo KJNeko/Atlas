@@ -50,12 +50,15 @@ Record Record::select( const RecordID id )
 	QString engine;
 
 	database::db_ref() << "SELECT title, creator, version, engine FROM records WHERE record_id = ?" << id >>
-		[&]( const std::string title_in, const std::string creator_in, const std::string version_in, const std::string engine_in )
+		[&]( const std::string title_in,
+			 const std::string creator_in,
+			 const std::string version_in,
+			 const std::string engine_in )
 	{
 		title = QString::fromStdString( title_in );
 		creator = QString::fromStdString( creator_in );
 		version = QString::fromStdString( version_in );
-		engine = QString::fromStdString(engine_in);
+		engine = QString::fromStdString( engine_in );
 	};
 
 	std::filesystem::path banner_path { ":invalid_banner.jpg" };

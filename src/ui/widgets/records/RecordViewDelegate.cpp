@@ -10,39 +10,48 @@
 #include <QMouseEvent>
 #include <QMenu>
 
-void RecordViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
 	painter->save();
 
-	const auto* record {index.data().value<Record*>()};
+	const auto* record { index.data().value< Record* >() };
 
-	painter->drawText(option.rect, "Testing.");
-	painter->drawText(option.rect, "\n" + QString::number(record->m_id));
+	painter->drawText( option.rect, "Testing." );
+	painter->drawText( option.rect, "\n" + QString::number( record->m_id ) );
 
 	painter->restore();
 }
 
 
-QSize RecordViewDelegate::sizeHint([[maybe_unused]] const QStyleOptionViewItem& option, [[maybe_unused]] const QModelIndex& index) const
+QSize RecordViewDelegate::sizeHint(
+	[[maybe_unused]] const QStyleOptionViewItem& option,
+	[[maybe_unused]] const QModelIndex& index ) const
 {
-	return {300,200};
+	return { 300, 200 };
 }
 
 
-bool RecordViewDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, [[maybe_unused]] const QStyleOptionViewItem& option, const QModelIndex& index)
+bool RecordViewDelegate::editorEvent(
+	QEvent* event,
+	QAbstractItemModel* model,
+	[[maybe_unused]] const QStyleOptionViewItem& option,
+	const QModelIndex& index )
 {
-	if(event->type() == QEvent::MouseButtonPress)
+	if ( event->type() == QEvent::MouseButtonPress )
 	{
-		QMouseEvent* m_event {dynamic_cast<QMouseEvent*>(event)};
+		QMouseEvent* m_event { dynamic_cast< QMouseEvent* >( event ) };
 
-		if(m_event->button() == Qt::RightButton)
+		if ( m_event->button() == Qt::RightButton )
 		{
 			QMenu menu;
 
-			menu.addAction("Manage record", [=](){
-				auto* r_model{dynamic_cast<RecordViewModel*>(model)};
-				[[maybe_unused]] auto& record {r_model->at(index.row())};
-			});
+			menu.addAction(
+				"Manage record",
+				[=]()
+				{
+					auto* r_model { dynamic_cast< RecordViewModel* >( model ) };
+					[[maybe_unused]] auto& record { r_model->at( index.row() ) };
+				} );
 
 			menu.exec();
 
@@ -50,8 +59,6 @@ bool RecordViewDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, [
 		}
 		else
 			return false;
-
 	}
-		return false;
-
+	return false;
 }
