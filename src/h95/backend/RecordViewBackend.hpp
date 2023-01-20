@@ -23,6 +23,8 @@ class RecordViewBackend : public QObject
 	//! Removes a tag from the taglist
 	void removeTag(const Tag& tag);
 
+	void refresh();
+
 	signals:
 	//! Emitted when a search for similar tags is done
 	void similarTagFinished(const std::vector<Tag>& tags);

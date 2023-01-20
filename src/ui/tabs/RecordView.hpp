@@ -28,6 +28,8 @@ class RecordView : public QWidget
 	explicit RecordView( QWidget* parent = nullptr );
 	~RecordView() override;
 
+	public slots:
+	void refresh();
 
 	private:
 	Ui::RecordView* ui;

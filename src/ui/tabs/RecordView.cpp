@@ -52,3 +52,8 @@ RecordView::~RecordView()
 {
 	delete ui;
 }
+
+void RecordView::refresh()
+{
+	backend.refresh();
+}
