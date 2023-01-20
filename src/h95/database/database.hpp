@@ -5,11 +5,10 @@
 #ifndef HYDRUS95_DATABASE_HPP
 #define HYDRUS95_DATABASE_HPP
 
-#include <QSqlDatabase>
-#include "h95/database/Record.hpp"
-
+#include <sqlite_modern_cpp.h>
 namespace database
 {
+	sqlite::database& db_ref();
 	void initalize();
 }
 

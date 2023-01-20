@@ -8,6 +8,8 @@
 #include "ui_MainWindow.h"
 
 #include "h95/config.hpp"
+#include "ui/dialog/GameImportDialog.hpp"
+#include "h95/database/database.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -18,6 +20,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		qDebug() << "First launch";
 		setSettings("first_launch", false);
 	}
+
+	database::initalize();
 }
 
 MainWindow::~MainWindow()

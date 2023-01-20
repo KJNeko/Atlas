@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="RecordView" name="widget" native="true"/>
+     <widget class="RecordView" name="recordView" native="true"/>
     </item>
    </layout>
   </widget>
@@ -33,13 +33,7 @@
     <property name="title">
      <string>Files</string>
     </property>
-    <widget class="QMenu" name="menuNew_Tab">
-     <property name="title">
-      <string>New Tab</string>
-     </property>
-     <addaction name="actionFile_View"/>
-    </widget>
-    <addaction name="menuNew_Tab"/>
+    <addaction name="actionImportGame"/>
    </widget>
    <addaction name="menuFiles"/>
   </widget>
@@ -47,6 +41,11 @@
   <action name="actionFile_View">
    <property name="text">
     <string>Record View</string>
+   </property>
+  </action>
+  <action name="actionImportGame">
+   <property name="text">
+    <string>Import Game</string>
    </property>
   </action>
  </widget>
