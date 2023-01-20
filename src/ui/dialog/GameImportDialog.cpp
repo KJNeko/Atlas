@@ -10,7 +10,7 @@
 #include <QFileDialog>
 #include <QDirIterator>
 #include <QMimeDatabase>
-#include "h95/config.hpp"
+#include <iostream>
 
 GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::GameImportDialog )
 {
@@ -30,16 +30,19 @@ void GameImportDialog::on_cancelButton_pressed()
 
 void GameImportDialog::verifySettings()
 {
+	ui->pathLabel->setText( QString::fromStdString(path_manager.fillPath(ui->dest->text().toStdString())) );
+
+
 	//Check that path and executable exists
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
-		ui->infoLabel->setText( "Path could not be verified to exist." );
+		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
 		return;
 	}
 
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
 	{
-		ui->infoLabel->setText( "Executable path could not be verified to exist" );
+		ui->infoLabel->setText( "Executable path is invalid or does not exist!" );
 		return;
 	}
 	else
@@ -48,75 +51,8 @@ void GameImportDialog::verifySettings()
 		const auto mime_type { mime_db.mimeTypeForFile( ui->execPath->text(), QMimeDatabase::MatchContent ) };
 		if ( mime_type.name() != "application/x-ms-dos-executable" )
 		{
-			ui->infoLabel->setText( QString( "File executable not proper type (application/x-ms-dos-executable vs %s" )
+			ui->infoLabel->setText( QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
 										.arg( mime_type.name() ) );
-		}
-	}
-
-	//Check if we should autofill
-	if ( ui->shouldParsePath->isChecked() )
-	{
-		const auto parse_text { ui->pathParse->text() };
-		if ( !parse_text.contains( "{path}" )
-			 || !(
-				 parse_text.contains( "{title}" ) || parse_text.contains( "{creator}" )
-				 || parse_text.contains( "{version}" ) || parse_text.contains( "{engine}" ) ) )
-		{
-			ui->infoLabel->setText(
-				"Autofill from path should contain {path} and at least one of `{creator}`, `{title}`, `{version}`, or `{engine}`" );
-			return;
-		}
-
-		//Parse path
-		std::filesystem::path path { ui->folderPath->text().toStdString() };
-		std::filesystem::path search_path { parse_text.toStdString() };
-
-		uint16_t step_counter { 0 };
-
-		std::vector< std::pair< std::string, std::string > > parsed_pieces;
-
-		while ( !search_path.empty() && step_counter < 512 )
-		{
-			const auto key { search_path.filename() };
-
-			if ( key == "{path}" )
-			{
-				parsed_pieces.emplace_back( key, path.string() );
-				break;
-			}
-			else
-				parsed_pieces.emplace_back( key, path.filename() );
-
-			path = path.parent_path();
-			search_path = search_path.parent_path();
-
-			++step_counter;
-		}
-
-		if ( step_counter == 512 )
-		{
-			ui->infoLabel->setText(
-				"Attempting to parse path exceeded 512 steps! Aborting. Report path and parser text to the dev" );
-			return;
-		}
-
-		for ( const auto& [key, string] : parsed_pieces )
-		{
-			if ( key == "{path}" )
-				continue;
-			else if ( key == "{title}" )
-				ui->title->setText( QString::fromStdString( string ) );
-			else if ( key == "{creator}" )
-				ui->creator->setText( QString::fromStdString( string ) );
-			else if ( key == "{version}" )
-				ui->version->setText( QString::fromStdString( string ) );
-			else if ( key == "{engine}" )
-				ui->engine->setText( QString::fromStdString( string ) );
-			else
-			{
-				ui->infoLabel->setText( "Unsupported key in parser. Aborting" );
-				return;
-			}
 		}
 	}
 
@@ -126,25 +62,6 @@ void GameImportDialog::verifySettings()
 		ui->infoLabel->setText( "One of the required Game Info fields were not populated" );
 		return;
 	}
-
-	auto path_str { ui->dest->text() };
-	if ( path_str.contains( "{h95_data}" ) )
-	{
-		const std::filesystem::path data_dir { getSettings< QString >( "paths/h95_data", "./data" ).toStdString() };
-		const auto filepath { std::filesystem::canonical( data_dir ) };
-		path_str.replace( "{h95_data}", QString::fromStdString( filepath.string() ) );
-	}
-
-
-	if ( path_str.contains( "{creator}" ) ) path_str.replace( "{creator}", ui->creator->text() );
-
-	if ( path_str.contains( "{title}" ) ) path_str.replace( "{title}", ui->title->text() );
-
-	if ( path_str.contains( "{version}" ) ) path_str.replace( "{version}", ui->version->text() );
-
-	if ( path_str.contains( "{engine}" ) ) path_str.replace( "{engine}", ui->engine->text() );
-
-	ui->pathLabel->setText( path_str );
 
 	ui->infoLabel->setText( "Good to import!" );
 }
@@ -189,6 +106,8 @@ void GameImportDialog::on_selectPath_pressed()
 	dialog.setAcceptMode( QFileDialog::AcceptOpen );
 	dialog.setLabelText( QFileDialog::LookIn, "Select game folder" );
 
+	QMimeDatabase mime_db;
+
 	if ( !dialog.exec() )
 		return;
 	else
@@ -199,24 +118,48 @@ void GameImportDialog::on_selectPath_pressed()
 
 		ui->folderPath->setText( list.first() );
 
-		const QDir dir { list.first() };
-		if ( !dir.exists() ) return;
+		std::filesystem::path dir { list.first().toStdString() };
+		if ( !std::filesystem::exists( dir ) ) return;
 
-		QDirIterator dir_itter { dir.path(), QDirIterator::NoIteratorFlags };
-
-		while ( dir_itter.hasNext() )
+		//Locate supporting files
+		for ( const auto& temp_dir : std::filesystem::directory_iterator( dir ) )
 		{
-			const auto file_info { dir_itter.nextFileInfo() };
+			const auto mime_type {
+				mime_db.mimeTypeForFile( QString::fromStdString( temp_dir.path().string() ) ).name() };
 
-			if ( file_info.isFile() )
+			// Locate executable
+			if ( temp_dir.is_regular_file() && temp_dir.path().extension() == ".exe"
+				 && mime_type == "application/x-ms-dos-executable" )
 			{
-				QMimeDatabase mime_db;
-				const auto type { mime_db.mimeTypeForFile( file_info, QMimeDatabase::MatchContent ) };
-				if ( type.name() == "application/x-ms-dos-executable" )
+				ui->execPath->setText( QString::fromStdString( temp_dir.path().string() ) );
+				break;
+			}
+			//Locate banner
+			else if (
+				temp_dir.is_regular_file() && ( mime_type == "image/jpeg" || mime_type == "image/png" )
+				&& temp_dir.path().filename().string().substr( 0, 7 ) == "banner" )
+			{
+				ui->bannerPath->setText( QString::fromStdString( temp_dir.path().string() ) );
+			}
+			//Locate previews
+			else if ( temp_dir.is_directory() && temp_dir.path().filename() == "previews" )
+			{
+				QString previews;
+
+				for ( const auto& file : std::filesystem::directory_iterator( temp_dir.path() ) )
 				{
-					ui->execPath->setText( file_info.filePath() );
-					break;
+					const auto file_type {
+						mime_db.mimeTypeForFile( QString::fromStdString( file.path().string() ) ).name() };
+
+					if ( file.is_regular_file() && ( file_type == "image/jpeg" || file_type == "image/png" ) )
+					{
+						previews += QString::fromStdString( file.path().string() + ";" );
+					}
 				}
+
+				if ( previews.endsWith( ':' ) ) previews.chop( 1 );
+
+				ui->previewPaths->setText( previews );
 			}
 		}
 	}
@@ -248,26 +191,40 @@ void GameImportDialog::on_selectExec_pressed()
 
 void GameImportDialog::on_title_textChanged( [[maybe_unused]] const QString text )
 {
+	path_manager.registerReplacement( "{title}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_creator_textChanged( [[maybe_unused]] const QString text )
 {
+	path_manager.registerReplacement( "{creator}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_version_textChanged( [[maybe_unused]] const QString text )
 {
+	path_manager.registerReplacement( "{version}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_engine_textChanged( [[maybe_unused]] const QString text )
 {
+	path_manager.registerReplacement( "{engine}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString text )
 {
+	if ( ui->shouldParsePath->isChecked() )
+		path_manager.populateValues( text.toStdString(), ui->pathParse->text().toStdString() );
+
+	ui->title->setText( path_manager.value( { "{title}" } ) );
+	ui->creator->setText( path_manager.value( "{creator}" ) );
+	ui->version->setText( path_manager.value( "{version}" ) );
+	ui->engine->setText( path_manager.value( "{engine}" ) );
+
+	path_manager.setRoot(text.toStdString());
+
 	verifySettings();
 }
 

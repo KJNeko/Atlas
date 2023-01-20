@@ -7,6 +7,7 @@
 
 #include <QDialog>
 #include "h95/database/Record.hpp"
+#include "h95/PathManager.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,8 @@ class GameImportDialog : public QDialog
 	Q_OBJECT
 
 	Q_DISABLE_COPY_MOVE( GameImportDialog )
+
+	PathManager path_manager;
 
 	public:
 	explicit GameImportDialog( QWidget* parent = nullptr );
