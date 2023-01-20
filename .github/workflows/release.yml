@@ -1,0 +1,77 @@
+Name: Release
+on:
+  workflow_dispatch:
+    push:
+      tags:
+        - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.2.*
+
+      - name: CMake
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          nmake -j8
+
+      - name: Package
+        run: |
+          cd bin
+          del Hydrus95_UNIT_TESTS.exe
+          cd ..
+          mkdir Hydrus95
+          move .\bin\* .\Hydrus95\
+          7z.exe a -tzip -mm=Deflate -mx=5 ..\Hydrus95-Windows.zip .\Hydrus95
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Windows-Extract
+          path: Hydrus95-Windows.zip
+          if-no-files-found: error
+          retention-days: 2
+
+  create-release:
+    name: Release
+    runs-on: ubuntu-20.04
+    needs: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Extract version
+        id: meta
+        run: |
+          echo "version=${GITHUB_REF##*\}" >> $GITHUB_ENV
+          echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
+          
+      - name: Rename
+        run: |
+          mkdir windows
+          mv Windows-Extract/Windows-Extract.zip Hydrus95-${{ env.version_short }}-windows.zip
+
+      - name: Upload
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'ref/tags')
+        with:
+          files: |
+            Hydrus95-${{env.version_short}}-windows.zip
+          
+
