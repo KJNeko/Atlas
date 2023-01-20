@@ -55,8 +55,14 @@ TEST_F( RecordCreation, GameRecord )
 {
 	const GameMetadata g_metadata { "no.exe", "your/moms/house" };
 
-	Record record {
-		Record::create( "my game", "some shithead", "v1.0", g_metadata, "some_banner.jpg", { "one.jpg", "two.jpg" } ) };
+	Record record { Record::create(
+		"my game",
+		"somebody",
+		"v1.0",
+		"my engine",
+		g_metadata,
+		"some_banner.jpg",
+		{ "one.jpg", "two.jpg" } ) };
 	ASSERT_GT( record.m_id, 0 );
 
 	Record db_record { Record::select( record.m_id ) };
@@ -66,6 +72,7 @@ TEST_F( RecordCreation, GameRecord )
 	ASSERT_EQ( db_record.m_title, record.m_title );
 	ASSERT_EQ( db_record.m_version, record.m_version );
 	ASSERT_EQ( db_record.m_creator, record.m_creator );
+	ASSERT_EQ( db_record.m_engine, record.m_engine );
 	ASSERT_EQ( db_record.m_metadata, record.m_metadata );
 
 	//Last check
