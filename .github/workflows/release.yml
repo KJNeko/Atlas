@@ -42,12 +42,15 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: 6.2.*
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw'
 
       - name: CMake
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles" -DQT_PATH=${GITHUB_WORKSPACE}\Qt\5.2.4\mingw_64
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles"
 
       - name: Build
         run: |
