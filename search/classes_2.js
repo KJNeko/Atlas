@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gameimportdialog_0',['GameImportDialog',['../classGameImportDialog.html',1,'']]],
-  ['gamemetadata_1',['GameMetadata',['../structGameMetadata.html',1,'']]]
+  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
+  ['modeldata_1',['ModelData',['../structModelData.html',1,'']]]
 ];

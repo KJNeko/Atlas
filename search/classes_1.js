@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['f95parser_0',['F95Parser',['../structF95Parser.html',1,'']]]
+  ['gameimportdialog_0',['GameImportDialog',['../classGameImportDialog.html',1,'']]],
+  ['gamemetadata_1',['GameMetadata',['../structGameMetadata.html',1,'']]]
 ];

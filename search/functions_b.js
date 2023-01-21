@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['recordselected_0',['recordSelected',['../classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6',1,'RecordViewWidget::recordSelected()'],['../classSelectedViewWidget.html#a7b41aa131b83359c42595ac82410b98b',1,'SelectedViewWidget::recordSelected()']]],
-  ['recordsupdated_1',['recordsUpdated',['../classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa',1,'RecordViewWidget']]],
-  ['recordview_2',['RecordView',['../classRecordView.html#ab1b13442e609d980d1da4f3934935466',1,'RecordView']]],
-  ['recordviewdelegate_3',['RecordViewDelegate',['../classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0',1,'RecordViewDelegate']]],
-  ['recordviewmodel_4',['RecordViewModel',['../classRecordViewModel.html#a62885b77767923c5d530f8ffc23415ca',1,'RecordViewModel']]],
-  ['recordviewwidget_5',['RecordViewWidget',['../classRecordViewWidget.html#a86b66e9f664c643ef9246df39a7a2a92',1,'RecordViewWidget']]],
-  ['rowcount_6',['rowCount',['../classRecordViewModel.html#a2e406c945cc93b5eca6d3343a3841de0',1,'RecordViewModel']]]
+  ['searchsimilar_0',['searchSimilar',['../classRecordViewBackend.html#a8c1ff89c54b9ae563b3f2464058bb414',1,'RecordViewBackend::searchSimilar()'],['../classTagSearchWidget.html#aab867dff88826f8c13e8bc6ec34b5206',1,'TagSearchWidget::searchSimilar()']]],
+  ['select_1',['select',['../structGameMetadata.html#a403699dddf5574f5331fc91a1d906804',1,'GameMetadata::select()'],['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()']]],
+  ['selected_2',['selected',['../classTagDisplayWidget.html#a03eba7a8e301b2c4da77d79bd2de629d',1,'TagDisplayWidget']]],
+  ['selectedviewwidget_3',['SelectedViewWidget',['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget']]],
+  ['setrecords_4',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
+  ['setroot_5',['setRoot',['../structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346',1,'PathManager']]],
+  ['setsettings_6',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
+  ['similartagfinished_7',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
+  ['sizehint_8',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
 ];

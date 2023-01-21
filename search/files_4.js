@@ -2,7 +2,5 @@ var searchData=
 [
   ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
   ['mainwindow_2ecpp_1',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
-  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]],
-  ['metadata_2ecpp_3',['Metadata.cpp',['../Metadata_8cpp.html',1,'']]],
-  ['metadata_2ehpp_4',['Metadata.hpp',['../Metadata_8hpp.html',1,'']]]
+  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]]
 ];

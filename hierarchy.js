@@ -1,8 +1,9 @@
 var hierarchy =
 [
-    [ "EmptyMetadata", "structEmptyMetadata.html", null ],
     [ "F95Parser", "structF95Parser.html", null ],
     [ "GameMetadata", "structGameMetadata.html", null ],
+    [ "ModelData", "structModelData.html", null ],
+    [ "PathManager", "structPathManager.html", null ],
     [ "QAbstractItemDelegate", null, [
       [ "RecordViewDelegate", "classRecordViewDelegate.html", null ]
     ] ],
@@ -15,6 +16,9 @@ var hierarchy =
     [ "QMainWindow", null, [
       [ "MainWindow", "classMainWindow.html", null ]
     ] ],
+    [ "QObject", null, [
+      [ "RecordViewBackend", "classRecordViewBackend.html", null ]
+    ] ],
     [ "QWidget", null, [
       [ "RecordView", "classRecordView.html", null ],
       [ "RecordViewWidget", "classRecordViewWidget.html", null ],
@@ -23,8 +27,5 @@ var hierarchy =
       [ "TagSearchWidget", "classTagSearchWidget.html", null ]
     ] ],
     [ "Record", "structRecord.html", null ],
-    [ "Tag", "classTag.html", null ],
-    [ "std::variant", null, [
-      [ "Metadata", "structMetadata.html", null ]
-    ] ]
+    [ "Tag", "classTag.html", null ]
 ];

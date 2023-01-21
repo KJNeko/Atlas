@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['prefixes_0',['prefixes',['../structF95Parser.html#a13d4ba738f785c2e7bf356e410efd83f',1,'F95Parser']]],
-  ['previews_1',['previews',['../structF95Parser.html#abce628f4f321ef4b65b11483dae90d65',1,'F95Parser']]]
+  ['prefixes_0',['prefixes',['../structF95Parser.html#a1b8dda489951573d40e7a8bf05aea3ef',1,'F95Parser']]],
+  ['previews_1',['previews',['../structF95Parser.html#a0cf9bfac93470aefc7f8869046125f61',1,'F95Parser']]]
 ];

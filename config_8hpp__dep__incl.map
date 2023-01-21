@@ -1,4 +1,7 @@
-<map id="src/backend/config.hpp" name="src/backend/config.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="6,5,161,31"/>
-<area shape="rect" id="node2" href="$MainWindow_8cpp.html" title=" " alt="" coords="5,79,161,104"/>
+<map id="src/h95/config.hpp" name="src/h95/config.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="151,5,278,31"/>
+<area shape="rect" id="node2" href="$PathManager_8hpp.html" title=" " alt="" coords="68,79,239,104"/>
+<area shape="rect" id="node4" href="$MainWindow_8cpp.html" title=" " alt="" coords="198,247,354,273"/>
+<area shape="rect" id="node3" href="$GameImportDialog_8hpp.html" title=" " alt="" coords="69,152,237,192"/>
+<area shape="rect" id="node5" href="$GameImportDialog_8cpp.html" title=" " alt="" coords="5,240,173,280"/>
 </map>

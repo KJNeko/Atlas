@@ -1,13 +1,4 @@
-<map id="src/backend/database.hpp" name="src/backend/database.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="31,5,206,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,112,104"/>
-<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="137,79,223,104"/>
-<area shape="rect" id="node4" href="$Types_8hpp.html" title=" " alt="" coords="46,299,127,324"/>
-<area shape="rect" id="node7" href="$Metadata_8hpp.html" title=" " alt="" coords="130,152,230,177"/>
-<area shape="rect" id="node11" title=" " alt="" coords="254,152,325,177"/>
-<area shape="rect" id="node5" title=" " alt="" coords="13,372,75,397"/>
-<area shape="rect" id="node6" title=" " alt="" coords="99,372,160,397"/>
-<area shape="rect" id="node8" href="$GameMetadata_8hpp.html" title=" " alt="" coords="122,225,257,251"/>
-<area shape="rect" id="node9" title=" " alt="" coords="153,299,220,324"/>
-<area shape="rect" id="node10" title=" " alt="" coords="244,299,324,324"/>
+<map id="src/h95/database/database.hpp" name="src/h95/database/database.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,208,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="36,79,177,104"/>
 </map>

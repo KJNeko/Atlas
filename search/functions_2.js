@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['create_0',['create',['../structRecord.html#af1322c91d44d918d038fa7a0b0c83d22',1,'Record']]]
+  ['data_0',['data',['../classRecordViewModel.html#a1b97c1638120696232ab2556f5779451',1,'RecordViewModel']]],
+  ['db_5fref_1',['db_ref',['../namespacedatabase.html#a2e692c6be7d742f62afd1f0363934385',1,'database']]]
 ];

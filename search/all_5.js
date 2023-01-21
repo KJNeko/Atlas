@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['f95parser_0',['F95Parser',['../structF95Parser.html',1,'F95Parser'],['../structF95Parser.html#a76ee2216bb9d80223dda91f385b1c421',1,'F95Parser::F95Parser()']]],
-  ['f95parser_2ehpp_1',['f95parser.hpp',['../f95parser_8hpp.html',1,'']]],
-  ['f95prefixid_2',['F95PrefixID',['../f95parser_8hpp.html#a510be1c2f7e72bb282a1d6f5eec3cc92',1,'f95parser.hpp']]],
-  ['f95tagid_3',['F95TagID',['../f95parser_8hpp.html#ac3e9565c4009cdceb714cb3105bc3f9c',1,'f95parser.hpp']]],
-  ['f95threadid_4',['F95ThreadID',['../f95parser_8hpp.html#af3eedbda3409d1b869f2cf3003cc70d7',1,'f95parser.hpp']]],
-  ['folder_5fpath_5',['folder_path',['../structGameMetadata.html#aee275ee8c5686b97fa1ec5821e7ade4d',1,'GameMetadata']]]
+  ['game_5fpath_0',['game_path',['../structGameMetadata.html#ad108b051bef64e473b502b894ef76cb6',1,'GameMetadata']]],
+  ['gameimportdialog_1',['GameImportDialog',['../classGameImportDialog.html',1,'GameImportDialog'],['../classGameImportDialog.html#a1db46344fb92984374794fc3303c8e6a',1,'GameImportDialog::GameImportDialog()']]],
+  ['gameimportdialog_2ecpp_2',['GameImportDialog.cpp',['../GameImportDialog_8cpp.html',1,'']]],
+  ['gameimportdialog_2ehpp_3',['GameImportDialog.hpp',['../GameImportDialog_8hpp.html',1,'']]],
+  ['gamemetadata_4',['GameMetadata',['../structGameMetadata.html',1,'']]],
+  ['gamemetadata_2ecpp_5',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
+  ['gamemetadata_2ehpp_6',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]],
+  ['getall_7',['getAll',['../RecordViewBackend_8cpp.html#ae1b1ea2d52ef15c8ccc27bdab37723c6',1,'RecordViewBackend.cpp']]],
+  ['getsettings_8',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'getSettings(const QString setting_name):&#160;config.hpp'],['../config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e',1,'getSettings(const QString setting_name, const T default_value):&#160;config.hpp']]],
+  ['getsettingsobject_9',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]]
 ];

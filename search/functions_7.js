@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['initalize_0',['initalize',['../namespacedatabase.html#a058ce1811f450f15ef050defc0fb5a28',1,'database']]],
-  ['insert_1',['insert',['../structGameMetadata.html#a85c5d97c1aaba6ff9a94253949719386',1,'GameMetadata::insert()'],['../structMetadata.html#a9fce1f4e758d3577e68cfc98c897e4d4',1,'Metadata::insert()']]]
+  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]]
 ];

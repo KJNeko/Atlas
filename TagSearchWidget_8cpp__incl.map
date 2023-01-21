@@ -1,8 +1,9 @@
 <map id="src/ui/widgets/tags/TagSearchWidget.cpp" name="src/ui/widgets/tags/TagSearchWidget.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="111,5,265,45"/>
-<area shape="rect" id="node2" href="$TagSearchWidget_8hpp.html" title=" " alt="" coords="27,93,176,119"/>
-<area shape="rect" id="node6" title=" " alt="" coords="200,93,352,119"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,167,77,192"/>
-<area shape="rect" id="node4" href="$Tag_8hpp.html" title=" " alt="" coords="102,167,223,192"/>
-<area shape="rect" id="node5" title=" " alt="" coords="129,240,196,265"/>
+<area shape="rect" id="node1" title=" " alt="" coords="123,5,276,45"/>
+<area shape="rect" id="node2" href="$TagSearchWidget_8hpp.html" title=" " alt="" coords="38,93,187,119"/>
+<area shape="rect" id="node7" title=" " alt="" coords="211,93,363,119"/>
+<area shape="rect" id="node3" title=" " alt="" coords="9,255,81,280"/>
+<area shape="rect" id="node4" href="$Tag_8hpp.html" title=" " alt="" coords="135,255,285,280"/>
+<area shape="rect" id="node6" href="$TagDisplayWidget_8hpp.html" title=" " alt="" coords="23,167,202,207"/>
+<area shape="rect" id="node5" title=" " alt="" coords="177,328,243,353"/>
 </map>

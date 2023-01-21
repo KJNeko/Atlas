@@ -1,4 +1,13 @@
 var searchData=
 [
-  ['paint_0',['paint',['../classRecordViewDelegate.html#a883289dbadbef07a2d2b4b17e7a6a98e',1,'RecordViewDelegate']]]
+  ['recordselected_0',['recordSelected',['../classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6',1,'RecordViewWidget::recordSelected()'],['../classSelectedViewWidget.html#a7b41aa131b83359c42595ac82410b98b',1,'SelectedViewWidget::recordSelected()']]],
+  ['recordsupdated_1',['recordsUpdated',['../classRecordViewBackend.html#ab3214cf0fb86ed1883522e044a933141',1,'RecordViewBackend::recordsUpdated()'],['../classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa',1,'RecordViewWidget::recordsUpdated()']]],
+  ['recordview_2',['RecordView',['../classRecordView.html#ab1b13442e609d980d1da4f3934935466',1,'RecordView']]],
+  ['recordviewdelegate_3',['RecordViewDelegate',['../classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0',1,'RecordViewDelegate']]],
+  ['recordviewmodel_4',['RecordViewModel',['../classRecordViewModel.html#a62885b77767923c5d530f8ffc23415ca',1,'RecordViewModel']]],
+  ['recordviewwidget_5',['RecordViewWidget',['../classRecordViewWidget.html#a86b66e9f664c643ef9246df39a7a2a92',1,'RecordViewWidget']]],
+  ['refresh_6',['refresh',['../classRecordViewBackend.html#a080c59de310c345c0b81689770799647',1,'RecordViewBackend::refresh()'],['../classRecordView.html#a6145eb28979b24d1bed8c28d82eb8be7',1,'RecordView::refresh()']]],
+  ['registerreplacement_7',['registerReplacement',['../structPathManager.html#a5da0e643e6df137e217660501dbd1fa4',1,'PathManager']]],
+  ['removetag_8',['removeTag',['../classRecordViewBackend.html#ade0b0fd4dd2f5cbd577da1a135fee0c6',1,'RecordViewBackend']]],
+  ['rowcount_9',['rowCount',['../classRecordViewModel.html#a2e406c945cc93b5eca6d3343a3841de0',1,'RecordViewModel']]]
 ];

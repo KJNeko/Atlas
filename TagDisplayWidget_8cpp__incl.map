@@ -1,8 +1,8 @@
 <map id="src/ui/widgets/tags/TagDisplayWidget.cpp" name="src/ui/widgets/tags/TagDisplayWidget.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="112,5,267,45"/>
-<area shape="rect" id="node2" href="$TagDisplayWidget_8hpp.html" title=" " alt="" coords="26,93,177,119"/>
-<area shape="rect" id="node6" title=" " alt="" coords="201,93,354,119"/>
+<area shape="rect" id="node1" title=" " alt="" coords="120,5,275,45"/>
+<area shape="rect" id="node2" href="$TagDisplayWidget_8hpp.html" title=" " alt="" coords="34,93,185,119"/>
+<area shape="rect" id="node6" title=" " alt="" coords="209,93,362,119"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,167,77,192"/>
-<area shape="rect" id="node4" href="$Tag_8hpp.html" title=" " alt="" coords="102,167,223,192"/>
-<area shape="rect" id="node5" title=" " alt="" coords="129,240,196,265"/>
+<area shape="rect" id="node4" href="$Tag_8hpp.html" title=" " alt="" coords="102,167,253,192"/>
+<area shape="rect" id="node5" title=" " alt="" coords="144,240,211,265"/>
 </map>

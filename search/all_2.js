@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['config_2ehpp_0',['config.hpp',['../config_8hpp.html',1,'']]],
-  ['cover_1',['cover',['../structF95Parser.html#a64fa95abd241d65f658d8734356046a5',1,'F95Parser']]],
-  ['create_2',['create',['../structRecord.html#af1322c91d44d918d038fa7a0b0c83d22',1,'Record']]],
-  ['creator_3',['creator',['../structF95Parser.html#aa14a06cecc4e01001c4b214e9578c879',1,'F95Parser']]],
-  ['creator_5fname_4',['creator_name',['../structGameMetadata.html#ac46cf06a33c60accd18b8c9f0ae9422c',1,'GameMetadata']]]
+  ['data_0',['data',['../classRecordViewModel.html#a1b97c1638120696232ab2556f5779451',1,'RecordViewModel']]],
+  ['database_1',['database',['../namespacedatabase.html',1,'']]],
+  ['database_2ecpp_2',['database.cpp',['../database_8cpp.html',1,'']]],
+  ['database_2ehpp_3',['database.hpp',['../database_8hpp.html',1,'']]],
+  ['db_4',['db',['../namespacedatabase_1_1internal.html#aff3c3b4cbbfc5fd91e105e036a4bdc00',1,'database::internal']]],
+  ['db_5fref_5',['db_ref',['../namespacedatabase.html#a2e692c6be7d742f62afd1f0363934385',1,'database']]],
+  ['internal_6',['internal',['../namespacedatabase_1_1internal.html',1,'database']]]
 ];

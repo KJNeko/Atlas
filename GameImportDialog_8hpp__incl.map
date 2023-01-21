@@ -1,4 +1,17 @@
 <map id="src/ui/dialog/GameImportDialog.hpp" name="src/ui/dialog/GameImportDialog.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,173,45"/>
-<area shape="rect" id="node2" title=" " alt="" coords="55,93,123,119"/>
+<area shape="rect" id="node1" title=" " alt="" coords="105,5,273,45"/>
+<area shape="rect" id="node2" title=" " alt="" coords="13,93,81,119"/>
+<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="105,93,274,119"/>
+<area shape="rect" id="node10" href="$PathManager_8hpp.html" title=" " alt="" coords="315,93,463,119"/>
+<area shape="rect" id="node4" href="$Types_8hpp.html" title=" " alt="" coords="25,240,132,265"/>
+<area shape="rect" id="node7" href="$GameMetadata_8hpp.html" title=" " alt="" coords="122,167,257,192"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,313,67,339"/>
+<area shape="rect" id="node6" title=" " alt="" coords="91,313,152,339"/>
+<area shape="rect" id="node8" title=" " alt="" coords="156,240,223,265"/>
+<area shape="rect" id="node9" title=" " alt="" coords="247,240,327,265"/>
+<area shape="rect" id="node11" href="$config_8hpp.html" title=" " alt="" coords="337,167,442,192"/>
+<area shape="rect" id="node14" title=" " alt="" coords="466,167,521,192"/>
+<area shape="rect" id="node15" title=" " alt="" coords="545,167,617,192"/>
+<area shape="rect" id="node12" title=" " alt="" coords="351,240,431,265"/>
+<area shape="rect" id="node13" title=" " alt="" coords="455,240,529,265"/>
 </map>
