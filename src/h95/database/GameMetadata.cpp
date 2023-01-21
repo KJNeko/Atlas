@@ -24,14 +24,14 @@ GameMetadata GameMetadata::select( const RecordID id )
 void GameMetadata::update( const RecordID id, const GameMetadata& metadata )
 {
 	database::db_ref() << "UPDATE game_metadata SET game_path = ?, exec_path = ? WHERE record_id = ?"
-					   << metadata.game_path << metadata.exec_path << id;
+					   << metadata.game_path.string() << metadata.exec_path.string() << id;
 	return;
 }
 
 GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata )
 {
 	database::db_ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path) VALUES (?, ?, ?)" << id
-					   << metadata.game_path << metadata.exec_path;
+					   << metadata.game_path.string() << metadata.exec_path.string();
 	return metadata;
 }
 

@@ -30,7 +30,7 @@ void GameImportDialog::on_cancelButton_pressed()
 
 void GameImportDialog::verifySettings()
 {
-	ui->pathLabel->setText( QString::fromStdString(path_manager.fillPath(ui->dest->text().toStdString())) );
+	ui->pathLabel->setText( QString::fromStdString(path_manager.fillPath(ui->dest->text().toStdString()).string()) );
 
 
 	//Check that path and executable exists
