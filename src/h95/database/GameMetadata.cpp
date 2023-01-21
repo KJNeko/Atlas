@@ -13,9 +13,9 @@ GameMetadata GameMetadata::select( const RecordID id )
 	std::optional< GameMetadata > metadata { std::nullopt };
 
 	database::db_ref() << "SELECT game_path, exec_path FROM game_metadata WHERE record_id = ?" << id >>
-		[&]( const std::string& game_path, const std::string exec_path )
+		[&]( const std::string& game_path_in, const std::string exec_path_in )
 	{
-		metadata = { game_path, exec_path };
+		metadata = { game_path_in, exec_path_in };
 	};
 
 	return metadata.value();
