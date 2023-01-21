@@ -87,9 +87,9 @@ target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit_tests)
 
 if(WIN32)
-    add_custom_command(TARGET IDHAN POST_BUILD
+    add_custom_command(TARGET Hydrus95 POST_BUILD
             COMMAND ${TOOL_WINDEPLOYQT}
-                    $<TARGET_FILE:IDHAN>
+                    $<TARGET_FILE:Hydrus95>
             COMMENT "Running windeployqt")
 endif()
 
