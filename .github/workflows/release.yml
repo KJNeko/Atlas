@@ -36,7 +36,7 @@ jobs:
           cd sqlite
           7z x sqlite-amalg.zip -o"include"
           7z x sqlite-dll.zip -o"lib"
-          cd $GITHUB_WORKSPACE
+          cd ${GITHUB_WORKSPACE}
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=$GITHUB_WORKSPACE/sqlite -G"MinGW Makefiles"
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles" -DQT_PATH=${GITHUB_WORKSPACE}\Qt\5.2.4\mingw_64
 
       - name: Build
         run: |
