@@ -15,11 +15,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: 6.2.*
-
       - name: Download SQLITE-Amalgamation
         uses: carlosperate/download-file-action@v1.1.1
         id: download_amalgamation
@@ -42,6 +37,11 @@ jobs:
           7z x sqlite-amalg.zip -o"include"
           7z x sqlite-dll.zip -o"lib"
           cd $GITHUB_WORKSPACE
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.2.*
 
       - name: CMake
         run: |
