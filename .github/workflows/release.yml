@@ -88,9 +88,9 @@ jobs:
       - name: Extract version
         id: meta
         run: |
-          echo "version=${GITHUB_REF##*\}" >> $GITHUB_ENV
+          echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
-          
+
       - name: Rename
         run: |
           mkdir windows
