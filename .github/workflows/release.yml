@@ -94,7 +94,7 @@ jobs:
       - name: Rename
         run: |
           mkdir windows
-          mv Windows-Extract/Windows-Extract.zip Hydrus95-${{ env.version_short }}-windows.zip
+          mv Windows-Extract/Hydrus95-Windows.zip Hydrus95-${{ env.version_short }}-windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
