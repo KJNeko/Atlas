@@ -55,6 +55,7 @@ jobs:
 
       - name: Build
         run: |
+          cd build
           make -j8
 
       - name: Package
