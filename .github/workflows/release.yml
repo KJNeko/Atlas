@@ -48,7 +48,7 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=./sqlite -G"MinGW Makefiles"
 
       - name: Build
         run: |
