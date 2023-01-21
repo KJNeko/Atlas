@@ -34,8 +34,8 @@ jobs:
       - name: Prepare SQLITE
         run: |
           cd sqlite
-          7z x sqlite-amalg.zip -o"${GITHUB_WORKSPACE}/sqlite/include"
-          7z x sqlite-dll.zip -o"${GITHUB_WORKSPACE}/sqlite/lib"
+          7z x sqlite-amalg.zip -o"./include"
+          7z x sqlite-dll.zip -o"./lib"
           cd ..
 
       - name: Install Qt
@@ -48,9 +48,7 @@ jobs:
 
       - name: CMake
         run: |
-          mkdir build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DSQL_PATH=${GITHUB_WORKSPACE}/sqlite -G"MinGW Makefiles"
 
       - name: Build
         run: |
