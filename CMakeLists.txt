@@ -10,6 +10,17 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILT_TYPE Release ... FORCE)
 endif()
 
+if(DEFINED QT_PATH)
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+endif()
+
+if(DEFINED SQL_PATH)
+    set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
+    set(SQLite3_LIBRARY "${SQL_PATH}/lib")
+    message("sql include dir: ${SQLite3_INCLUDE_DIR}")
+    message("sql lib dir: ${SQLite3_LIBRARY}")
+endif()
+
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
