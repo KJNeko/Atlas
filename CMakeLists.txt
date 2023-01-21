@@ -91,6 +91,14 @@ if(WIN32)
             COMMAND ${TOOL_WINDEPLOYQT}
                     $<TARGET_FILE:Hydrus95>
             COMMENT "Running windeployqt")
+
+    add_custom_command(TARGET Hydrus95 POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_RUNTIME_DLLS:Hydrus95> $<TARGET_FILE_DIR:Hydrus95>
+            COMMAND_EXPAND_LISTS)
+
+    add_custom_command(TARGET Hydrus95 POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${Sqlite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
 endif()
 
 
