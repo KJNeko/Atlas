@@ -4,6 +4,3 @@
 [submodule "dependencies/sqlite_modern_cpp"]
 	path = dependencies/sqlite_modern_cpp
 	url = https://github.com/SqliteModernCpp/sqlite_modern_cpp.git
-[submodule "dependencies/sqlite3"]
-	path = dependencies/sqlite3
-	url = https://github.com/sqlite/sqlite.git
