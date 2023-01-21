@@ -73,7 +73,7 @@ jobs:
   create-release:
     name: Release
     runs-on: ubuntu-20.04
-    needs: windows-latest
+    needs: build-windows
     steps:
       - name: Checkout
         uses: actions/checkout@v3
