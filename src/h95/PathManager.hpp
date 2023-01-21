@@ -24,12 +24,12 @@ Valid placeholders:
 
 struct PathManager
 {
-	std::filesystem::path root;
+	std::filesystem::path root{};
 
 	std::vector< std::pair< QString, QString > > values {
 		{ "{h95_data}",
 		  QString::fromStdString(
-			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data" ).toStdString() ) ) } };
+			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data" ).toStdString() ).string() ) } };
 
 	inline void registerReplacement( const QString key, const QString value )
 	{
@@ -82,12 +82,12 @@ struct PathManager
 		{
 			std::cout << "path: " << temp_path << std::endl;
 
-			const auto key { QString::fromStdString( temp_key_path.filename() ) };
+			const auto key { QString::fromStdString( temp_key_path.filename().string() ) };
 			temp_key_path = temp_key_path.parent_path();
 			if ( temp_key_path.empty() )
 				temp_values.emplace_back( key, QString::fromStdString( temp_path.string() ) );
 			else
-				temp_values.emplace_back( key, QString::fromStdString( temp_path.filename() ) );
+				temp_values.emplace_back( key, QString::fromStdString( temp_path.filename().string() ) );
 
 			temp_path = temp_path.parent_path();
 			++step_counter;
