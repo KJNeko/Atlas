@@ -39,8 +39,8 @@ jobs:
       - name: Prepare SQLITE
         run: |
           cd sqlite
-          7z x sqlite-amalg.zip -o./include
-          7z x sqlite-dll.zip -o./lib
+          7z x sqlite-amalg.zip -o"include"
+          7z x sqlite-dll.zip -o"lib"
           cd $GITHUB_WORKSPACE
 
       - name: CMake
