@@ -60,7 +60,7 @@ jobs:
 
       - name: Package
         run: |
-          cd bin
+          cd build/bin
           del Hydrus95_UNIT_TESTS.exe
           cd ..
           mkdir Hydrus95
