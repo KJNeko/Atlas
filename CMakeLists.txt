@@ -106,7 +106,7 @@ if(WIN32)
             COMMAND_EXPAND_LISTS)
 
     add_custom_command(TARGET Hydrus95 POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${Sqlite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
+            COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
 endif()
 
 
