@@ -33,8 +33,8 @@ jobs:
       - name: Prepare SQLITE
         run: |
           cd sqlite
-          7z x sqlite-amalg.zip -o"include"
-          7z x sqlite-dll.zip -o"lib"
+          7z x sqlite-amalg.zip -o"${GITHUB_WORKSPACE}/sqlite/include"
+          7z x sqlite-dll.zip -o"${GITHUB_WORKSPACE}/sqlite/lib"
           cd ..
 
       - name: Install Qt
