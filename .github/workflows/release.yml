@@ -16,7 +16,7 @@ jobs:
           submodules: true
 
       - name: Download SQLITE-Amalgamation
-        uses: carlosperate/download-file-action@v1.1.1
+        uses: carlosperate/download-file-action@v2.0.0
         id: download_amalgamation
         with:
           file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3400100.zip
@@ -24,7 +24,7 @@ jobs:
           location: './sqlite'
 
       - name: Download SQLITE-dll
-        uses: carlosperate/download-file-action@v1.1.1
+        uses: carlosperate/download-file-action@v2.0.0
         id: download_dll
         with:
           file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3400100.zip
