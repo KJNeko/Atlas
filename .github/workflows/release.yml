@@ -55,7 +55,7 @@ jobs:
       - name: Build
         run: |
           cd build
-          mingw32-make -j8
+          mingw32-make
 
       - name: Package
         run: |
