@@ -76,7 +76,6 @@ void GameImportDialog::on_importButton_pressed()
 		std::filesystem::create_directories( path.parent_path() );
 		std::filesystem::copy( ui->folderPath->text().toStdString(), path_str.toStdString() );
 		//std::filesystem::remove( ui->execPath->text().toStdString() );
-		ui->execPath->setText( path_str );
 	}
 
 	//Seperate preview paths
