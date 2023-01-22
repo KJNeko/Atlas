@@ -12,8 +12,8 @@ RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( n
 {
 	ui->setupUi( this );
 
-	ui->listView->setItemDelegate(&delegate);
-	ui->listView->setModel(&model);
+	ui->listView->setItemDelegate( &delegate );
+	ui->listView->setModel( &model );
 }
 
 RecordViewWidget::~RecordViewWidget()

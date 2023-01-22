@@ -19,16 +19,16 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 	{
 		const auto& record { *data.record };
 
-		QFont font {option.font};
-		QFontMetrics metrics {font};
+		QFont font { option.font };
+		QFontMetrics metrics { font };
 
 		QPixmap banner { QString::fromStdString( record.m_banner.string() ) };
-		banner = banner.scaledToHeight(option.rect.height() - (metrics.height() * 2), Qt::SmoothTransformation);
-		if(banner.width() > option.rect.width())
-			banner = banner.scaledToWidth(option.rect.width(), Qt::SmoothTransformation);
+		banner = banner.scaledToHeight( option.rect.height() - ( metrics.height() * 2 ), Qt::SmoothTransformation );
+		if ( banner.width() > option.rect.width() )
+			banner = banner.scaledToWidth( option.rect.width(), Qt::SmoothTransformation );
 
-		const QRect pixmap_rect {option.rect.center(), QSize(banner.width(), banner.height())};
-		painter->drawPixmap( pixmap_rect.translated(-(banner.width() / 2), -(banner.height()) / 2), banner );
+		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
+		painter->drawPixmap( pixmap_rect.translated( -( banner.width() / 2 ), -( banner.height() ) / 2 ), banner );
 
 		painter->drawRect( option.rect );
 		painter->drawText(
@@ -72,7 +72,7 @@ bool RecordViewDelegate::editorEvent(
 
 			menu.addAction( "Manage record", [=]() {} );
 
-			menu.exec(m_event->pos());
+			menu.exec( m_event->pos() );
 
 			return true;
 		}

@@ -25,8 +25,9 @@ Record Record::create(
 {
 
 	RecordID id { 0 };
-	database::db_ref() << "INSERT INTO records (title, creator, version, engine) VALUES (?, ?, ?, ?) RETURNING record_id"
-					   << title.toStdString() << creator.toStdString() << version.toStdString() << engine.toStdString()
+	database::db_ref()
+			<< "INSERT INTO records (title, creator, version, engine) VALUES (?, ?, ?, ?) RETURNING record_id"
+			<< title.toStdString() << creator.toStdString() << version.toStdString() << engine.toStdString()
 		>> [&]( const RecordID record_id )
 	{
 		id = record_id;

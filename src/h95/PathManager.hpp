@@ -24,12 +24,13 @@ Valid placeholders:
 
 struct PathManager
 {
-	std::filesystem::path root{};
+	std::filesystem::path root {};
 
 	std::vector< std::pair< QString, QString > > values {
 		{ "{h95_data}",
 		  QString::fromStdString(
-			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data" ).toStdString() ).string() ) } };
+			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data" ).toStdString() )
+				  .string() ) } };
 
 	inline void registerReplacement( const QString key, const QString value )
 	{

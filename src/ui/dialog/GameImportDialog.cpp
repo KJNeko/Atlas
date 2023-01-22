@@ -30,7 +30,8 @@ void GameImportDialog::on_cancelButton_pressed()
 
 void GameImportDialog::verifySettings()
 {
-	ui->pathLabel->setText( QString::fromStdString(path_manager.fillPath(ui->dest->text().toStdString()).string()) );
+	ui->pathLabel->setText(
+		QString::fromStdString( path_manager.fillPath( ui->dest->text().toStdString() ).string() ) );
 
 
 	//Check that path and executable exists
@@ -51,8 +52,9 @@ void GameImportDialog::verifySettings()
 		const auto mime_type { mime_db.mimeTypeForFile( ui->execPath->text(), QMimeDatabase::MatchContent ) };
 		if ( mime_type.name() != "application/x-ms-dos-executable" )
 		{
-			ui->infoLabel->setText( QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
-										.arg( mime_type.name() ) );
+			ui->infoLabel->setText(
+				QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
+					.arg( mime_type.name() ) );
 		}
 	}
 
@@ -74,7 +76,10 @@ void GameImportDialog::on_importButton_pressed()
 		const std::filesystem::path path { path_str.toStdString() };
 
 		std::filesystem::create_directories( path.parent_path() );
-		std::filesystem::copy( ui->folderPath->text().toStdString(), path_str.toStdString(), std::filesystem::copy_options::recursive );
+		std::filesystem::copy(
+			ui->folderPath->text().toStdString(),
+			path_str.toStdString(),
+			std::filesystem::copy_options::recursive );
 		//std::filesystem::remove( ui->execPath->text().toStdString() );
 	}
 
@@ -222,7 +227,7 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 	ui->version->setText( path_manager.value( "{version}" ) );
 	ui->engine->setText( path_manager.value( "{engine}" ) );
 
-	path_manager.setRoot(text.toStdString());
+	path_manager.setRoot( text.toStdString() );
 
 	verifySettings();
 }

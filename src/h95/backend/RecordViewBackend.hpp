@@ -16,7 +16,6 @@ class RecordViewBackend : public QObject
 	std::vector< Tag > active_tags {};
 
 	public:
-
 	public slots:
 	//! Starts a search for a similar tag to the text.
 	void searchSimilar( const QString& text );
