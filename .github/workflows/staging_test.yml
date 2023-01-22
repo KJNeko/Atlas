@@ -61,7 +61,7 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DCMAKE_CXX_COMPILER='${{github.workspace}}\Qt\Tools\mingw1120_64\bin\g++.exe' -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
 
       - name: Build
         run: |
