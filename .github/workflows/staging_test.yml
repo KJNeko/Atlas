@@ -14,7 +14,15 @@ jobs:
         with:
           submodules: true
 
+      - name: Cache sqlite
+        id: cache-sqlite
+        uses: actions/cache@v3
+        with:
+          path: './qslite'
+          key: ${{runner.os}}-sqlite-3400100
+
       - name: Download SQLITE-Amalgamation
+        if: steps.cache-sqlite.outputs.cache-hit != 'true'
         uses: carlosperate/download-file-action@v2.0.0
         id: download_amalgamation
         with:
@@ -23,6 +31,7 @@ jobs:
           location: './sqlite'
 
       - name: Download SQLITE-dll
+        if: steps.cache-sqlite.outputs.cache-hit != 'true'
         uses: carlosperate/download-file-action@v2.0.0
         id: download_dll
         with:
@@ -31,6 +40,7 @@ jobs:
           location: './sqlite'
 
       - name: Prepare SQLITE
+        if: steps.cache-sqlite.outputs.cache-hit != 'true'
         run: |
           cd sqlite
           7z x sqlite-amalg.zip -o"./include"
@@ -40,7 +50,15 @@ jobs:
           7z x sqlite-dll.zip -o"./lib"
           cd ..
 
+      - name: Cache qt
+        id: cache-qt
+        uses: actions/cache@v3
+        with:
+          path: './Qt/'
+          key: ${{runner.os}}-qt-6.2.4
+
       - name: Install Qt
+        if: steps.cache-qt.outputs.cache-hit != 'true'
         uses: jurplel/install-qt-action@v3
         with:
           version: 6.2.4
