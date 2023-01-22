@@ -60,7 +60,6 @@ jobs:
       - name: Package
         run: |
           cd build/bin
-          del Hydrus95_UNIT_TESTS.exe
           cd ..
           mkdir Hydrus95
           move .\bin\* .\Hydrus95\
