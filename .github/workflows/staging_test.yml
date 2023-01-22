@@ -43,16 +43,16 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 6.2.*
+          version: 6.2.4
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw'
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
 
       - name: Build
         run: |
           cd build
-          make -j8
+          mingw32-make -j8
