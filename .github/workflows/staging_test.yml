@@ -13,6 +13,11 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup mingw
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
       - name: Cache sqlite
         id: cache-sqlite
         uses: actions/cache@v3
