@@ -47,7 +47,7 @@ if (${CMAKE_COMPILER_IS_GNUCXX})
     #Generates system specific stuff (IE requires AVX)
     set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
     #Generates safe optimization flags
-    set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -fdevirtualize-at-ltrans")
+    set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans")
 
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} ${FGL_DEBUG} -fsanitize=undefined")
     set(CMAKE_CXX_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
