@@ -14,11 +14,16 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup mingw
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
       - name: Cache sqlite
         id: cache-sqlite
         uses: actions/cache@v3
         with:
-          path: './sqlite'
+          path: '${{github.workspace}}\sqlite'
           key: ${{runner.os}}-sqlite-3400100
 
       - name: Download SQLITE-Amalgamation
@@ -28,7 +33,7 @@ jobs:
         with:
           file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3400100.zip
           file-name: sqlite-amalg.zip
-          location: './sqlite'
+          location: '${{github.workspace}}\sqlite'
 
       - name: Download SQLITE-dll
         if: steps.cache-sqlite.outputs.cache-hit != 'true'
@@ -37,7 +42,7 @@ jobs:
         with:
           file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3400100.zip
           file-name: sqlite-dll.zip
-          location: './sqlite'
+          location: '${{github.workspace}}\sqlite'
 
       - name: Prepare SQLITE
         if: steps.cache-sqlite.outputs.cache-hit != 'true'
@@ -50,13 +55,6 @@ jobs:
           7z x sqlite-dll.zip -o"./lib"
           cd ..
 
-      - name: Cache qt
-        id: cache-qt
-        uses: actions/cache@v3
-        with:
-          path: './Qt'
-          key: ${{runner.os}}-qt-6.2.4
-
       - name: Install Qt
         if: steps.cache-qt.outputs.cache-hit != 'true'
         uses: jurplel/install-qt-action@v3
@@ -65,10 +63,11 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw'
+          cache: true
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
 
       - name: Build
         run: |
