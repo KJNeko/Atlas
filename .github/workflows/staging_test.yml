@@ -49,13 +49,6 @@ jobs:
           7z x sqlite-dll.zip -o"./lib"
           cd ..
 
-      - name: Cache qt
-        id: cache-qt
-        uses: actions/cache@v3
-        with:
-          path: './Qt'
-          key: ${{runner.os}}-qt-6.2.4
-
       - name: Install Qt
         if: steps.cache-qt.outputs.cache-hit != 'true'
         uses: jurplel/install-qt-action@v3
@@ -64,10 +57,11 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw'
+          cache: true
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite" -DCMAKE_CXX_COMPILER=$GITHUB_WORKSPACE/Qt/Tools/mingw1120_64/bin/g++.exe"
 
       - name: Build
         run: |
