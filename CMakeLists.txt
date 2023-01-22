@@ -95,7 +95,7 @@ endif ()
 
 if (WIN32)
     add_custom_command(TARGET Hydrus95 POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT}
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
             $<TARGET_FILE:Hydrus95>
             COMMENT "Running windeployqt")
 
