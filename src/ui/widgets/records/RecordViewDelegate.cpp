@@ -64,7 +64,7 @@ bool RecordViewDelegate::editorEvent(
 
 			menu.addAction( "Manage record", [=]() {} );
 
-			menu.exec();
+			menu.exec(m_event->pos());
 
 			return true;
 		}
