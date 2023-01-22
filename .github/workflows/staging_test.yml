@@ -18,7 +18,7 @@ jobs:
         id: cache-sqlite
         uses: actions/cache@v3
         with:
-          path: './qslite'
+          path: './sqlite'
           key: ${{runner.os}}-sqlite-3400100
 
       - name: Download SQLITE-Amalgamation
@@ -54,7 +54,7 @@ jobs:
         id: cache-qt
         uses: actions/cache@v3
         with:
-          path: './Qt/'
+          path: './Qt'
           key: ${{runner.os}}-qt-6.2.4
 
       - name: Install Qt
@@ -68,9 +68,10 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
 
       - name: Build
         run: |
           cd build
           mingw32-make -j8
+
