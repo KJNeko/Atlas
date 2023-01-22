@@ -6,6 +6,8 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      CMAKE_CXX_COMPILER: '${{github.rospace]]\Qt\Tools\mingw1120_64\bin\g++.exe'
     steps:
 
       - name: Checkout
@@ -61,7 +63,7 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite" -DCMAKE_CXX_COMPILER=${{github.workspace}}\Qt\Tools\mingw1120_64\bin\g++.exe
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH="./sqlite"
 
       - name: Build
         run: |
