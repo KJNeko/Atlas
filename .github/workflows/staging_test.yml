@@ -1,6 +1,5 @@
 name: Prerelease build
 on:
-  workflow_dispatch:
     push:
       branches: [staging]
 
