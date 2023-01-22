@@ -171,7 +171,7 @@ void GameImportDialog::on_selectPath_pressed()
 
 void GameImportDialog::on_selectExec_pressed()
 {
-	QFileDialog dialog;
+	QFileDialog dialog{this};
 	//TODO: Read more into the spec and try to see if I can find a list of all mime types
 	dialog.setMimeTypeFilters( { "application/x-ms-dos-executable" } );
 	dialog.setFileMode( QFileDialog::ExistingFile );
@@ -190,6 +190,64 @@ void GameImportDialog::on_selectExec_pressed()
 		else
 			ui->execPath->setText( list.first() );
 	}
+}
+
+const QStringList file_filters {"Image files (*.png, *.jpg *.gif *.tiff)", "Any files (*)"};
+
+void GameImportDialog::on_selectBanner_pressed()
+{
+	QFileDialog dialog{this};
+	dialog.setNameFilters(file_filters);
+	dialog.setFileMode(QFileDialog::ExistingFile);
+	dialog.setOption(QFileDialog::ReadOnly);
+	dialog.setAcceptMode(QFileDialog::AcceptOpen);
+	dialog.setLabelText(QFileDialog::LookIn, "Select banner image");
+
+	if(!dialog.exec())
+		return;
+	else
+	{
+		const auto list {dialog.selectedFiles()};
+
+		if(list.empty())
+			return;
+		else
+			ui->bannerPath->setText(list.first());
+	}
+
+	verifySettings();
+}
+
+void GameImportDialog::on_selectPreviews_pressed()
+{
+	QFileDialog dialog{this};
+	dialog.setNameFilters(file_filters);
+	dialog.setFileMode(QFileDialog::ExistingFiles);
+	dialog.setOption(QFileDialog::ReadOnly);
+	dialog.setAcceptMode(QFileDialog::AcceptOpen);
+	dialog.setLabelText(QFileDialog::LookIn, "Select previews");
+
+	if(!dialog.exec())
+		return;
+	else
+	{
+		const auto list {dialog.selectedFiles()};
+
+		if(list.empty())
+			return;
+
+		QString previews;
+
+		for(const auto& file : list)
+			previews += file + ';';
+
+		if(previews.endsWith(';'))
+			previews.chop(1);
+
+		ui->previewPaths->setText(previews);
+	}
+
+	verifySettings();
 }
 
 

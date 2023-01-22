@@ -43,6 +43,8 @@ class GameImportDialog : public QDialog
 
 	void on_selectPath_pressed();
 	void on_selectExec_pressed();
+	void on_selectBanner_pressed();
+	void on_selectPreviews_pressed();
 
 	void on_title_textChanged( const QString text );
 	void on_creator_textChanged( const QString text );
