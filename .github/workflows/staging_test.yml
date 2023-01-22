@@ -64,7 +64,7 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DCMAKE_CXX_COMPILER='$env:CMAKE_CXX_COMPILER' -DSQL_PATH='$env:SQL_PATH'
 
       - name: Build
         run: |
