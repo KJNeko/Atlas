@@ -27,7 +27,7 @@
  * || data_path | string | './data' |
  */
 
-
+//TODO: Add cache
 inline QSettings getSettingsObject()
 {
 	return { "./data/config.ini", QSettings::IniFormat };
