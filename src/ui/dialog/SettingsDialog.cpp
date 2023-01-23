@@ -16,7 +16,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 	ui->itemWidth->setValue( getSettings< int >( "main_view/item_width", 400 ) );
 	ui->itemHeight->setValue( getSettings< int >( "main_view/item_height", 300 ) );
 	ui->bannerWidth->setValue( getSettings< int >( "main_view/banner_width", 400 ) );
-	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 300 ) );
+	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 280) );
 	ui->itemPadding->setValue( getSettings< int >( "main_view/padding", 8 ) );
 }
 
