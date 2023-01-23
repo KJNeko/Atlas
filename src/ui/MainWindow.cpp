@@ -4,6 +4,8 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_MainWindow.h" resolved
 
+#include <QFileDialog>
+#include <QDirIterator>
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
@@ -34,4 +36,47 @@ void MainWindow::on_actionImportGame_triggered()
 	GameImportDialog dialog;
 	connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
 	dialog.exec();
+}
+
+void MainWindow::on_actionMassAddImages_triggered()
+{
+	QFileDialog dialog { this };
+	dialog.setFileMode( QFileDialog::Directory );
+	if ( !dialog.exec() )
+		return;
+	else
+	{
+		std::vector< std::filesystem::path > paths;
+		const auto dirs { dialog.selectedFiles() };
+		paths.reserve( static_cast< decltype( paths )::size_type >( dirs.size() ) );
+		for ( const auto& dir : dirs )
+		{
+			QDirIterator iterator { dir, QDirIterator::Subdirectories };
+
+			while ( iterator.hasNext() )
+			{
+				const auto file { iterator.nextFileInfo() };
+				if ( file.isFile() ) paths.emplace_back( file.filePath().toStdString() );
+			}
+		}
+
+		std::cout << "Importing records" << std::endl;
+
+		for ( size_t i = 0; i < paths.size(); ++i )
+		{
+			std::cout << i << std::endl;
+
+			const auto placeholder { QString::fromStdString( std::to_string( i ) ) };
+			Record::create(
+				placeholder,
+				placeholder,
+				placeholder,
+				placeholder,
+				{ placeholder.toStdString(), placeholder.toStdString() },
+				paths.at( i ),
+				{} );
+		}
+
+		ui->recordView->refresh();
+	}
 }

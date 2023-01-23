@@ -35,7 +35,14 @@
     </property>
     <addaction name="actionImportGame"/>
    </widget>
+   <widget class="QMenu" name="menuTests">
+    <property name="title">
+     <string>Tests</string>
+    </property>
+    <addaction name="actionMassAddImages"/>
+   </widget>
    <addaction name="menuFiles"/>
+   <addaction name="menuTests"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionFile_View">
@@ -46,6 +53,11 @@
   <action name="actionImportGame">
    <property name="text">
     <string>Import Game</string>
+   </property>
+  </action>
+  <action name="actionMassAddImages">
+   <property name="text">
+    <string>Mass Add Images</string>
    </property>
   </action>
  </widget>
