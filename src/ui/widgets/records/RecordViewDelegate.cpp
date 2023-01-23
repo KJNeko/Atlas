@@ -4,6 +4,7 @@
 
 #include "RecordViewDelegate.hpp"
 #include "RecordViewModel.hpp"
+#include "h95/config.hpp"
 
 #include <QPainter>
 #include <QEvent>
@@ -25,10 +26,13 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		QFont font { option.font };
 		QFontMetrics metrics { font };
 
+		const auto banner_width {getSettings<int>("main_view/banner_width", 400)};
+		const auto banner_height {getSettings<int>("main_view/banner_height", 300)};
+
 		QPixmap banner { QString::fromStdString( record.m_banner.string() ) };
-		banner = banner.scaledToHeight( option.rect.height() - ( metrics.height() * 2 ), Qt::SmoothTransformation );
-		if ( banner.width() > option.rect.width() )
-			banner = banner.scaledToWidth( option.rect.width(), Qt::SmoothTransformation );
+		banner = banner.scaledToHeight( banner_height - ( metrics.height() * 2 ), Qt::SmoothTransformation );
+		if ( banner.width() > banner_width)
+			banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
 		painter->drawPixmap(
@@ -58,7 +62,7 @@ QSize RecordViewDelegate::sizeHint(
 	[[maybe_unused]] const QModelIndex& index ) const
 {
 	ZoneScoped;
-	return { 400, 300 };
+	return { getSettings<int>("main_view/item_width", 400), getSettings<int>("main_view/item_height", 300) };
 }
 
 
