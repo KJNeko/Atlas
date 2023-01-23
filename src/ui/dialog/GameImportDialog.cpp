@@ -80,7 +80,9 @@ void GameImportDialog::on_importButton_pressed()
 			ui->folderPath->text().toStdString(),
 			path_str.toStdString(),
 			std::filesystem::copy_options::recursive );
-		//std::filesystem::remove( ui->execPath->text().toStdString() );
+
+		if(ui->deleteAfterCopy->isChecked())
+			std::filesystem::remove( ui->execPath->text().toStdString() );
 	}
 
 	//Seperate preview paths

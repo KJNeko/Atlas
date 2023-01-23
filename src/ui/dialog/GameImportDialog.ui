@@ -557,7 +557,7 @@
          <item>
           <widget class="QCheckBox" name="move_dest">
            <property name="text">
-            <string>Move to destination: </string>
+            <string>Copy to destination</string>
            </property>
           </widget>
          </item>
@@ -569,6 +569,13 @@
           </widget>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="deleteAfterCopy">
+        <property name="text">
+         <string>Delete after copy</string>
+        </property>
        </widget>
       </item>
       <item>
