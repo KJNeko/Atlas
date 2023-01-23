@@ -31,6 +31,7 @@ class MainWindow final : public QMainWindow
 	private slots:
 	void on_actionImportGame_triggered();
 	void on_actionMassAddImages_triggered();
+	void on_actionSettings_triggered();
 };
 
 

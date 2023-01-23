@@ -15,7 +15,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class SettingsDialog : public QDialog
+class SettingsDialog final : public QDialog
 {
 	Q_OBJECT
 
@@ -27,6 +27,10 @@ class SettingsDialog : public QDialog
 
 	private:
 	Ui::SettingsDialog* ui;
+
+	private slots:
+	void on_apply_pressed();
+	void on_cancel_pressed();
 };
 
 

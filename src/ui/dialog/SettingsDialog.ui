@@ -28,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>1038</width>
-        <height>618</height>
+        <height>569</height>
        </rect>
       </property>
       <attribute name="label">
@@ -50,7 +50,7 @@
         <x>0</x>
         <y>0</y>
         <width>1038</width>
-        <height>618</height>
+        <height>569</height>
        </rect>
       </property>
       <attribute name="label">
@@ -288,6 +288,14 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1038</width>
+        <height>569</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>Performance Settings</string>
       </attribute>
@@ -337,6 +345,45 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_5">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cancel">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="apply">
+        <property name="text">
+         <string>Apply</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

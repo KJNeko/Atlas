@@ -10,6 +10,7 @@
 #include "h95/config.hpp"
 #include "ui/dialog/GameImportDialog.hpp"
 #include "h95/database/database.hpp"
+#include "ui/dialog/SettingsDialog.hpp"
 
 #include <QFileDialog>
 #include <QDirIterator>
@@ -84,4 +85,12 @@ void MainWindow::on_actionMassAddImages_triggered()
 
 		ui->recordView->refresh();
 	}
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+	SettingsDialog dialog;
+	dialog.exec();
+
+	this->ui->recordView->refresh();
 }

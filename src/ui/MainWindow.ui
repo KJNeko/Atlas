@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1339</width>
-    <height>793</height>
+    <width>688</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1339</width>
+     <width>688</width>
      <height>22</height>
     </rect>
    </property>
@@ -34,6 +34,7 @@
      <string>Files</string>
     </property>
     <addaction name="actionImportGame"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuTests">
     <property name="title">
@@ -58,6 +59,11 @@
   <action name="actionMassAddImages">
    <property name="text">
     <string>Mass Add Images</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

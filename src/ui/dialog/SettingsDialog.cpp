@@ -6,14 +6,37 @@
 
 #include "SettingsDialog.hpp"
 #include "ui_SettingsDialog.h"
+#include "h95/config.hpp"
 
 
 SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
 {
 	ui->setupUi( this );
+
+	ui->itemWidth->setValue( getSettings< int >( "main_view/item_width", 400 ) );
+	ui->itemHeight->setValue( getSettings< int >( "main_view/item_height", 300 ) );
+	ui->bannerWidth->setValue( getSettings< int >( "main_view/banner_width", 400 ) );
+	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 300 ) );
+	ui->itemPadding->setValue( getSettings< int >( "main_view/padding", 8 ) );
 }
 
 SettingsDialog::~SettingsDialog()
 {
 	delete ui;
+}
+
+void SettingsDialog::on_apply_pressed()
+{
+	setSettings( "main_view/item_width", ui->itemWidth->value() );
+	setSettings( "main_view/item_height", ui->itemHeight->value() );
+	setSettings( "main_view/banner_width", ui->bannerWidth->value() );
+	setSettings( "main_view/banner_height", ui->bannerHeight->value() );
+	setSettings( "main_view/padding", ui->itemPadding->value() );
+
+	this->close();
+}
+
+void SettingsDialog::on_cancel_pressed()
+{
+	this->close();
 }
