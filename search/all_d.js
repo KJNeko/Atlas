@@ -9,6 +9,10 @@ var searchData=
   ['setrecords_6',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
   ['setroot_7',['setRoot',['../structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346',1,'PathManager']]],
   ['setsettings_8',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['similartagfinished_9',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
-  ['sizehint_10',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
+  ['settings_20list_9',['Settings list',['../H95Settings.html',1,'']]],
+  ['settingsdialog_10',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog::SettingsDialog()'],['../classSettingsDialog.html',1,'SettingsDialog']]],
+  ['settingsdialog_2ecpp_11',['SettingsDialog.cpp',['../SettingsDialog_8cpp.html',1,'']]],
+  ['settingsdialog_2ehpp_12',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
+  ['similartagfinished_13',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
+  ['sizehint_14',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
 ];

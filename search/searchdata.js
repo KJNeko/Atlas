@@ -5,9 +5,11 @@ var indexSectionsWithContent =
   2: "du",
   3: "cdfgmprst",
   4: "acdefgimoprstuv~",
-  5: "cdegmnprtv",
+  5: "cdefgmnprtv",
   6: "fr",
-  7: "hp"
+  7: "p",
+  8: "p",
+  9: "hps"
 };
 
 var indexSectionNames =
@@ -19,7 +21,9 @@ var indexSectionNames =
   4: "functions",
   5: "variables",
   6: "typedefs",
-  7: "pages"
+  7: "enums",
+  8: "enumvalues",
+  9: "pages"
 };
 
 var indexSectionLabels =
@@ -31,6 +35,8 @@ var indexSectionLabels =
   4: "Functions",
   5: "Variables",
   6: "Typedefs",
-  7: "Pages"
+  7: "Enumerations",
+  8: "Enumerator",
+  9: "Pages"
 };
 

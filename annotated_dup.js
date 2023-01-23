@@ -13,6 +13,7 @@ var annotated_dup =
     [ "RecordViewModel", "classRecordViewModel.html", "classRecordViewModel" ],
     [ "RecordViewWidget", "classRecordViewWidget.html", "classRecordViewWidget" ],
     [ "SelectedViewWidget", "classSelectedViewWidget.html", "classSelectedViewWidget" ],
+    [ "SettingsDialog", "classSettingsDialog.html", "classSettingsDialog" ],
     [ "Tag", "classTag.html", null ],
     [ "TagDisplayWidget", "classTagDisplayWidget.html", "classTagDisplayWidget" ],
     [ "TagSearchWidget", "classTagSearchWidget.html", "classTagSearchWidget" ]

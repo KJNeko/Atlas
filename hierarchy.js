@@ -11,7 +11,8 @@ var hierarchy =
       [ "RecordViewModel", "classRecordViewModel.html", null ]
     ] ],
     [ "QDialog", null, [
-      [ "GameImportDialog", "classGameImportDialog.html", null ]
+      [ "GameImportDialog", "classGameImportDialog.html", null ],
+      [ "SettingsDialog", "classSettingsDialog.html", null ]
     ] ],
     [ "QMainWindow", null, [
       [ "MainWindow", "classMainWindow.html", null ]

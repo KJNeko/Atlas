@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Hydrus95", "index.html", [
+    [ "Settings list", "H95Settings.html", null ],
     [ "Hydrus95 Parsers", "ParserPage.html", [
       [ "Build-in/Pre-packaged parsers", "ParserPage.html#DefaultParsers", [
         [ "ParserInfo", "ParserPage.html#ParserInfo", null ],
@@ -57,7 +58,10 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
-        [ "Typedefs", "globals_type.html", null ]
+        [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ]
       ] ]
     ] ]
   ] ]

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['game_5fpath_0',['game_path',['../structGameMetadata.html#ad108b051bef64e473b502b894ef76cb6',1,'GameMetadata']]]
+  ['file_5ffilters_0',['file_filters',['../GameImportDialog_8cpp.html#a312996aa14ae38c917ae455b07adb3f0',1,'GameImportDialog.cpp']]]
 ];
