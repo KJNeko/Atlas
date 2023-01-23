@@ -5,6 +5,7 @@
 #include "database.hpp"
 #include <filesystem>
 #include <sqlite_modern_cpp.h>
+#include <tracy/Tracy.hpp>
 
 namespace database
 {
@@ -21,6 +22,7 @@ namespace database
 	void initalize()
 	try
 	{
+		ZoneScoped;
 		std::filesystem::create_directory( "./data" );
 
 		internal::db = new sqlite::database( "./data/hydrus95.db" );

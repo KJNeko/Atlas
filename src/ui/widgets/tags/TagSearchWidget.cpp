@@ -4,6 +4,7 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_TagSearchWidget.h" resolved
 
+#include <tracy/Tracy.hpp>
 #include "TagSearchWidget.hpp"
 #include "ui_TagSearchWidget.h"
 
@@ -20,6 +21,7 @@ TagSearchWidget::~TagSearchWidget()
 
 void TagSearchWidget::similarTagFinished( const std::vector< Tag >& tags )
 {
+	ZoneScoped;
 	ui->tagDisplay->tagsChanged( tags );
 }
 

@@ -21,6 +21,7 @@ Valid placeholders:
 #include <string>
 #include <filesystem>
 #include <iostream>
+#include <tracy/Tracy.hpp>
 
 struct PathManager
 {
@@ -34,6 +35,7 @@ struct PathManager
 
 	inline void registerReplacement( const QString key, const QString value )
 	{
+		ZoneScoped;
 		if ( auto itter = std::find_if(
 				 values.begin(),
 				 values.end(),
@@ -46,6 +48,7 @@ struct PathManager
 
 	QString value( const QString& text )
 	{
+		ZoneScoped;
 		if ( auto itter = std::find_if(
 				 values.begin(),
 				 values.end(),
@@ -58,6 +61,7 @@ struct PathManager
 
 	std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false )
 	{
+		ZoneScoped;
 		QString path_str { QString::fromStdString( path.string() ) };
 
 		//Example : {h95_data}/{engine}/{version}
@@ -73,6 +77,7 @@ struct PathManager
 
 	void populateValues( const std::filesystem::path& path, const std::filesystem::path key_path )
 	{
+		ZoneScoped;
 		auto temp_path { path };
 		auto temp_key_path { key_path };
 

@@ -4,6 +4,7 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_SelectedViewWidget.h" resolved
 
+#include <tracy/Tracy.hpp>
 #include "SelectedViewWidget.hpp"
 #include "ui_SelectedViewWidget.h"
 
@@ -20,5 +21,6 @@ SelectedViewWidget::~SelectedViewWidget()
 
 void SelectedViewWidget::recordSelected( [[maybe_unused]] const Record& record )
 {
+	ZoneScoped;
 	//TODO: Make file selection view
 }

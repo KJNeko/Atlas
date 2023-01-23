@@ -10,8 +10,11 @@
 #include <QMouseEvent>
 #include <QMenu>
 
+#include <tracy/Tracy.hpp>
+
 void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	painter->save();
 
 	const auto data { index.data().value< ModelData >() };
@@ -52,7 +55,8 @@ QSize RecordViewDelegate::sizeHint(
 	[[maybe_unused]] const QStyleOptionViewItem& option,
 	[[maybe_unused]] const QModelIndex& index ) const
 {
-	return { 400, 200 };
+	ZoneScoped;
+	return { 400, 300 };
 }
 
 
@@ -62,6 +66,7 @@ bool RecordViewDelegate::editorEvent(
 	[[maybe_unused]] const QStyleOptionViewItem& option,
 	const QModelIndex& index )
 {
+	ZoneScoped;
 	if ( event->type() == QEvent::MouseButtonPress )
 	{
 		QMouseEvent* m_event { dynamic_cast< QMouseEvent* >( event ) };

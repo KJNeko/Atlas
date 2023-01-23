@@ -5,6 +5,7 @@
 #include "Record.hpp"
 #include <QJsonArray>
 #include <iostream>
+#include <tracy/Tracy.hpp>
 #include "h95/database/database.hpp"
 
 #ifdef NDEBUG
@@ -23,7 +24,7 @@ Record Record::create(
 	const std::filesystem::path& banner,
 	const std::vector< std::filesystem::path >& previews )
 {
-
+	ZoneScoped;
 	RecordID id { 0 };
 	database::db_ref()
 			<< "INSERT INTO records (title, creator, version, engine) VALUES (?, ?, ?, ?) RETURNING record_id"
@@ -45,6 +46,7 @@ Record Record::create(
 
 Record Record::select( const RecordID id )
 {
+	ZoneScoped;
 	QString title;
 	QString creator;
 	QString version;

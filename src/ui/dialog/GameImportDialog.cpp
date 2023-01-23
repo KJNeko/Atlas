@@ -12,6 +12,8 @@
 #include <QMimeDatabase>
 #include <iostream>
 
+#include <tracy/Tracy.hpp>
+
 GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::GameImportDialog )
 {
 	ui->setupUi( this );
@@ -30,6 +32,7 @@ void GameImportDialog::on_cancelButton_pressed()
 
 void GameImportDialog::verifySettings()
 {
+	ZoneScoped;
 	ui->pathLabel->setText(
 		QString::fromStdString( path_manager.fillPath( ui->dest->text().toStdString() ).string() ) );
 
@@ -70,6 +73,7 @@ void GameImportDialog::verifySettings()
 
 void GameImportDialog::on_importButton_pressed()
 {
+	ZoneScoped;
 	if ( ui->move_dest->isChecked() )
 	{
 		const auto path_str { ui->pathLabel->text() };
@@ -106,6 +110,7 @@ void GameImportDialog::on_importButton_pressed()
 
 void GameImportDialog::on_selectPath_pressed()
 {
+	ZoneScoped;
 	QFileDialog dialog;
 	dialog.setFileMode( QFileDialog::Directory );
 	dialog.setOption( QFileDialog::ReadOnly );
@@ -173,6 +178,7 @@ void GameImportDialog::on_selectPath_pressed()
 
 void GameImportDialog::on_selectExec_pressed()
 {
+	ZoneScoped;
 	QFileDialog dialog{this};
 	//TODO: Read more into the spec and try to see if I can find a list of all mime types
 	dialog.setMimeTypeFilters( { "application/x-ms-dos-executable" } );
@@ -198,6 +204,7 @@ const QStringList file_filters {"Image files (*.png, *.jpg *.gif *.tiff)", "Any 
 
 void GameImportDialog::on_selectBanner_pressed()
 {
+	ZoneScoped;
 	QFileDialog dialog{this};
 	dialog.setNameFilters(file_filters);
 	dialog.setFileMode(QFileDialog::ExistingFile);
@@ -222,6 +229,7 @@ void GameImportDialog::on_selectBanner_pressed()
 
 void GameImportDialog::on_selectPreviews_pressed()
 {
+	ZoneScoped;
 	QFileDialog dialog{this};
 	dialog.setNameFilters(file_filters);
 	dialog.setFileMode(QFileDialog::ExistingFiles);
@@ -279,6 +287,7 @@ void GameImportDialog::on_engine_textChanged( [[maybe_unused]] const QString tex
 
 void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString text )
 {
+	ZoneScoped;
 	if ( ui->shouldParsePath->isChecked() )
 		path_manager.populateValues( text.toStdString(), ui->pathParse->text().toStdString() );
 

@@ -7,6 +7,7 @@
 #include "RecordViewWidget.hpp"
 #include "ui_RecordViewWidget.h"
 
+#include <tracy/Tracy.hpp>
 
 RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordViewWidget )
 {
@@ -23,6 +24,7 @@ RecordViewWidget::~RecordViewWidget()
 
 void RecordViewWidget::recordsUpdated( const std::vector< Record >& records )
 {
+	ZoneScoped;
 	qDebug() << "Records updated";
 	qDebug() << "Updated " << records.size() << " records";
 	model.setRecords( records );

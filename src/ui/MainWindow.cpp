@@ -4,14 +4,17 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_MainWindow.h" resolved
 
-#include <QFileDialog>
-#include <QDirIterator>
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
 #include "h95/config.hpp"
 #include "ui/dialog/GameImportDialog.hpp"
 #include "h95/database/database.hpp"
+
+#include <QFileDialog>
+#include <QDirIterator>
+
+#include <tracy/Tracy.hpp>
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -33,6 +36,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImportGame_triggered()
 {
+	ZoneScoped;
 	GameImportDialog dialog;
 	connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
 	dialog.exec();
@@ -40,6 +44,7 @@ void MainWindow::on_actionImportGame_triggered()
 
 void MainWindow::on_actionMassAddImages_triggered()
 {
+	ZoneScoped;
 	QFileDialog dialog { this };
 	dialog.setFileMode( QFileDialog::Directory );
 	if ( !dialog.exec() )
