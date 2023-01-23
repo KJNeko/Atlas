@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.21)
 project(Hydrus95 LANGUAGES CXX)
 
 #enable_testing()
-cmake_policy(SET CMP0077 NEW)
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
