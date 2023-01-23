@@ -8,6 +8,26 @@
 #include <QSettings>
 #include <QVariant>
 
+/**
+ *
+ * @page H95Settings Settings list
+ *
+ *
+ * @warning THESE SHOULD NEVER BE MODIFIED MANUALLY IN `config.ini` UNLESS TOLD TOO. These are simply to provide some reference to what they are when developing new modules
+ *
+ * |Group | Key		| Value 	  | Default |
+ * |-|-----------|--------------|------------|
+ * || first_launch |	boolean |  true 	|
+ * || version_number | int | 100 |
+ * |main_view| item_width | int | 400 |
+ * |main_view| item_height | int | 300|
+ * |main_view| banner_width | int | 400 |
+ * |main_view| banner_height | int | 300 |
+ * |main_view| padding | int | 8 |
+ * || data_path | string | './data' |
+ */
+
+
 inline QSettings getSettingsObject()
 {
 	return { "./data/config.ini", QSettings::IniFormat };
