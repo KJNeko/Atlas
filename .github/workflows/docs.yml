@@ -1,7 +1,8 @@
 name: Doxygen
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [dev, staging, master]
 
 jobs:
   build-doxygen:
