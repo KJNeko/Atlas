@@ -1,6 +1,9 @@
-/build/
-/cmake-build-debug/
 /docs/html/
 /docs/latex/
 
 /.idea/
+
+/build/
+/cmake-build-debug/
+/cmake-build-relwithdebinfo/
+/cmake-build-release/
