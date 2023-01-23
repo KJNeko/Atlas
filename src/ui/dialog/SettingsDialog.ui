@@ -110,7 +110,7 @@
                 <number>9999</number>
                </property>
                <property name="value">
-                <number>400</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -127,7 +127,7 @@
                 <number>9999</number>
                </property>
                <property name="value">
-                <number>300</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -178,7 +178,7 @@
                 <number>9999</number>
                </property>
                <property name="value">
-                <number>400</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -195,7 +195,7 @@
                 <number>9999</number>
                </property>
                <property name="value">
-                <number>300</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -249,7 +249,7 @@
              <item>
               <widget class="QSpinBox" name="itemPadding">
                <property name="value">
-                <number>8</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
