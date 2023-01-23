@@ -16,7 +16,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class RecordView : public QWidget
+class RecordView final : public QWidget
 {
 	Q_OBJECT
 

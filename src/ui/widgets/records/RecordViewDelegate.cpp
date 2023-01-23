@@ -31,7 +31,9 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 			banner = banner.scaledToWidth( option.rect.width(), Qt::SmoothTransformation );
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
-		painter->drawPixmap( pixmap_rect.translated( -( banner.width() / 2 ), -( banner.height() ) / 2 ), banner );
+		painter->drawPixmap(
+			pixmap_rect.translated( ( banner.width() / 2 ) * -1, ( ( banner.height() ) / 2 ) * -1 ),
+			banner );
 
 		painter->drawRect( option.rect );
 		painter->drawText(

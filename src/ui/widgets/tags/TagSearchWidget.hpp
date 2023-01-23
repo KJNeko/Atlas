@@ -16,7 +16,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class TagSearchWidget : public QWidget
+class TagSearchWidget final : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( TagSearchWidget )

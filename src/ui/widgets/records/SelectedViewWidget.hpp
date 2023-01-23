@@ -16,7 +16,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class SelectedViewWidget : public QWidget
+class SelectedViewWidget final : public QWidget
 {
 	Q_OBJECT
 

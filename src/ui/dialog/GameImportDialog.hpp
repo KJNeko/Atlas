@@ -17,7 +17,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class GameImportDialog : public QDialog
+class GameImportDialog final : public QDialog
 {
 	Q_OBJECT
 
