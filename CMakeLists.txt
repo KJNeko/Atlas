@@ -35,6 +35,36 @@ if (WIN32)
     endif ()
 endif ()
 
+
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    set(TRACY_ENABLE ON)
+    set(TRACY_NO_EXIT OFF)
+    set(TRACY_ONLY_LOCALHOST ON)
+    SET(TRACY_NO_SAMPLE_RETIREMENT OFF)
+    set(TRACY_NO_SAMPLE_BRANCH OFF)
+    set(TRACY_NO_SAMPLE_CACHE OFF)
+elseif (CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
+    set(TRACY_ENABLE ON)
+    set(TRACY_NO_EXIT OFF)
+    set(TRACY_ONLY_LOCALHOST ON)
+    SET(TRACY_NO_SAMPLE_RETIREMENT OFF)
+    set(TRACY_NO_SAMPLE_BRANCH OFF)
+    set(TRACY_NO_SAMPLE_CACHE OFF)
+else ()
+    set(TRACY_ENABLE OFF)
+    set(TRACY_NO_EXIT OFF)
+endif ()
+
+include(FetchContent)
+FetchContent_Declare(
+        tracy
+        GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+        GIT_TAG master
+        GIT_SHALLOW TRUE
+        GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(tracy)
+
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
@@ -85,7 +115,7 @@ if (WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 endif ()
 
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3 TracyClient)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 
