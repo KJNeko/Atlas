@@ -188,6 +188,17 @@ void GameImportDialog::on_importButton_pressed()
 		if ( ui->deleteAfterCopy->isChecked() )
 		{
 			std::filesystem::remove( ui->execPath->text().toStdString() );
+			if ( std::filesystem::exists( banner ) ) std::filesystem::remove( banner );
+			for ( const auto& preview : previews ) std::filesystem::remove( preview );
+		}
+	}
+	else
+	{
+		const std::filesystem::path filepath { ui->folderPath->text().toStdString() };
+		const std::filesystem::path executable { ui->execPath->text().toStdString() };
+
+		path_manager.setRoot( filepath );
+		ui->execPath->setText( QString::fromStdString( path_manager.relative( executable ).string() ) );
 	}
 
 	//Seperate preview paths
