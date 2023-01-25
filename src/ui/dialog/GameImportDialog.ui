@@ -555,7 +555,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="move_dest">
+          <widget class="QCheckBox" name="copyToDest">
            <property name="text">
             <string>Copy to destination</string>
            </property>
