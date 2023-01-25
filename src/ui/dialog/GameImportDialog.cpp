@@ -14,6 +14,48 @@
 
 #include <tracy/Tracy.hpp>
 
+constexpr char preview_delim { ';' };
+
+inline std::vector< std::filesystem::path > deserializePreviews( const QString& str )
+{
+	const auto list { str.split( preview_delim ) };
+
+	std::vector< std::filesystem::path > paths;
+
+	for ( const auto& file : list ) paths.emplace_back( file.toStdString() );
+
+	return paths;
+}
+
+inline QString serializePreviews( const QList< QString >& list )
+{
+	if ( list.empty() ) return {};
+
+	QString previews;
+
+	for ( const auto& file : list ) previews += file + preview_delim;
+
+	if ( previews.endsWith( preview_delim ) ) previews.chop( 1 );
+
+	return previews;
+}
+
+inline QString serializePreviews( const std::vector< std::filesystem::path >& paths )
+{
+	QString previews;
+
+	for ( const auto& file : paths ) previews += QString::fromStdString( file.string() ) + preview_delim;
+
+	if ( previews.endsWith( preview_delim ) ) previews.chop( 1 );
+
+	return previews;
+}
+
+inline QString fixPathDelimiter( QString str )
+{
+	return str.replace( '/', QDir::separator() ).replace( '\\', QDir::separator() );
+}
+
 GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::GameImportDialog )
 {
 	ui->setupUi( this );
@@ -243,18 +285,8 @@ void GameImportDialog::on_selectPreviews_pressed()
 	{
 		const auto list {dialog.selectedFiles()};
 
-		if(list.empty())
-			return;
 
-		QString previews;
-
-		for(const auto& file : list)
-			previews += file + ';';
-
-		if(previews.endsWith(';'))
-			previews.chop(1);
-
-		ui->previewPaths->setText(previews);
+		ui->previewPaths->setText( serializePreviews( list ) );
 	}
 
 	verifySettings();
