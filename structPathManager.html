@@ -117,12 +117,14 @@ $(document).ready(function(){initNavTree('structPathManager.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5da0e643e6df137e217660501dbd1fa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a5da0e643e6df137e217660501dbd1fa4">registerReplacement</a> (const QString key, const QString <a class="el" href="structPathManager.html#a2d4a7f0af163bf7b17e29f045092d86c">value</a>)</td></tr>
+<tr class="memitem:a5da0e643e6df137e217660501dbd1fa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a5da0e643e6df137e217660501dbd1fa4">registerReplacement</a> (const QString key, const QString <a class="el" href="structPathManager.html#a32cba34c69eb1b00475973d9ee127b9e">value</a>)</td></tr>
 <tr class="separator:a5da0e643e6df137e217660501dbd1fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d4a7f0af163bf7b17e29f045092d86c"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a2d4a7f0af163bf7b17e29f045092d86c">value</a> (const QString &amp;text)</td></tr>
-<tr class="separator:a2d4a7f0af163bf7b17e29f045092d86c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a122e68c928c42ef46b990a314bda1b1c"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a122e68c928c42ef46b990a314bda1b1c">fillPath</a> (const std::filesystem::path &amp;path, bool relativeFromRoot=false)</td></tr>
-<tr class="separator:a122e68c928c42ef46b990a314bda1b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32cba34c69eb1b00475973d9ee127b9e"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a32cba34c69eb1b00475973d9ee127b9e">value</a> (const QString &amp;text) const</td></tr>
+<tr class="separator:a32cba34c69eb1b00475973d9ee127b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ab5c54887498b061f908dc0ddb9a55"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">fillPath</a> (const std::filesystem::path &amp;path, bool relativeFromRoot=false) const</td></tr>
+<tr class="separator:a00ab5c54887498b061f908dc0ddb9a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06260406adb9adb6e70a360945806b5b"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">relative</a> (const std::filesystem::path &amp;path) const</td></tr>
+<tr class="separator:a06260406adb9adb6e70a360945806b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66cb22d18d5ac2735f9352f9ee396ca7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">populateValues</a> (const std::filesystem::path &amp;path, const std::filesystem::path key_path)</td></tr>
 <tr class="separator:a66cb22d18d5ac2735f9352f9ee396ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0ee31573a5b1fdaf883b6ae88371346"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">setRoot</a> (const std::filesystem::path &amp;path)</td></tr>
@@ -139,8 +141,8 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Valid placeholders:</p>
 <p>{h95_data} {title} {creator} {engine} {version} </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a122e68c928c42ef46b990a314bda1b1c" name="a122e68c928c42ef46b990a314bda1b1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a122e68c928c42ef46b990a314bda1b1c">&#9670;&#160;</a></span>fillPath()</h2>
+<a id="a00ab5c54887498b061f908dc0ddb9a55" name="a00ab5c54887498b061f908dc0ddb9a55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ab5c54887498b061f908dc0ddb9a55">&#9670;&#160;</a></span>fillPath()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +165,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -247,6 +249,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a06260406adb9adb6e70a360945806b5b" name="a06260406adb9adb6e70a360945806b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06260406adb9adb6e70a360945806b5b">&#9670;&#160;</a></span>relative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path PathManager::relative </td>
+          <td>(</td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af0ee31573a5b1fdaf883b6ae88371346" name="af0ee31573a5b1fdaf883b6ae88371346"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af0ee31573a5b1fdaf883b6ae88371346">&#9670;&#160;</a></span>setRoot()</h2>
 
@@ -273,8 +301,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d4a7f0af163bf7b17e29f045092d86c" name="a2d4a7f0af163bf7b17e29f045092d86c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d4a7f0af163bf7b17e29f045092d86c">&#9670;&#160;</a></span>value()</h2>
+<a id="a32cba34c69eb1b00475973d9ee127b9e" name="a32cba34c69eb1b00475973d9ee127b9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32cba34c69eb1b00475973d9ee127b9e">&#9670;&#160;</a></span>value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -287,7 +315,7 @@ Public Attributes</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -326,9 +354,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">        { <span class="stringliteral">&quot;{h95_data}&quot;</span>,</div>
+<div class="line">        { <span class="stringliteral">&quot;{h95_games}&quot;</span>,</div>
 <div class="line">          QString::fromStdString(</div>
-<div class="line">              std::filesystem::canonical( getSettings&lt; QString &gt;( <span class="stringliteral">&quot;paths/data&quot;</span>, <span class="stringliteral">&quot;./data&quot;</span> ).toStdString() )</div>
+<div class="line">              std::filesystem::canonical( getSettings&lt; QString &gt;( <span class="stringliteral">&quot;paths/data&quot;</span>, <span class="stringliteral">&quot;./data/games&quot;</span> ).toStdString() )</div>
 <div class="line">                  .<span class="keywordtype">string</span>() ) } }</div>
 </div><!-- fragment -->
 </div>

@@ -4,10 +4,11 @@ var searchData=
   ['select_1',['select',['../structGameMetadata.html#a403699dddf5574f5331fc91a1d906804',1,'GameMetadata::select()'],['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()']]],
   ['selected_2',['selected',['../classTagDisplayWidget.html#a03eba7a8e301b2c4da77d79bd2de629d',1,'TagDisplayWidget']]],
   ['selectedviewwidget_3',['SelectedViewWidget',['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget']]],
-  ['setrecords_4',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
-  ['setroot_5',['setRoot',['../structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346',1,'PathManager']]],
-  ['setsettings_6',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['settingsdialog_7',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog']]],
-  ['similartagfinished_8',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
-  ['sizehint_9',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
+  ['serializepreviews_4',['serializePreviews',['../GameImportDialog_8cpp.html#a74698469e778e3d6d11b7d690ccb50b3',1,'serializePreviews(const QList&lt; QString &gt; &amp;list):&#160;GameImportDialog.cpp'],['../GameImportDialog_8cpp.html#a28138603c0cc4f0a3fb08f98d5b074bf',1,'serializePreviews(const std::vector&lt; std::filesystem::path &gt; &amp;paths):&#160;GameImportDialog.cpp']]],
+  ['setrecords_5',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
+  ['setroot_6',['setRoot',['../structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346',1,'PathManager']]],
+  ['setsettings_7',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
+  ['settingsdialog_8',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog']]],
+  ['similartagfinished_9',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
+  ['sizehint_10',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
 ];
