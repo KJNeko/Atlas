@@ -46,7 +46,7 @@ struct PathManager
 			values.emplace_back( key, value );
 	}
 
-	inline QString value( const QString& text )
+	inline QString value( const QString& text ) const
 	{
 		ZoneScoped;
 		if ( auto itter = std::find_if(
@@ -59,7 +59,7 @@ struct PathManager
 			return {};
 	}
 
-	inline std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false )
+	inline std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false ) const
 	{
 		ZoneScoped;
 		QString path_str { QString::fromStdString( path.string() ) };
