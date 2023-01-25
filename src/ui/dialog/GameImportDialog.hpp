@@ -24,6 +24,7 @@ class GameImportDialog final : public QDialog
 	Q_DISABLE_COPY_MOVE( GameImportDialog )
 
 	PathManager path_manager {};
+	bool good_import {false};
 
 	public:
 	explicit GameImportDialog( QWidget* parent = nullptr );

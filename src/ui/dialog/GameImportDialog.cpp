@@ -89,6 +89,7 @@ void GameImportDialog::on_cancelButton_pressed()
 void GameImportDialog::verifySettings()
 {
 	ZoneScoped;
+	good_import = false;
 	ui->pathLabel->setText(
 		QString::fromStdString( path_manager.fillPath( ui->dest->text().toStdString() ).string() ) );
 
@@ -125,12 +126,16 @@ void GameImportDialog::verifySettings()
 	}
 
 	ui->infoLabel->setText( "Good to import!" );
+	good_import = true;
 }
 
 void GameImportDialog::on_importButton_pressed()
 {
 	ZoneScoped;
 	verifySettings();
+	if(!good_import)
+		return;
+
 	if ( ui->copyToDest->isChecked() )
 	{
 		const auto path_str { ui->pathLabel->text() };
