@@ -59,10 +59,24 @@ inline QString fixPathDelimiter( QString str )
 GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::GameImportDialog )
 {
 	ui->setupUi( this );
+
+	ui->shouldParsePath->setChecked( getSettings< bool >( "import/should_autofill", true ) );
+	ui->pathParse->setText( fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}" ) ) );
+
+	ui->copyToDest->setChecked( getSettings< bool >( "import/should_copy", true ) );
+	ui->dest->setText( fixPathDelimiter(getSettings<QString>("import/dest_path", "{h95_games}/{title}")));
+
+	ui->deleteAfterCopy->setChecked(getSettings<bool>("import/should_delete", false));
 }
 
 GameImportDialog::~GameImportDialog()
 {
+	setSettings("import/should_autofill", ui->shouldParsePath->isChecked());
+	setSettings("import/auto_fill_path", ui->pathParse->text());
+	setSettings("import/should_copy", ui->copyToDest->isChecked());
+	setSettings("import/dest_path", ui->dest->text());
+	setSettings("import/should_delete", ui->deleteAfterCopy->isChecked());
+
 	delete ui;
 }
 
