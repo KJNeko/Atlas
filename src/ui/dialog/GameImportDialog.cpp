@@ -221,7 +221,7 @@ void GameImportDialog::on_selectPath_pressed()
 void GameImportDialog::on_selectExec_pressed()
 {
 	ZoneScoped;
-	QFileDialog dialog{this};
+	QFileDialog dialog { this };
 	//TODO: Read more into the spec and try to see if I can find a list of all mime types
 	dialog.setMimeTypeFilters( { "application/x-ms-dos-executable" } );
 	dialog.setFileMode( QFileDialog::ExistingFile );
@@ -242,28 +242,28 @@ void GameImportDialog::on_selectExec_pressed()
 	}
 }
 
-const QStringList file_filters {"Image files (*.png, *.jpg *.gif *.tiff)", "Any files (*)"};
+const QStringList file_filters { "Image files (*.png, *.jpg *.gif *.tiff)", "Any files (*)" };
 
 void GameImportDialog::on_selectBanner_pressed()
 {
 	ZoneScoped;
-	QFileDialog dialog{this};
-	dialog.setNameFilters(file_filters);
-	dialog.setFileMode(QFileDialog::ExistingFile);
-	dialog.setOption(QFileDialog::ReadOnly);
-	dialog.setAcceptMode(QFileDialog::AcceptOpen);
-	dialog.setLabelText(QFileDialog::LookIn, "Select banner image");
+	QFileDialog dialog { this };
+	dialog.setNameFilters( file_filters );
+	dialog.setFileMode( QFileDialog::ExistingFile );
+	dialog.setOption( QFileDialog::ReadOnly );
+	dialog.setAcceptMode( QFileDialog::AcceptOpen );
+	dialog.setLabelText( QFileDialog::LookIn, "Select banner image" );
 
-	if(!dialog.exec())
+	if ( !dialog.exec() )
 		return;
 	else
 	{
-		const auto list {dialog.selectedFiles()};
+		const auto list { dialog.selectedFiles() };
 
-		if(list.empty())
+		if ( list.empty() )
 			return;
 		else
-			ui->bannerPath->setText(list.first());
+			ui->bannerPath->setText( list.first() );
 	}
 
 	verifySettings();
@@ -272,18 +272,18 @@ void GameImportDialog::on_selectBanner_pressed()
 void GameImportDialog::on_selectPreviews_pressed()
 {
 	ZoneScoped;
-	QFileDialog dialog{this};
-	dialog.setNameFilters(file_filters);
-	dialog.setFileMode(QFileDialog::ExistingFiles);
-	dialog.setOption(QFileDialog::ReadOnly);
-	dialog.setAcceptMode(QFileDialog::AcceptOpen);
-	dialog.setLabelText(QFileDialog::LookIn, "Select previews");
+	QFileDialog dialog { this };
+	dialog.setNameFilters( file_filters );
+	dialog.setFileMode( QFileDialog::ExistingFiles );
+	dialog.setOption( QFileDialog::ReadOnly );
+	dialog.setAcceptMode( QFileDialog::AcceptOpen );
+	dialog.setLabelText( QFileDialog::LookIn, "Select previews" );
 
-	if(!dialog.exec())
+	if ( !dialog.exec() )
 		return;
 	else
 	{
-		const auto list {dialog.selectedFiles()};
+		const auto list { dialog.selectedFiles() };
 
 
 		ui->previewPaths->setText( serializePreviews( list ) );
