@@ -15,16 +15,22 @@
  *
  * @warning THESE SHOULD NEVER BE MODIFIED MANUALLY IN `config.ini` UNLESS TOLD TOO. These are simply to provide some reference to what they are when developing new modules
  *
- * |Group | Key		| Value 	  | Default |
- * |-|-----------|--------------|------------|
- * || first_launch |	boolean |  true 	|
- * || version_number | int | 100 |
- * |main_view| item_width | int | 400 |
- * |main_view| item_height | int | 300|
- * |main_view| banner_width | int | 400 |
- * |main_view| banner_height | int | 300 |
- * |main_view| padding | int | 8 |
- * || data_path | string | './data' |
+ * |Group 		| Key				| Value 	| Default	|
+ * |------------|-------------------|-----------|-----------|
+ * |			| first_launch 		| boolean 	|  true 	|
+ * |			| version_number 	| int 		| 100 		|
+ * | main_view	| item_width 		| int 		| 400 		|
+ * | main_view	| item_height 		| int 		| 300		|
+ * | main_view	| banner_width 		| int 		| 400		|
+ * | main_view	| banner_height 	| int 		| 300		|
+ * | main_view	| padding			| int		| 8			|
+ * |			| data_path			| string	| './data'	|
+ * | import		| auto_fill_path 	| string	| '{path}/{title}' |
+ * | import		| should_autofill 	| bool		| 'true'	|
+ * | import		| dest_path			| string	| '{h95_games}/{title}' |
+ * | import		| should_copy 		| bool		| 'true'	|
+ * | import		| should_delete		| bool		| 'false' 	|
+ *
  */
 
 //TODO: Add cache
