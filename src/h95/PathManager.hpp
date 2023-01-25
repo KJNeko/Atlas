@@ -28,9 +28,9 @@ struct PathManager
 	std::filesystem::path root {};
 
 	std::vector< std::pair< QString, QString > > values {
-		{ "{h95_data}",
+		{ "{h95_games}",
 		  QString::fromStdString(
-			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data" ).toStdString() )
+			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data/games" ).toStdString() )
 				  .string() ) } };
 
 	inline void registerReplacement( const QString key, const QString value )
