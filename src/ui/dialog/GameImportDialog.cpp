@@ -125,6 +125,12 @@ void GameImportDialog::verifySettings()
 		return;
 	}
 
+	if ( ui->pathLabel->text().contains( '{' ) || ui->pathLabel->text().contains( '}' ) )
+	{
+		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
+		return;
+	}
+
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
 }
