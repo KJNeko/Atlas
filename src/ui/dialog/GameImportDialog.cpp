@@ -130,18 +130,52 @@ void GameImportDialog::verifySettings()
 void GameImportDialog::on_importButton_pressed()
 {
 	ZoneScoped;
-	if ( ui->move_dest->isChecked() )
+	verifySettings();
+	if ( ui->copyToDest->isChecked() )
 	{
 		const auto path_str { ui->pathLabel->text() };
-		const std::filesystem::path path { path_str.toStdString() };
+		const std::filesystem::path game_path { path_str.toStdString() };
+		path_manager.setRoot( game_path );
 
-		std::filesystem::create_directories( path.parent_path() );
+		//Copy game
+		std::filesystem::create_directories( game_path.parent_path() );
 		std::filesystem::copy(
 			ui->folderPath->text().toStdString(),
-			path_str.toStdString(),
+			game_path,
 			std::filesystem::copy_options::recursive );
 
-		if(ui->deleteAfterCopy->isChecked())
+		//Copy extra information (previews + banners)
+		const std::filesystem::path banner { ui->bannerPath->text().toStdString() };
+		const std::filesystem::path banner_new { game_path / ( "banner" + banner.extension().string() ) };
+
+		//Check that we didn't copy the banner during our first copy
+
+		//Copy the banner
+		if ( std::filesystem::exists( banner ) && !std::filesystem::exists( banner_new ) )
+			std::filesystem::copy( banner, banner_new );
+
+		//Set banner path to be the new relative path
+		if ( std::filesystem::exists( banner_new ) )
+			ui->bannerPath->setText( QString::fromStdString( path_manager.relative( banner_new ).string() ) );
+
+		//Copy the previews
+		auto previews { deserializePreviews( ui->previewPaths->text() ) };
+
+		uint16_t counter { 0 };
+		for ( auto& preview : previews )
+		{
+			const std::filesystem::path preview_new { game_path / "previews" / preview.filename() };
+			std::filesystem::copy( preview, preview_new );
+			preview = path_manager.relative( preview_new );
+
+			++counter;
+		}
+
+		//Set preview paths to the new relative path
+		ui->previewPaths->setText( serializePreviews( previews ) );
+
+		if ( ui->deleteAfterCopy->isChecked() )
+		{
 			std::filesystem::remove( ui->execPath->text().toStdString() );
 	}
 

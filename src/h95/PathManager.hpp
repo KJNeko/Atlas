@@ -75,6 +75,12 @@ struct PathManager
 			return { path_str.toStdString() };
 	}
 
+	inline std::filesystem::path relative( const std::filesystem::path& path ) const
+	{
+		ZoneScoped;
+		return std::filesystem::relative( path, root );
+	}
+
 	inline void populateValues( const std::filesystem::path& path, const std::filesystem::path key_path )
 	{
 		ZoneScoped;
