@@ -74,6 +74,8 @@ int main( int argc, char** argv )
 	const auto path	{getSettings< QString >( "paths/data", "./data/games" ).toStdString()};
 	std::filesystem::create_directories(path);
 
+	database::initalize();
+
 	MainWindow window;
 	window.show();
 

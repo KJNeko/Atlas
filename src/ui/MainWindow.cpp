@@ -27,7 +27,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		setSettings( "first_launch", false );
 	}
 
-	database::initalize();
 }
 
 MainWindow::~MainWindow()
