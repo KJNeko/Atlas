@@ -20,6 +20,12 @@ if (DEFINED SQL_PATH)
     message("sql lib dir: ${SQLite3_LIBRARY}")
 endif ()
 
+if(WIN32)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/spdlog)
+else()
+    find_package(spdlog REQUIRED)
+endif()
+
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -33,7 +39,6 @@ if (WIN32)
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
-
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     set(TRACY_ENABLE ON)
@@ -98,7 +103,7 @@ file(GLOB_RECURSE UI_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
 if (WIN32)
-    add_executable(Hydrus95 WIN32 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(Hydrus95 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
 else ()
     if (${CMAKE_COMPILER_IS_GNUCXX})
         add_executable(Hydrus95 ${SOURCES} ${UI_SOURCES} ${CMAKE_SOURCE_DIR}/src/main.cpp)
@@ -114,7 +119,7 @@ if (WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 endif ()
 
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3 TracyClient)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3 TracyClient spdlog::spdlog)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 

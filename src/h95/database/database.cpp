@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <sqlite_modern_cpp.h>
 #include <tracy/Tracy.hpp>
+#include <spdlog/spdlog.h>
 #include "h95/config.hpp"
 
 namespace database
@@ -23,16 +24,18 @@ namespace database
 	void update()
 	try
 	{
+		spdlog::info("Checking for database update");
 		const auto ver_number { getSettings< int >( "version_number", 100 ) };
 		constexpr auto ver_latest { 103 };
+		spdlog::info("DB: Current: {} -> Supported: {}", ver_number, ver_latest);
 
-		if ( ver_number == ver_latest ) return;
+		if ( ver_number == ver_latest ) {spdlog::info("No update require!"); return;}
 
 		delete internal::db;
 
-		std::cout << "Backing up database" << std::endl;
+		spdlog::info("Backing up database");
 		std::filesystem::copy( "./data/hydrus95.db", "./data/hydrus95.db.backup" );
-		std::cout << "Backup complete" << std::endl;
+		spdlog::info("Backup complete");
 
 		internal::db = new sqlite::database("./data/hydrus95.db");
 
@@ -44,22 +47,22 @@ namespace database
 					"I fucked up and forgot to add a case for this update. Report your version number to me in an issue" );
 
 			case 100:
-				std::cout << "Updating 100 -> 101" << std::endl;
+				spdlog::info("Updating from 100 to 101");
 				[[fallthrough]];
 			case 101:
-				std::cout << "Updating 101 -> 102" << std::endl;
+				spdlog::info("Updating from 101 to 102");
 				[[fallthrough]];
 			case 102:
-				std::cout << "Updating 102 -> 103" << std::endl;
+				spdlog::info("Updating from 102 to 103");
 				[[fallthrough]];
 			case 103:
-				std::cout << "Fully updated. No updates needed" << std::endl;
+				spdlog::info("Update chain reached end.");
 				break;
 		}
 
 		setSettings( "version_number", ver_latest );
 
-		std::cout << "Finished updating. Deleting backup and restoring connection" << std::endl;
+		spdlog::info("Update finished. Erasing backup and restoring connection");
 		delete internal::db;
 		std::filesystem::remove("./data/hydrus95.db.backup");
 		internal::db = new sqlite::database("./data/hydrus95.db");
@@ -68,10 +71,7 @@ namespace database
 	}
 	catch ( std::exception& e )
 	{
-		std::cout
-			<< "Update failed! Please ***MANUALLY*** restore your database by renaming ./data/hydrus95.db.backup to ./data/hydurs95.db. Send the DB to the dev."
-			<< std::endl;
-		std::cout << "Update failure message: " << e.what() << std::endl;
+		spdlog::error("Something went wrong! Send the database to me along with this error if possible (Assuming your DB isn't stupidly large).\nUpdate failure message: {}", e.what());
 		std::abort();
 	}
 
@@ -95,7 +95,8 @@ namespace database
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
-		std::cout << "Shit: " << e.get_code() << ": " << e.what() << " during " << e.get_sql() << std::endl;
+		spdlog::error("Something went wrong while initalizing the database! {}: {} during {}", e.get_code(), e.what(), e.get_sql());
+		std::abort();
 	}
 
 }  // namespace database

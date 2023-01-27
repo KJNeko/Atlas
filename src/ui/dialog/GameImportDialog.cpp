@@ -13,6 +13,7 @@
 #include <iostream>
 
 #include <tracy/Tracy.hpp>
+#include <spdlog/spdlog.h>
 
 constexpr char preview_delim { ';' };
 
@@ -86,7 +87,7 @@ void GameImportDialog::on_cancelButton_pressed()
 	this->close();
 }
 
-void GameImportDialog::verifySettings()
+void GameImportDialog::verifySettings() try
 {
 	ZoneScoped;
 	good_import = false;
@@ -97,12 +98,14 @@ void GameImportDialog::verifySettings()
 	//Check that path and executable exists
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
+		spdlog::warn("Input folder path invalid or does not exist! Path: {}", ui->folderPath->text().toStdString());
 		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
 		return;
 	}
 
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
 	{
+		spdlog::warn("Executable path is invalid or does not exist! Path: {}", ui->execPath->text().toStdString());
 		ui->infoLabel->setText( "Executable path is invalid or does not exist!" );
 		return;
 	}
@@ -112,6 +115,7 @@ void GameImportDialog::verifySettings()
 		const auto mime_type { mime_db.mimeTypeForFile( ui->execPath->text(), QMimeDatabase::MatchContent ) };
 		if ( mime_type.name() != "application/x-ms-dos-executable" )
 		{
+			spdlog::warn("File executable not proper type (Wants: application/x-ms-dos-executable. Got: {}", mime_type.name().toStdString());
 			ui->infoLabel->setText(
 				QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
 					.arg( mime_type.name() ) );
@@ -121,12 +125,14 @@ void GameImportDialog::verifySettings()
 	//Check that title, creator and version are filled out
 	if ( ui->title->text().isEmpty() || ui->creator->text().isEmpty() || ui->version->text().isEmpty() )
 	{
+		spdlog::warn("One of the required Game Info fields were not populated.");
 		ui->infoLabel->setText( "One of the required Game Info fields were not populated" );
 		return;
 	}
 
-	if ( ui->pathLabel->text().contains( '{' ) || ui->pathLabel->text().contains( '}' ) )
+	if ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) )
 	{
+		spdlog::warn("Path label malformed. All replacements must be properly filled out");
 		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
 		return;
 	}
@@ -134,8 +140,13 @@ void GameImportDialog::verifySettings()
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
 }
+catch(std::exception& e)
+{
+	spdlog::warn("Something went wrong while verifying settings!");
+	spdlog::dump_backtrace();
+}
 
-void GameImportDialog::on_importButton_pressed()
+void GameImportDialog::on_importButton_pressed() try
 {
 	ZoneScoped;
 	verifySettings();
@@ -219,8 +230,14 @@ void GameImportDialog::on_importButton_pressed()
 	emit importComplete();
 	this->close();
 }
+catch(std::exception& e)
+{
+	spdlog::error("Failed to import file! Send the core dump and this error to the dev. Exception: {}", e.what());
+	spdlog::dump_backtrace();
+	std::abort();
+}
 
-void GameImportDialog::on_selectPath_pressed()
+void GameImportDialog::on_selectPath_pressed() try
 {
 	ZoneScoped;
 	QFileDialog dialog;
@@ -286,6 +303,10 @@ void GameImportDialog::on_selectPath_pressed()
 			}
 		}
 	}
+}
+catch(std::exception& e)
+{
+	spdlog::warn("Failed to process on_selectPath_pressed(): {}", e.what());
 }
 
 void GameImportDialog::on_selectExec_pressed()
