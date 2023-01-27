@@ -5,6 +5,8 @@ var dir_33f586cf01f7b35339e575ba246fbce1 =
     [ "parsers", "dir_8fce27e4c02529946634d0325d3efc79.html", "dir_8fce27e4c02529946634d0325d3efc79" ],
     [ "config.hpp", "config_8hpp.html", "config_8hpp" ],
     [ "f95parser.hpp", "f95parser_8hpp.html", "f95parser_8hpp" ],
+    [ "logging.cpp", "logging_8cpp.html", "logging_8cpp" ],
+    [ "logging.hpp", "logging_8hpp.html", "logging_8hpp" ],
     [ "PathManager.hpp", "PathManager_8hpp.html", "PathManager_8hpp" ],
     [ "Types.hpp", "Types_8hpp.html", "Types_8hpp" ]
 ];

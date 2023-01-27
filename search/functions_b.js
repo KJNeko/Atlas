@@ -10,5 +10,6 @@ var searchData=
   ['setsettings_7',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
   ['settingsdialog_8',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog']]],
   ['similartagfinished_9',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
-  ['sizehint_10',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]]
+  ['sizehint_10',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]],
+  ['spdlog_5fflush_11',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]]
 ];

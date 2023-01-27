@@ -1,16 +1,20 @@
 var searchData=
 [
-  ['tag_0',['Tag',['../classTag.html',1,'']]],
-  ['tag_2ehpp_1',['Tag.hpp',['../Tag_8hpp.html',1,'']]],
-  ['tagdisplaywidget_2',['TagDisplayWidget',['../classTagDisplayWidget.html',1,'TagDisplayWidget'],['../classTagDisplayWidget.html#a1254f7adfcc82da968e848b0778e3ea2',1,'TagDisplayWidget::TagDisplayWidget()']]],
-  ['tagdisplaywidget_2ecpp_3',['TagDisplayWidget.cpp',['../TagDisplayWidget_8cpp.html',1,'']]],
-  ['tagdisplaywidget_2ehpp_4',['TagDisplayWidget.hpp',['../TagDisplayWidget_8hpp.html',1,'']]],
-  ['tags_5',['tags',['../structF95Parser.html#a11349cdba228357ff97291697cc287ba',1,'F95Parser']]],
-  ['tagschanged_6',['tagsChanged',['../classRecordViewBackend.html#a734582d7a8a6d7036f341e86d3cfff70',1,'RecordViewBackend::tagsChanged()'],['../classTagDisplayWidget.html#af0e20060955f84749dcc5811a8305745',1,'TagDisplayWidget::tagsChanged()'],['../classTagSearchWidget.html#a5e1233beb418fcd65e4a2b36aae05253',1,'TagSearchWidget::tagsChanged()']]],
-  ['tagsearchwidget_7',['TagSearchWidget',['../classTagSearchWidget.html',1,'TagSearchWidget'],['../classTagSearchWidget.html#a7bbd77887c1743dda01678a93fa13bc9',1,'TagSearchWidget::TagSearchWidget()']]],
-  ['tagsearchwidget_2ecpp_8',['TagSearchWidget.cpp',['../TagSearchWidget_8cpp.html',1,'']]],
-  ['tagsearchwidget_2ehpp_9',['TagSearchWidget.hpp',['../TagSearchWidget_8hpp.html',1,'']]],
-  ['thread_5fid_10',['thread_id',['../structF95Parser.html#a3c0eb6730565d50d9576b201310a1da9',1,'F95Parser']]],
-  ['title_11',['title',['../structF95Parser.html#ae99b6dbebf817d4a4fc9106dffea8fac',1,'F95Parser']]],
-  ['types_2ehpp_12',['Types.hpp',['../Types_8hpp.html',1,'']]]
+  ['searchsimilar_0',['searchSimilar',['../classRecordViewBackend.html#a8c1ff89c54b9ae563b3f2464058bb414',1,'RecordViewBackend::searchSimilar()'],['../classTagSearchWidget.html#aab867dff88826f8c13e8bc6ec34b5206',1,'TagSearchWidget::searchSimilar()']]],
+  ['select_1',['select',['../structGameMetadata.html#a403699dddf5574f5331fc91a1d906804',1,'GameMetadata::select()'],['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()']]],
+  ['selected_2',['selected',['../classTagDisplayWidget.html#a03eba7a8e301b2c4da77d79bd2de629d',1,'TagDisplayWidget']]],
+  ['selectedviewwidget_3',['SelectedViewWidget',['../classSelectedViewWidget.html',1,'SelectedViewWidget'],['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget::SelectedViewWidget()']]],
+  ['selectedviewwidget_2ecpp_4',['SelectedViewWidget.cpp',['../SelectedViewWidget_8cpp.html',1,'']]],
+  ['selectedviewwidget_2ehpp_5',['SelectedViewWidget.hpp',['../SelectedViewWidget_8hpp.html',1,'']]],
+  ['serializepreviews_6',['serializePreviews',['../GameImportDialog_8cpp.html#a28138603c0cc4f0a3fb08f98d5b074bf',1,'serializePreviews(const std::vector&lt; std::filesystem::path &gt; &amp;paths):&#160;GameImportDialog.cpp'],['../GameImportDialog_8cpp.html#a74698469e778e3d6d11b7d690ccb50b3',1,'serializePreviews(const QList&lt; QString &gt; &amp;list):&#160;GameImportDialog.cpp']]],
+  ['setrecords_7',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
+  ['setroot_8',['setRoot',['../structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346',1,'PathManager']]],
+  ['setsettings_9',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
+  ['settings_20list_10',['Settings list',['../H95Settings.html',1,'']]],
+  ['settingsdialog_11',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog::SettingsDialog()'],['../classSettingsDialog.html',1,'SettingsDialog']]],
+  ['settingsdialog_2ecpp_12',['SettingsDialog.cpp',['../SettingsDialog_8cpp.html',1,'']]],
+  ['settingsdialog_2ehpp_13',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
+  ['similartagfinished_14',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend::similarTagFinished()'],['../classTagSearchWidget.html#a00a35e0c9c146d523424df7d07e7efc1',1,'TagSearchWidget::similarTagFinished()']]],
+  ['sizehint_15',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]],
+  ['spdlog_5fflush_16',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]]
 ];
