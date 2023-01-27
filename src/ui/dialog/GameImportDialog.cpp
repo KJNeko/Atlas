@@ -65,18 +65,18 @@ GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( n
 	ui->pathParse->setText( fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}" ) ) );
 
 	ui->copyToDest->setChecked( getSettings< bool >( "import/should_copy", true ) );
-	ui->dest->setText( fixPathDelimiter(getSettings<QString>("import/dest_path", "{h95_games}/{title}")));
+	ui->dest->setText( fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}" ) ) );
 
-	ui->deleteAfterCopy->setChecked(getSettings<bool>("import/should_delete", false));
+	ui->deleteAfterCopy->setChecked( getSettings< bool >( "import/should_delete", false ) );
 }
 
 GameImportDialog::~GameImportDialog()
 {
-	setSettings("import/should_autofill", ui->shouldParsePath->isChecked());
-	setSettings("import/auto_fill_path", ui->pathParse->text());
-	setSettings("import/should_copy", ui->copyToDest->isChecked());
-	setSettings("import/dest_path", ui->dest->text());
-	setSettings("import/should_delete", ui->deleteAfterCopy->isChecked());
+	setSettings( "import/should_autofill", ui->shouldParsePath->isChecked() );
+	setSettings( "import/auto_fill_path", ui->pathParse->text() );
+	setSettings( "import/should_copy", ui->copyToDest->isChecked() );
+	setSettings( "import/dest_path", ui->dest->text() );
+	setSettings( "import/should_delete", ui->deleteAfterCopy->isChecked() );
 
 	delete ui;
 }
@@ -87,7 +87,8 @@ void GameImportDialog::on_cancelButton_pressed()
 	this->close();
 }
 
-void GameImportDialog::verifySettings() try
+void GameImportDialog::verifySettings()
+try
 {
 	ZoneScoped;
 	good_import = false;
@@ -98,14 +99,14 @@ void GameImportDialog::verifySettings() try
 	//Check that path and executable exists
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
-		spdlog::warn("Input folder path invalid or does not exist! Path: {}", ui->folderPath->text().toStdString());
+		spdlog::warn( "Input folder path invalid or does not exist! Path: {}", ui->folderPath->text().toStdString() );
 		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
 		return;
 	}
 
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
 	{
-		spdlog::warn("Executable path is invalid or does not exist! Path: {}", ui->execPath->text().toStdString());
+		spdlog::warn( "Executable path is invalid or does not exist! Path: {}", ui->execPath->text().toStdString() );
 		ui->infoLabel->setText( "Executable path is invalid or does not exist!" );
 		return;
 	}
@@ -115,7 +116,9 @@ void GameImportDialog::verifySettings() try
 		const auto mime_type { mime_db.mimeTypeForFile( ui->execPath->text(), QMimeDatabase::MatchContent ) };
 		if ( mime_type.name() != "application/x-ms-dos-executable" )
 		{
-			spdlog::warn("File executable not proper type (Wants: application/x-ms-dos-executable. Got: {}", mime_type.name().toStdString());
+			spdlog::warn(
+				"File executable not proper type (Wants: application/x-ms-dos-executable. Got: {}",
+				mime_type.name().toStdString() );
 			ui->infoLabel->setText(
 				QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
 					.arg( mime_type.name() ) );
@@ -125,14 +128,12 @@ void GameImportDialog::verifySettings() try
 	//Check that title, creator and version are filled out
 	if ( ui->title->text().isEmpty() || ui->creator->text().isEmpty() || ui->version->text().isEmpty() )
 	{
-		spdlog::warn("One of the required Game Info fields were not populated.");
 		ui->infoLabel->setText( "One of the required Game Info fields were not populated" );
 		return;
 	}
 
 	if ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) )
 	{
-		spdlog::warn("Path label malformed. All replacements must be properly filled out");
 		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
 		return;
 	}
@@ -140,18 +141,18 @@ void GameImportDialog::verifySettings() try
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
 }
-catch(std::exception& e)
+catch ( std::exception& e )
 {
-	spdlog::warn("Something went wrong while verifying settings!");
+	spdlog::warn( "Something went wrong while verifying settings!" );
 	spdlog::dump_backtrace();
 }
 
-void GameImportDialog::on_importButton_pressed() try
+void GameImportDialog::on_importButton_pressed()
+try
 {
 	ZoneScoped;
 	verifySettings();
-	if(!good_import)
-		return;
+	if ( !good_import ) return;
 
 	if ( ui->copyToDest->isChecked() )
 	{
@@ -168,13 +169,16 @@ void GameImportDialog::on_importButton_pressed() try
 
 		//Copy extra information (previews + banners)
 		const std::filesystem::path banner { ui->bannerPath->text().toStdString() };
-		const std::filesystem::path banner_new { game_path / ( "banner" + banner.extension().string() ) };
+		const std::filesystem::path banner_new { game_path / "h95" / ( "banner" + banner.extension().string() ) };
 
 		//Check that we didn't copy the banner during our first copy
 
 		//Copy the banner
 		if ( std::filesystem::exists( banner ) && !std::filesystem::exists( banner_new ) )
+		{
+			spdlog::debug( "Copying {} -> {}", banner.string(), banner_new.string() );
 			std::filesystem::copy( banner, banner_new );
+		}
 
 		//Set banner path to be the new relative path
 		if ( std::filesystem::exists( banner_new ) )
@@ -183,14 +187,14 @@ void GameImportDialog::on_importButton_pressed() try
 		//Copy the previews
 		auto previews { deserializePreviews( ui->previewPaths->text() ) };
 
-		uint16_t counter { 0 };
+		std::filesystem::create_directories( game_path / "h95" / "previews" );
+
 		for ( auto& preview : previews )
 		{
-			const std::filesystem::path preview_new { game_path / "previews" / preview.filename() };
-			std::filesystem::copy( preview, preview_new );
+			const std::filesystem::path preview_new { game_path / "h95" / "previews" / preview.filename() };
+			spdlog::debug( "Copying {} -> {}", preview.string(), preview_new.string() );
+			std::filesystem::copy( preview, preview_new, std::filesystem::copy_options::overwrite_existing );
 			preview = path_manager.relative( preview_new );
-
-			++counter;
 		}
 
 		//Set preview paths to the new relative path
@@ -198,6 +202,7 @@ void GameImportDialog::on_importButton_pressed() try
 
 		if ( ui->deleteAfterCopy->isChecked() )
 		{
+			spdlog::debug( "Deleting files from sources" );
 			std::filesystem::remove( ui->execPath->text().toStdString() );
 			if ( std::filesystem::exists( banner ) ) std::filesystem::remove( banner );
 			for ( const auto& preview : previews ) std::filesystem::remove( preview );
@@ -230,14 +235,15 @@ void GameImportDialog::on_importButton_pressed() try
 	emit importComplete();
 	this->close();
 }
-catch(std::exception& e)
+catch ( std::exception& e )
 {
-	spdlog::error("Failed to import file! Send the core dump and this error to the dev. Exception: {}", e.what());
+	spdlog::error( "Failed to import file! Send the core dump and this error to the dev. Exception: {}", e.what() );
 	spdlog::dump_backtrace();
 	std::abort();
 }
 
-void GameImportDialog::on_selectPath_pressed() try
+void GameImportDialog::on_selectPath_pressed()
+try
 {
 	ZoneScoped;
 	QFileDialog dialog;
@@ -304,9 +310,9 @@ void GameImportDialog::on_selectPath_pressed() try
 		}
 	}
 }
-catch(std::exception& e)
+catch ( std::exception& e )
 {
-	spdlog::warn("Failed to process on_selectPath_pressed(): {}", e.what());
+	spdlog::warn( "Failed to process on_selectPath_pressed(): {}", e.what() );
 }
 
 void GameImportDialog::on_selectExec_pressed()
