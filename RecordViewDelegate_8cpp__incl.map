@@ -1,5 +1,5 @@
 <map id="src/ui/widgets/records/RecordViewDelegate.cpp" name="src/ui/widgets/records/RecordViewDelegate.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="782,5,953,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="829,5,999,45"/>
 <area shape="rect" id="node2" href="$RecordViewDelegate_8hpp.html" title=" " alt="" coords="124,93,291,119"/>
 <area shape="rect" id="node4" href="$RecordViewModel_8hpp.html" title=" " alt="" coords="392,93,543,119"/>
 <area shape="rect" id="node14" href="$config_8hpp.html" title=" " alt="" coords="655,93,760,119"/>
@@ -8,6 +8,7 @@
 <area shape="rect" id="node19" title=" " alt="" coords="971,93,1075,119"/>
 <area shape="rect" id="node20" title=" " alt="" coords="1099,93,1163,119"/>
 <area shape="rect" id="node21" title=" " alt="" coords="1188,93,1299,119"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1323,93,1435,119"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,167,164,192"/>
 <area shape="rect" id="node5" title=" " alt="" coords="189,167,327,192"/>
 <area shape="rect" id="node6" title=" " alt="" coords="352,167,495,192"/>

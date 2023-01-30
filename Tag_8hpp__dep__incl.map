@@ -1,11 +1,7 @@
 <map id="src/h95/database/Tag.hpp" name="src/h95/database/Tag.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="453,5,625,31"/>
-<area shape="rect" id="node2" href="$RecordViewBackend_8hpp.html" title=" " alt="" coords="216,79,408,119"/>
-<area shape="rect" id="node6" href="$TagDisplayWidget_8hpp.html" title=" " alt="" coords="461,79,616,119"/>
-<area shape="rect" id="node8" href="$TagSearchWidget_8hpp.html" title=" " alt="" coords="606,167,759,207"/>
+<area shape="rect" id="node1" title=" " alt="" coords="121,5,293,31"/>
+<area shape="rect" id="node2" href="$RecordViewBackend_8hpp.html" title=" " alt="" coords="111,79,303,119"/>
 <area shape="rect" id="node3" href="$RecordViewBackend_8cpp.html" title=" " alt="" coords="5,167,197,207"/>
 <area shape="rect" id="node4" href="$RecordView_8hpp.html" title=" " alt="" coords="221,174,403,199"/>
-<area shape="rect" id="node5" href="$RecordView_8cpp.html" title=" " alt="" coords="221,262,403,287"/>
-<area shape="rect" id="node7" href="$TagDisplayWidget_8cpp.html" title=" " alt="" coords="427,167,581,207"/>
-<area shape="rect" id="node9" href="$TagSearchWidget_8cpp.html" title=" " alt="" coords="606,255,759,295"/>
+<area shape="rect" id="node5" href="$RecordView_8cpp.html" title=" " alt="" coords="221,255,403,280"/>
 </map>

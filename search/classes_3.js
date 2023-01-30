@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pathmanager_0',['PathManager',['../structPathManager.html',1,'']]]
+  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
+  ['modeldata_1',['ModelData',['../structModelData.html',1,'']]]
 ];

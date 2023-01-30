@@ -3,6 +3,7 @@ var annotated_dup =
     [ "F95Parser", "structF95Parser.html", "structF95Parser" ],
     [ "GameImportDialog", "classGameImportDialog.html", "classGameImportDialog" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],
+    [ "Importer", "classImporter.html", "classImporter" ],
     [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
     [ "ModelData", "structModelData.html", "structModelData" ],
     [ "PathManager", "structPathManager.html", "structPathManager" ],
@@ -14,7 +15,5 @@ var annotated_dup =
     [ "RecordViewWidget", "classRecordViewWidget.html", "classRecordViewWidget" ],
     [ "SelectedViewWidget", "classSelectedViewWidget.html", "classSelectedViewWidget" ],
     [ "SettingsDialog", "classSettingsDialog.html", "classSettingsDialog" ],
-    [ "Tag", "classTag.html", null ],
-    [ "TagDisplayWidget", "classTagDisplayWidget.html", "classTagDisplayWidget" ],
-    [ "TagSearchWidget", "classTagSearchWidget.html", "classTagSearchWidget" ]
+    [ "Tag", "classTag.html", null ]
 ];

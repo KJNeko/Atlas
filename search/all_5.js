@@ -1,7 +1,7 @@
 var searchData=
 [
   ['game_5fpath_0',['game_path',['../structGameMetadata.html#ad108b051bef64e473b502b894ef76cb6',1,'GameMetadata']]],
-  ['gameimportdialog_1',['GameImportDialog',['../classGameImportDialog.html',1,'GameImportDialog'],['../classGameImportDialog.html#a1db46344fb92984374794fc3303c8e6a',1,'GameImportDialog::GameImportDialog()']]],
+  ['gameimportdialog_1',['GameImportDialog',['../classGameImportDialog.html',1,'GameImportDialog'],['../classGameImportDialog.html#a1db46344fb92984374794fc3303c8e6a',1,'GameImportDialog::GameImportDialog(QWidget *parent=nullptr)'],['../classGameImportDialog.html#a0bf31e5a55c5392aa0563f2d3fc51062',1,'GameImportDialog::GameImportDialog(const QUrl &amp;url, QWidget *parent=nullptr)']]],
   ['gameimportdialog_2ecpp_2',['GameImportDialog.cpp',['../GameImportDialog_8cpp.html',1,'']]],
   ['gameimportdialog_2ehpp_3',['GameImportDialog.hpp',['../GameImportDialog_8hpp.html',1,'']]],
   ['gamemetadata_4',['GameMetadata',['../structGameMetadata.html',1,'']]],

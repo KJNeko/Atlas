@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "F95Parser", "structF95Parser.html", null ],
     [ "GameMetadata", "structGameMetadata.html", null ],
+    [ "Importer", "classImporter.html", null ],
     [ "ModelData", "structModelData.html", null ],
     [ "PathManager", "structPathManager.html", null ],
     [ "QAbstractItemDelegate", null, [
@@ -23,9 +24,7 @@ var hierarchy =
     [ "QWidget", null, [
       [ "RecordView", "classRecordView.html", null ],
       [ "RecordViewWidget", "classRecordViewWidget.html", null ],
-      [ "SelectedViewWidget", "classSelectedViewWidget.html", null ],
-      [ "TagDisplayWidget", "classTagDisplayWidget.html", null ],
-      [ "TagSearchWidget", "classTagSearchWidget.html", null ]
+      [ "SelectedViewWidget", "classSelectedViewWidget.html", null ]
     ] ],
     [ "Record", "structRecord.html", null ],
     [ "Tag", "classTag.html", null ]
