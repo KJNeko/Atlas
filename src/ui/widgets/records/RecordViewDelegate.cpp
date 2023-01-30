@@ -26,7 +26,7 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		const auto banner_width { getSettings< int >( "main_view/banner_width", 400 ) };
 		const auto banner_height { getSettings< int >( "main_view/banner_height", 300 ) };
 
-		QPixmap banner { QString::fromStdString( record.m_banner.string() ) };
+		QPixmap banner { QString::fromStdString( (record.m_metadata.game_path / record.m_banner).string() ) };
 		banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
 		if ( banner.width() > banner_width ) banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
 
