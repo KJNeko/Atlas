@@ -12,6 +12,7 @@
 #include <QMenu>
 
 #include <tracy/Tracy.hpp>
+#include <QPixmapCache>
 
 void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
@@ -26,9 +27,18 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		const auto banner_width { getSettings< int >( "main_view/banner_width", 400 ) };
 		const auto banner_height { getSettings< int >( "main_view/banner_height", 300 ) };
 
-		QPixmap banner { QString::fromStdString( (record.m_metadata.game_path / record.m_banner).string() ) };
-		banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
-		if ( banner.width() > banner_width ) banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
+		const auto banner_path { QString::fromStdString((record.m_metadata.game_path / record.m_banner).string())};
+
+		QPixmap banner {":invalid_banner.jpg"};
+		if(!QPixmapCache::find( banner_path, &banner) && std::filesystem::exists(record.m_metadata.game_path / record.m_banner))
+		{
+			banner = QPixmap(banner_path);banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
+			if ( banner.width() > banner_width ) banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
+
+			QPixmapCache::insert(banner_path, banner);
+		}
+
+
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
 		painter->drawPixmap(
