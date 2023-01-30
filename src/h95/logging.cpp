@@ -25,8 +25,9 @@ void initLogging()
 
 	auto logger { std::make_shared< spdlog::logger >( "", sinks.begin(), sinks.end() ) };
 	logger->set_level( spdlog::level::debug );
+	logger->info("Logger setup");
 
 	spdlog::set_default_logger( logger );
 
-	spdlog::info( "Logger set" );
+	spdlog::info( "Default logger set" );
 }
