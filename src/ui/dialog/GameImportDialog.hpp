@@ -8,6 +8,7 @@
 #include <QDialog>
 #include "h95/database/Record.hpp"
 #include "h95/PathManager.hpp"
+#include "h95/Importer.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,8 @@ class GameImportDialog final : public QDialog
 	Q_OBJECT
 
 	Q_DISABLE_COPY_MOVE( GameImportDialog )
+
+	Importer importer;
 
 	PathManager path_manager {};
 	bool good_import {false};

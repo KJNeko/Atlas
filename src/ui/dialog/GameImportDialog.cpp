@@ -10,7 +10,6 @@
 #include <QFileDialog>
 #include <QDirIterator>
 #include <QMimeDatabase>
-#include <iostream>
 
 #include <tracy/Tracy.hpp>
 #include <spdlog/spdlog.h>
@@ -96,14 +95,17 @@ try
 		QString::fromStdString( path_manager.fillPath( ui->dest->text().toStdString() ).string() ) );
 
 
-	//Check that path and executable exists
+	//Check that source is valid
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
 		spdlog::warn( "Input folder path invalid or does not exist! Path: {}", ui->folderPath->text().toStdString() );
 		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
 		return;
 	}
+	else
+		importer.setSource( ui->folderPath->text().toStdString() );
 
+	//Check that the executable is valid
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
 	{
 		spdlog::warn( "Executable path is invalid or does not exist! Path: {}", ui->execPath->text().toStdString() );
@@ -111,19 +113,7 @@ try
 		return;
 	}
 	else
-	{
-		const QMimeDatabase mime_db;
-		const auto mime_type { mime_db.mimeTypeForFile( ui->execPath->text(), QMimeDatabase::MatchContent ) };
-		if ( mime_type.name() != "application/x-ms-dos-executable" )
-		{
-			spdlog::warn(
-				"File executable not proper type (Wants: application/x-ms-dos-executable. Got: {}",
-				mime_type.name().toStdString() );
-			ui->infoLabel->setText(
-				QString( "File executable not proper type (Wants: application/x-ms-dos-executable vs Actual: %1" )
-					.arg( mime_type.name() ) );
-		}
-	}
+		importer.setExecutable( ui->execPath->text().toStdString() );
 
 	//Check that title, creator and version are filled out
 	if ( ui->title->text().isEmpty() || ui->creator->text().isEmpty() || ui->version->text().isEmpty() )
@@ -132,20 +122,29 @@ try
 		return;
 	}
 
-	if ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) )
+	if ( ui->copyToDest->isChecked() )
 	{
-		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
+		if ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) )
+		{
+			ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
+			return;
+		}
+		else
+			importer.setDestination( ui->pathLabel->text().toStdString() );
+	}
+	else
+		importer.setDestination( ui->folderPath->text().toStdString() );
+
+	//Check that there is not already a folder where we want to place the file
+	if ( std::filesystem::exists( ui->pathLabel->text().toStdString() )
+		 && ui->copyToDest->isChecked() )  //&& !ui->forceCopy->isChecked())
+	{
+		ui->infoLabel->setText( "Destination folder already exists. Are you trying to update?" );
 		return;
 	}
 
-	const auto path_str { ui->pathLabel->text() };
-	const std::filesystem::path game_path { path_str.toStdString() };
-
-	if(std::filesystem::exists(game_path) && ui->copyToDest->isChecked() && !ui->forceCopy->isChecked())
-	{
-		ui->infoLabel->setText("Destination folder already exists. Are you trying to update?");
-	}
-
+	importer.setPreviews( deserializePreviews( ui->previewPaths->text() ) );
+	importer.setBanner( ui->bannerPath->text().toStdString() );
 
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
@@ -163,83 +162,7 @@ try
 	verifySettings();
 	if ( !good_import ) return;
 
-	if ( ui->copyToDest->isChecked() )
-	{
-		const auto path_str { ui->pathLabel->text() };
-		const std::filesystem::path game_path { path_str.toStdString() };
-		path_manager.setRoot( game_path );
-
-		//Copy game
-		std::filesystem::create_directories( game_path.parent_path() );
-		std::filesystem::copy(
-			ui->folderPath->text().toStdString(),
-			game_path,
-			std::filesystem::copy_options::recursive );
-
-		//Copy extra information (previews + banners)
-		const std::filesystem::path banner { ui->bannerPath->text().toStdString() };
-		const std::filesystem::path banner_new { game_path / "h95" / ( "banner" + banner.extension().string() ) };
-
-		//Check that we didn't copy the banner during our first copy
-
-		//Copy the banner
-		if ( std::filesystem::exists( banner ) && !std::filesystem::exists( banner_new ) )
-		{
-			spdlog::debug( "Copying {} -> {}", banner.string(), banner_new.string() );
-			std::filesystem::copy( banner, banner_new );
-		}
-
-		//Set banner path to be the new relative path
-		if ( std::filesystem::exists( banner_new ) )
-			ui->bannerPath->setText( QString::fromStdString( path_manager.relative( banner_new ).string() ) );
-
-		//Copy the previews
-		auto previews { deserializePreviews( ui->previewPaths->text() ) };
-
-		std::filesystem::create_directories( game_path / "h95" / "previews" );
-
-		for ( auto& preview : previews )
-		{
-			const std::filesystem::path preview_new { game_path / "h95" / "previews" / preview.filename() };
-			spdlog::debug( "Copying {} -> {}", preview.string(), preview_new.string() );
-			std::filesystem::copy( preview, preview_new, std::filesystem::copy_options::overwrite_existing );
-			preview = path_manager.relative( preview_new );
-		}
-
-		//Set preview paths to the new relative path
-		ui->previewPaths->setText( serializePreviews( previews ) );
-
-		if ( ui->deleteAfterCopy->isChecked() )
-		{
-			spdlog::debug( "Deleting files from sources" );
-			std::filesystem::remove( ui->execPath->text().toStdString() );
-			if ( std::filesystem::exists( banner ) ) std::filesystem::remove( banner );
-			for ( const auto& preview : previews ) std::filesystem::remove( preview );
-		}
-	}
-	else
-	{
-		const std::filesystem::path filepath { ui->folderPath->text().toStdString() };
-		const std::filesystem::path executable { ui->execPath->text().toStdString() };
-
-		path_manager.setRoot( filepath );
-		ui->execPath->setText( QString::fromStdString( path_manager.relative( executable ).string() ) );
-	}
-
-	//Seperate preview paths
-	const auto list { ui->previewPaths->text().split( ';', Qt::SkipEmptyParts ) };
-	std::vector< std::filesystem::path > previews;
-	for ( const auto& path : list ) previews.emplace_back( path.toStdString() );
-
-	//Import
-	Record::create(
-		ui->title->text(),
-		ui->creator->text(),
-		ui->version->text(),
-		ui->engine->text(),
-		{ ui->folderPath->text().toStdString(), ui->execPath->text().toStdString() },
-		ui->bannerPath->text().toStdString(),
-		previews );
+	importer.import_game( ui->title->text(), ui->creator->text(), ui->version->text(), ui->engine->text(), ui->deleteAfterCopy->isTristate());
 
 	emit importComplete();
 	this->close();
@@ -281,6 +204,8 @@ try
 			const auto mime_type {
 				mime_db.mimeTypeForFile( QString::fromStdString( temp_dir.path().string() ) ).name() };
 
+			std::cout << temp_dir.path().filename().string() << std::endl;
+
 			// Locate executable
 			if ( temp_dir.is_regular_file() && temp_dir.path().extension() == ".exe"
 				 && mime_type == "application/x-ms-dos-executable" )
@@ -291,7 +216,7 @@ try
 			//Locate banner
 			else if (
 				temp_dir.is_regular_file() && ( mime_type == "image/jpeg" || mime_type == "image/png" )
-				&& temp_dir.path().filename().string().substr( 0, 7 ) == "banner" )
+				&& temp_dir.path().filename().string().substr( 0, std::string( "banner" ).size() - 1 ) == "banner" )
 			{
 				ui->bannerPath->setText( QString::fromStdString( temp_dir.path().string() ) );
 			}
@@ -315,6 +240,11 @@ try
 
 				ui->previewPaths->setText( previews );
 			}
+
+			spdlog::info( temp_dir.is_regular_file() );
+			spdlog::info( mime_type == "image/jpeg" || mime_type == "image/png" );
+			spdlog::info(
+				temp_dir.path().filename().string().substr( 0, std::string( "banner" ).size() - 1 ) == "banner" );
 		}
 	}
 }
