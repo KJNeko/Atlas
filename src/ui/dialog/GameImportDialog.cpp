@@ -19,7 +19,7 @@ constexpr char preview_delim { ';' };
 
 inline std::vector< std::filesystem::path > deserializePreviews( const QString& str )
 {
-	const auto list { str.split( preview_delim ) };
+	const auto list { str.split( preview_delim, Qt::SkipEmptyParts ) };
 
 	std::vector< std::filesystem::path > paths;
 
@@ -138,6 +138,15 @@ try
 		return;
 	}
 
+	const auto path_str { ui->pathLabel->text() };
+	const std::filesystem::path game_path { path_str.toStdString() };
+
+	if(std::filesystem::exists(game_path) && ui->copyToDest->isChecked() && !ui->forceCopy->isChecked())
+	{
+		ui->infoLabel->setText("Destination folder already exists. Are you trying to update?");
+	}
+
+
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
 }
@@ -237,9 +246,8 @@ try
 }
 catch ( std::exception& e )
 {
-	spdlog::error( "Failed to import file! Send the core dump and this error to the dev. Exception: {}", e.what() );
+	spdlog::error( "Failed to import file! Send the this error to the dev. Exception: {}", e.what() );
 	spdlog::dump_backtrace();
-	std::abort();
 }
 
 void GameImportDialog::on_selectPath_pressed()
