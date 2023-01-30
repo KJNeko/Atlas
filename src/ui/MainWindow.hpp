@@ -28,6 +28,9 @@ class MainWindow final : public QMainWindow
 	private:
 	Ui::MainWindow* ui;
 
+	void dragEnterEvent(QDragEnterEvent* e) override;
+	void dropEvent(QDropEvent* event) override;
+
 	private slots:
 	void on_actionImportGame_triggered();
 	void on_actionMassAddImages_triggered();

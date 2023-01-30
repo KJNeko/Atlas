@@ -16,6 +16,9 @@
 #include <QDirIterator>
 
 #include <tracy/Tracy.hpp>
+#include <QMimeData>
+#include <QDropEvent>
+#include <spdlog/spdlog.h>
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -26,12 +29,34 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		qDebug() << "First launch";
 		setSettings( "first_launch", false );
 	}
-
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::dragEnterEvent( QDragEnterEvent* event )
+{
+	if(event->mimeData()->hasUrls())
+		event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent( QDropEvent* event )
+{
+	const QMimeData* mime_data {event->mimeData()};
+
+	if(mime_data->hasUrls())
+	{
+		QStringList path_list;
+		QList<QUrl> url_list {mime_data->urls()};
+		for(const auto& url : url_list)
+		{
+			GameImportDialog dialog {url};
+			connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
+			dialog.exec();
+		}
+	}
 }
 
 void MainWindow::on_actionImportGame_triggered()

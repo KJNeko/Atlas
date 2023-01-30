@@ -69,6 +69,23 @@ GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( n
 	ui->deleteAfterCopy->setChecked( getSettings< bool >( "import/should_delete", false ) );
 }
 
+GameImportDialog::GameImportDialog(const QUrl& url, QWidget* parent) : QDialog( parent ), ui( new Ui::GameImportDialog )
+{
+	ui->setupUi( this );
+
+	ui->shouldParsePath->setChecked( getSettings< bool >( "import/should_autofill", true ) );
+	ui->pathParse->setText( fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}" ) ) );
+
+	ui->copyToDest->setChecked( getSettings< bool >( "import/should_copy", true ) );
+	ui->dest->setText( fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}" ) ) );
+
+	ui->deleteAfterCopy->setChecked( getSettings< bool >( "import/should_delete", false ) );
+
+	ui->folderPath->setText(url.toLocalFile());
+	parseInfo();
+	verifySettings();
+}
+
 GameImportDialog::~GameImportDialog()
 {
 	setSettings( "import/should_autofill", ui->shouldParsePath->isChecked() );
@@ -155,6 +172,59 @@ catch ( std::exception& e )
 	spdlog::dump_backtrace();
 }
 
+void GameImportDialog::parseInfo()
+{
+	QMimeDatabase mime_db;
+	//Locate supporting files
+	for ( const auto& temp_dir : std::filesystem::directory_iterator( ui->folderPath->text().toStdString() ) )
+	{
+		spdlog::debug( "Searching for what {} is", temp_dir.path().string() );
+
+		const auto mime_type {
+			mime_db.mimeTypeForFile( QString::fromStdString( temp_dir.path().string() ) ).name() };
+
+		constexpr auto banner_str_size {std::string("banner").size()};
+
+		// Locate executable
+		if ( temp_dir.is_regular_file() && mime_type == "application/x-ms-dos-executable" )
+		{
+			ui->execPath->setText( QString::fromStdString( temp_dir.path().string() ) );
+		}
+		//Locate banner
+		else if (
+			temp_dir.is_regular_file()
+			&& temp_dir.path().filename().string().substr(0, banner_str_size) == "banner")
+		{
+			ui->bannerPath->setText( QString::fromStdString( temp_dir.path().string() ) );
+		}
+		//Locate previews
+		else if ( temp_dir.is_directory() && temp_dir.path().filename() == "previews" )
+		{
+			QString previews;
+
+			for ( const auto& file : std::filesystem::directory_iterator( temp_dir.path() ) )
+			{
+				const auto file_type {
+					mime_db.mimeTypeForFile( QString::fromStdString( file.path().string() ) ).name() };
+
+				spdlog::debug(
+					"Found {} in previews with filetype {}",
+					file.path().string(),
+					file_type.toStdString() );
+
+				if ( file.is_regular_file() && ( file_type == "image/jpeg" || file_type == "image/png" ) )
+				{
+					previews += QString::fromStdString( file.path().string() + ";" );
+				}
+			}
+
+			if ( previews.endsWith( ':' ) ) previews.chop( 1 );
+
+			ui->previewPaths->setText( previews );
+		}
+	}
+}
+
 void GameImportDialog::on_importButton_pressed()
 try
 {
@@ -188,7 +258,6 @@ try
 	dialog.setAcceptMode( QFileDialog::AcceptOpen );
 	dialog.setLabelText( QFileDialog::LookIn, "Select game folder" );
 
-	QMimeDatabase mime_db;
 
 	if ( !dialog.exec() )
 		return;
@@ -202,56 +271,8 @@ try
 
 		std::filesystem::path dir { list.first().toStdString() };
 		if ( !std::filesystem::exists( dir ) ) return;
-
-
-		//Locate supporting files
-		for ( const auto& temp_dir : std::filesystem::directory_iterator( dir ) )
-		{
-			spdlog::debug( "Searching for what {} is", temp_dir.path().string() );
-
-			const auto mime_type {
-				mime_db.mimeTypeForFile( QString::fromStdString( temp_dir.path().string() ) ).name() };
-
-			constexpr auto banner_str_size {std::string("banner").size()};
-
-			// Locate executable
-			if ( temp_dir.is_regular_file() && mime_type == "application/x-ms-dos-executable" )
-			{
-				ui->execPath->setText( QString::fromStdString( temp_dir.path().string() ) );
-			}
-			//Locate banner
-			else if (
-				temp_dir.is_regular_file()
-				&& temp_dir.path().filename().string().substr(0, banner_str_size) == "banner")
-			{
-				ui->bannerPath->setText( QString::fromStdString( temp_dir.path().string() ) );
-			}
-			//Locate previews
-			else if ( temp_dir.is_directory() && temp_dir.path().filename() == "previews" )
-			{
-				QString previews;
-
-				for ( const auto& file : std::filesystem::directory_iterator( temp_dir.path() ) )
-				{
-					const auto file_type {
-						mime_db.mimeTypeForFile( QString::fromStdString( file.path().string() ) ).name() };
-
-					spdlog::debug(
-						"Found {} in previews with filetype {}",
-						file.path().string(),
-						file_type.toStdString() );
-
-					if ( file.is_regular_file() && ( file_type == "image/jpeg" || file_type == "image/png" ) )
-					{
-						previews += QString::fromStdString( file.path().string() + ";" );
-					}
-				}
-
-				if ( previews.endsWith( ':' ) ) previews.chop( 1 );
-
-				ui->previewPaths->setText( previews );
-			}
-		}
+		else
+			parseInfo();
 	}
 }
 catch ( std::exception& e )

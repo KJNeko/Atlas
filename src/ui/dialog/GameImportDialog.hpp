@@ -27,16 +27,18 @@ class GameImportDialog final : public QDialog
 	Importer importer {};
 
 	PathManager path_manager {};
-	bool good_import {false};
+	bool good_import { false };
 
 	public:
 	explicit GameImportDialog( QWidget* parent = nullptr );
+	explicit GameImportDialog( const QUrl& url, QWidget* parent = nullptr );
 	~GameImportDialog() override;
 
 	private:
 	Ui::GameImportDialog* ui;
 
 	void verifySettings();
+	void parseInfo();
 
 	signals:
 	void importComplete();
