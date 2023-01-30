@@ -24,7 +24,7 @@ class GameImportDialog final : public QDialog
 
 	Q_DISABLE_COPY_MOVE( GameImportDialog )
 
-	Importer importer;
+	Importer importer {};
 
 	PathManager path_manager {};
 	bool good_import {false};

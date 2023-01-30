@@ -162,7 +162,12 @@ try
 	verifySettings();
 	if ( !good_import ) return;
 
-	importer.import_game( ui->title->text(), ui->creator->text(), ui->version->text(), ui->engine->text(), ui->deleteAfterCopy->isTristate());
+	importer.import_game(
+		ui->title->text(),
+		ui->creator->text(),
+		ui->version->text(),
+		ui->engine->text(),
+		ui->deleteAfterCopy->isTristate() );
 
 	emit importComplete();
 	this->close();
@@ -198,25 +203,26 @@ try
 		std::filesystem::path dir { list.first().toStdString() };
 		if ( !std::filesystem::exists( dir ) ) return;
 
+
 		//Locate supporting files
 		for ( const auto& temp_dir : std::filesystem::directory_iterator( dir ) )
 		{
+			spdlog::debug( "Searching for what {} is", temp_dir.path().string() );
+
 			const auto mime_type {
 				mime_db.mimeTypeForFile( QString::fromStdString( temp_dir.path().string() ) ).name() };
 
-			std::cout << temp_dir.path().filename().string() << std::endl;
+			constexpr auto banner_str_size {std::string("banner").size()};
 
 			// Locate executable
-			if ( temp_dir.is_regular_file() && temp_dir.path().extension() == ".exe"
-				 && mime_type == "application/x-ms-dos-executable" )
+			if ( temp_dir.is_regular_file() && mime_type == "application/x-ms-dos-executable" )
 			{
 				ui->execPath->setText( QString::fromStdString( temp_dir.path().string() ) );
-				break;
 			}
 			//Locate banner
 			else if (
-				temp_dir.is_regular_file() && ( mime_type == "image/jpeg" || mime_type == "image/png" )
-				&& temp_dir.path().filename().string().substr( 0, std::string( "banner" ).size() - 1 ) == "banner" )
+				temp_dir.is_regular_file()
+				&& temp_dir.path().filename().string().substr(0, banner_str_size) == "banner")
 			{
 				ui->bannerPath->setText( QString::fromStdString( temp_dir.path().string() ) );
 			}
@@ -230,6 +236,11 @@ try
 					const auto file_type {
 						mime_db.mimeTypeForFile( QString::fromStdString( file.path().string() ) ).name() };
 
+					spdlog::debug(
+						"Found {} in previews with filetype {}",
+						file.path().string(),
+						file_type.toStdString() );
+
 					if ( file.is_regular_file() && ( file_type == "image/jpeg" || file_type == "image/png" ) )
 					{
 						previews += QString::fromStdString( file.path().string() + ";" );
@@ -240,11 +251,6 @@ try
 
 				ui->previewPaths->setText( previews );
 			}
-
-			spdlog::info( temp_dir.is_regular_file() );
-			spdlog::info( mime_type == "image/jpeg" || mime_type == "image/png" );
-			spdlog::info(
-				temp_dir.path().filename().string().substr( 0, std::string( "banner" ).size() - 1 ) == "banner" );
 		}
 	}
 }
