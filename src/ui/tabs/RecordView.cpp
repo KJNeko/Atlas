@@ -19,6 +19,7 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 		ui->recordView,
 		SLOT( recordsUpdated( const std::vector< Record >& ) ) );
 
+	/*
 	//Connect backend to tag display
 	connect(
 		&backend,
@@ -39,6 +40,7 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 		&backend,
 		SLOT( searchSimilar( const QString& ) ) );
 	connect( ui->tagSearch->view(), SIGNAL( selected( const Tag& ) ), &backend, SLOT( addTag( const Tag& ) ) );
+	 */
 
 	//Connect intermediate pieces
 	connect(
