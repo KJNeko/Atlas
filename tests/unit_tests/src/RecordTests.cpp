@@ -16,6 +16,7 @@
 #include <QApplication>
 #include <QJsonArray>
 #include <fstream>
+#include <spdlog/spdlog.h>
 #include "h95/f95parser.hpp"
 
 class RecordCreation : public ::testing::Test
@@ -63,6 +64,9 @@ TEST_F( RecordCreation, GameRecord )
 		g_metadata,
 		"some_banner.jpg",
 		{ "one.jpg", "two.jpg" } ) };
+
+	spdlog::info("Import complete");
+
 	ASSERT_GT( record.m_id, 0 );
 
 	Record db_record { Record::select( record.m_id ) };

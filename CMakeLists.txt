@@ -123,9 +123,7 @@ set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQ
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
 
-if (DEFINED BUILD_TESTS)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit_tests)
-endif ()
+add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit_tests)
 
 if (WIN32)
     add_custom_command(TARGET Hydrus95 POST_BUILD
