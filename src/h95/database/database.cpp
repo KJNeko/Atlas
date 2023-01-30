@@ -26,7 +26,7 @@ namespace database
 	{
 		spdlog::info("Checking for database update");
 		const auto ver_number { getSettings< int >( "version_number", 100 ) };
-		constexpr auto ver_latest { 103 };
+		constexpr auto ver_latest { 100 };
 		spdlog::info("DB: Current: {} -> Supported: {}", ver_number, ver_latest);
 
 		if ( ver_number == ver_latest ) {spdlog::info("No update require!"); return;}
@@ -47,15 +47,6 @@ namespace database
 					"I fucked up and forgot to add a case for this update. Report your version number to me in an issue" );
 
 			case 100:
-				spdlog::info("Updating from 100 to 101");
-				[[fallthrough]];
-			case 101:
-				spdlog::info("Updating from 101 to 102");
-				[[fallthrough]];
-			case 102:
-				spdlog::info("Updating from 102 to 103");
-				[[fallthrough]];
-			case 103:
 				spdlog::info("Update chain reached end.");
 				break;
 		}
@@ -86,7 +77,7 @@ namespace database
 		const std::vector< std::string > table_strs {
 			"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, version TEXT, engine TEXT, unique(title, creator, version, engine))",
 			"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, game_path TEXT, exec_path TEXT)",
-			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, type TEXT, path TEXT)",
+			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 			"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)" };
 
 		for ( const auto& query_str : table_strs ) { db_ref() << query_str; }
