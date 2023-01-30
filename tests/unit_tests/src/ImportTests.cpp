@@ -9,7 +9,6 @@
 #include <spdlog/spdlog.h>
 
 #include "h95/database/database.hpp"
-#include "h95/Importer.hpp"
 
 
 class ImportTest : public ::testing::Test
