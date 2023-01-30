@@ -19,25 +19,6 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QSplitter" name="splitter_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <widget class="TagDisplayWidget" name="tagView" native="true"/>
-         <widget class="TagSearchWidget" name="tagSearch" native="true"/>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="RecordViewWidget" name="recordView" native="true"/>
      <widget class="SelectedViewWidget" name="selectedView" native="true"/>
     </widget>
@@ -55,18 +36,6 @@
    <class>SelectedViewWidget</class>
    <extends>QWidget</extends>
    <header>ui/widgets/records/SelectedViewWidget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TagDisplayWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/widgets/tags/TagDisplayWidget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TagSearchWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/widgets/tags/TagSearchWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
