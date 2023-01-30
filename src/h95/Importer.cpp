@@ -66,7 +66,7 @@ void Importer::import_game(
 			std::filesystem::remove(m_source);
 	}
 
-	m_executable = std::filesystem::relative(m_executable, m_root);
+	m_executable = std::filesystem::relative(m_executable, m_source);
 
 	//Import
 	Record::create( title, creator, version, engine, { m_root, m_executable }, m_banner, m_previews );
