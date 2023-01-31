@@ -4,6 +4,7 @@ var annotated_dup =
     [ "GameImportDialog", "classGameImportDialog.html", "classGameImportDialog" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],
     [ "Importer", "classImporter.html", "classImporter" ],
+    [ "KeyReplacer", "classKeyReplacer.html", "classKeyReplacer" ],
     [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
     [ "ModelData", "structModelData.html", "structModelData" ],
     [ "PathManager", "structPathManager.html", "structPathManager" ],

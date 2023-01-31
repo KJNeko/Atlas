@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3d_3d_0',['operator==',['../structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa',1,'GameMetadata::operator==()'],['../structRecord.html#a07f3aa92a3ba2d20d2d7c9111732487f',1,'Record::operator==()']]]
+  ['new_5fentry_0',['new_entry',['../structF95Parser.html#a52a2148e6e5f90444410144915a7a38c',1,'F95Parser']]]
 ];

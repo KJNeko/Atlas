@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['parsers_2ehpp_0',['parsers.hpp',['../parsers_8hpp.html',1,'']]],
-  ['pathmanager_2ehpp_1',['PathManager.hpp',['../PathManager_8hpp.html',1,'']]]
+  ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['mainwindow_2ecpp_1',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
+  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]]
 ];

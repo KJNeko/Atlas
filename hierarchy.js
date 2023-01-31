@@ -3,6 +3,7 @@ var hierarchy =
     [ "F95Parser", "structF95Parser.html", null ],
     [ "GameMetadata", "structGameMetadata.html", null ],
     [ "Importer", "classImporter.html", null ],
+    [ "KeyReplacer", "classKeyReplacer.html", null ],
     [ "ModelData", "structModelData.html", null ],
     [ "PathManager", "structPathManager.html", null ],
     [ "QAbstractItemDelegate", null, [

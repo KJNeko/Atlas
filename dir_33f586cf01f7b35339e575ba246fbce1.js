@@ -7,8 +7,11 @@ var dir_33f586cf01f7b35339e575ba246fbce1 =
     [ "f95parser.hpp", "f95parser_8hpp.html", "f95parser_8hpp" ],
     [ "Importer.cpp", "Importer_8cpp.html", "Importer_8cpp" ],
     [ "Importer.hpp", "Importer_8hpp.html", "Importer_8hpp" ],
+    [ "KeyReplacer.cpp", "KeyReplacer_8cpp.html", null ],
+    [ "KeyReplacer.hpp", "KeyReplacer_8hpp.html", "KeyReplacer_8hpp" ],
     [ "logging.cpp", "logging_8cpp.html", "logging_8cpp" ],
     [ "logging.hpp", "logging_8hpp.html", "logging_8hpp" ],
+    [ "PathManager.cpp", "PathManager_8cpp.html", null ],
     [ "PathManager.hpp", "PathManager_8hpp.html", "PathManager_8hpp" ],
     [ "Types.hpp", "Types_8hpp.html", "Types_8hpp" ]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['value_0',['value',['../structPathManager.html#a32cba34c69eb1b00475973d9ee127b9e',1,'PathManager']]],
-  ['values_1',['values',['../structPathManager.html#a4f3929dda0407cd9dc0619f55bc3fac7',1,'PathManager']]],
-  ['version_2',['version',['../structF95Parser.html#ae82e4a8a1ca89c1f5ec63ac8e444317c',1,'F95Parser']]]
+  ['ui_0',['Ui',['../namespaceUi.html',1,'']]],
+  ['update_1',['update',['../structGameMetadata.html#a57e8794552d02824c3e625449e9369ce',1,'GameMetadata::update()'],['../namespacedatabase.html#a55d2f2084a329f7046dd684b44f743a4',1,'database::update()']]]
 ];
