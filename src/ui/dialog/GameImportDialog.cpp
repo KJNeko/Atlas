@@ -11,6 +11,8 @@
 #include <QDirIterator>
 #include <QMimeDatabase>
 
+#include "h95/Importer.hpp"
+
 #include <tracy/Tracy.hpp>
 #include <spdlog/spdlog.h>
 
@@ -113,7 +115,6 @@ try
 	ui->pathLabel->setText(
 		QString::fromStdString( path_manager.fillPath( ui->dest->text().toStdString() ).string() ) );
 
-
 	//Check that source is valid
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
@@ -121,8 +122,6 @@ try
 		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
 		return;
 	}
-	else
-		importer.setSource( ui->folderPath->text().toStdString() );
 
 	//Check that the executable is valid
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
@@ -131,8 +130,6 @@ try
 		ui->infoLabel->setText( "Executable path is invalid or does not exist!" );
 		return;
 	}
-	else
-		importer.setExecutable( ui->execPath->text().toStdString() );
 
 	//Check that title, creator and version are filled out
 	if ( ui->title->text().isEmpty() || ui->creator->text().isEmpty() || ui->version->text().isEmpty() )
@@ -141,18 +138,13 @@ try
 		return;
 	}
 
-	if ( ui->copyToDest->isChecked() )
+	if ( ui->copyToDest->isChecked() && (ui->pathLabel->text().contains('{') && ui->pathLabel->text().contains('}')))
 	{
-		if ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) )
-		{
-			ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
-			return;
-		}
-		else
-			importer.setDestination( ui->pathLabel->text().toStdString() );
+		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
+		return;
 	}
-	else
-		importer.setDestination( ui->folderPath->text().toStdString() );
+
+
 
 	//Check that there is not already a folder where we want to place the file
 	if ( std::filesystem::exists( ui->pathLabel->text().toStdString() )
@@ -162,8 +154,6 @@ try
 		return;
 	}
 
-	importer.setPreviews( deserializePreviews( ui->previewPaths->text() ) );
-	importer.setBanner( ui->bannerPath->text().toStdString() );
 
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
@@ -236,6 +226,19 @@ try
 	ZoneScoped;
 	verifySettings();
 	if ( !good_import ) return;
+
+	Importer importer {};
+
+	importer.setSource( ui->folderPath->text().toStdString() );
+	importer.setExecutable( ui->execPath->text().toStdString() );
+
+	if ( ui->copyToDest->isChecked() )
+		importer.setDestination( ui->pathLabel->text().toStdString() );
+	else
+		importer.setDestination( ui->folderPath->text().toStdString() );
+
+	importer.setPreviews( deserializePreviews( ui->previewPaths->text() ) );
+	importer.setBanner( ui->bannerPath->text().toStdString() );
 
 	importer.import_game(
 		ui->title->text(),
