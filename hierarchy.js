@@ -7,10 +7,12 @@ var hierarchy =
     [ "ModelData", "structModelData.html", null ],
     [ "PathManager", "structPathManager.html", null ],
     [ "QAbstractItemDelegate", null, [
-      [ "RecordViewDelegate", "classRecordViewDelegate.html", null ]
+      [ "RecordViewDelegate", "classRecordViewDelegate.html", null ],
+      [ "TDelegate< T, loader, painter_func >", "classTDelegate.html", null ]
     ] ],
     [ "QAbstractListModel", null, [
-      [ "RecordViewModel", "classRecordViewModel.html", null ]
+      [ "RecordViewModel", "classRecordViewModel.html", null ],
+      [ "TListModel< T >", "classTListModel.html", null ]
     ] ],
     [ "QDialog", null, [
       [ "GameImportDialog", "classGameImportDialog.html", null ],

@@ -16,5 +16,7 @@ var annotated_dup =
     [ "RecordViewWidget", "classRecordViewWidget.html", "classRecordViewWidget" ],
     [ "SelectedViewWidget", "classSelectedViewWidget.html", "classSelectedViewWidget" ],
     [ "SettingsDialog", "classSettingsDialog.html", "classSettingsDialog" ],
-    [ "Tag", "classTag.html", null ]
+    [ "Tag", "classTag.html", null ],
+    [ "TDelegate", "classTDelegate.html", "classTDelegate" ],
+    [ "TListModel", "classTListModel.html", null ]
 ];

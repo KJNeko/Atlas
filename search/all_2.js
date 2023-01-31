@@ -6,6 +6,7 @@ var searchData=
   ['database_2ehpp_3',['database.hpp',['../database_8hpp.html',1,'']]],
   ['db_4',['db',['../namespacedatabase_1_1internal.html#aff3c3b4cbbfc5fd91e105e036a4bdc00',1,'database::internal']]],
   ['db_5fref_5',['db_ref',['../namespacedatabase.html#a2e692c6be7d742f62afd1f0363934385',1,'database']]],
-  ['deserializepreviews_6',['deserializePreviews',['../GameImportDialog_8cpp.html#a05599f97b8b6f3bd82cd8ecd142884a3',1,'GameImportDialog.cpp']]],
-  ['internal_7',['internal',['../namespacedatabase_1_1internal.html',1,'database']]]
+  ['defferloader_6',['DefferLoader',['../TDelegate_8hpp.html#ad12ba82a2a6ecac1357ce0b4789f0ca6',1,'TDelegate.hpp']]],
+  ['deserializepreviews_7',['deserializePreviews',['../GameImportDialog_8cpp.html#a05599f97b8b6f3bd82cd8ecd142884a3',1,'GameImportDialog.cpp']]],
+  ['internal_8',['internal',['../namespacedatabase_1_1internal.html',1,'database']]]
 ];
