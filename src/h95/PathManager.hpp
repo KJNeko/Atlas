@@ -18,6 +18,7 @@ Valid placeholders:
 */
 
 #include "h95/config.hpp"
+#include "KeyReplacer.hpp"
 #include <string>
 #include <filesystem>
 #include <iostream>
@@ -25,39 +26,11 @@ Valid placeholders:
 
 struct PathManager
 {
+	KeyReplacer key_replacer;
+
 	std::filesystem::path root {};
 
-	std::vector< std::pair< QString, QString > > values {
-		{ "{h95_games}",
-		  QString::fromStdString(
-			  std::filesystem::canonical( getSettings< QString >( "paths/data", "./data/games" ).toStdString() )
-				  .string() ) } };
-
-	inline void registerReplacement( const QString key, const QString value )
-	{
-		ZoneScoped;
-		if ( auto itter = std::find_if(
-				 values.begin(),
-				 values.end(),
-				 [&]( const std::pair< QString, QString >& pair ) { return pair.first == key; } );
-			 itter != values.end() )
-			itter->second = value;
-		else
-			values.emplace_back( key, value );
-	}
-
-	inline QString value( const QString& text ) const
-	{
-		ZoneScoped;
-		if ( auto itter = std::find_if(
-				 values.begin(),
-				 values.end(),
-				 [&]( const std::pair< QString, QString >& pair ) { return pair.first == text; } );
-			 itter != values.end() )
-			return itter->second;
-		else
-			return {};
-	}
+	PathManager();
 
 	inline std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false ) const
 	{
@@ -67,12 +40,9 @@ struct PathManager
 		//Example : {h95_data}/{engine}/{version}
 		//Example : {path}
 
-		for ( const auto& [key, value] : values ) path_str.replace( key, value );
+		key_replacer.replaceKeys(path_str);
 
-		if ( relativeFromRoot )
-			return { std::filesystem::relative( path_str.toStdString(), root ) };
-		else
-			return { path_str.toStdString() };
+		return {path_str.toStdString()};
 	}
 
 	inline std::filesystem::path relative( const std::filesystem::path& path ) const
@@ -105,12 +75,9 @@ struct PathManager
 			++step_counter;
 		}
 
-		std::cout << "Finished processing after " << step_counter << " steps " << std::endl;
-
 		for ( const auto& [key, value] : temp_values )
 		{
-			std::cout << key.toStdString() << ": " << value.toStdString() << std::endl;
-			registerReplacement( key, value );
+			key_replacer.registerKey( key, value );
 		}
 	}
 

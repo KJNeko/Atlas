@@ -70,6 +70,4 @@ void Importer::import_game(
 
 	//Import
 	Record::create( title, creator, version, engine, { m_root, m_executable }, m_banner, m_previews );
-
-	return;
 }

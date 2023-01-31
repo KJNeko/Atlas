@@ -363,25 +363,25 @@ void GameImportDialog::on_selectPreviews_pressed()
 
 void GameImportDialog::on_title_textChanged( [[maybe_unused]] const QString text )
 {
-	path_manager.registerReplacement( "{title}", text );
+	path_manager.key_replacer.registerKey( "{title}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_creator_textChanged( [[maybe_unused]] const QString text )
 {
-	path_manager.registerReplacement( "{creator}", text );
+	path_manager.key_replacer.registerKey( "{creator}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_version_textChanged( [[maybe_unused]] const QString text )
 {
-	path_manager.registerReplacement( "{version}", text );
+	path_manager.key_replacer.registerKey( "{version}", text );
 	verifySettings();
 }
 
 void GameImportDialog::on_engine_textChanged( [[maybe_unused]] const QString text )
 {
-	path_manager.registerReplacement( "{engine}", text );
+	path_manager.key_replacer.registerKey( "{engine}", text );
 	verifySettings();
 }
 
@@ -391,10 +391,10 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 	if ( ui->shouldParsePath->isChecked() )
 		path_manager.populateValues( text.toStdString(), ui->pathParse->text().toStdString() );
 
-	ui->title->setText( path_manager.value( { "{title}" } ) );
-	ui->creator->setText( path_manager.value( "{creator}" ) );
-	ui->version->setText( path_manager.value( "{version}" ) );
-	ui->engine->setText( path_manager.value( "{engine}" ) );
+	ui->title->setText( path_manager.key_replacer.value( { "{title}" } ) );
+	ui->creator->setText( path_manager.key_replacer.value( "{creator}" ) );
+	ui->version->setText( path_manager.key_replacer.value( "{version}" ) );
+	ui->engine->setText( path_manager.key_replacer.value( "{engine}" ) );
 
 	path_manager.setRoot( text.toStdString() );
 
