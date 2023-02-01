@@ -29,7 +29,7 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 
 		const auto banner_path { QString::fromStdString((record.m_metadata.game_path / record.m_banner).string())};
 
-		QPixmap banner {":invalid_banner.jpg"};
+		QPixmap banner {":/invalid_banner.jpg"};
 		if(!QPixmapCache::find( banner_path, &banner) && std::filesystem::exists(record.m_metadata.game_path / record.m_banner))
 		{
 			banner = QPixmap(banner_path);banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
@@ -37,8 +37,6 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 
 			QPixmapCache::insert(banner_path, banner);
 		}
-
-
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
 		painter->drawPixmap(
