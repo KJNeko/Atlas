@@ -1,7 +1,7 @@
 var TDelegate_8hpp =
 [
-    [ "TListModel< T >", "classTListModel.html", null ],
+    [ "TListModel< T, loader >", "classTListModel.html", null ],
     [ "TDelegate< T, loader, painter_func >", "classTDelegate.html", "classTDelegate" ],
-    [ "DefferLoader", "TDelegate_8hpp.html#ad12ba82a2a6ecac1357ce0b4789f0ca6", null ],
-    [ "PaintFunc", "TDelegate_8hpp.html#a160eb4c8fbea38d18f8f34177a34ee21", null ]
+    [ "DefferLoader", "TDelegate_8hpp.html#a40911e794e4a618326472a68ace1e7ca", null ],
+    [ "PaintFunc", "TDelegate_8hpp.html#a2b15b92a913b3e7f8e5b09229f37033a", null ]
 ];

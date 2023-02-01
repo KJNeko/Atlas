@@ -11,8 +11,9 @@ var hierarchy =
       [ "TDelegate< T, loader, painter_func >", "classTDelegate.html", null ]
     ] ],
     [ "QAbstractListModel", null, [
+      [ "TListModel< T >", "classTListModel.html", null ],
       [ "RecordViewModel", "classRecordViewModel.html", null ],
-      [ "TListModel< T >", "classTListModel.html", null ]
+      [ "TListModel< T, loader >", "classTListModel.html", null ]
     ] ],
     [ "QDialog", null, [
       [ "GameImportDialog", "classGameImportDialog.html", null ],

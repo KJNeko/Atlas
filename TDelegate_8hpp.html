@@ -113,14 +113,20 @@ $(document).ready(function(){initNavTree('TDelegate_8hpp.html',''); initResizabl
 <div class="contents">
 <div class="textblock"><code>#include &lt;QAbstractItemDelegate&gt;</code><br />
 <code>#include &lt;queue&gt;</code><br />
+<code>#include &lt;QPainter&gt;</code><br />
+<code>#include &lt;semaphore&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for TDelegate.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="TDelegate_8hpp__incl.png" border="0" usemap="#asrc_2ui_2widgets_2TDelegate_8hpp" alt=""/></div>
 <map name="asrc_2ui_2widgets_2TDelegate_8hpp" id="asrc_2ui_2widgets_2TDelegate_8hpp">
-<area shape="rect" title=" " alt="" coords="55,5,245,31"/>
+<area shape="rect" title=" " alt="" coords="211,5,401,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,164,104"/>
 <area shape="rect" title=" " alt="" coords="188,79,245,104"/>
+<area shape="rect" title=" " alt="" coords="269,79,343,104"/>
+<area shape="rect" title=" " alt="" coords="367,79,453,104"/>
+<area shape="rect" title=" " alt="" coords="478,79,537,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -137,23 +143,23 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTListModel.html">TListModel&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTListModel.html">TListModel&lt; T, loader &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTDelegate.html">TDelegate&lt; T, loader, painter_func &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a160eb4c8fbea38d18f8f34177a34ee21"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a160eb4c8fbea38d18f8f34177a34ee21"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="TDelegate_8hpp.html#a160eb4c8fbea38d18f8f34177a34ee21">PaintFunc</a> = void(QPainter *, const QStyleOptionViewItem &amp;, const QModelIndex &amp;, const T &amp;)</td></tr>
-<tr class="separator:a160eb4c8fbea38d18f8f34177a34ee21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad12ba82a2a6ecac1357ce0b4789f0ca6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ad12ba82a2a6ecac1357ce0b4789f0ca6"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="TDelegate_8hpp.html#ad12ba82a2a6ecac1357ce0b4789f0ca6">DefferLoader</a> = void(T &amp;t, <a class="el" href="classTListModel.html">TListModel</a>&lt; T &gt; &amp;model_ref)</td></tr>
-<tr class="separator:ad12ba82a2a6ecac1357ce0b4789f0ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b15b92a913b3e7f8e5b09229f37033a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2b15b92a913b3e7f8e5b09229f37033a"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="TDelegate_8hpp.html#a2b15b92a913b3e7f8e5b09229f37033a">PaintFunc</a> = void(QPainter *, const QStyleOptionViewItem &amp;, const QModelIndex &amp;, const T &amp;)</td></tr>
+<tr class="separator:a2b15b92a913b3e7f8e5b09229f37033a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40911e794e4a618326472a68ace1e7ca"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a40911e794e4a618326472a68ace1e7ca"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="TDelegate_8hpp.html#a40911e794e4a618326472a68ace1e7ca">DefferLoader</a> = void(std::shared_ptr&lt; T &gt; t_ptr)</td></tr>
+<tr class="separator:a40911e794e4a618326472a68ace1e7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="ad12ba82a2a6ecac1357ce0b4789f0ca6" name="ad12ba82a2a6ecac1357ce0b4789f0ca6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad12ba82a2a6ecac1357ce0b4789f0ca6">&#9670;&#160;</a></span>DefferLoader</h2>
+<a id="a40911e794e4a618326472a68ace1e7ca" name="a40911e794e4a618326472a68ace1e7ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40911e794e4a618326472a68ace1e7ca">&#9670;&#160;</a></span>DefferLoader</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,15 +167,15 @@ Typedefs</h2></td></tr>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="TDelegate_8hpp.html#ad12ba82a2a6ecac1357ce0b4789f0ca6">DefferLoader</a> =  void(T&amp; t, <a class="el" href="classTListModel.html">TListModel</a>&lt;T&gt;&amp; model_ref)</td>
+          <td class="memname">using <a class="el" href="TDelegate_8hpp.html#a40911e794e4a618326472a68ace1e7ca">DefferLoader</a> =  void( std::shared_ptr&lt; T &gt; t_ptr )</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a160eb4c8fbea38d18f8f34177a34ee21" name="a160eb4c8fbea38d18f8f34177a34ee21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a160eb4c8fbea38d18f8f34177a34ee21">&#9670;&#160;</a></span>PaintFunc</h2>
+<a id="a2b15b92a913b3e7f8e5b09229f37033a" name="a2b15b92a913b3e7f8e5b09229f37033a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b15b92a913b3e7f8e5b09229f37033a">&#9670;&#160;</a></span>PaintFunc</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +183,7 @@ template&lt;typename T &gt; </div>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="TDelegate_8hpp.html#a160eb4c8fbea38d18f8f34177a34ee21">PaintFunc</a> =  void(QPainter*, const QStyleOptionViewItem&amp;, const QModelIndex&amp;, const T&amp;)</td>
+          <td class="memname">using <a class="el" href="TDelegate_8hpp.html#a2b15b92a913b3e7f8e5b09229f37033a">PaintFunc</a> =  void( QPainter*, const QStyleOptionViewItem&amp;, const QModelIndex&amp;, const T&amp; )</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,4 +1,4 @@
-<map id="TListModel&lt; T &gt;" name="TListModel&lt; T &gt;">
-<area shape="rect" id="node1" title=" " alt="" coords="16,79,133,104"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,144,31"/>
+<map id="TListModel&lt; T, loader &gt;" name="TListModel&lt; T, loader &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,79,164,104"/>
+<area shape="rect" id="node2" title=" " alt="" coords="15,5,154,31"/>
 </map>
