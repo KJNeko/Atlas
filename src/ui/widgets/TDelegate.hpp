@@ -7,53 +7,101 @@
 
 #include <QAbstractItemDelegate>
 #include <queue>
+#include <QPainter>
+#include <semaphore>
+#include <thread>
 
-template< typename T > class TListModel : public QAbstractListModel
+template< typename T > using PaintFunc = void( QPainter*, const QStyleOptionViewItem&, const QModelIndex&, const T& );
+
+template< typename T > using DefferLoader = void( std::shared_ptr< T > t_ptr );
+
+
+template< typename T, const DefferLoader loader > class TListModel : public QAbstractListModel
 {
-	std::vector< T > vector;
+	std::vector< std::shared_ptr< T > > vector {};
+
 
 	using Idx = std::vector< T >::size_type;
 
-	std::queue<Idx> loader_queue;
-
 	TListModel( QWidget* parent = nullptr ) : QAbstractListModel( parent ) {}
 
-	void insert( const Idx index, T value );
-	void remove( const Idx index );
+	static constexpr uint8_t LOAD_MAX { 64 };
+
+	std::counting_semaphore< LOAD_MAX > load_sem;
+	std::mutex queue_mutex;
+	std::queue< std::shared_ptr< T > > load_queue;
+
+	void requestLoad( std::shared_ptr< T > t_ptr )
+	{
+		std::lock_guard guard( queue_mutex );
+		load_queue.push( std::move( t_ptr ) );
+		load_sem.release();
+		if ( load_queue.size() > load_sem.max() ) load_queue.pop();
+	}
+
+	void item_loader( std::stop_token& token )
+	{
+		while ( !token.stop_requested() )
+		{
+			using namespace std::chrono_literals;
+			if(!load_sem.try_acquire_for(2s))
+				continue;
+
+			auto t = [&]()
+			{
+				std::lock_guard guard( queue_mutex );
+				auto t { std::move( load_queue.back() ) };
+				load_queue.pop();
+				return t;
+			};
+
+			loader(t);
+		}
+	}
+
+	std::jthread loader_thread { &TListModel::item_loader, this };
+
+	~TListModel()
+	{
+		loader_thread.request_stop();
+		loader_thread.join();
+	}
 };
 
-template<typename T>
-using PaintFunc = void(QPainter*, const QStyleOptionViewItem&, const QModelIndex&, const T&);
 
-template<typename T>
-using DefferLoader = void(T& t, TListModel<T>& model_ref);
-
-
-template< typename T, DefferLoader<T> loader, PaintFunc<T> painter_func>
-class TDelegate : public QAbstractItemDelegate
+template< typename T, DefferLoader< T > loader, PaintFunc< T > painter_func > class TDelegate :
+  public QAbstractItemDelegate
 {
+	public:
 	TListModel< T >& model_ref;
 
 	TDelegate() = delete;
 
-	public:
 	TDelegate( TListModel< T >& model, QWidget* parent = nullptr ) : model_ref( model ), QAbstractItemDelegate( parent )
 	{
 	}
 
-	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override
+	void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const override
 	{
-		T data {index.data().value<T>()};
+		painter->save();
 
-		std::optional<typename T::DataStore> data_store {data.data_store};
+		painter->drawRect( option.rect );
 
-		if(data_store.has_value())
-			painter_func(painter, option, index, data);
+		if ( index.data().isNull() )
+		{
+			painter->restore();
+			return;
+		}
+
+		auto data { index.data().value< std::shared_ptr< T > >() };
+
+		std::optional< typename T::DataStore > data_store { data.data_store };
+
+		if ( data_store.has_value() )
+			painter_func( painter, option, index, data );
 		else
-			loader(data, model_ref);
+			model_ref.requestLoader( data );
 	}
-
-
 };
 
 
