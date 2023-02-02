@@ -12,6 +12,9 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 {
 	ui->setupUi( this );
 
+	ui->splitter->setStretchFactor(1, 0);
+	ui->selectedView->hide();
+
 	// Connect backend to view
 	connect(
 		&backend,
