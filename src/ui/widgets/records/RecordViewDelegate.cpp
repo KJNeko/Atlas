@@ -43,7 +43,19 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 			pixmap_rect.translated( ( banner.width() / 2 ) * -1, ( ( banner.height() ) / 2 ) * -1 ),
 			banner );
 
-		painter->drawRect( option.rect );
+
+		if(option.state & QStyle::State_Selected)
+		{
+			painter->save();
+
+			painter->setBrush(QColor(0,0,255, 50));
+			painter->drawRect(option.rect);
+
+			painter->restore();
+		}
+		else
+			painter->drawRect( option.rect );
+
 		painter->drawText(
 			option.rect,
 			record.m_title + " [" + record.m_version + "]",
