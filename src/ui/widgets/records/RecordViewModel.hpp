@@ -10,13 +10,6 @@
 
 #include "h95/database/Record.hpp"
 
-struct ModelData
-{
-	const Record* record { nullptr };
-};
-
-Q_DECLARE_METATYPE( ModelData )
-
 class RecordViewModel : public QAbstractListModel
 {
 	std::vector< Record > records {};

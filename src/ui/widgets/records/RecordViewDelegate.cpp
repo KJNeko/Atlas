@@ -19,32 +19,20 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 	ZoneScoped;
 	painter->save();
 
-	const auto data { index.data().value< ModelData >() };
-	if ( data.record != nullptr )
+	const Record* data_ptr { index.data().value< const Record* >() };
+	if ( data_ptr != nullptr )
 	{
-		const auto& record { *data.record };
+		const Record& record { *data_ptr };
 
 		const auto banner_width { getSettings< int >( "main_view/banner_width", 400 ) };
 		const auto banner_height { getSettings< int >( "main_view/banner_height", 300 ) };
 
-		const auto banner_path { QString::fromStdString( ( record.m_metadata.game_path / record.m_banner ).string() ) };
-
-		QPixmap banner { ":/invalid_banner.jpg" };
-		if ( !QPixmapCache::find( banner_path, &banner )
-			 && std::filesystem::exists( record.m_metadata.game_path / record.m_banner ) )
-		{
-			banner = QPixmap( banner_path );
-			banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
-			if ( banner.width() > banner_width )
-				banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
-
-			QPixmapCache::insert( banner_path, banner );
-		}
+		auto banner {record.getBanner(banner_width, banner_height)};
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
 		painter->drawPixmap(
 			pixmap_rect.translated( ( banner.width() / 2 ) * -1, ( ( banner.height() ) / 2 ) * -1 ),
-			banner );
+			std::move(banner) );
 
 
 		if ( option.state & QStyle::State_Selected )

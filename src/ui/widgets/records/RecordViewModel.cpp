@@ -11,8 +11,7 @@ QVariant RecordViewModel::data( const QModelIndex& index, int role ) const
 	ZoneScoped;
 	if ( role == Qt::DisplayRole )
 	{
-		const ModelData data { &( records.at( static_cast< unsigned long >( index.row() ) ) ) };
-		return QVariant::fromValue( data );
+		return QVariant::fromValue( &(records.at(static_cast<unsigned long>(index.row()))) );
 	}
 
 	return {};

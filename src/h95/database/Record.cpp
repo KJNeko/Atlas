@@ -6,6 +6,7 @@
 #include <QJsonArray>
 #include <iostream>
 #include <tracy/Tracy.hpp>
+#include <QPixmapCache>
 #include "h95/database/database.hpp"
 
 #ifdef NDEBUG
@@ -47,10 +48,11 @@ Record Record::create(
 
 	std::vector< std::pair< std::string, PreviewType > > image_paths;
 	if ( !banner.empty() ) image_paths.emplace_back( banner.string(), PREVIEW_BANNER );
-	for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW);
+	for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW );
 
 	for ( const auto& [path, type] : image_paths )
-		database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id << static_cast<uint8_t>(type) << path;
+		database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id
+						   << static_cast< uint8_t >( type ) << path;
 
 	return { id, title, creator, version, engine, GameMetadata::insert( id, metadata ), banner, previews };
 }
@@ -81,28 +83,69 @@ Record Record::select( const RecordID id )
 
 	std::filesystem::path banner_path { ":invalid_banner.jpg" };
 	std::vector< std::filesystem::path > preview_paths;
-	preview_paths.reserve(32);
+	preview_paths.reserve( 32 );
 
 	{
 		ZoneScopedN( "Query previews" );
 		database::db_ref() << "SELECT path, type FROM previews WHERE record_id = ?" << id >>
 			[&banner_path, &preview_paths]( std::string&& path, const uint8_t type )
 		{
-			ZoneScopedN("Process row");
-			switch(static_cast<PreviewType>(type))
+			ZoneScopedN( "Process row" );
+			switch ( static_cast< PreviewType >( type ) )
 			{
-				default: [[fallthrough]];
+				default:
+					[[fallthrough]];
 				case PREVIEW_UNKNOWN:
 					break;
 				case PREVIEW_BANNER:
-					banner_path = std::move(path);
+					banner_path = std::move( path );
 					break;
 				case PREVIEW_PREVIEW:
-					preview_paths.emplace_back(std::move(path));
+					preview_paths.emplace_back( std::move( path ) );
 					break;
 			}
 		};
 	}
 
 	return { id, title, creator, version, engine, GameMetadata::select( id ), banner_path, preview_paths };
+}
+
+
+QPixmap Record::getBanner() const
+{
+	const auto banner_path { QString::fromStdString( ( m_metadata.game_path / m_banner ).string() ) };
+
+	QPixmap banner { ":/invalid_banner.jpg" };
+	if ( !QPixmapCache::find( banner_path, &banner ) && std::filesystem::exists( m_metadata.game_path / m_banner ) )
+	{
+		banner = QPixmap( banner_path );
+		QPixmapCache::insert( banner_path, banner );
+		return banner;
+	}
+
+	return banner;
+}
+
+QPixmap Record::getBanner( const int banner_width, const int banner_height ) const
+{
+	const auto banner_path { QString::fromStdString( ( m_metadata.game_path / m_banner ).string() ) };
+
+	const auto key {banner_path + QString::number(banner_width) + QString::number(banner_width)};
+
+	QPixmap resized_banner { ":/invalid_banner.jpg" };
+	if ( !QPixmapCache::find(
+			 key,
+			 &resized_banner )
+		 && std::filesystem::exists( m_metadata.game_path / m_banner ) )
+	{
+		QPixmap banner { getBanner() };
+
+		banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
+		if ( banner.width() > banner_width ) banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
+
+		QPixmapCache::insert( key, banner );
+		return banner;
+	}
+
+	return resized_banner;
 }
