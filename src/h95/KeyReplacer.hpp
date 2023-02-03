@@ -10,7 +10,7 @@
 
 class KeyReplacer
 {
-	std::unordered_map<QString, QString> key_map;
+	std::unordered_map<QString, QString> key_map {};
 	public:
 	void registerKey(const QString& key, QString value);
 	//void parseKeys(const QString& mask, const QString& str);

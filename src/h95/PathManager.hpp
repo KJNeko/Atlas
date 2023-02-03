@@ -26,7 +26,7 @@ Valid placeholders:
 
 struct PathManager
 {
-	KeyReplacer key_replacer;
+	KeyReplacer key_replacer {};
 
 	std::filesystem::path root {};
 
