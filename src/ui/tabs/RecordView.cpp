@@ -12,7 +12,7 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 {
 	ui->setupUi( this );
 
-	ui->splitter->setStretchFactor(1, 0);
+	ui->splitter->setStretchFactor( 1, 0 );
 	ui->selectedView->hide();
 
 	// Connect backend to view
@@ -48,11 +48,25 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 	//Connect intermediate pieces
 	connect(
 		ui->recordView,
-		SIGNAL( recordSelected( const Record& ) ),
+		SIGNAL( changeSelection( const QPersistentModelIndex& ) ),
 		ui->selectedView,
-		SLOT( recordSelected( const Record& ) ) );
+		SLOT( recordSelected( const QPersistentModelIndex& ) ) );
+
+	connect(
+		ui->recordView,
+		SIGNAL( changeSelection( const QPersistentModelIndex& ) ),
+		this,
+		SLOT( recordSelected( const QPersistentModelIndex& ) ) );
 
 	backend.refresh();
+}
+
+void RecordView::recordSelected( const QPersistentModelIndex& index )
+{
+	if ( index.isValid() )
+		ui->selectedView->show();
+	else
+		ui->selectedView->hide();
 }
 
 RecordView::~RecordView()

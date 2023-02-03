@@ -22,14 +22,14 @@ class SelectedViewWidget final : public QWidget
 
 	Q_DISABLE_COPY_MOVE( SelectedViewWidget )
 
-	std::optional< Record > selected { std::nullopt };
+	std::optional<Record> selected {std::nullopt};
 
 	public:
 	explicit SelectedViewWidget( QWidget* parent = nullptr );
 	~SelectedViewWidget() override;
 
 	public slots:
-	void recordSelected( const Record& record );
+	void recordSelected(const QPersistentModelIndex&);
 
 	private:
 	Ui::SelectedViewWidget* ui;

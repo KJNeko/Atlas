@@ -6,6 +6,7 @@
 #define HYDRUS95_RECORDVIEWWIDGET_HPP
 
 #include <QWidget>
+#include <QItemSelection>
 #include "RecordViewModel.hpp"
 #include "RecordViewDelegate.hpp"
 
@@ -32,10 +33,11 @@ class RecordViewWidget final : public QWidget
 	~RecordViewWidget() override;
 
 	public slots:
+	void selectionChanged(const QItemSelection& selected, const QItemSelection& deseleted);
 	void recordsUpdated( const std::vector< Record >& records );
 
 	signals:
-	void recordSelected( const Record& record );
+	void changeSelection(const QPersistentModelIndex& index);
 
 	private:
 	Ui::RecordViewWidget* ui;
