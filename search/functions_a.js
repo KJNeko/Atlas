@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['recordselected_0',['recordSelected',['../classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6',1,'RecordViewWidget::recordSelected()'],['../classSelectedViewWidget.html#a7b41aa131b83359c42595ac82410b98b',1,'SelectedViewWidget::recordSelected()']]],
+  ['recordselected_0',['recordSelected',['../classRecordView.html#a7749dca219b679d6c0afd84e57241daf',1,'RecordView::recordSelected()'],['../classSelectedViewWidget.html#a52125d9f569883e911f668e535912aff',1,'SelectedViewWidget::recordSelected()']]],
   ['recordsupdated_1',['recordsUpdated',['../classRecordViewBackend.html#ab3214cf0fb86ed1883522e044a933141',1,'RecordViewBackend::recordsUpdated()'],['../classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa',1,'RecordViewWidget::recordsUpdated()']]],
   ['recordview_2',['RecordView',['../classRecordView.html#ab1b13442e609d980d1da4f3934935466',1,'RecordView']]],
   ['recordviewdelegate_3',['RecordViewDelegate',['../classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0',1,'RecordViewDelegate']]],

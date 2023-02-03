@@ -127,13 +127,15 @@ Inheritance diagram for RecordViewWidget:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-slots" name="pub-slots"></a>
 Public Slots</h2></td></tr>
+<tr class="memitem:acc67145100a852176f4be40a9f0dc1af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewWidget.html#acc67145100a852176f4be40a9f0dc1af">selectionChanged</a> (const QItemSelection &amp;selected, const QItemSelection &amp;deseleted)</td></tr>
+<tr class="separator:acc67145100a852176f4be40a9f0dc1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3e7308493a9ae106351f117438713aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa">recordsUpdated</a> (const std::vector&lt; <a class="el" href="structRecord.html">Record</a> &gt; &amp;records)</td></tr>
 <tr class="separator:ab3e7308493a9ae106351f117438713aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a5340e87cff1c083290a76e8aa005b0f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6">recordSelected</a> (const <a class="el" href="structRecord.html">Record</a> &amp;record)</td></tr>
-<tr class="separator:a5340e87cff1c083290a76e8aa005b0f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5466efb229af9021d2d80c05b8a1725"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewWidget.html#ae5466efb229af9021d2d80c05b8a1725">changeSelection</a> (const QPersistentModelIndex &amp;index)</td></tr>
+<tr class="separator:ae5466efb229af9021d2d80c05b8a1725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -195,8 +197,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5340e87cff1c083290a76e8aa005b0f6" name="a5340e87cff1c083290a76e8aa005b0f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5340e87cff1c083290a76e8aa005b0f6">&#9670;&#160;</a></span>recordSelected</h2>
+<a id="ae5466efb229af9021d2d80c05b8a1725" name="ae5466efb229af9021d2d80c05b8a1725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5466efb229af9021d2d80c05b8a1725">&#9670;&#160;</a></span>changeSelection</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,10 +207,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void RecordViewWidget::recordSelected </td>
+          <td class="memname">void RecordViewWidget::changeSelection </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structRecord.html">Record</a> &amp;&#160;</td>
-          <td class="paramname"><em>record</em></td><td>)</td>
+          <td class="paramtype">const QPersistentModelIndex &amp;&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -236,6 +238,42 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">const std::vector&lt; <a class="el" href="structRecord.html">Record</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>records</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acc67145100a852176f4be40a9f0dc1af" name="acc67145100a852176f4be40a9f0dc1af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc67145100a852176f4be40a9f0dc1af">&#9670;&#160;</a></span>selectionChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RecordViewWidget::selectionChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QItemSelection &amp;&#160;</td>
+          <td class="paramname"><em>selected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QItemSelection &amp;&#160;</td>
+          <td class="paramname"><em>deseleted</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>

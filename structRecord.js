@@ -1,5 +1,7 @@
 var structRecord =
 [
+    [ "getBanner", "structRecord.html#a40d83547e0b2d07d854368fc7996acbc", null ],
+    [ "getBanner", "structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238", null ],
     [ "operator==", "structRecord.html#a07f3aa92a3ba2d20d2d7c9111732487f", null ],
     [ "m_banner", "structRecord.html#a5441ab12a73bc474dd127ea05e714c33", null ],
     [ "m_creator", "structRecord.html#a6f32aa6ab509c27e48131b8b89f0c529", null ],

@@ -116,53 +116,56 @@ $(document).ready(function(){initNavTree('RecordViewWidget_8hpp_source.html','')
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define HYDRUS95_RECORDVIEWWIDGET_HPP</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QWidget&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="RecordViewModel_8hpp.html">RecordViewModel.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="RecordViewDelegate_8hpp.html">RecordViewDelegate.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">struct </span><a class="code hl_struct" href="structRecord.html">Record</a>;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>QT_BEGIN_NAMESPACE</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">class </span><a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>QT_END_NAMESPACE</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classRecordViewWidget.html">   21</a></span><span class="keyword">class </span><a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a> final : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    Q_OBJECT</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a> )</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_class" href="classRecordViewDelegate.html">RecordViewDelegate</a> delegate { <span class="keyword">this</span> };</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_class" href="classRecordViewModel.html">RecordViewModel</a> model { <span class="keyword">this</span> };</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a>( QWidget* parent = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_function" href="classRecordViewWidget.html#a4976615022bab1540f12a7dd23e3803e">~RecordViewWidget</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">public</span> slots:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa">recordsUpdated</a>( <span class="keyword">const</span> std::vector&lt; Record &gt;&amp; records );</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    signals:</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6">   38</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6">recordSelected</a>( <span class="keyword">const</span> <a class="code hl_struct" href="structRecord.html">Record</a>&amp; record );</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    Ui::RecordViewWidget* ui;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>};</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_RECORDVIEWWIDGET_HPP</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QItemSelection&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="RecordViewModel_8hpp.html">RecordViewModel.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="RecordViewDelegate_8hpp.html">RecordViewDelegate.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">struct </span><a class="code hl_struct" href="structRecord.html">Record</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>QT_BEGIN_NAMESPACE</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">class </span><a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>QT_END_NAMESPACE</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classRecordViewWidget.html">   22</a></span><span class="keyword">class </span><a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a> final : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    Q_OBJECT</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a> )</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_class" href="classRecordViewDelegate.html">RecordViewDelegate</a> delegate { <span class="keyword">this</span> };</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_class" href="classRecordViewModel.html">RecordViewModel</a> model { <span class="keyword">this</span> };</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classRecordViewWidget.html">RecordViewWidget</a>( QWidget* parent = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_function" href="classRecordViewWidget.html#a4976615022bab1540f12a7dd23e3803e">~RecordViewWidget</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">public</span> slots:</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classRecordViewWidget.html#acc67145100a852176f4be40a9f0dc1af">selectionChanged</a>(<span class="keyword">const</span> QItemSelection&amp; selected, <span class="keyword">const</span> QItemSelection&amp; deseleted);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa">recordsUpdated</a>( <span class="keyword">const</span> std::vector&lt; Record &gt;&amp; records );</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    signals:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classRecordViewWidget.html#ae5466efb229af9021d2d80c05b8a1725">   40</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="classRecordViewWidget.html#ae5466efb229af9021d2d80c05b8a1725">changeSelection</a>(<span class="keyword">const</span> QPersistentModelIndex&amp; index);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    Ui::RecordViewWidget* ui;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_RECORDVIEWWIDGET_HPP</span></div>
 <div class="ttc" id="aRecordViewDelegate_8hpp_html"><div class="ttname"><a href="RecordViewDelegate_8hpp.html">RecordViewDelegate.hpp</a></div></div>
 <div class="ttc" id="aRecordViewModel_8hpp_html"><div class="ttname"><a href="RecordViewModel_8hpp.html">RecordViewModel.hpp</a></div></div>
 <div class="ttc" id="aclassRecordViewDelegate_html"><div class="ttname"><a href="classRecordViewDelegate.html">RecordViewDelegate</a></div><div class="ttdef"><b>Definition:</b> RecordViewDelegate.hpp:11</div></div>
-<div class="ttc" id="aclassRecordViewModel_html"><div class="ttname"><a href="classRecordViewModel.html">RecordViewModel</a></div><div class="ttdef"><b>Definition:</b> RecordViewModel.hpp:21</div></div>
-<div class="ttc" id="aclassRecordViewWidget_html"><div class="ttname"><a href="classRecordViewWidget.html">RecordViewWidget</a></div><div class="ttdef"><b>Definition:</b> RecordViewWidget.hpp:22</div></div>
-<div class="ttc" id="aclassRecordViewWidget_html_a4976615022bab1540f12a7dd23e3803e"><div class="ttname"><a href="classRecordViewWidget.html#a4976615022bab1540f12a7dd23e3803e">RecordViewWidget::~RecordViewWidget</a></div><div class="ttdeci">~RecordViewWidget() override</div><div class="ttdef"><b>Definition:</b> RecordViewWidget.cpp:20</div></div>
-<div class="ttc" id="aclassRecordViewWidget_html_a5340e87cff1c083290a76e8aa005b0f6"><div class="ttname"><a href="classRecordViewWidget.html#a5340e87cff1c083290a76e8aa005b0f6">RecordViewWidget::recordSelected</a></div><div class="ttdeci">void recordSelected(const Record &amp;record)</div></div>
-<div class="ttc" id="aclassRecordViewWidget_html_ab3e7308493a9ae106351f117438713aa"><div class="ttname"><a href="classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa">RecordViewWidget::recordsUpdated</a></div><div class="ttdeci">void recordsUpdated(const std::vector&lt; Record &gt; &amp;records)</div><div class="ttdef"><b>Definition:</b> RecordViewWidget.cpp:25</div></div>
+<div class="ttc" id="aclassRecordViewModel_html"><div class="ttname"><a href="classRecordViewModel.html">RecordViewModel</a></div><div class="ttdef"><b>Definition:</b> RecordViewModel.hpp:14</div></div>
+<div class="ttc" id="aclassRecordViewWidget_html"><div class="ttname"><a href="classRecordViewWidget.html">RecordViewWidget</a></div><div class="ttdef"><b>Definition:</b> RecordViewWidget.hpp:23</div></div>
+<div class="ttc" id="aclassRecordViewWidget_html_a4976615022bab1540f12a7dd23e3803e"><div class="ttname"><a href="classRecordViewWidget.html#a4976615022bab1540f12a7dd23e3803e">RecordViewWidget::~RecordViewWidget</a></div><div class="ttdeci">~RecordViewWidget() override</div><div class="ttdef"><b>Definition:</b> RecordViewWidget.cpp:24</div></div>
+<div class="ttc" id="aclassRecordViewWidget_html_ab3e7308493a9ae106351f117438713aa"><div class="ttname"><a href="classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa">RecordViewWidget::recordsUpdated</a></div><div class="ttdeci">void recordsUpdated(const std::vector&lt; Record &gt; &amp;records)</div><div class="ttdef"><b>Definition:</b> RecordViewWidget.cpp:40</div></div>
+<div class="ttc" id="aclassRecordViewWidget_html_acc67145100a852176f4be40a9f0dc1af"><div class="ttname"><a href="classRecordViewWidget.html#acc67145100a852176f4be40a9f0dc1af">RecordViewWidget::selectionChanged</a></div><div class="ttdeci">void selectionChanged(const QItemSelection &amp;selected, const QItemSelection &amp;deseleted)</div><div class="ttdef"><b>Definition:</b> RecordViewWidget.cpp:29</div></div>
+<div class="ttc" id="aclassRecordViewWidget_html_ae5466efb229af9021d2d80c05b8a1725"><div class="ttname"><a href="classRecordViewWidget.html#ae5466efb229af9021d2d80c05b8a1725">RecordViewWidget::changeSelection</a></div><div class="ttdeci">void changeSelection(const QPersistentModelIndex &amp;index)</div></div>
 <div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition:</b> GameImportDialog.hpp:13</div></div>
-<div class="ttc" id="astructRecord_html"><div class="ttname"><a href="structRecord.html">Record</a></div><div class="ttdef"><b>Definition:</b> Record.hpp:12</div></div>
+<div class="ttc" id="astructRecord_html"><div class="ttname"><a href="structRecord.html">Record</a></div><div class="ttdef"><b>Definition:</b> Record.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

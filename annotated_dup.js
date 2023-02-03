@@ -6,7 +6,6 @@ var annotated_dup =
     [ "Importer", "classImporter.html", "classImporter" ],
     [ "KeyReplacer", "classKeyReplacer.html", "classKeyReplacer" ],
     [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
-    [ "ModelData", "structModelData.html", "structModelData" ],
     [ "PathManager", "structPathManager.html", "structPathManager" ],
     [ "Record", "structRecord.html", "structRecord" ],
     [ "RecordView", "classRecordView.html", "classRecordView" ],
@@ -16,7 +15,5 @@ var annotated_dup =
     [ "RecordViewWidget", "classRecordViewWidget.html", "classRecordViewWidget" ],
     [ "SelectedViewWidget", "classSelectedViewWidget.html", "classSelectedViewWidget" ],
     [ "SettingsDialog", "classSettingsDialog.html", "classSettingsDialog" ],
-    [ "Tag", "classTag.html", null ],
-    [ "TDelegate", "classTDelegate.html", "classTDelegate" ],
-    [ "TListModel", "classTListModel.html", null ]
+    [ "Tag", "classTag.html", null ]
 ];

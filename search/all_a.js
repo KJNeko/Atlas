@@ -12,7 +12,5 @@ var searchData=
   ['main_2ecpp_9',['main.cpp',['../main_8cpp.html',1,'']]],
   ['mainwindow_10',['MainWindow',['../classMainWindow.html',1,'MainWindow'],['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow::MainWindow()']]],
   ['mainwindow_2ecpp_11',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
-  ['mainwindow_2ehpp_12',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]],
-  ['model_5fref_13',['model_ref',['../classTDelegate.html#abfddec319b5ab8eaf267a73386f46af9',1,'TDelegate']]],
-  ['modeldata_14',['ModelData',['../structModelData.html',1,'']]]
+  ['mainwindow_2ehpp_12',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]]
 ];
