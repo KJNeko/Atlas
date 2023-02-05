@@ -19,6 +19,7 @@
 #include <QMimeData>
 #include <QDropEvent>
 #include <spdlog/spdlog.h>
+#include <QPixmapCache>
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -29,10 +30,18 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		qDebug() << "First launch";
 		setSettings( "first_launch", false );
 	}
+
+	QPixmapCache::setCacheLimit(1024 * 32);
+
+	spdlog::info("Cache limit set to {}KB", QPixmapCache::cacheLimit());
+
+	this->restoreGeometry(getSettings<QByteArray>("main_window/geometry"));
 }
 
 MainWindow::~MainWindow()
 {
+	setSettings("main_window/geometry", saveGeometry());
+
 	delete ui;
 }
 
