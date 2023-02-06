@@ -24,7 +24,7 @@ QString KeyReplacer::value(const QString& value) const
 void KeyReplacer::registerKey( const QString& key, QString value )
 {
 	if(const auto key_value = key_map.find(key); key_value == key_map.end())
-		key_value->second = value;
+		key_map.insert_or_assign(key, std::move(value));
 	else
 		key_map.emplace(key, std::move(value));
 }
