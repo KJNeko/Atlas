@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classSelectedViewWidget.html',''); ini
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classSelectedViewWidget-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SelectedViewWidget Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
@@ -128,6 +129,17 @@ Inheritance diagram for SelectedViewWidget:</div>
 Public Slots</h2></td></tr>
 <tr class="memitem:a52125d9f569883e911f668e535912aff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectedViewWidget.html#a52125d9f569883e911f668e535912aff">recordSelected</a> (const QPersistentModelIndex &amp;)</td></tr>
 <tr class="separator:a52125d9f569883e911f668e535912aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871e30941f74a1f5e159b35838ac9f88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectedViewWidget.html#a871e30941f74a1f5e159b35838ac9f88">on_closeButton_pressed</a> ()</td></tr>
+<tr class="separator:a871e30941f74a1f5e159b35838ac9f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4a5bc1ded614251514923925c74f677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectedViewWidget.html#ab4a5bc1ded614251514923925c74f677">keyPressEvent</a> (QKeyEvent *event) override</td></tr>
+<tr class="separator:ab4a5bc1ded614251514923925c74f677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e2137cacb49a47bfcfd4370b01eb815"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectedViewWidget.html#a3e2137cacb49a47bfcfd4370b01eb815">resizeEvent</a> (QResizeEvent *event) override</td></tr>
+<tr class="separator:a3e2137cacb49a47bfcfd4370b01eb815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a1aa9a63a417d3cd1bf21ae6a6b7f36e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectedViewWidget.html#a1aa9a63a417d3cd1bf21ae6a6b7f36e2">hiding</a> ()</td></tr>
+<tr class="separator:a1aa9a63a417d3cd1bf21ae6a6b7f36e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -189,6 +201,82 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1aa9a63a417d3cd1bf21ae6a6b7f36e2" name="a1aa9a63a417d3cd1bf21ae6a6b7f36e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aa9a63a417d3cd1bf21ae6a6b7f36e2">&#9670;&#160;</a></span>hiding</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectedViewWidget::hiding </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4a5bc1ded614251514923925c74f677" name="ab4a5bc1ded614251514923925c74f677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4a5bc1ded614251514923925c74f677">&#9670;&#160;</a></span>keyPressEvent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectedViewWidget::keyPressEvent </td>
+          <td>(</td>
+          <td class="paramtype">QKeyEvent *&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a871e30941f74a1f5e159b35838ac9f88" name="a871e30941f74a1f5e159b35838ac9f88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871e30941f74a1f5e159b35838ac9f88">&#9670;&#160;</a></span>on_closeButton_pressed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectedViewWidget::on_closeButton_pressed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a52125d9f569883e911f668e535912aff" name="a52125d9f569883e911f668e535912aff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a52125d9f569883e911f668e535912aff">&#9670;&#160;</a></span>recordSelected</h2>
 
@@ -209,6 +297,32 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e2137cacb49a47bfcfd4370b01eb815" name="a3e2137cacb49a47bfcfd4370b01eb815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e2137cacb49a47bfcfd4370b01eb815">&#9670;&#160;</a></span>resizeEvent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectedViewWidget::resizeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QResizeEvent *&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">slot</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

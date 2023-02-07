@@ -4,7 +4,7 @@ var searchData=
   ['record_2ecpp_1',['Record.cpp',['../Record_8cpp.html',1,'']]],
   ['record_2ehpp_2',['Record.hpp',['../Record_8hpp.html',1,'']]],
   ['recordid_3',['RecordID',['../Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e',1,'Types.hpp']]],
-  ['recordselected_4',['recordSelected',['../classSelectedViewWidget.html#a52125d9f569883e911f668e535912aff',1,'SelectedViewWidget::recordSelected()'],['../classRecordView.html#a7749dca219b679d6c0afd84e57241daf',1,'RecordView::recordSelected()']]],
+  ['recordselected_4',['recordSelected',['../classRecordView.html#a7749dca219b679d6c0afd84e57241daf',1,'RecordView::recordSelected()'],['../classSelectedViewWidget.html#a52125d9f569883e911f668e535912aff',1,'SelectedViewWidget::recordSelected()']]],
   ['recordsupdated_5',['recordsUpdated',['../classRecordViewWidget.html#ab3e7308493a9ae106351f117438713aa',1,'RecordViewWidget::recordsUpdated()'],['../classRecordViewBackend.html#ab3214cf0fb86ed1883522e044a933141',1,'RecordViewBackend::recordsUpdated()']]],
   ['recordview_6',['RecordView',['../classRecordView.html',1,'RecordView'],['../classRecordView.html#ab1b13442e609d980d1da4f3934935466',1,'RecordView::RecordView()']]],
   ['recordview_2ecpp_7',['RecordView.cpp',['../RecordView_8cpp.html',1,'']]],
@@ -12,7 +12,7 @@ var searchData=
   ['recordviewbackend_9',['RecordViewBackend',['../classRecordViewBackend.html',1,'']]],
   ['recordviewbackend_2ecpp_10',['RecordViewBackend.cpp',['../RecordViewBackend_8cpp.html',1,'']]],
   ['recordviewbackend_2ehpp_11',['RecordViewBackend.hpp',['../RecordViewBackend_8hpp.html',1,'']]],
-  ['recordviewdelegate_12',['RecordViewDelegate',['../classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0',1,'RecordViewDelegate::RecordViewDelegate()'],['../classRecordViewDelegate.html',1,'RecordViewDelegate']]],
+  ['recordviewdelegate_12',['RecordViewDelegate',['../classRecordViewDelegate.html',1,'RecordViewDelegate'],['../classRecordViewDelegate.html#a0c6eb4a14af49ab5e737cee1a65729e0',1,'RecordViewDelegate::RecordViewDelegate()']]],
   ['recordviewdelegate_2ecpp_13',['RecordViewDelegate.cpp',['../RecordViewDelegate_8cpp.html',1,'']]],
   ['recordviewdelegate_2ehpp_14',['RecordViewDelegate.hpp',['../RecordViewDelegate_8hpp.html',1,'']]],
   ['recordviewmodel_15',['RecordViewModel',['../classRecordViewModel.html#a62885b77767923c5d530f8ffc23415ca',1,'RecordViewModel::RecordViewModel()'],['../classRecordViewModel.html',1,'RecordViewModel']]],
@@ -26,6 +26,7 @@ var searchData=
   ['relative_23',['relative',['../structPathManager.html#a06260406adb9adb6e70a360945806b5b',1,'PathManager']]],
   ['removetag_24',['removeTag',['../classRecordViewBackend.html#ade0b0fd4dd2f5cbd577da1a135fee0c6',1,'RecordViewBackend']]],
   ['replacekeys_25',['replaceKeys',['../classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd',1,'KeyReplacer']]],
-  ['root_26',['root',['../structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa',1,'PathManager']]],
-  ['rowcount_27',['rowCount',['../classRecordViewModel.html#a2e406c945cc93b5eca6d3343a3841de0',1,'RecordViewModel']]]
+  ['resizeevent_26',['resizeEvent',['../classSelectedViewWidget.html#a3e2137cacb49a47bfcfd4370b01eb815',1,'SelectedViewWidget']]],
+  ['root_27',['root',['../structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa',1,'PathManager']]],
+  ['rowcount_28',['rowCount',['../classRecordViewModel.html#a2e406c945cc93b5eca6d3343a3841de0',1,'RecordViewModel']]]
 ];

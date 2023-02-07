@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_0',['value',['../classKeyReplacer.html#aa5024b097bb4ec476309ea364091149b',1,'KeyReplacer']]]
+  ['tagschanged_0',['tagsChanged',['../classRecordViewBackend.html#a734582d7a8a6d7036f341e86d3cfff70',1,'RecordViewBackend']]]
 ];
