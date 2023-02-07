@@ -303,6 +303,7 @@ void GameImportDialog::on_selectExec_pressed()
 {
 	ZoneScoped;
 	QFileDialog dialog { this };
+	dialog.setDirectory( ui->folderPath->text() );
 	//TODO: Read more into the spec and try to see if I can find a list of all mime types
 	dialog.setMimeTypeFilters( { "application/x-ms-dos-executable" } );
 	dialog.setFileMode( QFileDialog::ExistingFile );
