@@ -22,14 +22,17 @@
  * | main_view	| item_width 		| int 		| 400 		|
  * | main_view	| item_height 		| int 		| 300		|
  * | main_view	| banner_width 		| int 		| 400		|
- * | main_view	| banner_height 	| int 		| 300		|
- * | main_view	| padding			| int		| 8			|
- * |			| data_path			| string	| './data'	|
- * | import		| auto_fill_path 	| string	| '{path}/{title}' |
+ * | main_view	| banner_height 	| int 		| 280		|
+ * | main_view	| padding			| int		| 4			|
+ * | import		| auto_fill_path 	| string	| '{path}/{title}/{version}' |
  * | import		| should_autofill 	| bool		| 'true'	|
  * | import		| dest_path			| string	| '{h95_games}/{title}' |
  * | import		| should_copy 		| bool		| 'true'	|
  * | import		| should_delete		| bool		| 'false' 	|
+ * | selected_view | full_size		| bool		| 'true'	|
+ * | paths 		| h95_data 			| string 	| ./data/   |
+ * | paths		| h95_banners		| string	| ./data/banners |
+ * | paths		| h95_previews		| string	| ./data/previews	 |
  *
  */
 
