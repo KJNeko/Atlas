@@ -4,8 +4,10 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_RecordView.h" resolved
 
+#include <spdlog/spdlog.h>
 #include "RecordView.hpp"
 #include "ui_RecordView.h"
+#include "h95/config.hpp"
 
 
 RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordView )
@@ -58,15 +60,18 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 		this,
 		SLOT( recordSelected( const QPersistentModelIndex& ) ) );
 
+	connect( ui->selectedView, SIGNAL( hiding() ), ui->recordView, SLOT( selectionHiding() ) );
+
 	backend.refresh();
 }
 
 void RecordView::recordSelected( const QPersistentModelIndex& index )
 {
-	if ( index.isValid() )
-		ui->selectedView->show();
-	else
-		ui->selectedView->hide();
+	ui->selectedView->setHidden( !index.isValid() );
+
+	if ( !ui->selectedView->isHidden() ) ui->selectedView->setFocus();
+
+	if ( !ui->selectedView->isHidden() ) ui->recordView->hide();
 }
 
 RecordView::~RecordView()

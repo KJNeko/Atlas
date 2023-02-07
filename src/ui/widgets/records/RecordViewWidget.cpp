@@ -17,8 +17,11 @@ RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( n
 	ui->listView->setItemDelegate( &delegate );
 	ui->listView->setModel( &model );
 
-	connect(ui->listView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(selectionChanged( QItemSelection,QItemSelection)));
-
+	connect(
+		ui->listView->selectionModel(),
+		SIGNAL( selectionChanged( QItemSelection, QItemSelection ) ),
+		this,
+		SLOT( selectionChanged( QItemSelection, QItemSelection ) ) );
 }
 
 RecordViewWidget::~RecordViewWidget()
@@ -26,14 +29,16 @@ RecordViewWidget::~RecordViewWidget()
 	delete ui;
 }
 
-void RecordViewWidget::selectionChanged(const QItemSelection& selected, [[maybe_unused]] const QItemSelection& deseleted)
+void RecordViewWidget::selectionChanged(
+	const QItemSelection& selected,
+	[[maybe_unused]] const QItemSelection& deseleted )
 {
-	if(selected.size() == 0)
-		emit changeSelection(QPersistentModelIndex());
+	if ( selected.size() == 0 )
+		emit changeSelection( QPersistentModelIndex() );
 	else
 	{
-		const auto indexes {selected.indexes()};
-		emit changeSelection(indexes.back());
+		const auto indexes { selected.indexes() };
+		emit changeSelection( indexes.back() );
 	}
 }
 
@@ -41,4 +46,10 @@ void RecordViewWidget::recordsUpdated( const std::vector< Record >& records )
 {
 	ZoneScoped;
 	model.setRecords( records );
+}
+
+void RecordViewWidget::selectionHiding()
+{
+	ui->listView->selectionModel()->clear();
+	this->show();
 }

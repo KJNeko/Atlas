@@ -5,10 +5,11 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_SelectedViewWidget.h" resolved
 
 #include <tracy/Tracy.hpp>
-#include <spdlog/spdlog.h>
 #include "SelectedViewWidget.hpp"
 #include "ui_SelectedViewWidget.h"
+#include "h95/config.hpp"
 
+#include <QResizeEvent>
 
 SelectedViewWidget::SelectedViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::SelectedViewWidget )
 {
@@ -20,25 +21,57 @@ SelectedViewWidget::~SelectedViewWidget()
 	delete ui;
 }
 
-void SelectedViewWidget::recordSelected(const QPersistentModelIndex& record )
+void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 {
 	ZoneScoped;
 
-	if(record.isValid())
+	if ( record.isValid() )
 	{
-		if(this->isHidden())
-			this->show();
+		if ( this->isHidden() ) this->show();
 
-		const auto record_data {record.data().value<const Record*>()};
+		const auto record_data { record.data().value< const Record* >() };
 
 		selected = *record_data;
 
-		auto banner {selected->getBanner(ui->banner->size().width() - 20, 400)};
-		ui->banner->setPixmap(std::move(banner));
+		auto banner_n {
+			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) };
+		ui->banner->setPixmap( std::move( banner_n ) );
+
+		if ( record_data->m_creator.isEmpty() )
+			ui->title->setText( record_data->m_title );
+		else
+			ui->title->setText( QString( "%1 by %2" ).arg( record_data->m_title, record_data->m_creator ) );
 	}
 	else
 		this->hide();
+}
 
+void SelectedViewWidget::resizeEvent( QResizeEvent* event )
+{
+	ZoneScoped;
+	if ( selected != std::nullopt )
+	{
+		auto banner_n {
+			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) };
+		ui->banner->setPixmap( std::move( banner_n ) );
+	}
+	QWidget::resizeEvent( event );
+}
 
-	//TODO: Make file selection view
+void SelectedViewWidget::on_closeButton_pressed()
+{
+	emit hiding();
+	this->hide();
+}
+
+void SelectedViewWidget::keyPressEvent( QKeyEvent* event )
+{
+	if ( event->key() == Qt::Key_Escape )
+	{
+		event->accept();
+
+		emit hiding();
+		this->hide();
+	}
+	QWidget::keyPressEvent( event );
 }

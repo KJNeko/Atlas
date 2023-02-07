@@ -34,6 +34,7 @@ class RecordViewWidget final : public QWidget
 
 	public slots:
 	void selectionChanged(const QItemSelection& selected, const QItemSelection& deseleted);
+	void selectionHiding();
 	void recordsUpdated( const std::vector< Record >& records );
 
 	signals:

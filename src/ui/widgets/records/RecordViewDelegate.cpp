@@ -25,7 +25,7 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		const Record& record { *data_ptr };
 
 		const auto banner_width { getSettings< int >( "main_view/banner_width", 400 ) };
-		const auto banner_height { getSettings< int >( "main_view/banner_height", 300 ) };
+		const auto banner_height { getSettings< int >( "main_view/banner_height", 280 ) };
 
 		auto banner {record.getBanner(banner_width, banner_height)};
 
@@ -46,15 +46,6 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		}
 		else
 			painter->drawRect( option.rect );
-
-		painter->drawText(
-			option.rect,
-			record.m_title + " [" + record.m_version + "]",
-			Qt::AlignHCenter | Qt::AlignTop );
-		painter->drawText(
-			option.rect,
-			"by " + record.m_creator + ( record.m_engine.isEmpty() ? "" : " in " + record.m_engine ),
-			Qt::AlignHCenter | Qt::AlignBottom );
 	}
 	else
 		qDebug() << "Record was nullptr when trying to paint";

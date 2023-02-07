@@ -23,6 +23,7 @@ class SelectedViewWidget final : public QWidget
 	Q_DISABLE_COPY_MOVE( SelectedViewWidget )
 
 	std::optional<Record> selected {std::nullopt};
+	QPixmap banner;
 
 	public:
 	explicit SelectedViewWidget( QWidget* parent = nullptr );
@@ -30,6 +31,13 @@ class SelectedViewWidget final : public QWidget
 
 	public slots:
 	void recordSelected(const QPersistentModelIndex&);
+	void on_closeButton_pressed();
+
+	void keyPressEvent(QKeyEvent* event) override;
+	void resizeEvent(QResizeEvent* event) override;
+
+	signals:
+	void hiding();
 
 	private:
 	Ui::SelectedViewWidget* ui;
