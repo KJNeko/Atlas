@@ -63,10 +63,12 @@ GameImportDialog::GameImportDialog( QWidget* parent ) : QDialog( parent ), ui( n
 	ui->setupUi( this );
 
 	ui->shouldParsePath->setChecked( getSettings< bool >( "import/should_autofill", true ) );
-	ui->pathParse->setText( fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}" ) ) );
+	ui->pathParse->setText(
+		fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}/{version}" ) ) );
 
 	ui->copyToDest->setChecked( getSettings< bool >( "import/should_copy", true ) );
-	ui->dest->setText( fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}" ) ) );
+	ui->dest->setText(
+		fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}/{version}" ) ) );
 
 	ui->deleteAfterCopy->setChecked( getSettings< bool >( "import/should_delete", false ) );
 }
@@ -78,10 +80,12 @@ GameImportDialog::GameImportDialog( const QUrl& url, QWidget* parent ) :
 	ui->setupUi( this );
 
 	ui->shouldParsePath->setChecked( getSettings< bool >( "import/should_autofill", true ) );
-	ui->pathParse->setText( fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}" ) ) );
+	ui->pathParse->setText(
+		fixPathDelimiter( getSettings< QString >( "import/auto_fill_path", "{data}/{title}/{version}" ) ) );
 
 	ui->copyToDest->setChecked( getSettings< bool >( "import/should_copy", true ) );
-	ui->dest->setText( fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}" ) ) );
+	ui->dest->setText(
+		fixPathDelimiter( getSettings< QString >( "import/dest_path", "{h95_games}/{title}/{version}" ) ) );
 
 	ui->deleteAfterCopy->setChecked( getSettings< bool >( "import/should_delete", false ) );
 
@@ -138,7 +142,8 @@ try
 		return;
 	}
 
-	if ( ui->copyToDest->isChecked() && (ui->pathLabel->text().contains('{') && ui->pathLabel->text().contains('}')))
+	if ( ui->copyToDest->isChecked()
+		 && ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) ) )
 	{
 		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
 		return;

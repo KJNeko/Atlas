@@ -31,37 +31,36 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		setSettings( "first_launch", false );
 	}
 
-	QPixmapCache::setCacheLimit(1024 * 32);
+	QPixmapCache::setCacheLimit( 1024 * 32 );
 
-	spdlog::info("Cache limit set to {}KB", QPixmapCache::cacheLimit());
+	spdlog::info( "Cache limit set to {} KB", QPixmapCache::cacheLimit() );
 
-	this->restoreGeometry(getSettings<QByteArray>("main_window/geometry"));
+	this->restoreGeometry( getSettings< QByteArray >( "main_window/geometry" ) );
 }
 
 MainWindow::~MainWindow()
 {
-	setSettings("main_window/geometry", saveGeometry());
+	setSettings( "main_window/geometry", saveGeometry() );
 
 	delete ui;
 }
 
 void MainWindow::dragEnterEvent( QDragEnterEvent* event )
 {
-	if(event->mimeData()->hasUrls())
-		event->acceptProposedAction();
+	if ( event->mimeData()->hasUrls() ) event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent( QDropEvent* event )
 {
-	const QMimeData* mime_data {event->mimeData()};
+	const QMimeData* mime_data { event->mimeData() };
 
-	if(mime_data->hasUrls())
+	if ( mime_data->hasUrls() )
 	{
 		QStringList path_list;
-		QList<QUrl> url_list {mime_data->urls()};
-		for(const auto& url : url_list)
+		QList< QUrl > url_list { mime_data->urls() };
+		for ( const auto& url : url_list )
 		{
-			GameImportDialog dialog {url};
+			GameImportDialog dialog { url };
 			connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
 			dialog.exec();
 		}
