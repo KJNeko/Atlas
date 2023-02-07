@@ -21,7 +21,7 @@ void Importer::import_game(
 	{
 		std::filesystem::create_directories( m_root );
 		spdlog::debug("Copying {} -> {}", m_source.string(), m_root.string());
-		std::filesystem::copy( m_source, m_root );
+		std::filesystem::copy( m_source, m_root, std::filesystem::copy_options::recursive );
 
 		if ( !m_banner.empty() )
 		{
