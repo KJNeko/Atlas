@@ -8,6 +8,7 @@
 #include <tracy/Tracy.hpp>
 #include <QPixmapCache>
 #include "h95/database/database.hpp"
+#include "h95/config.hpp"
 
 #ifdef NDEBUG
 bool Record::operator==( const Record& other ) const
@@ -26,7 +27,6 @@ enum PreviewType
 Record Record::create(
 	const QString& title,
 	const QString& creator,
-	const QString& version,
 	const QString& engine,
 	const GameMetadata& metadata,
 	const std::filesystem::path& banner,
@@ -37,9 +37,8 @@ Record Record::create(
 
 	{
 		ZoneScopedN( "Query" );
-		database::db_ref()
-				<< "INSERT INTO records (title, creator, version, engine) VALUES (?, ?, ?, ?) RETURNING record_id"
-				<< title.toStdString() << creator.toStdString() << version.toStdString() << engine.toStdString()
+		database::db_ref() << "INSERT INTO records (title, creator, engine) VALUES (?, ?, ?) RETURNING record_id"
+						   << title.toStdString() << creator.toStdString() << engine.toStdString()
 			>> [&]( const RecordID record_id )
 		{
 			id = record_id;
@@ -54,7 +53,7 @@ Record Record::create(
 		database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id
 						   << static_cast< uint8_t >( type ) << path;
 
-	return { id, title, creator, version, engine, GameMetadata::insert( id, metadata ), banner, previews };
+	return { id, title, creator, engine, { GameMetadata::insert( id, metadata ) }, banner, previews };
 }
 
 Record Record::select( const RecordID id )
@@ -62,20 +61,17 @@ Record Record::select( const RecordID id )
 	ZoneScoped;
 	QString title;
 	QString creator;
-	QString version;
 	QString engine;
 
 	{
 		ZoneScopedN( "Query Inital" );
-		database::db_ref() << "SELECT title, creator, version, engine FROM records WHERE record_id = ?" << id >>
+		database::db_ref() << "SELECT title, creator, engine FROM records WHERE record_id = ?" << id >>
 			[&]( const std::string& title_in,
 				 const std::string& creator_in,
-				 const std::string& version_in,
 				 const std::string& engine_in )
 		{
 			title = QString::fromStdString( title_in );
 			creator = QString::fromStdString( creator_in );
-			version = QString::fromStdString( version_in );
 			engine = QString::fromStdString( engine_in );
 		};
 	}
@@ -107,19 +103,21 @@ Record Record::select( const RecordID id )
 		};
 	}
 
-	return { id, title, creator, version, engine, GameMetadata::select( id ), banner_path, preview_paths };
+	return { id, title, creator, engine, { GameMetadata::select( id ) }, banner_path, preview_paths };
 }
 
 
 QPixmap Record::getBanner() const
 {
-	const auto banner_path { QString::fromStdString( ( m_metadata.game_path / m_banner ).string() ) };
+	ZoneScoped;
+	const auto banner_path_str { QString::fromStdString(m_banner) };
+	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
 	QPixmap banner { ":/invalid_banner.jpg" };
-	if ( !QPixmapCache::find( banner_path, &banner ) && std::filesystem::exists( m_metadata.game_path / m_banner ) )
+	if ( !QPixmapCache::find( banner_path_str, &banner ) && std::filesystem::exists( banner_path ) )
 	{
-		banner = QPixmap( banner_path );
-		QPixmapCache::insert( banner_path, banner );
+		banner = QPixmap( banner_path_str );
+		QPixmapCache::insert( banner_path_str, banner );
 		return banner;
 	}
 
@@ -128,15 +126,14 @@ QPixmap Record::getBanner() const
 
 QPixmap Record::getBanner( const int banner_width, const int banner_height ) const
 {
-	const auto banner_path { QString::fromStdString( ( m_metadata.game_path / m_banner ).string() ) };
+	ZoneScopedN( "getBannerResized" );
+	const auto banner_path_str { QString::fromStdString(m_banner) };
+	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
-	const auto key {banner_path + QString::number(banner_width) + QString::number(banner_width)};
+	const auto key { banner_path_str + QString::number( banner_width ) + QString::number( banner_width ) };
 
 	QPixmap resized_banner { ":/invalid_banner.jpg" };
-	if ( !QPixmapCache::find(
-			 key,
-			 &resized_banner )
-		 && std::filesystem::exists( m_metadata.game_path / m_banner ) )
+	if ( !QPixmapCache::find( key, &resized_banner ) && std::filesystem::exists( banner_path ) )
 	{
 		QPixmap banner { getBanner() };
 

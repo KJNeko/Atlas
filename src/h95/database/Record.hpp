@@ -9,14 +9,16 @@
 #include "h95/Types.hpp"
 #include "GameMetadata.hpp"
 
+
+
 struct Record
 {
 	RecordID m_id;
-	GameMetadata m_metadata;
 	QString m_title;
 	QString m_creator;
-	QString m_version;
 	QString m_engine;
+
+	std::vector< GameMetadata > m_versions;
 
 	std::filesystem::path m_banner;
 	std::vector< std::filesystem::path > m_previews;
@@ -27,17 +29,15 @@ struct Record
 		const RecordID id,
 		const QString title,
 		const QString creator,
-		const QString version,
 		const QString engine,
-		const GameMetadata& metadata,
+		const std::vector< GameMetadata >& versions,
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews ) :
 	  m_id( id ),
-	  m_metadata( metadata ),
 	  m_title( title ),
 	  m_creator( creator ),
-	  m_version( version ),
 	  m_engine( engine ),
+	  m_versions( versions ),
 	  m_banner( banner ),
 	  m_previews( previews )
 	{
@@ -48,22 +48,19 @@ struct Record
 	static Record create(
 		const QString& title,
 		const QString& creator,
-		const QString& version,
 		const QString& engine,
 		const GameMetadata& metadata,
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews );
 
 	QPixmap getBanner() const;
-	QPixmap getBanner(const int banner_width, const int banner_height) const;
+	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
-#ifndef NDEBUG
-	bool operator==( const Record& other ) const = default;
-#else
+#ifdef NDEBUG
 	bool operator==( const Record& other ) const;
 #endif
 };
 
-Q_DECLARE_METATYPE(Record)
+Q_DECLARE_METATYPE( Record )
 
 #endif	//HYDRUS95_RECORD_HPP
