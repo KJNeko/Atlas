@@ -24,20 +24,24 @@ namespace database
 	void update()
 	try
 	{
-		spdlog::info("Checking for database update");
+		spdlog::info( "Checking for database update" );
 		const auto ver_number { getSettings< int >( "version_number", 100 ) };
 		constexpr auto ver_latest { 100 };
-		spdlog::info("DB: Current: {} -> Supported: {}", ver_number, ver_latest);
+		spdlog::info( "DB: Current: {} -> Supported: {}", ver_number, ver_latest );
 
-		if ( ver_number == ver_latest ) {spdlog::info("No update require!"); return;}
+		if ( ver_number == ver_latest )
+		{
+			spdlog::info( "No update require!" );
+			return;
+		}
 
 		delete internal::db;
 
-		spdlog::info("Backing up database");
+		spdlog::info( "Backing up database" );
 		std::filesystem::copy( "./data/hydrus95.db", "./data/hydrus95.db.backup" );
-		spdlog::info("Backup complete");
+		spdlog::info( "Backup complete" );
 
-		internal::db = new sqlite::database("./data/hydrus95.db");
+		internal::db = new sqlite::database( "./data/hydrus95.db" );
 
 		//Abusing fallthrough.
 		switch ( ver_number )
@@ -47,22 +51,24 @@ namespace database
 					"I fucked up and forgot to add a case for this update. Report your version number to me in an issue" );
 
 			case 100:
-				spdlog::info("Update chain reached end.");
+				spdlog::info( "Update chain reached end." );
 				break;
 		}
 
 		setSettings( "version_number", ver_latest );
 
-		spdlog::info("Update finished. Erasing backup and restoring connection");
+		spdlog::info( "Update finished. Erasing backup and restoring connection" );
 		delete internal::db;
-		std::filesystem::remove("./data/hydrus95.db.backup");
-		internal::db = new sqlite::database("./data/hydrus95.db");
+		std::filesystem::remove( "./data/hydrus95.db.backup" );
+		internal::db = new sqlite::database( "./data/hydrus95.db" );
 
 		return;
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error("Something went wrong! Send the database to me along with this error if possible (Assuming your DB isn't stupidly large).\nUpdate failure message: {}", e.what());
+		spdlog::error(
+			"Something went wrong! Send the database to me along with this error if possible (Assuming your DB isn't stupidly large).\nUpdate failure message: {}",
+			e.what() );
 		std::abort();
 	}
 
@@ -86,7 +92,11 @@ namespace database
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
-		spdlog::error("Something went wrong while initalizing the database! {}: {} during {}", e.get_code(), e.what(), e.get_sql());
+		spdlog::error(
+			"Something went wrong while initalizing the database! {}: {} during {}",
+			e.get_code(),
+			e.what(),
+			e.get_sql() );
 		std::abort();
 	}
 
