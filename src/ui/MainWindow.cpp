@@ -110,8 +110,7 @@ void MainWindow::on_actionMassAddImages_triggered()
 				placeholder,
 				placeholder,
 				placeholder,
-				placeholder,
-				{ placeholder.toStdString(), placeholder.toStdString() },
+				{ placeholder, placeholder.toStdString(), placeholder.toStdString() },
 				paths.at( i ),
 				{} );
 		}
