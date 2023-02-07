@@ -81,8 +81,8 @@ namespace database
 		internal::db = new sqlite::database( "./data/hydrus95.db" );
 
 		const std::vector< std::string > table_strs {
-			"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, version TEXT, engine TEXT, unique(title, creator, version, engine))",
-			"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, game_path TEXT, exec_path TEXT)",
+			"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, unique(title, creator, engine))",
+			"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, version TEXT, game_path TEXT, exec_path TEXT)",
 			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 			"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)" };
 

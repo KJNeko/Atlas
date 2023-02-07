@@ -144,7 +144,17 @@ try
 		return;
 	}
 
+	if ( ui->copyToDest->isChecked() && !ui->dest->text().contains( "{version}" ) )
+	{
+		ui->infoLabel->setText( "Destination path requires {version}" );
+		return;
+	}
 
+	if ( ui->copyToDest->isChecked() && !ui->dest->text().contains( "{title}" ) )
+	{
+		ui->infoLabel->setText( "Destination path requires {title}" );
+		return;
+	}
 
 	//Check that there is not already a folder where we want to place the file
 	if ( std::filesystem::exists( ui->pathLabel->text().toStdString() )

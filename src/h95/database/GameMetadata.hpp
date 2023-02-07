@@ -9,10 +9,10 @@
 #include <filesystem>
 #include "h95/Types.hpp"
 
-class QSqlQuery;
-
 struct GameMetadata
 {
+	QString version;
+
 	//! Path to the game folder
 	std::filesystem::path game_path {};
 
