@@ -26,6 +26,7 @@ class Importer
 	void setExecutable( const std::filesystem::path& path ) { m_executable = path; }
 	void setSource( const std::filesystem::path& path ) { m_source = path; }
 
+	//! Imports the game to the database and moves it to it's destination if m_root != m_source
 	void import_game(
 		const QString& title,
 		const QString& creator,

@@ -33,10 +33,10 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 
 		selected = *record_data;
 
-		auto banner_n {
-			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) };
-		ui->banner->setPixmap( std::move( banner_n ) );
+		ui->banner->setPixmap(
+			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
 
+		// If there is a creator do {title} by {creator} else just do {title}
 		if ( record_data->m_creator.isEmpty() )
 			ui->title->setText( record_data->m_title );
 		else
@@ -51,9 +51,8 @@ void SelectedViewWidget::resizeEvent( QResizeEvent* event )
 	ZoneScoped;
 	if ( selected != std::nullopt )
 	{
-		auto banner_n {
-			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) };
-		ui->banner->setPixmap( std::move( banner_n ) );
+		ui->banner->setPixmap(
+			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
 	}
 	QWidget::resizeEvent( event );
 }
@@ -66,6 +65,7 @@ void SelectedViewWidget::on_closeButton_pressed()
 
 void SelectedViewWidget::keyPressEvent( QKeyEvent* event )
 {
+	//Hide on escape
 	if ( event->key() == Qt::Key_Escape )
 	{
 		event->accept();

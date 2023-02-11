@@ -415,8 +415,6 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 	ui->version->setText( path_manager.key_replacer.value( "{version}" ) );
 	ui->engine->setText( path_manager.key_replacer.value( "{engine}" ) );
 
-	path_manager.setRoot( text.toStdString() );
-
 	verifySettings();
 }
 

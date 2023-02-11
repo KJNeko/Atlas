@@ -17,6 +17,7 @@ RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( n
 	ui->listView->setItemDelegate( &delegate );
 	ui->listView->setModel( &model );
 
+	// Connect selection change to record view
 	connect(
 		ui->listView->selectionModel(),
 		SIGNAL( selectionChanged( QItemSelection, QItemSelection ) ),
@@ -34,7 +35,7 @@ void RecordViewWidget::selectionChanged(
 	[[maybe_unused]] const QItemSelection& deseleted )
 {
 	if ( selected.size() == 0 )
-		emit changeSelection( QPersistentModelIndex() );
+		emit changeSelection( QPersistentModelIndex() ); //Nothing selected. So deselect everything
 	else
 	{
 		const auto indexes { selected.indexes() };

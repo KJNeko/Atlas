@@ -7,8 +7,18 @@
 
 #include <QString>
 
+using InternalTagID = uint32_t;
+using F95TagID = uint16_t;
+using DLSiteTagID = uint16_t;
+
+
+//! Basic tag representation (To fill out more later)
 class Tag
 {
+	//! Tag id for internal use within h95
+	InternalTagID tag_id;
+
+	//! Text of the tag
 	QString text {};
 };
 

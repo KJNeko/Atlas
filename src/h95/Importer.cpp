@@ -23,6 +23,11 @@ void Importer::import_game(
 	const QString& engine,
 	const bool delete_after )
 {
+	if(m_root.empty())
+		throw std::runtime_error("m_root was empty!");
+	if(m_source.empty())
+		throw std::runtime_error("m_source was empty!");
+
 	if ( m_root != m_source )
 	{
 		std::filesystem::create_directories( m_root );

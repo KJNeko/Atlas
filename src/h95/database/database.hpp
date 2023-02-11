@@ -8,7 +8,11 @@
 #include <sqlite_modern_cpp.h>
 namespace database
 {
+
+	//! Returns the global ref to the database.
 	sqlite::database& db_ref();
+
+	//! Initalizes the database. Creating all tables and other stuff.
 	void initalize();
 }  // namespace database
 

@@ -11,6 +11,7 @@
 Valid placeholders:
 
 {h95_data}
+{h95_games}
 {title}
 {creator}
 {engine}
@@ -28,10 +29,15 @@ struct PathManager
 {
 	KeyReplacer key_replacer {};
 
-	std::filesystem::path root {};
-
 	PathManager();
 
+	/**
+	 * @example path = {h95_data}/{engine}/{version}
+	 * @param path
+	 * @param relativeFromRoot
+	 * @return
+	 */
+	//! Uses key_replacer to populate `path` with keys.
 	inline std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false ) const
 	{
 		ZoneScoped;
@@ -45,12 +51,7 @@ struct PathManager
 		return { path_str.toStdString() };
 	}
 
-	inline std::filesystem::path relative( const std::filesystem::path& path ) const
-	{
-		ZoneScoped;
-		return std::filesystem::relative( path, root );
-	}
-
+	//! Uses `key_path` to rip values out of `path` to populate `key_replacer`
 	inline void populateValues( const std::filesystem::path& path, const std::filesystem::path key_path )
 	{
 		ZoneScoped;
@@ -77,8 +78,6 @@ struct PathManager
 
 		for ( const auto& [key, value] : temp_values ) { key_replacer.registerKey( key, value ); }
 	}
-
-	inline void setRoot( const std::filesystem::path& path ) { root = path; }
 };
 
 #endif	//HYDRUS95_PATHMANAGER_HPP

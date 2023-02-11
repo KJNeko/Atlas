@@ -7,6 +7,7 @@
 
 #include <QSettings>
 #include <QVariant>
+#include <spdlog/spdlog.h>
 
 /**
  *
@@ -42,16 +43,35 @@ inline QSettings getSettingsObject()
 	return { "./data/config.ini", QSettings::IniFormat };
 }
 
+/**
+ * @throws std::runtime_error when setting T not default constructable and no setting given
+ * @tparam T type for setting
+ * @param setting_name
+ * @return
+ */
+//! Returns T for the given setting_name
 template< typename T > inline T getSettings( const QString setting_name )
 {
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name ) };
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
-	else
-		return {};
+	else {
+		spdlog::warn("Setting for {} was not populated!", setting_name.toStdString());
+
+		if constexpr(std::is_default_constructible_v<T>)
+			return {};
+		else
+			throw std::runtime_error("T was not default constructable! Throwing instead! For given setting:" + setting_name.toStdString());
+	}
 }
 
+/**
+ * @tparam T type for setting
+ * @param setting_name
+ * @param default_value
+ * @return default_value if setting_name is not set
+ */
 template< typename T > inline T getSettings( const QString setting_name, const T default_value )
 {
 	QSettings settings { getSettingsObject() };
@@ -59,7 +79,7 @@ template< typename T > inline T getSettings( const QString setting_name, const T
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
 	else
-		return {};
+		return default_value;
 }
 
 template< typename T > inline void setSettings( const QString settings_name, const T value )

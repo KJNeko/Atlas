@@ -22,11 +22,15 @@ struct GameMetadata
 	//! Executes the game
 	void execGame();
 
+	//! Returns a populated GameMetadata for the given id from the database
 	static GameMetadata select( const RecordID id );
+
+	//! Updates information in the database for given metadata and id
 	static void update( const RecordID id, const GameMetadata& metadata );
+
+	//! Inserts a new set of metadata (Calls update if already exists)
 	static GameMetadata insert( const RecordID id, const GameMetadata& metadata );
 
-	bool operator==( const GameMetadata& other ) const;
 };
 
 

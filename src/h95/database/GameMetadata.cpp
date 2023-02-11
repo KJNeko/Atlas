@@ -40,9 +40,3 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 					   << metadata.version.toStdString();
 	return metadata;
 }
-
-
-bool GameMetadata::operator==( const GameMetadata& other ) const
-{
-	return game_path == other.game_path && exec_path == other.exec_path;
-}

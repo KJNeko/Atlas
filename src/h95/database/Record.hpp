@@ -9,6 +9,13 @@
 #include "h95/Types.hpp"
 #include "GameMetadata.hpp"
 
+//! Thrown when attempting to create a record that already exists
+struct RecordAlreadyExists : public std::runtime_error
+{
+	RecordID m_id;
+
+	RecordAlreadyExists(const char* const msg, const RecordID id) : std::runtime_error(msg), m_id(id){}
+};
 
 struct Record
 {
@@ -24,6 +31,8 @@ struct Record
 
 	private:
 	Record() = delete;
+
+	//! Internal, used in select and create
 	Record(
 		const RecordID id,
 		const QString title,
@@ -43,7 +52,23 @@ struct Record
 	}
 
 	public:
+	//! Selects a record from the database.
 	static Record select( const RecordID id );
+
+	//! Updates a record with new information.
+	static Record update(const RecordID id, const Record& record);
+
+	/**
+	 * @param title unique constraint
+	 * @param creator unique constraint
+	 * @param engine unique constraint
+	 * @param metadata
+	 * @param banner
+	 * @param previews
+	 * @return
+	 * @throws RecordAlreadyExists
+	 */
+	//! Creates a record and inserts it into the database.
 	static Record create(
 		const QString& title,
 		const QString& creator,
@@ -52,10 +77,14 @@ struct Record
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews );
 
+	//! Returns the banner for the record
 	QPixmap getBanner() const;
+
+	//! Returns a resized banner for the given record
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
 #ifdef NDEBUG
+	//! operator== override for faster comparisons during release builds (only compares RecordID)
 	bool operator==( const Record& other ) const;
 #endif
 };

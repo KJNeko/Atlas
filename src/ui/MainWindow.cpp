@@ -25,12 +25,16 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 {
 	ui->setupUi( this );
 
+	//Check if we are launching for the first time. Do extra config here.
 	if ( getSettings< bool >( "first_launch", true ) )
 	{
+		//Do extra config for first launch here (Extra prompts, ect)
+
 		qDebug() << "First launch";
 		setSettings( "first_launch", false );
 	}
 
+	// 32MB, setCacheLimit takes in KB measurements.
 	QPixmapCache::setCacheLimit( 1024 * 32 );
 
 	spdlog::info( "Cache limit set to {} KB", QPixmapCache::cacheLimit() );
@@ -47,6 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::dragEnterEvent( QDragEnterEvent* event )
 {
+	// Sent hint to handle drag event
 	if ( event->mimeData()->hasUrls() ) event->acceptProposedAction();
 }
 
@@ -60,6 +65,8 @@ void MainWindow::dropEvent( QDropEvent* event )
 		QList< QUrl > url_list { mime_data->urls() };
 		for ( const auto& url : url_list )
 		{
+			// Handle each URL given for import dialog.
+			//TODO: Replace with a multi import handler/window
 			GameImportDialog dialog { url };
 			connect( &dialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
 			dialog.exec();
@@ -75,6 +82,7 @@ void MainWindow::on_actionImportGame_triggered()
 	dialog.exec();
 }
 
+// Simply debug testing/stuff
 void MainWindow::on_actionMassAddImages_triggered()
 {
 	ZoneScoped;
