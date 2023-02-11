@@ -10,6 +10,12 @@
 #include "config.hpp"
 
 
+bool is_subpath( const std::filesystem::path& path, const std::filesystem::path& base )
+{
+	auto rel { std::filesystem::relative( path, base ) };
+	return !rel.empty() && rel.native()[0] != '.';
+}
+
 void Importer::import_game(
 	const QString& title,
 	const QString& creator,
@@ -42,6 +48,13 @@ void Importer::import_game(
 
 			if ( delete_after ) std::filesystem::remove( m_banner );
 
+			//Delete banner from copied directory.
+			if ( is_subpath( m_banner, m_root ) )
+			{
+				const auto banner_relative { std::filesystem::relative( m_banner, m_source ) };
+				std::filesystem::remove( m_root / banner_relative );
+			}
+
 			m_banner = dest_path;
 		}
 
@@ -65,6 +78,13 @@ void Importer::import_game(
 			file.copy( dest_path );
 
 			if ( delete_after ) std::filesystem::remove( preview );
+
+			//Delete preview from copied directory.
+			if ( is_subpath( preview, m_root ) )
+			{
+				const auto preview_relative { std::filesystem::relative( preview, m_source ) };
+				std::filesystem::remove( m_root / preview_relative );
+			}
 
 			preview = dest_path;
 		}
