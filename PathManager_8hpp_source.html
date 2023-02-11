@@ -139,9 +139,9 @@ $(document).ready(function(){initNavTree('PathManager_8hpp_source.html',''); ini
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="comment">//Example : {h95_data}/{engine}/{version}</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">//Example : {path}</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">replaceKeys</a>(path_str);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">replaceKeys</a>( path_str );</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> {path_str.toStdString()};</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> { path_str.toStdString() };</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">   48</a></span>    <span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">relative</a>( <span class="keyword">const</span> std::filesystem::path&amp; path )<span class="keyword"> const</span></div>
@@ -174,16 +174,13 @@ $(document).ready(function(){initNavTree('PathManager_8hpp_source.html',''); ini
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            ++step_counter;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : temp_values )</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        {</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">registerKey</a>( key, value );</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : temp_values ) { <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">registerKey</a>( key, value ); }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">   81</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">setRoot</a>( <span class="keyword">const</span> std::filesystem::path&amp; path ) { <a class="code hl_variable" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> = path; }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>};</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">   84</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">setRoot</a>( <span class="keyword">const</span> std::filesystem::path&amp; path ) { <a class="code hl_variable" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> = path; }</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>};</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_PATHMANAGER_HPP</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_PATHMANAGER_HPP</span></div>
 <div class="ttc" id="aKeyReplacer_8hpp_html"><div class="ttname"><a href="KeyReplacer_8hpp.html">KeyReplacer.hpp</a></div></div>
 <div class="ttc" id="aclassKeyReplacer_html"><div class="ttname"><a href="classKeyReplacer.html">KeyReplacer</a></div><div class="ttdef"><b>Definition:</b> KeyReplacer.hpp:12</div></div>
 <div class="ttc" id="aclassKeyReplacer_html_a956208892b5b49771ccc302b744f45be"><div class="ttname"><a href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">KeyReplacer::registerKey</a></div><div class="ttdeci">void registerKey(const QString &amp;key, QString value)</div><div class="ttdef"><b>Definition:</b> KeyReplacer.cpp:26</div></div>
@@ -196,7 +193,7 @@ $(document).ready(function(){initNavTree('PathManager_8hpp_source.html',''); ini
 <div class="ttc" id="astructPathManager_html_a66cb22d18d5ac2735f9352f9ee396ca7"><div class="ttname"><a href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">PathManager::populateValues</a></div><div class="ttdeci">void populateValues(const std::filesystem::path &amp;path, const std::filesystem::path key_path)</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:54</div></div>
 <div class="ttc" id="astructPathManager_html_a9d91d6b3fcb797f77e7eace2bbf798bd"><div class="ttname"><a href="structPathManager.html#a9d91d6b3fcb797f77e7eace2bbf798bd">PathManager::PathManager</a></div><div class="ttdeci">PathManager()</div><div class="ttdef"><b>Definition:</b> PathManager.cpp:8</div></div>
 <div class="ttc" id="astructPathManager_html_ad5bd3502dc9273bbd33f4fb39f7e25aa"><div class="ttname"><a href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">PathManager::root</a></div><div class="ttdeci">std::filesystem::path root</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:31</div></div>
-<div class="ttc" id="astructPathManager_html_af0ee31573a5b1fdaf883b6ae88371346"><div class="ttname"><a href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">PathManager::setRoot</a></div><div class="ttdeci">void setRoot(const std::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:84</div></div>
+<div class="ttc" id="astructPathManager_html_af0ee31573a5b1fdaf883b6ae88371346"><div class="ttname"><a href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">PathManager::setRoot</a></div><div class="ttdeci">void setRoot(const std::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

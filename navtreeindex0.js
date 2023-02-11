@@ -14,6 +14,7 @@ var NAVTREEINDEX0 =
 "GameMetadata_8hpp_source.html":[5,0,0,0,1,3],
 "H95Settings.html":[0],
 "Importer_8cpp.html":[5,0,0,0,5],
+"Importer_8cpp.html#af659424c8c87a6f8f457ff5e0a10b93a":[5,0,0,0,5,0],
 "Importer_8hpp.html":[5,0,0,0,6],
 "Importer_8hpp_source.html":[5,0,0,0,6],
 "KeyReplacer_8cpp.html":[5,0,0,0,7],
