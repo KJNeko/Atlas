@@ -33,12 +33,12 @@ class RecordViewWidget final : public QWidget
 	~RecordViewWidget() override;
 
 	public slots:
-	void selectionChanged(const QItemSelection& selected, const QItemSelection& deseleted);
+	void selectionChanged( const QItemSelection& selected, const QItemSelection& deseleted );
 	void selectionHiding();
 	void recordsUpdated( const std::vector< Record >& records );
 
 	signals:
-	void changeSelection(const QPersistentModelIndex& index);
+	void changeSelection( const QPersistentModelIndex& index );
 
 	private:
 	Ui::RecordViewWidget* ui;

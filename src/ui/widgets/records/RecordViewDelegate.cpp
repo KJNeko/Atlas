@@ -27,12 +27,12 @@ void RecordViewDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 		const auto banner_width { getSettings< int >( "main_view/banner_width", 400 ) };
 		const auto banner_height { getSettings< int >( "main_view/banner_height", 280 ) };
 
-		auto banner {record.getBanner(banner_width, banner_height)};
+		auto banner { record.getBanner( banner_width, banner_height ) };
 
 		const QRect pixmap_rect { option.rect.center(), QSize( banner.width(), banner.height() ) };
 		painter->drawPixmap(
 			pixmap_rect.translated( ( banner.width() / 2 ) * -1, ( ( banner.height() ) / 2 ) * -1 ),
-			std::move(banner) );
+			std::move( banner ) );
 
 
 		if ( option.state & QStyle::State_Selected )

@@ -19,7 +19,7 @@ class SettingsDialog final : public QDialog
 {
 	Q_OBJECT
 
-	Q_DISABLE_COPY_MOVE(SettingsDialog)
+	Q_DISABLE_COPY_MOVE( SettingsDialog )
 
 	public:
 	explicit SettingsDialog( QWidget* parent = nullptr );

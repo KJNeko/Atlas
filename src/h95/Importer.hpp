@@ -26,7 +26,12 @@ class Importer
 	void setExecutable( const std::filesystem::path& path ) { m_executable = path; }
 	void setSource( const std::filesystem::path& path ) { m_source = path; }
 
-	void import_game(const QString& title, const QString& creator, const QString& version, const QString& engine, bool delete_after);
+	void import_game(
+		const QString& title,
+		const QString& creator,
+		const QString& version,
+		const QString& engine,
+		bool delete_after );
 };
 
 #endif	//HYDRUS95_IMPORTER_HPP

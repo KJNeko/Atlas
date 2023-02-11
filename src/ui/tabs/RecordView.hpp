@@ -29,7 +29,7 @@ class RecordView final : public QWidget
 	~RecordView() override;
 
 	public slots:
-	void recordSelected(const QPersistentModelIndex& index);
+	void recordSelected( const QPersistentModelIndex& index );
 	void refresh();
 
 	private:

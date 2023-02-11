@@ -22,7 +22,7 @@ class SelectedViewWidget final : public QWidget
 
 	Q_DISABLE_COPY_MOVE( SelectedViewWidget )
 
-	std::optional<Record> selected {std::nullopt};
+	std::optional< Record > selected { std::nullopt };
 	QPixmap banner;
 
 	public:
@@ -30,11 +30,11 @@ class SelectedViewWidget final : public QWidget
 	~SelectedViewWidget() override;
 
 	public slots:
-	void recordSelected(const QPersistentModelIndex&);
+	void recordSelected( const QPersistentModelIndex& );
 	void on_closeButton_pressed();
 
-	void keyPressEvent(QKeyEvent* event) override;
-	void resizeEvent(QResizeEvent* event) override;
+	void keyPressEvent( QKeyEvent* event ) override;
+	void resizeEvent( QResizeEvent* event ) override;
 
 	signals:
 	void hiding();

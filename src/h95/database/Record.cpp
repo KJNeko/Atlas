@@ -66,9 +66,7 @@ Record Record::select( const RecordID id )
 	{
 		ZoneScopedN( "Query Inital" );
 		database::db_ref() << "SELECT title, creator, engine FROM records WHERE record_id = ?" << id >>
-			[&]( const std::string& title_in,
-				 const std::string& creator_in,
-				 const std::string& engine_in )
+			[&]( const std::string& title_in, const std::string& creator_in, const std::string& engine_in )
 		{
 			title = QString::fromStdString( title_in );
 			creator = QString::fromStdString( creator_in );
@@ -110,7 +108,7 @@ Record Record::select( const RecordID id )
 QPixmap Record::getBanner() const
 {
 	ZoneScoped;
-	const auto banner_path_str { QString::fromStdString(m_banner) };
+	const auto banner_path_str { QString::fromStdString( m_banner ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
 	QPixmap banner { ":/invalid_banner.jpg" };
@@ -127,7 +125,7 @@ QPixmap Record::getBanner() const
 QPixmap Record::getBanner( const int banner_width, const int banner_height ) const
 {
 	ZoneScopedN( "getBannerResized" );
-	const auto banner_path_str { QString::fromStdString(m_banner) };
+	const auto banner_path_str { QString::fromStdString( m_banner ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
 	const auto key { banner_path_str + QString::number( banner_width ) + QString::number( banner_width ) };

@@ -40,9 +40,9 @@ struct PathManager
 		//Example : {h95_data}/{engine}/{version}
 		//Example : {path}
 
-		key_replacer.replaceKeys(path_str);
+		key_replacer.replaceKeys( path_str );
 
-		return {path_str.toStdString()};
+		return { path_str.toStdString() };
 	}
 
 	inline std::filesystem::path relative( const std::filesystem::path& path ) const
@@ -75,10 +75,7 @@ struct PathManager
 			++step_counter;
 		}
 
-		for ( const auto& [key, value] : temp_values )
-		{
-			key_replacer.registerKey( key, value );
-		}
+		for ( const auto& [key, value] : temp_values ) { key_replacer.registerKey( key, value ); }
 	}
 
 	inline void setRoot( const std::filesystem::path& path ) { root = path; }

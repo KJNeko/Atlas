@@ -10,14 +10,15 @@
 
 class KeyReplacer
 {
-	std::unordered_map<QString, QString> key_map {};
+	std::unordered_map< QString, QString > key_map {};
+
 	public:
-	void registerKey(const QString& key, QString value);
+	void registerKey( const QString& key, QString value );
 	//void parseKeys(const QString& mask, const QString& str);
 
-	QString value(const QString& value) const;
+	QString value( const QString& value ) const;
 
-	QString& replaceKeys(QString& str) const;
+	QString& replaceKeys( QString& str ) const;
 
 	void clear();
 };

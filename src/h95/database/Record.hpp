@@ -10,7 +10,6 @@
 #include "GameMetadata.hpp"
 
 
-
 struct Record
 {
 	RecordID m_id;
