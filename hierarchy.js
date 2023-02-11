@@ -1,6 +1,5 @@
 var hierarchy =
 [
-    [ "F95Parser", "structF95Parser.html", null ],
     [ "GameMetadata", "structGameMetadata.html", null ],
     [ "Importer", "classImporter.html", null ],
     [ "KeyReplacer", "classKeyReplacer.html", null ],
@@ -27,5 +26,8 @@ var hierarchy =
       [ "SelectedViewWidget", "classSelectedViewWidget.html", null ]
     ] ],
     [ "Record", "structRecord.html", null ],
+    [ "std::runtime_error", null, [
+      [ "RecordAlreadyExists", "structRecordAlreadyExists.html", null ]
+    ] ],
     [ "Tag", "classTag.html", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hydrus95_20parsers_0',['Hydrus95 Parsers',['../ParserPage.html',1,'']]]
+  ['settings_20list_0',['Settings list',['../H95Settings.html',1,'']]]
 ];

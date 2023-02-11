@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structRecord.html" title=" " alt="" coords="5,5,68,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,128,31"/>
+<area shape="rect" id="node2" href="$structRecordAlreadyExists.html" title="Thrown when attempting to create a record that already exists." alt="" coords="176,5,317,31"/>
 </map>

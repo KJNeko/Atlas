@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['new_5fentry_0',['new_entry',['../structF95Parser.html#a52a2148e6e5f90444410144915a7a38c',1,'F95Parser']]]
+  ['on_5fclosebutton_5fpressed_0',['on_closeButton_pressed',['../classSelectedViewWidget.html#a871e30941f74a1f5e159b35838ac9f88',1,'SelectedViewWidget']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ui_0',['Ui',['../namespaceUi.html',1,'']]],
-  ['update_1',['update',['../structGameMetadata.html#a57e8794552d02824c3e625449e9369ce',1,'GameMetadata::update()'],['../namespacedatabase.html#a55d2f2084a329f7046dd684b44f743a4',1,'database::update()']]]
+  ['value_0',['value',['../classKeyReplacer.html#a54c8530f94c1e66248ffc2537e9812fb',1,'KeyReplacer']]],
+  ['version_1',['version',['../structGameMetadata.html#a93a9e8764cd2f36ea3ad68c3624813a1',1,'GameMetadata']]]
 ];

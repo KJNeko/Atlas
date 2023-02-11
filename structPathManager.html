@@ -120,24 +120,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d91d6b3fcb797f77e7eace2bbf798bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a9d91d6b3fcb797f77e7eace2bbf798bd">PathManager</a> ()</td></tr>
 <tr class="separator:a9d91d6b3fcb797f77e7eace2bbf798bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00ab5c54887498b061f908dc0ddb9a55"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">fillPath</a> (const std::filesystem::path &amp;path, bool relativeFromRoot=false) const</td></tr>
+<tr class="memdesc:a00ab5c54887498b061f908dc0ddb9a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses key_replacer to populate <code>path</code> with keys.  <br /></td></tr>
 <tr class="separator:a00ab5c54887498b061f908dc0ddb9a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06260406adb9adb6e70a360945806b5b"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">relative</a> (const std::filesystem::path &amp;path) const</td></tr>
-<tr class="separator:a06260406adb9adb6e70a360945806b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66cb22d18d5ac2735f9352f9ee396ca7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">populateValues</a> (const std::filesystem::path &amp;path, const std::filesystem::path key_path)</td></tr>
+<tr class="memdesc:a66cb22d18d5ac2735f9352f9ee396ca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses <code>key_path</code> to rip values out of <code>path</code> to populate <code>key_replacer</code>  <br /></td></tr>
 <tr class="separator:a66cb22d18d5ac2735f9352f9ee396ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0ee31573a5b1fdaf883b6ae88371346"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">setRoot</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="separator:af0ee31573a5b1fdaf883b6ae88371346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5ce3f127a574dbee8045cd14ecfa22e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classKeyReplacer.html">KeyReplacer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a> {}</td></tr>
 <tr class="separator:a5ce3f127a574dbee8045cd14ecfa22e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5bd3502dc9273bbd33f4fb39f7e25aa"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> {}</td></tr>
-<tr class="separator:ad5bd3502dc9273bbd33f4fb39f7e25aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Valid placeholders:</p>
-<p>{h95_data} {title} {creator} {engine} {version} </p>
+<p>{h95_data} {h95_games} {title} {creator} {engine} {version} </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9d91d6b3fcb797f77e7eace2bbf798bd" name="a9d91d6b3fcb797f77e7eace2bbf798bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d91d6b3fcb797f77e7eace2bbf798bd">&#9670;&#160;</a></span>PathManager()</h2>
@@ -191,6 +187,8 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Uses key_replacer to populate <code>path</code> with keys. </p>
+
 </div>
 </div>
 <a id="a66cb22d18d5ac2735f9352f9ee396ca7" name="a66cb22d18d5ac2735f9352f9ee396ca7"></a>
@@ -227,57 +225,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a06260406adb9adb6e70a360945806b5b" name="a06260406adb9adb6e70a360945806b5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06260406adb9adb6e70a360945806b5b">&#9670;&#160;</a></span>relative()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path PathManager::relative </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af0ee31573a5b1fdaf883b6ae88371346" name="af0ee31573a5b1fdaf883b6ae88371346"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0ee31573a5b1fdaf883b6ae88371346">&#9670;&#160;</a></span>setRoot()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PathManager::setRoot </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Uses <code>key_path</code> to rip values out of <code>path</code> to populate <code>key_replacer</code> </p>
 
 </div>
 </div>
@@ -290,20 +238,6 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classKeyReplacer.html">KeyReplacer</a> PathManager::key_replacer {}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad5bd3502dc9273bbd33f4fb39f7e25aa" name="ad5bd3502dc9273bbd33f4fb39f7e25aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5bd3502dc9273bbd33f4fb39f7e25aa">&#9670;&#160;</a></span>root</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path PathManager::root {}</td>
         </tr>
       </table>
 </div><div class="memdoc">

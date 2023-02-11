@@ -121,16 +121,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1cc494ae1e26aaea3bd14c21643361dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a1cc494ae1e26aaea3bd14c21643361dd">execGame</a> ()</td></tr>
 <tr class="memdesc:a1cc494ae1e26aaea3bd14c21643361dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the game.  <br /></td></tr>
 <tr class="separator:a1cc494ae1e26aaea3bd14c21643361dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57bc27b39976ceb2f59e0d0f75f45daa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa">operator==</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other) const</td></tr>
-<tr class="separator:a57bc27b39976ceb2f59e0d0f75f45daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a403699dddf5574f5331fc91a1d906804"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structGameMetadata.html">GameMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a403699dddf5574f5331fc91a1d906804">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id)</td></tr>
+<tr class="memdesc:a403699dddf5574f5331fc91a1d906804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a populated <a class="el" href="structGameMetadata.html">GameMetadata</a> for the given id from the database.  <br /></td></tr>
 <tr class="separator:a403699dddf5574f5331fc91a1d906804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57e8794552d02824c3e625449e9369ce"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a57e8794552d02824c3e625449e9369ce">update</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata)</td></tr>
+<tr class="memdesc:a57e8794552d02824c3e625449e9369ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates information in the database for given metadata and id.  <br /></td></tr>
 <tr class="separator:a57e8794552d02824c3e625449e9369ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85c5d97c1aaba6ff9a94253949719386"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structGameMetadata.html">GameMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a85c5d97c1aaba6ff9a94253949719386">insert</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata)</td></tr>
+<tr class="memdesc:a85c5d97c1aaba6ff9a94253949719386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new set of metadata (Calls update if already exists)  <br /></td></tr>
 <tr class="separator:a85c5d97c1aaba6ff9a94253949719386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -198,23 +199,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a57bc27b39976ceb2f59e0d0f75f45daa" name="a57bc27b39976ceb2f59e0d0f75f45daa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57bc27b39976ceb2f59e0d0f75f45daa">&#9670;&#160;</a></span>operator==()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool GameMetadata::operator== </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
-          <td class="paramname"><em>other</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Inserts a new set of metadata (Calls update if already exists) </p>
 
 </div>
 </div>
@@ -241,6 +226,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns a populated <a class="el" href="structGameMetadata.html">GameMetadata</a> for the given id from the database. </p>
 
 </div>
 </div>
@@ -277,6 +264,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Updates information in the database for given metadata and id. </p>
 
 </div>
 </div>

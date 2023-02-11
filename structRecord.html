@@ -119,15 +119,22 @@ $(document).ready(function(){initNavTree('structRecord.html',''); initResizable(
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a40d83547e0b2d07d854368fc7996acbc"><td class="memItemLeft" align="right" valign="top">QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a40d83547e0b2d07d854368fc7996acbc">getBanner</a> () const</td></tr>
+<tr class="memdesc:a40d83547e0b2d07d854368fc7996acbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the banner for the record.  <br /></td></tr>
 <tr class="separator:a40d83547e0b2d07d854368fc7996acbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba82f2ee194cfbf05889c7b8d8c92238"><td class="memItemLeft" align="right" valign="top">QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238">getBanner</a> (const int banner_width, const int banner_height) const</td></tr>
+<tr class="memdesc:aba82f2ee194cfbf05889c7b8d8c92238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a resized banner for the given record.  <br /></td></tr>
 <tr class="separator:aba82f2ee194cfbf05889c7b8d8c92238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acef48e262b25aba8e73f530955cd8da0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#acef48e262b25aba8e73f530955cd8da0">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id)</td></tr>
+<tr class="memdesc:acef48e262b25aba8e73f530955cd8da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a record from the database.  <br /></td></tr>
 <tr class="separator:acef48e262b25aba8e73f530955cd8da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f6aca72e452b2a32e137b8633b99206"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a0f6aca72e452b2a32e137b8633b99206">update</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structRecord.html">Record</a> &amp;record)</td></tr>
+<tr class="memdesc:a0f6aca72e452b2a32e137b8633b99206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a record with new information.  <br /></td></tr>
+<tr class="separator:a0f6aca72e452b2a32e137b8633b99206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a1224412e19ae58ccd7fb194e2f61e1b3">create</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, const std::filesystem::path &amp;banner, const std::vector&lt; std::filesystem::path &gt; &amp;previews)</td></tr>
+<tr class="memdesc:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a record and inserts it into the database.  <br /></td></tr>
 <tr class="separator:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -206,6 +213,26 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Creates a record and inserts it into the database. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>unique constraint </td></tr>
+    <tr><td class="paramname">creator</td><td>unique constraint </td></tr>
+    <tr><td class="paramname">engine</td><td>unique constraint </td></tr>
+    <tr><td class="paramname">metadata</td><td></td></tr>
+    <tr><td class="paramname">banner</td><td></td></tr>
+    <tr><td class="paramname">previews</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="structRecordAlreadyExists.html" title="Thrown when attempting to create a record that already exists.">RecordAlreadyExists</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a40d83547e0b2d07d854368fc7996acbc" name="a40d83547e0b2d07d854368fc7996acbc"></a>
@@ -222,6 +249,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the banner for the record. </p>
 
 </div>
 </div>
@@ -251,6 +280,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns a resized banner for the given record. </p>
+
 </div>
 </div>
 <a id="acef48e262b25aba8e73f530955cd8da0" name="acef48e262b25aba8e73f530955cd8da0"></a>
@@ -276,6 +307,46 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Selects a record from the database. </p>
+
+</div>
+</div>
+<a id="a0f6aca72e452b2a32e137b8633b99206" name="a0f6aca72e452b2a32e137b8633b99206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f6aca72e452b2a32e137b8633b99206">&#9670;&#160;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structRecord.html">Record</a> Record::update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structRecord.html">Record</a> &amp;&#160;</td>
+          <td class="paramname"><em>record</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates a record with new information. </p>
 
 </div>
 </div>

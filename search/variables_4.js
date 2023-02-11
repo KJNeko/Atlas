@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['game_5fpath_0',['game_path',['../structGameMetadata.html#ad108b051bef64e473b502b894ef76cb6',1,'GameMetadata']]]
+  ['key_5freplacer_0',['key_replacer',['../structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9',1,'PathManager']]]
 ];

@@ -1,6 +1,5 @@
 var annotated_dup =
 [
-    [ "F95Parser", "structF95Parser.html", "structF95Parser" ],
     [ "GameImportDialog", "classGameImportDialog.html", "classGameImportDialog" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],
     [ "Importer", "classImporter.html", "classImporter" ],
@@ -8,6 +7,7 @@ var annotated_dup =
     [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
     [ "PathManager", "structPathManager.html", "structPathManager" ],
     [ "Record", "structRecord.html", "structRecord" ],
+    [ "RecordAlreadyExists", "structRecordAlreadyExists.html", "structRecordAlreadyExists" ],
     [ "RecordView", "classRecordView.html", "classRecordView" ],
     [ "RecordViewBackend", "classRecordViewBackend.html", "classRecordViewBackend" ],
     [ "RecordViewDelegate", "classRecordViewDelegate.html", "classRecordViewDelegate" ],

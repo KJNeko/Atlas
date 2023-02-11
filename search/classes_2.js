@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['importer_0',['Importer',['../classImporter.html',1,'']]]
+  ['keyreplacer_0',['KeyReplacer',['../classKeyReplacer.html',1,'']]]
 ];

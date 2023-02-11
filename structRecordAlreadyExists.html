@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/h95/f95parser.hpp File Reference</title>
+<title>Hydrus95: RecordAlreadyExists Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -79,7 +79,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('f95parser_8hpp.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structRecordAlreadyExists.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -106,97 +106,100 @@ $(document).ready(function(){initNavTree('f95parser_8hpp.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
-  <div class="headertitle"><div class="title">f95parser.hpp File Reference</div></div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structRecordAlreadyExists-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">RecordAlreadyExists Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;QString&gt;</code><br />
-<code>#include &lt;QJsonObject&gt;</code><br />
-<code>#include &lt;QJsonArray&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for f95parser.hpp:</div>
+
+<p>Thrown when attempting to create a record that already exists.  
+ <a href="structRecordAlreadyExists.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Record_8hpp_source.html">Record.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for RecordAlreadyExists:</div>
 <div class="dyncontent">
-<div class="center"><img src="f95parser_8hpp__incl.png" border="0" usemap="#asrc_2h95_2f95parser_8hpp" alt=""/></div>
-<map name="asrc_2h95_2f95parser_8hpp" id="asrc_2h95_2f95parser_8hpp">
-<area shape="rect" title=" " alt="" coords="187,5,333,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,67,104"/>
-<area shape="rect" title=" " alt="" coords="91,79,149,104"/>
-<area shape="rect" title=" " alt="" coords="173,79,240,104"/>
-<area shape="rect" title=" " alt="" coords="264,79,363,104"/>
-<area shape="rect" title=" " alt="" coords="387,79,477,104"/>
-<area shape="rect" title=" " alt="" coords="501,79,573,104"/>
+<div class="center"><img src="structRecordAlreadyExists__inherit__graph.png" border="0" usemap="#aRecordAlreadyExists_inherit__map" alt="Inheritance graph"/></div>
+<map name="aRecordAlreadyExists_inherit__map" id="aRecordAlreadyExists_inherit__map">
+<area shape="rect" title="Thrown when attempting to create a record that already exists." alt="" coords="5,79,147,104"/>
+<area shape="rect" title=" " alt="" coords="15,5,137,31"/>
 </map>
-</div>
-</div>
-<p><a href="f95parser_8hpp_source.html">Go to the source code of this file.</a></p>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structF95Parser.html">F95Parser</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:af3e546b675d5453ef8d40639eed5a7b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecordAlreadyExists.html#af3e546b675d5453ef8d40639eed5a7b9">RecordAlreadyExists</a> (const char *const msg, const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id)</td></tr>
+<tr class="separator:af3e546b675d5453ef8d40639eed5a7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:af3eedbda3409d1b869f2cf3003cc70d7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f95parser_8hpp.html#af3eedbda3409d1b869f2cf3003cc70d7">F95ThreadID</a> = uint32_t</td></tr>
-<tr class="separator:af3eedbda3409d1b869f2cf3003cc70d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a510be1c2f7e72bb282a1d6f5eec3cc92"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f95parser_8hpp.html#a510be1c2f7e72bb282a1d6f5eec3cc92">F95PrefixID</a> = uint16_t</td></tr>
-<tr class="separator:a510be1c2f7e72bb282a1d6f5eec3cc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3e9565c4009cdceb714cb3105bc3f9c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f95parser_8hpp.html#ac3e9565c4009cdceb714cb3105bc3f9c">F95TagID</a> = uint32_t</td></tr>
-<tr class="separator:ac3e9565c4009cdceb714cb3105bc3f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a63690860597a717f781786128c9fffdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecordAlreadyExists.html#a63690860597a717f781786128c9fffdf">m_id</a></td></tr>
+<tr class="separator:a63690860597a717f781786128c9fffdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a510be1c2f7e72bb282a1d6f5eec3cc92" name="a510be1c2f7e72bb282a1d6f5eec3cc92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a510be1c2f7e72bb282a1d6f5eec3cc92">&#9670;&#160;</a></span>F95PrefixID</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Thrown when attempting to create a record that already exists. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af3e546b675d5453ef8d40639eed5a7b9" name="af3e546b675d5453ef8d40639eed5a7b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3e546b675d5453ef8d40639eed5a7b9">&#9670;&#160;</a></span>RecordAlreadyExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RecordAlreadyExists::RecordAlreadyExists </td>
+          <td>(</td>
+          <td class="paramtype">const char *const&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a63690860597a717f781786128c9fffdf" name="a63690860597a717f781786128c9fffdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63690860597a717f781786128c9fffdf">&#9670;&#160;</a></span>m_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="f95parser_8hpp.html#a510be1c2f7e72bb282a1d6f5eec3cc92">F95PrefixID</a> =  uint16_t</td>
+          <td class="memname"><a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> RecordAlreadyExists::m_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac3e9565c4009cdceb714cb3105bc3f9c" name="ac3e9565c4009cdceb714cb3105bc3f9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3e9565c4009cdceb714cb3105bc3f9c">&#9670;&#160;</a></span>F95TagID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="f95parser_8hpp.html#ac3e9565c4009cdceb714cb3105bc3f9c">F95TagID</a> =  uint32_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af3eedbda3409d1b869f2cf3003cc70d7" name="af3eedbda3409d1b869f2cf3003cc70d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3eedbda3409d1b869f2cf3003cc70d7">&#9670;&#160;</a></span>F95ThreadID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="f95parser_8hpp.html#af3eedbda3409d1b869f2cf3003cc70d7">F95ThreadID</a> =  uint32_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/h95/database/<a class="el" href="Record_8hpp_source.html">Record.hpp</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_33f586cf01f7b35339e575ba246fbce1.html">h95</a></li><li class="navelem"><a class="el" href="f95parser_8hpp.html">f95parser.hpp</a></li>
+    <li class="navelem"><a class="el" href="structRecordAlreadyExists.html">RecordAlreadyExists</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

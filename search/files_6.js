@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['logging_2ecpp_0',['logging.cpp',['../logging_8cpp.html',1,'']]],
-  ['logging_2ehpp_1',['logging.hpp',['../logging_8hpp.html',1,'']]]
+  ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['mainwindow_2ecpp_1',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
+  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]]
 ];

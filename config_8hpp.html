@@ -112,14 +112,16 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
 <div class="contents">
 <div class="textblock"><code>#include &lt;QSettings&gt;</code><br />
 <code>#include &lt;QVariant&gt;</code><br />
+<code>#include &lt;spdlog/spdlog.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for config.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#asrc_2h95_2config_8hpp" alt=""/></div>
 <map name="asrc_2h95_2config_8hpp" id="asrc_2h95_2config_8hpp">
-<area shape="rect" title=" " alt="" coords="33,5,159,31"/>
+<area shape="rect" title=" " alt="" coords="83,5,210,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,85,104"/>
 <area shape="rect" title=" " alt="" coords="110,79,183,104"/>
+<area shape="rect" title=" " alt="" coords="208,79,320,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -152,6 +154,7 @@ Functions</h2></td></tr>
 <tr class="separator:a37af631e4a1b0741f0c9bf9cc22a693d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50dc6d389eb806c8197e211128d06782"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a50dc6d389eb806c8197e211128d06782"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">getSettings</a> (const QString setting_name)</td></tr>
+<tr class="memdesc:a50dc6d389eb806c8197e211128d06782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns T for the given setting_name.  <br /></td></tr>
 <tr class="separator:a50dc6d389eb806c8197e211128d06782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e">getSettings</a> (const QString setting_name, const T default_value)</td></tr>
@@ -186,6 +189,27 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns T for the given setting_name. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>when setting T not default constructable and no setting given </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>type for setting </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setting_name</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -224,6 +248,20 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>type for setting </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setting_name</td><td></td></tr>
+    <tr><td class="paramname">default_value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>default_value if setting_name is not set </dd></dl>
 
 </div>
 </div>

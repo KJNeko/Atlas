@@ -116,84 +116,71 @@ $(document).ready(function(){initNavTree('PathManager_8hpp_source.html',''); ini
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define HYDRUS95_PATHMANAGER_HPP</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">h95/config.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="KeyReplacer_8hpp.html">KeyReplacer.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;tracy/Tracy.hpp&gt;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structPathManager.html">   27</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structPathManager.html">PathManager</a></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">   29</a></span>    <a class="code hl_class" href="classKeyReplacer.html">KeyReplacer</a> <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a> {};</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">   31</a></span>    std::filesystem::path <a class="code hl_variable" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> {};</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_function" href="structPathManager.html#a9d91d6b3fcb797f77e7eace2bbf798bd">PathManager</a>();</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">   35</a></span>    <span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">fillPath</a>( <span class="keyword">const</span> std::filesystem::path&amp; path, <span class="keywordtype">bool</span> relativeFromRoot = <span class="keyword">false</span> )<span class="keyword"> const</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        ZoneScoped;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        QString path_str { QString::fromStdString( path.string() ) };</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="comment">//Example : {h95_data}/{engine}/{version}</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">//Example : {path}</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">replaceKeys</a>( path_str );</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> { path_str.toStdString() };</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">   48</a></span>    <span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">relative</a>( <span class="keyword">const</span> std::filesystem::path&amp; path )<span class="keyword"> const</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        ZoneScoped;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">return</span> std::filesystem::relative( path, <a class="code hl_variable" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> );</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">h95/config.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="KeyReplacer_8hpp.html">KeyReplacer.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;tracy/Tracy.hpp&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structPathManager.html">   28</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structPathManager.html">PathManager</a></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">   30</a></span>    <a class="code hl_class" href="classKeyReplacer.html">KeyReplacer</a> <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a> {};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_function" href="structPathManager.html#a9d91d6b3fcb797f77e7eace2bbf798bd">PathManager</a>();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">   41</a></span>    <span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">fillPath</a>( <span class="keyword">const</span> std::filesystem::path&amp; path, <span class="keywordtype">bool</span> relativeFromRoot = <span class="keyword">false</span> )<span class="keyword"> const</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        ZoneScoped;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        QString path_str { QString::fromStdString( path.string() ) };</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="comment">//Example : {h95_data}/{engine}/{version}</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">//Example : {path}</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">replaceKeys</a>( path_str );</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">return</span> { path_str.toStdString() };</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">   54</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">populateValues</a>( <span class="keyword">const</span> std::filesystem::path&amp; path, <span class="keyword">const</span> std::filesystem::path key_path )</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        ZoneScoped;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">auto</span> temp_path { path };</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">auto</span> temp_key_path { key_path };</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        std::vector&lt; std::pair&lt; QString, QString &gt; &gt; temp_values;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        uint16_t step_counter { 0 };</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">while</span> ( !temp_key_path.empty() &amp;&amp; step_counter &lt; 512 )</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;path: &quot;</span> &lt;&lt; temp_path &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keyword">const</span> <span class="keyword">auto</span> key { QString::fromStdString( temp_key_path.filename().string() ) };</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            temp_key_path = temp_key_path.parent_path();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">if</span> ( temp_key_path.empty() )</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                temp_values.emplace_back( key, QString::fromStdString( temp_path.string() ) );</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                temp_values.emplace_back( key, QString::fromStdString( temp_path.filename().string() ) );</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            temp_path = temp_path.parent_path();</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            ++step_counter;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : temp_values ) { <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">registerKey</a>( key, value ); }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">   81</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">setRoot</a>( <span class="keyword">const</span> std::filesystem::path&amp; path ) { <a class="code hl_variable" href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">root</a> = path; }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>};</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_PATHMANAGER_HPP</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">   55</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">populateValues</a>( <span class="keyword">const</span> std::filesystem::path&amp; path, <span class="keyword">const</span> std::filesystem::path key_path )</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        ZoneScoped;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">auto</span> temp_path { path };</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keyword">auto</span> temp_key_path { key_path };</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        std::vector&lt; std::pair&lt; QString, QString &gt; &gt; temp_values;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        uint16_t step_counter { 0 };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">while</span> ( !temp_key_path.empty() &amp;&amp; step_counter &lt; 512 )</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;path: &quot;</span> &lt;&lt; temp_path &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keyword">const</span> <span class="keyword">auto</span> key { QString::fromStdString( temp_key_path.filename().string() ) };</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            temp_key_path = temp_key_path.parent_path();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keywordflow">if</span> ( temp_key_path.empty() )</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                temp_values.emplace_back( key, QString::fromStdString( temp_path.string() ) );</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                temp_values.emplace_back( key, QString::fromStdString( temp_path.filename().string() ) );</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            temp_path = temp_path.parent_path();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            ++step_counter;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : temp_values ) { <a class="code hl_variable" href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">key_replacer</a>.<a class="code hl_function" href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">registerKey</a>( key, value ); }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>};</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_PATHMANAGER_HPP</span></div>
 <div class="ttc" id="aKeyReplacer_8hpp_html"><div class="ttname"><a href="KeyReplacer_8hpp.html">KeyReplacer.hpp</a></div></div>
 <div class="ttc" id="aclassKeyReplacer_html"><div class="ttname"><a href="classKeyReplacer.html">KeyReplacer</a></div><div class="ttdef"><b>Definition:</b> KeyReplacer.hpp:12</div></div>
-<div class="ttc" id="aclassKeyReplacer_html_a956208892b5b49771ccc302b744f45be"><div class="ttname"><a href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">KeyReplacer::registerKey</a></div><div class="ttdeci">void registerKey(const QString &amp;key, QString value)</div><div class="ttdef"><b>Definition:</b> KeyReplacer.cpp:26</div></div>
-<div class="ttc" id="aclassKeyReplacer_html_aeb67814076ba6c8f5a6fcc8283a7e8dd"><div class="ttname"><a href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">KeyReplacer::replaceKeys</a></div><div class="ttdeci">QString &amp; replaceKeys(QString &amp;str) const</div><div class="ttdef"><b>Definition:</b> KeyReplacer.cpp:36</div></div>
+<div class="ttc" id="aclassKeyReplacer_html_a956208892b5b49771ccc302b744f45be"><div class="ttname"><a href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">KeyReplacer::registerKey</a></div><div class="ttdeci">void registerKey(const QString &amp;key, QString value)</div><div class="ttdoc">Registers a new key for the given value in the key_map.</div><div class="ttdef"><b>Definition:</b> KeyReplacer.cpp:26</div></div>
+<div class="ttc" id="aclassKeyReplacer_html_aeb67814076ba6c8f5a6fcc8283a7e8dd"><div class="ttname"><a href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">KeyReplacer::replaceKeys</a></div><div class="ttdeci">QString &amp; replaceKeys(QString &amp;str) const</div><div class="ttdoc">Populates a string by replacing the keys given with the values.</div><div class="ttdef"><b>Definition:</b> KeyReplacer.cpp:36</div></div>
 <div class="ttc" id="aconfig_8hpp_html"><div class="ttname"><a href="config_8hpp.html">config.hpp</a></div></div>
-<div class="ttc" id="astructPathManager_html"><div class="ttname"><a href="structPathManager.html">PathManager</a></div><div class="ttdef"><b>Definition:</b> PathManager.hpp:28</div></div>
-<div class="ttc" id="astructPathManager_html_a00ab5c54887498b061f908dc0ddb9a55"><div class="ttname"><a href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">PathManager::fillPath</a></div><div class="ttdeci">std::filesystem::path fillPath(const std::filesystem::path &amp;path, bool relativeFromRoot=false) const</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:35</div></div>
-<div class="ttc" id="astructPathManager_html_a06260406adb9adb6e70a360945806b5b"><div class="ttname"><a href="structPathManager.html#a06260406adb9adb6e70a360945806b5b">PathManager::relative</a></div><div class="ttdeci">std::filesystem::path relative(const std::filesystem::path &amp;path) const</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:48</div></div>
-<div class="ttc" id="astructPathManager_html_a5ce3f127a574dbee8045cd14ecfa22e9"><div class="ttname"><a href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">PathManager::key_replacer</a></div><div class="ttdeci">KeyReplacer key_replacer</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:29</div></div>
-<div class="ttc" id="astructPathManager_html_a66cb22d18d5ac2735f9352f9ee396ca7"><div class="ttname"><a href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">PathManager::populateValues</a></div><div class="ttdeci">void populateValues(const std::filesystem::path &amp;path, const std::filesystem::path key_path)</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:54</div></div>
+<div class="ttc" id="astructPathManager_html"><div class="ttname"><a href="structPathManager.html">PathManager</a></div><div class="ttdef"><b>Definition:</b> PathManager.hpp:29</div></div>
+<div class="ttc" id="astructPathManager_html_a00ab5c54887498b061f908dc0ddb9a55"><div class="ttname"><a href="structPathManager.html#a00ab5c54887498b061f908dc0ddb9a55">PathManager::fillPath</a></div><div class="ttdeci">std::filesystem::path fillPath(const std::filesystem::path &amp;path, bool relativeFromRoot=false) const</div><div class="ttdoc">Uses key_replacer to populate path with keys.</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:41</div></div>
+<div class="ttc" id="astructPathManager_html_a5ce3f127a574dbee8045cd14ecfa22e9"><div class="ttname"><a href="structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9">PathManager::key_replacer</a></div><div class="ttdeci">KeyReplacer key_replacer</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:30</div></div>
+<div class="ttc" id="astructPathManager_html_a66cb22d18d5ac2735f9352f9ee396ca7"><div class="ttname"><a href="structPathManager.html#a66cb22d18d5ac2735f9352f9ee396ca7">PathManager::populateValues</a></div><div class="ttdeci">void populateValues(const std::filesystem::path &amp;path, const std::filesystem::path key_path)</div><div class="ttdoc">Uses key_path to rip values out of path to populate key_replacer</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:55</div></div>
 <div class="ttc" id="astructPathManager_html_a9d91d6b3fcb797f77e7eace2bbf798bd"><div class="ttname"><a href="structPathManager.html#a9d91d6b3fcb797f77e7eace2bbf798bd">PathManager::PathManager</a></div><div class="ttdeci">PathManager()</div><div class="ttdef"><b>Definition:</b> PathManager.cpp:8</div></div>
-<div class="ttc" id="astructPathManager_html_ad5bd3502dc9273bbd33f4fb39f7e25aa"><div class="ttname"><a href="structPathManager.html#ad5bd3502dc9273bbd33f4fb39f7e25aa">PathManager::root</a></div><div class="ttdeci">std::filesystem::path root</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:31</div></div>
-<div class="ttc" id="astructPathManager_html_af0ee31573a5b1fdaf883b6ae88371346"><div class="ttname"><a href="structPathManager.html#af0ee31573a5b1fdaf883b6ae88371346">PathManager::setRoot</a></div><div class="ttdeci">void setRoot(const std::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> PathManager.hpp:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

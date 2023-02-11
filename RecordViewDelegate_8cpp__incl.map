@@ -1,14 +1,14 @@
 <map id="src/ui/widgets/records/RecordViewDelegate.cpp" name="src/ui/widgets/records/RecordViewDelegate.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="829,5,999,45"/>
-<area shape="rect" id="node2" href="$RecordViewDelegate_8hpp.html" title=" " alt="" coords="124,93,291,119"/>
-<area shape="rect" id="node4" href="$RecordViewModel_8hpp.html" title=" " alt="" coords="392,93,543,119"/>
-<area shape="rect" id="node15" href="$config_8hpp.html" title=" " alt="" coords="655,93,760,119"/>
-<area shape="rect" id="node18" title=" " alt="" coords="784,93,857,119"/>
-<area shape="rect" id="node19" title=" " alt="" coords="881,93,947,119"/>
-<area shape="rect" id="node20" title=" " alt="" coords="971,93,1075,119"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1099,93,1163,119"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1188,93,1299,119"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1323,93,1435,119"/>
+<area shape="rect" id="node1" title=" " alt="" coords="874,5,1045,45"/>
+<area shape="rect" id="node2" href="$RecordViewDelegate_8hpp.html" title=" " alt="" coords="168,93,335,119"/>
+<area shape="rect" id="node4" href="$RecordViewModel_8hpp.html" title=" " alt="" coords="436,93,587,119"/>
+<area shape="rect" id="node15" href="$config_8hpp.html" title=" " alt="" coords="700,93,805,119"/>
+<area shape="rect" id="node19" title=" " alt="" coords="829,93,903,119"/>
+<area shape="rect" id="node20" title=" " alt="" coords="927,93,992,119"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1017,93,1121,119"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1145,93,1209,119"/>
+<area shape="rect" id="node23" title=" " alt="" coords="1233,93,1344,119"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1369,93,1481,119"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,167,164,192"/>
 <area shape="rect" id="node5" title=" " alt="" coords="189,167,327,192"/>
 <area shape="rect" id="node6" title=" " alt="" coords="352,167,495,192"/>
@@ -22,4 +22,5 @@
 <area shape="rect" id="node14" title=" " alt="" coords="770,313,850,339"/>
 <area shape="rect" id="node16" title=" " alt="" coords="713,167,793,192"/>
 <area shape="rect" id="node17" title=" " alt="" coords="817,167,891,192"/>
+<area shape="rect" id="node18" title=" " alt="" coords="915,167,1027,192"/>
 </map>

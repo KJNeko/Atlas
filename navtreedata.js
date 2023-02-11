@@ -26,15 +26,6 @@ var NAVTREE =
 [
   [ "Hydrus95", "index.html", [
     [ "Settings list", "H95Settings.html", null ],
-    [ "Hydrus95 Parsers", "ParserPage.html", [
-      [ "Build-in/Pre-packaged parsers", "ParserPage.html#DefaultParsers", [
-        [ "ParserInfo", "ParserPage.html#ParserInfo", null ],
-        [ "Local Parser", "ParserPage.html#LocalParserDefault", null ],
-        [ "F95 Parser", "ParserPage.html#F95ParserDefault", null ],
-        [ "DLSite Parser", "ParserPage.html#DLSiteParser", null ]
-      ] ]
-    ] ],
-    [ "Parsers Specification", "ParserPageSpec.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -63,7 +54,8 @@ var NAVTREE =
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ]
       ] ]
-    ] ]
+    ] ],
+    [ "Examples", "examples.html", "examples" ]
   ] ]
 ];
 
