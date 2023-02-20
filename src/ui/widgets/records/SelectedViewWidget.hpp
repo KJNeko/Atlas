@@ -6,6 +6,7 @@
 #define HYDRUS95_SELECTEDVIEWWIDGET_HPP
 
 #include <QWidget>
+#include <QPersistentModelIndex>
 
 #include "h95/database/Record.hpp"
 
@@ -22,7 +23,7 @@ class SelectedViewWidget final : public QWidget
 
 	Q_DISABLE_COPY_MOVE( SelectedViewWidget )
 
-	std::optional< Record > selected { std::nullopt };
+	std::optional<QPersistentModelIndex> selected {std::nullopt};
 	QPixmap banner;
 
 	public:

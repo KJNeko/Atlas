@@ -31,16 +31,34 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 
 		const auto record_data { record.data().value< const Record* >() };
 
-		selected = *record_data;
+		selected = record;
+
+		if(!selected.has_value())
+		{
+			spdlog::warn("Somehow selected didn't have a value!");
+			return;
+		}
 
 		ui->banner->setPixmap(
-			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
+			record_data->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
 
 		// If there is a creator do {title} by {creator} else just do {title}
 		if ( record_data->m_creator.isEmpty() )
 			ui->title->setText( record_data->m_title );
 		else
 			ui->title->setText( QString( "%1 by %2" ).arg( record_data->m_title, record_data->m_creator ) );
+
+		ui->versionSelection->clear();
+
+		QStringList versions;
+
+		//Populate version selection
+		for(const auto& version : record_data->m_versions)
+		{
+			versions.emplace_back(version.version);
+		}
+
+		ui->versionSelection->addItems(versions);
 	}
 	else
 		this->hide();
@@ -49,10 +67,12 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 void SelectedViewWidget::resizeEvent( QResizeEvent* event )
 {
 	ZoneScoped;
-	if ( selected != std::nullopt )
+	if ( selected.has_value())
 	{
+		const auto record_data {selected.value().data().value<const Record*>()};
+
 		ui->banner->setPixmap(
-			selected->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
+			record_data->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
 	}
 	QWidget::resizeEvent( event );
 }
