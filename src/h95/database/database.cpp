@@ -82,7 +82,7 @@ namespace database
 
 		const std::vector< std::string > table_strs {
 			"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, unique(title, creator, engine))",
-			"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, version TEXT, game_path TEXT, exec_path TEXT)",
+			"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, UNIQUE(record_id, version, game_path, exec_path))",
 			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 			"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)" };
 

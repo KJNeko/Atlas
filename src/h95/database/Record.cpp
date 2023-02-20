@@ -42,7 +42,9 @@ Record Record::create(
 		engine.toStdString(),
 		metadata.version.toStdString(),
 		metadata.game_path.string(),
-		metadata.exec_path.string() );
+		metadata.exec_path.string(),
+		banner.string(),
+		previews.size());
 
 	{
 		ZoneScopedN( "Query Check" );
@@ -55,7 +57,7 @@ Record Record::create(
 			id = record_id;
 		};
 
-		if ( id != 0 ) { spdlog::debug( "Game was found! Adding version instead" ); }
+		if ( id != 0 ) { spdlog::debug( "Game was found with id {}! Adding version instead", id ); }
 	}
 
 	if ( id == 0 )
@@ -91,7 +93,7 @@ Record Record::select( const RecordID id )
 	{
 		ZoneScopedN( "Query Inital" );
 		database::db_ref() << "SELECT title, creator, engine FROM records WHERE record_id = ?" << id >>
-			[&]( const std::string& title_in, const std::string& creator_in, const std::string& engine_in )
+			[&]( const std::string&& title_in, const std::string&& creator_in, const std::string&& engine_in )
 		{
 			title = QString::fromStdString( title_in );
 			creator = QString::fromStdString( creator_in );
@@ -125,7 +127,7 @@ Record Record::select( const RecordID id )
 		};
 	}
 
-	return { id, title, creator, engine, { GameMetadata::select( id ) }, banner_path, preview_paths };
+	return { id, title, creator, engine, GameMetadata::select( id ), banner_path, preview_paths };
 }
 
 
