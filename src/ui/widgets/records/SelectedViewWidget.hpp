@@ -33,6 +33,7 @@ class SelectedViewWidget final : public QWidget
 	public slots:
 	void recordSelected( const QPersistentModelIndex& );
 	void on_closeButton_pressed();
+	void on_playButton_pressed();
 
 	void keyPressEvent( QKeyEvent* event ) override;
 	void resizeEvent( QResizeEvent* event ) override;

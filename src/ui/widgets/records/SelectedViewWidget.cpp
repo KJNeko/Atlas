@@ -10,6 +10,7 @@
 #include "h95/config.hpp"
 
 #include <QResizeEvent>
+#include <h95/executeProc.hpp>
 
 SelectedViewWidget::SelectedViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::SelectedViewWidget )
 {
@@ -78,6 +79,22 @@ void SelectedViewWidget::on_closeButton_pressed()
 {
 	emit hiding();
 	this->hide();
+}
+
+void SelectedViewWidget::on_playButton_pressed()
+{
+	const auto selected_text {ui->versionSelection->currentText()};
+
+	const auto record_data { selected.value().data().value< const Record* >() };
+
+	for(const auto& version : record_data->m_versions)
+	{
+		if(selected_text == version.version)
+		{
+			executeProc(version.game_path / version.exec_path);
+			return;
+		}
+	}
 }
 
 void SelectedViewWidget::keyPressEvent( QKeyEvent* event )
