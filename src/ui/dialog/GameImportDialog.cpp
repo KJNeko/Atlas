@@ -247,10 +247,15 @@ try
 	importer.setSource( ui->folderPath->text().toStdString() );
 	importer.setExecutable( ui->execPath->text().toStdString() );
 
+	spdlog::debug("Is copyToDest checked? {}", ui->copyToDest->isChecked());
 	if ( ui->copyToDest->isChecked() )
+	{
 		importer.setDestination( ui->pathLabel->text().toStdString() );
+	}
 	else
+	{
 		importer.setDestination( ui->folderPath->text().toStdString() );
+	}
 
 	importer.setPreviews( deserializePreviews( ui->previewPaths->text() ) );
 	importer.setBanner( ui->bannerPath->text().toStdString() );

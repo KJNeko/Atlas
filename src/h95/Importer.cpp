@@ -23,13 +23,15 @@ void Importer::import_game(
 	const QString& engine,
 	const bool delete_after )
 {
-	if(m_root.empty())
-		throw std::runtime_error("m_root was empty!");
-	if(m_source.empty())
-		throw std::runtime_error("m_source was empty!");
+	spdlog::debug("Importer triggered to import game");
+
+	if(m_root.empty()) spdlog::error("m_root was empty!");
+	if(m_source.empty()) spdlog::error("m_source was empty!");
 
 	if ( m_root != m_source )
 	{
+		spdlog::debug("Source and destination not the same. Switching config to source -> dest copy");
+
 		std::filesystem::create_directories( m_root );
 		spdlog::debug( "Copying {} -> {}", m_source.string(), m_root.string() );
 		std::filesystem::copy( m_source, m_root, std::filesystem::copy_options::recursive );
@@ -39,6 +41,8 @@ void Importer::import_game(
 			const auto banner_path_str { getSettings< QString >( "paths/h95_banners", "./data/banners" ) };
 			const std::filesystem::path banner_path { banner_path_str.toStdString() };
 			std::filesystem::create_directories( banner_path );
+
+			spdlog::debug("Banner not empty. Attempting copy to h95 banner path: {}", banner_path.string());
 
 			auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
 
@@ -52,16 +56,20 @@ void Importer::import_game(
 
 			file.copy( dest_path );
 
-			if ( delete_after ) std::filesystem::remove( m_banner );
+			if ( delete_after )
+			{std::filesystem::remove( m_banner );
+			spdlog::debug("Deleting banner from {} as requested after copy.", m_banner.string());}
 
 			//Delete banner from copied directory.
 			if ( is_subpath( m_banner, m_root ) )
 			{
 				const auto banner_relative { std::filesystem::relative( m_banner, m_source ) };
+				spdlog::debug("Banner was detected inside source path. Removing from copy at {}", (m_root / banner_relative).string());
 				std::filesystem::remove( m_root / banner_relative );
 			}
 
 			m_banner = dest_path;
+			spdlog::debug("Banner path set to {}", m_banner.string());
 		}
 
 		const auto preview_path_str { getSettings< QString >( "paths/h95_previews", "./data/previews" ) };
@@ -71,6 +79,7 @@ void Importer::import_game(
 		//Copy previews
 		for ( auto& preview : m_previews )
 		{
+			spdlog::debug("Handling preview {}", preview.string());
 			auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
 
 			QFile file { preview };
@@ -80,6 +89,8 @@ void Importer::import_game(
 
 			const auto dest_path {
 				preview_path / ( hasher.result().toHex( 0 ).toStdString() + preview.extension().string() ) };
+
+			spdlog::debug("Copying preview from {} -> {}", preview.string(), dest_path.string());
 
 			file.copy( dest_path );
 
@@ -97,6 +108,7 @@ void Importer::import_game(
 	}
 
 	m_executable = std::filesystem::relative( m_executable, m_source );
+	spdlog::debug("Setting executable to relative path: {}", m_executable.string());
 
 	//Import
 	Record::create( title, creator, engine, { version, m_root, m_executable }, m_banner, m_previews );

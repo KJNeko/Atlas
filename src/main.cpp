@@ -67,12 +67,19 @@ int main( int argc, char** argv )
 {
 	initLogging();
 
-	const int result {std::atexit(spdlog_flush)};
+	const int result { std::atexit( spdlog_flush ) };
+	spdlog::flush_on(spdlog::level::warn);
 
 	QApplication app { argc, argv };
 
-	const auto path	{getSettings< QString >( "paths/data", "./data/games" ).toStdString()};
-	std::filesystem::create_directories(path);
+	const auto path { getSettings< QString >( "paths/data", "./data/games" ).toStdString() };
+	std::filesystem::create_directories( path );
+
+	if ( getSettings< bool >( "debug/very_vocal", true ) )
+	{
+		spdlog::set_level( spdlog::level::debug );
+		spdlog::debug( "Debugging enabled." );
+	}
 
 	database::initalize();
 
@@ -81,4 +88,3 @@ int main( int argc, char** argv )
 
 	return app.exec();
 }
-

@@ -43,6 +43,7 @@ Record Record::create(
 		{
 			id = record_id;
 		};
+		spdlog::info("Record successfully imported with id = {}", id);
 	}
 
 	std::vector< std::pair< std::string, PreviewType > > image_paths;
@@ -73,7 +74,6 @@ Record Record::select( const RecordID id )
 			engine = QString::fromStdString( engine_in );
 		};
 	}
-
 
 	std::filesystem::path banner_path { ":invalid_banner.jpg" };
 	std::vector< std::filesystem::path > preview_paths;
