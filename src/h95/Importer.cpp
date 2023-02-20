@@ -23,12 +23,12 @@ void Importer::import_game(
 	const QString& engine,
 	const bool delete_after )
 {
-	spdlog::debug("Importer triggered to import game");
+	spdlog::debug( "Importer triggered to import game" );
 
-	if(m_root.empty()) spdlog::error("m_root was empty!");
-	if(m_source.empty()) spdlog::error("m_source was empty!");
+	if ( m_root.empty() ) spdlog::error( "m_root was empty!" );
+	if ( m_source.empty() ) spdlog::error( "m_source was empty!" );
 
-	bool copied_game {false};
+	bool copied_game { false };
 
 	try
 	{
@@ -124,13 +124,13 @@ void Importer::import_game(
 		//Import
 		Record::create( title, creator, engine, { version, m_root, m_executable }, m_banner, m_previews );
 	}
-	catch(std::exception& e)
+	catch ( std::exception& e )
 	{
-		spdlog::error("Import failed! Reason: {}", e.what());
-		if(copied_game)
+		spdlog::error( "Import failed! Reason: {}", e.what() );
+		if ( copied_game )
 		{
-			spdlog::info("Deleting game from copied directory after failure");
-			std::filesystem::remove_all(m_root);
+			spdlog::info( "Deleting game from copied directory after failure" );
+			std::filesystem::remove_all( m_root );
 		}
 	}
 }

@@ -33,9 +33,9 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 
 		selected = record;
 
-		if(!selected.has_value())
+		if ( !selected.has_value() )
 		{
-			spdlog::warn("Somehow selected didn't have a value!");
+			spdlog::warn( "Somehow selected didn't have a value!" );
 			return;
 		}
 
@@ -53,12 +53,9 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 		QStringList versions;
 
 		//Populate version selection
-		for(const auto& version : record_data->m_versions)
-		{
-			versions.emplace_back(version.version);
-		}
+		for ( const auto& version : record_data->m_versions ) { versions.emplace_back( version.version ); }
 
-		ui->versionSelection->addItems(versions);
+		ui->versionSelection->addItems( versions );
 	}
 	else
 		this->hide();
@@ -67,9 +64,9 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 void SelectedViewWidget::resizeEvent( QResizeEvent* event )
 {
 	ZoneScoped;
-	if ( selected.has_value())
+	if ( selected.has_value() )
 	{
-		const auto record_data {selected.value().data().value<const Record*>()};
+		const auto record_data { selected.value().data().value< const Record* >() };
 
 		ui->banner->setPixmap(
 			record_data->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );

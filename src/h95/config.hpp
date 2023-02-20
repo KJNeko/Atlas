@@ -56,13 +56,15 @@ template< typename T > inline T getSettings( const QString setting_name )
 	const auto variant { settings.value( setting_name ) };
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
-	else {
-		spdlog::warn("Setting for {} was not populated!", setting_name.toStdString());
+	else
+	{
+		spdlog::warn( "Setting for {} was not populated!", setting_name.toStdString() );
 
-		if constexpr(std::is_default_constructible_v<T>)
+		if constexpr ( std::is_default_constructible_v< T > )
 			return {};
 		else
-			throw std::runtime_error("T was not default constructable! Throwing instead! For given setting:" + setting_name.toStdString());
+			throw std::runtime_error(
+				"T was not default constructable! Throwing instead! For given setting:" + setting_name.toStdString() );
 	}
 }
 

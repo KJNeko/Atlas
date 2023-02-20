@@ -9,15 +9,18 @@
 
 void GameMetadata::execGame() {}
 
-std::vector<GameMetadata> GameMetadata::select( const RecordID id )
+std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 {
 	ZoneScoped;
-	std::vector<GameMetadata> metadata;
+	std::vector< GameMetadata > metadata;
 
 	database::db_ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
-		[&metadata]( const std::string&& game_path_in, const std::string&& exec_path_in, const std::string&& version_in )
+		[&metadata](
+			const std::string&& game_path_in,
+			const std::string&& exec_path_in,
+			const std::string&& version_in )
 	{
-		metadata.emplace_back(QString::fromStdString(version_in), game_path_in, exec_path_in);
+		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
 	};
 
 	return metadata;

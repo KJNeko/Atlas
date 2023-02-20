@@ -44,7 +44,7 @@ Record Record::create(
 		metadata.game_path.string(),
 		metadata.exec_path.string(),
 		banner.string(),
-		previews.size());
+		previews.size() );
 
 	{
 		ZoneScopedN( "Query Check" );

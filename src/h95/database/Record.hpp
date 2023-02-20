@@ -14,7 +14,7 @@ struct RecordAlreadyExists : public std::runtime_error
 {
 	RecordID m_id;
 
-	RecordAlreadyExists(const char* const msg, const RecordID id) : std::runtime_error(msg), m_id(id){}
+	RecordAlreadyExists( const char* const msg, const RecordID id ) : std::runtime_error( msg ), m_id( id ) {}
 };
 
 struct Record
@@ -56,7 +56,7 @@ struct Record
 	static Record select( const RecordID id );
 
 	//! Updates a record with new information.
-	static Record update(const RecordID id, const Record& record);
+	static Record update( const RecordID id, const Record& record );
 
 	/**
 	 * @param title unique constraint
