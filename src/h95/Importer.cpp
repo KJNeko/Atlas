@@ -25,8 +25,16 @@ void Importer::import_game(
 {
 	spdlog::debug( "Importer triggered to import game" );
 
-	if ( m_root.empty() ) spdlog::error( "m_root was empty!" );
-	if ( m_source.empty() ) spdlog::error( "m_source was empty!" );
+	if ( m_root.empty() )
+	{
+		spdlog::error( "m_root was empty!" );
+		return;
+	}
+	if ( m_source.empty() )
+	{
+		spdlog::error( "m_source was empty!" );
+		return;
+	}
 
 	bool copied_game { false };
 
