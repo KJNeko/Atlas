@@ -1,7 +1,7 @@
 var searchData=
 [
   ['searchsimilar_0',['searchSimilar',['../classRecordViewBackend.html#a8c1ff89c54b9ae563b3f2464058bb414',1,'RecordViewBackend']]],
-  ['select_1',['select',['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()'],['../structGameMetadata.html#a403699dddf5574f5331fc91a1d906804',1,'GameMetadata::select()']]],
+  ['select_1',['select',['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()'],['../structGameMetadata.html#aae9fd683e549650cfc7066165f686239',1,'GameMetadata::select()']]],
   ['selectedviewwidget_2',['SelectedViewWidget',['../classSelectedViewWidget.html',1,'SelectedViewWidget'],['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget::SelectedViewWidget()']]],
   ['selectedviewwidget_2ecpp_3',['SelectedViewWidget.cpp',['../SelectedViewWidget_8cpp.html',1,'']]],
   ['selectedviewwidget_2ehpp_4',['SelectedViewWidget.hpp',['../SelectedViewWidget_8hpp.html',1,'']]],

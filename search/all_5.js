@@ -4,7 +4,7 @@ var searchData=
   ['gameimportdialog_1',['GameImportDialog',['../classGameImportDialog.html',1,'GameImportDialog'],['../classGameImportDialog.html#a1db46344fb92984374794fc3303c8e6a',1,'GameImportDialog::GameImportDialog(QWidget *parent=nullptr)'],['../classGameImportDialog.html#a0bf31e5a55c5392aa0563f2d3fc51062',1,'GameImportDialog::GameImportDialog(const QUrl &amp;url, QWidget *parent=nullptr)']]],
   ['gameimportdialog_2ecpp_2',['GameImportDialog.cpp',['../GameImportDialog_8cpp.html',1,'']]],
   ['gameimportdialog_2ehpp_3',['GameImportDialog.hpp',['../GameImportDialog_8hpp.html',1,'']]],
-  ['gamemetadata_4',['GameMetadata',['../structGameMetadata.html',1,'']]],
+  ['gamemetadata_4',['GameMetadata',['../structGameMetadata.html',1,'GameMetadata'],['../structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)'],['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete']]],
   ['gamemetadata_2ecpp_5',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
   ['gamemetadata_2ehpp_6',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]],
   ['getall_7',['getAll',['../RecordViewBackend_8cpp.html#ae1b1ea2d52ef15c8ccc27bdab37723c6',1,'RecordViewBackend.cpp']]],
