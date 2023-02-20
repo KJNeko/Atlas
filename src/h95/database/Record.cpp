@@ -93,7 +93,7 @@ Record Record::select( const RecordID id )
 	{
 		ZoneScopedN( "Query Inital" );
 		database::db_ref() << "SELECT title, creator, engine FROM records WHERE record_id = ?" << id >>
-			[&]( const std::string&& title_in, const std::string&& creator_in, const std::string&& engine_in )
+			[&]( const std::string& title_in, const std::string& creator_in, const std::string& engine_in )
 		{
 			title = QString::fromStdString( title_in );
 			creator = QString::fromStdString( creator_in );
@@ -108,7 +108,7 @@ Record Record::select( const RecordID id )
 	{
 		ZoneScopedN( "Query previews" );
 		database::db_ref() << "SELECT path, type FROM previews WHERE record_id = ?" << id >>
-			[&banner_path, &preview_paths]( std::string&& path, const uint8_t type )
+			[&banner_path, &preview_paths]( const std::string& path, const uint8_t type )
 		{
 			ZoneScopedN( "Process row" );
 			switch ( static_cast< PreviewType >( type ) )
