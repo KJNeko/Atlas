@@ -35,6 +35,30 @@ Record Record::create(
 	ZoneScoped;
 	RecordID id { 0 };
 
+	spdlog::debug(
+		"Adding record with following values: title={}, creator={}, engine={}, version={}, game_path={}, exec_path={}, banner={}, {} previews",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString(),
+		metadata.version.toStdString(),
+		metadata.game_path.string(),
+		metadata.exec_path.string() );
+
+	{
+		ZoneScopedN( "Query Check" );
+		spdlog::debug( "Checking if game already exists in record." );
+
+		database::db_ref() << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
+						   << title.toStdString() << creator.toStdString() << engine.toStdString()
+			>> [&]( const RecordID record_id )
+		{
+			id = record_id;
+		};
+
+		if ( id != 0 ) { spdlog::debug( "Game was found! Adding version instead" ); }
+	}
+
+	if ( id == 0 )
 	{
 		ZoneScopedN( "Query" );
 		database::db_ref() << "INSERT INTO records (title, creator, engine) VALUES (?, ?, ?) RETURNING record_id"
@@ -43,16 +67,16 @@ Record Record::create(
 		{
 			id = record_id;
 		};
-		spdlog::info("Record successfully imported with id = {}", id);
+		spdlog::info( "Record successfully imported with id = {}", id );
+
+		std::vector< std::pair< std::string, PreviewType > > image_paths;
+		if ( !banner.empty() ) image_paths.emplace_back( banner.string(), PREVIEW_BANNER );
+		for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW );
+
+		for ( const auto& [path, type] : image_paths )
+			database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id
+							   << static_cast< uint8_t >( type ) << path;
 	}
-
-	std::vector< std::pair< std::string, PreviewType > > image_paths;
-	if ( !banner.empty() ) image_paths.emplace_back( banner.string(), PREVIEW_BANNER );
-	for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW );
-
-	for ( const auto& [path, type] : image_paths )
-		database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id
-						   << static_cast< uint8_t >( type ) << path;
 
 	return { id, title, creator, engine, { GameMetadata::insert( id, metadata ) }, banner, previews };
 }
