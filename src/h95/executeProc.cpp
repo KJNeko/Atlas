@@ -14,7 +14,7 @@ void executeProc( const std::string& path )
 	int pid = fork();
 	if ( pid == 0 )
 	{  //We are child
-		execl( path.c_str(), new char( '\n' ) );
+		execl( path.c_str(), "", nullptr );
 		spdlog::info( "I still exist?" );
 		throw std::runtime_error( "AAAAAAAAA" );
 	}
