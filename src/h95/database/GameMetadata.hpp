@@ -5,9 +5,11 @@
 #ifndef HYDRUS95_GAMEMETADATA_HPP
 #define HYDRUS95_GAMEMETADATA_HPP
 
-#include <QString>
 #include <filesystem>
-#include "h95/Types.hpp"
+
+#include <QString>
+
+#include <h95/Types.hpp>
 
 struct GameMetadata
 {

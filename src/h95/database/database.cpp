@@ -2,10 +2,12 @@
 // Created by kj16609 on 1/12/23.
 //
 
-#include "database.hpp"
 #include <filesystem>
-#include <sqlite_modern_cpp.h>
+
 #include <tracy/Tracy.hpp>
+
+#include "database.hpp"
+
 #include <h95/logging.hpp>
 #include <h95/config.hpp>
 

@@ -6,7 +6,8 @@
 #define HYDRUS95_GAMEIMPORTDIALOG_HPP
 
 #include <QDialog>
-#include "h95/PathManager.hpp"
+
+#include <h95/PathManager.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui

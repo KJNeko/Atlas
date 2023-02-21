@@ -5,7 +5,6 @@
 
 #ifdef __linux__
 
-#include <stdio.h>
 #include <unistd.h>
 #include <string>
 

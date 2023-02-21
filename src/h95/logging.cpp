@@ -15,9 +15,7 @@
 
 #pragma GCC diagnostic pop
 
-#include <memory>
-
-#include "logging.hpp"
+#include <h95/logging.hpp>
 
 void initLogging()
 {

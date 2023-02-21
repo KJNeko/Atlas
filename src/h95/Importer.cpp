@@ -5,7 +5,7 @@
 #include <QCryptographicHash>
 #include <QFile>
 
-#include "Importer.hpp"
+#include <h95/Importer.hpp>
 
 #include <h95/logging.hpp>
 #include <h95/database/Record.hpp>

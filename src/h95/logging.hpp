@@ -15,8 +15,6 @@
 
 #pragma GCC diagnostic pop
 
-
-
 void initLogging();
 
 #endif	//HYDRUS95_LOGGING_HPP

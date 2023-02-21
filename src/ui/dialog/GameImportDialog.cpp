@@ -4,17 +4,19 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_GameImportDialog.h" resolved
 
-#include "GameImportDialog.hpp"
-#include "ui_GameImportDialog.h"
 #include <filesystem>
+
 #include <QFileDialog>
 #include <QDirIterator>
 #include <QMimeDatabase>
 
-#include "h95/Importer.hpp"
-
 #include <tracy/Tracy.hpp>
-#include <spdlog/spdlog.h>
+
+#include "GameImportDialog.hpp"
+#include "ui_GameImportDialog.h"
+
+#include <h95/Importer.hpp>
+
 
 constexpr char preview_delim { ';' };
 

@@ -2,10 +2,7 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include <iostream>
-
 #include <QPixmapCache>
-#include <QJsonArray>
 
 #include <tracy/Tracy.hpp>
 

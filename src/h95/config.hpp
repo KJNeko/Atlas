@@ -7,6 +7,7 @@
 
 #include <QSettings>
 #include <QVariant>
+
 #include <h95/logging.hpp>
 
 /**

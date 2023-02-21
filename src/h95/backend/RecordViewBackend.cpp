@@ -3,8 +3,10 @@
 //
 
 #include <tracy/Tracy.hpp>
-#include "RecordViewBackend.hpp"
+
 #include "h95/database/database.hpp"
+
+#include "RecordViewBackend.hpp"
 
 std::vector< Record > getAll()
 {

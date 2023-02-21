@@ -6,8 +6,9 @@
 #define HYDRUS95_RECORDVIEWBACKEND_HPP
 
 #include <QObject>
-#include "h95/database/Tag.hpp"
-#include "h95/database/Record.hpp"
+
+#include <h95/database/Record.hpp>
+#include <h95/database/Tag.hpp>
 
 class RecordViewBackend final : public QObject
 {

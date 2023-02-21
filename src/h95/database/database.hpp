@@ -17,6 +17,10 @@
 
 #pragma GCC diagnostic pop
 
+namespace sqlite
+{
+	class database;
+}
 
 namespace database
 {

@@ -2,10 +2,13 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include "GameMetadata.hpp"
-#include "database.hpp"
-#include <iostream>
+#include <string>
+
 #include <tracy/Tracy.hpp>
+
+#include <h95/database/database.hpp>
+
+#include <h95/database/GameMetadata.hpp>
 
 void GameMetadata::execGame() {}
 
@@ -16,9 +19,9 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 
 	database::db_ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
 		[&metadata](
-			const std::string&& game_path_in,
-			const std::string&& exec_path_in,
-			const std::string&& version_in )
+			const std::string& game_path_in,
+			const std::string& exec_path_in,
+			const std::string& version_in )
 	{
 		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
 	};

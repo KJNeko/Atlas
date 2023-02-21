@@ -5,17 +5,10 @@
 #ifndef HYDRUS95_RECORD_HPP
 #define HYDRUS95_RECORD_HPP
 
-#include <QMetaType>
-#include "h95/Types.hpp"
-#include "GameMetadata.hpp"
+//#include <QMetaType>
 
-//! Thrown when attempting to create a record that already exists
-struct RecordAlreadyExists : public std::runtime_error
-{
-	RecordID m_id;
-
-	RecordAlreadyExists( const char* const msg, const RecordID id ) : std::runtime_error( msg ), m_id( id ) {}
-};
+#include <h95/Types.hpp>
+#include <h95/database/GameMetadata.hpp>
 
 struct Record
 {
@@ -89,6 +82,6 @@ struct Record
 #endif
 };
 
-Q_DECLARE_METATYPE( Record )
+//Q_DECLARE_METATYPE( Record )
 
 #endif	//HYDRUS95_RECORD_HPP
