@@ -6,7 +6,6 @@
 #define HYDRUS95_TYPES_HPP
 
 #include <cstdint>
-#include <variant>
 
 using RecordID = uint32_t;
 

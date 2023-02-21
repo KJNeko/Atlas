@@ -2,15 +2,15 @@
 // Created by kj16609 on 1/11/23.
 //
 
+#include <filesystem>
+#include <fstream>
+
 #include <QApplication>
 
 #include "h95/database/database.hpp"
-
-#include "ui/MainWindow.hpp"
 #include "h95/config.hpp"
-#include <filesystem>
-
 #include "h95/logging.hpp"
+#include "ui/MainWindow.hpp"
 
 #ifdef TRACY_ENABLE
 #include <tracy/Tracy.hpp>

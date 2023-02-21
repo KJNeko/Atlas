@@ -4,13 +4,16 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_SelectedViewWidget.h" resolved
 
-#include <tracy/Tracy.hpp>
-#include "SelectedViewWidget.hpp"
-#include "ui_SelectedViewWidget.h"
-#include "h95/config.hpp"
 
 #include <QResizeEvent>
+
+#include <tracy/Tracy.hpp>
+
+#include <h95/config.hpp>
 #include <h95/executeProc.hpp>
+
+#include "SelectedViewWidget.hpp"
+#include "ui_SelectedViewWidget.h"
 
 SelectedViewWidget::SelectedViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::SelectedViewWidget )
 {
