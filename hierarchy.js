@@ -29,5 +29,5 @@ var hierarchy =
     [ "std::runtime_error", null, [
       [ "RecordAlreadyExists", "structRecordAlreadyExists.html", null ]
     ] ],
-    [ "Tag", "classTag.html", null ]
+    [ "Tag", "structTag.html", null ]
 ];
