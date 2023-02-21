@@ -67,26 +67,39 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B build-r -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
 
       - name: Build
         run: |
-          cd build
+          cd build-r
+          mingw32-make -j8
+          cd ../build-d
           mingw32-make -j8
 
       - name: Package
         run: |
-          cd build/bin
-          cd ..
-          mkdir Hydrus95
-          move .\bin\* .\Hydrus95\
-          7z.exe a -tzip -mm=Deflate -mx=5 ..\Hydrus95-Windows.zip .\Hydrus95
+          mkdir Hydrus95-Release
+          mkdir Hydrus95-Debug
+          move .\build-r\bin\* .\Hydrus95-Release\
+          move .\build-d\bin\* .\Hydrus95-Debug\
+          7z.exe a -tzip -mm=Deflate -mx=5 .\Hydrus95-Windows.zip .\Hydrus95-Release
+          7z.exe a -tzip -mm=Deflate -mx=5 .\Hydrus95-Windows-Debug.zip .\Hydrus95-Debug
+          
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
           path: Hydrus95-Windows.zip
+          if-no-files-found: error
+          retention-days: 2
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Windows-Extract-Debug
+          path: Hydrus95-Windows-Debug.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -111,6 +124,7 @@ jobs:
         run: |
           mkdir windows
           mv Windows-Extract/Hydrus95-Windows.zip Hydrus95-${{ env.version_short }}-windows.zip
+          mv Windows-Extract/Hydrus95-Windows-Debug.zip Hydrus95-${{ env.version_short }}-Debug-windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
@@ -118,5 +132,6 @@ jobs:
         with:
           files: |
             Hydrus95-${{env.version_short}}-windows.zip
+            Hydrus95-${{env.version_short}}-Debug-windows.zip
           
 
