@@ -42,18 +42,12 @@ void executeProc( const std::string& path_str )
 		si.cb = sizeof( si );
 		ZeroMemory( &pi, sizeof( pi ) );
 
-		if ( !CreateProcessA( name, path, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
+		if ( !CreateProcessA( path, nullptr, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
 		{
 			spdlog::error( "Failed to execute process {}", path );
 		}
 
-		WaitForSingleObject( pi.hProcess, INFINITE );
-
-		CloseHandle( pi.hProcess );
-		CloseHandle( pi.hThread );
-
-		throw std::runtime_error( "Somehow got back in the thread?" );
-		std::abort();
+		std::exit(EXIT_SUCCESS);
 
 		return;
 	}
