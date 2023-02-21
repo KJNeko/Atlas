@@ -5,7 +5,19 @@
 #ifndef HYDRUS95_DATABASE_HPP
 #define HYDRUS95_DATABASE_HPP
 
+#pragma GCC diagnostic push
+
+#pragma GCC diagnostic ignored "-Wshadow"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wconversion"
+
 #include <sqlite_modern_cpp.h>
+
+#pragma GCC diagnostic pop
+
+
 namespace database
 {
 

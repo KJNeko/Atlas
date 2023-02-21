@@ -34,7 +34,7 @@ find_package(SQLite3 REQUIRED)
 
 if (WIN32)
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        find_program(TOOL_WINDEPLOYQT NAMES windeployqt.debug.bat)
+        find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     else ()
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
@@ -76,14 +76,14 @@ if (${CMAKE_COMPILER_IS_GNUCXX})
 
     set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
 
-    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always -rdynamic")
+    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always")# -rdynamic")
 
     #Generates system specific stuff (IE requires AVX)
     set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
     #Generates safe optimization flags
     set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans")
 
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} ${FGL_DEBUG} -fsanitize=undefined")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
     set(CMAKE_CXX_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE}")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} ${FGL_SYSTEM_SAFE}")

@@ -7,7 +7,7 @@
 
 #include <QSettings>
 #include <QVariant>
-#include <spdlog/spdlog.h>
+#include <h95/logging.hpp>
 
 /**
  *

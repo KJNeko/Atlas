@@ -6,8 +6,8 @@
 #include <filesystem>
 #include <sqlite_modern_cpp.h>
 #include <tracy/Tracy.hpp>
-#include <spdlog/spdlog.h>
-#include "h95/config.hpp"
+#include <h95/logging.hpp>
+#include <h95/config.hpp>
 
 namespace database
 {

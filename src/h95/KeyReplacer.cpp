@@ -3,9 +3,12 @@
 //
 
 #include <algorithm>
+
 #include <QHash>
-#include <spdlog/spdlog.h>
-#include "KeyReplacer.hpp"
+
+#include <h95/logging.hpp>
+
+#include <h95/KeyReplacer.hpp>
 
 void KeyReplacer::clear()
 {

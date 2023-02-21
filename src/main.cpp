@@ -67,7 +67,7 @@ int main( int argc, char** argv )
 {
 	initLogging();
 
-	const int result { std::atexit( spdlog_flush ) };
+	(void)std::atexit( spdlog_flush );
 	spdlog::flush_on( spdlog::level::warn );
 
 	QApplication app { argc, argv };

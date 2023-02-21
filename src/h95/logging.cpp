@@ -2,10 +2,19 @@
 // Created by kj16609 on 1/27/23.
 //
 
+#pragma GCC diagnostic push
+
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/logger.h>
+
+#pragma GCC diagnostic pop
+
 #include <memory>
 
 #include "logging.hpp"

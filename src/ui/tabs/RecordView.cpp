@@ -4,11 +4,13 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_RecordView.h" resolved
 
-#include <spdlog/spdlog.h>
-#include "RecordView.hpp"
-#include "ui_RecordView.h"
-#include "h95/config.hpp"
 
+#include "ui_RecordView.h"
+
+#include <h95/logging.hpp>
+#include <h95/config.hpp>
+
+#include <ui/tabs/RecordView.hpp>
 
 RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordView )
 {

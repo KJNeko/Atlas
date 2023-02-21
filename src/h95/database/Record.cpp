@@ -2,13 +2,17 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include "Record.hpp"
-#include <QJsonArray>
 #include <iostream>
-#include <tracy/Tracy.hpp>
+
 #include <QPixmapCache>
-#include "h95/database/database.hpp"
-#include "h95/config.hpp"
+#include <QJsonArray>
+
+#include <tracy/Tracy.hpp>
+
+#include <h95/database/database.hpp>
+#include <h95/config.hpp>
+
+#include <h95/database/Record.hpp>
 
 #ifdef NDEBUG
 bool Record::operator==( const Record& other ) const
@@ -134,7 +138,7 @@ Record Record::select( const RecordID id )
 QPixmap Record::getBanner() const
 {
 	ZoneScoped;
-	const auto banner_path_str { QString::fromStdString( m_banner ) };
+	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
 	QPixmap banner { ":/invalid_banner.jpg" };
@@ -151,7 +155,7 @@ QPixmap Record::getBanner() const
 QPixmap Record::getBanner( const int banner_width, const int banner_height ) const
 {
 	ZoneScopedN( "getBannerResized" );
-	const auto banner_path_str { QString::fromStdString( m_banner ) };
+	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
 
 	const auto key { banner_path_str + QString::number( banner_width ) + QString::number( banner_width ) };

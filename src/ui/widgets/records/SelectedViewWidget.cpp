@@ -91,7 +91,7 @@ void SelectedViewWidget::on_playButton_pressed()
 	{
 		if(selected_text == version.version)
 		{
-			executeProc(version.game_path / version.exec_path);
+			executeProc((version.game_path / version.exec_path).string());
 			return;
 		}
 	}

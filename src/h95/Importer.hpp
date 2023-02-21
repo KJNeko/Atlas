@@ -7,7 +7,10 @@
 
 #include <filesystem>
 #include <vector>
+
 #include <QString>
+
+#include <h95/logging.hpp>
 
 class Importer
 {

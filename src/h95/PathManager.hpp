@@ -38,7 +38,7 @@ struct PathManager
 	 * @return
 	 */
 	//! Uses key_replacer to populate `path` with keys.
-	inline std::filesystem::path fillPath( const std::filesystem::path& path, bool relativeFromRoot = false ) const
+	inline std::filesystem::path fillPath( const std::filesystem::path& path,[[maybe_unused]] bool relativeFromRoot = false ) const
 	{
 		ZoneScoped;
 		QString path_str { QString::fromStdString( path.string() ) };

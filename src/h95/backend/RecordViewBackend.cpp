@@ -19,18 +19,18 @@ std::vector< Record > getAll()
 	return records;
 }
 
-void RecordViewBackend::searchSimilar( const QString& text )
+void RecordViewBackend::searchSimilar( [[maybe_unused]] const QString& text )
 {
 	ZoneScoped;
 }
 
-void RecordViewBackend::addTag( const Tag& tag )
+void RecordViewBackend::addTag( [[maybe_unused]] const Tag& tag )
 {
 	ZoneScoped;
 	emit recordsUpdated( getAll() );
 }
 
-void RecordViewBackend::removeTag( const Tag& tag )
+void RecordViewBackend::removeTag( [[maybe_unused]] const Tag& tag )
 {
 	ZoneScoped;
 	emit recordsUpdated( getAll() );

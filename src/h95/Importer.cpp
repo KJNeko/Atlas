@@ -2,12 +2,14 @@
 // Created by kj16609 on 1/29/23.
 //
 
-#include <spdlog/spdlog.h>
 #include <QCryptographicHash>
 #include <QFile>
+
 #include "Importer.hpp"
-#include "h95/database/Record.hpp"
-#include "config.hpp"
+
+#include <h95/logging.hpp>
+#include <h95/database/Record.hpp>
+#include <h95/config.hpp>
 
 
 bool is_subpath( const std::filesystem::path& path, const std::filesystem::path& base )
@@ -40,7 +42,6 @@ void Importer::import_game(
 
 	try
 	{
-
 		if ( m_root != m_source )
 		{
 			spdlog::debug( "Source and destination not the same. Switching config to source -> dest copy" );
