@@ -81,7 +81,7 @@ bool RecordViewDelegate::editorEvent(
 
 			menu.addAction( "Manage record", [=]() {} );
 
-			menu.exec( m_event->pos() );
+			menu.exec( m_event->globalPosition().toPoint() );
 
 			return true;
 		}
