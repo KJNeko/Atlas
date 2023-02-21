@@ -24,7 +24,7 @@ class SelectedViewWidget final : public QWidget
 	Q_DISABLE_COPY_MOVE( SelectedViewWidget )
 
 	std::optional< QPersistentModelIndex > selected { std::nullopt };
-	QPixmap banner;
+	QPixmap banner {":/invalid_banner.png"};
 
 	public:
 	explicit SelectedViewWidget( QWidget* parent = nullptr );

@@ -8,7 +8,7 @@
 #include "ui_RecordViewWidget.h"
 
 #include <tracy/Tracy.hpp>
-#include <spdlog/spdlog.h>
+#include <h95/logging.hpp>
 
 RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordViewWidget )
 {

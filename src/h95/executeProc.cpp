@@ -27,31 +27,20 @@ void executeProc( const std::string& path )
 
 void executeProc( const std::string& path_str )
 {
-	const LPCSTR name { "H95 Game" };
 	LPSTR path;
 	path = new char[4096 * 4];
-	std::strcpy(path, path_str.c_str());
+	std::strcpy( path, path_str.c_str() );
 
 	//Fork here
-	if ( true )
-	{
-		STARTUPINFOA si;
-		PROCESS_INFORMATION pi;
+	STARTUPINFOA si;
+	PROCESS_INFORMATION pi;
 
-		ZeroMemory( &si, sizeof( si ) );
-		si.cb = sizeof( si );
-		ZeroMemory( &pi, sizeof( pi ) );
+	ZeroMemory( &si, sizeof( si ) );
+	si.cb = sizeof( si );
+	ZeroMemory( &pi, sizeof( pi ) );
 
-		if ( !CreateProcessA( path, nullptr, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
-		{
-			spdlog::error( "Failed to execute process {}", path );
-		}
-
-		std::exit(EXIT_SUCCESS);
-
-		return;
-	}
-	else { return; }
+	if ( !CreateProcessA( path, nullptr, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
+		spdlog::error( "Failed to execute process {}", path );
 }
 
 

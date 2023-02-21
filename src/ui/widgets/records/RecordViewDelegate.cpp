@@ -66,9 +66,9 @@ QSize RecordViewDelegate::sizeHint(
 
 bool RecordViewDelegate::editorEvent(
 	QEvent* event,
-	QAbstractItemModel* model,
+	[[maybe_unused]] QAbstractItemModel* model,
 	[[maybe_unused]] const QStyleOptionViewItem& option,
-	const QModelIndex& index )
+	[[maybe_unused]] const QModelIndex& index )
 {
 	ZoneScoped;
 	if ( event->type() == QEvent::MouseButtonPress )
