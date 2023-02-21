@@ -1,8 +1,7 @@
 <map id="src/h95/database/GameMetadata.hpp" name="src/h95/database/GameMetadata.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="17,5,255,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,72,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="96,79,176,104"/>
+<area shape="rect" id="node1" title=" " alt="" coords="23,5,262,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,79,85,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="109,79,176,104"/>
 <area shape="rect" id="node4" href="$Types_8hpp.html" title=" " alt="" coords="200,79,307,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="180,152,241,177"/>
-<area shape="rect" id="node6" title=" " alt="" coords="265,152,327,177"/>
+<area shape="rect" id="node5" title=" " alt="" coords="223,152,284,177"/>
 </map>

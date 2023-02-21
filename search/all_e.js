@@ -7,7 +7,7 @@ var searchData=
   ['selectedviewwidget_2ehpp_4',['SelectedViewWidget.hpp',['../SelectedViewWidget_8hpp.html',1,'']]],
   ['selectionchanged_5',['selectionChanged',['../classRecordViewWidget.html#acc67145100a852176f4be40a9f0dc1af',1,'RecordViewWidget']]],
   ['selectionhiding_6',['selectionHiding',['../classRecordViewWidget.html#a22d51344290f3cdc6421e370748d18b2',1,'RecordViewWidget']]],
-  ['serializepreviews_7',['serializePreviews',['../GameImportDialog_8cpp.html#a28138603c0cc4f0a3fb08f98d5b074bf',1,'serializePreviews(const std::vector&lt; std::filesystem::path &gt; &amp;paths):&#160;GameImportDialog.cpp'],['../GameImportDialog_8cpp.html#a74698469e778e3d6d11b7d690ccb50b3',1,'serializePreviews(const QList&lt; QString &gt; &amp;list):&#160;GameImportDialog.cpp']]],
+  ['serializepreviews_7',['serializePreviews',['../GameImportDialog_8cpp.html#a74698469e778e3d6d11b7d690ccb50b3',1,'serializePreviews(const QList&lt; QString &gt; &amp;list):&#160;GameImportDialog.cpp'],['../GameImportDialog_8cpp.html#a28138603c0cc4f0a3fb08f98d5b074bf',1,'serializePreviews(const std::vector&lt; std::filesystem::path &gt; &amp;paths):&#160;GameImportDialog.cpp']]],
   ['setbanner_8',['setBanner',['../classImporter.html#aaff243de48de0e1abf0e246b765dad1f',1,'Importer']]],
   ['setdestination_9',['setDestination',['../classImporter.html#a2502e298274e7810107f698e63daea3b',1,'Importer']]],
   ['setexecutable_10',['setExecutable',['../classImporter.html#aa13cae707ff3081f8b86e23c1412b8bc',1,'Importer']]],
@@ -21,5 +21,6 @@ var searchData=
   ['settingsdialog_2ehpp_18',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
   ['similartagfinished_19',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend']]],
   ['sizehint_20',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]],
-  ['spdlog_5fflush_21',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]]
+  ['spdlog_5fflush_21',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]],
+  ['sqlite_22',['sqlite',['../namespacesqlite.html',1,'']]]
 ];

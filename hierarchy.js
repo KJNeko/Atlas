@@ -26,8 +26,5 @@ var hierarchy =
       [ "SelectedViewWidget", "classSelectedViewWidget.html", null ]
     ] ],
     [ "Record", "structRecord.html", null ],
-    [ "std::runtime_error", null, [
-      [ "RecordAlreadyExists", "structRecordAlreadyExists.html", null ]
-    ] ],
     [ "Tag", "structTag.html", null ]
 ];

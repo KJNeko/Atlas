@@ -7,7 +7,6 @@ var annotated_dup =
     [ "MainWindow", "classMainWindow.html", "classMainWindow" ],
     [ "PathManager", "structPathManager.html", "structPathManager" ],
     [ "Record", "structRecord.html", "structRecord" ],
-    [ "RecordAlreadyExists", "structRecordAlreadyExists.html", "structRecordAlreadyExists" ],
     [ "RecordView", "classRecordView.html", "classRecordView" ],
     [ "RecordViewBackend", "classRecordViewBackend.html", "classRecordViewBackend" ],
     [ "RecordViewDelegate", "classRecordViewDelegate.html", "classRecordViewDelegate" ],
