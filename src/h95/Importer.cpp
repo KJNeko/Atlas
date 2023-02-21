@@ -45,7 +45,7 @@ void Importer::import_game(
 		{
 			spdlog::debug( "Source and destination not the same. Switching config to source -> dest copy" );
 
-			std::filesystem::create_directories( m_root );
+			std::filesystem::create_directories( m_root.parent_path() );
 			spdlog::debug( "Copying {} -> {}", m_source.string(), m_root.string() );
 			std::filesystem::copy( m_source, m_root, std::filesystem::copy_options::recursive );
 			copied_game = true;
