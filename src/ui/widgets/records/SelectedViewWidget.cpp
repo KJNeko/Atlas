@@ -59,7 +59,10 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 		ui->versionSelection->addItems( versions );
 	}
 	else
+	{
 		this->hide();
+		selected = std::nullopt;
+	}
 }
 
 void SelectedViewWidget::resizeEvent( QResizeEvent* event )
@@ -78,20 +81,21 @@ void SelectedViewWidget::resizeEvent( QResizeEvent* event )
 void SelectedViewWidget::on_closeButton_pressed()
 {
 	emit hiding();
+	selected = std::nullopt;
 	this->hide();
 }
 
 void SelectedViewWidget::on_playButton_pressed()
 {
-	const auto selected_text {ui->versionSelection->currentText()};
+	const auto selected_text { ui->versionSelection->currentText() };
 
 	const auto record_data { selected.value().data().value< const Record* >() };
 
-	for(const auto& version : record_data->m_versions)
+	for ( const auto& version : record_data->m_versions )
 	{
-		if(selected_text == version.version)
+		if ( selected_text == version.version )
 		{
-			executeProc((version.game_path / version.exec_path).string());
+			executeProc( ( version.game_path / version.exec_path ).string() );
 			return;
 		}
 	}
@@ -105,6 +109,7 @@ void SelectedViewWidget::keyPressEvent( QKeyEvent* event )
 		event->accept();
 
 		emit hiding();
+		selected = std::nullopt;
 		this->hide();
 	}
 	QWidget::keyPressEvent( event );

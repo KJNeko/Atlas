@@ -35,10 +35,17 @@ void RecordViewWidget::selectionChanged(
 	[[maybe_unused]] const QItemSelection& deseleted )
 {
 	if ( selected.size() == 0 )
+	{
+		spdlog::debug( "Selected size is zero" );
 		emit changeSelection( QPersistentModelIndex() );  //Nothing selected. So deselect everything
+	}
 	else
 	{
 		const auto indexes { selected.indexes() };
+		if(indexes.size() == 0)
+		{
+			throw std::runtime_error("Zero indexes?");
+		}
 		emit changeSelection( indexes.back() );
 	}
 }
