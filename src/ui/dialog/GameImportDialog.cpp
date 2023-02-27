@@ -224,7 +224,8 @@ void GameImportDialog::parseInfo()
 
 				spdlog::debug( "Found {} in previews with filetype {}", file.path().string(), file_type.toStdString() );
 
-				if ( file.is_regular_file() && ( file_type == "image/jpeg" || file_type == "image/png" ) )
+				if ( file.is_regular_file()
+					 && ( file_type == "image/jpeg" || file_type == "image/png" || file_type == "image/webp" ) )
 				{
 					previews += QString::fromStdString( file.path().string() + ";" );
 				}
@@ -330,7 +331,7 @@ void GameImportDialog::on_selectExec_pressed()
 	}
 }
 
-const QStringList file_filters { "Image files (*.png, *.jpg *.gif *.tiff)", "Any files (*)" };
+const QStringList file_filters { "Image files (*.png, *.jpg *.gif *.tiff *.webp)", "Any files (*)" };
 
 void GameImportDialog::on_selectBanner_pressed()
 {
