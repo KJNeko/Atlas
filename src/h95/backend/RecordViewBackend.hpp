@@ -18,14 +18,14 @@ class RecordViewBackend final : public QObject
 
 	public:
 	public slots:
-	//! Starts a search for a similar tag to the text.
-	void searchSimilar( const QString& text );
 	//! Adds a tag to the taglist
 	void addTag( const Tag& tag );
 	//! Removes a tag from the taglist
 	void removeTag( const Tag& tag );
 
 	void refresh();
+
+	std::vector<Tag> getTags() const;
 
 	signals:
 	//! Emitted when a search for similar tags is done

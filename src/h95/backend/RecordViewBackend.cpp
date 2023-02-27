@@ -8,6 +8,7 @@
 
 #include "RecordViewBackend.hpp"
 
+//! Returns all records in the database.
 std::vector< Record > getAll()
 {
 	ZoneScoped;
@@ -21,17 +22,14 @@ std::vector< Record > getAll()
 	return records;
 }
 
-void RecordViewBackend::searchSimilar( [[maybe_unused]] const QString& text )
-{
-	ZoneScoped;
-}
-
+//! Adds a tag to the active tags list
 void RecordViewBackend::addTag( [[maybe_unused]] const Tag& tag )
 {
 	ZoneScoped;
 	emit recordsUpdated( getAll() );
 }
 
+//! Removes a tag from the active tags list
 void RecordViewBackend::removeTag( [[maybe_unused]] const Tag& tag )
 {
 	ZoneScoped;
@@ -43,4 +41,9 @@ void RecordViewBackend::refresh()
 	ZoneScoped;
 	//TODO: Make true filter eventually
 	emit recordsUpdated( getAll() );
+}
+
+std::vector<Tag> RecordViewBackend::getTags() const
+{
+	return active_tags;
 }
