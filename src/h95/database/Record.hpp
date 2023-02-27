@@ -76,9 +76,11 @@ struct Record
 	//! Returns a resized banner for the given record
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
+#ifndef ALLOW_RECORD_SLOWCOMPARE
 #ifdef NDEBUG
 	//! operator== override for faster comparisons during release builds (only compares RecordID)
 	bool operator==( const Record& other ) const;
+#endif
 #endif
 };
 
