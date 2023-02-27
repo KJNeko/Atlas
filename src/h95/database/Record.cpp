@@ -41,9 +41,9 @@ Record Record::create(
 		title.toStdString(),
 		creator.toStdString(),
 		engine.toStdString(),
-		metadata.version.toStdString(),
-		metadata.game_path.string(),
-		metadata.exec_path.string(),
+		metadata.m_version.toStdString(),
+		metadata.m_game_path.string(),
+		metadata.m_exec_path.string(),
 		banner.string(),
 		previews.size() );
 

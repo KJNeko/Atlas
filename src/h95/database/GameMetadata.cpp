@@ -31,8 +31,8 @@ void GameMetadata::update( const RecordID id, const GameMetadata& metadata )
 {
 	ZoneScoped;
 	database::db_ref() << "UPDATE game_metadata SET game_path = ?, exec_path = ? WHERE record_id = ? AND version = ?"
-					   << metadata.game_path.string() << metadata.exec_path.string() << id
-					   << metadata.version.toStdString();
+					   << metadata.m_game_path.string() << metadata.m_exec_path.string() << id
+					   << metadata.m_version.toStdString();
 	return;
 }
 
@@ -40,7 +40,7 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 {
 	ZoneScoped;
 	database::db_ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
-					   << id << metadata.game_path.string() << metadata.exec_path.string()
-					   << metadata.version.toStdString();
+					   << id << metadata.m_game_path.string() << metadata.m_exec_path.string()
+					   << metadata.m_version.toStdString();
 	return metadata;
 }

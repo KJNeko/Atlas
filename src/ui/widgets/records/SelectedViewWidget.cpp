@@ -14,6 +14,7 @@
 
 #include "SelectedViewWidget.hpp"
 #include "ui_SelectedViewWidget.h"
+#include "h95/KeyReplacer.hpp"
 
 SelectedViewWidget::SelectedViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::SelectedViewWidget )
 {
@@ -33,7 +34,7 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 	{
 		if ( this->isHidden() ) this->show();
 
-		const auto record_data { record.data().value< const Record* >() };
+		const auto& record_data { *record.data().value< const Record* >() };
 
 		selected = record;
 
@@ -44,20 +45,20 @@ void SelectedViewWidget::recordSelected( const QPersistentModelIndex& record )
 		}
 
 		ui->banner->setPixmap(
-			record_data->getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
+			record_data.getBanner( ui->bannerFrame->size().width() - 20, ui->bannerFrame->minimumHeight() - 20 ) );
 
 		// If there is a creator do {title} by {creator} else just do {title}
-		if ( record_data->m_creator.isEmpty() )
-			ui->title->setText( record_data->m_title );
+		if ( record_data.m_creator.isEmpty() )
+			ui->title->setText( record_data.m_title );
 		else
-			ui->title->setText( QString( "%1 by %2" ).arg( record_data->m_title, record_data->m_creator ) );
+			ui->title->setText( QString( "%1 by %2" ).arg( record_data.m_title, record_data.m_creator ) );
 
 		ui->versionSelection->clear();
 
 		QStringList versions;
 
 		//Populate version selection
-		for ( const auto& version : record_data->m_versions ) { versions.emplace_back( version.version ); }
+		for ( const auto& version : record_data.m_versions ) { versions.emplace_back( version.m_version ); }
 
 		ui->versionSelection->addItems( versions );
 	}

@@ -13,10 +13,10 @@
 
 struct GameMetadata
 {
-	QString version;
+	QString m_version;
 
 	//! Path to the game folder
-	std::filesystem::path game_path {};
+	std::filesystem::path m_game_path {};
 
 	//! Path to the executable
 	std::filesystem::path m_exec_path {};
@@ -30,14 +30,11 @@ struct GameMetadata
 		const QString& version_in,
 		const std::filesystem::path& game_path_in,
 		const std::filesystem::path& exec_path_in ) :
-	  version( version_in ),
-	  game_path( game_path_in ),
-	  exec_path( exec_path_in )
+	  m_version( version_in ),
+	  m_game_path( game_path_in ),
+	  m_exec_path( exec_path_in )
 	{
 	}
-
-	//! Executes the game
-	void execGame();
 
 	//! Returns a populated GameMetadata for the given id from the database
 	static std::vector< GameMetadata > select( const RecordID id );
