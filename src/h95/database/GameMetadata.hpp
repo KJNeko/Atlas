@@ -19,7 +19,11 @@ struct GameMetadata
 	std::filesystem::path game_path {};
 
 	//! Path to the executable
-	std::filesystem::path exec_path {};
+	std::filesystem::path m_exec_path {};
+
+	QString m_custom_launch_str {""};
+	bool m_use_custom_launch_config {false};
+	bool m_ignore_global_launch_config {false};
 
 	GameMetadata() = delete;
 	GameMetadata(

@@ -2,6 +2,7 @@
 #include "executeProc.hpp"
 
 #include <h95/logging.hpp>
+#include <fmt/chrono.h>
 
 #ifdef __linux__
 
@@ -13,9 +14,19 @@ void executeProc( const std::string& path )
 	int pid = fork();
 	if ( pid == 0 )
 	{  //We are child
-		execl( path.c_str(), "", nullptr );
-		spdlog::info( "I still exist?" );
-		throw std::runtime_error( "AAAAAAAAA" );
+		//execl( path.c_str(), "", nullptr );
+
+		const auto start_time {std::chrono::steady_clock::now()};
+
+		spdlog::debug("Executing game {}", path);
+
+		std::system(path.c_str());
+
+		const auto end_time {std::chrono::steady_clock::now()};
+
+		spdlog::debug("Process killed after {}", end_time - start_time);
+
+		std::exit(EXIT_SUCCESS);
 	}
 }
 

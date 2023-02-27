@@ -10,8 +10,6 @@
 
 #include <h95/database/GameMetadata.hpp>
 
-void GameMetadata::execGame() {}
-
 std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 {
 	ZoneScoped;

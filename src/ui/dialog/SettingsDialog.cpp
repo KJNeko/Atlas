@@ -19,6 +19,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 	ui->bannerWidth->setValue( getSettings< int >( "main_view/banner_width", 400 ) );
 	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 280 ) );
 	ui->itemPadding->setValue( getSettings< int >( "main_view/padding", 4 ) );
+	ui->globalExecCommand->setText( getSettings< QString >( "execution/global_command", "{command}" ) );
 }
 
 SettingsDialog::~SettingsDialog()
@@ -33,6 +34,7 @@ void SettingsDialog::on_apply_pressed()
 	setSettings( "main_view/banner_width", ui->bannerWidth->value() );
 	setSettings( "main_view/banner_height", ui->bannerHeight->value() );
 	setSettings( "main_view/padding", ui->itemPadding->value() );
+	setSettings( "execution/global_command", ui->globalExecCommand->text() );
 
 	this->close();
 }
