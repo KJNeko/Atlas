@@ -117,6 +117,13 @@ Record Record::select( const RecordID id )
 			[&banner_path, &preview_paths]( const std::string& path, const uint8_t type )
 		{
 			ZoneScopedN( "Process row" );
+
+			if(!std::filesystem::exists(path))
+			{
+				spdlog::warn( "Path {} was expected to exist but does not", path );
+				return;
+			}
+
 			switch ( static_cast< PreviewType >( type ) )
 			{
 				default:
