@@ -124,8 +124,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aba82f2ee194cfbf05889c7b8d8c92238"><td class="memItemLeft" align="right" valign="top">QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238">getBanner</a> (const int banner_width, const int banner_height) const</td></tr>
 <tr class="memdesc:aba82f2ee194cfbf05889c7b8d8c92238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a resized banner for the given record.  <br /></td></tr>
 <tr class="separator:aba82f2ee194cfbf05889c7b8d8c92238"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cc19167ed89b3b4cbe07beae54e12cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a9cc19167ed89b3b4cbe07beae54e12cb">operator==</a> (const <a class="el" href="structRecord.html">Record</a> &amp;other) const</td></tr>
-<tr class="separator:a9cc19167ed89b3b4cbe07beae54e12cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07f3aa92a3ba2d20d2d7c9111732487f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a07f3aa92a3ba2d20d2d7c9111732487f">operator==</a> (const <a class="el" href="structRecord.html">Record</a> &amp;other) const =default</td></tr>
+<tr class="separator:a07f3aa92a3ba2d20d2d7c9111732487f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -137,6 +137,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af8ca213bd8bc5189926d504f1c110b9d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#af8ca213bd8bc5189926d504f1c110b9d">update</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structRecord.html">Record</a> &amp;record)</td></tr>
 <tr class="memdesc:af8ca213bd8bc5189926d504f1c110b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a record with new information.  <br /></td></tr>
 <tr class="separator:af8ca213bd8bc5189926d504f1c110b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ddba99ef46c3e0014f3224a52bb844"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a65ddba99ef46c3e0014f3224a52bb844">erase</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>)</td></tr>
+<tr class="separator:a65ddba99ef46c3e0014f3224a52bb844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a1224412e19ae58ccd7fb194e2f61e1b3">create</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, const std::filesystem::path &amp;banner, const std::vector&lt; std::filesystem::path &gt; &amp;previews)</td></tr>
 <tr class="memdesc:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a record and inserts it into the database.  <br /></td></tr>
 <tr class="separator:a1224412e19ae58ccd7fb194e2f61e1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,6 +241,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a65ddba99ef46c3e0014f3224a52bb844" name="a65ddba99ef46c3e0014f3224a52bb844"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ddba99ef46c3e0014f3224a52bb844">&#9670;&#160;</a></span>erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Record::erase </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a40d83547e0b2d07d854368fc7996acbc" name="a40d83547e0b2d07d854368fc7996acbc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a40d83547e0b2d07d854368fc7996acbc">&#9670;&#160;</a></span>getBanner() <span class="overload">[1/2]</span></h2>
 
@@ -288,11 +316,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a9cc19167ed89b3b4cbe07beae54e12cb" name="a9cc19167ed89b3b4cbe07beae54e12cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cc19167ed89b3b4cbe07beae54e12cb">&#9670;&#160;</a></span>operator==()</h2>
+<a id="a07f3aa92a3ba2d20d2d7c9111732487f" name="a07f3aa92a3ba2d20d2d7c9111732487f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07f3aa92a3ba2d20d2d7c9111732487f">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool Record::operator== </td>
@@ -302,6 +333,11 @@ Public Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
