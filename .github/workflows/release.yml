@@ -72,9 +72,12 @@ jobs:
           cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
 
       - name: Build
-        run: |
-          mingw32-make -j8 ${{github.workspace}}\builds\build-r
-          mingw32-make -j8 ${{github.workspace}}\builds\build-d
+        run: | 
+          cd ${{github.workspace}}\builds\build-r
+          mingw32-make -j8
+          cd ${{github.workspace}}\builds\build-d
+          mingw32-make -j8 
+          cd ${{github.workspace}}
 
       - name: Package
         run: |
