@@ -30,11 +30,12 @@ void executeProc( const std::string& path )
 
 void executeProc( const std::string& path_str )
 {
+	spdlog::debug("Executing game {}", path_str);
+
 	LPSTR path;
 	path = new char[4096 * 4];
 	std::strcpy( path, path_str.c_str() );
 
-	//Fork here
 	STARTUPINFOA si;
 	PROCESS_INFORMATION pi;
 

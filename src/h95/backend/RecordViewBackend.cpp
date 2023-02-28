@@ -4,9 +4,10 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/database/database.hpp"
-
 #include "RecordViewBackend.hpp"
+
+#include <h95/database/database.hpp>
+#include <h95/logging.hpp>
 
 //! Returns all records in the database.
 std::vector< Record > getAll()
@@ -18,6 +19,8 @@ std::vector< Record > getAll()
 	{
 		records.emplace_back( Record::select( record_id ) );
 	};
+
+	spdlog::debug("Search returned {} records", records.size());
 
 	return records;
 }

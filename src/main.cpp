@@ -75,8 +75,11 @@ int main( int argc, char** argv )
 	const auto path { getSettings< QString >( "paths/data", "./data/games" ).toStdString() };
 	std::filesystem::create_directories( path );
 
+#ifdef NDEBUG
 	if ( getSettings< bool >( "debug/very_vocal", true ) )
+#endif
 	{
+
 		spdlog::set_level( spdlog::level::debug );
 		spdlog::debug( "Debugging enabled." );
 	}

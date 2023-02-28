@@ -7,13 +7,15 @@
 #include <tracy/Tracy.hpp>
 
 #include <h95/database/database.hpp>
-
+#include <h95/logging.hpp>
 #include <h95/database/GameMetadata.hpp>
 
 std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 {
 	ZoneScoped;
 	std::vector< GameMetadata > metadata;
+
+	spdlog::debug("Selecting metadata for id {}", id);
 
 	database::db_ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
 		[&metadata](
@@ -27,18 +29,12 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 	return metadata;
 }
 
-void GameMetadata::update( const RecordID id, const GameMetadata& metadata )
-{
-	ZoneScoped;
-	database::db_ref() << "UPDATE game_metadata SET game_path = ?, exec_path = ? WHERE record_id = ? AND version = ?"
-					   << metadata.m_game_path.string() << metadata.m_exec_path.string() << id
-					   << metadata.m_version.toStdString();
-	return;
-}
-
 GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata )
 {
 	ZoneScoped;
+
+	spdlog::info("Inserting metadata into {} record", id);
+
 	database::db_ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
 					   << id << metadata.m_game_path.string() << metadata.m_exec_path.string()
 					   << metadata.m_version.toStdString();

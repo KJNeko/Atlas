@@ -45,8 +45,6 @@ void PathManager::populateValues( const std::filesystem::path& path, const std::
 	uint16_t step_counter { 0 };
 	while ( !temp_key_path.empty() && step_counter < 512 )
 	{
-		std::cout << "path: " << temp_path << std::endl;
-
 		const auto key { QString::fromStdString( temp_key_path.filename().string() ) };
 		temp_key_path = temp_key_path.parent_path();
 		if ( temp_key_path.empty() )
