@@ -54,30 +54,6 @@ void Importer::import_game(
 
 			if ( !m_banner.empty() )
 			{
-				const auto banner_path_str { getSettings< QString >( "paths/h95_banners", "./data/banners" ) };
-				const std::filesystem::path banner_path { banner_path_str.toStdString() };
-				std::filesystem::create_directories( banner_path );
-
-				spdlog::debug( "Banner not empty. Attempting copy to h95 banner path: {}", banner_path.string() );
-
-				auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
-
-				QFile file { m_banner };
-				file.open( QFile::OpenModeFlag::ReadOnly );
-				const auto file_data { file.readAll() };
-				hasher.addData( file_data );
-
-				const auto dest_path {
-					banner_path / ( hasher.result().toHex( 0 ).toStdString() + m_banner.extension().string() ) };
-
-				file.copy( dest_path );
-
-				if ( delete_after )
-				{
-					std::filesystem::remove( m_banner );
-					spdlog::debug( "Deleting banner from {} as requested after copy.", m_banner.string() );
-				}
-
 				//Delete banner from copied directory.
 				if ( is_subpath( m_banner, m_root ) )
 				{
@@ -88,34 +64,13 @@ void Importer::import_game(
 					std::filesystem::remove( m_root / banner_relative );
 				}
 
-				m_banner = dest_path;
+				m_banner = importBanner(m_banner);
 				spdlog::debug( "Banner path set to {}", m_banner.string() );
 			}
-
-			const auto preview_path_str { getSettings< QString >( "paths/h95_previews", "./data/previews" ) };
-			const std::filesystem::path preview_path { preview_path_str.toStdString() };
-			std::filesystem::create_directories( preview_path );
 
 			//Copy previews
 			for ( auto& preview : m_previews )
 			{
-				spdlog::debug( "Handling preview {}", preview.string() );
-				auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
-
-				QFile file { preview };
-				file.open( QFile::OpenModeFlag::ReadOnly );
-				const auto file_data { file.readAll() };
-				hasher.addData( file_data );
-
-				const auto dest_path {
-					preview_path / ( hasher.result().toHex( 0 ).toStdString() + preview.extension().string() ) };
-
-				spdlog::debug( "Copying preview from {} -> {}", preview.string(), dest_path.string() );
-
-				file.copy( dest_path );
-
-				if ( delete_after ) std::filesystem::remove( preview );
-
 				//Delete preview from copied directory.
 				if ( is_subpath( preview, m_root ) )
 				{
@@ -123,7 +78,7 @@ void Importer::import_game(
 					std::filesystem::remove( m_root / preview_relative );
 				}
 
-				preview = dest_path;
+				preview = importPreview(preview, delete_after);
 			}
 		}
 
@@ -143,3 +98,70 @@ void Importer::import_game(
 		}
 	}
 }
+
+std::filesystem::path importBanner(const std::filesystem::path& path, const bool delete_after)
+{
+	const auto banner_path_str { getSettings< QString >( "paths/h95_banners", "./data/banners" ) };
+	const std::filesystem::path banner_path { banner_path_str.toStdString() };
+	std::filesystem::create_directories( banner_path );
+
+	spdlog::debug( "Banner not empty. Attempting copy to h95 banner path: {}", banner_path.string() );
+
+	auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
+
+	QFile file { path };
+	file.open( QFile::OpenModeFlag::ReadOnly );
+	const auto file_data { file.readAll() };
+	hasher.addData( file_data );
+
+	const auto dest_path { banner_path / ( hasher.result().toHex( 0 ).toStdString() + path.extension().string() ) };
+
+	file.copy( dest_path );
+
+	if ( delete_after )
+	{
+		std::filesystem::remove( path );
+		spdlog::debug( "Deleting banner from {} as requested after copy.", path.string() );
+	}
+
+	return dest_path;
+}
+
+std::filesystem::path importPreview(const std::filesystem::path& path, const bool delete_after)
+{
+	const auto preview_path_str { getSettings< QString >( "paths/h95_previews", "./data/previews" ) };
+	const std::filesystem::path preview_path { preview_path_str.toStdString() };
+	std::filesystem::create_directories(preview_path.parent_path());
+
+	spdlog::debug( "Handling preview {}", path.string() );
+	auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
+
+	QFile file { path };
+	file.open( QFile::OpenModeFlag::ReadOnly );
+	const auto file_data { file.readAll() };
+	hasher.addData( file_data );
+
+	const auto dest_path {
+		preview_path / ( hasher.result().toHex( 0 ).toStdString() + path.extension().string() ) };
+
+	spdlog::debug( "Copying preview from {} -> {}", path.string(), dest_path.string() );
+
+	file.copy( dest_path );
+
+	if ( delete_after ) std::filesystem::remove( path );
+
+	return dest_path;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

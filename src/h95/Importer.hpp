@@ -62,4 +62,8 @@ class Importer
 		bool delete_after );
 };
 
+std::filesystem::path importBanner(const std::filesystem::path& path, const bool delete_after = false);
+std::filesystem::path importPreview(const std::filesystem::path& path, const bool delete_after = false);
+
+
 #endif	//HYDRUS95_IMPORTER_HPP
