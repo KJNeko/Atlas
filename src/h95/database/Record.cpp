@@ -269,7 +269,7 @@ try
 			bool found { false };
 			//Search for if it's in the database
 			database::db_ref() << "SELECT path FROM previews WHERE type = ? AND record_id = ? AND path = ?"
-							   << PREVIEW_PREVIEW << record.m_id << path
+							   << PREVIEW_PREVIEW << record.m_id << path.string()
 				>> [&]( [[maybe_unused]] const std::string& str )
 			{
 				found = true;
