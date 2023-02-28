@@ -83,7 +83,7 @@ jobs:
           move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Hydrus95-Release\
           move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Hydrus95-Debug\
           7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows.zip ${{github.workspace}}\Hydrus95-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows-Debug.zip ${{github.workspace}\Hydrus95-Debug
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows-Debug.zip ${{github.workspace}}\Hydrus95-Debug
           
 
       - name: Upload Windows Artifact
