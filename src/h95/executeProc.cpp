@@ -5,22 +5,13 @@
 
 #ifdef __linux__
 
-#include <unistd.h>
 #include <string>
 
 void executeProc( const std::string& path )
 {
-	int pid = fork();
-	if ( pid == 0 )
-	{  //We are child
-		//execl( path.c_str(), "", nullptr );
+	spdlog::debug( "Executing game {}", path );
 
-		spdlog::debug("Executing game {}", path);
-
-		std::system(path.c_str());
-
-		std::exit(EXIT_SUCCESS);
-	}
+	std::system( path.c_str() );
 }
 
 #elif _WIN64
@@ -30,7 +21,7 @@ void executeProc( const std::string& path )
 
 void executeProc( const std::string& path_str )
 {
-	spdlog::debug("Executing game {}", path_str);
+	spdlog::debug( "Executing game {}", path_str );
 
 	LPSTR path;
 	path = new char[4096 * 4];
