@@ -16,6 +16,7 @@
 #include "ui_GameImportDialog.h"
 
 #include <h95/Importer.hpp>
+#include <QMessageBox>
 
 
 constexpr char preview_delim { ';' };
@@ -124,42 +125,54 @@ try
 	//Check that source is valid
 	if ( !std::filesystem::exists( ui->folderPath->text().toStdString() ) )
 	{
-		spdlog::warn( "Input folder path invalid or does not exist! Path: {}", ui->folderPath->text().toStdString() );
-		ui->infoLabel->setText( "Input folder path invalid or does not exist!" );
+		QMessageBox::information( this, "Folder invalid", "Source path invalid or does not exist" );
 		return;
 	}
 
 	//Check that the executable is valid
 	if ( !( std::filesystem::exists( ui->execPath->text().toStdString() ) ) )
 	{
-		spdlog::warn( "Executable path is invalid or does not exist! Path: {}", ui->execPath->text().toStdString() );
-		ui->infoLabel->setText( "Executable path is invalid or does not exist!" );
+		QMessageBox::information( this, "Executable path invalid", "Executable path invalid or does not exist" );
 		return;
 	}
 
+	ui->infoLabel->setText( "One of the required Game Info fields were not populated" );
+
 	//Check that title, creator and version are filled out
-	if ( ui->title->text().isEmpty() || ui->creator->text().isEmpty() || ui->version->text().isEmpty() )
+	if ( ui->title->text().isEmpty() )
 	{
-		ui->infoLabel->setText( "One of the required Game Info fields were not populated" );
+		QMessageBox::information( this, "Required field no populated", "Title field not populated" );
+		return;
+	}
+
+	if ( ui->creator->text().isEmpty() )
+	{
+		QMessageBox::information( this, "Required field not populated", "Creator field not populated" );
+		return;
+	}
+
+	if ( ui->version->text().isEmpty() )
+	{
+		QMessageBox::information( this, "Required field not populated", "Version field not populated." );
 		return;
 	}
 
 	if ( ui->copyToDest->isChecked()
 		 && ( ui->pathLabel->text().contains( '{' ) && ui->pathLabel->text().contains( '}' ) ) )
 	{
-		ui->infoLabel->setText( "Path label malformed. All {} must be properly filled out" );
+		QMessageBox::information( this, "Path label malformed", "All replacement values were not replaced properly" );
 		return;
 	}
 
 	if ( ui->copyToDest->isChecked() && !ui->dest->text().contains( "{version}" ) )
 	{
-		ui->infoLabel->setText( "Destination path requires {version}" );
+		QMessageBox::information( this, "Required replacement not present", "Destination path requires {version}" );
 		return;
 	}
 
 	if ( ui->copyToDest->isChecked() && !ui->dest->text().contains( "{title}" ) )
 	{
-		ui->infoLabel->setText( "Destination path requires {title}" );
+		QMessageBox::information( this, "Required replacement not present", "Destination path requires {title}" );
 		return;
 	}
 
@@ -167,10 +180,12 @@ try
 	if ( std::filesystem::exists( ui->pathLabel->text().toStdString() )
 		 && ui->copyToDest->isChecked() )  //&& !ui->forceCopy->isChecked())
 	{
-		ui->infoLabel->setText( "Destination folder already exists. Are you trying to update?" );
+		QMessageBox::information(
+			this,
+			"Record already exists",
+			"Destination folder already exists. Are you trying to update? Use a new version instead" );
 		return;
 	}
-
 
 	ui->infoLabel->setText( "Good to import!" );
 	good_import = true;
@@ -412,7 +427,7 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 	if ( ui->shouldParsePath->isChecked() )
 		path_manager.populateValues( text.toStdString(), ui->pathParse->text().toStdString() );
 
-	if(!no_replace)
+	if ( !no_replace )
 	{
 		ui->title->setText( path_manager.key_replacer.value( { "{title}" } ) );
 		ui->creator->setText( path_manager.key_replacer.value( "{creator}" ) );
