@@ -68,32 +68,29 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B build-r -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
-          cmake -S . -B build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite'
 
       - name: Build
         run: |
-          cd build-r
-          mingw32-make -j4
-          cd ../build-d
-          mingw32-make -j4
-          cd ..
+          mingw32-make -j4 ${{github.workspace}}\builds\build-r
+          mingw32-make -j4 ${{github.workspace}}\builds\build-d
 
       - name: Package
         run: |
           mkdir Hydrus95-Release
           mkdir Hydrus95-Debug
-          move .\build-r\bin\* .\Hydrus95-Release\
-          move .\build-d\bin\* .\Hydrus95-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 .\Hydrus95-Windows.zip .\Hydrus95-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 .\Hydrus95-Windows-Debug.zip .\Hydrus95-Debug
+          move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Hydrus95-Release\
+          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Hydrus95-Debug\
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows.zip ${{github.workspace}}\Hydrus95-Release
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows-Debug.zip ${{github.workspace}\Hydrus95-Debug
           
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
-          path: Hydrus95-Windows.zip
+          path: ${{github.workspace}}\Hydrus95-Windows.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -101,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract-Debug
-          path: Hydrus95-Windows-Debug.zip
+          path: ${{github.workspace}}\Hydrus95-Windows-Debug.zip
           if-no-files-found: error
           retention-days: 2
 
