@@ -15,9 +15,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Print PATH
-        run: echo %PATH%
-
       - name: Setup mingw
         uses: egor-tensin/setup-mingw@v2
         with:
