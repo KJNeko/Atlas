@@ -43,7 +43,7 @@ void executeProc( const std::string& path_str )
 	si.cb = sizeof( si );
 	ZeroMemory( &pi, sizeof( pi ) );
 
-	if ( !CreateProcessA( path, nullptr, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
+	if ( !CreateProcessA( nullptr, path, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
 		spdlog::error( "Failed to execute process {}", path );
 }
 
