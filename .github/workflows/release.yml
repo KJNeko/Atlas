@@ -74,13 +74,14 @@ jobs:
       - name: Build
         run: | 
           cd ${{github.workspace}}\builds\build-r
-          mingw32-make -j8
+          mingw32-make -j2
           cd ${{github.workspace}}\builds\build-d
-          mingw32-make -j8 
+          mingw32-make -j2
           cd ${{github.workspace}}
 
       - name: Package
         run: |
+          cd ${{github.workspace}}
           mkdir Hydrus95-Release
           mkdir Hydrus95-Debug
           move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Hydrus95-Release\
