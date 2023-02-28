@@ -131,7 +131,7 @@ std::filesystem::path importPreview(const std::filesystem::path& path, const boo
 {
 	const auto preview_path_str { getSettings< QString >( "paths/h95_previews", "./data/previews" ) };
 	const std::filesystem::path preview_path { preview_path_str.toStdString() };
-	std::filesystem::create_directories(preview_path.parent_path());
+	std::filesystem::create_directories(preview_path);
 
 	spdlog::debug( "Handling preview {}", path.string() );
 	auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
