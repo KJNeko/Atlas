@@ -73,9 +73,9 @@ jobs:
       - name: Build
         run: |
           cd build-r
-          mingw32-make -j8
+          mingw32-make -j4
           cd ../build-d
-          mingw32-make -j8
+          mingw32-make -j4
 
       - name: Package
         run: |
