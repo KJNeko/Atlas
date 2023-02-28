@@ -80,6 +80,7 @@ jobs:
           mingw32-make -j4
           cd ../build-d
           mingw32-make -j4
+          cd ..
 
       - name: Package
         run: |
