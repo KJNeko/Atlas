@@ -5,6 +5,7 @@
 #include "RecordViewDelegate.hpp"
 #include "RecordViewModel.hpp"
 #include "h95/config.hpp"
+#include "ui/dialog/GameEditDialog.hpp"
 
 #include <QPainter>
 #include <QEvent>
@@ -79,7 +80,18 @@ bool RecordViewDelegate::editorEvent(
 		{
 			QMenu menu;
 
-			menu.addAction( "Manage record", [=]() {} );
+			const Record* data_ptr { index.data().value< const Record* >() };
+
+			const auto game_id { data_ptr->m_id };
+
+			menu.addAction(
+				"Manage record",
+				[=]()
+				{
+					GameEditDialog* dialog = new GameEditDialog( game_id );
+					dialog->exec();
+					dialog->deleteLater();
+				} );
 
 			menu.exec( m_event->globalPosition().toPoint() );
 

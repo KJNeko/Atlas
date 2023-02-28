@@ -48,8 +48,13 @@ struct Record
 	//! Selects a record from the database.
 	static Record select( const RecordID id );
 
+
+	static RecordID
+		search( const QString& title, const QString& creator, const QString& engine, const RecordID anti_id = 0 );
+
 	//! Updates a record with new information.
-	static Record update( const RecordID id, const Record& record );
+	static void update( const RecordID id, Record& record );
+
 
 	/**
 	 * @param title unique constraint
@@ -77,10 +82,9 @@ struct Record
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
 #ifndef ALLOW_RECORD_SLOWCOMPARE
-#ifdef NDEBUG
-	//! operator== override for faster comparisons during release builds (only compares RecordID)
+	bool operator==( const Record& other ) const = default;
+#else
 	bool operator==( const Record& other ) const;
-#endif
 #endif
 };
 

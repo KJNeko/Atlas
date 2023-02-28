@@ -429,3 +429,11 @@ void GameImportDialog::on_dest_textChanged( [[maybe_unused]] const QString text 
 {
 	verifySettings();
 }
+
+void GameImportDialog::setInformation( const QString& creator, const QString& title, const QString& engine )
+{
+	ui->shouldParsePath->setChecked( false );
+	ui->creator->setText( creator );
+	ui->title->setText( title );
+	ui->engine->setText( engine );
+}

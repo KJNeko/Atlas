@@ -36,6 +36,10 @@ class GameImportDialog final : public QDialog
 	void verifySettings();
 	void parseInfo();
 
+	public:
+	void setInformation( const QString& creator, const QString& title, const QString& engine );
+
+	private:
 	signals:
 	void importComplete();
 

@@ -82,7 +82,10 @@ template< typename T > inline T getSettings( const QString setting_name, const T
 	if ( variant.template canConvert< T >() )
 		return variant.template value< T >();
 	else
+	{
+		setSettings( setting_name, default_value );
 		return default_value;
+	}
 }
 
 template< typename T > inline void setSettings( const QString settings_name, const T value )

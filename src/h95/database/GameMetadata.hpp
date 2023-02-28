@@ -36,6 +36,8 @@ struct GameMetadata
 	{
 	}
 
+	bool operator==(const GameMetadata& other) const = default;
+
 	//! Returns a populated GameMetadata for the given id from the database
 	static std::vector< GameMetadata > select( const RecordID id );
 
