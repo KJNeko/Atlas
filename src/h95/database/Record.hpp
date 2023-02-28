@@ -55,6 +55,8 @@ struct Record
 	//! Updates a record with new information.
 	static void update( const RecordID id, Record& record );
 
+	static void erase(const RecordID);
+
 
 	/**
 	 * @param title unique constraint
@@ -81,11 +83,7 @@ struct Record
 	//! Returns a resized banner for the given record
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
-#ifdef ALLOW_RECORD_SLOWCOMPARE
 	bool operator==( const Record& other ) const = default;
-#else
-	bool operator==( const Record& other ) const;
-#endif
 };
 
 //Q_DECLARE_METATYPE( Record )

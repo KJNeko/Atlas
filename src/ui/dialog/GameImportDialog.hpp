@@ -24,6 +24,7 @@ class GameImportDialog final : public QDialog
 
 	PathManager path_manager {};
 	bool good_import { false };
+	bool no_replace { false };
 
 	public:
 	explicit GameImportDialog( QWidget* parent = nullptr );

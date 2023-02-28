@@ -8,6 +8,7 @@
 #include "ui_RecordViewWidget.h"
 
 #include <tracy/Tracy.hpp>
+
 #include <h95/logging.hpp>
 
 RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::RecordViewWidget )
@@ -23,6 +24,8 @@ RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( n
 		SIGNAL( selectionChanged( QItemSelection, QItemSelection ) ),
 		this,
 		SLOT( selectionChanged( QItemSelection, QItemSelection ) ) );
+
+	connect(&delegate, &RecordViewDelegate::requestRefreshRecords, this, &RecordViewWidget::requestUpdate);
 }
 
 RecordViewWidget::~RecordViewWidget()

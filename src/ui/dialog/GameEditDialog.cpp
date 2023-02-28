@@ -165,10 +165,9 @@ void GameEditDialog::on_removePreview_pressed()
 	dynamic_cast< GameEditImageModel* >( ui->imageTable->model() )->removeItems( indexes );
 }
 
-
 void GameEditDialog::on_applyChanges_pressed()
 {
-	if ( m_record.has_value() && m_record.value() != Record::select( m_id ) )
+	if ( m_record.has_value() && (m_record.value() != Record::select( m_id )) )
 	{
 		if ( QMessageBox::question( this, "Are you sure?", "Changes can not be reverted one applied" )
 			 == QMessageBox::No )
@@ -181,6 +180,12 @@ void GameEditDialog::on_applyChanges_pressed()
 		{
 			QMessageBox::warning( this, "Record already exists", "A record with this information already exists!" );
 			return;
+		}
+
+		if((m_record.value().m_versions.size() == 0) && (QMessageBox::question(this, "Delete entire record?", "There are zero versions attached to this record. Delete entire record?") == QMessageBox::Yes))
+		{
+			//Delete record
+			Record::erase(m_id);
 		}
 
 		Record::update( m_id, m_record.value() );
@@ -236,4 +241,9 @@ void GameEditDialog::on_removeVersion_pressed()
 	std::filesystem::remove_all( version_data.m_game_path );
 
 	model->removeItem( static_cast< std::size_t >( index.row() ) );
+}
+
+Record GameEditDialog::getRecord() const
+{
+	return m_record.value();
 }

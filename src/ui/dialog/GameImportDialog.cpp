@@ -412,10 +412,13 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 	if ( ui->shouldParsePath->isChecked() )
 		path_manager.populateValues( text.toStdString(), ui->pathParse->text().toStdString() );
 
-	ui->title->setText( path_manager.key_replacer.value( { "{title}" } ) );
-	ui->creator->setText( path_manager.key_replacer.value( "{creator}" ) );
-	ui->version->setText( path_manager.key_replacer.value( "{version}" ) );
-	ui->engine->setText( path_manager.key_replacer.value( "{engine}" ) );
+	if(!no_replace)
+	{
+		ui->title->setText( path_manager.key_replacer.value( { "{title}" } ) );
+		ui->creator->setText( path_manager.key_replacer.value( "{creator}" ) );
+		ui->version->setText( path_manager.key_replacer.value( "{version}" ) );
+		ui->engine->setText( path_manager.key_replacer.value( "{engine}" ) );
+	}
 
 	verifySettings();
 }
@@ -432,7 +435,7 @@ void GameImportDialog::on_dest_textChanged( [[maybe_unused]] const QString text 
 
 void GameImportDialog::setInformation( const QString& creator, const QString& title, const QString& engine )
 {
-	ui->shouldParsePath->setChecked( false );
+	no_replace = true;
 	ui->creator->setText( creator );
 	ui->title->setText( title );
 	ui->engine->setText( engine );

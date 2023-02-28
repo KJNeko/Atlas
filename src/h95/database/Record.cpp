@@ -12,13 +12,6 @@
 
 #include <h95/database/Record.hpp>
 
-#ifndef ALLOW_RECORD_SLOWCOMPARE
-bool Record::operator==( const Record& other ) const
-{
-	return other.m_id == this->m_id;
-}
-#endif
-
 enum PreviewType
 {
 	PREVIEW_UNKNOWN = 0,
@@ -294,4 +287,20 @@ try
 catch ( std::exception& e )
 {
 	spdlog::critical( "Failed to update record properly: {}", e.what() );
+}
+
+void Record::erase( const RecordID id )
+try
+{
+	ZoneScoped;
+
+	database::db_ref() << "DELETE FROM previews WHERE record_id = ?" << id;
+	database::db_ref() << "DELETE FROM game_metadata WHERE record_id = ?" << id;
+	database::db_ref() << "DELETE FROM records WHERE record_id = ?" << id;
+
+	//TODO: Clean orphans/empty folders
+}
+catch ( std::exception& e )
+{
+	spdlog::error( "Failed to delete record due to {}", e.what() );
 }

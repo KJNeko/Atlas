@@ -53,6 +53,10 @@ class GameEditDialog final : public QDialog
 	//Version stuff
 	void on_addVersion_pressed();
 	void on_removeVersion_pressed();
+
+	public:
+	Record getRecord() const;
+	bool recordDeleted() const {return m_record.has_value();}
 };
 
 

@@ -62,6 +62,8 @@ RecordView::RecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Recor
 		this,
 		SLOT( recordSelected( const QPersistentModelIndex& ) ) );
 
+	connect(ui->recordView, &RecordViewWidget::requestRecordUpdate, this, &RecordView::refresh);
+
 	connect( ui->selectedView, SIGNAL( hiding() ), ui->recordView, SLOT( selectionHiding() ) );
 
 	backend.refresh();

@@ -86,11 +86,12 @@ bool RecordViewDelegate::editorEvent(
 
 			menu.addAction(
 				"Manage record",
-				[=]()
+				[this, game_id]()
 				{
 					GameEditDialog* dialog = new GameEditDialog( game_id );
 					dialog->exec();
 					dialog->deleteLater();
+					emit requestRefreshRecords();
 				} );
 
 			menu.exec( m_event->globalPosition().toPoint() );

@@ -7,9 +7,13 @@
 
 #include <QAbstractItemDelegate>
 
-class RecordViewDelegate : public QAbstractItemDelegate
+class RecordViewDelegate final : public QAbstractItemDelegate
 {
+	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( RecordViewDelegate )
+
+	signals:
+	void requestRefreshRecords();
 
 	public:
 	RecordViewDelegate( QObject* parent = nullptr ) : QAbstractItemDelegate( parent ) {}

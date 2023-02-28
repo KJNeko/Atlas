@@ -106,8 +106,6 @@ void MainWindow::on_actionMassAddImages_triggered()
 			}
 		}
 
-		std::cout << "Importing records" << std::endl;
-
 		for ( size_t i = 0; i < paths.size(); ++i )
 		{
 			std::cout << i << std::endl;
