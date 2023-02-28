@@ -1,12 +1,13 @@
 name: Release
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: self-hosted
     steps:
 
       - name: Checkout
