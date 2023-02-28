@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['file_5ffilters_0',['file_filters',['../GameImportDialog_8cpp.html#a312996aa14ae38c917ae455b07adb3f0',1,'GameImportDialog.cpp']]]
+  ['key_5freplacer_0',['key_replacer',['../structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9',1,'PathManager']]]
 ];

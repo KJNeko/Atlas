@@ -151,20 +151,23 @@ $(document).ready(function(){initNavTree('config_8hpp_source.html',''); initResi
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">if</span> ( variant.template canConvert&lt; T &gt;() )</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordflow">return</span> variant.template value&lt; T &gt;();</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">return</span> default_value;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">   88</a></span><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T &gt; <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a>( <span class="keyword">const</span> QString settings_name, <span class="keyword">const</span> T value )</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>{</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    QSettings settings { <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>() };</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    settings.setValue( settings_name, value );</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_CONFIG_HPP</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <a class="code hl_function" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a>( setting_name, default_value );</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">return</span> default_value;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">   91</a></span><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T &gt; <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a>( <span class="keyword">const</span> QString settings_name, <span class="keyword">const</span> T value )</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>{</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    QSettings settings { <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>() };</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    settings.setValue( settings_name, value );</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_CONFIG_HPP</span></div>
 <div class="ttc" id="aconfig_8hpp_html_a37af631e4a1b0741f0c9bf9cc22a693d"><div class="ttname"><a href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a></div><div class="ttdeci">QSettings getSettingsObject()</div><div class="ttdef"><b>Definition:</b> config.hpp:42</div></div>
 <div class="ttc" id="aconfig_8hpp_html_a50dc6d389eb806c8197e211128d06782"><div class="ttname"><a href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">getSettings</a></div><div class="ttdeci">T getSettings(const QString setting_name)</div><div class="ttdoc">Returns T for the given setting_name.</div><div class="ttdef"><b>Definition:</b> config.hpp:54</div></div>
-<div class="ttc" id="aconfig_8hpp_html_ab96dee737e985f98d61752ed9cabcdc9"><div class="ttname"><a href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a></div><div class="ttdeci">void setSettings(const QString settings_name, const T value)</div><div class="ttdef"><b>Definition:</b> config.hpp:88</div></div>
+<div class="ttc" id="aconfig_8hpp_html_ab96dee737e985f98d61752ed9cabcdc9"><div class="ttname"><a href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a></div><div class="ttdeci">void setSettings(const QString settings_name, const T value)</div><div class="ttdef"><b>Definition:</b> config.hpp:91</div></div>
 <div class="ttc" id="alogging_8hpp_html"><div class="ttname"><a href="logging_8hpp.html">logging.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

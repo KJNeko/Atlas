@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['searchsimilar_0',['searchSimilar',['../classRecordViewBackend.html#a8c1ff89c54b9ae563b3f2464058bb414',1,'RecordViewBackend']]],
+  ['search_0',['search',['../structRecord.html#a813e7c562111209425ff3a5aed58b747',1,'Record']]],
   ['select_1',['select',['../structRecord.html#acef48e262b25aba8e73f530955cd8da0',1,'Record::select()'],['../structGameMetadata.html#aae9fd683e549650cfc7066165f686239',1,'GameMetadata::select()']]],
   ['selectedviewwidget_2',['SelectedViewWidget',['../classSelectedViewWidget.html',1,'SelectedViewWidget'],['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget::SelectedViewWidget()']]],
   ['selectedviewwidget_2ecpp_3',['SelectedViewWidget.cpp',['../SelectedViewWidget_8cpp.html',1,'']]],
@@ -11,16 +11,17 @@ var searchData=
   ['setbanner_8',['setBanner',['../classImporter.html#aaff243de48de0e1abf0e246b765dad1f',1,'Importer']]],
   ['setdestination_9',['setDestination',['../classImporter.html#a2502e298274e7810107f698e63daea3b',1,'Importer']]],
   ['setexecutable_10',['setExecutable',['../classImporter.html#aa13cae707ff3081f8b86e23c1412b8bc',1,'Importer']]],
-  ['setpreviews_11',['setPreviews',['../classImporter.html#a0b7fc3e445f84ffedf253713855e211b',1,'Importer']]],
-  ['setrecords_12',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
-  ['setsettings_13',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['setsource_14',['setSource',['../classImporter.html#a3826ad6c3c2b570790c293619a6c5134',1,'Importer']]],
-  ['settings_20list_15',['Settings list',['../H95Settings.html',1,'']]],
-  ['settingsdialog_16',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog::SettingsDialog()'],['../classSettingsDialog.html',1,'SettingsDialog']]],
-  ['settingsdialog_2ecpp_17',['SettingsDialog.cpp',['../SettingsDialog_8cpp.html',1,'']]],
-  ['settingsdialog_2ehpp_18',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
-  ['similartagfinished_19',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend']]],
-  ['sizehint_20',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]],
-  ['spdlog_5fflush_21',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]],
-  ['sqlite_22',['sqlite',['../namespacesqlite.html',1,'']]]
+  ['setinformation_11',['setInformation',['../classGameImportDialog.html#af380c2149f5082cbebb101ddf12638f8',1,'GameImportDialog']]],
+  ['setpreviews_12',['setPreviews',['../classImporter.html#a0b7fc3e445f84ffedf253713855e211b',1,'Importer']]],
+  ['setrecords_13',['setRecords',['../classRecordViewModel.html#ac54d01be1551e0f3391fa5c80e0ca662',1,'RecordViewModel']]],
+  ['setsettings_14',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
+  ['setsource_15',['setSource',['../classImporter.html#a3826ad6c3c2b570790c293619a6c5134',1,'Importer']]],
+  ['settings_20list_16',['Settings list',['../H95Settings.html',1,'']]],
+  ['settingsdialog_17',['SettingsDialog',['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog::SettingsDialog()'],['../classSettingsDialog.html',1,'SettingsDialog']]],
+  ['settingsdialog_2ecpp_18',['SettingsDialog.cpp',['../SettingsDialog_8cpp.html',1,'']]],
+  ['settingsdialog_2ehpp_19',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
+  ['similartagfinished_20',['similarTagFinished',['../classRecordViewBackend.html#ad820f2af6dbec95196f57ca148882b04',1,'RecordViewBackend']]],
+  ['sizehint_21',['sizeHint',['../classRecordViewDelegate.html#a66bce4877ca46d45467628da258c8f08',1,'RecordViewDelegate']]],
+  ['spdlog_5fflush_22',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]],
+  ['sqlite_23',['sqlite',['../namespacesqlite.html',1,'']]]
 ];

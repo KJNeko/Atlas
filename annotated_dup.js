@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "GameEditDialog", "classGameEditDialog.html", "classGameEditDialog" ],
+    [ "GameEditImageModel", "classGameEditImageModel.html", "classGameEditImageModel" ],
+    [ "GameEditVersionModel", "classGameEditVersionModel.html", "classGameEditVersionModel" ],
     [ "GameImportDialog", "classGameImportDialog.html", "classGameImportDialog" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],
     [ "Importer", "classImporter.html", "classImporter" ],

@@ -126,9 +126,6 @@ Inheritance diagram for RecordViewBackend:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-slots" name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr class="memitem:a8c1ff89c54b9ae563b3f2464058bb414"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewBackend.html#a8c1ff89c54b9ae563b3f2464058bb414">searchSimilar</a> (const QString &amp;text)</td></tr>
-<tr class="memdesc:a8c1ff89c54b9ae563b3f2464058bb414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a search for a similar tag to the text.  <br /></td></tr>
-<tr class="separator:a8c1ff89c54b9ae563b3f2464058bb414"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a057225f887a10728fcdd220dd28e3076"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewBackend.html#a057225f887a10728fcdd220dd28e3076">addTag</a> (const <a class="el" href="structTag.html">Tag</a> &amp;tag)</td></tr>
 <tr class="memdesc:a057225f887a10728fcdd220dd28e3076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the taglist.  <br /></td></tr>
 <tr class="separator:a057225f887a10728fcdd220dd28e3076"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +134,8 @@ Public Slots</h2></td></tr>
 <tr class="separator:ade0b0fd4dd2f5cbd577da1a135fee0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a080c59de310c345c0b81689770799647"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewBackend.html#a080c59de310c345c0b81689770799647">refresh</a> ()</td></tr>
 <tr class="separator:a080c59de310c345c0b81689770799647"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5ebd7ff5f3ba27e7fe25ee92f047983"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structTag.html">Tag</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRecordViewBackend.html#ac5ebd7ff5f3ba27e7fe25ee92f047983">getTags</a> () const</td></tr>
+<tr class="separator:ac5ebd7ff5f3ba27e7fe25ee92f047983"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
@@ -176,6 +175,32 @@ Signals</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Adds a tag to the taglist. </p>
+<p>Adds a tag to the active tags list. </p>
+
+</div>
+</div>
+<a id="ac5ebd7ff5f3ba27e7fe25ee92f047983" name="ac5ebd7ff5f3ba27e7fe25ee92f047983"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5ebd7ff5f3ba27e7fe25ee92f047983">&#9670;&#160;</a></span>getTags</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="structTag.html">Tag</a> &gt; RecordViewBackend::getTags </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -257,34 +282,7 @@ Signals</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Removes a tag from the taglist. </p>
-
-</div>
-</div>
-<a id="a8c1ff89c54b9ae563b3f2464058bb414" name="a8c1ff89c54b9ae563b3f2464058bb414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c1ff89c54b9ae563b3f2464058bb414">&#9670;&#160;</a></span>searchSimilar</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void RecordViewBackend::searchSimilar </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Starts a search for a similar tag to the text. </p>
+<p>Removes a tag from the active tags list. </p>
 
 </div>
 </div>

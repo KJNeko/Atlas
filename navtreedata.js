@@ -52,7 +52,8 @@ var NAVTREE =
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ]
+        [ "Enumerator", "globals_eval.html", null ],
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ],
     [ "Examples", "examples.html", "examples" ]
@@ -61,7 +62,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"GameImportDialog_8cpp.html"
+"GameEditDialog_8cpp.html",
+"structRecord.html#a162debb39ebd6de13b9404b7aa961b85"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

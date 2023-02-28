@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_0',['data',['../classRecordViewModel.html#a1b97c1638120696232ab2556f5779451',1,'RecordViewModel']]],
+  ['data_0',['data',['../classGameEditImageModel.html#a583ebeb02d813b5359c325ac2c025c1a',1,'GameEditImageModel::data()'],['../classGameEditVersionModel.html#a78c99edad6c57c0a45f1a8316763efdc',1,'GameEditVersionModel::data()'],['../classRecordViewModel.html#a1b97c1638120696232ab2556f5779451',1,'RecordViewModel::data()']]],
   ['database_1',['database',['../namespacedatabase.html',1,'']]],
   ['database_2ecpp_2',['database.cpp',['../database_8cpp.html',1,'']]],
   ['database_2ehpp_3',['database.hpp',['../database_8hpp.html',1,'']]],

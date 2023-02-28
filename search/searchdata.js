@@ -5,11 +5,12 @@ var indexSectionsWithContent =
   2: "dsu",
   3: "cdegiklmprst",
   4: "acdefghikmoprstuv~",
-  5: "defgkmptv",
+  5: "dfkmpt",
   6: "dfir",
   7: "p",
   8: "p",
-  9: "s"
+  9: "a",
+  10: "s"
 };
 
 var indexSectionNames =
@@ -23,7 +24,8 @@ var indexSectionNames =
   6: "typedefs",
   7: "enums",
   8: "enumvalues",
-  9: "pages"
+  9: "defines",
+  10: "pages"
 };
 
 var indexSectionLabels =
@@ -37,6 +39,7 @@ var indexSectionLabels =
   6: "Typedefs",
   7: "Enumerations",
   8: "Enumerator",
-  9: "Pages"
+  9: "Macros",
+  10: "Pages"
 };
 

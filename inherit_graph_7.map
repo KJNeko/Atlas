@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,112,31"/>
-<area shape="rect" id="node2" href="$classMainWindow.html" title=" " alt="" coords="160,5,256,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,73,80"/>
+<area shape="rect" id="node2" href="$classGameEditDialog.html" title=" " alt="" coords="129,5,244,31"/>
+<area shape="rect" id="node3" href="$classGameImportDialog.html" title=" " alt="" coords="121,55,252,80"/>
+<area shape="rect" id="node4" href="$classSettingsDialog.html" title=" " alt="" coords="133,104,240,129"/>
 </map>

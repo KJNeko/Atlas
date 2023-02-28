@@ -7,10 +7,15 @@ var hierarchy =
     [ "QAbstractItemDelegate", null, [
       [ "RecordViewDelegate", "classRecordViewDelegate.html", null ]
     ] ],
+    [ "QAbstractItemModel", null, [
+      [ "GameEditImageModel", "classGameEditImageModel.html", null ],
+      [ "GameEditVersionModel", "classGameEditVersionModel.html", null ]
+    ] ],
     [ "QAbstractListModel", null, [
       [ "RecordViewModel", "classRecordViewModel.html", null ]
     ] ],
     [ "QDialog", null, [
+      [ "GameEditDialog", "classGameEditDialog.html", null ],
       [ "GameImportDialog", "classGameImportDialog.html", null ],
       [ "SettingsDialog", "classSettingsDialog.html", null ]
     ] ],
