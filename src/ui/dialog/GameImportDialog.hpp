@@ -58,8 +58,6 @@ class GameImportDialog final : public QDialog
 	void on_version_textChanged( const QString text );
 	void on_engine_textChanged( const QString text );
 	void on_folderPath_textChanged( const QString text );
-	void on_execPath_textChanged( const QString text );
-	void on_dest_textChanged( const QString text );
 };
 
 

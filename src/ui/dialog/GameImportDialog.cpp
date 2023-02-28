@@ -369,8 +369,6 @@ void GameImportDialog::on_selectBanner_pressed()
 		else
 			ui->bannerPath->setText( list.first() );
 	}
-
-	verifySettings();
 }
 
 void GameImportDialog::on_selectPreviews_pressed()
@@ -392,33 +390,27 @@ void GameImportDialog::on_selectPreviews_pressed()
 
 		ui->previewPaths->setText( serializePreviews( list ) );
 	}
-
-	verifySettings();
 }
 
 
 void GameImportDialog::on_title_textChanged( [[maybe_unused]] const QString text )
 {
 	path_manager.key_replacer.registerKey( "{title}", text );
-	verifySettings();
 }
 
 void GameImportDialog::on_creator_textChanged( [[maybe_unused]] const QString text )
 {
 	path_manager.key_replacer.registerKey( "{creator}", text );
-	verifySettings();
 }
 
 void GameImportDialog::on_version_textChanged( [[maybe_unused]] const QString text )
 {
 	path_manager.key_replacer.registerKey( "{version}", text );
-	verifySettings();
 }
 
 void GameImportDialog::on_engine_textChanged( [[maybe_unused]] const QString text )
 {
 	path_manager.key_replacer.registerKey( "{engine}", text );
-	verifySettings();
 }
 
 void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString text )
@@ -434,18 +426,6 @@ void GameImportDialog::on_folderPath_textChanged( [[maybe_unused]] const QString
 		ui->version->setText( path_manager.key_replacer.value( "{version}" ) );
 		ui->engine->setText( path_manager.key_replacer.value( "{engine}" ) );
 	}
-
-	verifySettings();
-}
-
-void GameImportDialog::on_execPath_textChanged( [[maybe_unused]] const QString text )
-{
-	verifySettings();
-}
-
-void GameImportDialog::on_dest_textChanged( [[maybe_unused]] const QString text )
-{
-	verifySettings();
 }
 
 void GameImportDialog::setInformation( const QString& creator, const QString& title, const QString& engine )
