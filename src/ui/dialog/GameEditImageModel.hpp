@@ -10,7 +10,7 @@
 
 #include <QAbstractItemModel>
 
-class GameEditImageModel : public QAbstractItemModel
+class GameEditImageModel final : public QAbstractItemModel
 {
 	Q_DISABLE_COPY_MOVE( GameEditImageModel )
 

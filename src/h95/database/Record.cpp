@@ -12,7 +12,7 @@
 
 #include <h95/database/Record.hpp>
 
-#ifdef NDEBUG
+#ifndef ALLOW_RECORD_SLOWCOMPARE
 bool Record::operator==( const Record& other ) const
 {
 	return other.m_id == this->m_id;

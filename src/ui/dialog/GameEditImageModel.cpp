@@ -6,22 +6,22 @@
 
 #include <h95/logging.hpp>
 
-QModelIndex GameEditImageModel::index( int row, int column, const QModelIndex& parent ) const
+QModelIndex GameEditImageModel::index( int row, int column, [[maybe_unused]] const QModelIndex& parent ) const
 {
 	return QAbstractItemModel::createIndex( row, column );
 }
 
-QModelIndex GameEditImageModel::parent( const QModelIndex& index ) const
+QModelIndex GameEditImageModel::parent( [[maybe_unused]] const QModelIndex& index ) const
 {
 	return {};
 }
 
-int GameEditImageModel::rowCount( const QModelIndex& parent ) const
+int GameEditImageModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
 	return static_cast< int >( ( std::filesystem::exists( m_banner ) ? 1 : 0 ) + m_previews.size() );
 }
 
-int GameEditImageModel::columnCount( const QModelIndex& parent ) const
+int GameEditImageModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
 	return 2;
 }

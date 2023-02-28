@@ -19,7 +19,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class GameEditDialog : public QDialog
+class GameEditDialog final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( GameEditDialog )

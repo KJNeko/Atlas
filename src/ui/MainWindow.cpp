@@ -7,19 +7,19 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
-#include "h95/config.hpp"
-#include "ui/dialog/GameImportDialog.hpp"
-#include "h95/database/database.hpp"
-#include "ui/dialog/SettingsDialog.hpp"
+#include <ui/dialog/GameImportDialog.hpp>
+#include <ui/dialog/SettingsDialog.hpp>
+#include <h95/config.hpp>
+#include <h95/database/database.hpp>
+#include <h95/logging.hpp>
 
 #include <QFileDialog>
 #include <QDirIterator>
-
-#include <tracy/Tracy.hpp>
 #include <QMimeData>
 #include <QDropEvent>
-#include <spdlog/spdlog.h>
 #include <QPixmapCache>
+
+#include <tracy/Tracy.hpp>
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {

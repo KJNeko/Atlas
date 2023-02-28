@@ -78,7 +78,9 @@ void GameEditDialog::on_creatorEdit_textChanged( const QString& text )
 	m_record->m_creator = text;
 }
 
-void GameEditDialog::imageSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected )
+void GameEditDialog::imageSelectionChanged(
+	const QItemSelection& selected,
+	[[maybe_unused]] const QItemSelection& deselected )
 {
 	if ( selected.size() == 0 )
 		ui->imageLabel->clear();
@@ -229,7 +231,7 @@ void GameEditDialog::on_removeVersion_pressed()
 	const auto& model { dynamic_cast< GameEditVersionModel* >( ui->versionList->model() ) };
 
 	//Get data from row
-	const auto& version_data { m_record->m_versions.at( index.row() ) };
+	const auto& version_data { m_record->m_versions.at( static_cast< std::size_t >( index.row() ) ) };
 
 	std::filesystem::remove_all( version_data.m_game_path );
 
