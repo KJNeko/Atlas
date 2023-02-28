@@ -73,8 +73,8 @@ jobs:
 
       - name: Build
         run: |
-          mingw32-make -j4 ${{github.workspace}}\builds\build-r
-          mingw32-make -j4 ${{github.workspace}}\builds\build-d
+          mingw32-make -j8 ${{github.workspace}}\builds\build-r
+          mingw32-make -j8 ${{github.workspace}}\builds\build-d
 
       - name: Package
         run: |
