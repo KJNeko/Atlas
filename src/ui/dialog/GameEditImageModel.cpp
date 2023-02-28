@@ -45,11 +45,13 @@ QVariant GameEditImageModel::data( const QModelIndex& index, int role ) const
 					}
 					else
 					{
-						return QString::fromStdString( m_previews.at( static_cast< std::size_t >( index.row() - 1 ) ) );
+						return QString::fromStdString(
+							m_previews.at( static_cast< std::size_t >( index.row() - 1 ) ).string() );
 					}
 				}
 				else
-					return QString::fromStdString( m_previews.at( static_cast< std::size_t >( index.row() ) ) );
+					return QString::fromStdString(
+						m_previews.at( static_cast< std::size_t >( index.row() ) ).string() );
 			}
 			case 1:
 			{
@@ -113,9 +115,9 @@ void GameEditImageModel::removeItems( const std::vector< std::size_t >& indexes 
 
 void GameEditImageModel::addPreview( std::string path )
 {
-	beginInsertRows({}, rowCount({}), rowCount({}));
+	beginInsertRows( {}, rowCount( {} ), rowCount( {} ) );
 
-	m_previews.emplace_back(std::move(path));
+	m_previews.emplace_back( std::move( path ) );
 
 	endInsertRows();
 }
