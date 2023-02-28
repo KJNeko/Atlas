@@ -78,7 +78,7 @@ namespace database
 	try
 	{
 		ZoneScoped;
-		spdlog::debug("Initalizing database");
+		spdlog::debug( "Initalizing database" );
 		std::filesystem::create_directory( "./data" );
 
 		internal::db = new sqlite::database( "./data/hydrus95.db" );
@@ -89,7 +89,11 @@ namespace database
 			"CREATE TABLE IF NOT EXISTS previews (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 			"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)" };
 
-		for ( const auto& query_str : table_strs ) { db_ref() << query_str; spdlog::debug("Executing {}", query_str); }
+		for ( const auto& query_str : table_strs )
+		{
+			db_ref() << query_str;
+			spdlog::debug( "Executing {}", query_str );
+		}
 
 		update();
 	}

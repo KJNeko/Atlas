@@ -64,7 +64,7 @@ void Importer::import_game(
 					std::filesystem::remove( m_root / banner_relative );
 				}
 
-				m_banner = importBanner(m_banner);
+				m_banner = importBanner( m_banner );
 				spdlog::debug( "Banner path set to {}", m_banner.string() );
 			}
 
@@ -78,7 +78,7 @@ void Importer::import_game(
 					std::filesystem::remove( m_root / preview_relative );
 				}
 
-				preview = importPreview(preview, delete_after);
+				preview = importPreview( preview, delete_after );
 			}
 		}
 
@@ -99,7 +99,7 @@ void Importer::import_game(
 	}
 }
 
-std::filesystem::path importBanner(const std::filesystem::path& path, const bool delete_after)
+std::filesystem::path importBanner( const std::filesystem::path& path, const bool delete_after )
 {
 	const auto banner_path_str { getSettings< QString >( "paths/h95_banners", "./data/banners" ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
@@ -127,11 +127,11 @@ std::filesystem::path importBanner(const std::filesystem::path& path, const bool
 	return dest_path;
 }
 
-std::filesystem::path importPreview(const std::filesystem::path& path, const bool delete_after)
+std::filesystem::path importPreview( const std::filesystem::path& path, const bool delete_after )
 {
 	const auto preview_path_str { getSettings< QString >( "paths/h95_previews", "./data/previews" ) };
 	const std::filesystem::path preview_path { preview_path_str.toStdString() };
-	std::filesystem::create_directories(preview_path);
+	std::filesystem::create_directories( preview_path );
 
 	spdlog::debug( "Handling preview {}", path.string() );
 	auto hasher { QCryptographicHash( QCryptographicHash::Algorithm::Sha256 ) };
@@ -141,8 +141,7 @@ std::filesystem::path importPreview(const std::filesystem::path& path, const boo
 	const auto file_data { file.readAll() };
 	hasher.addData( file_data );
 
-	const auto dest_path {
-		preview_path / ( hasher.result().toHex( 0 ).toStdString() + path.extension().string() ) };
+	const auto dest_path { preview_path / ( hasher.result().toHex( 0 ).toStdString() + path.extension().string() ) };
 
 	spdlog::debug( "Copying preview from {} -> {}", path.string(), dest_path.string() );
 
@@ -152,16 +151,3 @@ std::filesystem::path importPreview(const std::filesystem::path& path, const boo
 
 	return dest_path;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -16,7 +16,7 @@ using DLSiteTagID = uint16_t;
 struct Tag
 {
 	//! Tag id for internal use within h95
-	InternalTagID tag_id {0};
+	InternalTagID tag_id { 0 };
 
 	//! Text of the tag
 	QString text {};

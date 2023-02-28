@@ -21,9 +21,9 @@ struct GameMetadata
 	//! Path to the executable
 	std::filesystem::path m_exec_path {};
 
-	QString m_custom_launch_str {""};
-	bool m_use_custom_launch_config {false};
-	bool m_ignore_global_launch_config {false};
+	QString m_custom_launch_str { "" };
+	bool m_use_custom_launch_config { false };
+	bool m_ignore_global_launch_config { false };
 
 	GameMetadata() = delete;
 	GameMetadata(
@@ -36,7 +36,7 @@ struct GameMetadata
 	{
 	}
 
-	bool operator==(const GameMetadata& other) const = default;
+	bool operator==( const GameMetadata& other ) const = default;
 
 	//! Returns a populated GameMetadata for the given id from the database
 	static std::vector< GameMetadata > select( const RecordID id );

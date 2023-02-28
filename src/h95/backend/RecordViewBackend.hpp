@@ -25,7 +25,7 @@ class RecordViewBackend final : public QObject
 
 	void refresh();
 
-	std::vector<Tag> getTags() const;
+	std::vector< Tag > getTags() const;
 
 	signals:
 	//! Emitted when a search for similar tags is done

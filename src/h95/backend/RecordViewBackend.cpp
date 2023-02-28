@@ -20,7 +20,7 @@ std::vector< Record > getAll()
 		records.emplace_back( Record::select( record_id ) );
 	};
 
-	spdlog::debug("Search returned {} records", records.size());
+	spdlog::debug( "Search returned {} records", records.size() );
 
 	return records;
 }
@@ -46,7 +46,7 @@ void RecordViewBackend::refresh()
 	emit recordsUpdated( getAll() );
 }
 
-std::vector<Tag> RecordViewBackend::getTags() const
+std::vector< Tag > RecordViewBackend::getTags() const
 {
 	return active_tags;
 }

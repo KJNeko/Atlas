@@ -25,7 +25,7 @@ RecordViewWidget::RecordViewWidget( QWidget* parent ) : QWidget( parent ), ui( n
 		this,
 		SLOT( selectionChanged( QItemSelection, QItemSelection ) ) );
 
-	connect(&delegate, &RecordViewDelegate::requestRefreshRecords, this, &RecordViewWidget::requestUpdate);
+	connect( &delegate, &RecordViewDelegate::requestRefreshRecords, this, &RecordViewWidget::requestUpdate );
 }
 
 RecordViewWidget::~RecordViewWidget()
@@ -45,10 +45,7 @@ void RecordViewWidget::selectionChanged(
 	else
 	{
 		const auto indexes { selected.indexes() };
-		if(indexes.size() == 0)
-		{
-			throw std::runtime_error("Zero indexes?");
-		}
+		if ( indexes.size() == 0 ) { throw std::runtime_error( "Zero indexes?" ); }
 		emit changeSelection( indexes.back() );
 	}
 }

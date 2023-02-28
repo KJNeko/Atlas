@@ -167,7 +167,7 @@ void GameEditDialog::on_removePreview_pressed()
 
 void GameEditDialog::on_applyChanges_pressed()
 {
-	if ( m_record.has_value() && (m_record.value() != Record::select( m_id )) )
+	if ( m_record.has_value() && ( m_record.value() != Record::select( m_id ) ) )
 	{
 		if ( QMessageBox::question( this, "Are you sure?", "Changes can not be reverted one applied" )
 			 == QMessageBox::No )
@@ -182,10 +182,15 @@ void GameEditDialog::on_applyChanges_pressed()
 			return;
 		}
 
-		if((m_record.value().m_versions.size() == 0) && (QMessageBox::question(this, "Delete entire record?", "There are zero versions attached to this record. Delete entire record?") == QMessageBox::Yes))
+		if ( ( m_record.value().m_versions.size() == 0 )
+			 && ( QMessageBox::question(
+					  this,
+					  "Delete entire record?",
+					  "There are zero versions attached to this record. Delete entire record?" )
+				  == QMessageBox::Yes ) )
 		{
 			//Delete record
-			Record::erase(m_id);
+			Record::erase( m_id );
 		}
 
 		Record::update( m_id, m_record.value() );

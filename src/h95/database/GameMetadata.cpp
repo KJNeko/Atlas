@@ -15,13 +15,10 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 	ZoneScoped;
 	std::vector< GameMetadata > metadata;
 
-	spdlog::debug("Selecting metadata for id {}", id);
+	spdlog::debug( "Selecting metadata for id {}", id );
 
 	database::db_ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
-		[&metadata](
-			const std::string& game_path_in,
-			const std::string& exec_path_in,
-			const std::string& version_in )
+		[&metadata]( const std::string& game_path_in, const std::string& exec_path_in, const std::string& version_in )
 	{
 		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
 	};
@@ -33,7 +30,7 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 {
 	ZoneScoped;
 
-	spdlog::info("Inserting metadata into {} record", id);
+	spdlog::info( "Inserting metadata into {} record", id );
 
 	database::db_ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
 					   << id << metadata.m_game_path.string() << metadata.m_exec_path.string()

@@ -55,7 +55,7 @@ struct Record
 	//! Updates a record with new information.
 	static void update( const RecordID id, Record& record );
 
-	static void erase(const RecordID);
+	static void erase( const RecordID );
 
 
 	/**

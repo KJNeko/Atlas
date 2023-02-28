@@ -7,6 +7,6 @@
 
 #include <string>
 
-void executeProc(const std::string& path);
+void executeProc( const std::string& path );
 
 #endif	//HYDRUS95_EXECUTEPROC_HPP

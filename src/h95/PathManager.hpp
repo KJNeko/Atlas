@@ -38,7 +38,8 @@ struct PathManager
 	 * @return
 	 */
 	//! Uses key_replacer to populate `path` with keys.
-	std::filesystem::path fillPath( const std::filesystem::path& path,[[maybe_unused]] bool relativeFromRoot = false ) const;
+	std::filesystem::path fillPath( const std::filesystem::path& path, [[maybe_unused]] bool relativeFromRoot = false )
+		const;
 
 	//! Uses `key_path` to rip values out of `path` to populate `key_replacer`
 	void populateValues( const std::filesystem::path& path, const std::filesystem::path key_path );

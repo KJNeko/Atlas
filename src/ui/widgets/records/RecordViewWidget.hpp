@@ -36,7 +36,7 @@ class RecordViewWidget final : public QWidget
 	void selectionChanged( const QItemSelection& selected, const QItemSelection& deseleted );
 	void selectionHiding();
 	void recordsUpdated( const std::vector< Record >& records );
-	void requestUpdate() {emit requestRecordUpdate();}
+	void requestUpdate() { emit requestRecordUpdate(); }
 
 	signals:
 	void changeSelection( const QPersistentModelIndex& index );

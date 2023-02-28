@@ -59,7 +59,7 @@ Record Record::create(
 	{
 		ZoneScopedN( "Query" );
 
-		spdlog::debug("Inserting new record");
+		spdlog::debug( "Inserting new record" );
 
 		database::db_ref() << "INSERT INTO records (title, creator, engine) VALUES (?, ?, ?) RETURNING record_id"
 						   << title.toStdString() << creator.toStdString() << engine.toStdString()
@@ -74,7 +74,7 @@ Record Record::create(
 		if ( !banner.empty() ) image_paths.emplace_back( banner.string(), PREVIEW_BANNER );
 		for ( const auto& preview : previews ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW );
 
-		spdlog::debug("Inserting {} previews for record id {}", previews.size(), id);
+		spdlog::debug( "Inserting {} previews for record id {}", previews.size(), id );
 
 		for ( const auto& [path, type] : image_paths )
 			database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << id
@@ -91,7 +91,7 @@ Record Record::select( const RecordID id )
 	QString creator;
 	QString engine;
 
-	spdlog::debug("Selecting record {} from database", id);
+	spdlog::debug( "Selecting record {} from database", id );
 
 	{
 		ZoneScopedN( "Query inital" );
@@ -111,14 +111,14 @@ Record Record::select( const RecordID id )
 	{
 		ZoneScopedN( "Query previews" );
 
-		spdlog::debug("Selecting previews and banner from DB for record {}", id);
+		spdlog::debug( "Selecting previews and banner from DB for record {}", id );
 
 		database::db_ref() << "SELECT path, type FROM previews WHERE record_id = ?" << id >>
 			[&banner_path, &preview_paths]( const std::string& path, const uint8_t type )
 		{
 			ZoneScopedN( "Process row" );
 
-			if(!std::filesystem::exists(path))
+			if ( !std::filesystem::exists( path ) )
 			{
 				spdlog::warn( "Path {} was expected to exist but does not", path );
 				return;
@@ -150,7 +150,12 @@ RecordID Record::search( const QString& title, const QString& creator, const QSt
 	{
 		ZoneScopedN( "Query" );
 
-		spdlog::debug("Searching for {} {} {} ! {}", title.toStdString(), creator.toStdString(), engine.toStdString(), anti_id);
+		spdlog::debug(
+			"Searching for {} {} {} ! {}",
+			title.toStdString(),
+			creator.toStdString(),
+			engine.toStdString(),
+			anti_id );
 
 		database::db_ref()
 				<< "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ? AND NOT record_id = ?"
@@ -169,7 +174,7 @@ QPixmap Record::getBanner() const
 {
 	ZoneScoped;
 
-	spdlog::debug("Getting banner for {}", m_id);
+	spdlog::debug( "Getting banner for {}", m_id );
 
 	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
@@ -189,7 +194,7 @@ QPixmap Record::getBanner( const int banner_width, const int banner_height ) con
 {
 	ZoneScopedN( "getBannerResized" );
 
-	spdlog::debug("Getting banner for id {} resized to {}x{}", m_id, banner_width, banner_height);
+	spdlog::debug( "Getting banner for id {} resized to {}x{}", m_id, banner_width, banner_height );
 
 	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
 	const std::filesystem::path banner_path { banner_path_str.toStdString() };
@@ -216,7 +221,7 @@ try
 {
 	ZoneScoped;
 
-	spdlog::debug("Updating record {}", id);
+	spdlog::debug( "Updating record {}", id );
 
 	const auto original { Record::select( id ) };
 
@@ -286,7 +291,7 @@ try
 					 [&]( const std::filesystem::path& path_fs ) -> bool { return path_fs.string() == path; } )
 				 == record.m_previews.end() )
 			{
-				spdlog::debug("Deleting preview {} from record {}", path, record.m_id);
+				spdlog::debug( "Deleting preview {} from record {}", path, record.m_id );
 
 				//Delete the item from the database if it's not found in the memory list.
 				database::db_ref() << "DELETE FROM previews WHERE type = ? AND record_id = ? AND path = ?"
@@ -309,7 +314,7 @@ try
 			//If it's not in the database then add it.
 			if ( !found )
 			{
-				spdlog::debug("Adding preview {} to record {}", path.string(), record.m_id);
+				spdlog::debug( "Adding preview {} to record {}", path.string(), record.m_id );
 
 				database::db_ref() << "INSERT INTO previews (record_id, type, path) VALUES (?, ?, ?)" << record.m_id
 								   << PREVIEW_PREVIEW << path.string();

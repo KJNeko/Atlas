@@ -116,7 +116,7 @@ void SelectedViewWidget::on_playButton_pressed()
 				replacer.registerKey( "{title}", record_data.m_title );
 				replacer.registerKey( "{creator}", record_data.m_creator );
 
-				launch_str = getSettings<QString>("execution/global_command", "{command}");
+				launch_str = getSettings< QString >( "execution/global_command", "{command}" );
 
 				replacer.replaceKeys( launch_str );
 			}

@@ -18,15 +18,14 @@ class GameEditVersionModel : public QAbstractItemModel
 	std::vector< GameMetadata >& m_versions;
 
 	public:
-
 	GameEditVersionModel( std::vector< GameMetadata >& versions, QObject* parent = nullptr ) :
 	  QAbstractItemModel( parent ),
 	  m_versions( versions )
 	{
 	}
 
-	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
-	QModelIndex parent(const QModelIndex& index) const override;
+	QModelIndex index( int row, int column, const QModelIndex& parent = QModelIndex() ) const override;
+	QModelIndex parent( const QModelIndex& index ) const override;
 
 	int rowCount( const QModelIndex& parent = QModelIndex() ) const override;
 	int columnCount( const QModelIndex& parent = QModelIndex() ) const override;
@@ -36,7 +35,7 @@ class GameEditVersionModel : public QAbstractItemModel
 
 	void removeItem( std::size_t index );
 
-	void addRow(GameMetadata metadata);
+	void addRow( GameMetadata metadata );
 };
 
 

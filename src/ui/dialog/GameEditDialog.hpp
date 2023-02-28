@@ -56,7 +56,7 @@ class GameEditDialog final : public QDialog
 
 	public:
 	Record getRecord() const;
-	bool recordDeleted() const {return m_record.has_value();}
+	bool recordDeleted() const { return m_record.has_value(); }
 };
 
 
