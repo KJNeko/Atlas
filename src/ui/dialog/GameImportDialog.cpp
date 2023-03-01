@@ -94,7 +94,6 @@ GameImportDialog::GameImportDialog( const QUrl& url, QWidget* parent ) :
 
 	ui->folderPath->setText( url.toLocalFile() );
 	parseInfo();
-	verifySettings();
 }
 
 GameImportDialog::~GameImportDialog()
@@ -199,7 +198,8 @@ catch ( std::exception& e )
 void GameImportDialog::parseInfo()
 {
 	QMimeDatabase mime_db;
-	bool multiple_execs { false };
+
+	std::vector< std::filesystem::path > exec_paths;
 
 	//Locate supporting files
 	for ( const auto& temp_dir : std::filesystem::directory_iterator( ui->folderPath->text().toStdString() ) )
@@ -213,13 +213,7 @@ void GameImportDialog::parseInfo()
 		// Locate executable
 		if ( temp_dir.is_regular_file() && mime_type == "application/x-ms-dos-executable" )
 		{
-			if ( ui->execPath->text().isEmpty() && !multiple_execs )
-				ui->execPath->setText( QString::fromStdString( temp_dir.path().string() ) );
-			else
-			{
-				ui->execPath->setText( "" );
-				multiple_execs = true;
-			}
+			exec_paths.emplace_back( temp_dir );
 		}
 		//Locate banner
 		else if (
@@ -250,6 +244,36 @@ void GameImportDialog::parseInfo()
 
 			ui->previewPaths->setText( previews );
 		}
+	}
+
+	std::vector< std::string > anti_list { "UnityCrashHandler64.exe", "UnityCrashHandler32.exe" };
+
+	//Remove any anit-list
+	std::remove_if(
+		exec_paths.begin(),
+		exec_paths.end(),
+		[&]( const std::filesystem::path& path )
+		{
+			for ( const auto& anti : anti_list )
+			{
+				if ( path.filename().string().starts_with( anti ) )
+					return true;
+				else
+					continue;
+			}
+			return false;
+		} );
+
+	if ( exec_paths.size() == 1 )
+		ui->execPath->setText( QString::fromStdString( exec_paths.back().string() ) );
+	else
+	{
+		//Have user pick the file
+		QMessageBox::information(
+			this,
+			"Unable to auto-determine",
+			"Unable to auto determine executable. Please select it manually" );
+		on_selectExec_pressed();
 	}
 }
 
