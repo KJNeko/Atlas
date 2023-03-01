@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 project(Hydrus95 LANGUAGES CXX)
 
-#enable_testing()
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -115,8 +114,6 @@ endif ()
 set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::Network SQLite::SQLite3 TracyClient spdlog::spdlog)
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
-
-#add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit_tests)
 
 if (WIN32)
     add_custom_command(TARGET Hydrus95 POST_BUILD
