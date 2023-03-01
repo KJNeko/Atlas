@@ -225,7 +225,7 @@
                   <item>
                    <widget class="QLineEdit" name="bannerPath">
                     <property name="placeholderText">
-                     <string>:/placeholder_cover.jpg</string>
+                     <string>:/placeholder_banner.jpg</string>
                     </property>
                    </widget>
                   </item>
