@@ -111,7 +111,7 @@ void SelectedViewWidget::on_playButton_pressed()
 			if ( !version.m_ignore_global_launch_config )
 			{
 				KeyReplacer replacer;
-				replacer.registerKey( "{command}", std::move( launch_str ) );
+				replacer.registerKey( "{command}", "\""+ std::move(launch_str) + "\"");
 				replacer.registerKey( "{version}", version.m_version );
 				replacer.registerKey( "{title}", record_data.m_title );
 				replacer.registerKey( "{creator}", record_data.m_creator );
