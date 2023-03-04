@@ -6,18 +6,18 @@
 
 #include <tracy/Tracy.hpp>
 
-#include <h95/database/database.hpp>
+#include <h95/database/Database.hpp>
 #include <h95/logging.hpp>
 #include <h95/database/GameMetadata.hpp>
 
-std::vector< GameMetadata > GameMetadata::select( const RecordID id )
+std::vector< GameMetadata > GameMetadata::select( const RecordID id, Transaction& transaction )
 {
 	ZoneScoped;
 	std::vector< GameMetadata > metadata;
 
 	spdlog::debug( "Selecting metadata for id {}", id );
 
-	database::db_ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
+	transaction.ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
 		[&metadata]( const std::string& game_path_in, const std::string& exec_path_in, const std::string& version_in )
 	{
 		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
@@ -26,14 +26,29 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id )
 	return metadata;
 }
 
-GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata )
+GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
 {
 	ZoneScoped;
 
-	spdlog::info( "Inserting metadata into {} record", id );
+	bool found { false };
 
-	database::db_ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
-					   << id << metadata.m_game_path.string() << metadata.m_exec_path.string()
-					   << metadata.m_version.toStdString();
+	transaction.ref()
+			<< "SELECT record_id FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
+			<< id << metadata.m_game_path.string() << metadata.m_exec_path.string() << metadata.m_version.toStdString()
+		>> [&]()
+	{
+		found = true;
+	};
+
+	if ( found )
+	{
+		transaction.abort();
+		throw MetadataAlreadyExists();
+	}
+
+	transaction.ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
+					  << id << metadata.m_game_path.string() << metadata.m_exec_path.string()
+					  << metadata.m_version.toStdString();
+
 	return metadata;
 }

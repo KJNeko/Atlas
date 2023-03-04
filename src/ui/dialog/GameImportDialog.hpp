@@ -7,8 +7,6 @@
 
 #include <QDialog>
 
-#include <h95/PathManager.hpp>
-
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -22,42 +20,17 @@ class GameImportDialog final : public QDialog
 
 	Q_DISABLE_COPY_MOVE( GameImportDialog )
 
-	PathManager path_manager {};
-	bool good_import { false };
-	bool no_replace { false };
+	QString m_source_path;
 
 	public:
-	explicit GameImportDialog( QWidget* parent = nullptr );
-	explicit GameImportDialog( const QUrl& url, QWidget* parent = nullptr );
+	explicit GameImportDialog(const QString& path, QWidget* parent = nullptr );
 	~GameImportDialog() override;
+
+	void loadAutoPopulateSettings();
+	void runAutoPopulate();
 
 	private:
 	Ui::GameImportDialog* ui;
-
-	void verifySettings();
-	void parseInfo();
-
-	public:
-	void setInformation( const QString& creator, const QString& title, const QString& engine );
-
-	private:
-	signals:
-	void importComplete();
-
-	private slots:
-	void on_cancelButton_pressed();
-	void on_importButton_pressed();
-
-	void on_selectPath_pressed();
-	void on_selectExec_pressed();
-	void on_selectBanner_pressed();
-	void on_selectPreviews_pressed();
-
-	void on_title_textChanged( const QString text );
-	void on_creator_textChanged( const QString text );
-	void on_version_textChanged( const QString text );
-	void on_engine_textChanged( const QString text );
-	void on_folderPath_textChanged( const QString text );
 };
 
 

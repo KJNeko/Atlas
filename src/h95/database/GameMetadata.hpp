@@ -10,6 +10,12 @@
 #include <QString>
 
 #include <h95/Types.hpp>
+#include <h95/database/Database.hpp>
+
+struct MetadataAlreadyExists : public std::runtime_error
+{
+	MetadataAlreadyExists() : std::runtime_error( "Metadata already exists" ) {}
+};
 
 struct GameMetadata
 {
@@ -39,10 +45,10 @@ struct GameMetadata
 	bool operator==( const GameMetadata& other ) const = default;
 
 	//! Returns a populated GameMetadata for the given id from the database
-	static std::vector< GameMetadata > select( const RecordID id );
+	static std::vector< GameMetadata > select( const RecordID id, Transaction& transaction );
 
 	//! Inserts a new set of metadata (Calls update if already exists)
-	static GameMetadata insert( const RecordID id, const GameMetadata& metadata );
+	static GameMetadata insert( const RecordID id, const GameMetadata& metadata, Transaction& transaction );
 };
 
 

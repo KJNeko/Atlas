@@ -14,7 +14,6 @@
 
 #include "SelectedViewWidget.hpp"
 #include "ui_SelectedViewWidget.h"
-#include "h95/KeyReplacer.hpp"
 
 SelectedViewWidget::SelectedViewWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::SelectedViewWidget )
 {
@@ -91,42 +90,7 @@ void SelectedViewWidget::on_closeButton_pressed()
 
 void SelectedViewWidget::on_playButton_pressed()
 {
-	const auto selected_text { ui->versionSelection->currentText() };
 
-	const auto& record_data { *selected.value().data().value< const Record* >() };
-
-	for ( const auto& version : record_data.m_versions )
-	{
-		if ( selected_text == version.m_version )
-		{
-			QString launch_str { QString::fromStdString( ( version.m_game_path / version.m_exec_path ).string() ) };
-
-			//Check if we should fill in the launch config replacements
-			if ( version.m_use_custom_launch_config )
-			{
-				//todo
-				launch_str = version.m_custom_launch_str;
-			}
-
-			if ( !version.m_ignore_global_launch_config )
-			{
-				KeyReplacer replacer;
-				replacer.registerKey( "{command}", "\""+ std::move(launch_str) + "\"");
-				replacer.registerKey( "{version}", version.m_version );
-				replacer.registerKey( "{title}", record_data.m_title );
-				replacer.registerKey( "{creator}", record_data.m_creator );
-
-				launch_str = getSettings< QString >( "execution/global_command", "{command}" );
-
-				replacer.replaceKeys( launch_str );
-			}
-
-			spdlog::info( "Launching {}", launch_str.toStdString() );
-
-			executeProc( launch_str.toStdString() );
-			return;
-		}
-	}
 }
 
 void SelectedViewWidget::keyPressEvent( QKeyEvent* event )

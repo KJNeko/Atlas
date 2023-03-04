@@ -9,54 +9,40 @@
 #include "ui_GameEditDialog.h"
 #include "GameImportDialog.hpp"
 
-// Let's `Record` use the default operator== in order to ensure it's not using the 'id' comparison only
-#define ALLOW_RECORD_SLOWCOMPARE
-
 #include <h95/config.hpp>
 #include <h95/database/Record.hpp>
 #include <h95/logging.hpp>
-#include <ui/dialog/GameEditVersionModel.hpp>
-#include <ui/dialog/GameEditImageModel.hpp>
 #include <QFileDialog>
 
 GameEditDialog::GameEditDialog( const RecordID game_id, QWidget* parent ) :
   QDialog( parent ),
-  m_id( game_id ),
   ui( new Ui::GameEditDialog )
 {
 	ui->setupUi( this );
 
 	this->restoreGeometry( getSettings< QByteArray >( "game_edit_dialog/geometry" ) );
 
-	try
 	{
-		m_record = Record::select( game_id );
-
-		ui->creatorEdit->setText( m_record->m_creator );
-		ui->nameEdit->setText( m_record->m_title );
-		ui->engineEdit->setText( m_record->m_engine );
-
-		//Setup image stuff
-		ui->imageTable->setModel( new GameEditImageModel( m_record->m_banner, m_record->m_previews ) );
-		ui->imageTable->resizeColumnsToContents();
-
-		//Version tab setup
-		ui->versionList->setModel( new GameEditVersionModel( m_record->m_versions ) );
-		ui->versionList->resizeColumnsToContents();
-
-		connect(
-			ui->imageTable->selectionModel(),
-			&QItemSelectionModel::selectionChanged,
-			this,
-			&GameEditDialog::imageSelectionChanged );
+		Transaction transaction;
+		m_record = Record::select( game_id, transaction );
+		transaction.commit();
 	}
-	catch ( std::exception& e )
-	{
-		spdlog::error( "Loading record in editor failed: {}", e.what() );
-		QMessageBox::critical( this, "Loading record in editor failed", QString::fromStdString( e.what() ) );
-		close();
-		return;
-	}
+
+	ui->creatorEdit->setLabel( "Creator" );
+	ui->creatorEdit->setText( m_record->m_creator );
+
+	ui->titleEdit->setLabel( "Title" );
+	ui->titleEdit->setText( m_record->m_title );
+
+	ui->engineEdit->setLabel( "Engine" );
+	ui->engineEdit->setText( m_record->m_engine );
+
+	ui->banner->setEditable(true);
+	ui->banner->setBanner( m_record->m_banner );
+
+	ui->previewList->setPreviews( m_record->m_previews );
+
+	ui->versionList->setVersions( m_record->m_versions );
 
 	show();
 }
@@ -68,187 +54,109 @@ GameEditDialog::~GameEditDialog()
 	delete ui;
 }
 
-void GameEditDialog::on_nameEdit_textChanged( const QString& text )
-{
-	m_record->m_title = text;
-}
-
-void GameEditDialog::on_creatorEdit_textChanged( const QString& text )
-{
-	m_record->m_creator = text;
-}
-
-void GameEditDialog::imageSelectionChanged(
-	const QItemSelection& selected,
-	[[maybe_unused]] const QItemSelection& deselected )
-{
-	if ( selected.size() == 0 )
-		ui->imageLabel->clear();
-	else
-	{
-		const auto& index { selected.indexes().back() };
-		const auto& model { index.model() };
-		const auto& row { index.row() };
-		const auto& img_path { model->data( model->index( row, 0 ) ).value< QString >() };
-		QPixmap pixmap { img_path };
-
-		const auto max_height { ui->imageTable->height() };
-		const auto max_width { this->width() / 2 };
-
-		pixmap = pixmap.scaledToHeight( max_height );
-		if ( pixmap.width() > max_width ) pixmap = pixmap.scaledToWidth( max_width );
-
-		ui->imageLabel->setPixmap( std::move( pixmap ) );
-	}
-}
-
-
-void GameEditDialog::on_replaceBanner_pressed()
-{
-	QFileDialog dialog;
-
-	if ( dialog.exec() )
-	{
-		const auto& files { dialog.selectedFiles() };
-		if ( files.size() == 0 )
-		{
-			QMessageBox::warning( this, "No files selected?", "No files selected to replace banner. Aborted" );
-			return;
-		}
-		else
-		{
-			const auto& file { files.back() };
-			this->m_record->m_banner = { file.toStdString() };
-		}
-	}
-}
-
-const QStringList file_filters { "Image file(s) (*.png, *.jpg *.gif *.tiff *.webp)", "Any file(s) (*)" };
-
-void GameEditDialog::on_addPreview_pressed()
-{
-	QFileDialog dialog;
-	dialog.setNameFilters( file_filters );
-	dialog.setFileMode( QFileDialog::ExistingFiles );
-	dialog.setOption( QFileDialog::ReadOnly );
-	dialog.setLabelText( QFileDialog::LookIn, "Select preview image(s)" );
-
-	if ( dialog.exec() )
-	{
-		const auto& files { dialog.selectedFiles() };
-		if ( files.size() == 0 )
-		{
-			QMessageBox::warning( this, "No files selected?", "No files selected to add. Aborted" );
-			return;
-		}
-		else
-		{
-			const auto& model { dynamic_cast< GameEditImageModel* >( ui->imageTable->model() ) };
-
-			for ( const auto& file : files ) { model->addPreview( file.toStdString() ); }
-			//this->m_record->m_previews.emplace_back( file.toStdString() ); }
-		}
-	}
-}
-
-void GameEditDialog::on_removePreview_pressed()
-{
-	const auto& selected { ui->imageTable->selectionModel()->selection().indexes() };
-
-	std::vector< std::size_t > indexes;
-	for ( const auto& idx : selected )
-	{
-		if ( std::find( indexes.begin(), indexes.end(), idx.row() ) == indexes.end() )
-			indexes.emplace_back( idx.row() );
-	}
-
-	dynamic_cast< GameEditImageModel* >( ui->imageTable->model() )->removeItems( indexes );
-}
 
 void GameEditDialog::on_applyChanges_pressed()
 {
-	if ( m_record.has_value() && ( m_record.value() != Record::select( m_id ) ) )
+	Record modified_record {
+		m_record.value().m_id,
+		ui->titleEdit->text(),
+		ui->creatorEdit->text(),
+		ui->engineEdit->text(),
+		ui->versionList->versions(),
+		ui->banner->path(),
+		ui->previewList->previews() };
+
+	if ( modified_record == m_record )
+		close();
+	else
 	{
-		if ( QMessageBox::question( this, "Are you sure?", "Changes can not be reverted one applied" )
-			 == QMessageBox::No )
-			return;
-
-		//Check if there is any existing record that is not us but has the same title and creator
-		const auto new_record { Record::search( m_record->m_title, m_record->m_creator, m_record->m_engine, m_id ) };
-
-		if ( new_record != 0 )
+		//Prompt user here before making modifications
+		if ( QMessageBox::question(
+				 this,
+				 "Are you sure?",
+				 "Are you sure you would like to make changes to this record? This can not be reverted" )
+			 == QMessageBox::Yes )
 		{
-			QMessageBox::warning( this, "Record already exists", "A record with this information already exists!" );
-			return;
-		}
+			Transaction transaction;
 
-		if ( ( m_record.value().m_versions.size() == 0 )
-			 && ( QMessageBox::question(
-					  this,
-					  "Delete entire record?",
-					  "There are zero versions attached to this record. Delete entire record?" )
-				  == QMessageBox::Yes ) )
-		{
-			//Delete record
-			Record::erase( m_id );
-		}
+			Record::update( m_record->m_id, modified_record, transaction );
 
-		Record::update( m_id, m_record.value() );
+			transaction.commit();
+		}
 	}
-
-	close();
 }
 
 void GameEditDialog::on_cancelChanges_pressed()
 {
-	if ( m_record.has_value() && m_record.value() != Record::select( m_id ) )
+	Record modified_record {
+		m_record.value().m_id,
+		ui->titleEdit->text(),
+		ui->creatorEdit->text(),
+		ui->engineEdit->text(),
+		ui->versionList->versions(),
+		ui->banner->path(),
+		ui->previewList->previews() };
+
+	if ( modified_record == m_record )
+		close();
+	else
 	{
-		if ( QMessageBox::question( this, "Are you sure?", "Changes will be lost", QMessageBox::Yes | QMessageBox::No )
+		//Prompt user here before making modifications
+		if ( QMessageBox::question(
+			this,
+			"Are you sure?",
+			"Are you sure you want to abort all changes?" )
 			 == QMessageBox::Yes )
 		{
-			this->close();
+			close();
 		}
-		else
-			return;
 	}
-	this->close();
 }
 
+void GameEditDialog::resizeEvent( QResizeEvent* event )
+{
+	QDialog::resizeEvent( event );
+}
 
 void GameEditDialog::on_addVersion_pressed()
 {
-	GameImportDialog import_dialog { this };
-	import_dialog.setInformation( m_record->m_creator, m_record->m_title, m_record->m_engine );
+	//Ask user for location
+	QFileDialog dialog;
+	dialog.setFileMode(QFileDialog::Directory);
 
-	import_dialog.exec();
+	if(dialog.exec())
+	{
+		const auto& files {dialog.selectedFiles()};
+
+		if(files.size() == 0)
+			return;
+
+		const auto& first {files.at(0)};
+
+		std::filesystem::path path {first.toStdString()};
+
+		if(std::filesystem::exists(path) && std::filesystem::is_directory(path))
+		{
+			//Find executable
+			for(const auto& item : std::filesystem::directory_iterator(path))
+			{
+				if(item.is_regular_file() && )
+
+
+			}
+
+
+
+
+		}
+
+
+
+	}
+
 }
 
 void GameEditDialog::on_removeVersion_pressed()
 {
-	if ( QMessageBox::question(
-			 this,
-			 "Are you sure?",
-			 "Deleting a version will remove ALL files associated with it",
-			 QMessageBox::Yes | QMessageBox::No )
-		 == QMessageBox::No )
-		return;
 
-	const auto& selected { ui->versionList->selectionModel()->selectedIndexes() };
-
-	if ( selected.size() == 0 ) return;
-
-	const auto index { selected.back() };
-	const auto& model { dynamic_cast< GameEditVersionModel* >( ui->versionList->model() ) };
-
-	//Get data from row
-	const auto& version_data { m_record->m_versions.at( static_cast< std::size_t >( index.row() ) ) };
-
-	std::filesystem::remove_all( version_data.m_game_path );
-
-	model->removeItem( static_cast< std::size_t >( index.row() ) );
-}
-
-Record GameEditDialog::getRecord() const
-{
-	return m_record.value();
 }

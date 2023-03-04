@@ -7,7 +7,7 @@
 
 #include <QApplication>
 
-#include "h95/database/database.hpp"
+#include "h95/database/Database.hpp"
 #include "h95/config.hpp"
 #include "h95/logging.hpp"
 #include "ui/MainWindow.hpp"
@@ -67,24 +67,23 @@ int main( int argc, char** argv )
 {
 	initLogging();
 
-	(void)std::atexit( spdlog_flush );
+	(void) std::atexit( spdlog_flush );
 	spdlog::flush_on( spdlog::level::warn );
 
 	QApplication app { argc, argv };
 
-	const auto path { getSettings< QString >( "paths/data", "./data/games" ).toStdString() };
+	const auto path { getSettings< QString >( "paths/data", "./data" ).toStdString() };
 	std::filesystem::create_directories( path );
 
 #ifdef NDEBUG
 	if ( getSettings< bool >( "debug/very_vocal", true ) )
 #endif
 	{
-
 		spdlog::set_level( spdlog::level::debug );
 		spdlog::debug( "Debugging enabled." );
 	}
 
-	database::initalize();
+	Database::initalize("./data/hydrus95.db");
 
 	MainWindow window;
 	window.show();

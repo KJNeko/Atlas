@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1795</width>
-    <height>1008</height>
+    <width>1297</width>
+    <height>812</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -19,7 +19,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="RecordView" name="recordView" native="true"/>
+     <widget class="GameTab" name="listView" native="true"/>
     </item>
    </layout>
   </widget>
@@ -28,15 +28,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1795</width>
-     <height>22</height>
+     <width>1297</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFiles">
     <property name="title">
      <string>Files</string>
     </property>
-    <addaction name="actionImportGame"/>
+    <addaction name="actionCreateRecord"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuTests">
@@ -54,9 +54,9 @@
     <string>Record View</string>
    </property>
   </action>
-  <action name="actionImportGame">
+  <action name="actionCreateRecord">
    <property name="text">
-    <string>Import Game</string>
+    <string>Create empty record</string>
    </property>
   </action>
   <action name="actionMassAddImages">
@@ -69,12 +69,17 @@
     <string>Settings</string>
    </property>
   </action>
+  <action name="actionMassImportGames">
+   <property name="text">
+    <string>Mass Import Games</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RecordView</class>
+   <class>GameTab</class>
    <extends>QWidget</extends>
-   <header>ui/tabs/RecordView.hpp</header>
+   <header>ui/tabs/GameTab.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

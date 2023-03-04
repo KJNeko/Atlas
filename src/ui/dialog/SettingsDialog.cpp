@@ -15,10 +15,10 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 	ui->setupUi( this );
 
 	ui->itemWidth->setValue( getSettings< int >( "main_view/item_width", 400 ) );
-	ui->itemHeight->setValue( getSettings< int >( "main_view/item_height", 300 ) );
+	ui->itemHeight->setValue( getSettings< int >( "main_view/item_height", 200 ) );
 	ui->bannerWidth->setValue( getSettings< int >( "main_view/banner_width", 400 ) );
-	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 280 ) );
-	ui->itemPadding->setValue( getSettings< int >( "main_view/padding", 4 ) );
+	ui->bannerHeight->setValue( getSettings< int >( "main_view/banner_height", 180 ) );
+	ui->itemPadding->setValue( getSettings< int >( "main_view/padding", 4) );
 	ui->globalExecCommand->setText( getSettings< QString >( "execution/global_command", "{command}" ) );
 }
 

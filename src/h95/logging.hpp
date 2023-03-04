@@ -16,6 +16,19 @@
 
 #pragma GCC diagnostic pop
 
+#include <QString>
+
 void initLogging();
+
+template<>
+struct fmt::formatter<QString> : fmt::formatter<std::string>
+{
+	auto format(QString my, format_context& ctx) -> decltype(ctx.out())
+	{
+		return format_to(ctx.out(), "{}", my.toStdString());
+	}
+
+};
+
 
 #endif	//HYDRUS95_LOGGING_HPP

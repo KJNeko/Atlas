@@ -1,42 +1,47 @@
 //
-// Created by kj16609 on 1/31/23.
+// Created by kj16609 on 3/2/23.
 //
-
-#include <QHash>
+#include "KeyReplacer.hpp"
 
 #include <h95/logging.hpp>
 
-#include <h95/KeyReplacer.hpp>
-
-void KeyReplacer::clear()
+QString KeyReplacer::value( const QString& key )
 {
-	key_map.clear();
-}
-
-
-QString KeyReplacer::value( const QString& key ) const
-{
-	spdlog::debug( "Getting value for key {}", key.toStdString() );
-	if ( const auto& key_value = key_map.find( key ); key_value != key_map.end() )
-		return key_value->second;
-	else
+	const auto itter { key_list.find( key ) };
+	if ( itter == key_list.end() )
 		return {};
-}
-
-
-void KeyReplacer::registerKey( const QString& key, QString value )
-{
-	spdlog::debug( "Registering key {} to value {}", key.toStdString(), value.toStdString() );
-
-	if ( const auto key_value = key_map.find( key ); key_value != key_map.end() )
-		key_map.at( key ) = std::move( value );
 	else
-		key_map.emplace( key, std::move( value ) );
+		return itter->second;
 }
 
-QString& KeyReplacer::replaceKeys( QString& str ) const
+void KeyReplacer::setKey( QString key, QString value )
 {
-	for ( const auto& [key, value] : key_map ) str.replace( key, value );
+	key_list.insert_or_assign( std::move( key ), std::move( value ) );
+}
 
-	return str;
+void KeyReplacer::replace( QString& str )
+{
+	for ( const auto& [key, text] : key_list ) { str.replace( key, text ); }
+}
+
+void KeyReplacer::extractKeys( std::filesystem::path text, std::filesystem::path pattern )
+{
+	const auto& str { text.string() };
+	if ( str.ends_with( '/' ) ) text = str.substr( 0, str.size() - 1 );
+
+	//Step counter to prevent infinite loops.
+	uint16_t step_counter { 0 };
+	while ( !pattern.empty() && step_counter < 512 )
+	{
+		const auto key { QString::fromStdString( pattern.filename().string() ) };
+		pattern = pattern.parent_path();
+
+		if ( pattern.empty() )
+			key_list.insert_or_assign( key, QString::fromStdString( text.string() ) );
+		else
+			key_list.insert_or_assign( key, QString::fromStdString( text.filename().string() ) );
+
+		text = text.parent_path();
+		++step_counter;
+	}
 }

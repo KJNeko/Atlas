@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameTab</class>
+ <widget class="QWidget" name="GameTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1172</width>
+    <height>737</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GameTab</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="SearchWidget" name="searchWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="GameView" name="gameView" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SearchWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/widgets/SearchWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GameView</class>
+   <extends>QWidget</extends>
+   <header>ui/widgets/listViews/GameView.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

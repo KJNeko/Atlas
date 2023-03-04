@@ -5,10 +5,10 @@
 #ifndef HYDRUS95_RECORD_HPP
 #define HYDRUS95_RECORD_HPP
 
-//#include <QMetaType>
-
 #include <h95/Types.hpp>
 #include <h95/database/GameMetadata.hpp>
+
+#include <QPixmap>
 
 struct Record
 {
@@ -25,6 +25,7 @@ struct Record
 	private:
 	Record() = delete;
 
+	public:
 	//! Internal, used in select and create
 	Record(
 		const RecordID id,
@@ -44,18 +45,21 @@ struct Record
 	{
 	}
 
-	public:
 	//! Selects a record from the database.
-	static Record select( const RecordID id );
+	static Record select( const RecordID id, Transaction& transaction );
 
 
-	static RecordID
-		search( const QString& title, const QString& creator, const QString& engine, const RecordID anti_id = 0 );
+	static RecordID search(
+		const QString& title,
+		const QString& creator,
+		const QString& engine,
+		const RecordID anti_id,
+		Transaction& transaction );
 
 	//! Updates a record with new information.
-	static void update( const RecordID id, Record& record );
+	static void update( const RecordID id, Record& record, Transaction& transaction );
 
-	static void erase( const RecordID );
+	static void erase( const RecordID, Transaction& transaction );
 
 
 	/**
@@ -73,9 +77,10 @@ struct Record
 		const QString& title,
 		const QString& creator,
 		const QString& engine,
-		const GameMetadata& metadata,
+		const std::vector<GameMetadata>& metadata,
 		const std::filesystem::path& banner,
-		const std::vector< std::filesystem::path >& previews );
+		const std::vector< std::filesystem::path >& previews,
+		Transaction& transaction );
 
 	//! Returns the banner for the record
 	QPixmap getBanner() const;
@@ -84,8 +89,36 @@ struct Record
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
 	bool operator==( const Record& other ) const = default;
+
+	friend class TestRecord;
 };
 
-//Q_DECLARE_METATYPE( Record )
+struct RecordException : public std::runtime_error
+{
+	RecordException( const char* const msg ) : std::runtime_error( msg ) {}
+};
+
+struct RecordAlreadyExists : public RecordException
+{
+	Record record;
+	RecordAlreadyExists( Record record_in ) :
+	  RecordException( ( "Record already exists with id " + std::to_string( record_in.m_id ) ).c_str() ),
+	  record( std::move( record_in ) )
+	{
+	}
+};
+
+struct InvalidRecordID : public RecordException
+{
+	RecordID id;
+	InvalidRecordID( const RecordID in_id ) :
+	  RecordException( ( "Invalid record id = " + std::to_string( in_id ) ).c_str() ),
+	  id( in_id )
+	{
+	}
+};
+
+Q_DECLARE_METATYPE(Record)
+Q_DECLARE_METATYPE(std::vector<Record>)
 
 #endif	//HYDRUS95_RECORD_HPP

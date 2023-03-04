@@ -59,7 +59,7 @@ template< typename T > inline T getSettings( const QString setting_name )
 		return variant.template value< T >();
 	else
 	{
-		spdlog::warn( "Setting for {} was not populated!", setting_name.toStdString() );
+		spdlog::warn( "Setting for {} was not populated!", setting_name );
 
 		if constexpr ( std::is_default_constructible_v< T > )
 			return {};
