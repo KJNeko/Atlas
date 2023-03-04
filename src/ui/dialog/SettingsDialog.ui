@@ -15,26 +15,15 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QToolBox" name="toolBox">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1038</width>
-        <height>533</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>General Settings</string>
+     <widget class="QWidget" name="GeneralSettings">
+      <attribute name="title">
+       <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
@@ -42,21 +31,26 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1038</width>
-        <height>533</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Display Settings</string>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Display</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
         <widget class="QFrame" name="frame_4">
          <property name="frameShape">
@@ -275,37 +269,29 @@
             </layout>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1038</width>
-        <height>533</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Performance Settings</string>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Performance</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
         <widget class="QCheckBox" name="storeBannersDIsk">
          <property name="enabled">
@@ -351,11 +337,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_4">
-      <attribute name="label">
-       <string>Global executable settings</string>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Execution</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
