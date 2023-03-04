@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['tag_0',['Tag',['../structTag.html',1,'']]]
+  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
+  ['metadataalreadyexists_1',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'']]]
 ];

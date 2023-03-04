@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['data_0',['data',['../classGameEditImageModel.html#a583ebeb02d813b5359c325ac2c025c1a',1,'GameEditImageModel::data()'],['../classGameEditVersionModel.html#a78c99edad6c57c0a45f1a8316763efdc',1,'GameEditVersionModel::data()'],['../classRecordViewModel.html#a1b97c1638120696232ab2556f5779451',1,'RecordViewModel::data()']]],
-  ['database_1',['database',['../namespacedatabase.html',1,'']]],
-  ['database_2ecpp_2',['database.cpp',['../database_8cpp.html',1,'']]],
-  ['database_2ehpp_3',['database.hpp',['../database_8hpp.html',1,'']]],
-  ['db_4',['db',['../namespacedatabase_1_1internal.html#aff3c3b4cbbfc5fd91e105e036a4bdc00',1,'database::internal']]],
-  ['db_5fref_5',['db_ref',['../namespacedatabase.html#a2e692c6be7d742f62afd1f0363934385',1,'database']]],
-  ['deserializepreviews_6',['deserializePreviews',['../GameImportDialog_8cpp.html#a05599f97b8b6f3bd82cd8ecd142884a3',1,'GameImportDialog.cpp']]],
-  ['dlsitetagid_7',['DLSiteTagID',['../Tag_8hpp.html#a03a2180b0e7eb6faf0645f636d0e190a',1,'Tag.hpp']]],
-  ['internal_8',['internal',['../namespacedatabase_1_1internal.html',1,'database']]]
+  ['cleanorphans_0',['cleanOrphans',['../namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8',1,'imageManager']]],
+  ['columncount_1',['columnCount',['../classVersionViewModel.html#a485d52271709c3a203a82fb0fbe3dd70',1,'VersionViewModel']]],
+  ['commit_2',['commit',['../structTransactionBase.html#a9392c0a8da6a3b1c1541ecfc87c2c079',1,'TransactionBase']]],
+  ['config_2ehpp_3',['config.hpp',['../config_8hpp.html',1,'']]],
+  ['create_4',['create',['../structRecord.html#a29fc7f66264493672d86c779ba9431fd',1,'Record']]]
 ];

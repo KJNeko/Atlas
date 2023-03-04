@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['importer_0',['Importer',['../classImporter.html',1,'']]]
+  ['database_0',['Database',['../classDatabase.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var dir_e6ec9186baadb435fe14e5f35cf46d26 =
 [
-    [ "RecordView.cpp", "RecordView_8cpp.html", null ],
-    [ "RecordView.hpp", "RecordView_8hpp.html", "RecordView_8hpp" ]
+    [ "GameTab.cpp", "GameTab_8cpp.html", null ],
+    [ "GameTab.hpp", "GameTab_8hpp.html", "GameTab_8hpp" ]
 ];

@@ -134,52 +134,32 @@ $(document).ready(function(){initNavTree('GameEditDialog_8hpp_source.html',''); 
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    Q_OBJECT</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_class" href="classGameEditDialog.html">GameEditDialog</a> )</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_typedef" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> m_id;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    std::optional&lt; Record &gt; m_record { std::nullopt };</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classGameEditDialog.html">GameEditDialog</a>( <span class="keyword">const</span> <a class="code hl_typedef" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> game_id, QWidget* parent = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_function" href="classGameEditDialog.html#a710c47381d5969bb8173dcb7bc8379d9">~GameEditDialog</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    Ui::GameEditDialog* ui;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">private</span> slots:</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">void</span> on_nameEdit_textChanged( <span class="keyword">const</span> QString&amp; text );</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> on_creatorEdit_textChanged( <span class="keyword">const</span> QString&amp; text );</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">void</span> imageSelectionChanged( <span class="keyword">const</span> QItemSelection&amp; selected, <span class="keyword">const</span> QItemSelection&amp; deselected );</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="comment">//Image editing</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> on_replaceBanner_pressed();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">void</span> on_addPreview_pressed();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">void</span> on_removePreview_pressed();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">//Extra buttons</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> on_applyChanges_pressed();</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">void</span> on_cancelChanges_pressed();</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">void</span> on_applyChanges_2_pressed() { on_applyChanges_pressed(); }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">void</span> on_cancelChanges_2_pressed() { on_cancelChanges_pressed(); }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">//Version stuff</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">void</span> on_addVersion_pressed();</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">void</span> on_removeVersion_pressed();</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <a class="code hl_struct" href="structRecord.html">Record</a> <a class="code hl_function" href="classGameEditDialog.html#ace0529696fea896e871eb1487e8f9e04">getRecord</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classGameEditDialog.html#a5be6aa9196d650445cc3f5ccac6012ca">   59</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGameEditDialog.html#a5be6aa9196d650445cc3f5ccac6012ca">recordDeleted</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_record.has_value(); }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>};</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_GAMEEDITDIALOG_HPP</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    std::optional&lt;Record&gt; m_record {std::nullopt};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classGameEditDialog.html">GameEditDialog</a>( <span class="keyword">const</span> <a class="code hl_typedef" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> game_id, QWidget* parent = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_function" href="classGameEditDialog.html#a710c47381d5969bb8173dcb7bc8379d9">~GameEditDialog</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">private</span> slots:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">void</span> on_applyChanges_pressed();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> on_cancelChanges_pressed();</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">void</span> on_addVersion_pressed();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">void</span> on_removeVersion_pressed();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> resizeEvent(QResizeEvent* event) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    Ui::GameEditDialog* ui;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>};</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_GAMEEDITDIALOG_HPP</span></div>
 <div class="ttc" id="aRecord_8hpp_html"><div class="ttname"><a href="Record_8hpp.html">Record.hpp</a></div></div>
 <div class="ttc" id="aTypes_8hpp_html"><div class="ttname"><a href="Types_8hpp.html">Types.hpp</a></div></div>
 <div class="ttc" id="aTypes_8hpp_html_a7781c4e1eb7252d6c4f422f1d180c49e"><div class="ttname"><a href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a></div><div class="ttdeci">uint32_t RecordID</div><div class="ttdef"><b>Definition:</b> Types.hpp:10</div></div>
 <div class="ttc" id="aclassGameEditDialog_html"><div class="ttname"><a href="classGameEditDialog.html">GameEditDialog</a></div><div class="ttdef"><b>Definition:</b> GameEditDialog.hpp:23</div></div>
-<div class="ttc" id="aclassGameEditDialog_html_a5be6aa9196d650445cc3f5ccac6012ca"><div class="ttname"><a href="classGameEditDialog.html#a5be6aa9196d650445cc3f5ccac6012ca">GameEditDialog::recordDeleted</a></div><div class="ttdeci">bool recordDeleted() const</div><div class="ttdef"><b>Definition:</b> GameEditDialog.hpp:59</div></div>
-<div class="ttc" id="aclassGameEditDialog_html_a710c47381d5969bb8173dcb7bc8379d9"><div class="ttname"><a href="classGameEditDialog.html#a710c47381d5969bb8173dcb7bc8379d9">GameEditDialog::~GameEditDialog</a></div><div class="ttdeci">~GameEditDialog() override</div><div class="ttdef"><b>Definition:</b> GameEditDialog.cpp:64</div></div>
-<div class="ttc" id="aclassGameEditDialog_html_ace0529696fea896e871eb1487e8f9e04"><div class="ttname"><a href="classGameEditDialog.html#ace0529696fea896e871eb1487e8f9e04">GameEditDialog::getRecord</a></div><div class="ttdeci">Record getRecord() const</div><div class="ttdef"><b>Definition:</b> GameEditDialog.cpp:251</div></div>
+<div class="ttc" id="aclassGameEditDialog_html_a710c47381d5969bb8173dcb7bc8379d9"><div class="ttname"><a href="classGameEditDialog.html#a710c47381d5969bb8173dcb7bc8379d9">GameEditDialog::~GameEditDialog</a></div><div class="ttdeci">~GameEditDialog() override</div><div class="ttdef"><b>Definition:</b> GameEditDialog.cpp:50</div></div>
 <div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition:</b> GameEditDialog.hpp:17</div></div>
-<div class="ttc" id="astructRecord_html"><div class="ttname"><a href="structRecord.html">Record</a></div><div class="ttdef"><b>Definition:</b> Record.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

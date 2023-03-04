@@ -105,213 +105,30 @@ $(document).ready(function(){initNavTree('GameImportDialog_8cpp.html',''); initR
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">GameImportDialog.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
-<code>#include &lt;QFileDialog&gt;</code><br />
-<code>#include &lt;QDirIterator&gt;</code><br />
-<code>#include &lt;QMimeDatabase&gt;</code><br />
-<code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
-<code>#include &quot;<a class="el" href="GameImportDialog_8hpp_source.html">GameImportDialog.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="GameImportDialog_8hpp_source.html">GameImportDialog.hpp</a>&quot;</code><br />
 <code>#include &quot;ui_GameImportDialog.h&quot;</code><br />
-<code>#include &lt;<a class="el" href="Importer_8hpp_source.html">h95/Importer.hpp</a>&gt;</code><br />
-<code>#include &lt;QMessageBox&gt;</code><br />
+<code>#include &lt;<a class="el" href="config_8hpp_source.html">h95/config.hpp</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for GameImportDialog.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="GameImportDialog_8cpp__incl.png" border="0" usemap="#asrc_2ui_2dialog_2GameImportDialog_8cpp" alt=""/></div>
 <map name="asrc_2ui_2dialog_2GameImportDialog_8cpp" id="asrc_2ui_2dialog_2GameImportDialog_8cpp">
-<area shape="rect" title=" " alt="" coords="439,5,607,45"/>
-<area shape="rect" title=" " alt="" coords="605,240,685,265"/>
-<area shape="rect" title=" " alt="" coords="76,93,165,119"/>
-<area shape="rect" title=" " alt="" coords="189,93,279,119"/>
-<area shape="rect" title=" " alt="" coords="303,93,421,119"/>
-<area shape="rect" title=" " alt="" coords="5,240,116,265"/>
-<area shape="rect" href="GameImportDialog_8hpp.html" title=" " alt="" coords="446,93,601,119"/>
-<area shape="rect" title=" " alt="" coords="675,93,833,119"/>
-<area shape="rect" href="Importer_8hpp.html" title=" " alt="" coords="713,167,832,192"/>
-<area shape="rect" title=" " alt="" coords="907,93,1014,119"/>
-<area shape="rect" title=" " alt="" coords="489,167,557,192"/>
-<area shape="rect" href="PathManager_8hpp.html" title=" " alt="" coords="311,167,459,192"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="332,240,437,265"/>
-<area shape="rect" href="KeyReplacer_8hpp.html" title=" " alt="" coords="461,240,580,265"/>
-<area shape="rect" title=" " alt="" coords="156,240,211,265"/>
-<area shape="rect" title=" " alt="" coords="235,240,307,265"/>
-<area shape="rect" title=" " alt="" coords="254,313,334,339"/>
-<area shape="rect" title=" " alt="" coords="359,313,432,339"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="602,313,714,339"/>
-<area shape="rect" title=" " alt="" coords="602,387,714,412"/>
-<area shape="rect" title=" " alt="" coords="465,313,576,339"/>
-<area shape="rect" title=" " alt="" coords="739,313,806,339"/>
-<area shape="rect" title=" " alt="" coords="810,240,869,265"/>
+<area shape="rect" title=" " alt="" coords="179,5,347,45"/>
+<area shape="rect" href="GameImportDialog_8hpp.html" title=" " alt="" coords="5,93,160,119"/>
+<area shape="rect" title=" " alt="" coords="184,93,341,119"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="366,93,471,119"/>
+<area shape="rect" title=" " alt="" coords="49,167,117,192"/>
+<area shape="rect" title=" " alt="" coords="277,167,357,192"/>
+<area shape="rect" title=" " alt="" coords="382,167,455,192"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="480,167,592,192"/>
+<area shape="rect" title=" " alt="" coords="423,240,535,265"/>
+<area shape="rect" title=" " alt="" coords="559,240,625,265"/>
 </map>
 </div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a05599f97b8b6f3bd82cd8ecd142884a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a05599f97b8b6f3bd82cd8ecd142884a3">deserializePreviews</a> (const QString &amp;str)</td></tr>
-<tr class="separator:a05599f97b8b6f3bd82cd8ecd142884a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74698469e778e3d6d11b7d690ccb50b3"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a74698469e778e3d6d11b7d690ccb50b3">serializePreviews</a> (const QList&lt; QString &gt; &amp;list)</td></tr>
-<tr class="separator:a74698469e778e3d6d11b7d690ccb50b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28138603c0cc4f0a3fb08f98d5b074bf"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a28138603c0cc4f0a3fb08f98d5b074bf">serializePreviews</a> (const std::vector&lt; std::filesystem::path &gt; &amp;paths)</td></tr>
-<tr class="separator:a28138603c0cc4f0a3fb08f98d5b074bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aab6278f24b3a88cdf3592ae470207d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a8aab6278f24b3a88cdf3592ae470207d">fixPathDelimiter</a> (QString str)</td></tr>
-<tr class="separator:a8aab6278f24b3a88cdf3592ae470207d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a256bd9de9669d955198529208742af65"><td class="memItemLeft" align="right" valign="top">constexpr char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a256bd9de9669d955198529208742af65">preview_delim</a> { ';' }</td></tr>
-<tr class="separator:a256bd9de9669d955198529208742af65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a312996aa14ae38c917ae455b07adb3f0"><td class="memItemLeft" align="right" valign="top">const QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameImportDialog_8cpp.html#a312996aa14ae38c917ae455b07adb3f0">file_filters</a> { &quot;Image files (*.png, *.jpg *.gif *.tiff *.webp)&quot;, &quot;Any files (*)&quot; }</td></tr>
-<tr class="separator:a312996aa14ae38c917ae455b07adb3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a05599f97b8b6f3bd82cd8ecd142884a3" name="a05599f97b8b6f3bd82cd8ecd142884a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05599f97b8b6f3bd82cd8ecd142884a3">&#9670;&#160;</a></span>deserializePreviews()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::filesystem::path &gt; deserializePreviews </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8aab6278f24b3a88cdf3592ae470207d" name="a8aab6278f24b3a88cdf3592ae470207d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aab6278f24b3a88cdf3592ae470207d">&#9670;&#160;</a></span>fixPathDelimiter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString fixPathDelimiter </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a74698469e778e3d6d11b7d690ccb50b3" name="a74698469e778e3d6d11b7d690ccb50b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74698469e778e3d6d11b7d690ccb50b3">&#9670;&#160;</a></span>serializePreviews() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString serializePreviews </td>
-          <td>(</td>
-          <td class="paramtype">const QList&lt; QString &gt; &amp;&#160;</td>
-          <td class="paramname"><em>list</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a28138603c0cc4f0a3fb08f98d5b074bf" name="a28138603c0cc4f0a3fb08f98d5b074bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28138603c0cc4f0a3fb08f98d5b074bf">&#9670;&#160;</a></span>serializePreviews() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString serializePreviews </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::filesystem::path &gt; &amp;&#160;</td>
-          <td class="paramname"><em>paths</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a312996aa14ae38c917ae455b07adb3f0" name="a312996aa14ae38c917ae455b07adb3f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a312996aa14ae38c917ae455b07adb3f0">&#9670;&#160;</a></span>file_filters</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const QStringList file_filters { &quot;Image files (*.png, *.jpg *.gif *.tiff *.webp)&quot;, &quot;Any files (*)&quot; }</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a256bd9de9669d955198529208742af65" name="a256bd9de9669d955198529208742af65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a256bd9de9669d955198529208742af65">&#9670;&#160;</a></span>preview_delim</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr char preview_delim { ';' }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

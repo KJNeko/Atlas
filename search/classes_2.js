@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keyreplacer_0',['KeyReplacer',['../classKeyReplacer.html',1,'']]]
+  ['editlabel_0',['EditLabel',['../classEditLabel.html',1,'']]]
 ];

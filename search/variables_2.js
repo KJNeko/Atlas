@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_5freplacer_0',['key_replacer',['../structPathManager.html#a5ce3f127a574dbee8045cd14ecfa22e9',1,'PathManager']]]
+  ['record_0',['record',['../structRecordAlreadyExists.html#ae03e24eee138a8e569bc6e46786e882c',1,'RecordAlreadyExists']]]
 ];

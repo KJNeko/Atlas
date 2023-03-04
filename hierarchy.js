@@ -1,35 +1,52 @@
 var hierarchy =
 [
+    [ "Database", "classDatabase.html", null ],
+    [ "fmt::formatter", null, [
+      [ "fmt::formatter< QString >", "structfmt_1_1formatter_3_01QString_01_4.html", null ]
+    ] ],
     [ "GameMetadata", "structGameMetadata.html", null ],
-    [ "Importer", "classImporter.html", null ],
     [ "KeyReplacer", "classKeyReplacer.html", null ],
-    [ "PathManager", "structPathManager.html", null ],
     [ "QAbstractItemDelegate", null, [
-      [ "RecordViewDelegate", "classRecordViewDelegate.html", null ]
+      [ "GameViewDelegate", "classGameViewDelegate.html", null ]
     ] ],
     [ "QAbstractItemModel", null, [
-      [ "GameEditImageModel", "classGameEditImageModel.html", null ],
-      [ "GameEditVersionModel", "classGameEditVersionModel.html", null ]
+      [ "VersionViewModel", "classVersionViewModel.html", null ]
     ] ],
     [ "QAbstractListModel", null, [
-      [ "RecordViewModel", "classRecordViewModel.html", null ]
+      [ "GameViewModel", "classGameViewModel.html", null ],
+      [ "PreviewViewModel", "classPreviewViewModel.html", null ]
     ] ],
     [ "QDialog", null, [
       [ "GameEditDialog", "classGameEditDialog.html", null ],
       [ "GameImportDialog", "classGameImportDialog.html", null ],
       [ "SettingsDialog", "classSettingsDialog.html", null ]
     ] ],
+    [ "QLabel", null, [
+      [ "BannerView", "classBannerView.html", null ]
+    ] ],
+    [ "QListView", null, [
+      [ "GameView", "classGameView.html", null ],
+      [ "PreviewView", "classPreviewView.html", null ],
+      [ "VersionView", "classVersionView.html", null ]
+    ] ],
     [ "QMainWindow", null, [
       [ "MainWindow", "classMainWindow.html", null ]
     ] ],
-    [ "QObject", null, [
-      [ "RecordViewBackend", "classRecordViewBackend.html", null ]
-    ] ],
     [ "QWidget", null, [
-      [ "RecordView", "classRecordView.html", null ],
-      [ "RecordViewWidget", "classRecordViewWidget.html", null ],
+      [ "EditLabel", "classEditLabel.html", null ],
+      [ "GameTab", "classGameTab.html", null ],
+      [ "SearchWidget", "classSearchWidget.html", null ],
       [ "SelectedViewWidget", "classSelectedViewWidget.html", null ]
     ] ],
     [ "Record", "structRecord.html", null ],
-    [ "Tag", "structTag.html", null ]
+    [ "std::runtime_error", null, [
+      [ "MetadataAlreadyExists", "structMetadataAlreadyExists.html", null ],
+      [ "RecordException", "structRecordException.html", [
+        [ "InvalidRecordID", "structInvalidRecordID.html", null ],
+        [ "RecordAlreadyExists", "structRecordAlreadyExists.html", null ]
+      ] ],
+      [ "TransactionInvalid", "structTransactionInvalid.html", null ]
+    ] ],
+    [ "Tag", "structTag.html", null ],
+    [ "TransactionBase", "structTransactionBase.html", null ]
 ];

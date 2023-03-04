@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['value_0',['value',['../classKeyReplacer.html#a54c8530f94c1e66248ffc2537e9812fb',1,'KeyReplacer']]]
+  ['ui_0',['Ui',['../namespaceUi.html',1,'']]],
+  ['update_1',['update',['../structRecord.html#af892e3d2652e89811632a58bc8b35578',1,'Record::update()'],['../classGameTab.html#aa1c7fecdaecb8399b7443dd5e8db05d4',1,'GameTab::update()']]]
 ];

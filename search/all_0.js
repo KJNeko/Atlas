@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['addpreview_0',['addPreview',['../classGameEditImageModel.html#a05545e04cd2146dd62752fef0f82f256',1,'GameEditImageModel']]],
-  ['addrecord_1',['addRecord',['../classRecordViewModel.html#a4cf67b61d4f4d6033640696a9b976c19',1,'RecordViewModel']]],
-  ['addrow_2',['addRow',['../classGameEditVersionModel.html#a84f085f6636437d20130a7e8ce6aa91e',1,'GameEditVersionModel']]],
-  ['addtag_3',['addTag',['../classRecordViewBackend.html#a057225f887a10728fcdd220dd28e3076',1,'RecordViewBackend']]],
-  ['allow_5frecord_5fslowcompare_4',['ALLOW_RECORD_SLOWCOMPARE',['../GameEditDialog_8cpp.html#ab5f4d1eaad21639fac82189d3c37115b',1,'GameEditDialog.cpp']]]
+  ['abort_0',['abort',['../structTransactionBase.html#a54b754fe2b95de9becd9fd808d92fe7b',1,'TransactionBase']]],
+  ['addpreview_1',['addPreview',['../classPreviewViewModel.html#a14667dce2c819c66d3b2aaad84774f24',1,'PreviewViewModel']]],
+  ['addversion_2',['addVersion',['../classVersionViewModel.html#a5f757f7788fbcd23935d13f99d9a4cdb',1,'VersionViewModel::addVersion()'],['../classVersionView.html#a30f0e0d57e61f5dd5a77dc5b5bd023e6',1,'VersionView::addVersion()']]]
 ];

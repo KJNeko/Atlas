@@ -106,7 +106,6 @@ $(document).ready(function(){initNavTree('classGameImportDialog.html',''); initR
 
 <div class="header">
   <div class="summary">
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classGameImportDialog-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GameImportDialog Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
@@ -124,25 +123,20 @@ Inheritance diagram for GameImportDialog:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
-Signals</h2></td></tr>
-<tr class="memitem:aa409e4890cfc7513a31c7cd8689346f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#aa409e4890cfc7513a31c7cd8689346f0">importComplete</a> ()</td></tr>
-<tr class="separator:aa409e4890cfc7513a31c7cd8689346f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1db46344fb92984374794fc3303c8e6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#a1db46344fb92984374794fc3303c8e6a">GameImportDialog</a> (QWidget *parent=nullptr)</td></tr>
-<tr class="separator:a1db46344fb92984374794fc3303c8e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bf31e5a55c5392aa0563f2d3fc51062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#a0bf31e5a55c5392aa0563f2d3fc51062">GameImportDialog</a> (const QUrl &amp;url, QWidget *parent=nullptr)</td></tr>
-<tr class="separator:a0bf31e5a55c5392aa0563f2d3fc51062"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc7e3b800de596cd1824a32668fc8f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#a1cc7e3b800de596cd1824a32668fc8f7">GameImportDialog</a> (const QString &amp;path, QWidget *parent=nullptr)</td></tr>
+<tr class="separator:a1cc7e3b800de596cd1824a32668fc8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab31c99349d3bf74a457b25ec2c28b9f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#ab31c99349d3bf74a457b25ec2c28b9f2">~GameImportDialog</a> () override</td></tr>
 <tr class="separator:ab31c99349d3bf74a457b25ec2c28b9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af380c2149f5082cbebb101ddf12638f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#af380c2149f5082cbebb101ddf12638f8">setInformation</a> (const QString &amp;creator, const QString &amp;title, const QString &amp;engine)</td></tr>
-<tr class="separator:af380c2149f5082cbebb101ddf12638f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a354e3fc851a61e7ac7855711d0944bab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#a354e3fc851a61e7ac7855711d0944bab">loadAutoPopulateSettings</a> ()</td></tr>
+<tr class="separator:a354e3fc851a61e7ac7855711d0944bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45a2d2cd4651a42061cfdcae185a554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameImportDialog.html#ab45a2d2cd4651a42061cfdcae185a554">runAutoPopulate</a> ()</td></tr>
+<tr class="separator:ab45a2d2cd4651a42061cfdcae185a554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1db46344fb92984374794fc3303c8e6a" name="a1db46344fb92984374794fc3303c8e6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1db46344fb92984374794fc3303c8e6a">&#9670;&#160;</a></span>GameImportDialog() <span class="overload">[1/2]</span></h2>
+<a id="a1cc7e3b800de596cd1824a32668fc8f7" name="a1cc7e3b800de596cd1824a32668fc8f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cc7e3b800de596cd1824a32668fc8f7">&#9670;&#160;</a></span>GameImportDialog()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,34 +147,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">GameImportDialog::GameImportDialog </td>
           <td>(</td>
-          <td class="paramtype">QWidget *&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>nullptr</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0bf31e5a55c5392aa0563f2d3fc51062" name="a0bf31e5a55c5392aa0563f2d3fc51062"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bf31e5a55c5392aa0563f2d3fc51062">&#9670;&#160;</a></span>GameImportDialog() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameImportDialog::GameImportDialog </td>
-          <td>(</td>
-          <td class="paramtype">const QUrl &amp;&#160;</td>
-          <td class="paramname"><em>url</em>, </td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -229,59 +197,34 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa409e4890cfc7513a31c7cd8689346f0" name="aa409e4890cfc7513a31c7cd8689346f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa409e4890cfc7513a31c7cd8689346f0">&#9670;&#160;</a></span>importComplete</h2>
+<a id="a354e3fc851a61e7ac7855711d0944bab" name="a354e3fc851a61e7ac7855711d0944bab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a354e3fc851a61e7ac7855711d0944bab">&#9670;&#160;</a></span>loadAutoPopulateSettings()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GameImportDialog::importComplete </td>
+          <td class="memname">void GameImportDialog::loadAutoPopulateSettings </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af380c2149f5082cbebb101ddf12638f8" name="af380c2149f5082cbebb101ddf12638f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af380c2149f5082cbebb101ddf12638f8">&#9670;&#160;</a></span>setInformation()</h2>
+<a id="ab45a2d2cd4651a42061cfdcae185a554" name="ab45a2d2cd4651a42061cfdcae185a554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab45a2d2cd4651a42061cfdcae185a554">&#9670;&#160;</a></span>runAutoPopulate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GameImportDialog::setInformation </td>
+          <td class="memname">void GameImportDialog::runAutoPopulate </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>creator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>title</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>engine</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

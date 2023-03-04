@@ -1,7 +1,8 @@
 var classKeyReplacer =
 [
-    [ "clear", "classKeyReplacer.html#a7e11062f33c01a67fb2b0b97212467b5", null ],
-    [ "registerKey", "classKeyReplacer.html#a956208892b5b49771ccc302b744f45be", null ],
-    [ "replaceKeys", "classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd", null ],
-    [ "value", "classKeyReplacer.html#a54c8530f94c1e66248ffc2537e9812fb", null ]
+    [ "extractKeys", "classKeyReplacer.html#a4e38bc42747503db190b9031fee1d303", null ],
+    [ "replace", "classKeyReplacer.html#adceb26041ed7b974b282e1af7adeee54", null ],
+    [ "setKey", "classKeyReplacer.html#a1883b7b24ea1399b43908087eee42aa4", null ],
+    [ "value", "classKeyReplacer.html#aec94a8ec0bde6e459f58998830a42ff3", null ],
+    [ "TestKeyReplacer", "classKeyReplacer.html#a636bd4b591a1ce2a6b130184a0eb2019", null ]
 ];

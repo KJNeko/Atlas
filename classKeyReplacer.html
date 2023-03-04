@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classKeyReplacer.html',''); initResiza
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classKeyReplacer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">KeyReplacer Class Reference</div></div>
 </div><!--header-->
@@ -116,46 +117,80 @@ $(document).ready(function(){initNavTree('classKeyReplacer.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a956208892b5b49771ccc302b744f45be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a956208892b5b49771ccc302b744f45be">registerKey</a> (const QString &amp;key, QString <a class="el" href="classKeyReplacer.html#a54c8530f94c1e66248ffc2537e9812fb">value</a>)</td></tr>
-<tr class="memdesc:a956208892b5b49771ccc302b744f45be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new key for the given value in the key_map.  <br /></td></tr>
-<tr class="separator:a956208892b5b49771ccc302b744f45be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54c8530f94c1e66248ffc2537e9812fb"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a54c8530f94c1e66248ffc2537e9812fb">value</a> (const QString &amp;key) const</td></tr>
-<tr class="memdesc:a54c8530f94c1e66248ffc2537e9812fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers keys from a string using a mask.  <br /></td></tr>
-<tr class="separator:a54c8530f94c1e66248ffc2537e9812fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb67814076ba6c8f5a6fcc8283a7e8dd"><td class="memItemLeft" align="right" valign="top">QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#aeb67814076ba6c8f5a6fcc8283a7e8dd">replaceKeys</a> (QString &amp;str) const</td></tr>
-<tr class="memdesc:aeb67814076ba6c8f5a6fcc8283a7e8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populates a string by replacing the keys given with the values.  <br /></td></tr>
-<tr class="separator:aeb67814076ba6c8f5a6fcc8283a7e8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e11062f33c01a67fb2b0b97212467b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a7e11062f33c01a67fb2b0b97212467b5">clear</a> ()</td></tr>
-<tr class="separator:a7e11062f33c01a67fb2b0b97212467b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec94a8ec0bde6e459f58998830a42ff3"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#aec94a8ec0bde6e459f58998830a42ff3">value</a> (const QString &amp;key)</td></tr>
+<tr class="separator:aec94a8ec0bde6e459f58998830a42ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1883b7b24ea1399b43908087eee42aa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a1883b7b24ea1399b43908087eee42aa4">setKey</a> (QString key, QString <a class="el" href="classKeyReplacer.html#aec94a8ec0bde6e459f58998830a42ff3">value</a>)</td></tr>
+<tr class="separator:a1883b7b24ea1399b43908087eee42aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adceb26041ed7b974b282e1af7adeee54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#adceb26041ed7b974b282e1af7adeee54">replace</a> (QString &amp;str)</td></tr>
+<tr class="memdesc:adceb26041ed7b974b282e1af7adeee54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all keys with the value found in key_list.  <br /></td></tr>
+<tr class="separator:adceb26041ed7b974b282e1af7adeee54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e38bc42747503db190b9031fee1d303"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a4e38bc42747503db190b9031fee1d303">extractKeys</a> (std::filesystem::path text, std::filesystem::path pattern)</td></tr>
+<tr class="separator:a4e38bc42747503db190b9031fee1d303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a636bd4b591a1ce2a6b130184a0eb2019"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKeyReplacer.html#a636bd4b591a1ce2a6b130184a0eb2019">TestKeyReplacer</a></td></tr>
+<tr class="separator:a636bd4b591a1ce2a6b130184a0eb2019"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7e11062f33c01a67fb2b0b97212467b5" name="a7e11062f33c01a67fb2b0b97212467b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e11062f33c01a67fb2b0b97212467b5">&#9670;&#160;</a></span>clear()</h2>
+<a id="a4e38bc42747503db190b9031fee1d303" name="a4e38bc42747503db190b9031fee1d303"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e38bc42747503db190b9031fee1d303">&#9670;&#160;</a></span>extractKeys()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KeyReplacer::clear </td>
+          <td class="memname">void KeyReplacer::extractKeys </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::filesystem::path&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::filesystem::path&#160;</td>
+          <td class="paramname"><em>pattern</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a956208892b5b49771ccc302b744f45be" name="a956208892b5b49771ccc302b744f45be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a956208892b5b49771ccc302b744f45be">&#9670;&#160;</a></span>registerKey()</h2>
+<a id="adceb26041ed7b974b282e1af7adeee54" name="adceb26041ed7b974b282e1af7adeee54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adceb26041ed7b974b282e1af7adeee54">&#9670;&#160;</a></span>replace()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KeyReplacer::registerKey </td>
+          <td class="memname">void KeyReplacer::replace </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replaces all keys with the value found in key_list. </p>
+
+</div>
+</div>
+<a id="a1883b7b24ea1399b43908087eee42aa4" name="a1883b7b24ea1399b43908087eee42aa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1883b7b24ea1399b43908087eee42aa4">&#9670;&#160;</a></span>setKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KeyReplacer::setKey </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
           <td class="paramname"><em>key</em>, </td>
         </tr>
         <tr>
@@ -172,32 +207,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Registers a new key for the given value in the key_map. </p>
-
 </div>
 </div>
-<a id="aeb67814076ba6c8f5a6fcc8283a7e8dd" name="aeb67814076ba6c8f5a6fcc8283a7e8dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb67814076ba6c8f5a6fcc8283a7e8dd">&#9670;&#160;</a></span>replaceKeys()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString &amp; KeyReplacer::replaceKeys </td>
-          <td>(</td>
-          <td class="paramtype">QString &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Populates a string by replacing the keys given with the values. </p>
-
-</div>
-</div>
-<a id="a54c8530f94c1e66248ffc2537e9812fb" name="a54c8530f94c1e66248ffc2537e9812fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54c8530f94c1e66248ffc2537e9812fb">&#9670;&#160;</a></span>value()</h2>
+<a id="aec94a8ec0bde6e459f58998830a42ff3" name="aec94a8ec0bde6e459f58998830a42ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec94a8ec0bde6e459f58998830a42ff3">&#9670;&#160;</a></span>value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -207,13 +220,33 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gathers keys from a string using a mask. </p>
-<p>Returns a value for the given key </p>
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a636bd4b591a1ce2a6b130184a0eb2019" name="a636bd4b591a1ce2a6b130184a0eb2019"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a636bd4b591a1ce2a6b130184a0eb2019">&#9670;&#160;</a></span>TestKeyReplacer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class TestKeyReplacer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
