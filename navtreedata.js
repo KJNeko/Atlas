@@ -26,6 +26,13 @@ var NAVTREE =
 [
   [ "Hydrus95", "index.html", [
     [ "Settings list", "H95Settings.html", null ],
+    [ "Welcome to Hydrus95's git page!", "md_README.html", [
+      [ "What is it?", "md_README.html#autotoc_md1", null ],
+      [ "Features:", "md_README.html#autotoc_md2", null ],
+      [ "F95Zone integration", "md_README.html#autotoc_md3", null ],
+      [ "DLSite integration", "md_README.html#autotoc_md4", null ],
+      [ "Steam/SteamCMD integration", "md_README.html#autotoc_md5", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -60,7 +67,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BannerView_8cpp.html",
-"structGameMetadata.html"
+"namespaceinternal.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
