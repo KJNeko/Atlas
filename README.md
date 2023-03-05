@@ -1,22 +1,35 @@
-# Welcome to Hydrus95's git page!
+# Hydrus95
+Hydrus95 is a lewd game manager first but does support other mediums. (Relevant mediums that [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/) releases)
 
-## What is it?
-Hydrus95 is a replacement program to replace the existing client [Game-List](www.game-list.org) ([Github](https://github.com/game-list/game-list)) as well as implement new features for game management for smaller scale games
+It's meant to replace [Game-List](www.game-list.org) ([Github](https://github.com/game-list/game-list)) but also expand on it's feature set.
+
+Hydrus95 is for the user that wants ease of use, quality of life and have the software do the heavy lifting for you.
 
 ## Features:
-- Written in C++ with modern practices to be stupidly fast.
-- Uses Qt6 as it's interface. Allowing for extremely easy customization of the interface.
+- Fast and Snappy UI.
+- Easy to understand UI written in Qt6.
+- [ ] [Custom themes and color schemes.](https://github.com/KJNeko/Hydrus95/issues/17)
+- Game file management (moves or copies game install files for you)
+- Easy to edit metadata and tags per title.
+- Navigate titles with a Banner/Thumbnail gallery grid.
+- View previews of the title scraped from the web or manually added.
+- Filter titles based on titles, creators, tags, ID's, description contents and urls.
+- Bulk install/import multiple titles and versions with a single approval.
+- Compresses all banner and preview images to smaller webp files for storage optimization.
 
-## F95Zone integration
-- [ ] Login service
+### [F95Zone integration](https://github.com/KJNeko/Hydrus95/issues/2)
+- [ ] Scrape Metadata (titles, tags, description, version and image urls)
+- [ ] Downloads Banner images and preview images automatically.
 - [ ] In app browser with custom hooks to allow 1 click game installs.
-- [ ] Update checker
+- [ ] Update/release checker/notifier.
 
-## DLSite integration
+### [DLSite integration](https://github.com/KJNeko/Hydrus95/issues/3)
+- [ ] Scrape Metadata (titles, tags, description, version and image urls)
 - [ ] Game updates/notifications
-- [ ] Follow your popular creators with updates
+- [ ] Follow your popular creators for new releases
 
-## Steam/SteamCMD integration
-- [ ] Set game to launch with `steam://rungameid/{gameid}` to launch through steam
-- [ ] SteamCMD to update/download games through the client.
+### [Steam/SteamCMD integration](https://github.com/KJNeko/Hydrus95/issues/4)
+- [ ] Add SteamID to Hydrus95
+- [ ] Run, download and uninstall with SteamID
+- [ ] Show Steam Link to push users to optionally buy the title.
 
