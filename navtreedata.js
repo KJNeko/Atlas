@@ -28,9 +28,9 @@ var NAVTREE =
     [ "Settings list", "H95Settings.html", null ],
     [ "Hydrus95", "md_README.html", [
       [ "Features:", "md_README.html#autotoc_md1", [
-        [ "<a href=\"https://github.com/KJNeko/Hydrus95/issues/2\" >F95Zone integration</a>", "md_README.html#autotoc_md2", null ],
-        [ "<a href=\"https://github.com/KJNeko/Hydrus95/issues/3\" >DLSite integration</a>", "md_README.html#autotoc_md3", null ],
-        [ "<a href=\"https://github.com/KJNeko/Hydrus95/issues/4\" >Steam/SteamCMD integration</a>", "md_README.html#autotoc_md4", null ]
+        [ "F95Zone integration[https://github.com/KJNeko/Hydrus95/issues/2]", "md_README.html#autotoc_md2", null ],
+        [ "DLSite integration[https://github.com/KJNeko/Hydrus95/issues/3]", "md_README.html#autotoc_md3", null ],
+        [ "Steam/SteamCMD integration[https://github.com/KJNeko/Hydrus95/issues/4]", "md_README.html#autotoc_md4", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
