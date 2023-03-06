@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/ui/widgets/records/SelectedViewWidget.cpp File Reference</title>
+<title>Hydrus95: src/ui/widgets/SelectedViewWidget.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -110,39 +110,40 @@ $(document).ready(function(){initNavTree('SelectedViewWidget_8cpp.html',''); ini
 <div class="contents">
 <div class="textblock"><code>#include &lt;QResizeEvent&gt;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
-<code>#include &lt;<a class="el" href="config_8hpp_source.html">h95/config.hpp</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="executeProc_8hpp_source.html">h95/executeProc.hpp</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">h95/config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="executeProc_8hpp_source.html">h95/executeProc.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="SelectedViewWidget_8hpp_source.html">SelectedViewWidget.hpp</a>&quot;</code><br />
 <code>#include &quot;ui_SelectedViewWidget.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SelectedViewWidget.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="SelectedViewWidget_8cpp__incl.png" border="0" usemap="#asrc_2ui_2widgets_2records_2SelectedViewWidget_8cpp" alt=""/></div>
-<map name="asrc_2ui_2widgets_2records_2SelectedViewWidget_8cpp" id="asrc_2ui_2widgets_2records_2SelectedViewWidget_8cpp">
-<area shape="rect" title=" " alt="" coords="316,5,487,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,109,119"/>
-<area shape="rect" title=" " alt="" coords="134,93,245,119"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="269,93,374,119"/>
-<area shape="rect" href="executeProc_8hpp.html" title=" " alt="" coords="589,93,731,119"/>
-<area shape="rect" href="SelectedViewWidget_8hpp.html" title=" " alt="" coords="398,93,565,119"/>
-<area shape="rect" title=" " alt="" coords="755,93,925,119"/>
-<area shape="rect" title=" " alt="" coords="180,167,260,192"/>
-<area shape="rect" title=" " alt="" coords="285,167,358,192"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="44,167,156,192"/>
-<area shape="rect" title=" " alt="" coords="44,240,156,265"/>
-<area shape="rect" title=" " alt="" coords="220,313,287,339"/>
-<area shape="rect" title=" " alt="" coords="855,167,910,192"/>
-<area shape="rect" title=" " alt="" coords="759,167,831,192"/>
-<area shape="rect" title=" " alt="" coords="383,167,540,192"/>
-<area shape="rect" href="Record_8hpp.html" title=" " alt="" coords="565,167,734,192"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="608,313,715,339"/>
-<area shape="rect" href="GameMetadata_8hpp.html" title=" " alt="" coords="333,240,550,265"/>
-<area shape="rect" title=" " alt="" coords="575,240,649,265"/>
-<area shape="rect" title=" " alt="" coords="631,387,692,412"/>
-<area shape="rect" title=" " alt="" coords="516,387,596,412"/>
-<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="342,313,525,339"/>
-<area shape="rect" title=" " alt="" coords="240,387,381,412"/>
-<area shape="rect" title=" " alt="" coords="406,387,477,412"/>
+<div class="center"><img src="SelectedViewWidget_8cpp__incl.png" border="0" usemap="#asrc_2ui_2widgets_2SelectedViewWidget_8cpp" alt=""/></div>
+<map name="asrc_2ui_2widgets_2SelectedViewWidget_8cpp" id="asrc_2ui_2widgets_2SelectedViewWidget_8cpp">
+<area shape="rect" title=" " alt="" coords="573,5,760,45"/>
+<area shape="rect" title=" " alt="" coords="329,93,433,119"/>
+<area shape="rect" title=" " alt="" coords="458,93,568,119"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="164,167,270,192"/>
+<area shape="rect" href="executeProc_8hpp.html" title=" " alt="" coords="835,93,978,119"/>
+<area shape="rect" href="SelectedViewWidget_8hpp.html" title=" " alt="" coords="644,93,811,119"/>
+<area shape="rect" title=" " alt="" coords="1002,93,1171,119"/>
+<area shape="rect" title=" " alt="" coords="122,387,202,412"/>
+<area shape="rect" title=" " alt="" coords="177,240,257,265"/>
+<area shape="rect" title=" " alt="" coords="282,240,355,265"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="41,240,153,265"/>
+<area shape="rect" title=" " alt="" coords="30,313,142,339"/>
+<area shape="rect" title=" " alt="" coords="167,313,262,339"/>
+<area shape="rect" title=" " alt="" coords="286,313,353,339"/>
+<area shape="rect" title=" " alt="" coords="970,167,1024,192"/>
+<area shape="rect" title=" " alt="" coords="692,167,764,192"/>
+<area shape="rect" title=" " alt="" coords="788,167,945,192"/>
+<area shape="rect" href="Record_8hpp.html" title=" " alt="" coords="498,167,667,192"/>
+<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="636,313,742,339"/>
+<area shape="rect" href="GameMetadata_8hpp.html" title=" " alt="" coords="400,240,618,265"/>
+<area shape="rect" title=" " alt="" coords="693,240,768,265"/>
+<area shape="rect" title=" " alt="" coords="658,387,720,412"/>
+<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="428,313,611,339"/>
+<area shape="rect" title=" " alt="" coords="357,387,498,412"/>
+<area shape="rect" title=" " alt="" coords="523,387,594,412"/>
 </map>
 </div>
 </div></div><!-- contents -->
@@ -150,7 +151,7 @@ Include dependency graph for SelectedViewWidget.cpp:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_da5c6b39c0a2f54e57df6799511cd3ab.html">ui</a></li><li class="navelem"><a class="el" href="dir_f3911b9629b0e27ea480d06d47573cbf.html">widgets</a></li><li class="navelem"><a class="el" href="dir_0612b598b523212c6809f172842c86fa.html">records</a></li><li class="navelem"><a class="el" href="SelectedViewWidget_8cpp.html">SelectedViewWidget.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_da5c6b39c0a2f54e57df6799511cd3ab.html">ui</a></li><li class="navelem"><a class="el" href="dir_f3911b9629b0e27ea480d06d47573cbf.html">widgets</a></li><li class="navelem"><a class="el" href="SelectedViewWidget_8cpp.html">SelectedViewWidget.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

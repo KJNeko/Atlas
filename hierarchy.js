@@ -5,7 +5,6 @@ var hierarchy =
       [ "fmt::formatter< QString >", "structfmt_1_1formatter_3_01QString_01_4.html", null ]
     ] ],
     [ "GameMetadata", "structGameMetadata.html", null ],
-    [ "KeyReplacer", "classKeyReplacer.html", null ],
     [ "QAbstractItemDelegate", null, [
       [ "GameViewDelegate", "classGameViewDelegate.html", null ]
     ] ],
@@ -19,6 +18,7 @@ var hierarchy =
     [ "QDialog", null, [
       [ "GameEditDialog", "classGameEditDialog.html", null ],
       [ "GameImportDialog", "classGameImportDialog.html", null ],
+      [ "ProgressDialog", "classProgressDialog.html", null ],
       [ "SettingsDialog", "classSettingsDialog.html", null ]
     ] ],
     [ "QLabel", null, [

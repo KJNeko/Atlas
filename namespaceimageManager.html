@@ -113,20 +113,14 @@ $(document).ready(function(){initNavTree('namespaceimageManager.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a40ef02bcdf9b14c7475350e80bc0d481"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a40ef02bcdf9b14c7475350e80bc0d481">getBannerPath</a> ()</td></tr>
-<tr class="separator:a40ef02bcdf9b14c7475350e80bc0d481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abccd98c4906081222de0a3ff938bfb46"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#abccd98c4906081222de0a3ff938bfb46">getPreviewPath</a> ()</td></tr>
-<tr class="separator:abccd98c4906081222de0a3ff938bfb46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3a51436b39123f7cd4d42731e15c031"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031">getImagePath</a> ()</td></tr>
+<tr class="memdesc:aa3a51436b39123f7cd4d42731e15c031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical preview path (Creates if it doesn't exist)  <br /></td></tr>
+<tr class="separator:aa3a51436b39123f7cd4d42731e15c031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ef0f334a8cd620bb535fb2e4b335fe8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8">cleanOrphans</a> ()</td></tr>
 <tr class="separator:a8ef0f334a8cd620bb535fb2e4b335fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a20f8cda95bd8552c97f325d157da2f"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a3a20f8cda95bd8552c97f325d157da2f">importImage</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;dest, bool delete_after=false)</td></tr>
-<tr class="separator:a3a20f8cda95bd8552c97f325d157da2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac11eb5a88c5442d8f7bffa7398ffe448"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#ac11eb5a88c5442d8f7bffa7398ffe448">importBanner</a> (const std::filesystem::path &amp;path, bool delete_after)</td></tr>
-<tr class="separator:ac11eb5a88c5442d8f7bffa7398ffe448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05b84f635b5db572dbc27c9318cb5918"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a05b84f635b5db572dbc27c9318cb5918">importPreview</a> (const std::filesystem::path &amp;path, bool delete_after)</td></tr>
-<tr class="separator:a05b84f635b5db572dbc27c9318cb5918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b480d1c275db6b736a95452944322b6"><td class="memItemLeft" align="right" valign="top">QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a5b480d1c275db6b736a95452944322b6">fetchImage</a> (const std::filesystem::path &amp;path, const QSize size)</td></tr>
-<tr class="separator:a5b480d1c275db6b736a95452944322b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6999d22aaaef0807b26ebd75f41d00e5"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5">importImage</a> (const std::filesystem::path &amp;path, bool delete_after=false)</td></tr>
+<tr class="memdesc:a6999d22aaaef0807b26ebd75f41d00e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the image located at <code>path</code> in the data folder.  <br /></td></tr>
+<tr class="separator:a6999d22aaaef0807b26ebd75f41d00e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8ef0f334a8cd620bb535fb2e4b335fe8" name="a8ef0f334a8cd620bb535fb2e4b335fe8"></a>
@@ -146,42 +140,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5b480d1c275db6b736a95452944322b6" name="a5b480d1c275db6b736a95452944322b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b480d1c275db6b736a95452944322b6">&#9670;&#160;</a></span>fetchImage()</h2>
+<a id="aa3a51436b39123f7cd4d42731e15c031" name="aa3a51436b39123f7cd4d42731e15c031"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3a51436b39123f7cd4d42731e15c031">&#9670;&#160;</a></span>getImagePath()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QPixmap imageManager::fetchImage </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QSize&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a40ef02bcdf9b14c7475350e80bc0d481" name="a40ef02bcdf9b14c7475350e80bc0d481"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40ef02bcdf9b14c7475350e80bc0d481">&#9670;&#160;</a></span>getBannerPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path imageManager::getBannerPath </td>
+          <td class="memname">std::filesystem::path imageManager::getImagePath </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -189,55 +155,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="abccd98c4906081222de0a3ff938bfb46" name="abccd98c4906081222de0a3ff938bfb46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abccd98c4906081222de0a3ff938bfb46">&#9670;&#160;</a></span>getPreviewPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path imageManager::getPreviewPath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Returns the canonical preview path (Creates if it doesn't exist) </p>
 
 </div>
 </div>
-<a id="ac11eb5a88c5442d8f7bffa7398ffe448" name="ac11eb5a88c5442d8f7bffa7398ffe448"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac11eb5a88c5442d8f7bffa7398ffe448">&#9670;&#160;</a></span>importBanner()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path imageManager::importBanner </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>delete_after</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3a20f8cda95bd8552c97f325d157da2f" name="a3a20f8cda95bd8552c97f325d157da2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a20f8cda95bd8552c97f325d157da2f">&#9670;&#160;</a></span>importImage()</h2>
+<a id="a6999d22aaaef0807b26ebd75f41d00e5" name="a6999d22aaaef0807b26ebd75f41d00e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6999d22aaaef0807b26ebd75f41d00e5">&#9670;&#160;</a></span>importImage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,40 +174,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>delete_after</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a05b84f635b5db572dbc27c9318cb5918" name="a05b84f635b5db572dbc27c9318cb5918"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05b84f635b5db572dbc27c9318cb5918">&#9670;&#160;</a></span>importPreview()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path imageManager::importPreview </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>delete_after</em>&#160;</td>
         </tr>
@@ -295,6 +184,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Stores the image located at <code>path</code> in the data folder. </p>
 
 </div>
 </div>

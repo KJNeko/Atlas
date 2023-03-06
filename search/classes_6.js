@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keyreplacer_0',['KeyReplacer',['../classKeyReplacer.html',1,'']]]
+  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
+  ['metadataalreadyexists_1',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mainwindow_2ecpp_1',['MainWindow.cpp',['../MainWindow_8cpp.html',1,'']]],
-  ['mainwindow_2ehpp_2',['MainWindow.hpp',['../MainWindow_8hpp.html',1,'']]]
+  ['previewview_2ecpp_0',['PreviewView.cpp',['../PreviewView_8cpp.html',1,'']]],
+  ['previewview_2ehpp_1',['PreviewView.hpp',['../PreviewView_8hpp.html',1,'']]],
+  ['progressdialog_2ecpp_2',['ProgressDialog.cpp',['../ProgressDialog_8cpp.html',1,'']]],
+  ['progressdialog_2ehpp_3',['ProgressDialog.hpp',['../ProgressDialog_8hpp.html',1,'']]]
 ];

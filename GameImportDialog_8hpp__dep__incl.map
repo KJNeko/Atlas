@@ -1,6 +1,5 @@
 <map id="src/ui/dialog/GameImportDialog.hpp" name="src/ui/dialog/GameImportDialog.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="209,5,377,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="93,5,261,45"/>
 <area shape="rect" id="node2" href="$MainWindow_8cpp.html" title=" " alt="" coords="5,101,161,126"/>
-<area shape="rect" id="node3" href="$GameEditDialog_8cpp.html" title=" " alt="" coords="186,101,399,126"/>
-<area shape="rect" id="node4" href="$GameImportDialog_8cpp.html" title=" " alt="" coords="423,93,591,133"/>
+<area shape="rect" id="node3" href="$GameImportDialog_8cpp.html" title=" " alt="" coords="186,93,354,133"/>
 </map>

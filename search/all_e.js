@@ -12,8 +12,7 @@ var searchData=
   ['ref_9',['ref',['../structTransactionBase.html#af298818d78de54ff7ee0cee7c6b0c4ed',1,'TransactionBase']]],
   ['removepreview_10',['removePreview',['../classPreviewViewModel.html#abc4474a1f73ea8a705c7ee66fe25e99a',1,'PreviewViewModel']]],
   ['removeversion_11',['removeVersion',['../classVersionViewModel.html#a7f28e5a664a55fe80650076dcdb9f5e5',1,'VersionViewModel::removeVersion()'],['../classVersionView.html#a7a0539aaf7532e727a26190a50a484cb',1,'VersionView::removeVersion()']]],
-  ['replace_12',['replace',['../classKeyReplacer.html#adceb26041ed7b974b282e1af7adeee54',1,'KeyReplacer']]],
-  ['resizeevent_13',['resizeEvent',['../classSelectedViewWidget.html#a3e2137cacb49a47bfcfd4370b01eb815',1,'SelectedViewWidget']]],
-  ['rowcount_14',['rowCount',['../classGameViewModel.html#a4263ee506ddb8cd43e8e7cc776a66fdd',1,'GameViewModel::rowCount()'],['../classPreviewViewModel.html#aa055e3f12012c7e08c9e69afbc37da72',1,'PreviewViewModel::rowCount()'],['../classVersionViewModel.html#ac155afddad35361c6b22d052936f8e92',1,'VersionViewModel::rowCount()']]],
-  ['runautopopulate_15',['runAutoPopulate',['../classGameImportDialog.html#ab45a2d2cd4651a42061cfdcae185a554',1,'GameImportDialog']]]
+  ['resizeevent_12',['resizeEvent',['../classBannerView.html#a1133e88b46cddfe5ee0901c18c7856d1',1,'BannerView::resizeEvent()'],['../classSelectedViewWidget.html#a3e2137cacb49a47bfcfd4370b01eb815',1,'SelectedViewWidget::resizeEvent()']]],
+  ['rowcount_13',['rowCount',['../classGameViewModel.html#a4263ee506ddb8cd43e8e7cc776a66fdd',1,'GameViewModel::rowCount()'],['../classPreviewViewModel.html#aa055e3f12012c7e08c9e69afbc37da72',1,'PreviewViewModel::rowCount()'],['../classVersionViewModel.html#ac155afddad35361c6b22d052936f8e92',1,'VersionViewModel::rowCount()']]],
+  ['runautopopulate_14',['runAutoPopulate',['../classGameImportDialog.html#ab45a2d2cd4651a42061cfdcae185a554',1,'GameImportDialog']]]
 ];

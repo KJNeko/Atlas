@@ -107,6 +107,8 @@ $(document).ready(function(){initNavTree('classBannerView.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classBannerView-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">BannerView Class Reference</div></div>
 </div><!--header-->
@@ -130,15 +132,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aba945fb32122b01d4caa0282b4d02e18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#aba945fb32122b01d4caa0282b4d02e18">~BannerView</a> () override</td></tr>
 <tr class="separator:aba945fb32122b01d4caa0282b4d02e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a17011b070a0f4acea30a1da3e6f766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a3a17011b070a0f4acea30a1da3e6f766">setEditable</a> (const bool)</td></tr>
+<tr class="memdesc:a3a17011b070a0f4acea30a1da3e6f766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if the banner can be changed by dragging into it.  <br /></td></tr>
 <tr class="separator:a3a17011b070a0f4acea30a1da3e6f766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24436e76fbcbae7488c005649e509b65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a24436e76fbcbae7488c005649e509b65">setBanner</a> (const std::filesystem::path &amp;banner)</td></tr>
+<tr class="memdesc:a24436e76fbcbae7488c005649e509b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the banner image.  <br /></td></tr>
+<tr class="separator:a24436e76fbcbae7488c005649e509b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4194b03ed41f59c75fd1d5f969682df0"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a4194b03ed41f59c75fd1d5f969682df0">path</a> () const</td></tr>
+<tr class="memdesc:a4194b03ed41f59c75fd1d5f969682df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current path for the banner image.  <br /></td></tr>
+<tr class="separator:a4194b03ed41f59c75fd1d5f969682df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr class="memitem:a59ed209e900c9ea8b8e1b093b96621ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a59ed209e900c9ea8b8e1b093b96621ba">dragEnterEvent</a> (QDragEnterEvent *event) override</td></tr>
 <tr class="separator:a59ed209e900c9ea8b8e1b093b96621ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f89864414e5c62b99d91cacb3b17542"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a1f89864414e5c62b99d91cacb3b17542">dropEvent</a> (QDropEvent *event) override</td></tr>
 <tr class="separator:a1f89864414e5c62b99d91cacb3b17542"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24436e76fbcbae7488c005649e509b65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a24436e76fbcbae7488c005649e509b65">setBanner</a> (const std::filesystem::path &amp;banner)</td></tr>
-<tr class="separator:a24436e76fbcbae7488c005649e509b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4194b03ed41f59c75fd1d5f969682df0"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a4194b03ed41f59c75fd1d5f969682df0">path</a> () const</td></tr>
-<tr class="separator:a4194b03ed41f59c75fd1d5f969682df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1133e88b46cddfe5ee0901c18c7856d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a1133e88b46cddfe5ee0901c18c7856d1">resizeEvent</a> (QResizeEvent *event) override</td></tr>
+<tr class="separator:a1133e88b46cddfe5ee0901c18c7856d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a201dfbef8171fd6fd1f72bf00ca1fc10"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBannerView.html#a201dfbef8171fd6fd1f72bf00ca1fc10">TestBannerView</a></td></tr>
+<tr class="separator:a201dfbef8171fd6fd1f72bf00ca1fc10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a11c44329671f91a5cb9c9c6bb52062b3" name="a11c44329671f91a5cb9c9c6bb52062b3"></a>
@@ -212,7 +227,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -238,7 +253,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -260,6 +275,34 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the current path for the banner image. </p>
+
+</div>
+</div>
+<a id="a1133e88b46cddfe5ee0901c18c7856d1" name="a1133e88b46cddfe5ee0901c18c7856d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1133e88b46cddfe5ee0901c18c7856d1">&#9670;&#160;</a></span>resizeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BannerView::resizeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QResizeEvent *&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a id="a24436e76fbcbae7488c005649e509b65" name="a24436e76fbcbae7488c005649e509b65"></a>
@@ -278,6 +321,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the banner image. </p>
+
 </div>
 </div>
 <a id="a3a17011b070a0f4acea30a1da3e6f766" name="a3a17011b070a0f4acea30a1da3e6f766"></a>
@@ -294,6 +339,31 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+<p>Sets if the banner can be changed by dragging into it. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a201dfbef8171fd6fd1f72bf00ca1fc10" name="a201dfbef8171fd6fd1f72bf00ca1fc10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a201dfbef8171fd6fd1f72bf00ca1fc10">&#9670;&#160;</a></span>TestBannerView</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class TestBannerView</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

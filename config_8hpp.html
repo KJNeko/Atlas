@@ -110,7 +110,8 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
   <div class="headertitle"><div class="title">config.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;QSettings&gt;</code><br />
+<div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
+<code>#include &lt;QSettings&gt;</code><br />
 <code>#include &lt;QVariant&gt;</code><br />
 <code>#include &lt;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -118,12 +119,14 @@ Include dependency graph for config.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#asrc_2h95_2config_8hpp" alt=""/></div>
 <map name="asrc_2h95_2config_8hpp" id="asrc_2h95_2config_8hpp">
-<area shape="rect" title=" " alt="" coords="83,5,210,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,85,104"/>
-<area shape="rect" title=" " alt="" coords="110,79,183,104"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="208,79,320,104"/>
-<area shape="rect" title=" " alt="" coords="151,152,263,177"/>
-<area shape="rect" title=" " alt="" coords="287,152,353,177"/>
+<area shape="rect" title=" " alt="" coords="86,5,213,31"/>
+<area shape="rect" title=" " alt="" coords="5,152,85,177"/>
+<area shape="rect" title=" " alt="" coords="59,79,139,104"/>
+<area shape="rect" title=" " alt="" coords="163,79,237,104"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="261,79,373,104"/>
+<area shape="rect" title=" " alt="" coords="133,152,245,177"/>
+<area shape="rect" title=" " alt="" coords="270,152,365,177"/>
+<area shape="rect" title=" " alt="" coords="389,152,456,177"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -131,16 +134,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8hpp__dep__incl.png" border="0" usemap="#asrc_2h95_2config_8hppdep" alt=""/></div>
 <map name="asrc_2h95_2config_8hppdep" id="asrc_2h95_2config_8hppdep">
-<area shape="rect" title=" " alt="" coords="768,5,895,31"/>
-<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="5,86,196,111"/>
-<area shape="rect" href="imageManager_8cpp.html" title=" " alt="" coords="221,86,399,111"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="423,86,519,111"/>
-<area shape="rect" href="MainWindow_8cpp.html" title=" " alt="" coords="544,86,700,111"/>
-<area shape="rect" href="GameEditDialog_8cpp.html" title=" " alt="" coords="725,86,938,111"/>
-<area shape="rect" href="GameImportDialog_8cpp.html" title=" " alt="" coords="962,79,1130,119"/>
-<area shape="rect" href="SettingsDialog_8cpp.html" title=" " alt="" coords="1155,86,1359,111"/>
-<area shape="rect" href="GameViewDelegate_8cpp.html" title=" " alt="" coords="1383,79,1549,119"/>
-<area shape="rect" href="SelectedViewWidget_8cpp.html" title=" " alt="" coords="1573,79,1743,119"/>
+<area shape="rect" title=" " alt="" coords="813,5,940,31"/>
+<area shape="rect" href="config_8cpp.html" title=" " alt="" coords="5,86,132,111"/>
+<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="156,86,347,111"/>
+<area shape="rect" href="imageManager_8cpp.html" title=" " alt="" coords="371,86,550,111"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="574,86,670,111"/>
+<area shape="rect" href="MainWindow_8cpp.html" title=" " alt="" coords="695,86,851,111"/>
+<area shape="rect" href="GameEditDialog_8cpp.html" title=" " alt="" coords="875,86,1089,111"/>
+<area shape="rect" href="GameImportDialog_8cpp.html" title=" " alt="" coords="1113,79,1281,119"/>
+<area shape="rect" href="SettingsDialog_8cpp.html" title=" " alt="" coords="1305,86,1509,111"/>
+<area shape="rect" href="SelectedViewWidget_8cpp.html" title=" " alt="" coords="1534,79,1721,119"/>
+<area shape="rect" href="GameView_8cpp.html" title=" " alt="" coords="1745,79,1905,119"/>
 </map>
 </div>
 </div>
@@ -160,8 +164,55 @@ Functions</h2></td></tr>
 <tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a> (const QString settings_name, const T value)</td></tr>
 <tr class="separator:ab96dee737e985f98d61752ed9cabcdc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba22929f0d72383a1b32b20732e72df"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df">dataPath</a> ()</td></tr>
+<tr class="memdesc:a0ba22929f0d72383a1b32b20732e72df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for <code>path/data</code> (Default <code>./data/</code>)  <br /></td></tr>
+<tr class="separator:a0ba22929f0d72383a1b32b20732e72df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8001ae5af09e3e54158e2fdf61fb1adb">imagePath</a> ()</td></tr>
+<tr class="memdesc:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for <code>path/images</code> (Default <code>./data/images</code>)  <br /></td></tr>
+<tr class="separator:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a0f1f79428b9d5612da52d47bdad840"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840">gamePath</a> ()</td></tr>
+<tr class="memdesc:a1a0f1f79428b9d5612da52d47bdad840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for <code>path/games</code> (Default <code>./data/igames</code>)  <br /></td></tr>
+<tr class="separator:a1a0f1f79428b9d5612da52d47bdad840"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a0ba22929f0d72383a1b32b20732e72df" name="a0ba22929f0d72383a1b32b20732e72df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba22929f0d72383a1b32b20732e72df">&#9670;&#160;</a></span>dataPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path dataPath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the canonical path for <code>path/data</code> (Default <code>./data/</code>) </p>
+
+</div>
+</div>
+<a id="a1a0f1f79428b9d5612da52d47bdad840" name="a1a0f1f79428b9d5612da52d47bdad840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0f1f79428b9d5612da52d47bdad840">&#9670;&#160;</a></span>gamePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path gamePath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the canonical path for <code>path/games</code> (Default <code>./data/igames</code>) </p>
+
+</div>
+</div>
 <a id="a50dc6d389eb806c8197e211128d06782" name="a50dc6d389eb806c8197e211128d06782"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50dc6d389eb806c8197e211128d06782">&#9670;&#160;</a></span>getSettings() <span class="overload">[1/2]</span></h2>
 
@@ -285,6 +336,25 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8001ae5af09e3e54158e2fdf61fb1adb" name="a8001ae5af09e3e54158e2fdf61fb1adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8001ae5af09e3e54158e2fdf61fb1adb">&#9670;&#160;</a></span>imagePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path imagePath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the canonical path for <code>path/images</code> (Default <code>./data/images</code>) </p>
 
 </div>
 </div>

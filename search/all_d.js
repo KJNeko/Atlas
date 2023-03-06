@@ -6,10 +6,13 @@ var searchData=
   ['preview_5fbanner_3',['PREVIEW_BANNER',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46acadf8856990bcddac2907d588c7170e5',1,'Record.cpp']]],
   ['preview_5fpreview_4',['PREVIEW_PREVIEW',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a2f03d87961c4d9ea96345b5c986585f6',1,'Record.cpp']]],
   ['preview_5funknown_5',['PREVIEW_UNKNOWN',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a88c9816c4c12a231f99d9cb2cb958077',1,'Record.cpp']]],
-  ['previews_6',['previews',['../classPreviewViewModel.html#aa4f4a43a9840a94484ce59054ccb939d',1,'PreviewViewModel::previews()'],['../classPreviewView.html#afa7459c0c434fb8476d2670b7ad63004',1,'PreviewView::previews()']]],
+  ['previews_6',['previews',['../classPreviewView.html#afa7459c0c434fb8476d2670b7ad63004',1,'PreviewView::previews()'],['../classPreviewViewModel.html#aa4f4a43a9840a94484ce59054ccb939d',1,'PreviewViewModel::previews()']]],
   ['previewtype_7',['PreviewType',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46',1,'Record.cpp']]],
-  ['previewview_8',['PreviewView',['../classPreviewView.html',1,'PreviewView'],['../classPreviewView.html#ae5b748d9ba8ace3c9f11598d28bd11fc',1,'PreviewView::PreviewView()']]],
+  ['previewview_8',['PreviewView',['../classPreviewView.html#ae5b748d9ba8ace3c9f11598d28bd11fc',1,'PreviewView::PreviewView()'],['../classPreviewView.html',1,'PreviewView']]],
   ['previewview_2ecpp_9',['PreviewView.cpp',['../PreviewView_8cpp.html',1,'']]],
   ['previewview_2ehpp_10',['PreviewView.hpp',['../PreviewView_8hpp.html',1,'']]],
-  ['previewviewmodel_11',['PreviewViewModel',['../classPreviewViewModel.html',1,'']]]
+  ['previewviewmodel_11',['PreviewViewModel',['../classPreviewViewModel.html',1,'']]],
+  ['progressdialog_12',['ProgressDialog',['../classProgressDialog.html#af97432a6b2bc0ada1e5640ce72307fd1',1,'ProgressDialog::ProgressDialog()'],['../classProgressDialog.html',1,'ProgressDialog']]],
+  ['progressdialog_2ecpp_13',['ProgressDialog.cpp',['../ProgressDialog_8cpp.html',1,'']]],
+  ['progressdialog_2ehpp_14',['ProgressDialog.hpp',['../ProgressDialog_8hpp.html',1,'']]]
 ];

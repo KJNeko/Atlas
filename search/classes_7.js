@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
-  ['metadataalreadyexists_1',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'']]]
+  ['previewview_0',['PreviewView',['../classPreviewView.html',1,'']]],
+  ['previewviewmodel_1',['PreviewViewModel',['../classPreviewViewModel.html',1,'']]],
+  ['progressdialog_2',['ProgressDialog',['../classProgressDialog.html',1,'']]]
 ];

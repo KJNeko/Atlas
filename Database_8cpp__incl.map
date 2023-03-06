@@ -1,11 +1,12 @@
 <map id="src/h95/database/Database.cpp" name="src/h95/database/Database.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="101,5,307,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,152,85,177"/>
-<area shape="rect" id="node3" title=" " alt="" coords="83,79,194,104"/>
-<area shape="rect" id="node4" href="$Database_8hpp.html" title=" " alt="" coords="219,79,320,104"/>
-<area shape="rect" id="node7" href="$logging_8hpp.html" title=" " alt="" coords="371,79,483,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="109,152,251,177"/>
-<area shape="rect" id="node6" title=" " alt="" coords="275,152,346,177"/>
-<area shape="rect" id="node8" title=" " alt="" coords="371,152,483,177"/>
-<area shape="rect" id="node9" title=" " alt="" coords="507,152,573,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="256,5,461,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="315,152,395,177"/>
+<area shape="rect" id="node3" title=" " alt="" coords="257,79,367,104"/>
+<area shape="rect" id="node4" href="$Database_8hpp.html" title=" " alt="" coords="131,79,232,104"/>
+<area shape="rect" id="node7" href="$logging_8hpp.html" title=" " alt="" coords="443,79,555,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,152,147,177"/>
+<area shape="rect" id="node6" title=" " alt="" coords="171,152,242,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="419,152,531,177"/>
+<area shape="rect" id="node9" title=" " alt="" coords="555,152,650,177"/>
+<area shape="rect" id="node10" title=" " alt="" coords="675,152,741,177"/>
 </map>

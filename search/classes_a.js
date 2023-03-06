@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['searchwidget_0',['SearchWidget',['../classSearchWidget.html',1,'']]],
-  ['selectedviewwidget_1',['SelectedViewWidget',['../classSelectedViewWidget.html',1,'']]],
-  ['settingsdialog_2',['SettingsDialog',['../classSettingsDialog.html',1,'']]]
+  ['tag_0',['Tag',['../structTag.html',1,'']]],
+  ['transactionbase_1',['TransactionBase',['../structTransactionBase.html',1,'']]],
+  ['transactioninvalid_2',['TransactionInvalid',['../structTransactionInvalid.html',1,'']]]
 ];

@@ -9,9 +9,5 @@ var searchData=
   ['gametab_2ecpp_6',['GameTab.cpp',['../GameTab_8cpp.html',1,'']]],
   ['gametab_2ehpp_7',['GameTab.hpp',['../GameTab_8hpp.html',1,'']]],
   ['gameview_2ecpp_8',['GameView.cpp',['../GameView_8cpp.html',1,'']]],
-  ['gameview_2ehpp_9',['GameView.hpp',['../GameView_8hpp.html',1,'']]],
-  ['gameviewdelegate_2ecpp_10',['GameViewDelegate.cpp',['../GameViewDelegate_8cpp.html',1,'']]],
-  ['gameviewdelegate_2ehpp_11',['GameViewDelegate.hpp',['../GameViewDelegate_8hpp.html',1,'']]],
-  ['gameviewmodel_2ecpp_12',['GameViewModel.cpp',['../GameViewModel_8cpp.html',1,'']]],
-  ['gameviewmodel_2ehpp_13',['GameViewModel.hpp',['../GameViewModel_8hpp.html',1,'']]]
+  ['gameview_2ehpp_9',['GameView.hpp',['../GameView_8hpp.html',1,'']]]
 ];

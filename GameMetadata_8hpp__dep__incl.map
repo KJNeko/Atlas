@@ -1,20 +1,18 @@
 <map id="src/h95/database/GameMetadata.hpp" name="src/h95/database/GameMetadata.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="655,5,893,31"/>
-<area shape="rect" id="node2" href="$GameMetadata_8cpp.html" title=" " alt="" coords="416,86,655,111"/>
-<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="679,86,869,111"/>
-<area shape="rect" id="node17" href="$VersionView_8hpp.html" title=" " alt="" coords="1186,79,1346,119"/>
+<area shape="rect" id="node1" title=" " alt="" coords="669,5,908,31"/>
+<area shape="rect" id="node2" href="$GameMetadata_8cpp.html" title=" " alt="" coords="431,86,669,111"/>
+<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="693,86,884,111"/>
+<area shape="rect" id="node15" href="$VersionView_8hpp.html" title=" " alt="" coords="1255,79,1415,119"/>
 <area shape="rect" id="node4" href="$Record_8cpp.html" title=" " alt="" coords="5,174,196,199"/>
-<area shape="rect" id="node5" href="$MainWindow_8cpp.html" title=" " alt="" coords="220,174,376,199"/>
-<area shape="rect" id="node6" href="$GameEditDialog_8cpp.html" title=" " alt="" coords="307,262,521,287"/>
-<area shape="rect" id="node7" href="$GameEditDialog_8hpp.html" title=" " alt="" coords="451,174,665,199"/>
-<area shape="rect" id="node8" href="$GameViewDelegate_8cpp.html" title=" " alt="" coords="545,255,710,295"/>
-<area shape="rect" id="node9" href="$SearchWidget_8hpp.html" title=" " alt="" coords="740,174,952,199"/>
-<area shape="rect" id="node11" href="$GameView_8hpp.html" title=" " alt="" coords="971,255,1131,295"/>
-<area shape="rect" id="node13" href="$GameViewModel_8hpp.html" title=" " alt="" coords="1027,167,1187,207"/>
-<area shape="rect" id="node15" href="$SelectedViewWidget_8hpp.html" title=" " alt="" coords="1211,167,1382,207"/>
-<area shape="rect" id="node10" href="$SearchWidget_8cpp.html" title=" " alt="" coords="735,262,947,287"/>
-<area shape="rect" id="node12" href="$GameView_8cpp.html" title=" " alt="" coords="971,343,1131,383"/>
-<area shape="rect" id="node14" href="$GameViewModel_8cpp.html" title=" " alt="" coords="1155,255,1315,295"/>
-<area shape="rect" id="node16" href="$SelectedViewWidget_8cpp.html" title=" " alt="" coords="1339,255,1510,295"/>
-<area shape="rect" id="node18" href="$VersionView_8cpp.html" title=" " alt="" coords="1406,167,1566,207"/>
+<area shape="rect" id="node5" href="$logging_8cpp.html" title=" " alt="" coords="220,174,355,199"/>
+<area shape="rect" id="node6" href="$MainWindow_8cpp.html" title=" " alt="" coords="379,174,535,199"/>
+<area shape="rect" id="node7" href="$GameEditDialog_8cpp.html" title=" " alt="" coords="505,262,718,287"/>
+<area shape="rect" id="node8" href="$GameEditDialog_8hpp.html" title=" " alt="" coords="610,174,823,199"/>
+<area shape="rect" id="node9" href="$GameView_8cpp.html" title=" " alt="" coords="781,255,941,295"/>
+<area shape="rect" id="node10" href="$SearchWidget_8hpp.html" title=" " alt="" coords="1083,174,1295,199"/>
+<area shape="rect" id="node12" href="$SelectedViewWidget_8hpp.html" title=" " alt="" coords="1319,167,1506,207"/>
+<area shape="rect" id="node14" href="$GameView_8hpp.html" title=" " alt="" coords="898,167,1058,207"/>
+<area shape="rect" id="node11" href="$SearchWidget_8cpp.html" title=" " alt="" coords="1083,262,1295,287"/>
+<area shape="rect" id="node13" href="$SelectedViewWidget_8cpp.html" title=" " alt="" coords="1319,255,1506,295"/>
+<area shape="rect" id="node16" href="$VersionView_8cpp.html" title=" " alt="" coords="1530,167,1690,207"/>
 </map>

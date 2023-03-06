@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['previewview_0',['PreviewView',['../classPreviewView.html',1,'']]],
-  ['previewviewmodel_1',['PreviewViewModel',['../classPreviewViewModel.html',1,'']]]
+  ['record_0',['Record',['../structRecord.html',1,'']]],
+  ['recordalreadyexists_1',['RecordAlreadyExists',['../structRecordAlreadyExists.html',1,'']]],
+  ['recordexception_2',['RecordException',['../structRecordException.html',1,'']]]
 ];
