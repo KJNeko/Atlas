@@ -5,6 +5,8 @@
 #ifndef HYDRUS95_CONFIG_HPP
 #define HYDRUS95_CONFIG_HPP
 
+#include <filesystem>
+
 #include <QSettings>
 #include <QVariant>
 
@@ -26,15 +28,9 @@
  * | main_view	| banner_width 		| int 		| 400		|
  * | main_view	| banner_height 	| int 		| 280		|
  * | main_view	| padding			| int		| 4			|
- * | import		| auto_fill_path 	| string	| '{path}/{title}/{version}' |
- * | import		| should_autofill 	| bool		| 'true'	|
- * | import		| dest_path			| string	| '{h95_games}/{title}' |
- * | import		| should_copy 		| bool		| 'true'	|
- * | import		| should_delete		| bool		| 'false' 	|
- * | selected_view | full_size		| bool		| 'true'	|
- * | paths 		| h95_data 			| string 	| ./data/   |
- * | paths		| h95_banners		| string	| ./data/banners |
- * | paths		| h95_previews		| string	| ./data/previews	 |
+ * | paths 		| data 				| string 	| ./data/   |
+ * | paths		| games				| string	| ./data/games	 |
+ * | paths		| images			| string	| ./data/images |
  *
  */
 
@@ -93,6 +89,17 @@ template< typename T > inline void setSettings( const QString settings_name, con
 	QSettings settings { getSettingsObject() };
 	settings.setValue( settings_name, value );
 }
+
+//! Returns the canonical path for `path/data` (Default `./data/`)
+std::filesystem::path dataPath();
+
+//! Returns the canonical path for `path/images` (Default `./data/images`)
+std::filesystem::path imagePath();
+
+//! Returns the canonical path for `path/games` (Default `./data/igames`)
+std::filesystem::path gamePath();
+
+
 
 
 #endif	//HYDRUS95_CONFIG_HPP

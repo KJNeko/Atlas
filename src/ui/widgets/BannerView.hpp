@@ -21,18 +21,24 @@ class BannerView : public QLabel
 	explicit BannerView( QWidget* parent = nullptr );
 	~BannerView() override;
 
+	//! Sets if the banner can be changed by dragging into it.
 	void setEditable(const bool);
 
-	void dragEnterEvent(QDragEnterEvent* event) override;
-	void dropEvent(QDropEvent* event) override;
-
+	//! Sets the banner image
 	void setBanner(const std::filesystem::path& banner);
 
+	//! Returns the current path for the banner image
 	std::filesystem::path path() const;
 
 	private:
+	//! Loads m_banner into the QPixmap
 	void loadImage();
 
+	protected:
+	friend class TestBannerView;
+	// Qt overrides
+	void dragEnterEvent(QDragEnterEvent* event) override;
+	void dropEvent(QDropEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
 };
 

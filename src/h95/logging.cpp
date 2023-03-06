@@ -8,14 +8,16 @@
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/logger.h>
+#include <fmt/ranges.h>
 
 #pragma GCC diagnostic pop
 
 #include <h95/logging.hpp>
+
+#include <h95/database/Record.hpp>
 
 void initLogging()
 {
@@ -28,7 +30,6 @@ void initLogging()
 #else
 	console_sink->set_level( spdlog::level::info );
 #endif
-
 
 	auto file_sink {
 		std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "./data/logs/log.txt", 1024 * 1024 * 1, 3 ) };
@@ -44,3 +45,4 @@ void initLogging()
 
 	spdlog::info( "Default logger set" );
 }
+

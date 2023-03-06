@@ -47,12 +47,16 @@ Record Record::create(
 						  << title.toStdString() << creator.toStdString() << engine.toStdString()
 			>> [&]( const RecordID record_id )
 		{
+			spdlog::error("Found record id {}", id);
 			id = record_id;
 		};
 
 		if ( id != 0 )
 		{
 			auto record { Record::select( id, transaction ) };
+
+			spdlog::error("Found record {} already exists. {} == {}, {} == {}, {} == {}", id, title, record.m_title, creator, record.m_creator, engine, record.m_engine);
+
 			transaction.abort();
 			throw RecordAlreadyExists( std::move( record ) );
 		}
@@ -292,11 +296,10 @@ try
 	{
 		ZoneScopedN( "Update images" );
 
-		const auto preview_path { imageManager::getPreviewPath() };
-		const auto banner_path { imageManager::getBannerPath() };
+		const std::filesystem::path image_path {imageManager::getImagePath()};
 
-		if ( !record.m_banner.string().starts_with( banner_path.string() ) )
-			record.m_banner = imageManager::importBanner( record.m_banner );
+		if ( !record.m_banner.string().starts_with( image_path.string() ) )
+			record.m_banner = imageManager::importImage( record.m_banner );
 
 		if ( original.m_banner != record.m_banner )
 			transaction.ref() << "UPDATE images SET path = ? WHERE type = ? AND record_id = ?"
@@ -304,8 +307,8 @@ try
 
 		for ( auto& preview : record.m_previews )
 		{
-			if ( !preview.string().starts_with( preview_path.string() ) )
-				preview = imageManager::importPreview( preview );
+			if ( !preview.string().starts_with( image_path.string() ) )
+				preview = imageManager::importImage( preview );
 		}
 
 		//Remove all previews that are not in the list

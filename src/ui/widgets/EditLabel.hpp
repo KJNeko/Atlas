@@ -21,8 +21,6 @@ class EditLabel : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( EditLabel )
 
-	QString* ptr {nullptr};
-
 	public:
 	explicit EditLabel( QWidget* parent = nullptr );
 	~EditLabel() override;

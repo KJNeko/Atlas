@@ -10,18 +10,13 @@
 
 namespace imageManager
 {
-	std::filesystem::path getBannerPath();
-	std::filesystem::path getPreviewPath();
+	//! Returns the canonical preview path (Creates if it doesn't exist)
+	std::filesystem::path getImagePath();
 
 	void cleanOrphans();
 
-	std::filesystem::path
-		importImage( const std::filesystem::path& path, const std::filesystem::path& dest, bool delete_after );
-
-	std::filesystem::path importBanner( const std::filesystem::path& path, bool delete_after = false );
-	std::filesystem::path importPreview( const std::filesystem::path& path, bool delete_after = false );
-
-	QPixmap fetchImage( const std::filesystem::path& path, const QSize size = {} );
+	//! Stores the image located at `path` in the data folder
+	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after = false );
 }  // namespace imageManager
 
 

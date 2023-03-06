@@ -52,7 +52,7 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::on_actionCreateRecord_triggered()
+void MainWindow::on_actionCreateRecord_triggered() try
 {
 	ZoneScoped;
 
@@ -63,6 +63,10 @@ void MainWindow::on_actionCreateRecord_triggered()
 	transaction.commit();
 
 	update();
+}
+catch(RecordAlreadyExists& e)
+{
+	QMessageBox::information(this, "Record already exists", "An empty record already exists.");
 }
 
 void MainWindow::on_actionSettings_triggered()

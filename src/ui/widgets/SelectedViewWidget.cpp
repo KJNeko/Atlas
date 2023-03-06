@@ -9,8 +9,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include <h95/config.hpp>
-#include <h95/executeProc.hpp>
+#include "h95/config.hpp"
+#include "h95/executeProc.hpp"
 
 #include "SelectedViewWidget.hpp"
 #include "ui_SelectedViewWidget.h"

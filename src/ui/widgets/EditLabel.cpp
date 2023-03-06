@@ -23,13 +23,12 @@ void EditLabel::setText( QString text )
 	ui->editBar->setText( std::move( text ) );
 }
 
-void EditLabel::setLabel(QString label)
+void EditLabel::setLabel( QString label )
 {
-	ui->label->setText(std::move(label));
+	ui->label->setText( std::move( label ) );
 }
 
 QString EditLabel::text() const
 {
 	return ui->editBar->text();
 }
-

@@ -30,6 +30,11 @@ class TestBannerView : public ::testing::Test
 		Database::deinit();
 		std::filesystem::remove( "./data/testing.db" );
 	}
+
+	inline static void dropEvent(BannerView& banner, QDropEvent& event)
+	{
+		banner.dropEvent(&event);
+	}
 };
 
 
@@ -39,26 +44,13 @@ TEST_F( TestBannerView, dragNDrop )
 
 	view.setEditable( true );
 
-	bool changed { false };
-	std::filesystem::path new_path;
-
-	QObject::connect(
-		&view,
-		&BannerView::bannerChanged,
-		[&]( std::filesystem::path path )
-		{
-			changed = true;
-			new_path = path;
-		} );
-
 	QMimeData data {};
 	data.setUrls( { QUrl::fromLocalFile(
 		QString::fromStdString( ( std::filesystem::canonical( "./assets/banner/placeholder.jpg" ).string() ) ) ) } );
 
 	QDropEvent event { view.rect().center(), Qt::LinkAction, &data, Qt::LeftButton, Qt::KeyboardModifier::NoModifier };
 
-	view.dropEvent( &event );
+	TestBannerView::dropEvent(view, event);
 
-	GTEST_ASSERT_TRUE( changed );
-	GTEST_ASSERT_EQ( new_path.string(), std::filesystem::canonical( "./assets/banner/placeholder.jpg" ) );
+	GTEST_ASSERT_EQ( view.path(), std::filesystem::canonical( "./assets/banner/placeholder.jpg" ) );
 }

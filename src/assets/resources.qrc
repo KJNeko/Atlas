@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>banner/placeholder.jpg</file>
+        <file>invalid.jpg</file>
     </qresource>
 </RCC>
