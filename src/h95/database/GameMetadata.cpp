@@ -17,7 +17,7 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id, Transaction
 
 	spdlog::debug( "Selecting metadata for id {}", id );
 
-	transaction.ref() << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
+	transaction << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
 		[&metadata]( const std::string& game_path_in, const std::string& exec_path_in, const std::string& version_in )
 	{
 		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
@@ -32,7 +32,8 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 
 	bool found { false };
 
-	transaction.ref()
+	// Search for duplicates
+	transaction
 			<< "SELECT record_id FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
 			<< id << metadata.m_game_path.string() << metadata.m_exec_path.string() << metadata.m_version.toStdString()
 		>> [&]()
@@ -43,12 +44,20 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 	if ( found )
 	{
 		transaction.abort();
-		throw MetadataAlreadyExists();
+		throw MetadataAlreadyExists( id, metadata );
 	}
 
-	transaction.ref() << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)"
-					  << id << metadata.m_game_path.string() << metadata.m_exec_path.string()
-					  << metadata.m_version.toStdString();
+	transaction << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)" << id
+				<< metadata.m_game_path.string() << metadata.m_exec_path.string() << metadata.m_version.toStdString();
 
 	return metadata;
+}
+
+void GameMetadata::erase( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
+{
+	ZoneScoped;
+
+	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
+				<< id << metadata.m_game_path.string() << metadata.m_exec_path.string()
+				<< metadata.m_version.toStdString();
 }

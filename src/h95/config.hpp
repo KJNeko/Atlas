@@ -90,16 +90,14 @@ template< typename T > inline void setSettings( const QString settings_name, con
 	settings.setValue( settings_name, value );
 }
 
-//! Returns the canonical path for `path/data` (Default `./data/`)
+//! Returns the canonical path for setting `path/data` (Default `./data/`)
 std::filesystem::path dataPath();
 
-//! Returns the canonical path for `path/images` (Default `./data/images`)
+//! Returns the canonical path for setting `path/images` (Default `./data/images`)
 std::filesystem::path imagePath();
 
-//! Returns the canonical path for `path/games` (Default `./data/igames`)
+//! Returns the canonical path for setting `path/games` (Default `./data/games`)
 std::filesystem::path gamePath();
-
-
 
 
 #endif	//HYDRUS95_CONFIG_HPP

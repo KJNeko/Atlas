@@ -26,8 +26,6 @@ namespace sqlite
 	class database;
 }
 
-struct TransactionBase;
-
 class Database
 {
 	static sqlite::database& ref();
@@ -40,9 +38,7 @@ class Database
 	//static void update();
 
 	private:
-	friend class TestDatabase;
-	friend struct TransactionBase;
-	friend class TestRecord;
+	friend struct Transaction;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -50,25 +46,35 @@ struct TransactionInvalid : public std::runtime_error
 	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
 };
 
-struct TransactionBase
+//! Transaction unit to the database.
+struct Transaction
 {
-	Q_DISABLE_COPY_MOVE( TransactionBase )
+	Q_DISABLE_COPY_MOVE( Transaction )
 
 	private:
 	bool finished { false };
 	std::lock_guard< std::mutex >* guard { nullptr };
 
 	public:
-	TransactionBase();
+	//! @throws TransactionInvalid when trying to create a transaction without the database being initalized first
+	Transaction();
 
-	sqlite::database& ref();
+	//! @throws TransactionInvalid
+	sqlite::database_binder operator<<( const std::string& sql );
 
+	/**
+	 * @brief Commits the transaction. Committing all changes made by this transaction
+	 * @throws TransactionInvalid when attempting to call commit() after an abort() or commit() twice
+	 */
 	void commit();
+
+	/**
+	 * @brief Aborts the transaction. Reverting all changes made by this transaction
+	 * @throws TransactionInvalid when attempting to call abort() after a commit() or abort() twice
+	 */
 	void abort();
 
-	~TransactionBase();
+	~Transaction();
 };
-
-using Transaction = TransactionBase;
 
 #endif	//HYDRUS95_DATABASE_HPP

@@ -23,6 +23,7 @@
 
 void initLogging();
 
+//! Formatter for QString in fmt::format
 template<> struct fmt::formatter< QString > : fmt::formatter< std::string >
 {
 	auto format( QString my, format_context& ctx ) -> decltype( ctx.out() )

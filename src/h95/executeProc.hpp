@@ -7,7 +7,10 @@
 
 #include <string>
 
-//! Executes the given string.
+/**
+ * @brief Executes the given path
+ * @param path
+ */
 void executeProc( const std::string& path );
 
 #endif	//HYDRUS95_EXECUTEPROC_HPP

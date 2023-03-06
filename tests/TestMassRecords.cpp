@@ -48,7 +48,9 @@ TEST_F( TestMassRecords, Test )
 
 	sqlite::database db { db_path };
 
-	spdlog::info("DB Size Before = {}", humanSize( static_cast< float >( std::filesystem::file_size( "./data/testing.db" ) ) ));
+	spdlog::info(
+		"DB Size Before = {}",
+		humanSize( static_cast< float >( std::filesystem::file_size( "./data/testing.db" ) ) ) );
 
 	Transaction transaction;
 
@@ -70,5 +72,7 @@ TEST_F( TestMassRecords, Test )
 
 	transaction.commit();
 
-	spdlog::info("DB Size = {}", humanSize( static_cast< float >( std::filesystem::file_size( "./data/testing.db" ) ) ));
+	spdlog::info(
+		"DB Size = {}",
+		humanSize( static_cast< float >( std::filesystem::file_size( "./data/testing.db" ) ) ) );
 }

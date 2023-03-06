@@ -49,12 +49,17 @@ struct Record
 	static Record select( const RecordID id, Transaction& transaction );
 
 
-	static RecordID search(
-		const QString& title,
-		const QString& creator,
-		const QString& engine,
-		const RecordID anti_id,
-		Transaction& transaction );
+	//! Searches for the record and returns it's id. 0 if failed.
+	/**
+	 *
+	 * @param title
+	 * @param creator
+	 * @param engine
+	 * @param transaction
+	 * @return
+	 */
+	static RecordID
+		search( const QString& title, const QString& creator, const QString& engine, Transaction& transaction );
 
 	//! Updates a record with new information.
 	static void update( const RecordID id, Record& record, Transaction& transaction );
@@ -77,15 +82,26 @@ struct Record
 		const QString& title,
 		const QString& creator,
 		const QString& engine,
-		const std::vector<GameMetadata>& metadata,
+		const std::vector< GameMetadata >& metadata,
 		const std::filesystem::path& banner,
 		const std::vector< std::filesystem::path >& previews,
 		Transaction& transaction );
 
 	//! Returns the banner for the record
+	/**
+	 * @note Returns ":/invalid_banner.jpg" if banner could not be found
+	 * @return
+	 */
 	QPixmap getBanner() const;
 
 	//! Returns a resized banner for the given record
+	/**
+	 *
+	 * @param banner_width
+	 * @param banner_height
+	 * @return
+	 * @note Returns ":/invalid_banner.jpg" if banner could not be found
+	 */
 	QPixmap getBanner( const int banner_width, const int banner_height ) const;
 
 	bool operator==( const Record& other ) const = default;
@@ -117,8 +133,5 @@ struct InvalidRecordID : public RecordException
 	{
 	}
 };
-
-Q_DECLARE_METATYPE(Record)
-Q_DECLARE_METATYPE(std::vector<Record>)
 
 #endif	//HYDRUS95_RECORD_HPP

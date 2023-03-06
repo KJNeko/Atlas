@@ -36,7 +36,7 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	internal::db = new sqlite::database( init_path );
 
-	TransactionBase transaction;
+	Transaction transaction;
 
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT)",
@@ -46,7 +46,7 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	for ( const auto& query_str : table_queries )
 	{
-		transaction.ref() << query_str;
+		transaction << query_str;
 		spdlog::debug( "Executing {}" );
 	}
 
@@ -60,7 +60,7 @@ void Database::deinit()
 	internal::db = nullptr;
 }
 
-TransactionBase::TransactionBase() : guard( new std::lock_guard( Database::lock() ) )
+Transaction::Transaction() : guard( new std::lock_guard( Database::lock() ) )
 {
 	if ( internal::db == nullptr )
 	{
@@ -68,34 +68,34 @@ TransactionBase::TransactionBase() : guard( new std::lock_guard( Database::lock(
 		throw TransactionInvalid();
 	}
 
-	ref() << "BEGIN TRANSACTION";
+	*this << "BEGIN TRANSACTION";
 }
 
-TransactionBase::~TransactionBase()
+Transaction::~Transaction()
 {
 	if ( !finished ) abort();
 }
 
-void TransactionBase::commit()
+void Transaction::commit()
 {
 	if ( finished ) throw TransactionInvalid();
-	ref() << "COMMIT TRANSACTION";
+	*this << "COMMIT TRANSACTION";
 
 	finished = true;
 	delete guard;
 }
 
-void TransactionBase::abort()
+void Transaction::abort()
 {
 	if ( finished ) throw TransactionInvalid();
-	ref() << "ROLLBACK TRANSACTION";
+	*this << "ROLLBACK TRANSACTION";
 
 	finished = true;
 	delete guard;
 }
 
-sqlite::database& TransactionBase::ref()
+sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
 	if ( finished ) throw TransactionInvalid();
-	return Database::ref();
+	return Database::ref() << sql;
 }

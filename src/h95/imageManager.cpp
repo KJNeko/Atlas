@@ -36,8 +36,8 @@ namespace imageManager
 			if ( !path.is_regular_file() ) continue;
 
 			bool found { false };
-			transaction.ref() << "SELECT count(*) FROM images WHERE path = ?"
-							  << std::filesystem::relative( path, getImagePath() ).string()
+			transaction << "SELECT count(*) FROM images WHERE path = ?"
+						<< std::filesystem::relative( path, getImagePath() ).string()
 				>> [&]( [[maybe_unused]] int count )
 			{
 				found = true;
@@ -72,8 +72,7 @@ namespace imageManager
 				//Save as webp
 				image.save( QString::fromStdString( dest.string() ) );
 
-				if(delete_after)
-					std::filesystem::remove(path);
+				if ( delete_after ) std::filesystem::remove( path );
 
 				return dest;
 			}

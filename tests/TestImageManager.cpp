@@ -32,9 +32,12 @@ class TestImageManager : public ::testing::Test
 
 TEST_F( TestImageManager, importPreview )
 {
-	const auto output {imageManager::importImage( "./assets/banner/placeholder.jpg" )};
+	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
-	GTEST_ASSERT_TRUE(std::filesystem::canonical("./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp") == output);
+	GTEST_ASSERT_TRUE(
+		std::filesystem::canonical(
+			"./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" )
+		== output );
 
 	GTEST_ASSERT_TRUE( std::filesystem::exists(
 		"./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
@@ -49,6 +52,6 @@ TEST_F( TestImageManager, clearOrhpans )
 {
 	imageManager::cleanOrphans();
 
-	GTEST_ASSERT_FALSE( std::filesystem::exists(
-		"./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
+	GTEST_ASSERT_FALSE(
+		std::filesystem::exists( "./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
 }
