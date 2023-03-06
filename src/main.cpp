@@ -10,7 +10,6 @@
 #include "h95/database/Database.hpp"
 #include "h95/config.hpp"
 #include "h95/logging.hpp"
-#include "ui/MainWindow.hpp"
 
 #ifdef TRACY_ENABLE
 #include <tracy/Tracy.hpp>
@@ -84,9 +83,4 @@ int main( int argc, char** argv )
 	}
 
 	Database::initalize("./data/hydrus95.db");
-
-	MainWindow window;
-	window.show();
-
-	return app.exec();
 }
