@@ -1,26 +1,4 @@
 var searchData=
 [
-  ['gameeditdialog_0',['GameEditDialog',['../classGameEditDialog.html#a1047e3d4d1b345ffe87dbb10b20e5265',1,'GameEditDialog::GameEditDialog()'],['../classGameEditDialog.html',1,'GameEditDialog']]],
-  ['gameeditdialog_2ecpp_1',['GameEditDialog.cpp',['../GameEditDialog_8cpp.html',1,'']]],
-  ['gameeditdialog_2ehpp_2',['GameEditDialog.hpp',['../GameEditDialog_8hpp.html',1,'']]],
-  ['gameimportdialog_3',['GameImportDialog',['../classGameImportDialog.html',1,'GameImportDialog'],['../classGameImportDialog.html#a1cc7e3b800de596cd1824a32668fc8f7',1,'GameImportDialog::GameImportDialog()']]],
-  ['gameimportdialog_2ecpp_4',['GameImportDialog.cpp',['../GameImportDialog_8cpp.html',1,'']]],
-  ['gameimportdialog_2ehpp_5',['GameImportDialog.hpp',['../GameImportDialog_8hpp.html',1,'']]],
-  ['gamemetadata_6',['GameMetadata',['../structGameMetadata.html',1,'GameMetadata'],['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete'],['../structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)']]],
-  ['gamemetadata_2ecpp_7',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
-  ['gamemetadata_2ehpp_8',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]],
-  ['gamepath_9',['gamePath',['../config_8cpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp'],['../config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp']]],
-  ['gametab_10',['GameTab',['../classGameTab.html',1,'GameTab'],['../classGameTab.html#a960ff41dba8559243f4f01a22383e9db',1,'GameTab::GameTab()']]],
-  ['gametab_2ecpp_11',['GameTab.cpp',['../GameTab_8cpp.html',1,'']]],
-  ['gametab_2ehpp_12',['GameTab.hpp',['../GameTab_8hpp.html',1,'']]],
-  ['gameview_13',['GameView',['../classGameView.html',1,'GameView'],['../classGameView.html#aef54ba65c9d6737feb11011a7ee249a9',1,'GameView::GameView()']]],
-  ['gameview_2ecpp_14',['GameView.cpp',['../GameView_8cpp.html',1,'']]],
-  ['gameview_2ehpp_15',['GameView.hpp',['../GameView_8hpp.html',1,'']]],
-  ['gameviewdelegate_16',['GameViewDelegate',['../classGameViewDelegate.html',1,'']]],
-  ['gameviewmodel_17',['GameViewModel',['../classGameViewModel.html',1,'']]],
-  ['getall_18',['getAll',['../SearchWidget_8cpp.html#ae1b1ea2d52ef15c8ccc27bdab37723c6',1,'SearchWidget.cpp']]],
-  ['getbanner_19',['getBanner',['../structRecord.html#a40d83547e0b2d07d854368fc7996acbc',1,'Record::getBanner() const'],['../structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238',1,'Record::getBanner(const int banner_width, const int banner_height) const']]],
-  ['getimagepath_20',['getImagePath',['../namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031',1,'imageManager']]],
-  ['getsettings_21',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'getSettings(const QString setting_name):&#160;config.hpp'],['../config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e',1,'getSettings(const QString setting_name, const T default_value):&#160;config.hpp']]],
-  ['getsettingsobject_22',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]]
+  ['hydrus95_0',['Hydrus95',['../md_README.html',1,'']]]
 ];

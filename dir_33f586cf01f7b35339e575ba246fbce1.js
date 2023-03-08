@@ -9,5 +9,6 @@ var dir_33f586cf01f7b35339e575ba246fbce1 =
     [ "imageManager.hpp", "imageManager_8hpp.html", "imageManager_8hpp" ],
     [ "logging.cpp", "logging_8cpp.html", "logging_8cpp" ],
     [ "logging.hpp", "logging_8hpp.html", "logging_8hpp" ],
+    [ "perfLogging.hpp", "perfLogging_8hpp.html", null ],
     [ "Types.hpp", "Types_8hpp.html", "Types_8hpp" ]
 ];

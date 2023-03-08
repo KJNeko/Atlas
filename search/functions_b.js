@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
-  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]],
-  ['metadataalreadyexists_2',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html#a75da725e2004c435f2c81d6fc42b2b83',1,'MetadataAlreadyExists']]],
-  ['model_3',['model',['../classGameView.html#a2c9002327704edfe2a93aba859d7b075',1,'GameView']]]
+  ['search_0',['search',['../structRecord.html#ad9f5516d966492b0cef8b78ce0378814',1,'Record']]],
+  ['select_1',['select',['../structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1',1,'GameMetadata::select()'],['../structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9',1,'Record::select()']]],
+  ['setsettings_2',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
+  ['spdlog_5fflush_3',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]]
 ];

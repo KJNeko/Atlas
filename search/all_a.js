@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['loadautopopulatesettings_0',['loadAutoPopulateSettings',['../classGameImportDialog.html#a354e3fc851a61e7ac7855711d0944bab',1,'GameImportDialog']]],
-  ['logging_2ecpp_1',['logging.cpp',['../logging_8cpp.html',1,'']]],
-  ['logging_2ehpp_2',['logging.hpp',['../logging_8hpp.html',1,'']]]
+  ['operator_3c_3c_0',['operator&lt;&lt;',['../structTransaction.html#a2959780e22d5c12861ad0260c476ff31',1,'Transaction']]],
+  ['operator_3d_3d_1',['operator==',['../structGameMetadata.html#ab302459c96a07a9220ced9e37ad9abcb',1,'GameMetadata::operator==()'],['../structRecord.html#a07f3aa92a3ba2d20d2d7c9111732487f',1,'Record::operator==()']]]
 ];

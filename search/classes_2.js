@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['editlabel_0',['EditLabel',['../classEditLabel.html',1,'']]]
+  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html',1,'']]]
 ];

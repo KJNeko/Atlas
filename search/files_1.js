@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['config_2ecpp_0',['config.cpp',['../config_8cpp.html',1,'']]],
-  ['config_2ehpp_1',['config.hpp',['../config_8hpp.html',1,'']]]
+  ['database_2ecpp_0',['Database.cpp',['../Database_8cpp.html',1,'']]],
+  ['database_2ehpp_1',['Database.hpp',['../Database_8hpp.html',1,'']]]
 ];

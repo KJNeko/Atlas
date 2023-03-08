@@ -133,17 +133,18 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a8f70ee2a9b2639d7e0464f93581014a9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;transaction)</td></tr>
+<tr class="memitem:a8f70ee2a9b2639d7e0464f93581014a9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
 <tr class="memdesc:a8f70ee2a9b2639d7e0464f93581014a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a record from the database.  <br /></td></tr>
 <tr class="separator:a8f70ee2a9b2639d7e0464f93581014a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc3b2f47c92f6ddca1b8a67efd75ac6c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#acc3b2f47c92f6ddca1b8a67efd75ac6c">search</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> anti_id, <a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;transaction)</td></tr>
-<tr class="separator:acc3b2f47c92f6ddca1b8a67efd75ac6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af892e3d2652e89811632a58bc8b35578"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#af892e3d2652e89811632a58bc8b35578">update</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structRecord.html">Record</a> &amp;record, <a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;transaction)</td></tr>
+<tr class="memitem:ad9f5516d966492b0cef8b78ce0378814"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#ad9f5516d966492b0cef8b78ce0378814">search</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
+<tr class="memdesc:ad9f5516d966492b0cef8b78ce0378814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches for the record and returns it's id. 0 if failed.  <br /></td></tr>
+<tr class="separator:ad9f5516d966492b0cef8b78ce0378814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af892e3d2652e89811632a58bc8b35578"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#af892e3d2652e89811632a58bc8b35578">update</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structRecord.html">Record</a> &amp;record, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
 <tr class="memdesc:af892e3d2652e89811632a58bc8b35578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a record with new information.  <br /></td></tr>
 <tr class="separator:af892e3d2652e89811632a58bc8b35578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefe45bf3be1b9f2c12eeb670fc0d25d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#aefe45bf3be1b9f2c12eeb670fc0d25d3">erase</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>, <a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;transaction)</td></tr>
+<tr class="memitem:aefe45bf3be1b9f2c12eeb670fc0d25d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#aefe45bf3be1b9f2c12eeb670fc0d25d3">erase</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
 <tr class="separator:aefe45bf3be1b9f2c12eeb670fc0d25d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29fc7f66264493672d86c779ba9431fd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a29fc7f66264493672d86c779ba9431fd">create</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, const std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt; &amp;metadata, const std::filesystem::path &amp;banner, const std::vector&lt; std::filesystem::path &gt; &amp;previews, <a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;transaction)</td></tr>
+<tr class="memitem:a29fc7f66264493672d86c779ba9431fd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structRecord.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html#a29fc7f66264493672d86c779ba9431fd">create</a> (const QString &amp;title, const QString &amp;creator, const QString &amp;engine, const std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt; &amp;metadata, const std::filesystem::path &amp;banner, const std::vector&lt; std::filesystem::path &gt; &amp;previews, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
 <tr class="memdesc:a29fc7f66264493672d86c779ba9431fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a record and inserts it into the database.  <br /></td></tr>
 <tr class="separator:a29fc7f66264493672d86c779ba9431fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -287,7 +288,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>transaction</em>&#160;</td>
         </tr>
         <tr>
@@ -343,7 +344,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>transaction</em>&#160;</td>
         </tr>
         <tr>
@@ -377,6 +378,8 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the banner for the record. </p>
+<dl class="section note"><dt>Note</dt><dd>Returns ":/invalid_banner.jpg" if banner could not be found </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -407,6 +410,15 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns a resized banner for the given record. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">banner_width</td><td></td></tr>
+    <tr><td class="paramname">banner_height</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Returns ":/invalid_banner.jpg" if banner could not be found </dd></dl>
 
 </div>
 </div>
@@ -436,8 +448,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="acc3b2f47c92f6ddca1b8a67efd75ac6c" name="acc3b2f47c92f6ddca1b8a67efd75ac6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc3b2f47c92f6ddca1b8a67efd75ac6c">&#9670;&#160;</a></span>search()</h2>
+<a id="ad9f5516d966492b0cef8b78ce0378814" name="ad9f5516d966492b0cef8b78ce0378814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f5516d966492b0cef8b78ce0378814">&#9670;&#160;</a></span>search()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -466,13 +478,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>anti_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>transaction</em>&#160;</td>
         </tr>
         <tr>
@@ -487,6 +493,18 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Searches for the record and returns it's id. 0 if failed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td></td></tr>
+    <tr><td class="paramname">creator</td><td></td></tr>
+    <tr><td class="paramname">engine</td><td></td></tr>
+    <tr><td class="paramname">transaction</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -508,7 +526,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>transaction</em>&#160;</td>
         </tr>
         <tr>
@@ -552,7 +570,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">Transaction</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>transaction</em>&#160;</td>
         </tr>
         <tr>

@@ -136,66 +136,59 @@ $(document).ready(function(){initNavTree('Database_8hpp_source.html',''); initRe
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">class </span>database;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">struct </span><a class="code hl_struct" href="structTransactionBase.html">TransactionBase</a>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classDatabase.html">   31</a></span><span class="keyword">class </span><a class="code hl_class" href="classDatabase.html">Database</a></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>{</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">static</span> sqlite::database&amp; ref();</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">static</span> std::mutex&amp; lock();</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#a6a376d59d40a2ddd479d5ae4d00e03ca">initalize</a>( <span class="keyword">const</span> std::filesystem::path init_path = <span class="stringliteral">&quot;./data/hydrus95.db&quot;</span> );</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">deinit</a>();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classDatabase.html">   29</a></span><span class="keyword">class </span><a class="code hl_class" href="classDatabase.html">Database</a></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">static</span> sqlite::database&amp; ref();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">static</span> std::mutex&amp; lock();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">initalize</a>( <span class="keyword">const</span> std::filesystem::path init_path );</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">deinit</a>();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">//static void update();</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="comment">//static void update();</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classDatabase.html#a304ce84e890b78327b803e611c20bbec">   43</a></span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="classDatabase.html#a304ce84e890b78327b803e611c20bbec">TestDatabase</a>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classDatabase.html#af5a8532141b24cea67c106dd72e3cff2">   44</a></span>    <span class="keyword">friend</span> <span class="keyword">struct </span><a class="code hl_struct" href="structTransactionBase.html">TransactionBase</a>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classDatabase.html#a81386bdaf4aa4490c372c9ae770883ee">   45</a></span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="classDatabase.html#a81386bdaf4aa4490c372c9ae770883ee">TestRecord</a>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structTransactionInvalid.html">   48</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structTransactionInvalid.html">TransactionInvalid</a> : <span class="keyword">public</span> std::runtime_error</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">   50</a></span>    <a class="code hl_function" href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">TransactionInvalid</a>() : std::runtime_error( <span class="stringliteral">&quot;Transaction accessed while invalid&quot;</span> ) {}</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structTransactionBase.html">   53</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structTransactionBase.html">TransactionBase</a></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>{</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_struct" href="structTransactionBase.html">TransactionBase</a> )</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">bool</span> finished { <span class="keyword">false</span> };</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    std::lock_guard&lt; std::mutex &gt;* guard { <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_function" href="structTransactionBase.html#ad2964f04d963a800653aa73e56237554">TransactionBase</a>();</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    sqlite::database&amp; <a class="code hl_function" href="structTransactionBase.html#af298818d78de54ff7ee0cee7c6b0c4ed">ref</a>();</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="structTransactionBase.html#a9392c0a8da6a3b1c1541ecfc87c2c079">commit</a>();</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="structTransactionBase.html#a54b754fe2b95de9becd9fd808d92fe7b">abort</a>();</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_function" href="structTransactionBase.html#af895ea9b7f2729934674fa9fdb3e679d">~TransactionBase</a>();</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>};</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="Database_8hpp.html#a54edd3f89772366ed678703474ae23dd">   72</a></span><span class="keyword">using </span><a class="code hl_struct" href="structTransactionBase.html">Transaction</a> = <a class="code hl_struct" href="structTransactionBase.html">TransactionBase</a>;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_DATABASE_HPP</span></div>
-<div class="ttc" id="aclassDatabase_html"><div class="ttname"><a href="classDatabase.html">Database</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:32</div></div>
-<div class="ttc" id="aclassDatabase_html_a304ce84e890b78327b803e611c20bbec"><div class="ttname"><a href="classDatabase.html#a304ce84e890b78327b803e611c20bbec">Database::TestDatabase</a></div><div class="ttdeci">friend class TestDatabase</div><div class="ttdef"><b>Definition:</b> Database.hpp:43</div></div>
-<div class="ttc" id="aclassDatabase_html_a6a376d59d40a2ddd479d5ae4d00e03ca"><div class="ttname"><a href="classDatabase.html#a6a376d59d40a2ddd479d5ae4d00e03ca">Database::initalize</a></div><div class="ttdeci">static void initalize(const std::filesystem::path init_path=&quot;./data/hydrus95.db&quot;)</div><div class="ttdef"><b>Definition:</b> Database.cpp:32</div></div>
-<div class="ttc" id="aclassDatabase_html_a81386bdaf4aa4490c372c9ae770883ee"><div class="ttname"><a href="classDatabase.html#a81386bdaf4aa4490c372c9ae770883ee">Database::TestRecord</a></div><div class="ttdeci">friend class TestRecord</div><div class="ttdef"><b>Definition:</b> Database.hpp:45</div></div>
-<div class="ttc" id="aclassDatabase_html_a95da77a6408fed05dfd75efa87400a2e"><div class="ttname"><a href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">Database::deinit</a></div><div class="ttdeci">static void deinit()</div><div class="ttdef"><b>Definition:</b> Database.cpp:56</div></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classDatabase.html#a157204bdd68859eaffcd09a886111f2b">   41</a></span>    <span class="keyword">friend</span> <span class="keyword">struct </span><a class="code hl_struct" href="structTransaction.html">Transaction</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>};</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structTransactionInvalid.html">   44</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structTransactionInvalid.html">TransactionInvalid</a> : <span class="keyword">public</span> std::runtime_error</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">   46</a></span>    <a class="code hl_function" href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">TransactionInvalid</a>() : std::runtime_error( <span class="stringliteral">&quot;Transaction accessed while invalid&quot;</span> ) {}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structTransaction.html">   50</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structTransaction.html">Transaction</a></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_struct" href="structTransaction.html">Transaction</a> )</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">bool</span> finished { <span class="keyword">false</span> };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    std::lock_guard&lt; std::mutex &gt;* guard { <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_function" href="structTransaction.html#ab47005b855d38bc324bb79fd023baa13">Transaction</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    sqlite::database_binder <a class="code hl_function" href="structTransaction.html#a2959780e22d5c12861ad0260c476ff31">operator&lt;&lt;</a>( <span class="keyword">const</span> std::string&amp; sql );</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="structTransaction.html#a109bd0f1d70b6ff69cf3abccf7eea8f8">commit</a>();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="structTransaction.html#a11db8852227f0bf3bf103483032711f5">abort</a>();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_function" href="structTransaction.html#a362b0d2524d0c799165190517192dca9">~Transaction</a>();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>};</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#endif  </span><span class="comment">//HYDRUS95_DATABASE_HPP</span></div>
+<div class="ttc" id="aclassDatabase_html"><div class="ttname"><a href="classDatabase.html">Database</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:30</div></div>
+<div class="ttc" id="aclassDatabase_html_a95da77a6408fed05dfd75efa87400a2e"><div class="ttname"><a href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">Database::deinit</a></div><div class="ttdeci">static void deinit()</div><div class="ttdef"><b>Definition:</b> Database.cpp:71</div></div>
+<div class="ttc" id="aclassDatabase_html_ae81f8f9992ec7c99d97b46153c67773f"><div class="ttname"><a href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">Database::initalize</a></div><div class="ttdeci">static void initalize(const std::filesystem::path init_path)</div><div class="ttdef"><b>Definition:</b> Database.cpp:32</div></div>
 <div class="ttc" id="anamespacesqlite_html"><div class="ttname"><a href="namespacesqlite.html">sqlite</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:25</div></div>
-<div class="ttc" id="astructTransactionBase_html"><div class="ttname"><a href="structTransactionBase.html">TransactionBase</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:54</div></div>
-<div class="ttc" id="astructTransactionBase_html_a54b754fe2b95de9becd9fd808d92fe7b"><div class="ttname"><a href="structTransactionBase.html#a54b754fe2b95de9becd9fd808d92fe7b">TransactionBase::abort</a></div><div class="ttdeci">void abort()</div><div class="ttdef"><b>Definition:</b> Database.cpp:88</div></div>
-<div class="ttc" id="astructTransactionBase_html_a9392c0a8da6a3b1c1541ecfc87c2c079"><div class="ttname"><a href="structTransactionBase.html#a9392c0a8da6a3b1c1541ecfc87c2c079">TransactionBase::commit</a></div><div class="ttdeci">void commit()</div><div class="ttdef"><b>Definition:</b> Database.cpp:79</div></div>
-<div class="ttc" id="astructTransactionBase_html_ad2964f04d963a800653aa73e56237554"><div class="ttname"><a href="structTransactionBase.html#ad2964f04d963a800653aa73e56237554">TransactionBase::TransactionBase</a></div><div class="ttdeci">TransactionBase()</div><div class="ttdef"><b>Definition:</b> Database.cpp:63</div></div>
-<div class="ttc" id="astructTransactionBase_html_af298818d78de54ff7ee0cee7c6b0c4ed"><div class="ttname"><a href="structTransactionBase.html#af298818d78de54ff7ee0cee7c6b0c4ed">TransactionBase::ref</a></div><div class="ttdeci">sqlite::database &amp; ref()</div><div class="ttdef"><b>Definition:</b> Database.cpp:97</div></div>
-<div class="ttc" id="astructTransactionBase_html_af895ea9b7f2729934674fa9fdb3e679d"><div class="ttname"><a href="structTransactionBase.html#af895ea9b7f2729934674fa9fdb3e679d">TransactionBase::~TransactionBase</a></div><div class="ttdeci">~TransactionBase()</div><div class="ttdef"><b>Definition:</b> Database.cpp:74</div></div>
-<div class="ttc" id="astructTransactionInvalid_html"><div class="ttname"><a href="structTransactionInvalid.html">TransactionInvalid</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:49</div></div>
-<div class="ttc" id="astructTransactionInvalid_html_a0e97ce4bbf36e0b3f9ac1a8c068f03c4"><div class="ttname"><a href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">TransactionInvalid::TransactionInvalid</a></div><div class="ttdeci">TransactionInvalid()</div><div class="ttdef"><b>Definition:</b> Database.hpp:50</div></div>
+<div class="ttc" id="astructTransactionInvalid_html"><div class="ttname"><a href="structTransactionInvalid.html">TransactionInvalid</a></div><div class="ttdef"><b>Definition:</b> Database.hpp:45</div></div>
+<div class="ttc" id="astructTransactionInvalid_html_a0e97ce4bbf36e0b3f9ac1a8c068f03c4"><div class="ttname"><a href="structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4">TransactionInvalid::TransactionInvalid</a></div><div class="ttdeci">TransactionInvalid()</div><div class="ttdef"><b>Definition:</b> Database.hpp:46</div></div>
+<div class="ttc" id="astructTransaction_html"><div class="ttname"><a href="structTransaction.html">Transaction</a></div><div class="ttdoc">Transaction unit to the database.</div><div class="ttdef"><b>Definition:</b> Database.hpp:51</div></div>
+<div class="ttc" id="astructTransaction_html_a109bd0f1d70b6ff69cf3abccf7eea8f8"><div class="ttname"><a href="structTransaction.html#a109bd0f1d70b6ff69cf3abccf7eea8f8">Transaction::commit</a></div><div class="ttdeci">void commit()</div><div class="ttdoc">Commits the transaction. Committing all changes made by this transaction.</div><div class="ttdef"><b>Definition:</b> Database.cpp:94</div></div>
+<div class="ttc" id="astructTransaction_html_a11db8852227f0bf3bf103483032711f5"><div class="ttname"><a href="structTransaction.html#a11db8852227f0bf3bf103483032711f5">Transaction::abort</a></div><div class="ttdeci">void abort()</div><div class="ttdoc">Aborts the transaction. Reverting all changes made by this transaction.</div><div class="ttdef"><b>Definition:</b> Database.cpp:103</div></div>
+<div class="ttc" id="astructTransaction_html_a2959780e22d5c12861ad0260c476ff31"><div class="ttname"><a href="structTransaction.html#a2959780e22d5c12861ad0260c476ff31">Transaction::operator&lt;&lt;</a></div><div class="ttdeci">sqlite::database_binder operator&lt;&lt;(const std::string &amp;sql)</div><div class="ttdef"><b>Definition:</b> Database.cpp:112</div></div>
+<div class="ttc" id="astructTransaction_html_a362b0d2524d0c799165190517192dca9"><div class="ttname"><a href="structTransaction.html#a362b0d2524d0c799165190517192dca9">Transaction::~Transaction</a></div><div class="ttdeci">~Transaction()</div><div class="ttdef"><b>Definition:</b> Database.cpp:89</div></div>
+<div class="ttc" id="astructTransaction_html_ab47005b855d38bc324bb79fd023baa13"><div class="ttname"><a href="structTransaction.html#ab47005b855d38bc324bb79fd023baa13">Transaction::Transaction</a></div><div class="ttdeci">Transaction()</div><div class="ttdef"><b>Definition:</b> Database.cpp:78</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

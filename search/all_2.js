@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['cleanorphans_0',['cleanOrphans',['../namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8',1,'imageManager']]],
-  ['columncount_1',['columnCount',['../classVersionViewModel.html#a485d52271709c3a203a82fb0fbe3dd70',1,'VersionViewModel']]],
-  ['commit_2',['commit',['../structTransactionBase.html#a9392c0a8da6a3b1c1541ecfc87c2c079',1,'TransactionBase']]],
-  ['config_2ecpp_3',['config.cpp',['../config_8cpp.html',1,'']]],
-  ['config_2ehpp_4',['config.hpp',['../config_8hpp.html',1,'']]],
-  ['create_5',['create',['../structRecord.html#a29fc7f66264493672d86c779ba9431fd',1,'Record']]]
+  ['database_0',['Database',['../classDatabase.html',1,'']]],
+  ['database_2ecpp_1',['Database.cpp',['../Database_8cpp.html',1,'']]],
+  ['database_2ehpp_2',['Database.hpp',['../Database_8hpp.html',1,'']]],
+  ['datapath_3',['dataPath',['../config_8cpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp'],['../config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp']]],
+  ['deinit_4',['deinit',['../classDatabase.html#a95da77a6408fed05dfd75efa87400a2e',1,'Database']]]
 ];

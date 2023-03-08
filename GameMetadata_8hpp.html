@@ -114,19 +114,21 @@ $(document).ready(function(){initNavTree('GameMetadata_8hpp.html',''); initResiz
 <code>#include &lt;QString&gt;</code><br />
 <code>#include &lt;<a class="el" href="Types_8hpp_source.html">h95/Types.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="Database_8hpp_source.html">h95/database/Database.hpp</a>&gt;</code><br />
+<code>#include &lt;fmt/format.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for GameMetadata.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="GameMetadata_8hpp__incl.png" border="0" usemap="#asrc_2h95_2database_2GameMetadata_8hpp" alt=""/></div>
 <map name="asrc_2h95_2database_2GameMetadata_8hpp" id="asrc_2h95_2database_2GameMetadata_8hpp">
-<area shape="rect" title=" " alt="" coords="85,5,323,31"/>
-<area shape="rect" title=" " alt="" coords="199,152,279,177"/>
+<area shape="rect" title=" " alt="" coords="121,5,359,31"/>
+<area shape="rect" title=" " alt="" coords="197,152,277,177"/>
 <area shape="rect" title=" " alt="" coords="136,79,203,104"/>
 <area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="5,79,112,104"/>
-<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="281,79,463,104"/>
+<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="278,79,461,104"/>
+<area shape="rect" title=" " alt="" coords="485,79,577,104"/>
 <area shape="rect" title=" " alt="" coords="28,152,89,177"/>
-<area shape="rect" title=" " alt="" coords="303,152,444,177"/>
-<area shape="rect" title=" " alt="" coords="469,152,539,177"/>
+<area shape="rect" title=" " alt="" coords="301,152,443,177"/>
+<area shape="rect" title=" " alt="" coords="467,152,538,177"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -134,22 +136,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="GameMetadata_8hpp__dep__incl.png" border="0" usemap="#asrc_2h95_2database_2GameMetadata_8hppdep" alt=""/></div>
 <map name="asrc_2h95_2database_2GameMetadata_8hppdep" id="asrc_2h95_2database_2GameMetadata_8hppdep">
-<area shape="rect" title=" " alt="" coords="669,5,908,31"/>
-<area shape="rect" href="GameMetadata_8cpp.html" title=" " alt="" coords="431,86,669,111"/>
-<area shape="rect" href="Record_8hpp.html" title=" " alt="" coords="693,86,884,111"/>
-<area shape="rect" href="VersionView_8hpp.html" title=" " alt="" coords="1255,79,1415,119"/>
-<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="5,174,196,199"/>
-<area shape="rect" href="logging_8cpp.html" title=" " alt="" coords="220,174,355,199"/>
-<area shape="rect" href="MainWindow_8cpp.html" title=" " alt="" coords="379,174,535,199"/>
-<area shape="rect" href="GameEditDialog_8cpp.html" title=" " alt="" coords="505,262,718,287"/>
-<area shape="rect" href="GameEditDialog_8hpp.html" title=" " alt="" coords="610,174,823,199"/>
-<area shape="rect" href="GameView_8cpp.html" title=" " alt="" coords="781,255,941,295"/>
-<area shape="rect" href="SearchWidget_8hpp.html" title=" " alt="" coords="1083,174,1295,199"/>
-<area shape="rect" href="SelectedViewWidget_8hpp.html" title=" " alt="" coords="1319,167,1506,207"/>
-<area shape="rect" href="GameView_8hpp.html" title=" " alt="" coords="898,167,1058,207"/>
-<area shape="rect" href="SearchWidget_8cpp.html" title=" " alt="" coords="1083,262,1295,287"/>
-<area shape="rect" href="SelectedViewWidget_8cpp.html" title=" " alt="" coords="1319,255,1506,295"/>
-<area shape="rect" href="VersionView_8cpp.html" title=" " alt="" coords="1530,167,1690,207"/>
+<area shape="rect" title=" " alt="" coords="124,5,363,31"/>
+<area shape="rect" href="GameMetadata_8cpp.html" title=" " alt="" coords="5,79,244,104"/>
+<area shape="rect" href="Record_8hpp.html" title=" " alt="" coords="268,79,459,104"/>
+<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="175,152,365,177"/>
+<area shape="rect" href="logging_8cpp.html" title=" " alt="" coords="389,152,524,177"/>
 </map>
 </div>
 </div>
@@ -157,9 +148,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMetadataAlreadyExists.html">MetadataAlreadyExists</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html">GameMetadata</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representation of a game version.  <a href="structGameMetadata.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMetadataException.html">MetadataException</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMetadataAlreadyExists.html">MetadataAlreadyExists</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

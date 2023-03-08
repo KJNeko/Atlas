@@ -112,25 +112,23 @@ $(document).ready(function(){initNavTree('structfmt_1_1formatter_3_01QString_01_
 </div><!--header-->
 <div class="contents">
 
+<p>Formatter for QString in fmt::format.  
+ <a href="structfmt_1_1formatter_3_01QString_01_4.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="logging_8hpp_source.html">logging.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for fmt::formatter&lt; QString &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="structfmt_1_1formatter_3_01QString_01_4__inherit__graph.png" border="0" usemap="#afmt_1_1formatter_3_01QString_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="afmt_1_1formatter_3_01QString_01_4_inherit__map" id="afmt_1_1formatter_3_01QString_01_4_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,93,171,119"/>
-<area shape="rect" title=" " alt="" coords="24,5,152,45"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a46ea1e8ae93e3d2c21a96bb86ae10826"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a46ea1e8ae93e3d2c21a96bb86ae10826">format</a> (QString my, format_context &amp;ctx) -&gt; decltype(ctx.out())</td></tr>
-<tr class="separator:a46ea1e8ae93e3d2c21a96bb86ae10826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a51b8f0b49cfafb8bf46c32c5e7ea3d"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a0a51b8f0b49cfafb8bf46c32c5e7ea3d">parse</a> (format_parse_context &amp;ctx) -&gt; decltype(ctx.begin())</td></tr>
+<tr class="separator:a0a51b8f0b49cfafb8bf46c32c5e7ea3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b0db35a32ece461dcea59407ecb5300"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300">format</a> (const QString &amp;my, format_context &amp;ctx) const -&gt; decltype(ctx.out())</td></tr>
+<tr class="separator:a6b0db35a32ece461dcea59407ecb5300"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a46ea1e8ae93e3d2c21a96bb86ae10826" name="a46ea1e8ae93e3d2c21a96bb86ae10826"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46ea1e8ae93e3d2c21a96bb86ae10826">&#9670;&#160;</a></span>format()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Formatter for QString in fmt::format. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6b0db35a32ece461dcea59407ecb5300" name="a6b0db35a32ece461dcea59407ecb5300"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b0db35a32ece461dcea59407ecb5300">&#9670;&#160;</a></span>format()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +139,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">auto fmt::formatter&lt; QString &gt;::format </td>
           <td>(</td>
-          <td class="paramtype">QString&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>my</em>, </td>
         </tr>
         <tr>
@@ -153,13 +151,39 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; decltype( ctx.out() )
+          <td></td><td> const -&gt; decltype( ctx.out() )
 	</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0a51b8f0b49cfafb8bf46c32c5e7ea3d" name="a0a51b8f0b49cfafb8bf46c32c5e7ea3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a51b8f0b49cfafb8bf46c32c5e7ea3d">&#9670;&#160;</a></span>parse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto fmt::formatter&lt; QString &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">format_parse_context &amp;&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td> -&gt; decltype( ctx.begin() ) </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

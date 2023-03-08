@@ -6,6 +6,5 @@ var namespaces_dup =
       [ "importImage", "namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5", null ]
     ] ],
     [ "internal", "namespaceinternal.html", null ],
-    [ "sqlite", "namespacesqlite.html", null ],
-    [ "Ui", "namespaceUi.html", null ]
+    [ "sqlite", "namespacesqlite.html", null ]
 ];

@@ -1,27 +1,4 @@
 var searchData=
 [
-  ['search_0',['search',['../classSearchWidget.html#a849572419430b215a9a3adbe1998b564',1,'SearchWidget::search()'],['../structRecord.html#acc3b2f47c92f6ddca1b8a67efd75ac6c',1,'Record::search()']]],
-  ['searchcomplete_1',['searchComplete',['../classSearchWidget.html#a37a1794bd4f28ba0d69aae7f85a69365',1,'SearchWidget']]],
-  ['searchwidget_2',['SearchWidget',['../classSearchWidget.html',1,'SearchWidget'],['../classSearchWidget.html#ae1ab8b6ccb682ec0e30104237c28ee7b',1,'SearchWidget::SearchWidget()']]],
-  ['searchwidget_2ecpp_3',['SearchWidget.cpp',['../SearchWidget_8cpp.html',1,'']]],
-  ['searchwidget_2ehpp_4',['SearchWidget.hpp',['../SearchWidget_8hpp.html',1,'']]],
-  ['select_5',['select',['../structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9',1,'Record::select()'],['../structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1',1,'GameMetadata::select()']]],
-  ['selectedviewwidget_6',['SelectedViewWidget',['../classSelectedViewWidget.html',1,'SelectedViewWidget'],['../classSelectedViewWidget.html#ab064ce3c6909b363f10f83d0f36e85e3',1,'SelectedViewWidget::SelectedViewWidget()']]],
-  ['selectedviewwidget_2ecpp_7',['SelectedViewWidget.cpp',['../SelectedViewWidget_8cpp.html',1,'']]],
-  ['selectedviewwidget_2ehpp_8',['SelectedViewWidget.hpp',['../SelectedViewWidget_8hpp.html',1,'']]],
-  ['setbanner_9',['setBanner',['../classBannerView.html#a24436e76fbcbae7488c005649e509b65',1,'BannerView']]],
-  ['seteditable_10',['setEditable',['../classBannerView.html#a3a17011b070a0f4acea30a1da3e6f766',1,'BannerView']]],
-  ['setlabel_11',['setLabel',['../classEditLabel.html#a0a5b77ee14c2483df58cb929ba6a90d5',1,'EditLabel']]],
-  ['setpreviews_12',['setPreviews',['../classPreviewView.html#af3e87e0d0cd69c8036dfa320c9fc37da',1,'PreviewView::setPreviews()'],['../classPreviewViewModel.html#a56f41786a2a819267ccfaeafbc0078ec',1,'PreviewViewModel::setPreviews()']]],
-  ['setrecords_13',['setRecords',['../classGameViewModel.html#a4ba799d3e78d079b3812ced2d211508f',1,'GameViewModel::setRecords()'],['../classGameView.html#aa708428a1d09b0e755ea46a36729f853',1,'GameView::setRecords()']]],
-  ['setsettings_14',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['settext_15',['setText',['../classEditLabel.html#a1b9014b1d5b586df765511b47bde53c3',1,'EditLabel']]],
-  ['settings_20list_16',['Settings list',['../H95Settings.html',1,'']]],
-  ['settingsdialog_17',['SettingsDialog',['../classSettingsDialog.html',1,'SettingsDialog'],['../classSettingsDialog.html#ac5ab03e7361d2d6fe1232ee8ce1f0c26',1,'SettingsDialog::SettingsDialog()']]],
-  ['settingsdialog_2ecpp_18',['SettingsDialog.cpp',['../SettingsDialog_8cpp.html',1,'']]],
-  ['settingsdialog_2ehpp_19',['SettingsDialog.hpp',['../SettingsDialog_8hpp.html',1,'']]],
-  ['setversions_20',['setVersions',['../classVersionViewModel.html#a7a3942a408c7c92ff37b0baeb7d53725',1,'VersionViewModel::setVersions()'],['../classVersionView.html#ad6150889d73d3da2841eace1e9ae26b0',1,'VersionView::setVersions()']]],
-  ['sizehint_21',['sizeHint',['../classGameViewDelegate.html#a89235d3e3957ec5ea0dba85b2ac10134',1,'GameViewDelegate']]],
-  ['spdlog_5fflush_22',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]],
-  ['sqlite_23',['sqlite',['../namespacesqlite.html',1,'']]]
+  ['update_0',['update',['../structRecord.html#af892e3d2652e89811632a58bc8b35578',1,'Record']]]
 ];

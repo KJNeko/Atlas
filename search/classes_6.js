@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['mainwindow_0',['MainWindow',['../classMainWindow.html',1,'']]],
-  ['metadataalreadyexists_1',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'']]]
+  ['transaction_0',['Transaction',['../structTransaction.html',1,'']]],
+  ['transactioninvalid_1',['TransactionInvalid',['../structTransactionInvalid.html',1,'']]]
 ];
