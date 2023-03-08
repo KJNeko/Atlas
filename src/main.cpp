@@ -67,7 +67,7 @@ int main( int argc, char** argv )
 	initLogging();
 
 	(void) std::atexit( spdlog_flush );
-	spdlog::flush_on( spdlog::level::warn );
+	spdlog::flush_on( spdlog::level::err );
 
 	QApplication app { argc, argv };
 
@@ -75,12 +75,15 @@ int main( int argc, char** argv )
 	std::filesystem::create_directories( path );
 
 #ifdef NDEBUG
-	if ( getSettings< bool >( "debug/very_vocal", true ) )
-#endif
+	if ( getSettings< bool >( "debug/very_vocal", false ) )
 	{
 		spdlog::set_level( spdlog::level::debug );
 		spdlog::debug( "Debugging enabled." );
 	}
+#else
+	spdlog::set_level(spdlog::level::debug);
+	spdlog::debug("Debugging forcefully enabled due to not compiling with NDEBUG");
+#endif
 
 	Database::initalize("./data/hydrus95.db");
 }

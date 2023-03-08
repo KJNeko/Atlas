@@ -32,7 +32,7 @@ class Database
 	static std::mutex& lock();
 
 	public:
-	static void initalize( const std::filesystem::path init_path = "./data/hydrus95.db" );
+	static void initalize( const std::filesystem::path init_path );
 	static void deinit();
 
 	//static void update();

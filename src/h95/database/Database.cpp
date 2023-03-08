@@ -62,7 +62,7 @@ void Database::initalize( const std::filesystem::path init_path )
 	for ( const auto& query_str : table_queries )
 	{
 		transaction << query_str;
-		spdlog::debug( "Executing {}" );
+		spdlog::debug( "Executing {}", query_str );
 	}
 
 	transaction.commit();
@@ -111,6 +111,7 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
+	spdlog::debug("Executing {}", sql);
 	if ( finished ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }
