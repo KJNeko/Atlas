@@ -4,27 +4,33 @@
 
 #include <filesystem>
 
-#include <tracy/Tracy.hpp>
 
 #include "Database.hpp"
 
 #include <h95/logging.hpp>
+#include <tracy/Tracy.hpp>
 
 namespace internal
 {
 	static sqlite::database* db { nullptr };
-	static std::mutex db_mtx {};
+	static TracyLockable(std::mutex, db_mtx);
+	//static std::mutex db_mtx {};
 }  // namespace internal
 
 sqlite::database& Database::ref()
 {
+	ZoneScoped;
 	if ( internal::db != nullptr )
 		return *internal::db;
 	else
 		throw std::runtime_error( "Database was not initalized!" );
 }
 
+#ifdef TRACY_ENABLE
+tracy::Lockable<std::mutex>& Database::lock()
+#else
 std::mutex& Database::lock()
+#endif
 {
 	return internal::db_mtx;
 }

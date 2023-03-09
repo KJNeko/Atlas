@@ -7,6 +7,8 @@
 
 #include <filesystem>
 
+#include <tracy/Tracy.hpp>
+
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Wshadow"
@@ -26,10 +28,16 @@ namespace sqlite
 	class database;
 }
 
+
 class Database
 {
 	static sqlite::database& ref();
+
+#ifdef TRACY_ENABLE
+	static tracy::Lockable<std::mutex>& lock();
+#else
 	static std::mutex& lock();
+#endif
 
 	public:
 	static void initalize( const std::filesystem::path init_path );
@@ -53,7 +61,7 @@ struct Transaction
 
 	private:
 	bool finished { false };
-	std::lock_guard< std::mutex >* guard { nullptr };
+	std::lock_guard< LockableBase(std::mutex) >* guard { nullptr };
 
 	public:
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initalized first
