@@ -3,36 +3,39 @@ project(Hydrus95 LANGUAGES CXX)
 
 enable_testing()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/H95py)
+
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (NOT CMAKE_BUILD_TYPE)
+if (NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILT_TYPE Release ... FORCE)
 endif ()
 
-if (DEFINED QT_PATH)
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
-endif ()
-
+#Sql
 if (DEFINED SQL_PATH)
     set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
     set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
-    message("sql include dir: ${SQLite3_INCLUDE_DIR}")
-    message("sql lib dir: ${SQLite3_LIBRARY}")
 endif ()
+find_package(SQLite3 REQUIRED)
 
+#Spdlog
 if (WIN32)
     add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/spdlog)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
 
+
+#Qt
+if (DEFINED QT_PATH)
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+endif ()
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-
-find_package(SQLite3 REQUIRED)
 
 if (WIN32)
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -41,6 +44,7 @@ if (WIN32)
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
+
 
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
@@ -74,11 +78,26 @@ file(GLOB_RECURSE SOURCES
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(HYDRUS_SOURCES ${SOURCES} ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/assets/resources.qrc)
+set(HYDRUS_SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/assets/resources.qrc)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog)
 
-add_executable(Hydrus95 ${HYDRUS_SOURCES})
+#Lib for EXE and Python
+add_library(H95Static STATIC ${HYDRUS_SOURCES})
+target_link_libraries(H95Static ${REQUIRED_LIBS})
+target_include_directories(H95Static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+file(GLOB_RECURSE HYDRUS_CLIB_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/*.cpp")
+
+add_library(H95 SHARED ${HYDRUS_SOURCES} ${HYDRUS_CLIB_SOURCES})
+target_link_libraries(H95 H95Static)
+
+set_property(TARGET H95 PROPERTY POSITION_INDEPENDENT_CODE 1)
+
+#Build exe
+add_executable(Hydrus95 ${HYDRUS_UI})
 if (${CMAKE_COMPILER_IS_GNUCXX})
     set_target_properties(Hydrus95 PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 endif ()
@@ -89,10 +108,10 @@ if (WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 endif ()
 
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog)
 
-target_link_libraries(Hydrus95 ${REQUIRED_LIBS})
+target_link_libraries(Hydrus95 ${REQUIRED_LIBS} H95Static)
 
+#Post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET Hydrus95 POST_BUILD
             COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
@@ -108,6 +127,7 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
 endif ()
 
+#Test builds
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     include(FetchContent)
@@ -122,12 +142,13 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-    add_executable(Hydrus95TESTS ${SOURCES} ${UI_SOURCES} ${TESTS})
+    add_executable(Hydrus95TESTS ${TESTS})
 
     set_target_properties(Hydrus95TESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
     target_include_directories(Hydrus95TESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_link_libraries(Hydrus95TESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main)
+    target_link_libraries(Hydrus95TESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Static)
 
+    #Test post setup (Windows only)
     if (WIN32)
         add_custom_command(TARGET Hydrus95TESTS POST_BUILD
                 COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
@@ -150,3 +171,15 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
     gtest_discover_tests(Hydrus95TESTS)
 
 endif ()
+
+#Python binding setup
+add_custom_target(H95Py ALL DEPENDS $<TARGET_FILE_DIR:H95>)
+
+file(GLOB_RECURSE H95PY_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/*.py"
+        )
+message("Files = ${H95PY_FILES}")
+
+foreach(file ${H95PY_FILES})
+    add_custom_command(TARGET H95Py POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${file} $<TARGET_FILE_DIR:H95>)
+endforeach(file)
