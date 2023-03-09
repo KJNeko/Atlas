@@ -12,12 +12,18 @@
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/logger.h>
 #include <fmt/ranges.h>
+#include <h95/config.hpp>
 
 #pragma GCC diagnostic pop
 
 #include <h95/logging.hpp>
 
 #include <h95/database/Record.hpp>
+
+void flush_logger()
+{
+	spdlog::default_logger()->flush();
+}
 
 void initLogging()
 {
@@ -32,10 +38,52 @@ void initLogging()
 	std::vector< spdlog::sink_ptr > sinks { console_sink, file_sink };
 
 	auto logger { std::make_shared< spdlog::logger >( "", sinks.begin(), sinks.end() ) };
-	logger->set_level( spdlog::level::debug );
+
 	logger->info( "Logger setup" );
 
+	logger->flush_on( spdlog::level::info );
+
+	if ( std::atexit( flush_logger ) != 0 ) { spdlog::warn( "Failed to register logger flush at std::exit" ); }
+
 	spdlog::set_default_logger( logger );
+
+	#ifndef NDEBUG
+	console_sink->set_level( spdlog::level::debug );
+	//#else
+	switch ( getSettings< int >( "logging/level", 2 ) )
+	{
+		case 0:
+			console_sink->set_level( spdlog::level::trace );
+			spdlog::debug("Logging level set to \'trace\'");
+			break;
+		case 1:
+			console_sink->set_level( spdlog::level::debug );
+			spdlog::info("Logging level set to \'debug\'");
+			break;
+		case 2:
+			console_sink->set_level( spdlog::level::info );
+			spdlog::info("Logging level set to \'info\'");
+			break;
+		case 3:
+			console_sink->set_level( spdlog::level::warn );
+			spdlog::info("Logging level set to \'warn\'");
+			break;
+		case 4:
+			console_sink->set_level( spdlog::level::err );
+			spdlog::info("Logging level set to \'error\'");
+			break;
+		case 5:
+			console_sink->set_level( spdlog::level::critical );
+			spdlog::info("Logging level set to \'critical\'");
+			break;
+		case 6:
+			console_sink->set_level( spdlog::level::off );
+			break;
+		default:
+			console_sink->set_level( spdlog::level::info );
+			break;
+	}
+	#endif
 
 	spdlog::info( "Default logger set" );
 }
