@@ -41,6 +41,7 @@ class Database
 
 	private:
 	friend struct Transaction;
+	friend struct NonTransaction;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -77,6 +78,26 @@ struct Transaction
 	void abort();
 
 	~Transaction();
+};
+
+struct NonTransaction
+{
+	Q_DISABLE_COPY_MOVE(NonTransaction)
+
+	private:
+	bool finished {false};
+	std::lock_guard<std::mutex>* guard {nullptr};
+
+	public:
+	NonTransaction();
+
+	sqlite::database_binder operator<<(const std::string& sql);
+
+	void commit();
+
+	void abort();
+
+	~NonTransaction();
 };
 
 #endif	//HYDRUS95_DATABASE_HPP
