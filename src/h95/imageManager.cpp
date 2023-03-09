@@ -17,7 +17,6 @@ namespace imageManager
 {
 	std::filesystem::path getImagePath()
 	{
-		ZoneScoped;
 		const auto path {
 			std::filesystem::path( getSettings< QString >( "paths/h95_data", "./data" ).toStdString() ) / "images" };
 
@@ -29,7 +28,6 @@ namespace imageManager
 
 	void cleanOrphans()
 	{
-		ZoneScoped;
 		//Grab all images from the database
 		Transaction transaction;
 
@@ -51,12 +49,10 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after )
 	{
-		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
 			if ( std::ifstream ifs( path ); ifs )
 			{
-				ZoneScopedN("ifs");
 				std::vector< char > data;
 				data.resize( std::filesystem::file_size( path ) );
 				ifs.read( data.data(), static_cast< long >( data.size() ) );

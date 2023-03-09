@@ -11,7 +11,6 @@
 #include <QVariant>
 
 #include <h95/logging.hpp>
-#include <tracy/Tracy.hpp>
 
 /**
  *
@@ -50,7 +49,6 @@ inline QSettings getSettingsObject()
 //! Returns T for the given setting_name
 template< typename T > inline T getSettings( const QString setting_name )
 {
-	ZoneScoped;
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name ) };
 	if ( variant.template canConvert< T >() )
@@ -75,7 +73,6 @@ template< typename T > inline T getSettings( const QString setting_name )
  */
 template< typename T > inline T getSettings( const QString setting_name, const T default_value )
 {
-	ZoneScoped;
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name, default_value ) };
 	if ( variant.template canConvert< T >() )

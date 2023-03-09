@@ -8,18 +8,16 @@
 #include "Database.hpp"
 
 #include <h95/logging.hpp>
-#include <tracy/Tracy.hpp>
 
 namespace internal
 {
 	static sqlite::database* db { nullptr };
-	static TracyLockable(std::mutex, db_mtx);
+	static std::mutex db_mtx;
 	//static std::mutex db_mtx {};
 }  // namespace internal
 
 sqlite::database& Database::ref()
 {
-	ZoneScoped;
 	if ( internal::db != nullptr )
 		return *internal::db;
 	else

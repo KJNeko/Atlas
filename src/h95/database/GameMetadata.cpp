@@ -4,15 +4,12 @@
 
 #include <string>
 
-#include <tracy/Tracy.hpp>
-
 #include <h95/database/Database.hpp>
 #include <h95/logging.hpp>
 #include <h95/database/GameMetadata.hpp>
 
 std::vector< GameMetadata > GameMetadata::select( const RecordID id, Transaction& transaction )
 {
-	ZoneScoped;
 	std::vector< GameMetadata > metadata;
 
 	spdlog::debug( "Selecting metadata for id {}", id );
@@ -28,8 +25,6 @@ std::vector< GameMetadata > GameMetadata::select( const RecordID id, Transaction
 
 GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
 {
-	ZoneScoped;
-
 	bool found { false };
 
 	// Search for duplicates
@@ -55,8 +50,6 @@ GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metada
 
 void GameMetadata::erase( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
 {
-	ZoneScoped;
-
 	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
 				<< id << metadata.m_game_path.string() << metadata.m_exec_path.string()
 				<< metadata.m_version.toStdString();
