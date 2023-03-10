@@ -171,15 +171,3 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
     gtest_discover_tests(Hydrus95TESTS)
 
 endif ()
-
-#Python binding setup
-add_custom_target(H95Py ALL DEPENDS $<TARGET_FILE_DIR:H95>)
-
-file(GLOB_RECURSE H95PY_FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/*.py"
-        )
-message("Files = ${H95PY_FILES}")
-
-foreach(file ${H95PY_FILES})
-    add_custom_command(TARGET H95Py POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${file} $<TARGET_FILE_DIR:H95>)
-endforeach(file)
