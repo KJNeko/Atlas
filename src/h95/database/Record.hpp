@@ -25,7 +25,6 @@ struct Record
 	private:
 	Record() = delete;
 
-	public:
 	//! Internal, used in select and create
 	Record(
 		const RecordID id,
@@ -44,6 +43,8 @@ struct Record
 	  m_previews( previews )
 	{
 	}
+
+	public:
 
 	//! Selects a record from the database.
 	static Record select( const RecordID id, Transaction& transaction );
