@@ -17,8 +17,9 @@ endif ()
 if (DEFINED SQL_PATH)
     set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
     set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
+else ()
+    find_package(SQLite3 REQUIRED)
 endif ()
-find_package(SQLite3 REQUIRED)
 
 #Spdlog
 if (WIN32)
