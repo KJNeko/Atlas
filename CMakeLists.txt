@@ -9,17 +9,22 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/H95py)
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+message("prefix = ${CMAKE_PREFIX_PATH}")
+message("sys prefix = ${CMAKE_SYSTEM_PREFIX_PATH}")
+
 if (NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILT_TYPE Release ... FORCE)
 endif ()
 
 #Sql
-if (DEFINED SQL_PATH)
-    set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
-    set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
-else ()
+if(WIN32)
+set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_INCLUDES})
+set(Sqlite3_LIBRARY $ENV{SQLITE3_LIBRARY})
+    #set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
+    #set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
+else()
     find_package(SQLite3 REQUIRED)
-endif ()
+endif()
 
 #Spdlog
 if (WIN32)
