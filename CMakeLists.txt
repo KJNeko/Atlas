@@ -84,17 +84,9 @@ set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/assets/resources.qrc
 set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog)
 
 #Lib for EXE and Python
-add_library(H95Static STATIC ${HYDRUS_SOURCES})
-target_link_libraries(H95Static ${REQUIRED_LIBS})
-target_include_directories(H95Static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-file(GLOB_RECURSE HYDRUS_CLIB_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/pybind/*.cpp")
-
-add_library(H95 SHARED ${HYDRUS_SOURCES} ${HYDRUS_CLIB_SOURCES})
-target_link_libraries(H95 H95Static)
-
-set_property(TARGET H95 PROPERTY POSITION_INDEPENDENT_CODE 1)
+add_library(H95Obj OBJECT ${HYDRUS_SOURCES})
+target_link_libraries(H95Obj ${REQUIRED_LIBS})
+target_include_directories(H95Obj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 #Build exe
 add_executable(Hydrus95 ${HYDRUS_UI})
@@ -109,7 +101,7 @@ if (WIN32)
 endif ()
 
 
-target_link_libraries(Hydrus95 ${REQUIRED_LIBS} H95Static)
+target_link_libraries(Hydrus95 ${REQUIRED_LIBS} H95Obj)
 
 #Post setup (Windows only)
 if (WIN32)
@@ -146,7 +138,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     set_target_properties(Hydrus95TESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
     target_include_directories(Hydrus95TESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_link_libraries(Hydrus95TESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Static)
+    target_link_libraries(Hydrus95TESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Obj)
 
     #Test post setup (Windows only)
     if (WIN32)
