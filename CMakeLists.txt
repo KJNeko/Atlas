@@ -18,10 +18,8 @@ endif ()
 
 #Sql
 if(WIN32)
-    set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_INCLUDES})
-    set(SQlite3_LIBRARY $ENV{SQLITE3_LIBRARY})
-    #set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
-    #set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
+    set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_PATH}/include)
+    set(SQlite3_LIBRARY $ENV{SQLITE3_PATH}/lib)
 else()
     find_package(SQLite3 REQUIRED)
 endif()
@@ -32,7 +30,6 @@ if (WIN32)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
-
 
 #Qt
 if (DEFINED QT_PATH)
