@@ -1,0 +1,3 @@
+{
+    "files": ["scraper/vndbScraper.py","ui/window/mainwindow.py","ui/UIStyle.py","scraper/dlsiteScraper.py","scraper/init.py","db/ClientFunctions.py","core/Hydrus95FileManagement.py","resources/qss/oled.qss","scraper/f95Scraper.py","main.py","resources/qss/OledBlack.qss","ui/dialog/UIImportGames.ui","ui/dialog/UIImportGames.py","ui/window/mainwindow.ui","core/Hydrus95Globals.py","resources/qss/default_hydrus.qss","media/Hydrus95ImageDownloader.py"]
+}
