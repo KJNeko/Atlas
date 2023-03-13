@@ -17,12 +17,12 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
 endif ()
 
 #Sql
-if (DEFINED SQL_PATH)
-    set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
-    set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
-    message("sql include dir: ${SQLite3_INCLUDE_DIR}")
-    message("sql lib dir: ${SQLite3_LIBRARY}")
-endif ()
+if(WIN32)
+    set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_PATH}/include)
+    set(SQLite3_LIBRARY $ENV{SQLITE3_PATH}/lib)
+else()
+    find_package(SQLite3 REQUIRED)
+endif()
 
 #Spdlog
 if (WIN32)
