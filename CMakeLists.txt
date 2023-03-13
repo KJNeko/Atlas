@@ -18,8 +18,8 @@ endif ()
 
 #Sql
 if(WIN32)
-set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_INCLUDES})
-set(Sqlite3_LIBRARY $ENV{SQLITE3_LIBRARY})
+    set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_INCLUDES})
+    set(SQlite3_LIBRARY $ENV{SQLITE3_LIBRARY})
     #set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
     #set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
 else()
