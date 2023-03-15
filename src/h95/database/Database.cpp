@@ -16,7 +16,7 @@ namespace internal
 	static std::mutex db_mtx;
 
 #ifndef NDEBUG
-	static std::atomic<std::thread::id> last_locked;
+	static std::atomic< std::thread::id > last_locked { std::thread::id( 0 ) };
 #endif
 
 	//static std::mutex db_mtx {};
@@ -35,7 +35,8 @@ std::mutex& Database::lock()
 	return internal::db_mtx;
 }
 
-void Database::initalize( const std::filesystem::path init_path ) try
+void Database::initalize( const std::filesystem::path init_path )
+try
 {
 	spdlog::info( "Initalizing database with path {}", init_path );
 	std::filesystem::create_directories( init_path.parent_path() );
@@ -82,10 +83,10 @@ void Database::initalize( const std::filesystem::path init_path ) try
 	else
 		spdlog::info( "Database has been initalized before! Skipping table creation" );
 }
-catch(sqlite::sqlite_exception& e)
+catch ( sqlite::sqlite_exception& e )
 {
-	spdlog::error("{}", e.get_sql());
-	std::rethrow_exception(std::current_exception());
+	spdlog::error( "{}", e.get_sql() );
+	std::rethrow_exception( std::current_exception() );
 }
 
 void Database::deinit()
@@ -96,29 +97,30 @@ void Database::deinit()
 }
 
 
-std::lock_guard<std::mutex> TransactionData::getLock()
+std::lock_guard< std::mutex > TransactionData::getLock()
 {
 	//Check if we are already locked
-	if(internal::last_locked == std::this_thread::get_id())
-		throw std::runtime_error("Deadlock");
+	if ( internal::last_locked == std::this_thread::get_id() )
+		throw std::runtime_error( "Deadlock" );
 	else
-		return std::lock_guard<std::mutex>(Database::lock());
+		return std::lock_guard< std::mutex >( Database::lock() );
 }
 
-TransactionData::TransactionData() :  guard(getLock())
+TransactionData::TransactionData() : guard( getLock() )
 {
 	internal::last_locked = std::this_thread::get_id();
 }
 TransactionData::~TransactionData()
 {
-	internal::last_locked = std::thread::id(-1);
+	internal::last_locked = std::thread::id( -1 );
 }
 
 
-Transaction::Transaction(const bool autocommit) : m_autocommit(autocommit), data(new TransactionData())
+Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), data( new TransactionData() )
 {
 	if ( internal::db == nullptr )
 	{
+		spdlog::error( "Database was not ready!" );
 		data.reset();
 		throw TransactionInvalid();
 	}
@@ -128,7 +130,7 @@ Transaction::Transaction(const bool autocommit) : m_autocommit(autocommit), data
 
 Transaction::~Transaction()
 {
-	if (data != nullptr)
+	if ( data.use_count() == 1 )
 	{
 		if ( m_autocommit )
 			commit();
@@ -139,29 +141,26 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
-	if ( data->finished ) throw TransactionInvalid();
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	*this << "COMMIT TRANSACTION";
 
-	data->finished = true;
 	data.reset();
 }
 
 void Transaction::abort()
 {
-	if ( data->finished ) throw TransactionInvalid();
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	*this << "ROLLBACK TRANSACTION";
 
-	data->finished = true;
 	data.reset();
 }
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
 	spdlog::info( "Executing {}", sql );
-	if ( data->finished ) throw TransactionInvalid();
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }
-
 
 NonTransaction::NonTransaction() : guard( new std::lock_guard( Database::lock() ) )
 {

@@ -21,12 +21,6 @@
 
 #include <QObject>
 
-namespace sqlite
-{
-	class database;
-}
-
-
 class Database
 {
 	static sqlite::database& ref();
@@ -52,10 +46,8 @@ struct TransactionInvalid : public std::runtime_error
 
 struct TransactionData
 {
-	bool finished { false };
-	std::lock_guard< std::mutex > guard;
-
 	private:
+	std::lock_guard< std::mutex > guard;
 
 	std::lock_guard<std::mutex> getLock();
 
