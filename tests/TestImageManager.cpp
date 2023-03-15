@@ -32,6 +32,9 @@ class TestImageManager : public ::testing::Test
 
 TEST_F( TestImageManager, importPreview )
 {
+	QImage image {":/banner/placeholder.jpg"};
+	image.save("./assets/banner/placeholder.jpg");
+
 	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
 	GTEST_ASSERT_TRUE(
@@ -50,6 +53,10 @@ TEST_F( TestImageManager, importNonExistant )
 
 TEST_F( TestImageManager, clearOrhpans )
 {
+
+	QImage image {":/banner/placeholder.jpg"};
+	image.save("./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp");
+
 	imageManager::cleanOrphans();
 
 	GTEST_ASSERT_FALSE(
