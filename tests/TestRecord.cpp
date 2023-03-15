@@ -99,3 +99,36 @@ TEST_F( TestRecord, selectNonExisting )
 {
 	ASSERT_THROW( Record( RecordID( 0 ) ), InvalidRecordID );
 }
+
+
+TEST_F( TestRecord, Example1 )
+{
+	QString title { "my title" };
+	QString creator { "Some Person" };
+	QString engine { "Some Engine" };
+	const uint64_t last_played { 0 };
+	const std::uint32_t total_playtime { 0 };
+	std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };
+	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
+	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
+
+	Record record { title, creator, engine, last_played, total_playtime, metadata, banner, previews };
+}
+
+TEST_F( TestRecord, Example2 )
+{
+	Transaction transaction;
+
+	QString title { "my title 2" };
+	QString creator { "Some Person 2" };
+	QString engine { "Some Engine 2" };
+	const uint64_t last_played { 0 };
+	const std::uint32_t total_playtime { 0 };
+	std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };
+	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
+	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
+
+	Record record { title, creator, engine, last_played, total_playtime, metadata, banner, previews, transaction };
+
+	transaction.commit();
+}
