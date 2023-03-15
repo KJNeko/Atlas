@@ -18,8 +18,7 @@ TEST( TestDatabase, testTransactionUnloaded )
 
 TEST( TestDatabase, testInit )
 {
-	if(std::filesystem::exists("./data/"))
-		std::filesystem::remove_all("./data/");
+	if ( std::filesystem::exists( "./data/" ) ) std::filesystem::remove_all( "./data/" );
 
 	Database::initalize( "./data/testing.db" );
 	Database::deinit();
@@ -41,4 +40,17 @@ TEST( TestDatabase, testTransaction )
 TEST( TestDatabase, testUpdate )
 {
 	GTEST_SKIP() << "To be implemented later";
+}
+
+TEST( TestDatabase, testDeadlock )
+{
+	Database::initalize( "./data/testing.db" );
+
+	EXPECT_THROW(
+		[]()
+		{
+			Transaction transaction_1;
+			Transaction transaction_2;
+		}(),
+		std::runtime_error );
 }
