@@ -30,6 +30,7 @@ template< typename T, typename T_Key, typename... T_Args >
 concept HasKeyFunc = HasObjectKeyFunc< T, T_Key > || HasStaticKeyFunc< T, T_Key, T_Args... >;
 
 /**
+ * @brief Allows for objects of the same 'key' to be in a shared memory space.
  * @tparam T Object to store in the flyweight
  * @tparam T_Key Key to use as the index.
  */

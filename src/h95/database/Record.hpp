@@ -105,7 +105,24 @@ struct RecordData : public QObject
 	{
 	}
 
-	RecordData( const RecordID, Transaction transaction = Transaction( true ) );
+	/**
+	 * @param id
+	 * @param transaction
+	 */
+	RecordData( const RecordID id, Transaction transaction = Transaction( true ) );
+
+	/**
+	 * @warning Constructing will create a new record in the database. Pass in Transaction as last parameter in order to not commit on return
+	 * @param title
+	 * @param creator
+	 * @param engine
+	 * @param last_played
+	 * @param total_playtime
+	 * @param versions
+	 * @param banner
+	 * @param previews
+	 * @param transaction
+	 */
 	RecordData(
 		QString title,
 		QString creator,

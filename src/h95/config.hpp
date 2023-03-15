@@ -16,7 +16,6 @@
  *
  * @page H95Settings Settings list
  *
- *
  * @warning THESE SHOULD NEVER BE MODIFIED MANUALLY IN `config.ini` UNLESS TOLD TOO. These are simply to provide some reference to what they are when developing new modules
  *
  * |Group 		| Key				| Value 	| Default	|
@@ -31,7 +30,6 @@
  * | paths 		| data 				| string 	| ./data/   |
  * | paths		| games				| string	| ./data/games	 |
  * | paths		| images			| string	| ./data/images |
- *
  */
 
 //TODO: Add cache
