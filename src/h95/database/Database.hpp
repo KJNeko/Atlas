@@ -42,6 +42,7 @@ class Database
 	private:
 	friend struct Transaction;
 	friend struct NonTransaction;
+	friend struct TransactionData;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -49,18 +50,34 @@ struct TransactionInvalid : public std::runtime_error
 	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
 };
 
+struct TransactionData
+{
+	bool finished { false };
+	std::lock_guard< std::mutex > guard;
+
+	private:
+
+	std::lock_guard<std::mutex> getLock();
+
+	public:
+
+	TransactionData();
+
+	~TransactionData();
+};
+
 //! Transaction unit to the database.
 struct Transaction
 {
-	Q_DISABLE_COPY_MOVE( Transaction )
-
 	private:
-	bool finished { false };
-	std::lock_guard< std::mutex >* guard { nullptr };
+	std::shared_ptr< TransactionData > data;
+	bool m_autocommit { false };
 
 	public:
-	//! @throws TransactionInvalid when trying to create a transaction without the database being initalized first
-	Transaction();
+	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
+	Transaction( const bool autocommit = false );
+	Transaction( const Transaction& other ) = default;
+	Transaction( Transaction&& other ) = default;
 
 	//! @throws TransactionInvalid
 	sqlite::database_binder operator<<( const std::string& sql );
@@ -82,16 +99,16 @@ struct Transaction
 
 struct NonTransaction
 {
-	Q_DISABLE_COPY_MOVE(NonTransaction)
+	Q_DISABLE_COPY_MOVE( NonTransaction )
 
 	private:
-	bool finished {false};
-	std::lock_guard<std::mutex>* guard {nullptr};
+	bool finished { false };
+	std::lock_guard< std::mutex >* guard { nullptr };
 
 	public:
 	NonTransaction();
 
-	sqlite::database_binder operator<<(const std::string& sql);
+	sqlite::database_binder operator<<( const std::string& sql );
 
 	void commit();
 
@@ -99,5 +116,15 @@ struct NonTransaction
 
 	~NonTransaction();
 };
+
+inline sqlite::database_binder& operator<<( sqlite::database_binder&& db, QString& str )
+{
+	return db << ( str.toStdString() );
+}
+
+inline sqlite::database_binder& operator<<( sqlite::database_binder& db, QString& str )
+{
+	return db << ( str.toStdString() );
+}
 
 #endif	//HYDRUS95_DATABASE_HPP

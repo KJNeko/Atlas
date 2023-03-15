@@ -14,6 +14,11 @@ namespace internal
 {
 	static sqlite::database* db { nullptr };
 	static std::mutex db_mtx;
+
+#ifndef NDEBUG
+	static std::atomic<std::thread::id> last_locked;
+#endif
+
 	//static std::mutex db_mtx {};
 }  // namespace internal
 
@@ -25,32 +30,29 @@ sqlite::database& Database::ref()
 		throw std::runtime_error( "Database was not initalized!" );
 }
 
-#ifdef TRACY_ENABLE
-tracy::Lockable< std::mutex >& Database::lock()
-#else
 std::mutex& Database::lock()
-#endif
 {
 	return internal::db_mtx;
 }
 
-void Database::initalize( const std::filesystem::path init_path )
+void Database::initalize( const std::filesystem::path init_path ) try
 {
-	spdlog::debug( "Initalizing database with path {}", init_path );
+	spdlog::info( "Initalizing database with path {}", init_path );
 	std::filesystem::create_directories( init_path.parent_path() );
+	spdlog::info( "Initalizing database with path {}", init_path );
 
 	internal::db = new sqlite::database( init_path );
 
-	if(getSettings<bool>("db/first_start", true))
+	if ( getSettings< bool >( "db/first_start", true ) )
 	{
-
 		NonTransaction transaction;
 
 		const std::vector< std::string > table_queries {
-
-			"CREATE TABLE records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_record DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
+			"CREATE TABLE records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
 			"CREATE TABLE game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT UNIQUE, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER);",
-			"CREATE TABLE images (record_id INTEGER REFERENCES records(record_id), type INTEGER, sha256 TEXT, UNIQUE(record_id, type, sha256));",
+			"CREATE TABLE images (record_id INTEGER REFERENCES records(record_id), type INTEGER, path TEXT, UNIQUE(record_id, type, path));",
+			"CREATE TABLE tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
+			"CREATE TABLE tag_mappings (record_id INTEGER REFERENCES records(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
 
 			//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
 			"CREATE TABLE f95zone_data (f95_id INTEGER PRIMARY KEY);",
@@ -75,10 +77,15 @@ void Database::initalize( const std::filesystem::path init_path )
 
 		transaction.commit();
 
-		setSettings("db/first_start", false);
+		setSettings( "db/first_start", false );
 	}
 	else
-		spdlog::info("Database has been initalized before! Skipping table creation");
+		spdlog::info( "Database has been initalized before! Skipping table creation" );
+}
+catch(sqlite::sqlite_exception& e)
+{
+	spdlog::error("{}", e.get_sql());
+	std::rethrow_exception(std::current_exception());
 }
 
 void Database::deinit()
@@ -88,11 +95,31 @@ void Database::deinit()
 	internal::db = nullptr;
 }
 
-Transaction::Transaction() : guard( new std::lock_guard( Database::lock() ) )
+
+std::lock_guard<std::mutex> TransactionData::getLock()
+{
+	//Check if we are already locked
+	if(internal::last_locked == std::this_thread::get_id())
+		throw std::runtime_error("Deadlock");
+	else
+		return std::lock_guard<std::mutex>(Database::lock());
+}
+
+TransactionData::TransactionData() :  guard(getLock())
+{
+	internal::last_locked = std::this_thread::get_id();
+}
+TransactionData::~TransactionData()
+{
+	internal::last_locked = std::thread::id(-1);
+}
+
+
+Transaction::Transaction(const bool autocommit) : m_autocommit(autocommit), data(new TransactionData())
 {
 	if ( internal::db == nullptr )
 	{
-		delete guard;
+		data.reset();
 		throw TransactionInvalid();
 	}
 
@@ -101,31 +128,37 @@ Transaction::Transaction() : guard( new std::lock_guard( Database::lock() ) )
 
 Transaction::~Transaction()
 {
-	if ( !finished ) abort();
+	if (data != nullptr)
+	{
+		if ( m_autocommit )
+			commit();
+		else
+			abort();
+	}
 }
 
 void Transaction::commit()
 {
-	if ( finished ) throw TransactionInvalid();
+	if ( data->finished ) throw TransactionInvalid();
 	*this << "COMMIT TRANSACTION";
 
-	finished = true;
-	delete guard;
+	data->finished = true;
+	data.reset();
 }
 
 void Transaction::abort()
 {
-	if ( finished ) throw TransactionInvalid();
+	if ( data->finished ) throw TransactionInvalid();
 	*this << "ROLLBACK TRANSACTION";
 
-	finished = true;
-	delete guard;
+	data->finished = true;
+	data.reset();
 }
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
-	spdlog::debug( "Executing {}", sql );
-	if ( finished ) throw TransactionInvalid();
+	spdlog::info( "Executing {}", sql );
+	if ( data->finished ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }
 

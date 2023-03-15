@@ -53,24 +53,4 @@ template<> struct fmt::formatter< std::filesystem::path >
 	auto format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() );
 };
 
-
-struct Record;
-
-template<> struct fmt::formatter< Record >
-{
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
-
-	auto format( const Record& my, format_context& ctx ) const -> decltype( ctx.out() );
-};
-
-struct GameMetadata;
-
-template<> struct fmt::formatter< GameMetadata >
-{
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
-
-	auto format( const GameMetadata& my, format_context& ctx ) const -> decltype( ctx.out() );
-};
-
-
 #endif	//HYDRUS95_LOGGING_HPP

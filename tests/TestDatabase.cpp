@@ -18,22 +18,24 @@ TEST( TestDatabase, testTransactionUnloaded )
 
 TEST( TestDatabase, testInit )
 {
+	if(std::filesystem::exists("./data/"))
+		std::filesystem::remove_all("./data/");
+
 	Database::initalize( "./data/testing.db" );
 	Database::deinit();
-	std::filesystem::remove( "./data/testing.db" );
+	std::filesystem::remove_all( "./data/" );
 
 	SUCCEED();
 }
 
 TEST( TestDatabase, testTransaction )
 {
-
 	Database::initalize( "./data/testing.db" );
 	{
 		Transaction transaction;
 	}
 	Database::deinit();
-	std::filesystem::remove( "./data/testing.db" );
+	std::filesystem::remove_all( "./data" );
 }
 
 TEST( TestDatabase, testUpdate )

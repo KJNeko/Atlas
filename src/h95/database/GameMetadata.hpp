@@ -25,44 +25,30 @@ struct GameMetadata
 	//! canonical path to the executable
 	std::filesystem::path m_exec_path {};
 
+	//! Indicates that we don't control where the game was placed.
+	bool m_in_place;
+
+	std::uint32_t m_total_playtime;
+	std::uint64_t m_last_played;
+
 	GameMetadata() = delete;
 	GameMetadata(
 		const QString& version_in,
 		const std::filesystem::path& game_path_in,
-		const std::filesystem::path& exec_path_in ) :
+		const std::filesystem::path& exec_path_in,
+		const bool in_place,
+		const std::uint64_t last_played,
+		const std::uint32_t total_playtime ) :
 	  m_version( version_in ),
 	  m_game_path( game_path_in ),
-	  m_exec_path( exec_path_in )
+	  m_exec_path( exec_path_in ),
+	  m_in_place( in_place ),
+	  m_total_playtime( total_playtime ),
+	  m_last_played( last_played )
 	{
 	}
 
 	bool operator==( const GameMetadata& other ) const = default;
-
-	//! Returns a populated GameMetadata for the given id from the database
-	/**
-	 * @param id
-	 * @param transaction
-	 * @return
-	 */
-	static std::vector< GameMetadata > select( const RecordID id, Transaction& transaction );
-
-	//! Inserts a new set of metadata
-	/**
-	 * @throws MetadataAlreadyExists
-	 * @param id id of the record.
-	 * @param metadata
-	 * @param transaction
-	 * @return
-	 */
-	static GameMetadata insert( const RecordID id, const GameMetadata& metadata, Transaction& transaction );
-
-	//! Erases metadata from the given id
-	/**
-	 * @param id
-	 * @param metadata
-	 * @param transaction
-	 */
-	static void erase( const RecordID id, const GameMetadata& metadata, Transaction& transaction );
 };
 
 struct MetadataException : public std::runtime_error

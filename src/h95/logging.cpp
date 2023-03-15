@@ -47,34 +47,34 @@ void initLogging()
 
 	spdlog::set_default_logger( logger );
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	console_sink->set_level( spdlog::level::debug );
 	//#else
 	switch ( getSettings< int >( "logging/level", 2 ) )
 	{
 		case 0:
 			console_sink->set_level( spdlog::level::trace );
-			spdlog::debug("Logging level set to \'trace\'");
+			spdlog::debug( "Logging level set to \'trace\'" );
 			break;
 		case 1:
 			console_sink->set_level( spdlog::level::debug );
-			spdlog::info("Logging level set to \'debug\'");
+			spdlog::info( "Logging level set to \'debug\'" );
 			break;
 		case 2:
 			console_sink->set_level( spdlog::level::info );
-			spdlog::info("Logging level set to \'info\'");
+			spdlog::info( "Logging level set to \'info\'" );
 			break;
 		case 3:
 			console_sink->set_level( spdlog::level::warn );
-			spdlog::info("Logging level set to \'warn\'");
+			spdlog::info( "Logging level set to \'warn\'" );
 			break;
 		case 4:
 			console_sink->set_level( spdlog::level::err );
-			spdlog::info("Logging level set to \'error\'");
+			spdlog::info( "Logging level set to \'error\'" );
 			break;
 		case 5:
 			console_sink->set_level( spdlog::level::critical );
-			spdlog::info("Logging level set to \'critical\'");
+			spdlog::info( "Logging level set to \'critical\'" );
 			break;
 		case 6:
 			console_sink->set_level( spdlog::level::off );
@@ -83,7 +83,7 @@ void initLogging()
 			console_sink->set_level( spdlog::level::info );
 			break;
 	}
-	#endif
+#endif
 
 	spdlog::info( "Default logger set" );
 }
@@ -122,19 +122,19 @@ auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::pat
 			std::filesystem::exists( path ) ? "True" : "False" );
 }
 
-
+/*
 auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )
 {
 	return format_to(
 		ctx.out(),
 		"RecordID: {}, Title: \"{}\", Creator: \"{}\", Engine: \"{}\", Versions: {}, Banner: {}, Previews: {}",
-		my.m_id,
-		my.m_title,
-		my.m_creator,
-		my.m_engine,
-		my.m_versions,
-		my.m_banner,
-		my.m_previews );
+		my->m_id,
+		my->m_title,
+		my->m_creator,
+		my->m_engine,
+		my->m_versions,
+		my->m_banner,
+		my->m_previews );
 }
 
 auto fmt::formatter< GameMetadata >::format( const GameMetadata& my, fmt::format_context& ctx ) const
@@ -146,4 +146,4 @@ auto fmt::formatter< GameMetadata >::format( const GameMetadata& my, fmt::format
 		my.m_version,
 		my.m_game_path,
 		my.m_exec_path );
-}
+}*/

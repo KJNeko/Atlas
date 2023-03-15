@@ -26,7 +26,7 @@ class TestImageManager : public ::testing::Test
 	{
 		delete app;
 		Database::deinit();
-		std::filesystem::remove( "./data/testing.db" );
+		std::filesystem::remove_all( "./data/" );
 	}
 };
 

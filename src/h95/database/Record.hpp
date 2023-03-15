@@ -9,106 +9,125 @@
 #include <h95/database/GameMetadata.hpp>
 
 #include <QPixmap>
+#include "FlyWeight.hpp"
 
-struct Record
+enum IMAGE_TYPE
 {
-	RecordID m_id;
+	IMAGE_BANNER = 1,
+	IMAGE_PREVIEW = 2,
+	IMAGE_UNKNOWN = 999
+};
+
+struct RecordData : public QObject
+{
+	Q_OBJECT
+
+	RecordData() = default;
+
+	public:
+	RecordID m_id { 0 };
+
+	private:
 	QString m_title;
 	QString m_creator;
 	QString m_engine;
 
-	std::vector< GameMetadata > m_versions;
+	//! Unix timestamp (Jan 01 1970 Epoch)
+	std::uint64_t m_last_played { 0 };
 
-	std::filesystem::path m_banner;
-	std::vector< std::filesystem::path > m_previews;
+	//! Seconds counter
+	std::uint32_t m_total_playtime { 0 };
 
-	private:
-	Record() = delete;
+	std::vector< GameMetadata > m_versions {};
 
-	//! Internal, used in select and create
-	Record(
-		const RecordID id,
-		const QString title,
-		const QString creator,
-		const QString engine,
-		const std::vector< GameMetadata >& versions,
-		const std::filesystem::path& banner,
-		const std::vector< std::filesystem::path >& previews ) :
+	std::filesystem::path m_banner {};
+	std::vector< std::filesystem::path > m_previews {};
+
+	public:
+	//Getters
+	const QString& getTitle() const;
+	const QString& getCreator() const;
+	const QString& getEngine() const;
+	std::uint64_t getLastPlayed() const;
+	std::uint32_t getTotalPlaytime() const;
+	const std::vector< GameMetadata >& getVersions();
+	const std::filesystem::path& getBannerPath() const;
+	QPixmap getBanner() const;
+	const std::vector< std::filesystem::path >& getPreviewPaths() const;
+	std::vector< QPixmap > getPreviews() const;
+
+	//Setters
+	void setTitle( QString, Transaction = Transaction( true ) );
+	void setCreator( QString, Transaction = Transaction( true ) );
+	void setEngine( QString, Transaction = Transaction( true ) );
+	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
+	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
+	void addVersion( GameMetadata&, Transaction = Transaction( true ) );
+	void removeVersion( GameMetadata&, Transaction = Transaction( true ) );
+
+	//! Syncs the data from the database
+	void sync( Transaction transaction = Transaction( true ) );
+
+	signals:
+	//! Emitted when ANY data is changed
+	void dataChanged();
+	void titleChanged( QString );
+	void creatorChanged( QString );
+	void engineChanged( QString );
+	void lastPlayedChanged( std::uint64_t );
+	void totalPlaytimeChanged( std::uint32_t );
+	void versionsChanged( const std::vector< GameMetadata >& );
+	void bannerPathChanged( std::filesystem::path );
+	void bannerChanged( QPixmap );
+	void previewPathChanged( std::vector< std::filesystem::path > );
+	void previewsChanged( std::vector< QPixmap > );
+
+	public:
+	RecordData(
+		RecordID id,
+		QString title,
+		QString creator,
+		QString engine,
+		const std::uint64_t last_played,
+		const std::uint32_t total_playtime,
+		std::vector< GameMetadata > versions,
+		std::filesystem::path banner,
+		std::vector< std::filesystem::path > previews ) :
 	  m_id( id ),
-	  m_title( title ),
-	  m_creator( creator ),
-	  m_engine( engine ),
-	  m_versions( versions ),
-	  m_banner( banner ),
-	  m_previews( previews )
+	  m_title( std::move( title ) ),
+	  m_creator( std::move( creator ) ),
+	  m_engine( std::move( engine ) ),
+	  m_last_played( last_played ),
+	  m_total_playtime( total_playtime ),
+	  m_versions( std::move( versions ) ),
+	  m_banner( std::move( banner ) ),
+	  m_previews( std::move( previews ) )
 	{
 	}
 
-	public:
+	RecordData( const RecordID, Transaction transaction = Transaction( true ) );
+	RecordData(
+		QString title,
+		QString creator,
+		QString engine,
+		const std::uint64_t last_played,
+		const std::uint32_t total_playtime,
+		std::vector< GameMetadata > versions,
+		std::filesystem::path banner,
+		std::vector< std::filesystem::path > previews,
+		Transaction = Transaction( true ) );
 
-	//! Selects a record from the database.
-	static Record select( const RecordID id, Transaction& transaction );
+	//! Defined to comply with FlyWeight HasStaticKeyFunc constraint
+	inline static RecordID key( const RecordID id, [[maybe_unused]] Transaction transaction = Transaction( true ) )
+	{
+		return id;
+	}
 
-
-	//! Searches for the record and returns it's id. 0 if failed.
-	/**
-	 *
-	 * @param title
-	 * @param creator
-	 * @param engine
-	 * @param transaction
-	 * @return
-	 */
-	static RecordID
-		search( const QString& title, const QString& creator, const QString& engine, Transaction& transaction );
-
-	//! Updates a record with new information.
-	static void update( const RecordID id, Record& record, Transaction& transaction );
-
-	static void erase( const RecordID, Transaction& transaction );
-
-
-	/**
-	 * @param title unique constraint
-	 * @param creator unique constraint
-	 * @param engine unique constraint
-	 * @param metadata
-	 * @param banner
-	 * @param previews
-	 * @return
-	 * @throws RecordAlreadyExists
-	 */
-	//! Creates a record and inserts it into the database.
-	static Record create(
-		const QString& title,
-		const QString& creator,
-		const QString& engine,
-		const std::vector< GameMetadata >& metadata,
-		const std::filesystem::path& banner,
-		const std::vector< std::filesystem::path >& previews,
-		Transaction& transaction );
-
-	//! Returns the banner for the record
-	/**
-	 * @note Returns ":/invalid_banner.jpg" if banner could not be found
-	 * @return
-	 */
-	QPixmap getBanner() const;
-
-	//! Returns a resized banner for the given record
-	/**
-	 *
-	 * @param banner_width
-	 * @param banner_height
-	 * @return
-	 * @note Returns ":/invalid_banner.jpg" if banner could not be found
-	 */
-	QPixmap getBanner( const int banner_width, const int banner_height ) const;
-
-	bool operator==( const Record& other ) const = default;
-
-	friend class TestRecord;
+	//! Defined to comply with FlyWeight HasKeyFunc constraint
+	RecordID key() const { return m_id; }
 };
+
+using Record = FlyWeight< RecordData, RecordID >;
 
 struct RecordException : public std::runtime_error
 {
@@ -119,7 +138,7 @@ struct RecordAlreadyExists : public RecordException
 {
 	Record record;
 	RecordAlreadyExists( Record record_in ) :
-	  RecordException( ( "Record already exists with id " + std::to_string( record_in.m_id ) ).c_str() ),
+	  RecordException( ( "Record already exists with id " + std::to_string( record_in->m_id ) ).c_str() ),
 	  record( std::move( record_in ) )
 	{
 	}

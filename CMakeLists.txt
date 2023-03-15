@@ -49,6 +49,7 @@ if (WIN32)
 endif ()
 
 
+
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
@@ -82,7 +83,7 @@ file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
 
 
-set(HYDRUS_SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/assets/resources.qrc)
 set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog)
 
@@ -91,8 +92,12 @@ add_library(H95Obj OBJECT ${HYDRUS_SOURCES})
 target_link_libraries(H95Obj ${REQUIRED_LIBS})
 target_include_directories(H95Obj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+if(DEFINED DISABLE_FLYWEIGHT)
+    target_compile_definitions(H95Obj PRIVATE HYDRUS95_DISABLE_FLYWEIGHT)
+endif()
+
 #Build exe
-add_executable(Hydrus95 ${HYDRUS_UI})
+add_executable(Hydrus95 ${HYDRUS_UI} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 if (${CMAKE_COMPILER_IS_GNUCXX})
     set_target_properties(Hydrus95 PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 endif ()
@@ -102,7 +107,6 @@ target_include_directories(Hydrus95 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 if (WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 endif ()
-
 
 target_link_libraries(Hydrus95 ${REQUIRED_LIBS} H95Obj)
 

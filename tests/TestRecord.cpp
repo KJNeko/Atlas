@@ -7,6 +7,7 @@
 #include <h95/database/Database.hpp>
 
 #include "GTestBox.hpp"
+#include <h95/logging.hpp>
 
 class TestRecord : public ::testing::Test
 {
@@ -14,80 +15,43 @@ class TestRecord : public ::testing::Test
 	void TearDown() override
 	{
 		Database::deinit();
-		std::filesystem::remove( "./data/testing.db" );
+		std::filesystem::remove_all( "./data" );
 	}
 };
 
+
 TEST_F( TestRecord, createRecord )
 {
-	Transaction transaction;
-	Record::create(
-		"My Title",
-		"Some Person",
-		"Some Engine",
-		{ { "V1.0", "./bin/", "./bin/Hydrus95.exe" } },
-		"./assets/banner/placeholder.jpg",
-		{ "./assets/banner/placeholder.jpg" },
-		transaction );
-	transaction.commit();
+	QString title { "my title" };
+	QString creator { "Some Person" };
+	QString engine { "Some Engine" };
+	const std::uint64_t last_played { 0 };
+	const std::uint32_t total_playtime { 0 };
+	std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };
+	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
+	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
+
+	Record record { title, creator, engine, last_played, total_playtime, metadata, banner, previews };
 }
 
 TEST_F( TestRecord, createExistingRecord )
 {
+	QString title { "my title" };
+	QString creator { "Some Person" };
+	QString engine { "Some Engine" };
+	const std::uint64_t last_played { 0 };
+	const std::uint32_t total_playtime { 0 };
+	std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };
+	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
+	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
+
 	{
-		Transaction transaction;
-		Record::create(
-			"My Title",
-			"Some Person",
-			"Some Engine",
-			{ { "V1.0", "./bin/", "./bin/Hydrus95.exe" } },
-			"./assets/banner/placeholder.jpg",
-			{ "./assets/banner/placeholder.jpg" },
-			transaction );
-		transaction.commit();
+		Record record { title, creator, engine, last_played, total_playtime, metadata, banner, previews };
 	}
 
 	{
-		Transaction transaction;
 		ASSERT_THROW(
-			Record::create(
-				"My Title",
-				"Some Person",
-				"Some Engine",
-				{ { "v1.5", "./bin/", "./bin/Hydrus95.exe" } },
-				"",
-				{},
-				transaction ),
-			RecordAlreadyExists );
-	}
-}
-
-TEST_F( TestRecord, createDuplicateRecord )
-{
-	{
-		Transaction transaction;
-		Record::create(
-			"My Title",
-			"Some Person",
-			"Some Engine",
-			{ { "V1.0", "./bin/", "./bin/Hydrus95.exe" } },
-			"./assets/placeholder.jpg",
-			{ "./assets/placeholder.jpg" },
-			transaction );
-		transaction.commit();
-	}
-
-	{
-		Transaction transaction;
-		ASSERT_THROW(
-			Record::create(
-				"My Title",
-				"Some Person",
-				"Some Engine",
-				{ { "v1.0", "./bin/", "./bin/Hydrus95.exe" } },
-				"./assets/banner/placeholder.jpg",
-				{ "./assets/banner/placeholder.jpg" },
-				transaction ),
+			Record( title, creator, engine, last_played, total_playtime, metadata, banner, previews ),
 			RecordAlreadyExists );
 	}
 }
@@ -97,44 +61,41 @@ TEST_F( TestRecord, select )
 	std::optional< Record > record;
 
 	{
-		Transaction transaction;
-		record = Record::create(
-			"My Title",
-			"Some Person",
-			"Some Engine",
-			{ { "V1.0", "./bin/", "./bin/Hydrus95.exe" } },
-			"./assets/banner/placeholder.jpg",
-			{ "./assets/banner/placeholder.jpg" },
-			transaction );
-		transaction.commit();
+		QString title { "my title" };
+		QString creator { "Some Person" };
+		QString engine { "Some Engine" };
+		const uint64_t last_played { 0 };
+		const std::uint32_t total_playtime { 0 };
+		std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };
+		std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
+		std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
+
+
+		record = Record( title, creator, engine, last_played, total_playtime, metadata, banner, previews );
 	}
 
 	GTEST_ASSERT_TRUE( record.has_value() );
 
 	{
-		Transaction transaction;
-
-		const auto record_comp { Record::select( record->m_id, transaction ) };
+		const Record record_comp { ( *record )->m_id };
 		const auto& rec { *record };
-		GTEST_ASSERT_EQ( rec.m_id, record_comp.m_id );
-		GTEST_ASSERT_EQ( rec.m_versions, record_comp.m_versions );
-		GTEST_ASSERT_EQ( rec.m_engine, record_comp.m_engine );
-		GTEST_ASSERT_EQ( rec.m_title, record_comp.m_title );
-		GTEST_ASSERT_EQ( rec.m_creator, record_comp.m_creator );
-		GTEST_ASSERT_EQ( rec.m_previews, record_comp.m_previews );
-		GTEST_ASSERT_EQ( rec.m_banner, record_comp.m_banner );
+		GTEST_ASSERT_EQ( rec->m_id, record_comp->m_id );
+		GTEST_ASSERT_EQ( rec->getVersions(), record_comp->getVersions() );
+		GTEST_ASSERT_EQ( rec->getEngine(), record_comp->getEngine() );
+		GTEST_ASSERT_EQ( rec->getTitle(), record_comp->getTitle() );
+		GTEST_ASSERT_EQ( rec->getCreator(), record_comp->getCreator() );
+		GTEST_ASSERT_EQ( rec->getPreviewPaths(), record_comp->getPreviewPaths() );
+		GTEST_ASSERT_EQ( rec->getBannerPath(), record_comp->getBannerPath() );
 		GTEST_ASSERT_EQ( rec, record_comp );
 	}
 }
 
 TEST_F( TestRecord, selectZero )
 {
-	Transaction transaction;
-	ASSERT_THROW( Record::select( 0, transaction ), InvalidRecordID );
+	ASSERT_THROW( Record( RecordID( 0 ) ), InvalidRecordID );
 }
 
 TEST_F( TestRecord, selectNonExisting )
 {
-	Transaction transaction;
-	ASSERT_THROW( Record::select( 50, transaction ), InvalidRecordID );
+	ASSERT_THROW( Record( RecordID( 0 ) ), InvalidRecordID );
 }
