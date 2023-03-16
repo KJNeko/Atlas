@@ -41,7 +41,7 @@ try
 	std::filesystem::create_directories( init_path.parent_path() );
 	spdlog::info( "Initalizing database with path {}", init_path );
 
-	internal::db = new sqlite::database( init_path );
+	internal::db = new sqlite::database( init_path.string() );
 
 	if ( getSettings< bool >( "db/first_start", true ) )
 	{
