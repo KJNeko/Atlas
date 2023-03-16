@@ -208,7 +208,7 @@ void RecordData::addVersion( const GameMetadata& version, Transaction transactio
 
 	transaction
 		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime) VALUES (?, ?, ?, ?, ?, ?, ?)"
-		<< m_id << version.m_version << version.m_game_path.string() << version.m_exec_path.string()
+		<< m_id << version.m_version.toStdString() << version.m_game_path.string() << version.m_exec_path.string()
 		<< version.m_in_place << version.m_last_played << version.m_total_playtime;
 
 	emit dataChanged();
@@ -224,7 +224,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 		m_versions.erase( itter );
 
 	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ? AND game_path = ? AND exec_path = ?"
-				<< m_id << version.m_version << version.m_game_path.string() << version.m_exec_path.string();
+				<< m_id << version.m_version.toStdString() << version.m_game_path.string() << version.m_exec_path.string();
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
@@ -257,8 +257,8 @@ RecordData::RecordData(
 	try
 	{
 		RecordID record_id { 0 };
-		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << m_title
-					<< m_creator << m_engine
+		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << m_title.toStdString()
+					<< m_creator.toStdString() << m_engine.toStdString()
 			>> [ & ]( const RecordID id ) { record_id = id; };
 
 		if ( record_id != 0 )
@@ -269,7 +269,7 @@ RecordData::RecordData(
 
 		transaction
 				<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, ?, ?) RETURNING record_id"
-				<< m_title << m_creator << m_engine << m_last_played << m_total_playtime
+				<< m_title.toStdString() << m_creator.toStdString() << m_engine.toStdString() << m_last_played << m_total_playtime
 			>> [ & ]( const RecordID id ) { m_id = id; };
 
 		//Handle banner stuff

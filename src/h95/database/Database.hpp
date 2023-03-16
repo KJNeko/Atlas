@@ -116,14 +116,4 @@ struct NonTransaction
 	~NonTransaction();
 };
 
-inline sqlite::database_binder& operator<<( sqlite::database_binder&& db, const QString& str )
-{
-	return db << ( str.toStdString() );
-}
-
-inline sqlite::database_binder& operator<<( sqlite::database_binder& db, const QString& str )
-{
-	return db << ( str.toStdString() );
-}
-
 #endif //HYDRUS95_DATABASE_HPP
