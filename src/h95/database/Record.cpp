@@ -22,8 +22,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 {
 	bool found { false };
 
-	transaction << "SELECT title, creator, engine, last_played_r, total_playtime FROM records WHERE record_id = ?"
-				<< id
+	transaction << "SELECT title, creator, engine, last_played_r, total_playtime FROM records WHERE record_id = ?" << id
 		>> [this, &found](
 			   std::string title_in,
 			   std::string creator_in,
@@ -284,9 +283,9 @@ RecordData::RecordData(
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
 						<< preview;
 	}
-	catch(sqlite::sqlite_exception& e)
+	catch ( sqlite::sqlite_exception& e )
 	{
-		spdlog::error("{}", e.get_sql());
-		std::rethrow_exception(std::current_exception());
+		spdlog::error( "{}", e.get_sql() );
+		std::rethrow_exception( std::current_exception() );
 	}
 }

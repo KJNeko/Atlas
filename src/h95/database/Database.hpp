@@ -49,10 +49,9 @@ struct TransactionData
 	private:
 	std::lock_guard< std::mutex > guard;
 
-	std::lock_guard<std::mutex> getLock();
+	std::lock_guard< std::mutex > getLock();
 
 	public:
-
 	TransactionData();
 
 	~TransactionData();

@@ -31,12 +31,12 @@ namespace imageManager
 		//Grab all images from the database
 		Transaction transaction;
 
-		spdlog::debug("Clearing orphans");
+		spdlog::debug( "Clearing orphans" );
 
 		for ( const auto& path : std::filesystem::directory_iterator( getImagePath() ) )
 		{
 			if ( !path.is_regular_file() ) continue;
-			spdlog::debug("Testing if file {} exists in DB", path.path());
+			spdlog::debug( "Testing if file {} exists in DB", path.path() );
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
@@ -52,8 +52,8 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after )
 	{
-		spdlog::info("Importing image {}", path);
-		spdlog::info("Currently at {}", std::filesystem::current_path());
+		spdlog::info( "Importing image {}", path );
+		spdlog::info( "Currently at {}", std::filesystem::current_path() );
 		if ( std::filesystem::exists( path ) )
 		{
 			if ( std::ifstream ifs( path ); ifs )
@@ -74,7 +74,7 @@ namespace imageManager
 				const std::filesystem::path dest {
 					( getImagePath() / hash.result().toHex().toStdString() ).string() + ".webp" };
 
-				spdlog::info("Saving to file {}", dest);
+				spdlog::info( "Saving to file {}", dest );
 
 				//Save as webp
 				image.save( QString::fromStdString( dest.string() ) );
