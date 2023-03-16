@@ -68,9 +68,14 @@ namespace imageManager
 				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
 					                               + ".webp" };
 
-				std::filesystem::create_directories( dest.parent_path() );
+				if(!std::filesystem::exists(dest.parent_path()))
+				{
+					if ( !std::filesystem::create_directories( dest.parent_path() ) )
+						throw std::runtime_error( fmt::format( "Failed to create directory {}", dest.parent_path() ) );
+				}
+
 				//Save as webp
-				image.save( QString::fromStdString( dest.string() ) );
+				image.save( QString::fromStdString( dest.string() ), "webp", 99 );
 
 				if(!std::filesystem::exists(dest))
 					throw std::runtime_error("Save failed!");
@@ -80,8 +85,6 @@ namespace imageManager
 				return dest;
 			}
 		}
-		else
-			throw std::runtime_error("File no present for image import!");
 
 		return { ":/invalid.jpg" };
 	}
