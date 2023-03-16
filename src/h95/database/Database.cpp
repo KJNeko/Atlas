@@ -37,9 +37,8 @@ std::mutex& Database::lock()
 void Database::initalize( const std::filesystem::path init_path )
 try
 {
-	spdlog::info( "Initalizing database with path {}", init_path );
+	spdlog::debug( "Initalizing database with path {}", init_path );
 	std::filesystem::create_directories( init_path.parent_path() );
-	spdlog::info( "Initalizing database with path {}", init_path );
 
 	internal::db = new sqlite::database( init_path.string() );
 

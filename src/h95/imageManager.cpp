@@ -48,8 +48,7 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after )
 	{
-		spdlog::info( "Importing image {}", path );
-		spdlog::info( "Currently at {}", std::filesystem::current_path() );
+		spdlog::debug( "Importing image {}", path );
 		if ( std::filesystem::exists( path ) )
 		{
 			if ( std::ifstream ifs( path ); ifs )
@@ -68,9 +67,6 @@ namespace imageManager
 
 				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
 					                               + ".webp" };
-
-				spdlog::info( "Saving to file {}", dest );
-
 				//Save as webp
 				image.save( QString::fromStdString( dest.string() ) );
 
