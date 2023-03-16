@@ -85,6 +85,11 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	};
 }
 
+RecordID RecordData::getID() const
+{
+	return m_id;
+}
+
 const QString& RecordData::getTitle() const
 {
 	return m_title;

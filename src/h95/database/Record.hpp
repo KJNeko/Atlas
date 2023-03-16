@@ -24,10 +24,8 @@ struct RecordData : public QObject
 
 	RecordData() = default;
 
-	public:
-	RecordID m_id { 0 };
-
 	private:
+	RecordID m_id { 0 };
 	QString m_title;
 	QString m_creator;
 	QString m_engine;
@@ -45,6 +43,7 @@ struct RecordData : public QObject
 
 	public:
 	//Getters
+	RecordID getID() const;
 	const QString& getTitle() const;
 	const QString& getCreator() const;
 	const QString& getEngine() const;
@@ -142,6 +141,8 @@ struct RecordData : public QObject
 
 	//! Defined to comply with FlyWeight HasKeyFunc constraint
 	RecordID key() const { return m_id; }
+
+	friend struct RecordAlreadyExists;
 };
 
 using Record = FlyWeight< RecordData, RecordID >;
