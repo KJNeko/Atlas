@@ -31,9 +31,9 @@ if(WIN32)
             message("Must define SQL_PATH with -DSQL_PATH=?? or add to path as SQLITE3_PATH")
         endif()
     endif()
-else()
-    find_package(SQLite3 REQUIRED)
 endif()
+
+find_package(SQLite3 REQUIRED)
 
 #Spdlog
 if (WIN32)
