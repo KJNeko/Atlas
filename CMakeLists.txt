@@ -116,8 +116,6 @@ endif ()
 #Build exe
 add_executable(Hydrus95 ${HYDRUS_UI} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
-qt_import_plugins(Hydrus95 INCLUDE Qt::QWebpPlugin)
-
 if (${CMAKE_COMPILER_IS_GNUCXX})
     set_target_properties(Hydrus95 PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 endif ()
@@ -162,7 +160,6 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
     file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
     add_executable(Hydrus95TESTS ${TESTS})
-    qt_import_plugins(Hydrus95TESTS INCLUDE Qt::QWebpPlugin)
 
     set_target_properties(Hydrus95TESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
     target_include_directories(Hydrus95TESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
