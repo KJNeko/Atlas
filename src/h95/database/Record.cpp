@@ -128,7 +128,7 @@ const std::filesystem::path& RecordData::getBannerPath() const
 
 QPixmap RecordData::getBanner() const
 {
-	return QPixmap { QString::fromStdString( m_banner ) };
+	return QPixmap { QString::fromStdString( m_banner.string() ) };
 }
 
 const std::vector< std::filesystem::path >& RecordData::getPreviewPaths() const
@@ -142,7 +142,7 @@ std::vector< QPixmap > RecordData::getPreviews() const
 
 	for ( const auto& link : m_previews )
 	{
-		images.emplace_back( QString::fromStdString( link ) );
+		images.emplace_back( QString::fromStdString( link.string() ) );
 	}
 
 	return images;
@@ -274,11 +274,11 @@ RecordData::RecordData(
 
 		//Handle banner stuff
 		transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER
-					<< m_banner;
+					<< m_banner.string();
 
 		for ( const auto& preview : m_previews )
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
-						<< preview;
+						<< preview.string();
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
