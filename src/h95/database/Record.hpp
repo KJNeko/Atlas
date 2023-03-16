@@ -62,8 +62,8 @@ struct RecordData : public QObject
 	void setEngine( QString, Transaction = Transaction( true ) );
 	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
-	void addVersion( GameMetadata&, Transaction = Transaction( true ) );
-	void removeVersion( GameMetadata&, Transaction = Transaction( true ) );
+	void addVersion( const GameMetadata&, Transaction = Transaction( true ) );
+	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
 
 	//! Syncs the data from the database
 	void sync( Transaction transaction = Transaction( true ) );

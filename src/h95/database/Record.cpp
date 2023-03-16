@@ -190,7 +190,7 @@ void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction 
 	emit totalPlaytimeChanged( time );
 }
 
-void RecordData::addVersion( GameMetadata& version, Transaction transaction )
+void RecordData::addVersion( const GameMetadata& version, Transaction transaction )
 {
 	//Check if version is already added
 	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
@@ -208,7 +208,7 @@ void RecordData::addVersion( GameMetadata& version, Transaction transaction )
 	emit versionsChanged( m_versions );
 }
 
-void RecordData::removeVersion( GameMetadata& version, Transaction transaction )
+void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
 {
 	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
 	if ( itter == m_versions.end() )
