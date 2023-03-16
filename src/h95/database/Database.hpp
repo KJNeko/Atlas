@@ -7,6 +7,7 @@
 
 #include <filesystem>
 
+#include <QObject>
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Wshadow"
@@ -19,7 +20,6 @@
 
 #pragma GCC diagnostic pop
 
-#include <QObject>
 
 class Database
 {

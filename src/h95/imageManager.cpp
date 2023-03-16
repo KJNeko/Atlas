@@ -2,16 +2,16 @@
 // Created by kj16609 on 3/2/23.
 //
 
+#include "imageManager.hpp"
+
 #include <fstream>
 
-#include <QPixmap>
 #include <QCryptographicHash>
 #include <QFile>
+#include <QPixmap>
 
-
-#include "imageManager.hpp"
-#include "h95/database/Database.hpp"
 #include "config.hpp"
+#include "h95/database/Database.hpp"
 
 namespace imageManager
 {

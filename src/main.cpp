@@ -7,8 +7,8 @@
 
 #include <QApplication>
 
-#include "h95/database/Database.hpp"
 #include "h95/config.hpp"
+#include "h95/database/Database.hpp"
 #include "h95/logging.hpp"
 
 #ifdef TRACY_ENABLE
@@ -81,9 +81,9 @@ int main( int argc, char** argv )
 		spdlog::debug( "Debugging enabled." );
 	}
 #else
-	spdlog::set_level(spdlog::level::debug);
-	spdlog::debug("Debugging forcefully enabled due to not compiling with NDEBUG");
+	spdlog::set_level( spdlog::level::debug );
+	spdlog::debug( "Debugging forcefully enabled due to not compiling with NDEBUG" );
 #endif
 
-	Database::initalize("./data/hydrus95.db");
+	Database::initalize( "./data/hydrus95.db" );
 }

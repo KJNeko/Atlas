@@ -2,9 +2,8 @@
 // Created by kj16609 on 3/2/23.
 //
 
-#include <h95/database/Database.hpp>
-
 #include "GTestBox.hpp"
+#include "h95/database/Database.hpp"
 
 TEST( TestDatabase, testTransactionUnloaded )
 {

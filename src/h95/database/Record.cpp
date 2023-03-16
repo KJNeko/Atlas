@@ -2,14 +2,16 @@
 // Created by kj16609 on 1/15/23.
 //
 
+#include "Record.hpp"
+
+#include <iostream>
+
 #include <QPixmapCache>
 
-#include <h95/database/Database.hpp>
-#include <h95/config.hpp>
-
-#include <h95/database/Record.hpp>
-#include "h95/imageManager.hpp"
 #include "h95/SHA256.hpp"
+#include "h95/config.hpp"
+#include "h95/database/Database.hpp"
+#include "h95/imageManager.hpp"
 
 enum PreviewType
 {

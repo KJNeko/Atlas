@@ -5,11 +5,11 @@
 #ifndef HYDRUS95_RECORD_HPP
 #define HYDRUS95_RECORD_HPP
 
-#include <h95/Types.hpp>
-#include <h95/database/GameMetadata.hpp>
-
 #include <QPixmap>
+
 #include "FlyWeight.hpp"
+#include "h95/Types.hpp"
+#include "h95/database/GameMetadata.hpp"
 
 enum IMAGE_TYPE
 {

@@ -6,6 +6,7 @@
 #define HYDRUS95_IMAGEMANAGER_HPP
 
 #include <filesystem>
+
 #include <QSize>
 
 namespace imageManager

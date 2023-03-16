@@ -5,15 +5,12 @@
 #include "SHA256.hpp"
 
 #include <fstream>
-
-#include "SHA256.hpp"
+#include <vector>
 
 #include <QCryptographicHash>
-#include <vector>
 
 std::array< char, 32 > sha256FromIstream( std::istream& istream )
 {
-
 	const auto idx { istream.tellg() };
 	istream.seekg( 0, std::istream::beg );
 

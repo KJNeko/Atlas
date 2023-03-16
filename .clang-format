@@ -32,16 +32,32 @@ ConstructorInitializerIndentWidth: '2'
 ContinuationIndentWidth: '4'
 DerivePointerAlignment: 'false'
 FixNamespaceComments: 'true'
-IncludeBlocks: Preserve
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^<Q.*>'
+    Priority: 3
+    SortPriority: 3
+    CaseSensitive: true
+  - Regex: '^<.*/.*>'
+    Priority: 4
+    SortPriority: 4
+  - Regex: '^<.*>'
+    Priority: 2
+    SortPriority: 2
+  - Regex: '^".*"'
+    Priority: 5
+    SortPriority: 5
+  - Regex: '^".*/.*"'
+    Priority: 6
+    SortPriority: 6
 IndentCaseLabels: 'true'
 IndentWidth: '4'
 IndentWrappedFunctionNames: 'true'
-KeepEmptyLinesAtTheStartOfBlocks: 'true'
+KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
 MaxEmptyLinesToKeep: '2'
 NamespaceIndentation: All
 ReflowComments: 'false'
-SortIncludes: 'false'
 SpaceAfterCStyleCast: 'true'
 SpaceAfterLogicalNot: 'false'
 SpaceAfterTemplateKeyword: 'false'

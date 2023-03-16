@@ -6,8 +6,10 @@
 #define HYDRUS95_SEARCH_HPP
 
 #include <vector>
+
 #include <QString>
-#include <h95/database/Record.hpp>
+
+#include "h95/database/Record.hpp"
 
 //TODO: Fucking EVERYTHING
 

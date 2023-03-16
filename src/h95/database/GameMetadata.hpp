@@ -9,10 +9,10 @@
 
 #include <QString>
 
-#include <h95/Types.hpp>
-#include <h95/database/Database.hpp>
-
 #include <fmt/format.h>
+
+#include "h95/Types.hpp"
+#include "h95/database/Database.hpp"
 
 //! Representation of a game version
 struct GameMetadata

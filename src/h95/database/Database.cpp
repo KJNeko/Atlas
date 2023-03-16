@@ -2,13 +2,12 @@
 // Created by kj16609 on 1/12/23.
 //
 
+#include "Database.hpp"
+
 #include <filesystem>
 
-
-#include "Database.hpp"
 #include "h95/config.hpp"
-
-#include <h95/logging.hpp>
+#include "h95/logging.hpp"
 
 namespace internal
 {

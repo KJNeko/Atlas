@@ -8,17 +8,17 @@
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/sinks/rotating_file_sink.h>
-#include <spdlog/logger.h>
 #include <fmt/ranges.h>
-#include <h95/config.hpp>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+#include "h95/config.hpp"
 
 #pragma GCC diagnostic pop
 
-#include <h95/logging.hpp>
-
-#include <h95/database/Record.hpp>
+#include "h95/database/Record.hpp"
+#include "h95/logging.hpp"
 
 void flush_logger()
 {

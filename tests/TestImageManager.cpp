@@ -2,12 +2,12 @@
 // Created by kj16609 on 3/2/23.
 //
 
-#include <h95/database/Database.hpp>
-#include <h95/imageManager.hpp>
-#include <QPixmap>
 #include <QApplication>
+#include <QPixmap>
 
 #include "GTestBox.hpp"
+#include "h95/database/Database.hpp"
+#include "h95/imageManager.hpp"
 
 class TestImageManager : public ::testing::Test
 {
@@ -32,8 +32,8 @@ class TestImageManager : public ::testing::Test
 
 TEST_F( TestImageManager, importPreview )
 {
-	QImage image {":/banner/placeholder.jpg"};
-	image.save("./assets/banner/placeholder.jpg");
+	QImage image { ":/banner/placeholder.jpg" };
+	image.save( "./assets/banner/placeholder.jpg" );
 
 	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
@@ -53,9 +53,8 @@ TEST_F( TestImageManager, importNonExistant )
 
 TEST_F( TestImageManager, clearOrhpans )
 {
-
-	QImage image {":/banner/placeholder.jpg"};
-	image.save("./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp");
+	QImage image { ":/banner/placeholder.jpg" };
+	image.save( "./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" );
 
 	imageManager::cleanOrphans();
 

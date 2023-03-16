@@ -14,8 +14,8 @@
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 
-#include <spdlog/spdlog.h>
 #include <fmt/ranges.h>
+#include <spdlog/spdlog.h>
 
 #pragma GCC diagnostic pop
 

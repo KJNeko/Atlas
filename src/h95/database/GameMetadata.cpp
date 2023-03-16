@@ -5,5 +5,5 @@
 #include <string>
 
 #include <h95/database/Database.hpp>
-#include <h95/logging.hpp>
 #include <h95/database/GameMetadata.hpp>
+#include <h95/logging.hpp>
