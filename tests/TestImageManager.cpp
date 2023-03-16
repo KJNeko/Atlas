@@ -36,15 +36,17 @@ TEST_F( TestImageManager, importPreview )
 	std::filesystem::create_directories("./assets/banner");
 	image.save( "./assets/banner/placeholder.jpg" );
 
-	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
+	GTEST_ASSERT_TRUE(std::filesystem::exists("./assets/banner/placeholder.jpg"));
 
-	GTEST_ASSERT_TRUE(
-		std::filesystem::
-			canonical( "./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" )
-		== output );
+	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
 	GTEST_ASSERT_TRUE( std::filesystem::exists(
 		"./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
+
+	GTEST_ASSERT_TRUE(
+		std::filesystem::
+		canonical( "./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" )
+		== output );
 }
 
 TEST_F( TestImageManager, importNonExistant )
