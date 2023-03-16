@@ -75,7 +75,8 @@ namespace imageManager
 				}
 
 				//Save as webp
-				image.save( QString::fromStdString( dest.string() ), "webp", 99 );
+				if(!image.save( QString::fromStdString( dest.string() ), "WEBP", 99 ))
+					throw std::runtime_error(fmt::format("QImage failed to save at {}", dest));
 
 				if(!std::filesystem::exists(dest))
 					throw std::runtime_error("Save failed!");
