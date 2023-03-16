@@ -126,6 +126,7 @@ Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), 
 	}
 
 	*this << "BEGIN TRANSACTION";
+	ran_once = false;
 }
 
 Transaction::~Transaction()
@@ -141,6 +142,7 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
+	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
 	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	*this << "COMMIT TRANSACTION";
 
@@ -149,6 +151,7 @@ void Transaction::commit()
 
 void Transaction::abort()
 {
+	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
 	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	*this << "ROLLBACK TRANSACTION";
 
@@ -157,7 +160,8 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
-	spdlog::info( "Executing {}", sql );
+	ran_once = true;
+	spdlog::debug( "Executing {}", sql );
 	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }

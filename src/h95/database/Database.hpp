@@ -64,6 +64,7 @@ struct Transaction
 	private:
 	std::shared_ptr< TransactionData > data;
 	bool m_autocommit { false };
+	bool ran_once { false };
 
 	public:
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
