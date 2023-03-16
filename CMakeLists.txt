@@ -42,6 +42,12 @@ else ()
     find_package(spdlog REQUIRED)
 endif ()
 
+if (WIN32)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/fmt)
+else ()
+    find_package(fmt REQUIRED)
+endif ()
+
 #Qt
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
