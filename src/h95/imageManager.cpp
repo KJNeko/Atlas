@@ -67,6 +67,8 @@ namespace imageManager
 
 				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
 					                               + ".webp" };
+
+				std::filesystem::create_directories(dest.parent_path());
 				//Save as webp
 				image.save( QString::fromStdString( dest.string() ) );
 
