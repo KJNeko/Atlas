@@ -17,27 +17,27 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
 endif ()
 
 #Sql
-if(WIN32)
-    if(NOT DEFINED $ENV{SQLITE3_PATH})
+if (WIN32)
+    if (NOT DEFINED $ENV{SQLITE3_PATH})
         set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_PATH}/include)
         set(SQLite3_LIBRARY $ENV{SQLITE3_PATH}/lib)
         set(SQLite3_FOUND true)
-    else()
-        if(DEFINED SQL_PATH)
+    else ()
+        if (DEFINED SQL_PATH)
             set(SQLite3_INCLUDE_DIR "${SQL_PATH}/include")
             set(SQLite3_LIBRARY "${SQL_PATH}/lib/sqlite3.dll")
             set(SQLite3_FOUND true)
-        else()
+        else ()
             message("Must define SQL_PATH with -DSQL_PATH=?? or add to path as SQLITE3_PATH")
-        endif()
-    endif()
-endif()
+        endif ()
+    endif ()
+endif ()
 
 find_package(SQLite3 REQUIRED)
 
 #Spdlog
 if (WIN32)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/spdlog)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/spdlog)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
@@ -64,8 +64,6 @@ if (WIN32)
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
-
-
 
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
@@ -109,9 +107,9 @@ add_library(H95Obj OBJECT ${HYDRUS_SOURCES})
 target_link_libraries(H95Obj ${REQUIRED_LIBS})
 target_include_directories(H95Obj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if(DEFINED DISABLE_FLYWEIGHT)
+if (DEFINED DISABLE_FLYWEIGHT)
     target_compile_definitions(H95Obj PRIVATE HYDRUS95_DISABLE_FLYWEIGHT)
-endif()
+endif ()
 
 #Build exe
 add_executable(Hydrus95 ${HYDRUS_UI} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
