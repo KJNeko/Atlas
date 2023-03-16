@@ -10,23 +10,22 @@
 #include <unordered_map>
 
 //! Requires `FlyWeightID<T_Key> key() const` to be defined
-template< typename T, typename T_Key >
+template < typename T, typename T_Key >
 concept HasObjectKeyFunc = requires( const T t ) {
 							   {
 								   t.key()
 							   } -> std::same_as< T_Key >;
 						   };
 
-
 //! Requires `static FlyWeightID<T_Key> key(T_Args...)` to be defined
-template< typename T, typename T_Key, typename... T_Args >
+template < typename T, typename T_Key, typename... T_Args >
 concept HasStaticKeyFunc = requires( T_Args... args ) {
 							   {
 								   T::key( args... )
 							   } -> std::same_as< T_Key >;
 						   };
 
-template< typename T, typename T_Key, typename... T_Args >
+template < typename T, typename T_Key, typename... T_Args >
 concept HasKeyFunc = HasObjectKeyFunc< T, T_Key > || HasStaticKeyFunc< T, T_Key, T_Args... >;
 
 /**
@@ -34,7 +33,7 @@ concept HasKeyFunc = HasObjectKeyFunc< T, T_Key > || HasStaticKeyFunc< T, T_Key,
  * @tparam T Object to store in the flyweight
  * @tparam T_Key Key to use as the index.
  */
-template< typename T, typename T_Key >
+template < typename T, typename T_Key >
 	requires HasObjectKeyFunc< T, T_Key >
 class FlyWeight : public std::shared_ptr< T >
 {
@@ -72,7 +71,7 @@ class FlyWeight : public std::shared_ptr< T >
 	 * @param args Arguments for ctor
 	 * @return
 	 */
-	template< typename... T_Args >
+	template < typename... T_Args >
 		requires HasKeyFunc< T, T_Key, T_Args... > && std::constructible_from< T, T_Args... >
 	inline static std::shared_ptr< T > determinePtr( T_Args&&... args )
 	{
@@ -96,13 +95,13 @@ class FlyWeight : public std::shared_ptr< T >
 	//! Returns the key from the inherited pointer
 	inline T_Key key() const { return std::shared_ptr< T >::get()->key(); }
 
-	public:
+  public:
+
 	//! Passthrough for ctor to T
-	template< typename... T_Args >
+	template < typename... T_Args >
 		requires HasKeyFunc< T, T_Key, T_Args... > && std::constructible_from< T, T_Args... >
 	FlyWeight( T_Args&&... args ) : std::shared_ptr< T >( determinePtr( std::forward< T_Args >( args )... ) )
-	{
-	}
+	{}
 
 	FlyWeight( const FlyWeight& other ) = default;
 	FlyWeight( FlyWeight&& other ) = default;
@@ -115,7 +114,7 @@ class FlyWeight : public std::shared_ptr< T >
 			if ( auto itter = map.find( key() ); itter != map.end() ) map.erase( itter );
 	}
 
-	static inline std::size_t flyweightSize() { return map.size(); }
+	inline static std::size_t flyweightSize() { return map.size(); }
 };
 
-#endif	//HYDRUS95_FLYWEIGHT_HPP
+#endif //HYDRUS95_FLYWEIGHT_HPP

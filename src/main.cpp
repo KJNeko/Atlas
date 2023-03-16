@@ -13,13 +13,13 @@
 
 #ifdef TRACY_ENABLE
 #include <tracy/Tracy.hpp>
+
 void* operator new( std::size_t count )
 {
 	auto ptr = malloc( count );
 	TracySecureAlloc( ptr, count );
 	return ptr;
 }
-
 
 void* operator new[]( std::size_t count )
 {
@@ -28,13 +28,11 @@ void* operator new[]( std::size_t count )
 	return ptr;
 }
 
-
 void operator delete( void* ptr ) noexcept
 {
 	TracySecureFree( ptr );
 	free( ptr );
 }
-
 
 void operator delete[]( void* ptr ) noexcept
 {
@@ -42,13 +40,11 @@ void operator delete[]( void* ptr ) noexcept
 	free( ptr );
 }
 
-
 void operator delete( void* ptr, std::size_t ) noexcept
 {
 	TracySecureFree( ptr );
 	free( ptr );
 }
-
 
 void operator delete[]( void* ptr, std::size_t ) noexcept
 {
@@ -66,7 +62,7 @@ int main( int argc, char** argv )
 {
 	initLogging();
 
-	(void) std::atexit( spdlog_flush );
+	(void)std::atexit( spdlog_flush );
 	spdlog::flush_on( spdlog::level::err );
 
 	QApplication app { argc, argv };

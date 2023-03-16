@@ -4,7 +4,6 @@
 
 #include "Search.hpp"
 
-
 void Search::searchTextChanged( QString text )
 {
 	//
@@ -31,10 +30,8 @@ std::vector< Record > Search::search()
 
 	std::vector< Record > records;
 
-	transaction << "SELECT record_id FROM records" >> [&]( const RecordID id )
-	{
-		records.emplace_back( id, transaction );
-	};
+	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
+	{ records.emplace_back( id, transaction ); };
 
 	return records;
 }

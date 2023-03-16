@@ -15,4 +15,4 @@
 
 #pragma GCC diagnostic pop
 
-#endif	//HYDRUS95_THEBOX_HPP
+#endif //HYDRUS95_THEBOX_HPP

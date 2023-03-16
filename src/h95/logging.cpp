@@ -32,7 +32,8 @@ void initLogging()
 	auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };
 
 	auto file_sink {
-		std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "./data/logs/log.txt", 1024 * 1024 * 1, 3 ) };
+		std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "./data/logs/log.txt", 1024 * 1024 * 1, 3 )
+	};
 	file_sink->set_level( spdlog::level::trace );
 
 	std::vector< spdlog::sink_ptr > sinks { console_sink, file_sink };
@@ -43,7 +44,7 @@ void initLogging()
 
 	logger->flush_on( spdlog::level::info );
 
-	if ( std::atexit( flush_logger ) != 0 ) { spdlog::warn( "Failed to register logger flush at std::exit" ); }
+	if ( std::atexit( flush_logger ) != 0 ) spdlog::warn( "Failed to register logger flush at std::exit" );
 
 	spdlog::set_default_logger( logger );
 
@@ -116,10 +117,7 @@ auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::pat
 			std::filesystem::exists( path ) ? "True" : "False" );
 	else
 		return format_to(
-			ctx.out(),
-			"[\"{}\", Exists: \"{}\"]",
-			path.string(),
-			std::filesystem::exists( path ) ? "True" : "False" );
+			ctx.out(), "[\"{}\", Exists: \"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
 }
 
 /*

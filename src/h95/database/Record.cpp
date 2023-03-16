@@ -25,7 +25,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	bool found { false };
 
 	transaction << "SELECT title, creator, engine, last_played_r, total_playtime FROM records WHERE record_id = ?" << id
-		>> [this, &found](
+		>> [ this, &found ](
 			   std::string title_in,
 			   std::string creator_in,
 			   std::string engine_in,
@@ -48,7 +48,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	transaction
 			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime FROM game_metadata WHERE record_id = ?"
 			<< id
-		>> [&metadata](
+		>> [ &metadata ](
 			   std::string version,
 			   std::string game_path,
 			   std::string exec_path,
@@ -68,18 +68,18 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	const std::filesystem::path image_path { getSettings< QString >( "paths/images", "./data/images" ).toStdString() };
 
 	transaction << "SELECT type, path FROM images WHERE record_id = ? " << id >>
-		[this, &image_path]( const uint16_t type, std::string path )
+		[ this, &image_path ]( const uint16_t type, std::string path )
 	{
 		switch ( static_cast< PreviewType >( type ) )
 		{
 			case PREVIEW_PREVIEW:
-			{
-				m_previews.emplace_back( image_path / path );
-			}
+				{
+					m_previews.emplace_back( image_path / path );
+				}
 			case PREVIEW_BANNER:
-			{
-				m_banner = image_path / path;
-			}
+				{
+					m_banner = image_path / path;
+				}
 			case PREVIEW_UNKNOWN:
 				break;
 		}
@@ -140,11 +140,13 @@ std::vector< QPixmap > RecordData::getPreviews() const
 {
 	std::vector< QPixmap > images;
 
-	for ( const auto& link : m_previews ) { images.emplace_back( QString::fromStdString( link ) ); }
+	for ( const auto& link : m_previews )
+	{
+		images.emplace_back( QString::fromStdString( link ) );
+	}
 
 	return images;
 }
-
 
 void RecordData::setTitle( QString new_title, Transaction transaction )
 {
@@ -209,7 +211,6 @@ void RecordData::addVersion( const GameMetadata& version, Transaction transactio
 		<< m_id << version.m_version << version.m_game_path.string() << version.m_exec_path.string()
 		<< version.m_in_place << version.m_last_played << version.m_total_playtime;
 
-
 	emit dataChanged();
 	emit versionsChanged( m_versions );
 }
@@ -258,10 +259,7 @@ RecordData::RecordData(
 		RecordID record_id { 0 };
 		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << m_title
 					<< m_creator << m_engine
-			>> [&]( const RecordID id )
-		{
-			record_id = id;
-		};
+			>> [ & ]( const RecordID id ) { record_id = id; };
 
 		if ( record_id != 0 )
 		{
@@ -272,10 +270,7 @@ RecordData::RecordData(
 		transaction
 				<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, ?, ?) RETURNING record_id"
 				<< m_title << m_creator << m_engine << m_last_played << m_total_playtime
-			>> [&]( const RecordID id )
-		{
-			m_id = id;
-		};
+			>> [ & ]( const RecordID id ) { m_id = id; };
 
 		//Handle banner stuff
 		transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER

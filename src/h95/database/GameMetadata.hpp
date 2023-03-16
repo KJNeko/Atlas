@@ -32,6 +32,7 @@ struct GameMetadata
 	std::uint64_t m_last_played;
 
 	GameMetadata() = delete;
+
 	GameMetadata(
 		const QString& version_in,
 		const std::filesystem::path& game_path_in,
@@ -45,8 +46,7 @@ struct GameMetadata
 	  m_in_place( in_place ),
 	  m_total_playtime( total_playtime ),
 	  m_last_played( last_played )
-	{
-	}
+	{}
 
 	bool operator==( const GameMetadata& other ) const = default;
 };
@@ -65,8 +65,7 @@ struct MetadataAlreadyExists : public MetadataException
 	  MetadataException( fmt::format( "Tried to insert duplicate metadata under id {}", id ) ),
 	  m_id( id ),
 	  m_metadata( metadata )
-	{
-	}
+	{}
 };
 
-#endif	//HYDRUS95_GAMEMETADATA_HPP
+#endif //HYDRUS95_GAMEMETADATA_HPP

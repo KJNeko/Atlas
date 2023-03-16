@@ -17,13 +17,15 @@ class SHA256
 
 	SHA256() = delete;
 
-	public:
+  public:
+
 	bool operator==( const SHA256& other ) const = default;
 
 	std::string toHex() const;
 	QByteArrayView toByteView() const;
 
 	const char* data() const { return m_data.data(); }
+
 	const std::size_t size() const { return m_data.size(); }
 
 	SHA256( std::istream& istream );
@@ -31,5 +33,4 @@ class SHA256
 	SHA256( const std::vector< char >& data );
 };
 
-
-#endif	//HYDRUS95_SHA256_HPP
+#endif //HYDRUS95_SHA256_HPP

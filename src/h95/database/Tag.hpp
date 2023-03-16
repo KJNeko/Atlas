@@ -12,5 +12,4 @@ struct Tag
 	QString text;
 };
 
-
-#endif	//HYDRUS95_TAG_HPP
+#endif //HYDRUS95_TAG_HPP

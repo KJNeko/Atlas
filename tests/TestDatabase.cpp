@@ -7,12 +7,7 @@
 
 TEST( TestDatabase, testTransactionUnloaded )
 {
-	EXPECT_THROW(
-		[]()
-		{
-			Transaction trans;
-		}(),
-		TransactionInvalid );
+	EXPECT_THROW( []() { Transaction trans; }(), TransactionInvalid );
 }
 
 TEST( TestDatabase, testInit )

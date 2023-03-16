@@ -15,10 +15,11 @@ class RecordListModel : public QAbstractListModel
 
 	std::vector< Record > m_records {};
 
-	public:
+  public:
+
 	RecordListModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) {}
 
-	public slots:
+  public slots:
 	void setRecords( std::vector< Record > records );
 
 	/**
@@ -29,9 +30,8 @@ class RecordListModel : public QAbstractListModel
 
 	void removeRecord( QPersistentModelIndex index );
 
-	signals:
+  signals:
 	void recordsChanged( std::vector< Record > records );
 };
 
-
-#endif	//HYDRUS95_RECORDLISTMODEL_HPP
+#endif //HYDRUS95_RECORDLISTMODEL_HPP

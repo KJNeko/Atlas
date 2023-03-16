@@ -17,14 +17,13 @@ namespace imageManager
 {
 	std::filesystem::path getImagePath()
 	{
-		const auto path {
-			std::filesystem::path( getSettings< QString >( "paths/h95_data", "./data" ).toStdString() ) / "images" };
+		const auto path { std::filesystem::path( getSettings< QString >( "paths/h95_data", "./data" ).toStdString() )
+			              / "images" };
 
 		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
 
 		return std::filesystem::canonical( path );
 	}
-
 
 	void cleanOrphans()
 	{
@@ -41,10 +40,7 @@ namespace imageManager
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
 						<< std::filesystem::relative( path, getImagePath() ).string()
-				>> [&]( [[maybe_unused]] int count )
-			{
-				found = true;
-			};
+				>> [ & ]( [[maybe_unused]] int count ) { found = true; };
 
 			if ( !found ) std::filesystem::remove( path );
 		}
@@ -64,15 +60,14 @@ namespace imageManager
 
 				QImage image;
 				image.loadFromData(
-					reinterpret_cast< const unsigned char* >( data.data() ),
-					static_cast< int >( data.size() ) );
+					reinterpret_cast< const unsigned char* >( data.data() ), static_cast< int >( data.size() ) );
 
 				QCryptographicHash hash { QCryptographicHash::Sha256 };
-				hash.addData(
-					{ reinterpret_cast< const char* >( data.data() ), static_cast< qsizetype >( data.size() ) } );
+				hash.addData( { reinterpret_cast< const char* >( data.data() ),
+				                static_cast< qsizetype >( data.size() ) } );
 
-				const std::filesystem::path dest {
-					( getImagePath() / hash.result().toHex().toStdString() ).string() + ".webp" };
+				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
+					                               + ".webp" };
 
 				spdlog::info( "Saving to file {}", dest );
 
@@ -88,4 +83,4 @@ namespace imageManager
 		return { ":/invalid.jpg" };
 	}
 
-}  // namespace imageManager
+} // namespace imageManager

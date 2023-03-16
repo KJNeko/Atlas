@@ -45,7 +45,8 @@ inline QSettings getSettingsObject()
  * @return
  */
 //! Returns T for the given setting_name
-template< typename T > inline T getSettings( const QString setting_name )
+template < typename T >
+inline T getSettings( const QString setting_name )
 {
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name ) };
@@ -69,7 +70,8 @@ template< typename T > inline T getSettings( const QString setting_name )
  * @param default_value
  * @return default_value if setting_name is not set
  */
-template< typename T > inline T getSettings( const QString setting_name, const T default_value )
+template < typename T >
+inline T getSettings( const QString setting_name, const T default_value )
 {
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name, default_value ) };
@@ -82,7 +84,8 @@ template< typename T > inline T getSettings( const QString setting_name, const T
 	}
 }
 
-template< typename T > inline void setSettings( const QString settings_name, const T value )
+template < typename T >
+inline void setSettings( const QString settings_name, const T value )
 {
 	QSettings settings { getSettingsObject() };
 	settings.setValue( settings_name, value );
@@ -97,5 +100,4 @@ std::filesystem::path imagePath();
 //! Returns the canonical path for setting `path/games` (Default `./data/games`)
 std::filesystem::path gamePath();
 
-
-#endif	//HYDRUS95_CONFIG_HPP
+#endif //HYDRUS95_CONFIG_HPP

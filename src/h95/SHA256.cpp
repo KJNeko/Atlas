@@ -18,7 +18,6 @@ std::array< char, 32 > sha256FromIstream( std::istream& istream )
 
 	QCryptographicHash hasher { QCryptographicHash::Algorithm::Sha256 };
 
-
 	if ( istream.good() )
 	{
 		std::array< char, block_size > data;
@@ -45,7 +44,8 @@ std::array< char, 32 > sha256FromIstream( std::istream& istream )
 	return m_data;
 }
 
-SHA256::SHA256( std::istream& istream ) : m_data( sha256FromIstream( istream ) ) {}
+SHA256::SHA256( std::istream& istream ) : m_data( sha256FromIstream( istream ) )
+{}
 
 std::array< char, 32 > sha256FromVec( const std::vector< char >& data )
 {
@@ -59,7 +59,8 @@ std::array< char, 32 > sha256FromVec( const std::vector< char >& data )
 	return arry;
 }
 
-SHA256::SHA256( const std::vector< char >& data ) : m_data { sha256FromVec( data ) } {}
+SHA256::SHA256( const std::vector< char >& data ) : m_data { sha256FromVec( data ) }
+{}
 
 std::string SHA256::toHex() const
 {

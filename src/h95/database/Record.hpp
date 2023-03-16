@@ -24,7 +24,8 @@ struct RecordData : public QObject
 
 	RecordData() = default;
 
-	private:
+  private:
+
 	RecordID m_id { 0 };
 	QString m_title;
 	QString m_creator;
@@ -41,7 +42,8 @@ struct RecordData : public QObject
 	std::filesystem::path m_banner {};
 	std::vector< std::filesystem::path > m_previews {};
 
-	public:
+  public:
+
 	//Getters
 	RecordID getID() const;
 	const QString& getTitle() const;
@@ -67,7 +69,7 @@ struct RecordData : public QObject
 	//! Syncs the data from the database
 	void sync( Transaction transaction = Transaction( true ) );
 
-	signals:
+  signals:
 	//! Emitted when ANY data is changed
 	void dataChanged();
 	void titleChanged( QString );
@@ -81,7 +83,8 @@ struct RecordData : public QObject
 	void previewPathChanged( std::vector< std::filesystem::path > );
 	void previewsChanged( std::vector< QPixmap > );
 
-	public:
+  public:
+
 	RecordData(
 		RecordID id,
 		QString title,
@@ -101,8 +104,7 @@ struct RecordData : public QObject
 	  m_versions( std::move( versions ) ),
 	  m_banner( std::move( banner ) ),
 	  m_previews( std::move( previews ) )
-	{
-	}
+	{}
 
 	/**
 	 * @param id
@@ -155,21 +157,21 @@ struct RecordException : public std::runtime_error
 struct RecordAlreadyExists : public RecordException
 {
 	Record record;
+
 	RecordAlreadyExists( Record record_in ) :
 	  RecordException( ( "Record already exists with id " + std::to_string( record_in->m_id ) ).c_str() ),
 	  record( std::move( record_in ) )
-	{
-	}
+	{}
 };
 
 struct InvalidRecordID : public RecordException
 {
 	RecordID id;
+
 	InvalidRecordID( const RecordID in_id ) :
 	  RecordException( ( "Invalid record id = " + std::to_string( in_id ) ).c_str() ),
 	  id( in_id )
-	{
-	}
+	{}
 };
 
-#endif	//HYDRUS95_RECORD_HPP
+#endif //HYDRUS95_RECORD_HPP

@@ -4,7 +4,6 @@
 
 #include "RecordListModel.hpp"
 
-
 void RecordListModel::setRecords( std::vector< Record > records )
 {
 	beginResetModel();

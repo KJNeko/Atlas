@@ -20,20 +20,21 @@
 
 #pragma GCC diagnostic pop
 
-
 class Database
 {
 	static sqlite::database& ref();
 
 	static std::mutex& lock();
 
-	public:
+  public:
+
 	static void initalize( const std::filesystem::path init_path );
 	static void deinit();
 
 	//static void update();
 
-	private:
+  private:
+
 	friend struct Transaction;
 	friend struct NonTransaction;
 	friend struct TransactionData;
@@ -46,12 +47,14 @@ struct TransactionInvalid : public std::runtime_error
 
 struct TransactionData
 {
-	private:
+  private:
+
 	std::lock_guard< std::mutex > guard;
 
 	std::lock_guard< std::mutex > getLock();
 
-	public:
+  public:
+
 	TransactionData();
 
 	~TransactionData();
@@ -60,12 +63,14 @@ struct TransactionData
 //! Transaction unit to the database.
 struct Transaction
 {
-	private:
+  private:
+
 	std::shared_ptr< TransactionData > data;
 	bool m_autocommit { false };
 	bool ran_once { false };
 
-	public:
+  public:
+
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
 	Transaction( const bool autocommit = false );
 	Transaction( const Transaction& other ) = default;
@@ -93,11 +98,13 @@ struct NonTransaction
 {
 	Q_DISABLE_COPY_MOVE( NonTransaction )
 
-	private:
+  private:
+
 	bool finished { false };
 	std::lock_guard< std::mutex >* guard { nullptr };
 
-	public:
+  public:
+
 	NonTransaction();
 
 	sqlite::database_binder operator<<( const std::string& sql );
@@ -119,4 +126,4 @@ inline sqlite::database_binder& operator<<( sqlite::database_binder& db, const Q
 	return db << ( str.toStdString() );
 }
 
-#endif	//HYDRUS95_DATABASE_HPP
+#endif //HYDRUS95_DATABASE_HPP

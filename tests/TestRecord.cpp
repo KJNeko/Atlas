@@ -10,13 +10,13 @@
 class TestRecord : public ::testing::Test
 {
 	void SetUp() override { Database::initalize( "./data/testing.db" ); }
+
 	void TearDown() override
 	{
 		Database::deinit();
 		std::filesystem::remove_all( "./data" );
 	}
 };
-
 
 TEST_F( TestRecord, createRecord )
 {
@@ -68,7 +68,6 @@ TEST_F( TestRecord, select )
 		std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
 		std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
-
 		record = Record( title, creator, engine, last_played, total_playtime, metadata, banner, previews );
 	}
 
@@ -99,35 +98,32 @@ TEST_F( TestRecord, selectNonExisting )
 }
 
 #define PREPARE_RECORD_TEST                                                                                            \
-	Record record {                                                                                                    \
-		[]() -> Record                                                                                                 \
-		{                                                                                                              \
-			QString title { "my title" };                                                                              \
-			QString creator { "Some Person" };                                                                         \
-			QString engine { "Some Engine" };                                                                          \
-			const uint64_t last_played { 0 };                                                                          \
-			const std::uint32_t total_playtime { 0 };                                                                  \
-			std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };          \
-			std::filesystem::path banner { "./assets/banner/placeholder.jpg" };                                        \
-			std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };                       \
+  Record record { []() -> Record                                                                                       \
+		          {                                                                                                    \
+				  QString title { "my title" };                                                                        \
+				  QString creator { "Some Person" };                                                                   \
+				  QString engine { "Some Engine" };                                                                    \
+				  const uint64_t last_played { 0 };                                                                    \
+				  const std::uint32_t total_playtime { 0 };                                                            \
+				  std::vector< GameMetadata > metadata { { "V1.0", "./bin/", "./bin/Hydrus95.exe", false, 0, 0 } };    \
+				  std::filesystem::path banner { "./assets/banner/placeholder.jpg" };                                  \
+				  std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };                 \
                                                                                                                        \
-                                                                                                                       \
-			return Record( title, creator, engine, last_played, total_playtime, metadata, banner, previews );          \
-		}() };
+				  return Record( title, creator, engine, last_played, total_playtime, metadata, banner, previews );    \
+				  }() };
 
 #define TEST_RECORD_EQ                                                                                                 \
-	{                                                                                                                  \
-		const Record record_comp { record->getID() };                                                                  \
-		GTEST_ASSERT_EQ( record->getID(), record_comp->getID() );                                                      \
-		GTEST_ASSERT_EQ( record->getVersions(), record_comp->getVersions() );                                          \
-		GTEST_ASSERT_EQ( record->getEngine(), record_comp->getEngine() );                                              \
-		GTEST_ASSERT_EQ( record->getTitle(), record_comp->getTitle() );                                                \
-		GTEST_ASSERT_EQ( record->getCreator(), record_comp->getCreator() );                                            \
-		GTEST_ASSERT_EQ( record->getPreviewPaths(), record_comp->getPreviewPaths() );                                  \
-		GTEST_ASSERT_EQ( record->getBannerPath(), record_comp->getBannerPath() );                                      \
-		GTEST_ASSERT_EQ( record, record_comp );                                                                        \
-	}
-
+  {                                                                                                                    \
+	const Record record_comp { record->getID() };                                                                      \
+	GTEST_ASSERT_EQ( record->getID(), record_comp->getID() );                                                          \
+	GTEST_ASSERT_EQ( record->getVersions(), record_comp->getVersions() );                                              \
+	GTEST_ASSERT_EQ( record->getEngine(), record_comp->getEngine() );                                                  \
+	GTEST_ASSERT_EQ( record->getTitle(), record_comp->getTitle() );                                                    \
+	GTEST_ASSERT_EQ( record->getCreator(), record_comp->getCreator() );                                                \
+	GTEST_ASSERT_EQ( record->getPreviewPaths(), record_comp->getPreviewPaths() );                                      \
+	GTEST_ASSERT_EQ( record->getBannerPath(), record_comp->getBannerPath() );                                          \
+	GTEST_ASSERT_EQ( record, record_comp );                                                                            \
+  }
 
 TEST_F( TestRecord, setTitle )
 {
@@ -139,10 +135,8 @@ TEST_F( TestRecord, setTitle )
 
 	ASSERT_EQ( record->getTitle(), test_value );
 
-
 	TEST_RECORD_EQ
 }
-
 
 TEST_F( TestRecord, setCreator )
 {

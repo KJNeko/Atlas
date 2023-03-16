@@ -19,7 +19,7 @@ namespace internal
 #endif
 
 	//static std::mutex db_mtx {};
-}  // namespace internal
+} // namespace internal
 
 sqlite::database& Database::ref()
 {
@@ -95,7 +95,6 @@ void Database::deinit()
 	internal::db = nullptr;
 }
 
-
 std::lock_guard< std::mutex > TransactionData::getLock()
 {
 	//Check if we are already locked
@@ -109,11 +108,11 @@ TransactionData::TransactionData() : guard( getLock() )
 {
 	internal::last_locked = std::this_thread::get_id();
 }
+
 TransactionData::~TransactionData()
 {
 	internal::last_locked = std::thread::id( -1 );
 }
-
 
 Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), data( new TransactionData() )
 {
