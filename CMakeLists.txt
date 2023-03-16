@@ -100,7 +100,7 @@ file(GLOB_RECURSE UI_SOURCES
 
 set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/assets/resources.qrc)
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog)
+set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt)
 
 #Lib for EXE and Python
 add_library(H95Obj OBJECT ${HYDRUS_SOURCES})
