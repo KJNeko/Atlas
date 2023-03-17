@@ -51,7 +51,7 @@ void initLogging()
 #ifndef NDEBUG
 	console_sink->set_level( spdlog::level::debug );
 	//#else
-	switch ( getSettings< int >( "logging/level", 2 ) )
+	switch ( config::logging::level::get() )
 	{
 		case 0:
 			console_sink->set_level( spdlog::level::trace );

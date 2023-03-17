@@ -42,7 +42,7 @@ try
 
 	internal::db = new sqlite::database( init_path.string() );
 
-	if ( getSettings< bool >( "db/first_start", true ) )
+	if ( config::db::first_start::get() )
 	{
 		NonTransaction transaction;
 
@@ -76,7 +76,7 @@ try
 
 		transaction.commit();
 
-		setSettings( "db/first_start", false );
+		config::db::first_start::set(false);
 	}
 	else
 		spdlog::info( "Database has been initalized before! Skipping table creation" );

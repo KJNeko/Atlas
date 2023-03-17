@@ -17,8 +17,7 @@ namespace imageManager
 {
 	std::filesystem::path getImagePath()
 	{
-		const auto path { std::filesystem::path( getSettings< QString >( "paths/h95_data", "./data" ).toStdString() )
-			              / "images" };
+		const auto path { std::filesystem::path( config::paths::images::get().toStdString() ) };
 
 		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
 
@@ -68,18 +67,17 @@ namespace imageManager
 				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
 					                               + ".webp" };
 
-				if(!std::filesystem::exists(dest.parent_path()))
+				if ( !std::filesystem::exists( dest.parent_path() ) )
 				{
 					if ( !std::filesystem::create_directories( dest.parent_path() ) )
 						throw std::runtime_error( fmt::format( "Failed to create directory {}", dest.parent_path() ) );
 				}
 
 				//Save as webp
-				if(!image.save( QString::fromStdString( dest.string() ), "WEBP", 99 ))
-					throw std::runtime_error(fmt::format("QImage failed to save at {}", dest));
+				if ( !image.save( QString::fromStdString( dest.string() ), "WEBP", 99 ) )
+					throw std::runtime_error( fmt::format( "QImage failed to save at {}", dest ) );
 
-				if(!std::filesystem::exists(dest))
-					throw std::runtime_error("Save failed!");
+				if ( !std::filesystem::exists( dest ) ) throw std::runtime_error( "Save failed!" );
 
 				if ( delete_after ) std::filesystem::remove( path );
 

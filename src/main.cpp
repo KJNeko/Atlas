@@ -67,7 +67,7 @@ int main( int argc, char** argv )
 
 	QApplication app { argc, argv };
 
-	const auto path { getSettings< QString >( "paths/data", "./data" ).toStdString() };
+	const std::filesystem::path path { config::paths::data::get().toStdString() };
 	std::filesystem::create_directories( path );
 
 #ifdef NDEBUG
