@@ -9,28 +9,27 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/H95py)
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message("prefix = ${CMAKE_PREFIX_PATH}")
-message("sys prefix = ${CMAKE_SYSTEM_PREFIX_PATH}")
-
 if (NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILT_TYPE Release ... FORCE)
 endif ()
 
 #Sql
 if (WIN32)
-    if (NOT DEFINED $ENV{SQLITE3_PATH})
+
+    if (DEFINED SQL_PATH)
+        set(SQLite3_INCLUDE_DIR "${SQL_PATH}\\include")
+        set(SQLite3_LIBRARY "${SQL_PATH}\\lib\\sqlite3.dll")
+        set(SQLite3_FOUND true)
+    elseif (DEFINED $ENV{SQLITE3_PATH})
         set(SQLite3_INCLUDE_DIR $ENV{SQLITE3_PATH}\\include)
         set(SQLite3_LIBRARY $ENV{SQLITE3_PATH}\\lib\\sqlite3.dll)
         set(SQLite3_FOUND true)
     else ()
-        if (DEFINED SQL_PATH)
-            set(SQLite3_INCLUDE_DIR "${SQL_PATH}\\include")
-            set(SQLite3_LIBRARY "${SQL_PATH}\\lib\\sqlite3.dll")
-            set(SQLite3_FOUND true)
-        else ()
-            message("Must define SQL_PATH with -DSQL_PATH=?? or add to path as SQLITE3_PATH")
-        endif ()
+        message("Must define SQL_PATH with -DSQL_PATH=?? or add to path as SQLITE3_PATH")
     endif ()
+
+    message("SQlite3_INCLUDE_DIR = ${SQLite3_INCLUDE_DIR}")
+    message("SQlite3_LIBRARY = ${SQLite3_LIBRARY}")
 endif ()
 
 find_package(SQLite3 REQUIRED)
@@ -58,20 +57,20 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 if (WIN32)
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if (CMAKE_BUILD_TYPE STREQUAL " Debug")
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     else ()
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
 
-message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} ")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
 
-    set(FGL_WARNINGS "-Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override  -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wmismatched-tags -Wredundant-tags -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Werror=pedantic -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
+    set(FGL_WARNINGS " -Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wmismatched-tags -Wredundant-tags -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Werror=pedantic -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
 
     set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4 -Werror")
 
