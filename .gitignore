@@ -10,3 +10,5 @@
 /cmake-build-debug-mingw/
 /.vs
 /out/build/x64-Debug
+/CMakeFiles
+/CMakeCache.txt

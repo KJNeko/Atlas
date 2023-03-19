@@ -1,0 +1,173 @@
+/*
+Default QSS for hydrus. This is prepended to any stylesheet loaded in hydrus.
+Copying these entries in your own stylesheets should override these settings.
+This will get more work in future.
+*/
+
+/*
+
+Here are some text and background colours
+
+*/
+
+/* Example: This regex is valid */
+
+QLabel#HydrusValid
+{
+	color: #008000;
+}
+
+QLineEdit#HydrusValid
+{
+	background-color: #80ff80;
+}
+
+QTextEdit#HydrusValid
+{
+	background-color: #80ff80;
+}
+
+QPlainTextEdit#HydrusValid
+{
+	background-color: #80ff80;
+}
+
+/* Duplicates 'middle' text colour */
+
+QLabel#HydrusIndeterminate
+{
+	color: #000080;
+}
+
+QLineEdit#HydrusIndeterminate
+{
+	background-color: #000080;
+}
+
+QTextEdit#HydrusIndeterminate
+{
+	background-color: #000080;
+}
+
+QPlainTextEdit#HydrusIndeterminate
+{
+	background-color: #000080;
+}
+
+/* Example: This regex is invalid */
+
+QLabel#HydrusInvalid
+{
+	color: #800000;
+}
+
+QLineEdit#HydrusInvalid
+{
+	background-color: #ff8080;
+}
+
+QTextEdit#HydrusInvalid
+{
+	background-color: #ff8080;
+}
+
+QPlainTextEdit#HydrusInvalid
+{
+	background-color: #ff8080;
+}
+
+/* Example: Your files are going to be deleted! */
+
+QLabel#HydrusWarning
+{
+	color: #800000;
+}
+
+QCheckBox#HydrusWarning
+{
+	color: #800000;
+}
+
+/*
+
+Buttons on dialogs
+
+*/
+
+QPushButton#HydrusAccept
+{
+	color: #008000;
+}
+
+QPushButton#HydrusCancel
+{
+	color: #800000;
+}
+
+/*
+
+This is the green/red button that switches 'include current tags' and similar states on/off
+
+*/
+
+QPushButton#HydrusOnOffButton[hydrus_on=true]
+{
+	color: #008000;
+}
+
+QPushButton#HydrusOnOffButton[hydrus_on=false]
+{
+	color: #800000;
+}
+
+/*
+
+This is the Command Palette (default Ctrl+P), and specifically the background colour of the item you currently have selected.
+
+*/
+
+QLocatorResultWidget#selectedLocatorResult
+{
+	background-color: #006ffa
+}
+
+QLocatorResultWidget QWidget
+{
+	background: transparent
+}
+
+
+/*
+
+Custom Controls
+
+These are drawn by hydev on a blank canvas, so they work a little different.
+
+*/
+
+/*
+
+The scanbar beneath video/audio in the media viewer.
+
+*/
+
+QWidget#HydrusAnimationBar
+{
+	qproperty-hab_border: #000000;
+	qproperty-hab_background: #f0f0f0;
+	qproperty-hab_nub: #606060;
+}
+
+
+/*
+
+And this one is odd since we are assigning a colour to <a> html richtext inside a QLabel.
+We hack it with hardcoded 'style' attribute in the html in python code.
+
+*/
+
+
+QLabel#HydrusHyperlink
+{
+	qproperty-link_color: #0000ff;
+}

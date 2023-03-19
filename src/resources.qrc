@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/images/Logo_01.png</file>
+        <file>ui/images/sizegrip.png</file>
+        <file>ui/images/search.png</file>
+        <file>ui/images/Logo_02.png</file>
+        <file>ui/images/Logo_03.png</file>
+        <file>ui/images/addgame.png</file>
+    </qresource>
+</RCC>
