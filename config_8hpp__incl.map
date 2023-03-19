@@ -1,12 +1,12 @@
 <map id="src/h95/config.hpp" name="src/h95/config.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="86,5,213,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="82,5,209,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,152,85,177"/>
-<area shape="rect" id="node3" title=" " alt="" coords="59,79,139,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="163,79,237,104"/>
-<area shape="rect" id="node5" href="$logging_8hpp.html" title=" " alt="" coords="261,79,373,104"/>
-<area shape="rect" id="node6" title=" " alt="" coords="121,152,233,177"/>
-<area shape="rect" id="node7" title=" " alt="" coords="258,152,353,177"/>
-<area shape="rect" id="node8" title=" " alt="" coords="377,152,444,177"/>
-<area shape="rect" id="node9" href="$Types_8hpp.html" title=" " alt="" coords="469,152,550,177"/>
-<area shape="rect" id="node10" title=" " alt="" coords="479,225,540,251"/>
+<area shape="rect" id="node3" title=" " alt="" coords="55,79,135,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="159,79,233,104"/>
+<area shape="rect" id="node5" href="$logging_8hpp.html" title=" " alt="" coords="257,79,369,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="123,152,218,177"/>
+<area shape="rect" id="node7" title=" " alt="" coords="243,152,355,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="379,152,445,177"/>
+<area shape="rect" id="node9" href="$Types_8hpp.html" title=" " alt="" coords="470,152,551,177"/>
+<area shape="rect" id="node10" title=" " alt="" coords="480,225,541,251"/>
 </map>

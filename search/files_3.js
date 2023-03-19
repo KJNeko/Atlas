@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gamemetadata_2ecpp_0',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
-  ['gamemetadata_2ehpp_1',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]]
+  ['f95scraper_2epy_0',['f95Scraper.py',['../f95Scraper_8py.html',1,'']]],
+  ['flyweight_2ehpp_1',['FlyWeight.hpp',['../FlyWeight_8hpp.html',1,'']]]
 ];

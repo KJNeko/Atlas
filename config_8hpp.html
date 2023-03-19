@@ -106,6 +106,8 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">config.hpp File Reference</div></div>
 </div><!--header-->
@@ -113,22 +115,22 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
 <div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;QSettings&gt;</code><br />
 <code>#include &lt;QVariant&gt;</code><br />
-<code>#include &lt;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for config.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#asrc_2h95_2config_8hpp" alt=""/></div>
 <map name="asrc_2h95_2config_8hpp" id="asrc_2h95_2config_8hpp">
-<area shape="rect" title=" " alt="" coords="86,5,213,31"/>
+<area shape="rect" title=" " alt="" coords="82,5,209,31"/>
 <area shape="rect" title=" " alt="" coords="5,152,85,177"/>
-<area shape="rect" title=" " alt="" coords="59,79,139,104"/>
-<area shape="rect" title=" " alt="" coords="163,79,237,104"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="261,79,373,104"/>
-<area shape="rect" title=" " alt="" coords="121,152,233,177"/>
-<area shape="rect" title=" " alt="" coords="258,152,353,177"/>
-<area shape="rect" title=" " alt="" coords="377,152,444,177"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="469,152,550,177"/>
-<area shape="rect" title=" " alt="" coords="479,225,540,251"/>
+<area shape="rect" title=" " alt="" coords="55,79,135,104"/>
+<area shape="rect" title=" " alt="" coords="159,79,233,104"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="257,79,369,104"/>
+<area shape="rect" title=" " alt="" coords="123,152,218,177"/>
+<area shape="rect" title=" " alt="" coords="243,152,355,177"/>
+<area shape="rect" title=" " alt="" coords="379,152,445,177"/>
+<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="470,152,551,177"/>
+<area shape="rect" title=" " alt="" coords="480,225,541,251"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -136,16 +138,28 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8hpp__dep__incl.png" border="0" usemap="#asrc_2h95_2config_8hppdep" alt=""/></div>
 <map name="asrc_2h95_2config_8hppdep" id="asrc_2h95_2config_8hppdep">
-<area shape="rect" title=" " alt="" coords="292,5,419,31"/>
-<area shape="rect" href="config_8cpp.html" title=" " alt="" coords="5,79,132,104"/>
-<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="156,79,347,104"/>
-<area shape="rect" href="imageManager_8cpp.html" title=" " alt="" coords="371,79,550,104"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="574,79,670,104"/>
+<area shape="rect" title=" " alt="" coords="371,5,498,31"/>
+<area shape="rect" href="Database_8cpp.html" title=" " alt="" coords="5,79,211,104"/>
+<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="235,79,426,104"/>
+<area shape="rect" href="imageManager_8cpp.html" title=" " alt="" coords="451,79,629,104"/>
+<area shape="rect" href="logging_8cpp.html" title=" " alt="" coords="654,79,789,104"/>
 </map>
 </div>
 </div>
 <p><a href="config_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceconfig"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceconfig.html">config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad9cbc71e838f29e2d051824114269161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ad9cbc71e838f29e2d051824114269161">SETTING_D</a>(type,  group,  name,  default_val)</td></tr>
+<tr class="separator:ad9cbc71e838f29e2d051824114269161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a614981d78c395748e2d7e28ebb1da3d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a614981d78c395748e2d7e28ebb1da3d2">SETTING</a>(type,  group,  name)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#ad9cbc71e838f29e2d051824114269161">SETTING_D</a>( type, group, name, std::nullopt_t );</td></tr>
+<tr class="separator:a614981d78c395748e2d7e28ebb1da3d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a37af631e4a1b0741f0c9bf9cc22a693d"><td class="memItemLeft" align="right" valign="top">QSettings&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a> ()</td></tr>
@@ -154,65 +168,114 @@ Functions</h2></td></tr>
 <tr class="memitem:a50dc6d389eb806c8197e211128d06782"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">getSettings</a> (const QString setting_name)</td></tr>
 <tr class="memdesc:a50dc6d389eb806c8197e211128d06782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns T for the given setting_name.  <br /></td></tr>
 <tr class="separator:a50dc6d389eb806c8197e211128d06782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e">getSettings</a> (const QString setting_name, const T default_value)</td></tr>
-<tr class="separator:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a> (const QString settings_name, const T value)</td></tr>
-<tr class="separator:ab96dee737e985f98d61752ed9cabcdc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba22929f0d72383a1b32b20732e72df"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df">dataPath</a> ()</td></tr>
-<tr class="memdesc:a0ba22929f0d72383a1b32b20732e72df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>)  <br /></td></tr>
-<tr class="separator:a0ba22929f0d72383a1b32b20732e72df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8001ae5af09e3e54158e2fdf61fb1adb">imagePath</a> ()</td></tr>
-<tr class="memdesc:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>)  <br /></td></tr>
-<tr class="separator:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a0f1f79428b9d5612da52d47bdad840"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840">gamePath</a> ()</td></tr>
-<tr class="memdesc:a1a0f1f79428b9d5612da52d47bdad840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>)  <br /></td></tr>
-<tr class="separator:a1a0f1f79428b9d5612da52d47bdad840"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a614981d78c395748e2d7e28ebb1da3d2" name="a614981d78c395748e2d7e28ebb1da3d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a614981d78c395748e2d7e28ebb1da3d2">&#9670;&#160;</a></span>SETTING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTING</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="config_8hpp.html#ad9cbc71e838f29e2d051824114269161">SETTING_D</a>( type, group, name, std::nullopt_t );</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad9cbc71e838f29e2d051824114269161" name="ad9cbc71e838f29e2d051824114269161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9cbc71e838f29e2d051824114269161">&#9670;&#160;</a></span>SETTING_D</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTING_D</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">default_val&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">namespace </span>group::name                                                                                                \</div>
+<div class="line">  {                                                                                                                    \</div>
+<div class="line">    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceinternal.html">internal</a>                                                                                                 \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">      <span class="keyword">const</span> std::string key { std::string( #group ) + <span class="stringliteral">&quot;/&quot;</span> + #name };                                                   \</div>
+<div class="line">      <span class="keyword">const</span> std::optional&lt; type &gt; default_value { default_val };                                                       \</div>
+<div class="line">    }                                                                                                                  \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">    <span class="keyword">inline</span> type get()                                                                                                  \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">      QSettings settings { <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>() };                                                                      \</div>
+<div class="line">      <span class="keyword">const</span> QVariant value { settings.value( internal::key ) };                                                        \</div>
+<div class="line">      if ( value.template canConvert&lt; type &gt;() )                                                                       \</div>
+<div class="line">        <span class="keywordflow">return</span> value.template value&lt; type &gt;();                                                                         \</div>
+<div class="line">      <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( internal::default_value.has_value() )                                                                  \</div>
+<div class="line">        <span class="keywordflow">return</span> internal::default_value.value();                                                                        \</div>
+<div class="line">      else                                                                                                             \</div>
+<div class="line">        throw std::                                                                                                    \</div>
+<div class="line">            runtime_error( fmt::format( <span class="stringliteral">&quot;No setting with name {} found, No default value given.&quot;</span>, internal::key ) );   \</div>
+<div class="line">    }                                                                                                                  \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">    <span class="keyword">inline</span> <span class="keywordtype">void</span> set( <span class="keyword">const</span> type&amp; value )                                                                               \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">      QSettings settings { <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>() };                                                                      \</div>
+<div class="line">      settings.setValue( internal::key, value );                                                                       \</div>
+<div class="line">    }                                                                                                                  \</div>
+<div class="line">  }</div>
+<div class="ttc" id="aconfig_8hpp_html_a37af631e4a1b0741f0c9bf9cc22a693d"><div class="ttname"><a href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a></div><div class="ttdeci">QSettings getSettingsObject()</div><div class="ttdef"><b>Definition:</b> config.hpp:36</div></div>
+<div class="ttc" id="anamespaceinternal_html"><div class="ttname"><a href="namespaceinternal.html">internal</a></div><div class="ttdef"><b>Definition:</b> Database.cpp:13</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0ba22929f0d72383a1b32b20732e72df" name="a0ba22929f0d72383a1b32b20732e72df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ba22929f0d72383a1b32b20732e72df">&#9670;&#160;</a></span>dataPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path dataPath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>) </p>
-<p>Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>) </p>
-
-</div>
-</div>
-<a id="a1a0f1f79428b9d5612da52d47bdad840" name="a1a0f1f79428b9d5612da52d47bdad840"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a0f1f79428b9d5612da52d47bdad840">&#9670;&#160;</a></span>gamePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path gamePath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>) </p>
-<p>Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>) </p>
-
-</div>
-</div>
 <a id="a50dc6d389eb806c8197e211128d06782" name="a50dc6d389eb806c8197e211128d06782"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50dc6d389eb806c8197e211128d06782">&#9670;&#160;</a></span>getSettings() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a50dc6d389eb806c8197e211128d06782">&#9670;&#160;</a></span>getSettings()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,58 +323,6 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a7d7ab716d6ac8c84591d74209875ae4e" name="a7d7ab716d6ac8c84591d74209875ae4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d7ab716d6ac8c84591d74209875ae4e">&#9670;&#160;</a></span>getSettings() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T getSettings </td>
-          <td>(</td>
-          <td class="paramtype">const QString&#160;</td>
-          <td class="paramname"><em>setting_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T&#160;</td>
-          <td class="paramname"><em>default_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>type for setting </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">setting_name</td><td></td></tr>
-    <tr><td class="paramname">default_value</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>default_value if setting_name is not set </dd></dl>
-
-</div>
-</div>
 <a id="a37af631e4a1b0741f0c9bf9cc22a693d" name="a37af631e4a1b0741f0c9bf9cc22a693d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37af631e4a1b0741f0c9bf9cc22a693d">&#9670;&#160;</a></span>getSettingsObject()</h2>
 
@@ -326,64 +337,6 @@ template&lt;typename T &gt; </div>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8001ae5af09e3e54158e2fdf61fb1adb" name="a8001ae5af09e3e54158e2fdf61fb1adb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8001ae5af09e3e54158e2fdf61fb1adb">&#9670;&#160;</a></span>imagePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path imagePath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>) </p>
-<p>Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>) </p>
-
-</div>
-</div>
-<a id="ab96dee737e985f98d61752ed9cabcdc9" name="ab96dee737e985f98d61752ed9cabcdc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab96dee737e985f98d61752ed9cabcdc9">&#9670;&#160;</a></span>setSettings()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setSettings </td>
-          <td>(</td>
-          <td class="paramtype">const QString&#160;</td>
-          <td class="paramname"><em>settings_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>

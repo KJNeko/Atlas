@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['search_0',['search',['../structRecord.html#ad9f5516d966492b0cef8b78ce0378814',1,'Record']]],
-  ['select_1',['select',['../structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1',1,'GameMetadata::select()'],['../structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9',1,'Record::select()']]],
-  ['setsettings_2',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['spdlog_5fflush_3',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]]
+  ['main_0',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
+  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]],
+  ['metadataalreadyexists_2',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html#ab19d74f8d834c5921c9f775df41f3133',1,'MetadataAlreadyExists']]],
+  ['metadataexception_3',['MetadataException',['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException']]]
 ];

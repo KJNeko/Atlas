@@ -107,7 +107,6 @@ $(document).ready(function(){initNavTree('structGameMetadata.html',''); initResi
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structGameMetadata-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GameMetadata Struct Reference</div></div>
@@ -123,22 +122,10 @@ $(document).ready(function(){initNavTree('structGameMetadata.html',''); initResi
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a62316e65e2cebb3220279e99bc6e0a6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e">GameMetadata</a> ()=delete</td></tr>
 <tr class="separator:a62316e65e2cebb3220279e99bc6e0a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2dfd2d398b598c415397119db5abfbe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe">GameMetadata</a> (const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)</td></tr>
-<tr class="separator:ad2dfd2d398b598c415397119db5abfbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc6d6d9ecfceac3d5ea1a8f50d5c9a9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#afc6d6d9ecfceac3d5ea1a8f50d5c9a9e">GameMetadata</a> (const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in, const bool in_place, const std::uint64_t last_played, const std::uint32_t total_playtime)</td></tr>
+<tr class="separator:afc6d6d9ecfceac3d5ea1a8f50d5c9a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab302459c96a07a9220ced9e37ad9abcb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ab302459c96a07a9220ced9e37ad9abcb">operator==</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other) const =default</td></tr>
 <tr class="separator:ab302459c96a07a9220ced9e37ad9abcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a populated <a class="el" href="structGameMetadata.html" title="Representation of a game version.">GameMetadata</a> for the given id from the database.  <br /></td></tr>
-<tr class="separator:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85d2ed0262865f298f18ae20abd3bfd8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structGameMetadata.html">GameMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a85d2ed0262865f298f18ae20abd3bfd8">insert</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a85d2ed0262865f298f18ae20abd3bfd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new set of metadata.  <br /></td></tr>
-<tr class="separator:a85d2ed0262865f298f18ae20abd3bfd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ee2bf7970c2a1242639492b3a13a524"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a5ee2bf7970c2a1242639492b3a13a524">erase</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a5ee2bf7970c2a1242639492b3a13a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases metadata from the given id.  <br /></td></tr>
-<tr class="separator:a5ee2bf7970c2a1242639492b3a13a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -150,6 +137,13 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ace552832959f9b2b2ddd2e1482072120"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120">m_exec_path</a> {}</td></tr>
 <tr class="memdesc:ace552832959f9b2b2ddd2e1482072120"><td class="mdescLeft">&#160;</td><td class="mdescRight">canonical path to the executable  <br /></td></tr>
 <tr class="separator:ace552832959f9b2b2ddd2e1482072120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f350dbac3d533807a07c63537768ec1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a5f350dbac3d533807a07c63537768ec1">m_in_place</a></td></tr>
+<tr class="memdesc:a5f350dbac3d533807a07c63537768ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that we don't control where the game was placed.  <br /></td></tr>
+<tr class="separator:a5f350dbac3d533807a07c63537768ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44d3e870142ab47196005d9357a63af"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#af44d3e870142ab47196005d9357a63af">m_total_playtime</a></td></tr>
+<tr class="separator:af44d3e870142ab47196005d9357a63af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a88044df3d122d2e89acd7250ab3783"><td class="memItemLeft" align="right" valign="top">std::uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a8a88044df3d122d2e89acd7250ab3783">m_last_played</a></td></tr>
+<tr class="separator:a8a88044df3d122d2e89acd7250ab3783"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Representation of a game version. </p>
@@ -179,8 +173,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad2dfd2d398b598c415397119db5abfbe" name="ad2dfd2d398b598c415397119db5abfbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2dfd2d398b598c415397119db5abfbe">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[2/2]</span></h2>
+<a id="afc6d6d9ecfceac3d5ea1a8f50d5c9a9e" name="afc6d6d9ecfceac3d5ea1a8f50d5c9a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc6d6d9ecfceac3d5ea1a8f50d5c9a9e">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -204,7 +198,25 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>exec_path_in</em>&#160;</td>
+          <td class="paramname"><em>exec_path_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>in_place</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::uint64_t&#160;</td>
+          <td class="paramname"><em>last_played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::uint32_t&#160;</td>
+          <td class="paramname"><em>total_playtime</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -222,117 +234,6 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5ee2bf7970c2a1242639492b3a13a524" name="a5ee2bf7970c2a1242639492b3a13a524"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ee2bf7970c2a1242639492b3a13a524">&#9670;&#160;</a></span>erase()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GameMetadata::erase </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
-          <td class="paramname"><em>metadata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Erases metadata from the given id. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td></td></tr>
-    <tr><td class="paramname">metadata</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a85d2ed0262865f298f18ae20abd3bfd8" name="a85d2ed0262865f298f18ae20abd3bfd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85d2ed0262865f298f18ae20abd3bfd8">&#9670;&#160;</a></span>insert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structGameMetadata.html">GameMetadata</a> GameMetadata::insert </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
-          <td class="paramname"><em>metadata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Inserts a new set of metadata. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="structMetadataAlreadyExists.html">MetadataAlreadyExists</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>id of the record. </td></tr>
-    <tr><td class="paramname">metadata</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
 <a id="ab302459c96a07a9220ced9e37ad9abcb" name="ab302459c96a07a9220ced9e37ad9abcb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab302459c96a07a9220ced9e37ad9abcb">&#9670;&#160;</a></span>operator==()</h2>
 
@@ -356,52 +257,6 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a51802300df7cdc0f2bd73c1f7cbc5eb1" name="a51802300df7cdc0f2bd73c1f7cbc5eb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51802300df7cdc0f2bd73c1f7cbc5eb1">&#9670;&#160;</a></span>select()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt; GameMetadata::select </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns a populated <a class="el" href="structGameMetadata.html" title="Representation of a game version.">GameMetadata</a> for the given id from the database. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -438,6 +293,50 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a5f350dbac3d533807a07c63537768ec1" name="a5f350dbac3d533807a07c63537768ec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f350dbac3d533807a07c63537768ec1">&#9670;&#160;</a></span>m_in_place</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameMetadata::m_in_place</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates that we don't control where the game was placed. </p>
+
+</div>
+</div>
+<a id="a8a88044df3d122d2e89acd7250ab3783" name="a8a88044df3d122d2e89acd7250ab3783"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a88044df3d122d2e89acd7250ab3783">&#9670;&#160;</a></span>m_last_played</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint64_t GameMetadata::m_last_played</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af44d3e870142ab47196005d9357a63af" name="af44d3e870142ab47196005d9357a63af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af44d3e870142ab47196005d9357a63af">&#9670;&#160;</a></span>m_total_playtime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t GameMetadata::m_total_playtime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a9ca26d0ecb32d4390068c6542f0efd97" name="a9ca26d0ecb32d4390068c6542f0efd97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ca26d0ecb32d4390068c6542f0efd97">&#9670;&#160;</a></span>m_version</h2>
 
@@ -452,9 +351,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/h95/database/<a class="el" href="GameMetadata_8hpp_source.html">GameMetadata.hpp</a></li>
-<li>src/h95/database/<a class="el" href="GameMetadata_8cpp.html">GameMetadata.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

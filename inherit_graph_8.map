@@ -1,9 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,55,128,80"/>
-<area shape="rect" id="node2" href="$structMetadataException.html" title=" " alt="" coords="176,5,308,31"/>
-<area shape="rect" id="node4" href="$structRecordException.html" title=" " alt="" coords="183,55,301,80"/>
-<area shape="rect" id="node7" href="$structTransactionInvalid.html" title=" " alt="" coords="178,104,306,129"/>
-<area shape="rect" id="node3" href="$structMetadataAlreadyExists.html" title=" " alt="" coords="356,5,511,31"/>
-<area shape="rect" id="node5" href="$structInvalidRecordID.html" title=" " alt="" coords="376,55,491,80"/>
-<area shape="rect" id="node6" href="$structRecordAlreadyExists.html" title=" " alt="" coords="363,104,504,129"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,112,56"/>
+<area shape="rect" id="node2" href="$classMainWindow.html" title=" " alt="" coords="197,5,293,31"/>
+<area shape="rect" id="node3" href="$classmainwindow_1_1MainWindow.html" title=" " alt="" coords="160,55,331,80"/>
 </map>

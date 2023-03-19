@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['datapath_0',['dataPath',['../config_8cpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp'],['../config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp']]],
-  ['deinit_1',['deinit',['../classDatabase.html#a95da77a6408fed05dfd75efa87400a2e',1,'Database']]]
+  ['bannerchanged_0',['bannerChanged',['../structRecordData.html#a711e13e61a903ca473e0d1a24abf8b2d',1,'RecordData']]],
+  ['bannerpathchanged_1',['bannerPathChanged',['../structRecordData.html#a5d4ee9137fcd2523f39a39eee371c061',1,'RecordData']]]
 ];

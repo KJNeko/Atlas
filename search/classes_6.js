@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['transaction_0',['Transaction',['../structTransaction.html',1,'']]],
-  ['transactioninvalid_1',['TransactionInvalid',['../structTransactionInvalid.html',1,'']]]
+  ['recordalreadyexists_0',['RecordAlreadyExists',['../structRecordAlreadyExists.html',1,'']]],
+  ['recorddata_1',['RecordData',['../structRecordData.html',1,'']]],
+  ['recordexception_2',['RecordException',['../structRecordException.html',1,'']]],
+  ['recordlistmodel_3',['RecordListModel',['../classRecordListModel.html',1,'']]]
 ];

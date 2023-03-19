@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['format_0',['format',['../structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300',1,'fmt::formatter&lt; QString &gt;::format()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a00f2d6931a5285fb757d7aa0523bd498',1,'fmt::formatter&lt; RecordID &gt;::format()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a8e7ce96ba8a0f562555952da1b00c9c6',1,'fmt::formatter&lt; std::filesystem::path &gt;::format()'],['../structfmt_1_1formatter_3_01Record_01_4.html#aafc86786f81d090443c01c685c7c94ed',1,'fmt::formatter&lt; Record &gt;::format()'],['../structfmt_1_1formatter_3_01GameMetadata_01_4.html#a23b627de0cca767c9fd4d7f3d5e41b0c',1,'fmt::formatter&lt; GameMetadata &gt;::format()']]]
+  ['data_0',['data',['../classSHA256.html#aa3fc125206455d3d1729b6809e511f3c',1,'SHA256']]],
+  ['datachanged_1',['dataChanged',['../structRecordData.html#a6c759f8a91f2f92e85e0204a44e78fba',1,'RecordData']]],
+  ['deinit_2',['deinit',['../classDatabase.html#a95da77a6408fed05dfd75efa87400a2e',1,'Database']]],
+  ['deletelocaldatabase_3',['deleteLocalDatabase',['../namespaceClientFunctions.html#a1b9dba53cf8f30230630d5f78318933d',1,'ClientFunctions']]]
 ];

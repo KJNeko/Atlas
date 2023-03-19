@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['format_0',['format',['../structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300',1,'fmt::formatter&lt; QString &gt;::format()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a00f2d6931a5285fb757d7aa0523bd498',1,'fmt::formatter&lt; RecordID &gt;::format()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a8e7ce96ba8a0f562555952da1b00c9c6',1,'fmt::formatter&lt; std::filesystem::path &gt;::format()'],['../structfmt_1_1formatter_3_01Record_01_4.html#aafc86786f81d090443c01c685c7c94ed',1,'fmt::formatter&lt; Record &gt;::format()'],['../structfmt_1_1formatter_3_01GameMetadata_01_4.html#a23b627de0cca767c9fd4d7f3d5e41b0c',1,'fmt::formatter&lt; GameMetadata &gt;::format()']]],
-  ['formatter_3c_20gamemetadata_20_3e_1',['formatter&lt; GameMetadata &gt;',['../structfmt_1_1formatter_3_01GameMetadata_01_4.html',1,'fmt']]],
-  ['formatter_3c_20qstring_20_3e_2',['formatter&lt; QString &gt;',['../structfmt_1_1formatter_3_01QString_01_4.html',1,'fmt']]],
-  ['formatter_3c_20record_20_3e_3',['formatter&lt; Record &gt;',['../structfmt_1_1formatter_3_01Record_01_4.html',1,'fmt']]],
-  ['formatter_3c_20recordid_20_3e_4',['formatter&lt; RecordID &gt;',['../structfmt_1_1formatter_3_01RecordID_01_4.html',1,'fmt']]],
-  ['formatter_3c_20std_3a_3afilesystem_3a_3apath_20_3e_5',['formatter&lt; std::filesystem::path &gt;',['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html',1,'fmt']]]
+  ['data_0',['data',['../classSHA256.html#aa3fc125206455d3d1729b6809e511f3c',1,'SHA256']]],
+  ['database_1',['Database',['../classDatabase.html',1,'']]],
+  ['database_2ecpp_2',['Database.cpp',['../Database_8cpp.html',1,'']]],
+  ['database_2ehpp_3',['Database.hpp',['../Database_8hpp.html',1,'']]],
+  ['datachanged_4',['dataChanged',['../structRecordData.html#a6c759f8a91f2f92e85e0204a44e78fba',1,'RecordData']]],
+  ['default_5fhydrus_5fstylesheet_5',['DEFAULT_HYDRUS_STYLESHEET',['../namespaceUIStyle.html#abf27147292f6340b8972f4075c9c2218',1,'UIStyle']]],
+  ['deinit_6',['deinit',['../classDatabase.html#a95da77a6408fed05dfd75efa87400a2e',1,'Database']]],
+  ['deletelocaldatabase_7',['deleteLocalDatabase',['../namespaceClientFunctions.html#a1b9dba53cf8f30230630d5f78318933d',1,'ClientFunctions']]],
+  ['dlsitescraper_8',['dlsiteScraper',['../namespacedlsiteScraper.html',1,'']]],
+  ['dlsitescraper_2epy_9',['dlsiteScraper.py',['../dlsiteScraper_8py.html',1,'']]]
 ];

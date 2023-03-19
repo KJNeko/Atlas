@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete'],['../structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)']]],
-  ['gamepath_1',['gamePath',['../config_8cpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp'],['../config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp']]],
-  ['getbanner_2',['getBanner',['../structRecord.html#a40d83547e0b2d07d854368fc7996acbc',1,'Record::getBanner() const'],['../structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238',1,'Record::getBanner(const int banner_width, const int banner_height) const']]],
-  ['getimagepath_3',['getImagePath',['../namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031',1,'imageManager']]],
-  ['getsettings_4',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'getSettings(const QString setting_name):&#160;config.hpp'],['../config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e',1,'getSettings(const QString setting_name, const T default_value):&#160;config.hpp']]],
-  ['getsettingsobject_5',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]]
+  ['enginechanged_0',['engineChanged',['../structRecordData.html#a63588c275fa52fbdfb31580c6d6ca47f',1,'RecordData']]],
+  ['executeproc_1',['executeProc',['../executeProc_8hpp.html#a8be2ad3be2b5f5520dd7dff167b09823',1,'executeProc.hpp']]]
 ];

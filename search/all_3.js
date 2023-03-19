@@ -1,7 +1,20 @@
 var searchData=
 [
-  ['erase_0',['erase',['../structGameMetadata.html#a5ee2bf7970c2a1242639492b3a13a524',1,'GameMetadata::erase()'],['../structRecord.html#aefe45bf3be1b9f2c12eeb670fc0d25d3',1,'Record::erase()']]],
-  ['executeproc_1',['executeProc',['../executeProc_8hpp.html#a8be2ad3be2b5f5520dd7dff167b09823',1,'executeProc.hpp']]],
-  ['executeproc_2ecpp_2',['executeProc.cpp',['../executeProc_8cpp.html',1,'']]],
-  ['executeproc_2ehpp_3',['executeProc.hpp',['../executeProc_8hpp.html',1,'']]]
+  ['checkifgameinstalled_0',['checkIfgameinstalled',['../namespaceClientFunctions.html#a1bed86555473ec58049d0363c2a13af7',1,'ClientFunctions']]],
+  ['cleanorphans_1',['cleanOrphans',['../namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8',1,'imageManager']]],
+  ['clearstylesheet_2',['ClearStylesheet',['../namespaceUIStyle.html#a613af5a52f1a2d205d6290928022b97e',1,'UIStyle']]],
+  ['clientfunctions_3',['ClientFunctions',['../namespaceClientFunctions.html',1,'']]],
+  ['clientfunctions_2epy_4',['ClientFunctions.py',['../ClientFunctions_8py.html',1,'']]],
+  ['clk_5fbtnadd_5',['clk_btnAdd',['../classUIImportGames_1_1ImportDialog.html#aa30aa62fa8bf67e00939ec9c6c32e46e',1,'UIImportGames::ImportDialog']]],
+  ['clk_5fbtnnext_6',['clk_btnNext',['../classUIImportGames_1_1ImportDialog.html#afb618506eb58eca600d634f60ca5b99d',1,'UIImportGames::ImportDialog']]],
+  ['clk_5ftest_7',['clk_test',['../classUIImportGames_1_1ImportDialog.html#a6541679f5285b6d9d58f831534dadc9e',1,'UIImportGames::ImportDialog']]],
+  ['commit_8',['commit',['../structTransaction.html#a109bd0f1d70b6ff69cf3abccf7eea8f8',1,'Transaction::commit()'],['../structNonTransaction.html#a633bf37120f5d78b5add3af573d34ee4',1,'NonTransaction::commit()']]],
+  ['config_9',['config',['../namespaceconfig.html',1,'']]],
+  ['config_2ehpp_10',['config.hpp',['../config_8hpp.html',1,'']]],
+  ['createdirectory_11',['CreateDirectory',['../namespaceHydrus95FileManagement.html#a2c22681eb154edd36626b4e5d4ed7968',1,'Hydrus95FileManagement']]],
+  ['createlocaldatabase_12',['createLocalDatabase',['../namespaceClientFunctions.html#a197b13c3bfcad5de49e37a6201f6c3c0',1,'ClientFunctions']]],
+  ['createremotedatabase_13',['createRemoteDatabase',['../namespaceClientFunctions.html#ab93ac049c1b5abd60af42ecfb0fd0e38',1,'ClientFunctions']]],
+  ['creatorchanged_14',['creatorChanged',['../structRecordData.html#abd1b53fc98bfcb32cfb252e26d34723b',1,'RecordData']]],
+  ['current_5fstyle_5fname_15',['CURRENT_STYLE_NAME',['../namespaceUIStyle.html#a1a0e960856c8cbaa3a1579a6d32a1feb',1,'UIStyle']]],
+  ['current_5fstylesheet_16',['CURRENT_STYLESHEET',['../namespaceUIStyle.html#a9374054ea2627934925b666d686848e6',1,'UIStyle']]]
 ];

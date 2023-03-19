@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['testrecord_0',['TestRecord',['../structRecord.html#a81386bdaf4aa4490c372c9ae770883ee',1,'Record']]],
-  ['transaction_1',['Transaction',['../classDatabase.html#a157204bdd68859eaffcd09a886111f2b',1,'Database']]]
+  ['nontransaction_0',['NonTransaction',['../classDatabase.html#a554d5d7f40317657f67a36f0ed43ea18',1,'Database']]]
 ];

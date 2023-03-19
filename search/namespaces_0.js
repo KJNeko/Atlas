@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['imagemanager_0',['imageManager',['../namespaceimageManager.html',1,'']]],
-  ['internal_1',['internal',['../namespaceinternal.html',1,'']]]
+  ['clientfunctions_0',['ClientFunctions',['../namespaceClientFunctions.html',1,'']]],
+  ['config_1',['config',['../namespaceconfig.html',1,'']]]
 ];

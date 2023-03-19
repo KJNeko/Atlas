@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['preview_5fbanner_0',['PREVIEW_BANNER',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46acadf8856990bcddac2907d588c7170e5',1,'Record.cpp']]],
-  ['preview_5fpreview_1',['PREVIEW_PREVIEW',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a2f03d87961c4d9ea96345b5c986585f6',1,'Record.cpp']]],
-  ['preview_5funknown_2',['PREVIEW_UNKNOWN',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a88c9816c4c12a231f99d9cb2cb958077',1,'Record.cpp']]]
+  ['image_5fbanner_0',['IMAGE_BANNER',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8adfd7af39e106633c1b21a74c342a6f8f',1,'Record.hpp']]],
+  ['image_5fpreview_1',['IMAGE_PREVIEW',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8a802679ec601be8994e419e63b273be45',1,'Record.hpp']]],
+  ['image_5funknown_2',['IMAGE_UNKNOWN',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8ac9e52255f1b44bcb0257383d948c3153',1,'Record.hpp']]]
 ];

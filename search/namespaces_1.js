@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sqlite_0',['sqlite',['../namespacesqlite.html',1,'']]]
+  ['dlsitescraper_0',['dlsiteScraper',['../namespacedlsiteScraper.html',1,'']]]
 ];

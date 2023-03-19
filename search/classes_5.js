@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['record_0',['Record',['../structRecord.html',1,'']]],
-  ['recordalreadyexists_1',['RecordAlreadyExists',['../structRecordAlreadyExists.html',1,'']]],
-  ['recordexception_2',['RecordException',['../structRecordException.html',1,'']]]
+  ['nontransaction_0',['NonTransaction',['../structNonTransaction.html',1,'']]]
 ];

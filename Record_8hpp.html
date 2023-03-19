@@ -106,29 +106,38 @@ $(document).ready(function(){initNavTree('Record_8hpp.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">Record.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="Types_8hpp_source.html">h95/Types.hpp</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="GameMetadata_8hpp_source.html">h95/database/GameMetadata.hpp</a>&gt;</code><br />
-<code>#include &lt;QPixmap&gt;</code><br />
+<div class="textblock"><code>#include &lt;QPixmap&gt;</code><br />
+<code>#include &quot;<a class="el" href="FlyWeight_8hpp_source.html">FlyWeight.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Types_8hpp_source.html">h95/Types.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="GameMetadata_8hpp_source.html">h95/database/GameMetadata.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Record.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="Record_8hpp__incl.png" border="0" usemap="#asrc_2h95_2database_2Record_8hpp" alt=""/></div>
 <map name="asrc_2h95_2database_2Record_8hpp" id="asrc_2h95_2database_2Record_8hpp">
-<area shape="rect" title=" " alt="" coords="121,5,311,31"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="5,152,112,177"/>
-<area shape="rect" href="GameMetadata_8hpp.html" title=" " alt="" coords="107,79,325,104"/>
-<area shape="rect" title=" " alt="" coords="349,79,424,104"/>
-<area shape="rect" title=" " alt="" coords="28,225,89,251"/>
-<area shape="rect" title=" " alt="" coords="153,225,233,251"/>
-<area shape="rect" title=" " alt="" coords="187,152,253,177"/>
-<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="278,152,461,177"/>
-<area shape="rect" title=" " alt="" coords="485,152,577,177"/>
-<area shape="rect" title=" " alt="" coords="277,225,419,251"/>
-<area shape="rect" title=" " alt="" coords="443,225,514,251"/>
+<area shape="rect" title=" " alt="" coords="203,5,394,31"/>
+<area shape="rect" title=" " alt="" coords="101,79,176,104"/>
+<area shape="rect" href="FlyWeight_8hpp.html" title=" " alt="" coords="201,79,303,104"/>
+<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="209,225,316,251"/>
+<area shape="rect" href="GameMetadata_8hpp.html" title=" " alt="" coords="442,79,659,104"/>
+<area shape="rect" title=" " alt="" coords="5,152,80,177"/>
+<area shape="rect" title=" " alt="" coords="105,152,173,177"/>
+<area shape="rect" title=" " alt="" coords="197,152,307,177"/>
+<area shape="rect" title=" " alt="" coords="232,299,293,324"/>
+<area shape="rect" title=" " alt="" coords="687,225,767,251"/>
+<area shape="rect" title=" " alt="" coords="596,225,663,251"/>
+<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="750,152,933,177"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="465,152,577,177"/>
+<area shape="rect" title=" " alt="" coords="957,225,1027,251"/>
+<area shape="rect" title=" " alt="" coords="791,225,932,251"/>
+<area shape="rect" title=" " alt="" coords="341,225,435,251"/>
+<area shape="rect" title=" " alt="" coords="460,225,572,251"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -136,9 +145,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Record_8hpp__dep__incl.png" border="0" usemap="#asrc_2h95_2database_2Record_8hppdep" alt=""/></div>
 <map name="asrc_2h95_2database_2Record_8hppdep" id="asrc_2h95_2database_2Record_8hppdep">
-<area shape="rect" title=" " alt="" coords="99,5,289,31"/>
-<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="5,79,196,104"/>
-<area shape="rect" href="logging_8cpp.html" title=" " alt="" coords="220,79,355,104"/>
+<area shape="rect" title=" " alt="" coords="313,5,504,31"/>
+<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="5,86,196,111"/>
+<area shape="rect" href="Search_8hpp.html" title=" " alt="" coords="220,86,411,111"/>
+<area shape="rect" href="logging_8cpp.html" title=" " alt="" coords="435,86,569,111"/>
+<area shape="rect" href="RecordListModel_8hpp.html" title=" " alt="" coords="593,79,760,119"/>
+<area shape="rect" href="Search_8cpp.html" title=" " alt="" coords="220,174,411,199"/>
+<area shape="rect" href="RecordListModel_8cpp.html" title=" " alt="" coords="593,167,760,207"/>
 </map>
 </div>
 </div>
@@ -146,7 +159,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecord.html">Record</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecordData.html">RecordData</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecordException.html">RecordException</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,7 +167,55 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structInvalidRecordID.html">InvalidRecordID</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aa83905a0e2c4ac0759c747aab085627c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Record_8hpp.html#aa83905a0e2c4ac0759c747aab085627c">Record</a> = <a class="el" href="classFlyWeight.html">FlyWeight</a>&lt; <a class="el" href="structRecordData.html">RecordData</a>, <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;</td></tr>
+<tr class="separator:aa83905a0e2c4ac0759c747aab085627c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aef8b88d56fdf9a25f990a68d80c014d8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8">IMAGE_TYPE</a> { <a class="el" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8adfd7af39e106633c1b21a74c342a6f8f">IMAGE_BANNER</a> = 1
+, <a class="el" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8a802679ec601be8994e419e63b273be45">IMAGE_PREVIEW</a> = 2
+, <a class="el" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8ac9e52255f1b44bcb0257383d948c3153">IMAGE_UNKNOWN</a> = 999
+ }</td></tr>
+<tr class="separator:aef8b88d56fdf9a25f990a68d80c014d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="aa83905a0e2c4ac0759c747aab085627c" name="aa83905a0e2c4ac0759c747aab085627c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa83905a0e2c4ac0759c747aab085627c">&#9670;&#160;</a></span>Record</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="Record_8hpp.html#aa83905a0e2c4ac0759c747aab085627c">Record</a> =  <a class="el" href="classFlyWeight.html">FlyWeight</a>&lt; <a class="el" href="structRecordData.html">RecordData</a>, <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aef8b88d56fdf9a25f990a68d80c014d8" name="aef8b88d56fdf9a25f990a68d80c014d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef8b88d56fdf9a25f990a68d80c014d8">&#9670;&#160;</a></span>IMAGE_TYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8">IMAGE_TYPE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aef8b88d56fdf9a25f990a68d80c014d8adfd7af39e106633c1b21a74c342a6f8f" name="aef8b88d56fdf9a25f990a68d80c014d8adfd7af39e106633c1b21a74c342a6f8f"></a>IMAGE_BANNER&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aef8b88d56fdf9a25f990a68d80c014d8a802679ec601be8994e419e63b273be45" name="aef8b88d56fdf9a25f990a68d80c014d8a802679ec601be8994e419e63b273be45"></a>IMAGE_PREVIEW&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aef8b88d56fdf9a25f990a68d80c014d8ac9e52255f1b44bcb0257383d948c3153" name="aef8b88d56fdf9a25f990a68d80c014d8ac9e52255f1b44bcb0257383d948c3153"></a>IMAGE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

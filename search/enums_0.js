@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['previewtype_0',['PreviewType',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46',1,'Record.cpp']]]
+  ['image_5ftype_0',['IMAGE_TYPE',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8',1,'Record.hpp']]]
 ];
