@@ -7,7 +7,6 @@
 
 #include <cstdint>
 
-using RecordID = uint32_t;
+using RecordID = std::uint32_t;
 
-
-#endif	//HYDRUS95_TYPES_HPP
+#endif //HYDRUS95_TYPES_HPP

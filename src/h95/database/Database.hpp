@@ -7,6 +7,7 @@
 
 #include <filesystem>
 
+#include <QObject>
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Wshadow"
@@ -14,31 +15,35 @@
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wundef"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#pragma GCC diagnostic ignored "-Wpragmas"
 
 #include <sqlite_modern_cpp.h>
 
 #pragma GCC diagnostic pop
 
-#include <QObject>
-
-namespace sqlite
-{
-	class database;
-}
-
 class Database
 {
 	static sqlite::database& ref();
+
 	static std::mutex& lock();
 
-	public:
+  public:
+
 	static void initalize( const std::filesystem::path init_path );
 	static void deinit();
 
 	//static void update();
 
-	private:
+  private:
+
 	friend struct Transaction;
+	friend struct NonTransaction;
+	friend struct TransactionData;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -46,18 +51,36 @@ struct TransactionInvalid : public std::runtime_error
 	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
 };
 
+struct TransactionData
+{
+  private:
+
+	std::lock_guard< std::mutex > guard;
+
+	std::lock_guard< std::mutex > getLock();
+
+  public:
+
+	TransactionData();
+
+	~TransactionData();
+};
+
 //! Transaction unit to the database.
 struct Transaction
 {
-	Q_DISABLE_COPY_MOVE( Transaction )
+  private:
 
-	private:
-	bool finished { false };
-	std::lock_guard< std::mutex >* guard { nullptr };
+	std::shared_ptr< TransactionData > data;
+	bool m_autocommit { false };
+	bool ran_once { false };
 
-	public:
-	//! @throws TransactionInvalid when trying to create a transaction without the database being initalized first
-	Transaction();
+  public:
+
+	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
+	Transaction( const bool autocommit = false );
+	Transaction( const Transaction& other ) = default;
+	Transaction( Transaction&& other ) = default;
 
 	//! @throws TransactionInvalid
 	sqlite::database_binder operator<<( const std::string& sql );
@@ -77,4 +100,26 @@ struct Transaction
 	~Transaction();
 };
 
-#endif	//HYDRUS95_DATABASE_HPP
+struct NonTransaction
+{
+	Q_DISABLE_COPY_MOVE( NonTransaction )
+
+  private:
+
+	bool finished { false };
+	std::lock_guard< std::mutex >* guard { nullptr };
+
+  public:
+
+	NonTransaction();
+
+	sqlite::database_binder operator<<( const std::string& sql );
+
+	void commit();
+
+	void abort();
+
+	~NonTransaction();
+};
+
+#endif //HYDRUS95_DATABASE_HPP

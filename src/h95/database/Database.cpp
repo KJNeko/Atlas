@@ -2,19 +2,24 @@
 // Created by kj16609 on 1/12/23.
 //
 
-#include <filesystem>
-
-#include <tracy/Tracy.hpp>
-
 #include "Database.hpp"
 
-#include <h95/logging.hpp>
+#include <filesystem>
+
+#include "h95/config.hpp"
+#include "h95/logging.hpp"
 
 namespace internal
 {
 	static sqlite::database* db { nullptr };
-	static std::mutex db_mtx {};
-}  // namespace internal
+	static std::mutex db_mtx;
+
+#ifndef NDEBUG
+	static std::atomic< std::thread::id > last_locked { std::thread::id( 0 ) };
+#endif
+
+	//static std::mutex db_mtx {};
+} // namespace internal
 
 sqlite::database& Database::ref()
 {
@@ -30,42 +35,56 @@ std::mutex& Database::lock()
 }
 
 void Database::initalize( const std::filesystem::path init_path )
+try
 {
-	spdlog::debug( "Initalizing database with path {}", init_path.string() );
+	spdlog::debug( "Initalizing database with path {}", init_path );
 	std::filesystem::create_directories( init_path.parent_path() );
 
-	internal::db = new sqlite::database( init_path );
+	internal::db = new sqlite::database( init_path.string() );
 
-	Transaction transaction;
+	if ( config::db::first_start::get() )
+	{
+		NonTransaction transaction;
 
-	const std::vector< std::string > table_queries {
+		const std::vector< std::string > table_queries {
+			"CREATE TABLE records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
+			"CREATE TABLE game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT UNIQUE, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER);",
+			"CREATE TABLE images (record_id INTEGER REFERENCES records(record_id), type INTEGER, path TEXT, UNIQUE(record_id, type, path));",
+			"CREATE TABLE tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
+			"CREATE TABLE tag_mappings (record_id INTEGER REFERENCES records(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
 
-		"CREATE TABLE records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_record DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
-		"CREATE TABLE game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT UNIQUE, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER);",
-		"CREATE TABLE images (record_id INTEGER REFERENCES records(record_id), type INTEGER, sha256 TEXT, UNIQUE(record_id, type, sha256));",
+			//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
+			"CREATE TABLE f95zone_data (f95_id INTEGER PRIMARY KEY);",
+			"CREATE TABLE dlsite_data (dlsite_id TEXT PRIMARY KEY);",
 
-		//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
-		"CREATE TABLE f95zone_data (f95_id INTEGER PRIMARY KEY);",
-		"CREATE TABLE dlsite_data (dlsite_id TEXT PRIMARY KEY);",
+			"CREATE TABLE f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
+			"CREATE TABLE dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));"
 
-		"CREATE TABLE f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
-		"CREATE TABLE dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));"
-
-		//Old tables
-		/*
+			//Old tables
+			/*
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT)",
 		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, UNIQUE(record_id, version, game_path, exec_path))",
 		"CREATE TABLE IF NOT EXISTS images (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
 		"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)"*/
-	};
+		};
 
-	for ( const auto& query_str : table_queries )
-	{
-		transaction << query_str;
-		spdlog::debug( "Executing {}", query_str );
+		for ( const auto& query_str : table_queries )
+		{
+			transaction << query_str;
+			spdlog::debug( "Executing {}", query_str );
+		}
+
+		transaction.commit();
+
+		config::db::first_start::set(false);
 	}
-
-	transaction.commit();
+	else
+		spdlog::info( "Database has been initalized before! Skipping table creation" );
+}
+catch ( sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}", e.get_sql() );
+	std::rethrow_exception( std::current_exception() );
 }
 
 void Database::deinit()
@@ -75,43 +94,106 @@ void Database::deinit()
 	internal::db = nullptr;
 }
 
-Transaction::Transaction() : guard( new std::lock_guard( Database::lock() ) )
+std::lock_guard< std::mutex > TransactionData::getLock()
+{
+	//Check if we are already locked
+	if ( internal::last_locked == std::this_thread::get_id() )
+		throw std::runtime_error( "Deadlock" );
+	else
+		return std::lock_guard< std::mutex >( Database::lock() );
+}
+
+TransactionData::TransactionData() : guard( getLock() )
+{
+	internal::last_locked = std::this_thread::get_id();
+}
+
+TransactionData::~TransactionData()
+{
+	internal::last_locked = std::thread::id( -1 );
+}
+
+Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), data( new TransactionData() )
+{
+	if ( internal::db == nullptr )
+	{
+		spdlog::error( "Database was not ready!" );
+		data.reset();
+		throw TransactionInvalid();
+	}
+
+	*this << "BEGIN TRANSACTION";
+	ran_once = false;
+}
+
+Transaction::~Transaction()
+{
+	if ( data.use_count() == 1 )
+	{
+		if ( m_autocommit )
+			commit();
+		else
+			abort();
+	}
+}
+
+void Transaction::commit()
+{
+	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	*this << "COMMIT TRANSACTION";
+
+	data.reset();
+}
+
+void Transaction::abort()
+{
+	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	*this << "ROLLBACK TRANSACTION";
+
+	data.reset();
+}
+
+sqlite::database_binder Transaction::operator<<( const std::string& sql )
+{
+	ran_once = true;
+	spdlog::debug( "Executing {}", sql );
+	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	return Database::ref() << sql;
+}
+
+NonTransaction::NonTransaction() : guard( new std::lock_guard( Database::lock() ) )
 {
 	if ( internal::db == nullptr )
 	{
 		delete guard;
 		throw TransactionInvalid();
 	}
-
-	*this << "BEGIN TRANSACTION";
 }
 
-Transaction::~Transaction()
+NonTransaction::~NonTransaction()
 {
 	if ( !finished ) abort();
 }
 
-void Transaction::commit()
+void NonTransaction::commit()
 {
 	if ( finished ) throw TransactionInvalid();
-	*this << "COMMIT TRANSACTION";
-
 	finished = true;
 	delete guard;
 }
 
-void Transaction::abort()
+void NonTransaction::abort()
 {
 	if ( finished ) throw TransactionInvalid();
-	*this << "ROLLBACK TRANSACTION";
-
 	finished = true;
 	delete guard;
 }
 
-sqlite::database_binder Transaction::operator<<( const std::string& sql )
+sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
-	spdlog::debug("Executing {}", sql);
+	spdlog::debug( "Executing {} without transaction", sql );
 	if ( finished ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }

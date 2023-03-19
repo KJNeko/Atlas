@@ -13,9 +13,10 @@
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 
-#include <spdlog/spdlog.h>
 #include <fmt/ranges.h>
+#include <spdlog/spdlog.h>
 
 #pragma GCC diagnostic pop
 
@@ -26,7 +27,8 @@
 void initLogging();
 
 //! Formatter for QString in fmt::format
-template<> struct fmt::formatter< QString >
+template <>
+struct fmt::formatter< QString >
 {
 	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
@@ -36,7 +38,8 @@ template<> struct fmt::formatter< QString >
 	}
 };
 
-template<> struct fmt::formatter< RecordID >
+template <>
+struct fmt::formatter< RecordID >
 {
 	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
@@ -46,31 +49,12 @@ template<> struct fmt::formatter< RecordID >
 	}
 };
 
-template<> struct fmt::formatter< std::filesystem::path >
+template <>
+struct fmt::formatter< std::filesystem::path >
 {
 	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
 	auto format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() );
 };
 
-
-struct Record;
-
-template<> struct fmt::formatter< Record >
-{
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
-
-	auto format( const Record& my, format_context& ctx ) const -> decltype( ctx.out() );
-};
-
-struct GameMetadata;
-
-template<> struct fmt::formatter< GameMetadata >
-{
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
-
-	auto format( const GameMetadata& my, format_context& ctx ) const -> decltype( ctx.out() );
-};
-
-
-#endif	//HYDRUS95_LOGGING_HPP
+#endif //HYDRUS95_LOGGING_HPP

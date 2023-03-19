@@ -10,12 +10,11 @@
 #include <QSettings>
 #include <QVariant>
 
-#include <h95/logging.hpp>
+#include "h95/logging.hpp"
 
 /**
  *
  * @page H95Settings Settings list
- *
  *
  * @warning THESE SHOULD NEVER BE MODIFIED MANUALLY IN `config.ini` UNLESS TOLD TOO. These are simply to provide some reference to what they are when developing new modules
  *
@@ -31,7 +30,6 @@
  * | paths 		| data 				| string 	| ./data/   |
  * | paths		| games				| string	| ./data/games	 |
  * | paths		| images			| string	| ./data/images |
- *
  */
 
 //TODO: Add cache
@@ -47,7 +45,8 @@ inline QSettings getSettingsObject()
  * @return
  */
 //! Returns T for the given setting_name
-template< typename T > inline T getSettings( const QString setting_name )
+template < typename T >
+inline T getSettings( const QString setting_name )
 {
 	QSettings settings { getSettingsObject() };
 	const auto variant { settings.value( setting_name ) };
@@ -65,39 +64,49 @@ template< typename T > inline T getSettings( const QString setting_name )
 	}
 }
 
-/**
- * @tparam T type for setting
- * @param setting_name
- * @param default_value
- * @return default_value if setting_name is not set
- */
-template< typename T > inline T getSettings( const QString setting_name, const T default_value )
+#define SETTING_D( type, group, name, default_val )                                                                    \
+  namespace group::name                                                                                                \
+  {                                                                                                                    \
+	namespace internal                                                                                                 \
+	{                                                                                                                  \
+	  const std::string key { std::string( #group ) + "/" + #name };                                                   \
+	  const std::optional< type > default_value { default_val };                                                       \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline type get()                                                                                                  \
+	{                                                                                                                  \
+	  QSettings settings { getSettingsObject() };                                                                      \
+	  const QVariant value { settings.value( internal::key ) };                                                        \
+	  if ( value.template canConvert< type >() )                                                                       \
+		return value.template value< type >();                                                                         \
+	  else if ( internal::default_value.has_value() )                                                                  \
+		return internal::default_value.value();                                                                        \
+	  else                                                                                                             \
+		throw std::                                                                                                    \
+			runtime_error( fmt::format( "No setting with name {} found, No default value given.", internal::key ) );   \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline void set( const type& value )                                                                               \
+	{                                                                                                                  \
+	  QSettings settings { getSettingsObject() };                                                                      \
+	  settings.setValue( internal::key, value );                                                                       \
+	}                                                                                                                  \
+  }
+
+#define SETTING( type, group, name ) SETTING_D( type, group, name, std::nullopt_t );
+
+namespace config
 {
-	QSettings settings { getSettingsObject() };
-	const auto variant { settings.value( setting_name, default_value ) };
-	if ( variant.template canConvert< T >() )
-		return variant.template value< T >();
-	else
-	{
-		setSettings( setting_name, default_value );
-		return default_value;
-	}
-}
+	SETTING_D( QString, paths, data, "./data" )
+	SETTING_D( QString, paths, images, "./data/images" )
+	SETTING_D( QString, paths, games, "./data/games" )
 
-template< typename T > inline void setSettings( const QString settings_name, const T value )
-{
-	QSettings settings { getSettingsObject() };
-	settings.setValue( settings_name, value );
-}
+	SETTING_D(bool, db, first_start, true)
 
-//! Returns the canonical path for setting `path/data` (Default `./data/`)
-std::filesystem::path dataPath();
-
-//! Returns the canonical path for setting `path/images` (Default `./data/images`)
-std::filesystem::path imagePath();
-
-//! Returns the canonical path for setting `path/games` (Default `./data/games`)
-std::filesystem::path gamePath();
+	SETTING_D(int, logging, level, 2)
 
 
-#endif	//HYDRUS95_CONFIG_HPP
+
+} // namespace config
+
+#endif //HYDRUS95_CONFIG_HPP

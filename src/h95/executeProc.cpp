@@ -24,7 +24,7 @@ void executeProc( const std::string& path_str )
 	spdlog::debug( "Executing game {}", path_str );
 
 	LPSTR path;
-	path = new char[4096 * 4];
+	path = new char[ 4096 * 4 ];
 	std::strcpy( path, path_str.c_str() );
 
 	STARTUPINFOA si;
@@ -37,7 +37,6 @@ void executeProc( const std::string& path_str )
 	if ( !CreateProcessA( nullptr, path, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
 		spdlog::error( "Failed to execute process {}", path );
 }
-
 
 #else
 #error "No define for handling this OS"
