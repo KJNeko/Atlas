@@ -14,3 +14,4 @@
 /out/build/x64-Debug
 /CMakeFiles
 /CMakeCache.txt
+*.user
