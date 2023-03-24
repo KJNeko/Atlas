@@ -10,5 +10,7 @@ var dir_33f586cf01f7b35339e575ba246fbce1 =
     [ "logging.hpp", "logging_8hpp.html", "logging_8hpp" ],
     [ "SHA256.cpp", "SHA256_8cpp.html", "SHA256_8cpp" ],
     [ "SHA256.hpp", "SHA256_8hpp.html", "SHA256_8hpp" ],
-    [ "Types.hpp", "Types_8hpp.html", "Types_8hpp" ]
+    [ "Types.hpp", "Types_8hpp.html", "Types_8hpp" ],
+    [ "utils.cpp", "utils_8cpp.html", null ],
+    [ "utils.hpp", "utils_8hpp.html", "utils_8hpp" ]
 ];

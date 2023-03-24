@@ -1,20 +1,4 @@
 var searchData=
 [
-  ['id_0',['id',['../structInvalidRecordID.html#acf01c40f2e25a8486ddd4f982cfdd8e3',1,'InvalidRecordID']]],
-  ['image_5fbanner_1',['IMAGE_BANNER',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8adfd7af39e106633c1b21a74c342a6f8f',1,'Record.hpp']]],
-  ['image_5fpreview_2',['IMAGE_PREVIEW',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8a802679ec601be8994e419e63b273be45',1,'Record.hpp']]],
-  ['image_5ftype_3',['IMAGE_TYPE',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8',1,'Record.hpp']]],
-  ['image_5funknown_4',['IMAGE_UNKNOWN',['../Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8ac9e52255f1b44bcb0257383d948c3153',1,'Record.hpp']]],
-  ['imagemanager_5',['imageManager',['../namespaceimageManager.html',1,'']]],
-  ['imagemanager_2ecpp_6',['imageManager.cpp',['../imageManager_8cpp.html',1,'']]],
-  ['imagemanager_2ehpp_7',['imageManager.hpp',['../imageManager_8hpp.html',1,'']]],
-  ['importdialog_8',['ImportDialog',['../classUIImportGames_1_1ImportDialog.html',1,'UIImportGames']]],
-  ['importimage_9',['importImage',['../namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5',1,'imageManager']]],
-  ['include_5fdir_10',['INCLUDE_DIR',['../namespaceHydrus95Globals.html#af183052e421a59cfa330145b7db4865c',1,'Hydrus95Globals']]],
-  ['init_2epy_11',['init.py',['../init_8py.html',1,'']]],
-  ['initalize_12',['initalize',['../classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f',1,'Database']]],
-  ['initialisedefaults_13',['InitialiseDefaults',['../namespaceUIStyle.html#a2dfb01b4f3731bfd49c31eef16563caa',1,'UIStyle']]],
-  ['initlogging_14',['initLogging',['../logging_8cpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp'],['../logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp']]],
-  ['internal_15',['internal',['../namespaceinternal.html',1,'']]],
-  ['invalidrecordid_16',['InvalidRecordID',['../structInvalidRecordID.html#a132db5191179dca2ed2e5d54f89cafc0',1,'InvalidRecordID::InvalidRecordID()'],['../structInvalidRecordID.html',1,'InvalidRecordID']]]
+  ['key_0',['key',['../structRecordData.html#ae952f7920c18caa6c52b65c6be26760c',1,'RecordData::key(const RecordID id, Transaction transaction=Transaction(true))'],['../structRecordData.html#a0a7a6b50f56b9ea6363a4c16a4b2802d',1,'RecordData::key() const']]]
 ];

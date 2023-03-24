@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['default_5fhydrus_5fstylesheet_0',['DEFAULT_HYDRUS_STYLESHEET',['../namespaceUIStyle.html#abf27147292f6340b8972f4075c9c2218',1,'UIStyle']]]
+  ['text_0',['text',['../structTag.html#a0e3ac68298c0ab3401c9562c13244655',1,'Tag']]]
 ];

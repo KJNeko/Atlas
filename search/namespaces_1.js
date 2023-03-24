@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['dlsitescraper_0',['dlsiteScraper',['../namespacedlsiteScraper.html',1,'']]]
+  ['imagemanager_0',['imageManager',['../namespaceimageManager.html',1,'']]],
+  ['internal_1',['internal',['../namespaceinternal.html',1,'']]]
 ];

@@ -9,6 +9,9 @@ var hierarchy =
     [ "QAbstractListModel", null, [
       [ "RecordListModel", "classRecordListModel.html", null ]
     ] ],
+    [ "QMainWindow", null, [
+      [ "MainWindow", "classMainWindow.html", null ]
+    ] ],
     [ "QObject", null, [
       [ "RecordData", "structRecordData.html", null ],
       [ "Search", "classSearch.html", null ]
@@ -30,12 +33,5 @@ var hierarchy =
     ] ],
     [ "Tag", "structTag.html", null ],
     [ "Transaction", "structTransaction.html", null ],
-    [ "TransactionData", "structTransactionData.html", null ],
-    [ "QDialog", null, [
-      [ "UIImportGames.ImportDialog", "classUIImportGames_1_1ImportDialog.html", null ]
-    ] ],
-    [ "QMainWindow", null, [
-      [ "MainWindow", "classMainWindow.html", null ],
-      [ "mainwindow.MainWindow", "classmainwindow_1_1MainWindow.html", null ]
-    ] ]
+    [ "TransactionData", "structTransactionData.html", null ]
 ];

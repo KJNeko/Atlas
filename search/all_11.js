@@ -1,21 +1,15 @@
 var searchData=
 [
-  ['readme_2emd_0',['README.md',['../README_8md.html',1,'']]],
-  ['record_1',['Record',['../Record_8hpp.html#aa83905a0e2c4ac0759c747aab085627c',1,'Record.hpp']]],
-  ['record_2',['record',['../structRecordAlreadyExists.html#ae03e24eee138a8e569bc6e46786e882c',1,'RecordAlreadyExists']]],
-  ['record_2ecpp_3',['Record.cpp',['../Record_8cpp.html',1,'']]],
-  ['record_2ehpp_4',['Record.hpp',['../Record_8hpp.html',1,'']]],
-  ['recordalreadyexists_5',['RecordAlreadyExists',['../structRecordAlreadyExists.html',1,'RecordAlreadyExists'],['../structRecordData.html#ad334f8cd34a80f82062c2946f75c9c67',1,'RecordData::RecordAlreadyExists()'],['../structRecordAlreadyExists.html#afee98167673b80eb76e112e034f66daa',1,'RecordAlreadyExists::RecordAlreadyExists()']]],
-  ['recorddata_6',['RecordData',['../structRecordData.html',1,'RecordData'],['../structRecordData.html#a9006d244488c8531e3017bfbb2e67d8f',1,'RecordData::RecordData(QString title, QString creator, QString engine, const std::uint64_t last_played, const std::uint32_t total_playtime, std::vector&lt; GameMetadata &gt; versions, std::filesystem::path banner, std::vector&lt; std::filesystem::path &gt; previews, Transaction=Transaction(true))'],['../structRecordData.html#a4f43d8de9e56cdd02042db569eaa13bf',1,'RecordData::RecordData(const RecordID id, Transaction transaction=Transaction(true))'],['../structRecordData.html#a8c8e3a0fddb11a17e7f7187a7756f9ca',1,'RecordData::RecordData(RecordID id, QString title, QString creator, QString engine, const std::uint64_t last_played, const std::uint32_t total_playtime, std::vector&lt; GameMetadata &gt; versions, std::filesystem::path banner, std::vector&lt; std::filesystem::path &gt; previews)'],['../structRecordData.html#ad9daa9f2d3963b69d4743431a18fabf1',1,'RecordData::RecordData()=default']]],
-  ['recordexception_7',['RecordException',['../structRecordException.html#a8d9445956d94d871b9c9f2f3e6153add',1,'RecordException::RecordException()'],['../structRecordException.html',1,'RecordException']]],
-  ['recordid_8',['RecordID',['../Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068',1,'Types.hpp']]],
-  ['recordlistmodel_9',['RecordListModel',['../classRecordListModel.html',1,'RecordListModel'],['../classRecordListModel.html#a4eaa3e02354882564fade37035d54347',1,'RecordListModel::RecordListModel()']]],
-  ['recordlistmodel_2ecpp_10',['RecordListModel.cpp',['../RecordListModel_8cpp.html',1,'']]],
-  ['recordlistmodel_2ehpp_11',['RecordListModel.hpp',['../RecordListModel_8hpp.html',1,'']]],
-  ['recordschanged_12',['recordsChanged',['../classRecordListModel.html#a88fb703a5edb88a052227574f917207f',1,'RecordListModel']]],
-  ['remotedbname_13',['remotedbName',['../namespaceClientFunctions.html#a0c5a6730deb85a4e9c071a30d6c9cb9d',1,'ClientFunctions']]],
-  ['removerecord_14',['removeRecord',['../classRecordListModel.html#aa26b0792e25f3c77eceb453f35c0728e',1,'RecordListModel']]],
-  ['removetag_15',['removeTag',['../classSearch.html#ab8c8ab61cd0271e87a510329cff1eba0',1,'Search']]],
-  ['removeversion_16',['removeVersion',['../structRecordData.html#a88776f6db0a2fe088023388b5a99fcc2',1,'RecordData']]],
-  ['resource_5fdir_17',['RESOURCE_DIR',['../namespaceHydrus95Globals.html#a268981450b00b81cf2520e6cf23855c0',1,'Hydrus95Globals']]]
+  ['tag_0',['Tag',['../structTag.html',1,'']]],
+  ['tag_2ecpp_1',['Tag.cpp',['../Tag_8cpp.html',1,'']]],
+  ['tag_2ehpp_2',['Tag.hpp',['../Tag_8hpp.html',1,'']]],
+  ['text_3',['text',['../structTag.html#a0e3ac68298c0ab3401c9562c13244655',1,'Tag']]],
+  ['titlechanged_4',['titleChanged',['../structRecordData.html#aa15bd0a6e14354e05488e521887c5287',1,'RecordData']]],
+  ['tobyteview_5',['toByteView',['../classSHA256.html#a6e48dd7c6f98f4b667f39e8958d7873c',1,'SHA256']]],
+  ['tohex_6',['toHex',['../classSHA256.html#a43c908c89d2336552bc5ca090fcdf034',1,'SHA256']]],
+  ['totalplaytimechanged_7',['totalPlaytimeChanged',['../structRecordData.html#a812a7c036f79795b864fbcb15ff704cd',1,'RecordData']]],
+  ['transaction_8',['Transaction',['../structTransaction.html',1,'Transaction'],['../structTransaction.html#a054f88537cd1096cec395f8bd767dc10',1,'Transaction::Transaction(Transaction &amp;&amp;other)=default'],['../structTransaction.html#a589a12cf4bf7bd09ff94eb10cd659322',1,'Transaction::Transaction(const Transaction &amp;other)=default'],['../structTransaction.html#a22209c4afc696977b081eb8f9adf6906',1,'Transaction::Transaction(const bool autocommit=false)'],['../classDatabase.html#a157204bdd68859eaffcd09a886111f2b',1,'Database::Transaction()']]],
+  ['transactiondata_9',['TransactionData',['../structTransactionData.html',1,'TransactionData'],['../classDatabase.html#a575baefe827cb3485826b66fda29b0e2',1,'Database::TransactionData()'],['../structTransactionData.html#a87e3e9714a9853c488b5457f0c5aa88b',1,'TransactionData::TransactionData()']]],
+  ['transactioninvalid_10',['TransactionInvalid',['../structTransactionInvalid.html',1,'TransactionInvalid'],['../structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4',1,'TransactionInvalid::TransactionInvalid()']]],
+  ['types_2ehpp_11',['Types.hpp',['../Types_8hpp.html',1,'']]]
 ];

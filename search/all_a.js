@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['j7±bœùs_0',['j7±bœ‹s',['../namespacedlsiteScraper.html#ad9cd53966351948989c33220d76cd524',1,'dlsiteScraper']]]
+  ['lastplayedchanged_0',['lastPlayedChanged',['../structRecordData.html#a63273d52548a381893a765e7672c679c',1,'RecordData']]],
+  ['logging_2ecpp_1',['logging.cpp',['../logging_8cpp.html',1,'']]],
+  ['logging_2ehpp_2',['logging.hpp',['../logging_8hpp.html',1,'']]]
 ];

@@ -5,12 +5,6 @@ var annotated_dup =
       [ "formatter< RecordID >", "structfmt_1_1formatter_3_01RecordID_01_4.html", "structfmt_1_1formatter_3_01RecordID_01_4" ],
       [ "formatter< std::filesystem::path >", "structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html", "structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4" ]
     ] ],
-    [ "mainwindow", "namespacemainwindow.html", [
-      [ "MainWindow", "classmainwindow_1_1MainWindow.html", "classmainwindow_1_1MainWindow" ]
-    ] ],
-    [ "UIImportGames", "namespaceUIImportGames.html", [
-      [ "ImportDialog", "classUIImportGames_1_1ImportDialog.html", "classUIImportGames_1_1ImportDialog" ]
-    ] ],
     [ "Database", "classDatabase.html", "classDatabase" ],
     [ "FlyWeight", "classFlyWeight.html", "classFlyWeight" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],

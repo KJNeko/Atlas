@@ -1,8 +1,19 @@
 var searchData=
 [
-  ['findf95zonerecord_0',['FindF95zoneRecord',['../namespaceClientFunctions.html#a7beba995b04c91bfd216fa830347d658',1,'ClientFunctions']]],
-  ['flush_5flogger_1',['flush_logger',['../logging_8cpp.html#ae0c2b06c1c0699397962461f8b85e82a',1,'logging.cpp']]],
-  ['flyweight_2',['FlyWeight',['../classFlyWeight.html#a4d6fb2c7a3eec9524faa36fa28210e5f',1,'FlyWeight::FlyWeight(T_Args &amp;&amp;... args)'],['../classFlyWeight.html#aa4ae9d30dd6c4d0a6ed8bb62d9b34b36',1,'FlyWeight::FlyWeight(const FlyWeight &amp;other)=default'],['../classFlyWeight.html#a350da49a1a01ea4e8ff01793a80a0363',1,'FlyWeight::FlyWeight(FlyWeight &amp;&amp;other)=default']]],
-  ['flyweightsize_3',['flyweightSize',['../classFlyWeight.html#a915708b171ec8c51ea31b9e491f368ab',1,'FlyWeight']]],
-  ['format_4',['format',['../structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300',1,'fmt::formatter&lt; QString &gt;::format()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a00f2d6931a5285fb757d7aa0523bd498',1,'fmt::formatter&lt; RecordID &gt;::format()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a8e7ce96ba8a0f562555952da1b00c9c6',1,'fmt::formatter&lt; std::filesystem::path &gt;::format()']]]
+  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html#afc6d6d9ecfceac3d5ea1a8f50d5c9a9e',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in, const bool in_place, const std::uint64_t last_played, const std::uint32_t total_playtime)'],['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete']]],
+  ['getbanner_1',['getBanner',['../structRecordData.html#aff8c1fca88901edd0c236c0439d55ea3',1,'RecordData']]],
+  ['getbannerpath_2',['getBannerPath',['../structRecordData.html#aaed52cea9ef1e014c782ebf51d235aae',1,'RecordData']]],
+  ['getcreator_3',['getCreator',['../structRecordData.html#a7e8e015cc3fd770a075bf41869dcba68',1,'RecordData']]],
+  ['getengine_4',['getEngine',['../structRecordData.html#a7bff18dc82e2942416f14853f42c9d1a',1,'RecordData']]],
+  ['getid_5',['getID',['../structRecordData.html#a21333192d4d35af63cebf0498d0fe257',1,'RecordData']]],
+  ['getimagepath_6',['getImagePath',['../namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031',1,'imageManager']]],
+  ['getlastplayed_7',['getLastPlayed',['../structRecordData.html#a5439ff6020e182ca07a420b71ed21537',1,'RecordData']]],
+  ['getpreviewpaths_8',['getPreviewPaths',['../structRecordData.html#aa93bb93e2c09d9d977d4c302283a5bd3',1,'RecordData']]],
+  ['getpreviews_9',['getPreviews',['../structRecordData.html#ab7ffbfb5ee4466a92af4c849cfcd42f9',1,'RecordData']]],
+  ['getsettings_10',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'config.hpp']]],
+  ['getsettingsobject_11',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]],
+  ['gettagsactive_12',['getTagsActive',['../classSearch.html#a625c611acc848160f5792ca4911a97c3',1,'Search']]],
+  ['gettitle_13',['getTitle',['../structRecordData.html#af719478c5ec39aaa19a77a962f674252',1,'RecordData']]],
+  ['gettotalplaytime_14',['getTotalPlaytime',['../structRecordData.html#a63f8a138762f05772b183835a5d38eb0',1,'RecordData']]],
+  ['getversions_15',['getVersions',['../structRecordData.html#a951f32e46101abb0ffd1a572d9896af0',1,'RecordData']]]
 ];

@@ -1,27 +1,7 @@
 var searchData=
 [
-  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html#afc6d6d9ecfceac3d5ea1a8f50d5c9a9e',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in, const bool in_place, const std::uint64_t last_played, const std::uint32_t total_playtime)'],['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete']]],
-  ['getavailablestyles_1',['GetAvailableStyles',['../namespaceUIStyle.html#aa65ec1d9c6200e2cea45acca80c131ad',1,'UIStyle']]],
-  ['getavailablestylesheets_2',['GetAvailableStylesheets',['../namespaceUIStyle.html#a430f54bdb95088be90e512ed6f1109f9',1,'UIStyle']]],
-  ['getbanner_3',['getBanner',['../structRecordData.html#aff8c1fca88901edd0c236c0439d55ea3',1,'RecordData']]],
-  ['getbannerpath_4',['getBannerPath',['../structRecordData.html#aaed52cea9ef1e014c782ebf51d235aae',1,'RecordData']]],
-  ['getcreator_5',['getCreator',['../structRecordData.html#a7e8e015cc3fd770a075bf41869dcba68',1,'RecordData']]],
-  ['getengine_6',['getEngine',['../structRecordData.html#a7bff18dc82e2942416f14853f42c9d1a',1,'RecordData']]],
-  ['getf95bannerimage_7',['getF95BannerImage',['../namespaceHydrus95ImageDownloader.html#a292756aafc42ac2659ffdfbe59baea0e',1,'Hydrus95ImageDownloader']]],
-  ['getgameinfo_8',['getGameInfo',['../classUIImportGames_1_1ImportDialog.html#a25779c0e1dcfc8a03e1e4b3c3905044c',1,'UIImportGames::ImportDialog']]],
-  ['getid_9',['getID',['../structRecordData.html#a21333192d4d35af63cebf0498d0fe257',1,'RecordData']]],
-  ['getimagepath_10',['getImagePath',['../namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031',1,'imageManager']]],
-  ['getlastidused_11',['getLastIdUsed',['../namespaceClientFunctions.html#a087638f9363d34b96bcacdc3d11f9fd6',1,'ClientFunctions']]],
-  ['getlastplayed_12',['getLastPlayed',['../structRecordData.html#a5439ff6020e182ca07a420b71ed21537',1,'RecordData']]],
-  ['getpreviewpaths_13',['getPreviewPaths',['../structRecordData.html#aa93bb93e2c09d9d977d4c302283a5bd3',1,'RecordData']]],
-  ['getpreviews_14',['getPreviews',['../structRecordData.html#ab7ffbfb5ee4466a92af4c849cfcd42f9',1,'RecordData']]],
-  ['getrecordtitle_15',['getRecordTitle',['../namespaceClientFunctions.html#abe73623475657f7e0c9d59dab76e0d5f',1,'ClientFunctions']]],
-  ['getrecordtitles_16',['getRecordTitles',['../namespaceClientFunctions.html#a4d417645f7bc20e5855323157e2d973b',1,'ClientFunctions']]],
-  ['getsettings_17',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'config.hpp']]],
-  ['getsettingsobject_18',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]],
-  ['gettagsactive_19',['getTagsActive',['../classSearch.html#a625c611acc848160f5792ca4911a97c3',1,'Search']]],
-  ['gettitle_20',['getTitle',['../structRecordData.html#af719478c5ec39aaa19a77a962f674252',1,'RecordData']]],
-  ['gettotalplaytime_21',['getTotalPlaytime',['../structRecordData.html#a63f8a138762f05772b183835a5d38eb0',1,'RecordData']]],
-  ['getversions_22',['getVersions',['../structRecordData.html#a951f32e46101abb0ffd1a572d9896af0',1,'RecordData']]],
-  ['getvndbcoverimage_23',['getVNDBCoverImage',['../namespaceHydrus95ImageDownloader.html#a5749816c7b307793dffb5e84277f43f1',1,'Hydrus95ImageDownloader']]]
+  ['importimage_0',['importImage',['../namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5',1,'imageManager']]],
+  ['initalize_1',['initalize',['../classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f',1,'Database']]],
+  ['initlogging_2',['initLogging',['../logging_8cpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp'],['../logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp']]],
+  ['invalidrecordid_3',['InvalidRecordID',['../structInvalidRecordID.html#a132db5191179dca2ed2e5d54f89cafc0',1,'InvalidRecordID']]]
 ];

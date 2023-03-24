@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['updatebanners_0',['updateBanners',['../namespaceClientFunctions.html#ab46152254d31a7a75b537c76f05a6d99',1,'ClientFunctions']]],
-  ['updatedatabasewithgameinfo_1',['updateDatabaseWithGameInfo',['../classUIImportGames_1_1ImportDialog.html#af33e8320bf83fa021285e66080573366',1,'UIImportGames::ImportDialog']]],
-  ['updatef95zonetablebasic_2',['updateF95zoneTableBasic',['../namespaceClientFunctions.html#a62dc299b3482a4991203b360849cfb6e',1,'ClientFunctions']]],
-  ['updatef95zonetablefull_3',['updateF95zoneTableFull',['../namespaceClientFunctions.html#a3f8bf8eb3393fe799927e5d27c38670c',1,'ClientFunctions']]],
-  ['updategameslist_4',['updateGamesList',['../classmainwindow_1_1MainWindow.html#a54894a1cd4fde8e8580d35f906d1dfbd',1,'mainwindow::MainWindow']]]
+  ['_7eflyweight_0',['~FlyWeight',['../classFlyWeight.html#a337d1c8828bdeeb6bc7128372c6cfd08',1,'FlyWeight']]],
+  ['_7emainwindow_1',['~MainWindow',['../classMainWindow.html#ae98d00a93bc118200eeef9f9bba1dba7',1,'MainWindow']]],
+  ['_7enontransaction_2',['~NonTransaction',['../structNonTransaction.html#a83da0d8c8f879d085b341a95235181de',1,'NonTransaction']]],
+  ['_7etransaction_3',['~Transaction',['../structTransaction.html#a362b0d2524d0c799165190517192dca9',1,'Transaction']]],
+  ['_7etransactiondata_4',['~TransactionData',['../structTransactionData.html#adaaf2d10d2cfdbadfd5436c16e2c32b0',1,'TransactionData']]]
 ];

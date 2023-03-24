@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['openimportdialog_0',['openImportDialog',['../classmainwindow_1_1MainWindow.html#a1f44791bf5dba1677aa17bc3c0f74880',1,'mainwindow::MainWindow']]],
-  ['operator_3c_3c_1',['operator&lt;&lt;',['../structTransaction.html#a2959780e22d5c12861ad0260c476ff31',1,'Transaction::operator&lt;&lt;()'],['../structNonTransaction.html#afbe006917a9298502576303516b4af79',1,'NonTransaction::operator&lt;&lt;()']]],
-  ['operator_3d_2',['operator=',['../classFlyWeight.html#a9146209603b47d0a102d18506cef0bc6',1,'FlyWeight']]],
-  ['operator_3d_3d_3',['operator==',['../structGameMetadata.html#ab302459c96a07a9220ced9e37ad9abcb',1,'GameMetadata::operator==()'],['../classSHA256.html#a249c9016ea8bd9133efe2d54adfd14e5',1,'SHA256::operator==()']]]
+  ['parse_0',['parse',['../structfmt_1_1formatter_3_01QString_01_4.html#a0a51b8f0b49cfafb8bf46c32c5e7ea3d',1,'fmt::formatter&lt; QString &gt;::parse()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a13ee52f6dbea3d8dfce4e606c16eecf6',1,'fmt::formatter&lt; RecordID &gt;::parse()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a7efbb7163bc9d16c87c13f039e9f3c20',1,'fmt::formatter&lt; std::filesystem::path &gt;::parse()']]],
+  ['parse_5finput_1',['parse_input',['../utils_8hpp.html#a3acb36125e5e0918b51b4d3613e9f9c4',1,'utils.hpp']]],
+  ['previewpathchanged_2',['previewPathChanged',['../structRecordData.html#a1b5fa7feeb05487afd5cb203382e4738',1,'RecordData']]],
+  ['previewschanged_3',['previewsChanged',['../structRecordData.html#a4810108eaf43cefb6bb7c3c648d1b428',1,'RecordData']]]
 ];

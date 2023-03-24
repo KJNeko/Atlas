@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['lastplayedchanged_0',['lastPlayedChanged',['../structRecordData.html#a63273d52548a381893a765e7672c679c',1,'RecordData']]]
+  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]],
+  ['metadataalreadyexists_2',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html#ab19d74f8d834c5921c9f775df41f3133',1,'MetadataAlreadyExists']]],
+  ['metadataexception_3',['MetadataException',['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException']]]
 ];

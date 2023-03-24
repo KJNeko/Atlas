@@ -114,30 +114,46 @@ $(document).ready(function(){initNavTree('main_8cpp.html',''); initResizable(); 
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;QApplication&gt;</code><br />
-<code>#include &lt;QFile&gt;</code><br />
+<code>#include &quot;<a class="el" href="Database_8hpp_source.html">h95/database/Database.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">h95/config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for main.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#asrc_2main_8cpp" alt=""/></div>
 <map name="asrc_2main_8cpp" id="asrc_2main_8cpp">
-<area shape="rect" title=" " alt="" coords="238,5,334,31"/>
-<area shape="rect" href="mainwindow_8h.html" title=" " alt="" coords="5,79,124,104"/>
-<area shape="rect" title=" " alt="" coords="149,79,229,104"/>
-<area shape="rect" title=" " alt="" coords="253,79,319,104"/>
-<area shape="rect" title=" " alt="" coords="343,79,439,104"/>
-<area shape="rect" title=" " alt="" coords="463,79,517,104"/>
-<area shape="rect" title=" " alt="" coords="11,152,118,177"/>
+<area shape="rect" title=" " alt="" coords="405,5,501,31"/>
+<area shape="rect" href="mainwindow_8h.html" title=" " alt="" coords="121,79,239,104"/>
+<area shape="rect" title=" " alt="" coords="548,225,628,251"/>
+<area shape="rect" title=" " alt="" coords="315,79,381,104"/>
+<area shape="rect" title=" " alt="" coords="405,79,501,104"/>
+<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="526,79,709,104"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="741,79,846,104"/>
+<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="956,152,1068,177"/>
+<area shape="rect" title=" " alt="" coords="5,152,112,177"/>
+<area shape="rect" title=" " alt="" coords="136,152,235,177"/>
+<area shape="rect" title=" " alt="" coords="442,152,513,177"/>
+<area shape="rect" title=" " alt="" coords="537,152,679,177"/>
+<area shape="rect" title=" " alt="" coords="753,152,833,177"/>
+<area shape="rect" title=" " alt="" coords="858,152,931,177"/>
+<area shape="rect" title=" " alt="" coords="779,225,874,251"/>
+<area shape="rect" title=" " alt="" coords="899,225,1011,251"/>
+<area shape="rect" title=" " alt="" coords="1035,225,1101,251"/>
+<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="1126,225,1207,251"/>
+<area shape="rect" title=" " alt="" coords="1136,299,1197,324"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
-<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf56f93cae52ff0ce976afbc9c1242b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0">spdlog_flush</a> ()</td></tr>
+<tr class="separator:adf56f93cae52ff0ce976afbc9c1242b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
+<a id="a3c04138a5bfe5d72780bb7e82a18e627" name="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&#160;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,13 +167,30 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>argv</em>[]&#160;</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adf56f93cae52ff0ce976afbc9c1242b0" name="adf56f93cae52ff0ce976afbc9c1242b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf56f93cae52ff0ce976afbc9c1242b0">&#9670;&#160;</a></span>spdlog_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spdlog_flush </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
