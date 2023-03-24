@@ -73,10 +73,9 @@ int main( int argc, char** argv )
 
     QApplication app { argc, argv };
 
-    const auto path { getSettings< QString >("path/data","./data" ).toStdString() };
-    //std::filesystem::create_directory( "./data" );
-    //std::filesystem::create_directory( "./data/games" );
-    //std::filesystem::create_directory( "./data/images" );
+	std::filesystem::create_directory( config::paths::data::get().toStdString() );
+    std::filesystem::create_directory( config::paths::games::get().toStdString() );
+    std::filesystem::create_directory( config::paths::images::get().toStdString() );
 
 #ifdef NDEBUG
     if ( getSettings< bool >( "debug/very_vocal", false ) )
