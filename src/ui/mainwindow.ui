@@ -72,6 +72,12 @@ background-color:rgb(45,51,60);
 
 QTreeWidget{
 background-color:rgb(36,40,47);
+color:rgb(200,200,200)
+}
+
+QTreeWidget::item::selected{
+	background-color:rgb(45,56, 75);
+ 	color: rgb(255, 255, 255);
 }
 
 QLineEdit{
@@ -223,7 +229,7 @@ background-color: transparent;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/ui/images/Logo_03.png</pixmap>
+          <pixmap resource="../assets/resources.qrc">:/ui/images/Logo_03.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -255,7 +261,7 @@ background-color: transparent;
         </widget>
        </item>
        <item row="2" column="0" colspan="5">
-        <widget class="QTreeWidget" name="treeWidget">
+        <widget class="QTreeWidget" name="gamesTree">
          <property name="columnCount">
           <number>1</number>
          </property>
@@ -299,7 +305,7 @@ background-color: transparent;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/ui/images/search.png</pixmap>
+          <pixmap resource="../assets/resources.qrc">:/ui/images/search.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -385,7 +391,7 @@ background-color: transparent;
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset resource="../assets/resources.qrc">
            <normaloff>:/ui/images/addgame.png</normaloff>:/ui/images/addgame.png</iconset>
          </property>
          <property name="toolButtonStyle">
@@ -621,7 +627,7 @@ background-color: transparent;
   </action>
  </widget>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="../assets/resources.qrc"/>
  </resources>
  <connections/>
  <designerdata>
