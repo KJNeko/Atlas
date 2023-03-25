@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-//#include "./dialog/batchimport.h"
+#include "./dialog/batchImportDialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,9 +23,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImport_triggered()
 {
-    //batchimport biDialog;
+    batchImportDialog biDialog;
     //connect( &biDialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
-    //biDialog.exec();
+    biDialog.exec();
 }
 
 void MainWindow::addTreeRoot(QString name, QString record_id)

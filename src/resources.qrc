@@ -1,10 +1,10 @@
 <RCC>
-    <qresource prefix="/">
-        <file>ui/images/Logo_01.png</file>
-        <file>ui/images/sizegrip.png</file>
-        <file>ui/images/search.png</file>
-        <file>ui/images/Logo_02.png</file>
-        <file>ui/images/Logo_03.png</file>
-        <file>ui/images/addgame.png</file>
+    <qresource prefix="/images">
+        <file>assets/addgame.png</file>
+        <file>assets/Logo_01.png</file>
+        <file>assets/Logo_02.png</file>
+        <file>assets/Logo_03.png</file>
+        <file>assets/search.png</file>
+        <file>assets/sizegrip.png</file>
     </qresource>
 </RCC>

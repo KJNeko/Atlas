@@ -228,9 +228,6 @@ background-color: transparent;
          <property name="text">
           <string/>
          </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/resources.qrc">:/ui/images/Logo_03.png</pixmap>
-         </property>
          <property name="scaledContents">
           <bool>true</bool>
          </property>
@@ -303,9 +300,6 @@ background-color: transparent;
          </property>
          <property name="text">
           <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../assets/resources.qrc">:/ui/images/search.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -391,7 +385,7 @@ background-color: transparent;
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../assets/resources.qrc">
+          <iconset>
            <normaloff>:/ui/images/addgame.png</normaloff>:/ui/images/addgame.png</iconset>
          </property>
          <property name="toolButtonStyle">
@@ -525,7 +519,7 @@ background-color: transparent;
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -626,9 +620,7 @@ background-color: transparent;
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../assets/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">
