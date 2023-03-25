@@ -1,6 +1,8 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+
 #include "./dialog/batchImportDialog.h"
+#include "./ui_mainwindow.h"
+#include "./dialog/SettingsDialog.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -52,4 +54,10 @@ void MainWindow::addTreeChild(QTreeWidgetItem *parent,
     parent->addChild(treeItem);
 }
 
+void MainWindow::on_actionOptions_triggered()
+{
+	SettingsDialog *settingsDialog { new SettingsDialog( this ) };
 
+	settingsDialog->exec();
+	settingsDialog->deleteLater();
+}
