@@ -20,11 +20,6 @@
 #include "h95/database/Record.hpp"
 #include "h95/logging.hpp"
 
-void flush_logger()
-{
-	spdlog::default_logger()->flush();
-}
-
 void initLogging()
 {
 	spdlog::enable_backtrace( 32 );
@@ -43,8 +38,6 @@ void initLogging()
 	logger->info( "Logger setup" );
 
 	logger->flush_on( spdlog::level::info );
-
-	if ( std::atexit( flush_logger ) != 0 ) spdlog::warn( "Failed to register logger flush at std::exit" );
 
 	spdlog::set_default_logger( logger );
 
