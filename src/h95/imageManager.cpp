@@ -17,7 +17,7 @@ namespace imageManager
 {
 	std::filesystem::path getImagePath()
 	{
-		const auto path { std::filesystem::path( config::paths::images::get().toStdString() ) };
+		const auto path { std::filesystem::path( config::paths::images::get() ) };
 
 		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
 

@@ -73,9 +73,9 @@ int main( int argc, char** argv )
 
     QApplication app { argc, argv };
 
-	std::filesystem::create_directory( config::paths::data::get().toStdString() );
-    std::filesystem::create_directory( config::paths::games::get().toStdString() );
-    std::filesystem::create_directory( config::paths::images::get().toStdString() );
+	std::filesystem::create_directory( config::paths::database::get().parent_path() );
+    std::filesystem::create_directory( config::paths::games::get() );
+    std::filesystem::create_directory( config::paths::images::get() );
 
 #ifdef NDEBUG
     if ( getSettings< bool >( "debug/very_vocal", false ) )
@@ -88,7 +88,7 @@ int main( int argc, char** argv )
     spdlog::debug("Debugging forcefully enabled due to not compiling with NDEBUG");
 #endif
 
-    Database::initalize("./data/hydrus95.db");
+    Database::initalize(config::paths::database::get());
 
     MainWindow w;
     w.show();

@@ -95,17 +95,126 @@ inline T getSettings( const QString setting_name )
 
 #define SETTING( type, group, name ) SETTING_D( type, group, name, std::nullopt_t );
 
+template < typename T >
+void setSettings( const QString name, const T& value )
+{
+	getSettingsObject().setValue( name, value );
+}
+
 namespace config
 {
-	SETTING_D( QString, paths, data, "./data" )
-	SETTING_D( QString, paths, images, "./data/images" )
-	SETTING_D( QString, paths, games, "./data/games" )
+	namespace paths
+	{
+		namespace database
+		{
+			inline QString getQString()
+			{
+				return "./data/hydrus95.db";
+				/*
+				QSettings settings { getSettingsObject() };
+				return settings.value( "paths/database", "./data/hydrus95.db" ).value< QString >();
+				 */
+			}
 
-	SETTING_D(bool, db, first_start, true)
+			inline std::filesystem::path get()
+			{
+				return { getQString().toStdString() };
+			}
 
-	SETTING_D(int, logging, level, 2)
+			inline std::filesystem::path getCanonical()
+			{
+				const auto path { get() };
+				if ( std::filesystem::exists( path ) )
+					return std::filesystem::canonical( get() );
+				else
+					return path;
+			}
 
+			/*
+			inline void set( const QString path )
+			{
+				setSettings( "paths/database", path );
+			}
 
+			inline void set( std::filesystem::path path )
+			{
+				set( QString::fromStdString( path.string() ) );
+			}*/
+
+		} // namespace database
+
+		namespace images
+		{
+			inline QString getQString()
+			{
+				QSettings settings { getSettingsObject() };
+				return settings.value( "paths/images", "./data/images" ).value< QString >();
+			}
+
+			inline std::filesystem::path get()
+			{
+				return { getQString().toStdString() };
+			}
+
+			inline std::filesystem::path getCanonical()
+			{
+				const auto path { get() };
+				if ( std::filesystem::exists( path ) )
+					return std::filesystem::canonical( get() );
+				else
+					return path;
+			}
+
+			inline void set( const QString path )
+			{
+				setSettings( "paths/images", path );
+			}
+
+			inline void set( std::filesystem::path path )
+			{
+				set( QString::fromStdString( path.string() ) );
+			}
+
+		} // namespace images
+
+		namespace games
+		{
+			inline QString getQString()
+			{
+				QSettings settings { getSettingsObject() };
+				return settings.value( "paths/games", "./data/games" ).value< QString >();
+			}
+
+			inline std::filesystem::path get()
+			{
+				return { getQString().toStdString() };
+			}
+
+			inline std::filesystem::path getCanonical()
+			{
+				const auto path { get() };
+				if ( std::filesystem::exists( path ) )
+					return std::filesystem::canonical( get() );
+				else
+					return path;
+			}
+
+			inline void set( const QString path )
+			{
+				setSettings( "paths/games", path );
+			}
+
+			inline void set( std::filesystem::path path )
+			{
+				set( QString::fromStdString( path.string() ) );
+			}
+		} // namespace games
+
+	} // namespace paths
+
+	SETTING_D( bool, db, first_start, true )
+
+	SETTING_D( int, logging, level, 2 )
 
 } // namespace config
 
