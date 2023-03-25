@@ -42,6 +42,8 @@ class SettingsDialog : public QDialog
 	void on_applySettings_pressed();
 	void on_cancelSettings_pressed();
 	void reject() override;
+	void on_themeBox_currentTextChanged(const QString& text);
+	void reloadTheme();
 };
 
 #endif //HYDRUS95_SETTINGSDIALOG_HPP

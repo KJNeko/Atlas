@@ -145,6 +145,8 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
 endif ()
 
+add_custom_command(TARGET Hydrus95 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Hydrus95>/data/qss COMMENT "Compiling qss files")
+
 #Test builds
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 

@@ -210,6 +210,37 @@ namespace config
 			}
 		} // namespace games
 
+		namespace theme
+		{
+			inline QString getQString()
+			{
+				QSettings settings { getSettingsObject() };
+				return settings.value( "paths/theme", ":/themes/default.qss" ).value< QString >();
+			}
+
+			inline std::filesystem::path get()
+			{
+				return { getQString().toStdString() };
+			}
+
+			inline void setDefault()
+			{
+				setSettings( "paths/theme", ":/themes/default.qss" );
+			}
+
+			inline void set( const QString path )
+
+			{
+				setSettings( "paths/theme", path );
+			}
+
+			inline void set( const std::filesystem::path& path )
+			{
+				set( QString::fromStdString( path.string() ) );
+			}
+
+		} // namespace theme
+
 	} // namespace paths
 
 	SETTING_D( bool, db, first_start, true )

@@ -19,7 +19,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 
 	//TODO: Load qss options into ui->themeBox
 
-	//Fill settingsPaths
+	prepareThemeSettings();
 	preparePathsSettings();
 }
 
@@ -28,6 +28,33 @@ SettingsDialog::~SettingsDialog()
 	delete ui;
 }
 
+void SettingsDialog::prepareThemeSettings()
+{
+	//Load all valid options.
+	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/qss" ) )
+	{
+		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
+			ui->themeBox->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
+	}
+
+	//Select current option
+	for(int i = 0; i < ui->themeBox->count(); ++i)
+	{
+		if(ui->themeBox->itemText(i).toStdString() == config::paths::theme::get().filename().string())
+		{
+			//Found
+			ui->themeBox->setCurrentIndex(i);
+			break;
+		}
+	}
+}
+
+void SettingsDialog::saveThemeSettings()
+{
+	config::paths::theme::set( "./data/qss/" + ui->themeBox->currentText() );
+
+	reloadTheme();
+}
 
 void SettingsDialog::preparePathsSettings()
 {
@@ -136,6 +163,7 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 void SettingsDialog::on_applySettings_pressed()
 {
 	savePathsSettings();
+	saveThemeSettings();
 	this->accept();
 }
 
@@ -149,5 +177,50 @@ void SettingsDialog::reject()
 	if ( QMessageBox::
 	         question( this, "Are you sure?", "Are you sure you want to exit? Any unapplied changes will be lost" )
 	     == QMessageBox::Yes )
+	{
 		QDialog::reject();
+		reloadTheme();
+	}
+}
+
+void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
+{
+	spdlog::info( "Theme changed to {}", text );
+
+	QFile file { "./data/qss/" + text };
+	file.open( QFile::ReadOnly );
+
+	QString style { file.readAll() };
+
+	dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+
+	ensurePolished();
+}
+
+void SettingsDialog::reloadTheme()
+{
+	QFile file { config::paths::theme::getQString() };
+
+	if ( !file.exists() )
+	{
+		config::paths::theme::setDefault();
+
+		file.open( QFile::ReadOnly );
+
+		QString style { file.readAll() };
+
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+
+		ensurePolished();
+
+		return;
+	}
+
+	file.open( QFile::ReadOnly );
+
+	QString style { file.readAll() };
+
+	dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+
+	ensurePolished();
 }
