@@ -31,6 +31,12 @@ class SettingsDialog : public QDialog
 
 	Ui::SettingsDialog *ui;
 
+	void prepareThemeSettings();
+	void saveThemeSettings();
+
+	void preparePathsSettings();
+	void savePathsSettings();
+
   private slots:
 	void on_settingsList_currentRowChanged( int idx );
 	void on_applySettings_pressed();

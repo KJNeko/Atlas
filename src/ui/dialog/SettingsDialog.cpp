@@ -13,14 +13,24 @@
 #include "h95/logging.hpp"
 #include "ui_SettingsDialog.h"
 
-SettingsDialog::SettingsDialog( QWidget *parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
+SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
 {
 	ui->setupUi( this );
 
 	//TODO: Load qss options into ui->themeBox
 
 	//Fill settingsPaths
+	preparePathsSettings();
+}
 
+SettingsDialog::~SettingsDialog()
+{
+	delete ui;
+}
+
+
+void SettingsDialog::preparePathsSettings()
+{
 	//Set 'root' canomical path
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
@@ -54,20 +64,9 @@ SettingsDialog::SettingsDialog( QWidget *parent ) : QDialog( parent ), ui( new U
 		->setText( locale
 	                   .formattedDataSize( static_cast<
 										   qint64 >( std::filesystem::file_size( config::paths::database::get() ) ) ) );
-
 }
 
-SettingsDialog::~SettingsDialog()
-{
-	delete ui;
-}
-
-void SettingsDialog::on_settingsList_currentRowChanged( int idx )
-{
-	ui->stackedWidget->setCurrentIndex( idx );
-}
-
-void SettingsDialog::on_applySettings_pressed()
+void SettingsDialog::savePathsSettings()
 {
 	//Handle pathSettings
 	if ( ui->gamePath->text() != config::paths::games::getQString() )
@@ -96,9 +95,9 @@ void SettingsDialog::on_applySettings_pressed()
 
 		//TODO: Make progress bar dialog
 
-		for(const auto& game : std::filesystem::directory_iterator(config::paths::games::get()))
+		for ( const auto& game : std::filesystem::directory_iterator( config::paths::games::get() ) )
 		{
-			spdlog::info("copying {} to {}", game.path(), new_path / game.path().filename());
+			spdlog::info( "copying {} to {}", game.path(), new_path / game.path().filename() );
 			std::filesystem::copy(
 				game,
 				new_path / game.path().filename(),
@@ -106,28 +105,37 @@ void SettingsDialog::on_applySettings_pressed()
 		}
 
 		//Delete old game folder
-		std::filesystem::remove_all(config::paths::games::get());
+		std::filesystem::remove_all( config::paths::games::get() );
 
 		//Set new config option
-		config::paths::games::set(new_path);
+		config::paths::games::set( new_path );
 	}
 
-	if(ui->imagesPath->text() != config::paths::images::getQString())
+	if ( ui->imagesPath->text() != config::paths::images::getQString() )
 	{
-		const std::filesystem::path new_image_path {ui->imagesPath->text().toStdString()};
+		const std::filesystem::path new_image_path { ui->imagesPath->text().toStdString() };
 
 		//TODO: Make progress bar for copying images
-		for(const auto& image : std::filesystem::directory_iterator(config::paths::images::get()))
-			std::filesystem::copy(image, new_image_path / image.path().filename());
+		for ( const auto& image : std::filesystem::directory_iterator( config::paths::images::get() ) )
+			std::filesystem::copy( image, new_image_path / image.path().filename() );
 
 		//TODO: Might as well clean any orphans here too.
 
 		//Delete old image folder
-		std::filesystem::remove_all(config::paths::images::get());
+		std::filesystem::remove_all( config::paths::images::get() );
 
-		config::paths::images::set(new_image_path);
+		config::paths::images::set( new_image_path );
 	}
+}
 
+void SettingsDialog::on_settingsList_currentRowChanged( int idx )
+{
+	ui->stackedWidget->setCurrentIndex( idx );
+}
+
+void SettingsDialog::on_applySettings_pressed()
+{
+	savePathsSettings();
 	this->accept();
 }
 
@@ -138,6 +146,8 @@ void SettingsDialog::on_cancelSettings_pressed()
 
 void SettingsDialog::reject()
 {
-	if(QMessageBox::question(this, "Are you sure?", "Are you sure you want to exit? Any unapplied changes will be lost") == QMessageBox::Yes)
+	if ( QMessageBox::
+	         question( this, "Are you sure?", "Are you sure you want to exit? Any unapplied changes will be lost" )
+	     == QMessageBox::Yes )
 		QDialog::reject();
 }
