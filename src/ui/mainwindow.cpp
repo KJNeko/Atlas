@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-#include "./dialog/batchImportDialog.h"
+#include "./dialog/batchimportdialog.h"
 #include "./ui_mainwindow.h"
 #include "./dialog/SettingsDialog.hpp"
 
