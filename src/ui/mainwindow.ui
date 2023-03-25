@@ -62,7 +62,7 @@ QStatusBar{
 
 QSizeGrip {
 	background-color: transparent;
-    image: url(:ui/images/sizegrip.png);
+    image: url(:/images/assets/sizegrip.png);
     width: 16px;
     height: 16px;}
 
@@ -228,6 +228,9 @@ background-color: transparent;
          <property name="text">
           <string/>
          </property>
+         <property name="pixmap">
+          <pixmap resource="../resources.qrc">:/images/assets/Logo_03.png</pixmap>
+         </property>
          <property name="scaledContents">
           <bool>true</bool>
          </property>
@@ -300,6 +303,9 @@ background-color: transparent;
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../resources.qrc">:/images/assets/search.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -620,7 +626,9 @@ background-color: transparent;
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">
