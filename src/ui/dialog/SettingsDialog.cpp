@@ -141,10 +141,11 @@ void SettingsDialog::savePathsSettings()
 
 			std::vector< std::filesystem::path > files;
 
-			const auto base { config::paths::games::get() };
+			const auto games_path { config::paths::games::get() };
 
+			//Find all files that we need to copy.
 			for ( const auto& file : std::filesystem::recursive_directory_iterator( folders.at( i ) ) )
-				if ( file.is_regular_file() ) files.emplace_back( std::filesystem::relative( file, base ) );
+				if ( file.is_regular_file() ) files.emplace_back( std::filesystem::relative( file, games_path ) );
 
 			progress_dialog.setSubMax( static_cast< int >( files.size() ) );
 
@@ -152,16 +153,16 @@ void SettingsDialog::savePathsSettings()
 			{
 				progress_dialog.setSubValue( static_cast< int >( fidx ) );
 
-				const auto s_path { base / files.at( fidx ) };
-				const auto d_path { new_path / files.at( fidx ) };
+				const auto source_path { games_path / files.at( fidx ) };
+				const auto dest_path { new_path / files.at( fidx ) };
 
-				if ( !std::filesystem::exists( d_path.parent_path() ) )
-					std::filesystem::create_directories( d_path.parent_path() );
+				if ( !std::filesystem::exists( dest_path.parent_path() ) )
+					std::filesystem::create_directories( dest_path.parent_path() );
 
 				progress_dialog.setSubText( QString::fromStdString( files.at( fidx ).string() ) );
 				adjustSize();
 
-				std::filesystem::copy( s_path, d_path );
+				std::filesystem::copy( source_path, dest_path );
 
 				QApplication::processEvents();
 			}
