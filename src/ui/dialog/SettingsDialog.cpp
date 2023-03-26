@@ -9,6 +9,7 @@
 #include <QDirIterator>
 #include <QMessageBox>
 
+#include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
 #include "h95/logging.hpp"
 #include "ui_SettingsDialog.h"
@@ -38,12 +39,12 @@ void SettingsDialog::prepareThemeSettings()
 	}
 
 	//Select current option
-	for(int i = 0; i < ui->themeBox->count(); ++i)
+	for ( int i = 0; i < ui->themeBox->count(); ++i )
 	{
-		if(ui->themeBox->itemText(i).toStdString() == config::paths::theme::get().filename().string())
+		if ( ui->themeBox->itemText( i ).toStdString() == config::paths::theme::get().filename().string() )
 		{
 			//Found
-			ui->themeBox->setCurrentIndex(i);
+			ui->themeBox->setCurrentIndex( i );
 			break;
 		}
 	}
@@ -104,7 +105,7 @@ void SettingsDialog::savePathsSettings()
 			QMessageBox::question(
 				this,
 				"Folder movement required",
-				"We need to move the folder in order to set it to it's new location. This could take awhile, Are you sure?" )
+				"We need to move the folder in order to set it to it's new location. This could take awhile, Are you sure? This CAN NOT be aborted once started." )
 			== QMessageBox::No )
 			return;
 
@@ -122,6 +123,53 @@ void SettingsDialog::savePathsSettings()
 
 		//TODO: Make progress bar dialog
 
+		ProgressBarDialog progress_dialog { this };
+		progress_dialog.show();
+
+		std::vector< std::filesystem::path > folders;
+		for ( const auto& group : std::filesystem::directory_iterator( config::paths::games::get() ) )
+			if ( group.is_directory() ) folders.emplace_back( group.path() );
+
+		progress_dialog.setMax( static_cast< int >( folders.size() ) );
+		progress_dialog.showSubProgress( true );
+
+		for ( std::size_t i = 0; i < folders.size(); ++i )
+		{
+			progress_dialog.setValue( static_cast< int >( i ) );
+			progress_dialog
+				.setText( QString::fromStdString( "Top level folder: " + folders.at( i ).filename().string() ) );
+
+			std::vector< std::filesystem::path > files;
+
+			const auto base { config::paths::games::get() };
+
+			for ( const auto& file : std::filesystem::recursive_directory_iterator( folders.at( i ) ) )
+				if ( file.is_regular_file() ) files.emplace_back( std::filesystem::relative( file, base ) );
+
+			progress_dialog.setSubMax( static_cast< int >( files.size() ) );
+
+			for ( std::size_t fidx = 0; fidx < files.size(); ++fidx )
+			{
+				progress_dialog.setSubValue( static_cast< int >( fidx ) );
+
+				const auto s_path { base / files.at( fidx ) };
+				const auto d_path { new_path / files.at( fidx ) };
+
+				if ( !std::filesystem::exists( d_path.parent_path() ) )
+					std::filesystem::create_directories( d_path.parent_path() );
+
+				progress_dialog.setSubText( QString::fromStdString( files.at( fidx ).string() ) );
+				adjustSize();
+
+				std::filesystem::copy( s_path, d_path );
+
+				QApplication::processEvents();
+			}
+		}
+
+		progress_dialog.hide();
+
+		/*
 		for ( const auto& game : std::filesystem::directory_iterator( config::paths::games::get() ) )
 		{
 			spdlog::info( "copying {} to {}", game.path(), new_path / game.path().filename() );
@@ -129,7 +177,7 @@ void SettingsDialog::savePathsSettings()
 				game,
 				new_path / game.path().filename(),
 				std::filesystem::copy_options::recursive | std::filesystem::copy_options::copy_symlinks );
-		}
+		}*/
 
 		//Delete old game folder
 		std::filesystem::remove_all( config::paths::games::get() );
