@@ -7,6 +7,8 @@ namespace Ui {
 class batchImportDialog;
 }
 
+
+
 class batchImportDialog : public QDialog
 {
     Q_DISABLE_COPY_MOVE(batchImportDialog)
@@ -18,6 +20,13 @@ public:
 
 private:
     Ui::batchImportDialog *ui;
+
+
+  private slots:
+	void on_btnSetFolder_pressed();
+	void on_btnNext_pressed();
+	void on_btnBack_pressed();
+	void processFiles();
 };
 
 #endif // BATCHIMPORTDIALOG_H

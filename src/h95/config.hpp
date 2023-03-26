@@ -243,6 +243,26 @@ namespace config
 
 	} // namespace paths
 
+	namespace importer
+	{
+		namespace pathparse
+		{
+			inline QString get()
+			{
+				QSettings settings { getSettingsObject() };
+				return settings.value( "import/pathparse", "{path}/{creator}/{title}/{version}" ).value< QString >();
+			}
+
+			inline void set( const QString path )
+
+			{
+				setSettings( "import/pathparse", path );
+			}
+
+		}
+
+	}
+
 	SETTING_D( bool, db, first_start, true )
 
 	SETTING_D( int, logging, level, 2 )
