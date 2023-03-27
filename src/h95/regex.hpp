@@ -39,6 +39,7 @@ inline QString regexify( QString pattern )
 
 bool valid( QString pattern, QString text )
 {
+	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
@@ -46,6 +47,7 @@ bool valid( QString pattern, QString text )
 
 std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
 {
+	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 
