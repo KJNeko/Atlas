@@ -49,31 +49,14 @@ void batchImportDialog::processFiles()
 	const std::filesystem::path base { ui->tbPath->text().toStdString() };
 	const std::filesystem::path search { ui->tbFormat->text().toStdString() };
 
-	//Calculate search depth
-	const int depth { [ & ]()
-		              {
-						  auto temp { search };
-						  int counter { 0 };
-
-						  while ( !temp.empty() )
-						  {
-							  ++counter;
-							  temp = temp.parent_path();
-						  }
-
-						  return counter - 1;
-					  }() };
-
 	const QString cleaned_regex {
-		"^" + regexify( ui->tbFormat->text().replace( "{path}/", QString::fromStdString( base.string() ) ) ) + "$"
+		regexify( ui->tbFormat->text().replace( "{path}", QString::fromStdString( base.string() ) ) )
 	};
 
 	for ( auto folder = std::filesystem::recursive_directory_iterator( ui->tbPath->text().toStdString() );
 	      folder != std::filesystem::recursive_directory_iterator();
 	      ++folder )
 	{
-		if ( folder.depth() != depth - 1 ) continue;
-
 		if ( folder->is_directory() && valid( cleaned_regex, QString::fromStdString( folder->path().string() ) ) )
 		{
 			std::vector< std::filesystem::path > potential_executables;

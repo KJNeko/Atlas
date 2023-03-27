@@ -13,7 +13,12 @@
 
 inline QString groupify( const QString group_name )
 {
-	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">.*?)";
+	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">[^\\\\/]+)";
+}
+
+inline QString cleanPathDelim( QString path )
+{
+	return QString::fromStdString( std::filesystem::path( path.toStdString() ).make_preferred().string() );
 }
 
 inline QString regexify( QString pattern )
@@ -29,12 +34,12 @@ inline QString regexify( QString pattern )
 		return regexify( std::move( pattern ) );
 	}
 	else
-		return pattern;
+		return cleanPathDelim( "^" + std::move( pattern ) + "$" );
 }
 
 bool valid( QString pattern, QString text )
 {
-	pattern = regexify( pattern );
+	spdlog::info("Testing regex {} against {}", pattern, text);
 
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
@@ -43,8 +48,6 @@ bool valid( QString pattern, QString text )
 
 std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
 {
-	pattern = regexify( pattern );
-
 	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 
