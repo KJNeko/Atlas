@@ -128,4 +128,7 @@ void batchImportDialog::on_btnNext_pressed()
 }
 
 void batchImportDialog::on_btnBack_pressed()
-{}
+{
+	//Clear the model
+	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
+}

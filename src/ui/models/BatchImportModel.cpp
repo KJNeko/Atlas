@@ -153,6 +153,13 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 	}
 }
 
+void BatchImportModel::clearData()
+{
+	beginResetModel();
+	m_data.clear();
+	endResetModel();
+}
+
 void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
