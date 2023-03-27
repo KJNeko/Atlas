@@ -62,8 +62,6 @@ void batchImportDialog::processFiles()
 		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
 	};
 
-	spdlog::info( "Base: {}\nSearch: {}", base, search );
-
 	const QString cleaned_regex {
 		regexify( ui->tbFormat->text().replace( "{path}", QString::fromStdString( base.string() ) ) )
 	};
