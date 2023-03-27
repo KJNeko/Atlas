@@ -9,6 +9,8 @@
 #include <QDirIterator>
 #include <QMessageBox>
 
+#include <tracy/Tracy.hpp>
+
 #include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
 #include "h95/logging.hpp"
@@ -32,6 +34,7 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::prepareThemeSettings()
 {
+	ZoneScoped;
 	//Load all valid options.
 	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/qss" ) )
 	{
@@ -60,6 +63,7 @@ void SettingsDialog::saveThemeSettings()
 
 void SettingsDialog::preparePathsSettings()
 {
+	ZoneScoped;
 	//Set 'root' canomical path
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
@@ -85,6 +89,7 @@ void SettingsDialog::preparePathsSettings()
 
 void SettingsDialog::savePathsSettings()
 {
+	ZoneScoped;
 	//Handle pathSettings
 	if ( ui->gamePath->text() != config::paths::games::getQString() )
 	{
@@ -200,6 +205,7 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 
 void SettingsDialog::on_applySettings_pressed()
 {
+	ZoneScoped;
 	savePathsSettings();
 	saveThemeSettings();
 	this->accept();
@@ -223,6 +229,7 @@ void SettingsDialog::reject()
 
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
+	ZoneScoped;
 	spdlog::info( "Theme changed to {}", text );
 
 	QFile file { "./data/qss/" + text };
@@ -237,6 +244,7 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 
 void SettingsDialog::reloadTheme()
 {
+	ZoneScoped;
 	QFile file { config::paths::theme::getQString() };
 
 	if ( !file.exists() )

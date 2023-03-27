@@ -12,6 +12,7 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <tracy/Tracy.hpp>
 
 #include "h95/config.hpp"
 
@@ -22,6 +23,7 @@
 
 void initLogging()
 {
+	ZoneScoped;
 	spdlog::enable_backtrace( 32 );
 
 	auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };

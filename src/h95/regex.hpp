@@ -23,6 +23,7 @@ inline QString cleanPathDelim( QString path )
 
 inline QString regexify( QString pattern )
 {
+	ZoneScoped;
 	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
 	{
 		//We found a complete set.
@@ -39,6 +40,7 @@ inline QString regexify( QString pattern )
 
 bool valid( QString pattern, QString text )
 {
+	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
@@ -47,6 +49,7 @@ bool valid( QString pattern, QString text )
 
 std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
 {
+	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };

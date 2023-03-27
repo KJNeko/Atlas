@@ -10,3 +10,6 @@
 [submodule "dependencies/fmt"]
 	path = dependencies/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "dependencies/tracy"]
+	path = dependencies/tracy
+	url = https://github.com/wolfpld/tracy.git

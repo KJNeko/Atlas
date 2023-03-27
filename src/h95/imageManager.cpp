@@ -10,6 +10,8 @@
 #include <QFile>
 #include <QPixmap>
 
+#include <tracy/Tracy.hpp>
+
 #include "config.hpp"
 #include "h95/database/Database.hpp"
 
@@ -17,6 +19,7 @@ namespace imageManager
 {
 	std::filesystem::path getImagePath()
 	{
+		ZoneScoped;
 		const auto path { std::filesystem::path( config::paths::images::get() ) };
 
 		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
@@ -26,6 +29,7 @@ namespace imageManager
 
 	void cleanOrphans()
 	{
+		ZoneScoped;
 		//Grab all images from the database
 		Transaction transaction;
 
@@ -47,6 +51,7 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after )
 	{
+		ZoneScoped;
 		spdlog::debug( "Importing image {}", path );
 		if ( std::filesystem::exists( path ) )
 		{

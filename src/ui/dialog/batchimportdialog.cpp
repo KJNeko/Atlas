@@ -3,6 +3,8 @@
 #include <QFileDialog>
 #include <QMimeDatabase>
 
+#include <tracy/Tracy.hpp>
+
 #include "h95/config.hpp"
 #include "h95/regex.hpp"
 #include "h95/utils.hpp"
@@ -40,6 +42,7 @@ void batchImportDialog::on_btnSetFolder_pressed()
 
 void batchImportDialog::processFiles()
 {
+	ZoneScoped;
 	std::vector< GameImportData > folder_data;
 
 	/*
@@ -50,6 +53,7 @@ void batchImportDialog::processFiles()
 
 	auto stripEndSlash = []( const std::filesystem::path path ) -> std::filesystem::path
 	{
+		ZoneScoped;
 		if ( const auto str = path.string(); str.ends_with( '/' ) || str.ends_with( '\\' ) )
 			return { str.substr( 0, str.size() - 1 ) };
 		else
@@ -69,56 +73,62 @@ void batchImportDialog::processFiles()
 
 	uint64_t games_found { 0 };
 
-	for ( auto folder = std::filesystem::recursive_directory_iterator( base );
-	      folder != std::filesystem::recursive_directory_iterator();
-	      ++folder )
 	{
-		if ( folder->is_directory() && valid( cleaned_regex, QString::fromStdString( folder->path().string() ) ) )
+		ZoneScopedN( "Scan folders" );
+		for ( auto folder = std::filesystem::recursive_directory_iterator( base );
+		      folder != std::filesystem::recursive_directory_iterator();
+		      ++folder )
 		{
-			std::vector< std::filesystem::path > potential_executables;
-
-			//Check for a valid game in the folder
-			for ( const auto& file : std::filesystem::directory_iterator( folder->path() ) )
+			ZoneScopedN( "test folder" );
+			if ( folder->is_directory() && valid( cleaned_regex, QString::fromStdString( folder->path().string() ) ) )
 			{
-				if ( file.is_regular_file() )
+				std::vector< std::filesystem::path > potential_executables;
+
+				//Check for a valid game in the folder
+				for ( const auto& file : std::filesystem::directory_iterator( folder->path() ) )
 				{
-					QMimeDatabase mime_db;
-					const auto type { mime_db.mimeTypeForFile(
-						QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent ) };
+					ZoneScopedN("Scan files");
+					if ( file.is_regular_file() )
+					{
+						QMimeDatabase mime_db;
+						const auto type { mime_db.mimeTypeForFile(
+							QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent ) };
 
-					if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
-					     || ( type.inherits( "application/x-ms-dos-executable" )
-					          && file.path().extension() == ".exe" ) )
-						potential_executables.emplace_back( std::filesystem::relative( file, folder->path() ) );
+						if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
+						     || ( type.inherits( "application/x-ms-dos-executable" )
+						          && file.path().extension() == ".exe" ) )
+							potential_executables.emplace_back( std::filesystem::relative( file, folder->path() ) );
+					}
 				}
-			}
 
-			if ( potential_executables.size() > 0 )
-			{
-				const auto [ title, version, creator ] =
-					extractGroups( cleaned_regex, QString::fromStdString( folder->path().string() ) );
+				if ( potential_executables.size() > 0 )
+				{
+					ZoneScopedN("Add to list");
+					const auto [ title, version, creator ] =
+						extractGroups( cleaned_regex, QString::fromStdString( folder->path().string() ) );
 
-				//TODO: Calculate size stuff
-
-				GameImportData game_data { std::filesystem::relative( folder->path(), base ),
-					                       title,
-					                       version,
-					                       creator,
-					                       folderSize( folder->path() ),
-					                       potential_executables,
-					                       potential_executables.at( 0 ),
-					                       ui->moveImported->isChecked() };
-				folder_data.emplace_back( game_data );
-				++games_found;
-				ui->statusLabel->setText( QString( "%1 games processed" ).arg( games_found ) );
+					GameImportData game_data { std::filesystem::relative( folder->path(), base ),
+						                       title,
+						                       version,
+						                       creator,
+						                       folderSize( folder->path() ),
+						                       potential_executables,
+						                       potential_executables.at( 0 ),
+						                       ui->moveImported->isChecked() };
+					folder_data.emplace_back( game_data );
+					++games_found;
+					ui->statusLabel->setText( QString( "%1 games processed" ).arg( games_found ) );
+				}
 			}
 		}
 	}
 
 	//Add all games into list
-	for ( const auto& folder : folder_data )
-		dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( folder );
-
+	{
+		ZoneScopedN("Populate model");
+		for ( const auto& folder : folder_data )
+			dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( folder );
+	}
 	ui->twGames->resizeColumnsToContents();
 }
 

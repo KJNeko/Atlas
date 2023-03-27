@@ -6,6 +6,8 @@
 
 #include <QLineEdit>
 
+#include <tracy/Tracy.hpp>
+
 #include "h95/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -25,6 +27,7 @@ QString temp( const QString temp )
 
 QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 {
+	ZoneScoped;
 	const auto& item { m_data.at( static_cast< std::size_t >( index.row() ) ) };
 	if ( role == Qt::DisplayRole )
 	{
@@ -61,6 +64,7 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 
 void BatchImportModel::addGame( GameImportData data )
 {
+	ZoneScoped;
 	beginInsertRows( {}, static_cast< int >( m_data.size() ), static_cast< int >( m_data.size() ) );
 	m_data.push_back( std::move( data ) );
 	endInsertRows();
@@ -68,6 +72,7 @@ void BatchImportModel::addGame( GameImportData data )
 
 QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
+	ZoneScoped;
 	if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
 	{
 		switch ( section )
@@ -96,6 +101,7 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 
 Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 {
+	ZoneScoped;
 	switch ( index.column() )
 	{
 		case TITLE:
@@ -120,6 +126,7 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 
 bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value, int role )
 {
+	ZoneScoped;
 	spdlog::info( "Data set" );
 
 	switch ( index.column() )

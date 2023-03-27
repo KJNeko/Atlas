@@ -9,8 +9,11 @@
 
 #include <QCryptographicHash>
 
+#include <tracy/Tracy.hpp>
+
 std::array< char, 32 > sha256FromIstream( std::istream& istream )
 {
+	ZoneScoped;
 	const auto idx { istream.tellg() };
 	istream.seekg( 0, std::istream::beg );
 
@@ -49,6 +52,7 @@ SHA256::SHA256( std::istream& istream ) : m_data( sha256FromIstream( istream ) )
 
 std::array< char, 32 > sha256FromVec( const std::vector< char >& data )
 {
+	ZoneScoped;
 	std::array< char, 32 > arry;
 
 	if ( data.size() != 32 )

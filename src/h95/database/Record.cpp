@@ -8,6 +8,8 @@
 
 #include <QPixmapCache>
 
+#include <tracy/Tracy.hpp>
+
 #include "h95/SHA256.hpp"
 #include "h95/config.hpp"
 #include "h95/database/Database.hpp"
@@ -22,6 +24,7 @@ enum PreviewType
 
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
+	ZoneScoped;
 	bool found { false };
 
 	transaction << "SELECT title, creator, engine, last_played_r, total_playtime FROM records WHERE record_id = ?" << id
@@ -138,6 +141,7 @@ const std::vector< std::filesystem::path >& RecordData::getPreviewPaths() const
 
 std::vector< QPixmap > RecordData::getPreviews() const
 {
+	ZoneScoped;
 	std::vector< QPixmap > images;
 
 	for ( const auto& link : m_previews )
@@ -150,6 +154,7 @@ std::vector< QPixmap > RecordData::getPreviews() const
 
 void RecordData::setTitle( QString new_title, Transaction transaction )
 {
+	ZoneScoped;
 	m_title = std::move( new_title );
 
 	transaction << "UPDATE records SET title = ? WHERE record_id = ? " << new_title.toStdString() << m_id;
@@ -160,6 +165,7 @@ void RecordData::setTitle( QString new_title, Transaction transaction )
 
 void RecordData::setCreator( QString new_creator, Transaction transaction )
 {
+	ZoneScoped;
 	m_creator = std::move( new_creator );
 
 	transaction << "UPDATE records SET creator = ? WHERE record_id = ?" << new_creator.toStdString() << m_id;
@@ -170,6 +176,7 @@ void RecordData::setCreator( QString new_creator, Transaction transaction )
 
 void RecordData::setEngine( QString new_engine, Transaction transaction )
 {
+	ZoneScoped;
 	m_engine = std::move( new_engine );
 
 	transaction << "UPDATE records SET engine = ? WHERE record_id = ?" << new_engine.toStdString() << m_id;
@@ -180,6 +187,7 @@ void RecordData::setEngine( QString new_engine, Transaction transaction )
 
 void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
 {
+	ZoneScoped;
 	m_last_played = time;
 
 	transaction << "UPDATE records SET last_played_r = ? WHERE record_id = ?" << time << m_id;
@@ -190,6 +198,7 @@ void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
 
 void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction )
 {
+	ZoneScoped;
 	m_total_playtime = time;
 
 	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time << m_id;
@@ -200,6 +209,7 @@ void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction 
 
 void RecordData::addVersion( const GameMetadata& version, Transaction transaction )
 {
+	ZoneScoped;
 	//Check if version is already added
 	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
 	if ( itter != m_versions.end() ) return;
@@ -217,6 +227,7 @@ void RecordData::addVersion( const GameMetadata& version, Transaction transactio
 
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
 {
+	ZoneScoped;
 	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
 	if ( itter == m_versions.end() )
 		return;
@@ -233,6 +244,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 
 void RecordData::sync( Transaction transaction )
 {
+	ZoneScoped;
 	new ( this ) RecordData( m_id, transaction );
 }
 
@@ -255,6 +267,7 @@ RecordData::RecordData(
   m_banner( std::move( banner ) ),
   m_previews( std::move( previews ) )
 {
+	ZoneScoped;
 	try
 	{
 		RecordID record_id { 0 };

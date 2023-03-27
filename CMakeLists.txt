@@ -15,7 +15,6 @@ endif ()
 
 #Sql
 if (WIN32)
-
     if (DEFINED SQL_PATH)
         set(SQLite3_INCLUDE_DIR "${SQL_PATH}\\include")
         set(SQLite3_LIBRARY "${SQL_PATH}\\lib\\sqlite3.dll")
@@ -69,6 +68,13 @@ endif ()
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} ")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
+if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
+#Tracy (Profiler)
+    option(TRACY_ENABLE "" ON)
+    option(TRACY_ON_DEMAND "" ON)
+endif()
+add_subdirectory(dependencies/tracy)
+
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
 
@@ -103,7 +109,7 @@ file(GLOB_RECURSE UI_SOURCES
 
 set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
-set(REQUIRED_LIBS Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt)
+set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt Tracy::TracyClient)
 
 #Lib for EXE and Python
 add_library(H95Obj OBJECT ${HYDRUS_SOURCES})
