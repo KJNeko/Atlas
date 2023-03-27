@@ -11,7 +11,7 @@
 TEST( Regex, regexify )
 {
 	GTEST_ASSERT_EQ(
-		"(?P<creator>.*?)/(?P<title>.*?)/(?P<version>.*?)", regexify( "{creator}/{title}/{version}" ).toStdString() );
+		"^(?P<creator>[^\\\\/]+)/(?P<title>[^\\\\/]+)/(?P<version>[^\\\\/]+)$", regexify( "{creator}/{title}/{version}" ).toStdString() );
 }
 
 const QString pattern { "/run/media/kj16609/HDDWIN/NSFWSorted/{creator}/{title}/{version}" };
