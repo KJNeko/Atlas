@@ -3,24 +3,24 @@
 
 #include <QDialog>
 
-namespace Ui {
-class batchImportDialog;
+namespace Ui
+{
+	class batchImportDialog;
 }
-
-
 
 class batchImportDialog : public QDialog
 {
-    Q_DISABLE_COPY_MOVE(batchImportDialog)
-    Q_OBJECT
+	Q_DISABLE_COPY_MOVE( batchImportDialog )
+	Q_OBJECT
 
-public:
-    explicit batchImportDialog(QWidget *parent = nullptr);
-    ~batchImportDialog();
+  public:
 
-private:
-    Ui::batchImportDialog *ui;
+	explicit batchImportDialog( QWidget *parent = nullptr );
+	~batchImportDialog();
 
+  private:
+
+	Ui::batchImportDialog *ui;
 
   private slots:
 	void on_btnSetFolder_pressed();

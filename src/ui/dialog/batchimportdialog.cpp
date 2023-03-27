@@ -87,7 +87,7 @@ void batchImportDialog::processFiles()
 				//Check for a valid game in the folder
 				for ( const auto& file : std::filesystem::directory_iterator( folder->path() ) )
 				{
-					ZoneScopedN("Scan files");
+					ZoneScopedN( "Scan files" );
 					if ( file.is_regular_file() )
 					{
 						QMimeDatabase mime_db;
@@ -103,7 +103,7 @@ void batchImportDialog::processFiles()
 
 				if ( potential_executables.size() > 0 )
 				{
-					ZoneScopedN("Add to list");
+					ZoneScopedN( "Add to list" );
 					const auto [ title, version, creator ] =
 						extractGroups( cleaned_regex, QString::fromStdString( folder->path().string() ) );
 
@@ -125,7 +125,7 @@ void batchImportDialog::processFiles()
 
 	//Add all games into list
 	{
-		ZoneScopedN("Populate model");
+		ZoneScopedN( "Populate model" );
 		for ( const auto& folder : folder_data )
 			dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( folder );
 	}
