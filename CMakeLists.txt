@@ -162,7 +162,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-    add_executable(Hydrus95TESTS ${TESTS})
+    add_executable(Hydrus95TESTS ${TESTS} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 
     set_target_properties(Hydrus95TESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
     target_include_directories(Hydrus95TESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -183,9 +183,6 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
         add_custom_command(TARGET Hydrus95TESTS POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95TESTS> COMMENT "Copying sqlite lib files")
     endif ()
-
-    add_custom_command(TARGET Hydrus95TESTS POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/assets $<TARGET_FILE_DIR:Hydrus95TESTS>/assets COMMENT "Copying assets")
 
     include(GoogleTest)
     gtest_discover_tests(Hydrus95TESTS)
