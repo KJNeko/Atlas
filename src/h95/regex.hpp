@@ -28,7 +28,7 @@ inline QString escapeStr( QString pattern )
 			if ( i + 1 >= pattern.size() )
 				continue;
 			else if ( pattern.at( i + 1 ) == '\\' || pattern.at( i + 1 ) == '/' )
-				//Skip the next character since we know it's escaped.
+			//Skip the next character since we know it's escaped.
 			{
 				i += 1;
 				continue;

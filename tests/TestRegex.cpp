@@ -29,7 +29,7 @@ TEST( Regex, WindowsPath )
 	GTEST_ASSERT_EQ( version.toStdString(), "Hydrus95" );
 }
 
-TEST( Regex, patternTest0 )
+TEST( Regex, patternTestLinux0 )
 {
 	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Acerola/Brave Alchemist Colette/1.04" };
 
@@ -41,7 +41,7 @@ TEST( Regex, patternTest0 )
 	GTEST_ASSERT_EQ( version.toStdString(), "1.04" );
 }
 
-TEST( Regex, patternTest2 )
+TEST( Regex, patternTestLinux1 )
 {
 	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/ChimeraZak/My Forest Home/v2.35" };
 
@@ -52,7 +52,7 @@ TEST( Regex, patternTest2 )
 	GTEST_ASSERT_EQ( version.toStdString(), "v2.35" );
 }
 
-TEST( Regex, patternTest3 )
+TEST( Regex, patternTestLinux2 )
 {
 	QString text {
 		"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0"
@@ -65,7 +65,7 @@ TEST( Regex, patternTest3 )
 	GTEST_ASSERT_EQ( version.toStdString(), "1.1.0" );
 }
 
-TEST( Regex, patternTest10 )
+TEST( Regex, patternTestLinux3 )
 {
 	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" };
 
@@ -76,7 +76,7 @@ TEST( Regex, patternTest10 )
 	GTEST_ASSERT_EQ( version.toStdString(), "1.3.2" );
 }
 
-TEST( Regex, patternTest15 )
+TEST( Regex, patternTestLinux4 )
 {
 	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" };
 
@@ -87,7 +87,7 @@ TEST( Regex, patternTest15 )
 	GTEST_ASSERT_EQ( version.toStdString(), "1.2.10.0 - uncensored" );
 }
 
-TEST( Regex, patternTest16 )
+TEST( Regex, patternTestLinux5 )
 {
 	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" };
 
@@ -102,4 +102,6 @@ TEST( Regex, escape )
 {
 	QString str { "\\ my\\str \\" };
 	QString expected { "\\\\ my\\\\str \\\\" };
+
+	ASSERT_EQ( escapeStr( str ).toStdString(), expected.toStdString() );
 }
