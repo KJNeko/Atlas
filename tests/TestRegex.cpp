@@ -9,24 +9,29 @@
 
 TEST( Regex, regexify )
 {
-	const QString expected {
-	"^(?P<creator>[^\\\\\\/]+)/(?P<title>[^\\\\\\/]+)/(?P<version>[^\\\\\\/]+)$"};
+	const QString expected { "^(?P<creator>[^\\\\\\/]+)/(?P<title>[^\\\\\\/]+)/(?P<version>[^\\\\\\/]+)$" };
 
-	GTEST_ASSERT_EQ(
-		expected.toStdString(),
-		regexify( "{creator}/{title}/{version}" ).toStdString() );
+	GTEST_ASSERT_EQ( expected.toStdString(), regexify( "{creator}/{title}/{version}" ).toStdString() );
 }
 
 const QString pattern { "/run/media/kj16609/HDDWIN/NSFWSorted/{creator}/{title}/{version}" };
 
+TEST( Regex, WindowsPath )
+{
+	const QString text { "C:\\Users\\vboxuser\\Desktop\\Projects\\Hydrus95" };
+	const QString modified_pattern { "C:\\Users\\vboxuser\\{creator}\\{title}\\{version}" };
+
+	GTEST_ASSERT_TRUE( valid( modified_pattern, text ) );
+
+	const auto [ title, creator, version ] = extractGroups( modified_pattern, text );
+	GTEST_ASSERT_EQ( title.toStdString(), "Desktop" );
+	GTEST_ASSERT_EQ( creator.toStdString(), "Projects" );
+	GTEST_ASSERT_EQ( version.toStdString(), "Hydrus95" );
+}
+
 TEST( Regex, patternTest0 )
 {
-	QString text {
-		QString::fromStdString( std::filesystem::
-		                            path( "/run/media/kj16609/HDDWIN/NSFWSorted/Acerola/Brave Alchemist Colette/1.04" )
-		                                .make_preferred()
-		                                .string() )
-	};
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Acerola/Brave Alchemist Colette/1.04" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 
@@ -38,12 +43,7 @@ TEST( Regex, patternTest0 )
 
 TEST( Regex, patternTest2 )
 {
-	QString text {
-		QString::fromStdString( std::filesystem::
-		                            path( "/run/media/kj16609/HDDWIN/NSFWSorted/ChimeraZak/My Forest Home/v2.35" )
-		                                .make_preferred()
-		                                .string() )
-	};
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/ChimeraZak/My Forest Home/v2.35" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -54,11 +54,9 @@ TEST( Regex, patternTest2 )
 
 TEST( Regex, patternTest3 )
 {
-	QString text { QString::fromStdString(
-		std::filesystem::path(
-			"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0" )
-			.make_preferred()
-			.string() ) };
+	QString text {
+		"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0"
+	};
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -69,10 +67,7 @@ TEST( Regex, patternTest3 )
 
 TEST( Regex, patternTest10 )
 {
-	QString text { QString::fromStdString(
-		std::filesystem::path( "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" )
-			.make_preferred()
-			.string() ) };
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -83,11 +78,7 @@ TEST( Regex, patternTest10 )
 
 TEST( Regex, patternTest15 )
 {
-	QString text { QString::fromStdString(
-		std::filesystem::
-			path( "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" )
-				.make_preferred()
-				.string() ) };
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -98,12 +89,7 @@ TEST( Regex, patternTest15 )
 
 TEST( Regex, patternTest16 )
 {
-	QString text {
-		QString::
-			fromStdString( std::filesystem::path( "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" )
-		                       .make_preferred()
-		                       .string() )
-	};
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -112,11 +98,8 @@ TEST( Regex, patternTest16 )
 	GTEST_ASSERT_EQ( version.toStdString(), "0.37.5 DEBUG" );
 }
 
-TEST(Regex, escape)
+TEST( Regex, escape )
 {
-	QString str {"\\ my\\str \\"};
-	QString expected {"\\\\ my\\\\str \\\\"};
-
+	QString str { "\\ my\\str \\" };
+	QString expected { "\\\\ my\\\\str \\\\" };
 }
-
-
