@@ -23,9 +23,37 @@ inline QString cleanPathDelim( QString path )
 	return QDir::toNativeSeparators( std::move( path ) );
 }
 
+//! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
+inline QString escapeStr( QString pattern )
+{
+	for ( int i = 0; i < pattern.size(); ++i )
+	{
+		if ( pattern.at( i ) == '\\' )
+		{
+			if ( i + 1 >= pattern.size() )
+				continue;
+			else if ( pattern.at( i + 1 ) == '\\' || pattern.at( i + 1 ) == '/' )
+				//Skip the next character since we know it's escaped.
+			{
+				i += 1;
+				continue;
+			}
+			else
+			{
+				pattern.insert( i, '\\' );
+				i += 1;
+				continue;
+			}
+		}
+	}
+	return pattern;
+}
+
 inline QString regexify( QString pattern )
 {
 	ZoneScoped;
+	pattern = escapeStr( std::move( pattern ) );
+
 	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
 	{
 		//We found a complete set.
@@ -44,6 +72,7 @@ bool valid( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
+	spdlog::info( "Regex: {}", pattern );
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
