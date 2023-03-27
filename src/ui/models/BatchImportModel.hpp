@@ -17,7 +17,7 @@ struct GameImportData
 	QString title;
 	QString version;
 	QString creator;
-	QString size;
+	std::size_t size;
 	std::vector< std::filesystem::path > executables;
 	std::filesystem::path executable;
 	bool move_after_import;

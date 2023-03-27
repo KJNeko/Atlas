@@ -5,6 +5,7 @@
 
 #include "h95/config.hpp"
 #include "h95/regex.hpp"
+#include "h95/utils.hpp"
 #include "ui/models/BatchImportModel.hpp"
 #include "ui_batchimportdialog.h"
 
@@ -53,6 +54,8 @@ void batchImportDialog::processFiles()
 		regexify( ui->tbFormat->text().replace( "{path}", QString::fromStdString( base.string() ) ) )
 	};
 
+	uint64_t games_found { 0 };
+
 	for ( auto folder = std::filesystem::recursive_directory_iterator( ui->tbPath->text().toStdString() );
 	      folder != std::filesystem::recursive_directory_iterator();
 	      ++folder )
@@ -88,11 +91,13 @@ void batchImportDialog::processFiles()
 					                       title,
 					                       version,
 					                       creator,
-					                       QString::number( 0 ),
+					                       folderSize( folder->path() ),
 					                       potential_executables,
 					                       potential_executables.at( 0 ),
 					                       ui->moveImported->isChecked() };
 				folder_data.emplace_back( game_data );
+				++games_found;
+				ui->statusLabel->setText( QString( "%1 games processed" ).arg( games_found ) );
 			}
 		}
 	}

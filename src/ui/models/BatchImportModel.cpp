@@ -40,7 +40,10 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			case VERSION:
 				return temp( item.version );
 			case SIZE:
-				return temp( item.size );
+				{
+					QLocale locale { QLocale::system() };
+					return temp( locale.formattedDataSize( static_cast< qint64 >( item.size ) ) );
+				}
 			case EXECUTABLES:
 				return temp( QString::fromStdString( item.executable.string() ) );
 			case MOVE_FLAG:
