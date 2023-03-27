@@ -42,7 +42,7 @@ TEST( Regex, patternTest2 )
 TEST( Regex, patternTest3 )
 {
 	QString text {
-		"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0/"
+		"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0"
 	};
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
@@ -54,7 +54,7 @@ TEST( Regex, patternTest3 )
 
 TEST( Regex, patternTest10 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2/" };
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [title, creator, version] = extractGroups(pattern, text);
@@ -65,7 +65,7 @@ TEST( Regex, patternTest10 )
 
 TEST( Regex, patternTest15 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored/" };
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [title, creator, version] = extractGroups(pattern, text);
@@ -76,7 +76,7 @@ TEST( Regex, patternTest15 )
 
 TEST( Regex, patternTest16 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG/" };
+	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [title, creator, version] = extractGroups(pattern, text);
