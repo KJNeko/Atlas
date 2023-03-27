@@ -10,7 +10,7 @@
 TEST( Regex, regexify )
 {
 	const QString expected {
-	"^(?P<creator>[^\\\\/]+)/(?P<title>[^\\\\/]+)/(?P<version>[^\\\\/]+)$"};
+	"^(?P<creator>[^\\\\\\/]+)/(?P<title>[^\\\\\\/]+)/(?P<version>[^\\\\\\/]+)$"};
 
 	GTEST_ASSERT_EQ(
 		expected.toStdString(),
