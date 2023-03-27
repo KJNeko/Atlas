@@ -58,13 +58,13 @@ void batchImportDialog::processFiles()
 	const std::filesystem::path base {
 		stripEndSlash( std::filesystem::path( ui->tbPath->text().toStdString() ).make_preferred() )
 	};
+
 	const std::filesystem::path search {
 		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
 	};
 
-	const QString cleaned_regex {
-		regexify( ui->tbFormat->text().replace( "{path}", QString::fromStdString( base.string() ) ) )
-	};
+	const QString cleaned_regex { regexify( QString::fromStdString( search.string() )
+		                                        .replace( "{path}", QString::fromStdString( base.string() ) ) ) };
 
 	uint64_t games_found { 0 };
 
