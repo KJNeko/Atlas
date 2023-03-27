@@ -91,7 +91,7 @@ int main( int argc, char** argv )
 	std::filesystem::create_directory( config::paths::images::get() );
 
 #ifdef NDEBUG
-	if ( getSettings< bool >( "debug/very_vocal", false ) )
+	//if ( getSettings< bool >( "debug/very_vocal", false ) )
 	{
 		spdlog::set_level( spdlog::level::debug );
 		spdlog::debug( "Debugging enabled." );

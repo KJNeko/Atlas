@@ -102,20 +102,26 @@ std::lock_guard< std::mutex > TransactionData::getLock()
 {
 	ZoneScoped;
 	//Check if we are already locked
+#ifndef NDEBUG
 	if ( internal::last_locked == std::this_thread::get_id() )
 		throw std::runtime_error( "Deadlock" );
 	else
+#endif
 		return std::lock_guard< std::mutex >( Database::lock() );
 }
 
 TransactionData::TransactionData() : guard( getLock() )
 {
+#ifndef NDEBUG
 	internal::last_locked = std::this_thread::get_id();
+#endif
 }
 
 TransactionData::~TransactionData()
 {
+#ifndef NDEBUG
 	internal::last_locked = std::thread::id( -1 );
+#endif
 }
 
 Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), data( new TransactionData() )
