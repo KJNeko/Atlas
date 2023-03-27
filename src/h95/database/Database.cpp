@@ -76,7 +76,7 @@ try
 
 		transaction.commit();
 
-		config::db::first_start::set(false);
+		config::db::first_start::set( false );
 	}
 	else
 		spdlog::info( "Database has been initalized before! Skipping table creation" );

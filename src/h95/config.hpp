@@ -259,9 +259,9 @@ namespace config
 				setSettings( "import/pathparse", path );
 			}
 
-		}
+		} // namespace pathparse
 
-	}
+	} // namespace importer
 
 	SETTING_D( bool, db, first_start, true )
 

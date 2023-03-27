@@ -234,7 +234,7 @@ QWidget* BatchImportDelegate::
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
 				edit->move( options.rect.topLeft() );
-				edit->resize(options.rect.size());
+				edit->resize( options.rect.size() );
 				return edit;
 			}
 		default:
