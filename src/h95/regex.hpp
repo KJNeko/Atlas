@@ -39,8 +39,6 @@ inline QString regexify( QString pattern )
 
 bool valid( QString pattern, QString text )
 {
-	spdlog::info("Testing regex {} against {}", pattern, text);
-
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
