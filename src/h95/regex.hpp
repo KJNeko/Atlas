@@ -18,11 +18,6 @@ inline QString groupify( const QString group_name )
 	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">[^\\\\\\/]+)";
 }
 
-inline QString cleanPathDelim( QString path )
-{
-	return QDir::toNativeSeparators( std::move( path ) );
-}
-
 //! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
 inline QString escapeStr( QString pattern )
 {
@@ -65,14 +60,13 @@ inline QString regexify( QString pattern )
 		return regexify( std::move( pattern ) );
 	}
 	else
-		return cleanPathDelim( "^" + std::move( pattern ) + "$" );
+		return "^" + std::move( pattern ) + "$";
 }
 
 bool valid( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
-	spdlog::info( "Regex: {}", pattern );
 	QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
