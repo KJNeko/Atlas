@@ -15,7 +15,7 @@
 
 inline QString groupify( const QString group_name )
 {
-	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">[^\\/]+)";
+	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">[^\\\\/]+)";
 }
 
 inline QString cleanPathDelim( QString path )

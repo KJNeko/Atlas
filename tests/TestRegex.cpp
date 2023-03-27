@@ -9,8 +9,11 @@
 
 TEST( Regex, regexify )
 {
+	const QString expected {
+	"^(?P<creator>[^\\\\/]+)/(?P<title>[^\\\\/]+)/(?P<version>[^\\\\/]+)$"};
+
 	GTEST_ASSERT_EQ(
-		"^(?P<creator>[^\\/]+)/(?P<title>[^\\/]+)/(?P<version>[^\\/]+)$",
+		expected.toStdString(),
 		regexify( "{creator}/{title}/{version}" ).toStdString() );
 }
 
@@ -108,3 +111,12 @@ TEST( Regex, patternTest16 )
 	GTEST_ASSERT_EQ( creator.toStdString(), "TsunAmie" );
 	GTEST_ASSERT_EQ( version.toStdString(), "0.37.5 DEBUG" );
 }
+
+TEST(Regex, escape)
+{
+	QString str {"\\ my\\str \\"};
+	QString expected {"\\\\ my\\\\str \\\\"};
+
+}
+
+
