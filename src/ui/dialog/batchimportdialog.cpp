@@ -6,6 +6,7 @@
 #include "h95/config.hpp"
 #include "h95/regex.hpp"
 #include "h95/utils.hpp"
+#include "ui/delegates/BatchImportDelegate.hpp"
 #include "ui/models/BatchImportModel.hpp"
 #include "ui_batchimportdialog.h"
 

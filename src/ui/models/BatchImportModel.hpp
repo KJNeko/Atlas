@@ -34,16 +34,6 @@ enum ImportColumns
 	MOVE_FLAG
 };
 
-class BatchImportDelegate final : public QAbstractItemDelegate
-{
-	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
-	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
-	QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& options, const QModelIndex& index )
-		const override;
-	void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const override;
-	void setEditorData( QWidget* editor, const QModelIndex& index ) const override;
-};
-
 class BatchImportModel final : public QAbstractTableModel
 {
 	std::vector< GameImportData > m_data {};
