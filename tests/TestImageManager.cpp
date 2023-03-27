@@ -8,6 +8,7 @@
 #include "GTestBox.hpp"
 #include "h95/database/Database.hpp"
 #include "h95/imageManager.hpp"
+#include "h95/logging.hpp"
 
 class TestImageManager : public ::testing::Test
 {
@@ -32,7 +33,7 @@ class TestImageManager : public ::testing::Test
 
 TEST_F( TestImageManager, importPreview )
 {
-	QImage image { ":/banner/placeholder.jpg" };
+	QImage image { ":/images/assets/search.png" };
 	std::filesystem::create_directories("./assets/banner");
 	image.save( "./assets/banner/placeholder.jpg" );
 
@@ -40,12 +41,14 @@ TEST_F( TestImageManager, importPreview )
 
 	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
+	spdlog::info("{}", output);
+
 	GTEST_ASSERT_TRUE( std::filesystem::exists(
-		"./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
+		"./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
 
 	GTEST_ASSERT_TRUE(
 		std::filesystem::
-		canonical( "./data/images/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" )
+		canonical( "./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" )
 		== output );
 }
 
@@ -56,12 +59,12 @@ TEST_F( TestImageManager, importNonExistant )
 
 TEST_F( TestImageManager, clearOrhpans )
 {
-	QImage image { ":/banner/placeholder.jpg" };
+	QImage image { ":/images/assets/search.png" };
 	std::filesystem::create_directories("./assets/banner");
-	image.save( "./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" );
+	image.save( "./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" );
 
 	imageManager::cleanOrphans();
 
 	GTEST_ASSERT_FALSE( std::filesystem::
-	                        exists( "./data/de4fb797c8dabce6c9ee87e7e93d3cc5393e5ff4afe6c85634117cb2128feba7.webp" ) );
+	                        exists( "./images/data/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
 }
