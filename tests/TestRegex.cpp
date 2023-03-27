@@ -24,8 +24,8 @@ TEST( Regex, WindowsPath )
 	GTEST_ASSERT_TRUE( valid( modified_pattern, text ) );
 
 	const auto [ title, creator, version ] = extractGroups( modified_pattern, text );
-	GTEST_ASSERT_EQ( title.toStdString(), "Desktop" );
-	GTEST_ASSERT_EQ( creator.toStdString(), "Projects" );
+	GTEST_ASSERT_EQ( title.toStdString(), "Projects" );
+	GTEST_ASSERT_EQ( creator.toStdString(), "Desktop" );
 	GTEST_ASSERT_EQ( version.toStdString(), "Hydrus95" );
 }
 
