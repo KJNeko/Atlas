@@ -2,7 +2,6 @@
 // Created by kj16609 on 3/26/23.
 //
 
-#include <QRegularExpression>
 #include <QString>
 
 #include "GTestBox.hpp"
@@ -11,7 +10,7 @@
 TEST( Regex, regexify )
 {
 	GTEST_ASSERT_EQ(
-		"^(?P<creator>[^\\\\/]+)/(?P<title>[^\\\\/]+)/(?P<version>[^\\\\/]+)$",
+		"^(?P<creator>[^\\/]+)/(?P<title>[^\\/]+)/(?P<version>[^\\/]+)$",
 		regexify( "{creator}/{title}/{version}" ).toStdString() );
 }
 
@@ -19,7 +18,12 @@ const QString pattern { "/run/media/kj16609/HDDWIN/NSFWSorted/{creator}/{title}/
 
 TEST( Regex, patternTest0 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Acerola/Brave Alchemist Colette/1.04" };
+	QString text {
+		QString::fromStdString( std::filesystem::
+		                            path( "/run/media/kj16609/HDDWIN/NSFWSorted/Acerola/Brave Alchemist Colette/1.04" )
+		                                .make_preferred()
+		                                .string() )
+	};
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 
@@ -31,7 +35,12 @@ TEST( Regex, patternTest0 )
 
 TEST( Regex, patternTest2 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/ChimeraZak/My Forest Home/v2.35" };
+	QString text {
+		QString::fromStdString( std::filesystem::
+		                            path( "/run/media/kj16609/HDDWIN/NSFWSorted/ChimeraZak/My Forest Home/v2.35" )
+		                                .make_preferred()
+		                                .string() )
+	};
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -42,9 +51,11 @@ TEST( Regex, patternTest2 )
 
 TEST( Regex, patternTest3 )
 {
-	QString text {
-		"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0"
-	};
+	QString text { QString::fromStdString(
+		std::filesystem::path(
+			"/run/media/kj16609/HDDWIN/NSFWSorted/dobuworks/Hypnotizing the Rich Bitch into My Personal Plaything/1.1.0" )
+			.make_preferred()
+			.string() ) };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -55,7 +66,10 @@ TEST( Regex, patternTest3 )
 
 TEST( Regex, patternTest10 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" };
+	QString text { QString::fromStdString(
+		std::filesystem::path( "/run/media/kj16609/HDDWIN/NSFWSorted/Overseer Division Studios/PMC Promiscuity/1.3.2" )
+			.make_preferred()
+			.string() ) };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -66,7 +80,11 @@ TEST( Regex, patternTest10 )
 
 TEST( Regex, patternTest15 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" };
+	QString text { QString::fromStdString(
+		std::filesystem::
+			path( "/run/media/kj16609/HDDWIN/NSFWSorted/Team-Apple Pie/Monster Black Market/1.2.10.0 - uncensored" )
+				.make_preferred()
+				.string() ) };
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
@@ -77,7 +95,12 @@ TEST( Regex, patternTest15 )
 
 TEST( Regex, patternTest16 )
 {
-	QString text { "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" };
+	QString text {
+		QString::
+			fromStdString( std::filesystem::path( "/run/media/kj16609/HDDWIN/NSFWSorted/TsunAmie/Haremon/0.37.5 DEBUG" )
+		                       .make_preferred()
+		                       .string() )
+	};
 
 	GTEST_ASSERT_TRUE( valid( pattern, text ) );
 	const auto [ title, creator, version ] = extractGroups( pattern, text );
