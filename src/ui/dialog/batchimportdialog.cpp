@@ -47,8 +47,22 @@ void batchImportDialog::processFiles()
 	 *
 	 */
 
-	const std::filesystem::path base { ui->tbPath->text().toStdString() };
-	const std::filesystem::path search { ui->tbFormat->text().toStdString() };
+	auto stripEndSlash = []( const std::filesystem::path path ) -> std::filesystem::path
+	{
+		if ( const auto str = path.string(); str.ends_with( '/' ) || str.ends_with( '\\' ) )
+			return { str.substr( 0, str.size() - 1 ) };
+		else
+			return path;
+	};
+
+	const std::filesystem::path base {
+		stripEndSlash( std::filesystem::path( ui->tbPath->text().toStdString() ).make_preferred() )
+	};
+	const std::filesystem::path search {
+		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
+	};
+
+	spdlog::info( "Base: {}\nSearch: {}", base, search );
 
 	const QString cleaned_regex {
 		regexify( ui->tbFormat->text().replace( "{path}", QString::fromStdString( base.string() ) ) )
@@ -56,7 +70,7 @@ void batchImportDialog::processFiles()
 
 	uint64_t games_found { 0 };
 
-	for ( auto folder = std::filesystem::recursive_directory_iterator( ui->tbPath->text().toStdString() );
+	for ( auto folder = std::filesystem::recursive_directory_iterator( base );
 	      folder != std::filesystem::recursive_directory_iterator();
 	      ++folder )
 	{
