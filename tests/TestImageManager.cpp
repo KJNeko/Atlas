@@ -34,21 +34,21 @@ class TestImageManager : public ::testing::Test
 TEST_F( TestImageManager, importPreview )
 {
 	QImage image { ":/images/assets/search.png" };
-	std::filesystem::create_directories("./assets/banner");
+	std::filesystem::create_directories( "./assets/banner" );
 	image.save( "./assets/banner/placeholder.jpg" );
 
-	GTEST_ASSERT_TRUE(std::filesystem::exists("./assets/banner/placeholder.jpg"));
+	GTEST_ASSERT_TRUE( std::filesystem::exists( "./assets/banner/placeholder.jpg" ) );
 
 	const auto output { imageManager::importImage( "./assets/banner/placeholder.jpg" ) };
 
-	spdlog::info("{}", output);
+	spdlog::info( "{}", output );
 
 	GTEST_ASSERT_TRUE( std::filesystem::exists(
 		"./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
 
 	GTEST_ASSERT_TRUE(
 		std::filesystem::
-		canonical( "./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" )
+			canonical( "./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" )
 		== output );
 }
 
@@ -60,11 +60,11 @@ TEST_F( TestImageManager, importNonExistant )
 TEST_F( TestImageManager, clearOrhpans )
 {
 	QImage image { ":/images/assets/search.png" };
-	std::filesystem::create_directories("./assets/banner");
+	std::filesystem::create_directories( "./assets/banner" );
 	image.save( "./data/images/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" );
 
 	imageManager::cleanOrphans();
 
-	GTEST_ASSERT_FALSE( std::filesystem::
-	                        exists( "./images/data/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
+	GTEST_ASSERT_FALSE( std::filesystem::exists(
+		"./images/data/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
 }
