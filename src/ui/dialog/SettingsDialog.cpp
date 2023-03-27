@@ -12,6 +12,7 @@
 #include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
 #include "h95/logging.hpp"
+#include "h95/utils.hpp"
 #include "ui_SettingsDialog.h"
 
 SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
@@ -70,23 +71,11 @@ void SettingsDialog::preparePathsSettings()
 	QLocale locale { this->locale() };
 
 	//Set filesizes
-	const auto image_dir { config::paths::images::get() };
-	QDirIterator images_itter( image_dir, QDirIterator::Subdirectories );
+	ui->imagesSizeLabel
+		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::get() ) ) ) );
 
-	uint64_t total_images_b { 0 };
-
-	while ( images_itter.hasNext() ) total_images_b += static_cast< uint64_t >( images_itter.nextFileInfo().size() );
-
-	ui->imagesSizeLabel->setText( locale.formattedDataSize( static_cast< qint64 >( total_images_b ) ) );
-
-	const auto game_dir { config::paths::games::get() };
-	QDirIterator game_itter( game_dir, QDirIterator::Subdirectories );
-
-	uint64_t total_game_b { 0 };
-
-	while ( game_itter.hasNext() ) total_game_b += static_cast< uint64_t >( game_itter.nextFileInfo().size() );
-
-	ui->gamesSizeLabel->setText( locale.formattedDataSize( static_cast< qint64 >( total_game_b ) ) );
+	ui->gamesSizeLabel
+		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::get() ) ) ) );
 
 	ui->databaseSizeLabel
 		->setText( locale
