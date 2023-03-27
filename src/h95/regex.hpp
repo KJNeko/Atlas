@@ -21,6 +21,7 @@ inline QString groupify( const QString group_name )
 //! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
 inline QString escapeStr( QString pattern )
 {
+	ZoneScoped;
 	for ( int i = 0; i < pattern.size(); ++i )
 	{
 		if ( pattern.at( i ) == '\\' )
