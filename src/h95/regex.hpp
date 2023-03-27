@@ -9,6 +9,8 @@
 #include <QRegularExpression>
 #include <QString>
 
+#include <tracy/Tracy.hpp>
+
 #include "h95/logging.hpp"
 
 inline QString groupify( const QString group_name )
