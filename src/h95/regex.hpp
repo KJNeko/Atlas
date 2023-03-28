@@ -15,37 +15,28 @@
 
 inline QString groupify( const QString group_name )
 {
-	return "(?P<" + group_name.mid( 1, group_name.size() - 2 ) + ">[^\\\\\\/]+)";
+	return R"((?P<)" + group_name.mid( 1, group_name.size() - 2 ) + R"(>[^\\\/]+))";
 }
 
 //! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
 inline QString escapeStr( QString pattern )
 {
 	ZoneScoped;
-	for ( int i = 0; i < pattern.size(); ++i )
+	const QRegularExpression regex { R"((?<!\\)[\(\)]|(?<!\\)[\\](?![\/\\\(\)\?$]))" };
+
+	while ( pattern.contains( regex ) )
 	{
-		if ( pattern.at( i ) == '\\' )
-		{
-			if ( i + 1 < pattern.size() && (pattern.at(i + 1) == '\\' || pattern.at(i + 1) == '/'))
-			{
-				i += 1;
-				continue;
-			}
-			else
-			{
-				pattern.insert( i, '\\' );
-				i += 1;
-				continue;
-			}
-		}
+		const auto index { pattern.indexOf( regex ) };
+		const auto character { pattern.at( index ) };
+		pattern.replace( index, 1, QString( "\\" ) + character );
 	}
+
 	return pattern;
 }
 
-inline QString regexify( QString pattern )
+inline QString processRegexify( QString pattern )
 {
 	ZoneScoped;
-
 	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
 	{
 		//We found a complete set.
@@ -55,10 +46,16 @@ inline QString regexify( QString pattern )
 		const auto extract { pattern.mid( start, ( end - start ) + 1 ) };
 		pattern.replace( extract, groupify( extract ) );
 		TracyMessageL( "Recurse" );
-		return regexify( std::move( pattern ) );
+		return processRegexify( std::move( pattern ) );
 	}
 	else
-		return escapeStr( "^" + std::move( pattern ) + "$" );
+		return "^" + std::move( pattern ) + "$";
+}
+
+inline QString regexify( QString pattern )
+{
+	ZoneScoped;
+	return processRegexify( escapeStr( std::move( pattern ) ) );
 }
 
 inline bool valid( QString pattern, QString text )
