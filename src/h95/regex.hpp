@@ -61,7 +61,7 @@ inline QString regexify( QString pattern )
 		return escapeStr( "^" + std::move( pattern ) + "$" );
 }
 
-bool valid( QString pattern, QString text )
+inline bool valid( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
@@ -70,7 +70,7 @@ bool valid( QString pattern, QString text )
 	return match.hasMatch();
 }
 
-std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
+inline std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
