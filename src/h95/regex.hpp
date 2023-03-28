@@ -26,10 +26,7 @@ inline QString escapeStr( QString pattern )
 	{
 		if ( pattern.at( i ) == '\\' )
 		{
-			if ( i + 1 >= pattern.size() )
-				continue;
-			else if ( pattern.at( i + 1 ) == '\\' || pattern.at( i + 1 ) == '/' )
-			//Skip the next character since we know it's escaped.
+			if ( i + 1 < pattern.size() && (pattern.at(i + 1) == '\\' || pattern.at(i + 1) == '/'))
 			{
 				i += 1;
 				continue;
@@ -48,7 +45,6 @@ inline QString escapeStr( QString pattern )
 inline QString regexify( QString pattern )
 {
 	ZoneScoped;
-	pattern = escapeStr( std::move( pattern ) );
 
 	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
 	{
@@ -58,17 +54,18 @@ inline QString regexify( QString pattern )
 
 		const auto extract { pattern.mid( start, ( end - start ) + 1 ) };
 		pattern.replace( extract, groupify( extract ) );
+		TracyMessageL( "Recurse" );
 		return regexify( std::move( pattern ) );
 	}
 	else
-		return "^" + std::move( pattern ) + "$";
+		return escapeStr( "^" + std::move( pattern ) + "$" );
 }
 
 bool valid( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
-	QRegularExpression regex { pattern };
+	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
 }
