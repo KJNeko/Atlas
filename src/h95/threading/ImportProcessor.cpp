@@ -4,14 +4,12 @@
 
 #include "ImportProcessor.hpp"
 
-#include <QMimeDatabase>
+#include <QApplication>
 
-#include <tracy/Tracy.hpp>
+#include "h95/config.hpp"
+#include "h95/database/Record.hpp"
 
-#include "h95/regex.hpp"
-#include "h95/utils.hpp"
-
-ImportProcessor::ImportProcessor()
+ImportProcessor::ImportProcessor() : QObject( nullptr )
 {
 	thread.start();
 	this->moveToThread( &thread );
@@ -20,65 +18,95 @@ ImportProcessor::ImportProcessor()
 ImportProcessor::~ImportProcessor() noexcept
 {
 	this->moveToThread( this->parent()->thread() );
-	if ( thread.isRunning() ) thread.exit();
+	thread.exit();
 }
 
-void ImportProcessor::
-	processDirectory( const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )
+void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {
-	for ( auto itter = std::filesystem::
-	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
-	      itter != std::filesystem::recursive_directory_iterator();
-	      ++itter )
+	emit startProgressBar();
+	emit updateMax( data.size() );
+
+	int counter { 0 };
+
+	//God I love decomposition
+	for ( auto [ path, title, creator, version, size, executables, executable, move_after_import ] : data )
 	{
-		const std::filesystem::path& folder { *itter };
-		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
+		emit updateText( QString( "Importing %1" ).arg( title ) );
+
+		const auto source_folder { source / path };
+
+		try
 		{
-			ZoneScopedN( "test folder" );
-			std::vector< std::filesystem::path > potential_executables;
-
-			//Check for a valid game in the folder
-			for ( const auto& file : std::filesystem::directory_iterator( folder ) )
+			if ( move_after_import )
 			{
-				ZoneScopedN( "Scan files" );
-				if ( file.is_regular_file() )
+				//Gather all files to copy
+				std::vector< std::filesystem::path > files;
+				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
+					if ( file.is_regular_file() ) files.emplace_back( std::move( file ) );
+
+				//Set paths for destination
+				const auto dest_root { config::paths::games::getPath() };
+				const auto dest_folder { dest_root / creator.toStdString() / title.toStdString()
+					                     / version.toStdString() };
+
+				emit updateSubMax( files.size() );
+
+				//Scan through and copy every file.
+				for ( int i = 0; i < files.size(); ++i )
 				{
-					QMimeDatabase mime_db;
-					const auto type { mime_db.mimeTypeForFile(
-						QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent ) };
+					const auto source_path { source_folder / files.at( i ) };
+					const auto dest_path { dest_folder / std::filesystem::relative( files.at( i ), source_folder ) };
 
-					if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
-					     || ( type.inherits( "application/x-ms-dos-executable" )
-					          && file.path().extension() == ".exe" ) )
-						potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
+					if ( !std::filesystem::exists( dest_path.parent_path() ) )
+						std::filesystem::create_directories( dest_path.parent_path() );
+
+					std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
+					emit updateSubText( QString( "Copying files for %1: %2" )
+					                        .arg( title )
+					                        .arg( QString::fromStdString( source_path.filename() ) ) );
+
+					emit updateSubValue( i );
 				}
+
+				//std::filesystem::remove( source_folder );
+				path = std::filesystem::relative( dest_folder, dest_root );
 			}
 
-			if ( potential_executables.size() > 0 )
-			{
-				ZoneScopedN( "Add to list" );
-				const auto [ title, version, creator ] =
-					extractGroups( regex, QString::fromStdString( folder.string() ) );
+			GameMetadata metadata {
+				std::move( version ), std::move( path ), std::move( executable ), !move_after_import, 0, 0
+			};
 
-				const GameImportData game_data { std::filesystem::relative( folder, base ),
-					                             title,
-					                             version,
-					                             creator,
-					                             skip_filesize ? 0 : folderSize( folder ),
-					                             potential_executables,
-					                             potential_executables.at( 0 ),
-					                             move_imported };
-				emit finishedDirectory( game_data );
-			}
-			else
-			{
-				TracyMessageL( "No executables found" );
-				spdlog::warn( "No executables found for path {}", folder );
-			}
+			auto record { RecordData(
+				std::move( title ),
+				std::move( creator ),
+				std::move( version ),
+				std::uint64_t( 0 ),
+				std::uint64_t( 0 ),
+				{ metadata },
+				{},
+				{} ) };
 
-			itter.pop();
-			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
+			//No crash! Yay. Continue to import
+			spdlog::info( "Import succeeded with id {}", record.getID() );
+			emit updateValue( ++counter );
+		}
+		catch ( RecordException& e )
+		{
+			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
+			emit updateValue( ++counter );
+		}
+		catch ( std::exception& e )
+		{
+			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
+			emit updateValue( ++counter );
+		}
+		catch ( ... )
+		{
+			spdlog::critical( "Something went seriously wrong in the import thread!" );
+			emit updateValue( ++counter );
 		}
 	}
-	emit finishedProcessing();
+
+	emit closeProgressBar();
+	emit importComplete();
 }

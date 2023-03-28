@@ -11,7 +11,7 @@
 #include <QComboBox>
 #include <QString>
 
-#include "h95/threading/ImportProcessor.hpp"
+#include "h95/threading/ImportPreProcessor.hpp"
 
 enum ImportColumns
 {

@@ -7,6 +7,7 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
 #include "h95/regex.hpp"
 #include "h95/utils.hpp"
@@ -22,15 +23,31 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 
-	connect( this, &BatchImportDialog::startProcessingDirectory, &processor, &ImportProcessor::processDirectory );
-	connect( &processor, &ImportProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
-	connect( &processor, &ImportProcessor::finishedProcessing, this, &BatchImportDialog::finishedProcessing );
+	connect( this, &BatchImportDialog::startProcessingDirectory, &preprocessor, &ImportPreProcessor::processDirectory );
+	connect(
+		&preprocessor, &ImportPreProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
+	connect( &preprocessor, &ImportPreProcessor::finishedProcessing, this, &BatchImportDialog::finishedProcessing );
 
 	connect(
 		this,
 		&BatchImportDialog::addToModel,
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
+
+	connect( this, &BatchImportDialog::startImportingGames, &processor, &ImportProcessor::importGames );
+	connect( &processor, &ImportProcessor::importComplete, this, &BatchImportDialog::finishedImporting );
+
+	//Connecting progress bar
+	connect( &processor, &ImportProcessor::updateText, &progress, &ProgressBarDialog::setText );
+	connect( &processor, &ImportProcessor::updateSubText, &progress, &ProgressBarDialog::setSubText );
+	connect( &processor, &ImportProcessor::updateMax, &progress, &ProgressBarDialog::setMax );
+	connect( &processor, &ImportProcessor::updateSubMax, &progress, &ProgressBarDialog::setSubMax );
+	connect( &processor, &ImportProcessor::updateValue, &progress, &ProgressBarDialog::setValue );
+	connect( &processor, &ImportProcessor::updateSubValue, &progress, &ProgressBarDialog::setSubValue );
+	connect( &processor, &ImportProcessor::startProgressBar, &progress, &ProgressBarDialog::show );
+	connect( &processor, &ImportProcessor::closeProgressBar, &progress, &ProgressBarDialog::hide );
+
+	progress.showSubProgress( true );
 
 	loadConfig();
 }
@@ -77,6 +94,8 @@ void BatchImportDialog::on_btnSetFolder_pressed()
 void BatchImportDialog::processFiles()
 {
 	ZoneScoped;
+	ui->btnNext->setEnabled( false );
+	ui->btnNext->setText( "Import Games" );
 	/*
 	 * base: /run/media/kj16609/HDDWIN/NSFWSorted/
 	 * regex: {path}/{creator}/{title}/{version}
@@ -110,33 +129,47 @@ void BatchImportDialog::processFiles()
 	ui->twGames->resizeColumnsToContents();
 }
 
+void BatchImportDialog::importFiles()
+{
+	const auto& games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
+
+	emit startImportingGames( games, ui->tbPath->text().toStdString() );
+}
+
 void BatchImportDialog::on_btnNext_pressed()
 {
-	//Verify that the path is set
-	const auto& path { ui->tbPath->text() };
-	if ( path.isEmpty() || !QFile::exists( path ) )
+	if ( ui->btnNext->text() == "Import Games" )
 	{
-		ui->statusLabel->setText( "Path not set or invalid. Please check" );
-		return;
+		importFiles();
 	}
-
-	if ( ui->tbFormat->text().isEmpty() )
+	else
 	{
-		ui->statusLabel->setText( "Autofill not set. Please fill out the required entries" );
-		return;
+		//Verify that the path is set
+		const auto& path { ui->tbPath->text() };
+		if ( path.isEmpty() || !QFile::exists( path ) )
+		{
+			ui->statusLabel->setText( "Path not set or invalid. Please check" );
+			return;
+		}
+
+		if ( ui->tbFormat->text().isEmpty() )
+		{
+			ui->statusLabel->setText( "Autofill not set. Please fill out the required entries" );
+			return;
+		}
+
+		if ( !ui->tbFormat->text().contains( "{title}" ) )
+		{
+			ui->statusLabel->setText( "Autofill missing \"{title}\" which is required" );
+			return;
+		}
+
+		ui->swImportGames->setCurrentIndex( 1 );
+		ui->btnBack->setEnabled( true );
+		ui->btnNext->setEnabled( false );
+
+		processFiles();
 	}
-
-	if ( !ui->tbFormat->text().contains( "{title}" ) )
-	{
-		ui->statusLabel->setText( "Autofill missing \"{title}\" which is required" );
-		return;
-	}
-
-	ui->swImportGames->setCurrentIndex( 1 );
-	ui->btnBack->setEnabled( true );
-	ui->btnNext->setEnabled( false );
-
-	processFiles();
 }
 
 void BatchImportDialog::on_btnBack_pressed()
@@ -163,4 +196,10 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 void BatchImportDialog::finishedProcessing()
 {
 	ui->statusLabel->setText( "Finished processing all games" );
+	ui->btnNext->setEnabled( true );
+}
+
+void BatchImportDialog::finishedImporting()
+{
+	this->close();
 }
