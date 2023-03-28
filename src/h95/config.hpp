@@ -75,10 +75,6 @@ void setSettings( const QString name, const T& value )
 #define SETTINGS_D( group, name, type, default_value )                                                                 \
   namespace config::group::name                                                                                        \
   {                                                                                                                    \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  return getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >();                                    \
-	}                                                                                                                  \
                                                                                                                        \
 	inline void set( const type& val )                                                                                 \
 	{                                                                                                                  \
@@ -88,6 +84,12 @@ void setSettings( const QString name, const T& value )
 	inline void setDefault()                                                                                           \
 	{                                                                                                                  \
 	  set( default_value );                                                                                            \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline type get()                                                                                                  \
+	{                                                                                                                  \
+	  if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                                   \
+	  return getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >();                                    \
 	}                                                                                                                  \
   }
 
