@@ -68,8 +68,7 @@ void batchImportDialog::processFiles()
 		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
 	};
 
-	const QString cleaned_regex { regexify( QString::fromStdString( search.string() )
-		                                        .replace( "{path}", QString::fromStdString( base.string() ) ) ) };
+	const QString cleaned_regex { regexify( escapeStr( QString::fromStdString( (base / search).string() ) ) ) };
 
 	const bool move_imported { ui->moveImported->isChecked() };
 

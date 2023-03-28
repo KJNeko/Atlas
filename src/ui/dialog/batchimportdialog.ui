@@ -129,7 +129,7 @@
              <item>
               <widget class="QLineEdit" name="tbFormat">
                <property name="text">
-                <string>{path}/{creator}/{title}/{version}</string>
+                <string>{creator}/{title}/{version}</string>
                </property>
               </widget>
              </item>
@@ -153,17 +153,32 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Valid options: title, creator, version. All must be surrounded with braces. Example {title}</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>You can use various characters to indicate a directory. You can see examples below or more advanced ones in the docs (LINK HERE)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Examples:
+somecreator/somegame-v1.0: {creator}/{title}-{version}
+somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>Valid options: path, title, creator, version. All must be surrounded with braces, Example: {path}
-{path} and {title} are required at the minimum
-Use &quot;/&quot; for subfolders and &quot;-&quot; if game info is in the folder name. See examples below:
-somegame-v1.0/game.exe
-somegame/v1.0/game.exe
-Autofill from path uses regex as it's way of parsing paths. You can fill in raw regex here or use the simplified capture groups (See '{title}' and it's siblings).</string>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
+                <string>Note that you can also use raw regex (Read the docs for more information about this)</string>
                </property>
               </widget>
              </item>
