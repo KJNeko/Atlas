@@ -294,6 +294,8 @@ RecordData::RecordData(
 		for ( const auto& preview : m_previews )
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
 						<< preview.string();
+
+		for ( const auto& version : m_versions ) addVersion( version, transaction );
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
