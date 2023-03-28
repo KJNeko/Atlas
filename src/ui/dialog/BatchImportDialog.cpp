@@ -1,4 +1,4 @@
-#include "batchimportdialog.h"
+#include "BatchImportDialog.hpp"
 
 #include <QFileDialog>
 #include <QFutureWatcher>
@@ -12,9 +12,9 @@
 #include "h95/utils.hpp"
 #include "ui/delegates/BatchImportDelegate.hpp"
 #include "ui/models/BatchImportModel.hpp"
-#include "ui_batchimportdialog.h"
+#include "ui_BatchImportDialog.h"
 
-batchImportDialog::batchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::batchImportDialog )
+BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::BatchImportDialog )
 {
 	ui->setupUi( this );
 	ui->progressBar->hide();
@@ -22,53 +22,49 @@ batchImportDialog::batchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 
-
-	connect( this, &batchImportDialog::startProcessingDirectory, &processor, &ImportProcessor::processDirectory );
-	connect( &processor, &ImportProcessor::finishedDirectory, this, &batchImportDialog::processFinishedDirectory );
-	connect( &processor, &ImportProcessor::finishedProcessing, this, &batchImportDialog::finishedProcessing );
+	connect( this, &BatchImportDialog::startProcessingDirectory, &processor, &ImportProcessor::processDirectory );
+	connect( &processor, &ImportProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
+	connect( &processor, &ImportProcessor::finishedProcessing, this, &BatchImportDialog::finishedProcessing );
 
 	connect(
 		this,
-		&batchImportDialog::addToModel,
+		&BatchImportDialog::addToModel,
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
-
 
 	loadConfig();
 }
 
-void batchImportDialog::loadConfig()
+void BatchImportDialog::loadConfig()
 {
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
-	ui->cbCheckLocal->setChecked(config::importer::searchGameInfo::get());
-	ui->cbSkipFilesize->setChecked(config::importer::skipFilesize::get());
-	ui->cbDownloadBanners->setChecked(config::importer::downloadBanner::get());
-	ui->cbDownloadVNDB->setChecked(config::importer::downloadVNDB::get());
-	ui->cbMoveImported->setChecked(config::importer::moveImported::get());
+	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
+	ui->cbSkipFilesize->setChecked( config::importer::skipFilesize::get() );
+	ui->cbDownloadBanners->setChecked( config::importer::downloadBanner::get() );
+	ui->cbDownloadVNDB->setChecked( config::importer::downloadVNDB::get() );
+	ui->cbMoveImported->setChecked( config::importer::moveImported::get() );
 }
 
-void batchImportDialog::saveConfig()
+void BatchImportDialog::saveConfig()
 {
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
-	config::importer::searchGameInfo::set(ui->cbCheckLocal->isChecked());
-	config::importer::skipFilesize::set(ui->cbSkipFilesize->isChecked());
-	config::importer::downloadBanner::set(ui->cbDownloadBanners->isChecked());
-	config::importer::downloadVNDB::set(ui->cbDownloadVNDB->isChecked());
-	config::importer::moveImported::set(ui->cbMoveImported->isChecked());
+	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
+	config::importer::skipFilesize::set( ui->cbSkipFilesize->isChecked() );
+	config::importer::downloadBanner::set( ui->cbDownloadBanners->isChecked() );
+	config::importer::downloadVNDB::set( ui->cbDownloadVNDB->isChecked() );
+	config::importer::moveImported::set( ui->cbMoveImported->isChecked() );
 }
 
-
-batchImportDialog::~batchImportDialog()
+BatchImportDialog::~BatchImportDialog()
 {
-
 	saveConfig();
 
 	delete ui;
 }
 
-void batchImportDialog::on_btnSetFolder_pressed()
+void BatchImportDialog::on_btnSetFolder_pressed()
 {
 	auto directory { QFileDialog::getExistingDirectory( this, "Select folder to add" ) };
 
@@ -78,7 +74,7 @@ void batchImportDialog::on_btnSetFolder_pressed()
 		ui->tbPath->setText( std::move( directory ) );
 }
 
-void batchImportDialog::processFiles()
+void BatchImportDialog::processFiles()
 {
 	ZoneScoped;
 	/*
@@ -108,12 +104,13 @@ void batchImportDialog::processFiles()
 
 	spdlog::info( "Scanning {} for games", base );
 
-	emit startProcessingDirectory( cleaned_regex, base, ui->cbMoveImported->isChecked(), ui->cbSkipFilesize->isChecked() );
+	emit startProcessingDirectory(
+		cleaned_regex, base, ui->cbMoveImported->isChecked(), ui->cbSkipFilesize->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }
 
-void batchImportDialog::on_btnNext_pressed()
+void BatchImportDialog::on_btnNext_pressed()
 {
 	//Verify that the path is set
 	const auto& path { ui->tbPath->text() };
@@ -142,13 +139,13 @@ void batchImportDialog::on_btnNext_pressed()
 	processFiles();
 }
 
-void batchImportDialog::on_btnBack_pressed()
+void BatchImportDialog::on_btnBack_pressed()
 {
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 }
 
-void batchImportDialog::modelChanged(
+void BatchImportDialog::modelChanged(
 	[[maybe_unused]] const QModelIndex& topLeft,
 	[[maybe_unused]] const QModelIndex& bottomRight,
 	[[maybe_unused]] const QList< int >& roles )
@@ -156,14 +153,14 @@ void batchImportDialog::modelChanged(
 	ui->twGames->resizeColumnsToContents();
 }
 
-void batchImportDialog::processFinishedDirectory( const GameImportData game_data )
+void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
 {
 	emit addToModel( game_data );
 	ui->twGames->resizeColumnsToContents();
 	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
 }
 
-void batchImportDialog::finishedProcessing()
+void BatchImportDialog::finishedProcessing()
 {
 	ui->statusLabel->setText( "Finished processing all games" );
 }

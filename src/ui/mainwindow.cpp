@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
+#include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
-#include "./dialog/batchimportdialog.h"
 #include "./ui_mainwindow.h"
 
 MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImport_triggered()
 {
-	batchImportDialog biDialog;
+	BatchImportDialog biDialog;
 	//connect( &biDialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
 	biDialog.exec();
 }

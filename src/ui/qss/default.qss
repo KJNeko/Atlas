@@ -165,10 +165,10 @@ background-color: transparent;
 }
 
 /*BatchImportDialog Specific*/
-#batchImportDialog{
+#BatchImportDialog{
         background-color:rgb(36,40,47);
 }
 
-#batchImportDialog > QWidget{
+#BatchImportDialog > QWidget{
         background-color:rgb(36,40,47);
 }

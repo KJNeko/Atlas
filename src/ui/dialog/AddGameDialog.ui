@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>addGameDialog</class>
- <widget class="QDialog" name="addGameDialog">
+ <class>AddGameDialog</class>
+ <widget class="QDialog" name="AddGameDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -7,23 +7,24 @@
 
 namespace Ui
 {
-	class batchImportDialog;
+	class BatchImportDialog;
 }
 
-class batchImportDialog : public QDialog
+class BatchImportDialog : public QDialog
 {
-	Q_DISABLE_COPY_MOVE( batchImportDialog )
+	Q_DISABLE_COPY_MOVE( BatchImportDialog )
 	Q_OBJECT
 
 	ImportProcessor processor {};
 
   public:
 
-	explicit batchImportDialog( QWidget* parent = nullptr );
-	~batchImportDialog();
+	explicit BatchImportDialog( QWidget* parent = nullptr );
+	~BatchImportDialog();
 
   private:
-	Ui::batchImportDialog* ui;
+
+	Ui::BatchImportDialog* ui;
 
 	void loadConfig();
 	void saveConfig();
@@ -35,12 +36,13 @@ class batchImportDialog : public QDialog
 	void processFiles();
 	void modelChanged(
 		const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList< int >& roles = QList< int >() );
-	void processFinishedDirectory(const GameImportData data);
+	void processFinishedDirectory( const GameImportData data );
 	void finishedProcessing();
 
   signals:
-	void startProcessingDirectory( const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize );
-	void addToModel(const GameImportData data);
+	void startProcessingDirectory(
+		const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize );
+	void addToModel( const GameImportData data );
 };
 
 #endif // BATCHIMPORTDIALOG_H
