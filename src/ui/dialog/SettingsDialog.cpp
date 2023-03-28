@@ -76,15 +76,16 @@ void SettingsDialog::preparePathsSettings()
 
 	//Set filesizes
 	ui->imagesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::getPath() ) ) ) );
+		->setText( locale
+	                   .formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::getPath() ) ) ) );
 
 	ui->gamesSizeLabel
 		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::getPath() ) ) ) );
 
 	ui->databaseSizeLabel
 		->setText( locale
-	                   .formattedDataSize( static_cast<
-										   qint64 >( std::filesystem::file_size( config::paths::database::getPath() ) ) ) );
+	                   .formattedDataSize( static_cast< qint64 >( std::filesystem::file_size( config::paths::database::
+	                                                                                              getPath() ) ) ) );
 }
 
 void SettingsDialog::savePathsSettings()
