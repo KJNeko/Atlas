@@ -43,9 +43,6 @@ class BatchImportModel final : public QAbstractTableModel
 
 	void clearData();
 
-
-
-
 	friend class BatchImportDelegate;
 };
 

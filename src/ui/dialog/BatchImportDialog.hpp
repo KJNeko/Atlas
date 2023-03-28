@@ -18,7 +18,7 @@ class BatchImportDialog : public QDialog
 
 	ImportPreProcessor preprocessor {};
 	ImportProcessor processor {};
-	ProgressBarDialog progress {this};
+	ProgressBarDialog progress { this };
 
   public:
 
