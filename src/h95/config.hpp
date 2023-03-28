@@ -109,7 +109,7 @@ void setSettings( const QString name, const T& value )
 SETTINGS_PATH( paths, database, "./data/hydrus95.db" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
-SETTINGS_PATH( paths, theme, "./data/themes/default.qss" );
+SETTINGS_PATH( paths, theme, "./data/themes/default.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
 SETTINGS_D( importer, skipFilesize, bool, false )
