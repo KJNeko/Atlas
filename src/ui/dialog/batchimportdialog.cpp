@@ -23,6 +23,16 @@ batchImportDialog::batchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 
 	ui->tbFormat->setText( config::importer::pathparse::get() );
+
+	connect( this, &batchImportDialog::startProcessingDirectory, &processor, &ImportProcessor::processDirectory );
+	connect( &processor, &ImportProcessor::finishedDirectory, this, &batchImportDialog::processFinishedDirectory );
+	connect( &processor, &ImportProcessor::finishedProcessing, this, &batchImportDialog::finishedProcessing );
+
+	connect(
+		this,
+		&batchImportDialog::addToModel,
+		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
+		&BatchImportModel::addGame );
 }
 
 batchImportDialog::~batchImportDialog()
@@ -68,75 +78,11 @@ void batchImportDialog::processFiles()
 		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
 	};
 
-	const QString cleaned_regex { regexify( escapeStr( QString::fromStdString( (base / search).string() ) ) ) };
-
-	const bool move_imported { ui->moveImported->isChecked() };
-
-	auto processGame = [ cleaned_regex, base, move_imported ]( const std::filesystem::path folder ) -> GameImportData
-	{
-		ZoneScopedN( "test folder" );
-		std::vector< std::filesystem::path > potential_executables;
-
-		//Check for a valid game in the folder
-		for ( const auto& file : std::filesystem::directory_iterator( folder ) )
-		{
-			ZoneScopedN( "Scan files" );
-			if ( file.is_regular_file() )
-			{
-				QMimeDatabase mime_db;
-				const auto type {
-					mime_db
-						.mimeTypeForFile( QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent )
-				};
-
-				if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
-				     || ( type.inherits( "application/x-ms-dos-executable" ) && file.path().extension() == ".exe" ) )
-					potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
-			}
-		}
-
-		if ( potential_executables.size() > 0 )
-		{
-			ZoneScopedN( "Add to list" );
-			const auto [ title, version, creator ] =
-				extractGroups( cleaned_regex, QString::fromStdString( folder.string() ) );
-
-			const GameImportData game_data { std::filesystem::relative( folder, base ),
-				                             title,
-				                             version,
-				                             creator,
-				                             folderSize( folder ),
-				                             potential_executables,
-				                             potential_executables.at( 0 ),
-				                             move_imported };
-			return game_data;
-		}
-		else
-			throw std::runtime_error(
-				"Fuck" ); //TODO: This needs better error handling. It REALLY shouldn't ever fail due to us though.
-	};
-
-	std::vector< QFuture< GameImportData > > futures;
+	const QString cleaned_regex { regexify( escapeStr( QString::fromStdString( ( base / search ).string() ) ) ) };
 
 	spdlog::info( "Scanning {} for games", base );
 
-	for ( auto itter = std::filesystem::
-	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
-	      itter != std::filesystem::recursive_directory_iterator();
-	      ++itter )
-	{
-		auto& file { *itter };
-		if ( file.is_directory() && valid( cleaned_regex, QString::fromStdString( itter->path().string() ) ) )
-		{
-			const auto future { QtConcurrent::run( processGame, file.path() ) };
-			futures.push_back( future );
-			itter.pop();
-			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
-		}
-	}
-
-	for ( const auto& future : futures )
-		if ( future.isValid() ) dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( future.result() );
+	emit startProcessingDirectory( cleaned_regex, base, ui->moveImported->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }
@@ -157,6 +103,12 @@ void batchImportDialog::on_btnNext_pressed()
 		return;
 	}
 
+	if ( !ui->tbFormat->text().contains( "{title}" ) )
+	{
+		ui->statusLabel->setText( "Autofill missing \"{title}\" which is required" );
+		return;
+	}
+
 	ui->swImportGames->setCurrentIndex( 1 );
 	ui->btnBack->setEnabled( true );
 	ui->btnNext->setEnabled( false );
@@ -168,4 +120,24 @@ void batchImportDialog::on_btnBack_pressed()
 {
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
+}
+
+void batchImportDialog::modelChanged(
+	[[maybe_unused]] const QModelIndex& topLeft,
+	[[maybe_unused]] const QModelIndex& bottomRight,
+	[[maybe_unused]] const QList< int >& roles )
+{
+	ui->twGames->resizeColumnsToContents();
+}
+
+void batchImportDialog::processFinishedDirectory( const GameImportData game_data )
+{
+	emit addToModel( game_data );
+	ui->twGames->resizeColumnsToContents();
+	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
+}
+
+void batchImportDialog::finishedProcessing()
+{
+	ui->statusLabel->setText( "Finished processing all games" );
 }

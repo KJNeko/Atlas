@@ -11,17 +11,7 @@
 #include <QComboBox>
 #include <QString>
 
-struct GameImportData
-{
-	std::filesystem::path path;
-	QString title;
-	QString version;
-	QString creator;
-	std::size_t size;
-	std::vector< std::filesystem::path > executables;
-	std::filesystem::path executable;
-	bool move_after_import;
-};
+#include "h95/threading/ImportProcessor.hpp"
 
 enum ImportColumns
 {
@@ -52,6 +42,9 @@ class BatchImportModel final : public QAbstractTableModel
 	bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole ) override;
 
 	void clearData();
+
+
+
 
 	friend class BatchImportDelegate;
 };
