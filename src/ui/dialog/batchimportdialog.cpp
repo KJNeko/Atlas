@@ -1,7 +1,9 @@
 #include "batchimportdialog.h"
 
 #include <QFileDialog>
+#include <QFutureWatcher>
 #include <QMimeDatabase>
+#include <QtConcurrentRun>
 
 #include <tracy/Tracy.hpp>
 
@@ -43,8 +45,6 @@ void batchImportDialog::on_btnSetFolder_pressed()
 void batchImportDialog::processFiles()
 {
 	ZoneScoped;
-	std::vector< GameImportData > folder_data;
-
 	/*
 	 * base: /run/media/kj16609/HDDWIN/NSFWSorted/
 	 * regex: {path}/{creator}/{title}/{version}
@@ -71,64 +71,74 @@ void batchImportDialog::processFiles()
 	const QString cleaned_regex { regexify( QString::fromStdString( search.string() )
 		                                        .replace( "{path}", QString::fromStdString( base.string() ) ) ) };
 
-	uint64_t games_found { 0 };
+	const bool move_imported { ui->moveImported->isChecked() };
 
+	auto processGame = [ cleaned_regex, base, move_imported ]( const std::filesystem::path folder ) -> GameImportData
 	{
-		ZoneScopedN( "Scan folders" );
-		for ( auto folder = std::filesystem::recursive_directory_iterator( base );
-		      folder != std::filesystem::recursive_directory_iterator();
-		      ++folder )
+		ZoneScopedN( "test folder" );
+		std::vector< std::filesystem::path > potential_executables;
+
+		//Check for a valid game in the folder
+		for ( const auto& file : std::filesystem::directory_iterator( folder ) )
 		{
-			ZoneScopedN( "test folder" );
-			if ( folder->is_directory() && valid( cleaned_regex, QString::fromStdString( folder->path().string() ) ) )
+			ZoneScopedN( "Scan files" );
+			if ( file.is_regular_file() )
 			{
-				std::vector< std::filesystem::path > potential_executables;
+				QMimeDatabase mime_db;
+				const auto type {
+					mime_db
+						.mimeTypeForFile( QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent )
+				};
 
-				//Check for a valid game in the folder
-				for ( const auto& file : std::filesystem::directory_iterator( folder->path() ) )
-				{
-					ZoneScopedN( "Scan files" );
-					if ( file.is_regular_file() )
-					{
-						QMimeDatabase mime_db;
-						const auto type { mime_db.mimeTypeForFile(
-							QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent ) };
-
-						if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
-						     || ( type.inherits( "application/x-ms-dos-executable" )
-						          && file.path().extension() == ".exe" ) )
-							potential_executables.emplace_back( std::filesystem::relative( file, folder->path() ) );
-					}
-				}
-
-				if ( potential_executables.size() > 0 )
-				{
-					ZoneScopedN( "Add to list" );
-					const auto [ title, version, creator ] =
-						extractGroups( cleaned_regex, QString::fromStdString( folder->path().string() ) );
-
-					GameImportData game_data { std::filesystem::relative( folder->path(), base ),
-						                       title,
-						                       version,
-						                       creator,
-						                       folderSize( folder->path() ),
-						                       potential_executables,
-						                       potential_executables.at( 0 ),
-						                       ui->moveImported->isChecked() };
-					folder_data.emplace_back( game_data );
-					++games_found;
-					ui->statusLabel->setText( QString( "%1 games processed" ).arg( games_found ) );
-				}
+				if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
+				     || ( type.inherits( "application/x-ms-dos-executable" ) && file.path().extension() == ".exe" ) )
+					potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
 			}
+		}
+
+		if ( potential_executables.size() > 0 )
+		{
+			ZoneScopedN( "Add to list" );
+			const auto [ title, version, creator ] =
+				extractGroups( cleaned_regex, QString::fromStdString( folder.string() ) );
+
+			const GameImportData game_data { std::filesystem::relative( folder, base ),
+				                             title,
+				                             version,
+				                             creator,
+				                             folderSize( folder ),
+				                             potential_executables,
+				                             potential_executables.at( 0 ),
+				                             move_imported };
+			return game_data;
+		}
+		else
+			throw std::runtime_error(
+				"Fuck" ); //TODO: This needs better error handling. It REALLY shouldn't ever fail due to us though.
+	};
+
+	std::vector< QFuture< GameImportData > > futures;
+
+	spdlog::info( "Scanning {} for games", base );
+
+	for ( auto itter = std::filesystem::
+	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
+	      itter != std::filesystem::recursive_directory_iterator();
+	      ++itter )
+	{
+		auto& file { *itter };
+		if ( file.is_directory() && valid( cleaned_regex, QString::fromStdString( itter->path().string() ) ) )
+		{
+			const auto future { QtConcurrent::run( processGame, file.path() ) };
+			futures.push_back( future );
+			itter.pop();
+			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
 		}
 	}
 
-	//Add all games into list
-	{
-		ZoneScopedN( "Populate model" );
-		for ( const auto& folder : folder_data )
-			dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( folder );
-	}
+	for ( const auto& future : futures )
+		if ( future.isValid() ) dynamic_cast< BatchImportModel* >( ui->twGames->model() )->addGame( future.result() );
+
 	ui->twGames->resizeColumnsToContents();
 }
 
