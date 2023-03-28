@@ -24,7 +24,7 @@ ImportProcessor::~ImportProcessor() noexcept
 }
 
 void ImportProcessor::
-	processDirectory( const QString regex, const std::filesystem::path base, const bool move_imported )
+	processDirectory( const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )
 {
 	for ( auto itter = std::filesystem::
 	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
@@ -64,7 +64,7 @@ void ImportProcessor::
 					                             title,
 					                             version,
 					                             creator,
-					                             folderSize( folder ),
+					                             skip_filesize ? 0 : folderSize( folder ),
 					                             potential_executables,
 					                             potential_executables.at( 0 ),
 					                             move_imported };

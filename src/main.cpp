@@ -69,12 +69,12 @@ int main( int argc, char** argv )
 
 	QApplication app { argc, argv };
 
-	QFile style_sheet_file { config::paths::theme::getQString() };
+	QFile style_sheet_file { config::paths::theme::get() };
 
 	if ( !style_sheet_file.exists() )
 	{
 		config::paths::theme::setDefault();
-		QFile default_sheet { config::paths::theme::getQString() };
+		QFile default_sheet { config::paths::theme::get() };
 		default_sheet.open( QFile::ReadOnly );
 
 		app.setStyleSheet( default_sheet.readAll() );
@@ -86,9 +86,9 @@ int main( int argc, char** argv )
 		app.setStyleSheet( style_sheet_file.readAll() );
 	}
 
-	std::filesystem::create_directory( config::paths::database::get().parent_path() );
-	std::filesystem::create_directory( config::paths::games::get() );
-	std::filesystem::create_directory( config::paths::images::get() );
+	std::filesystem::create_directory( config::paths::database::getPath().parent_path() );
+	std::filesystem::create_directory( config::paths::games::getPath() );
+	std::filesystem::create_directory( config::paths::images::getPath() );
 
 #ifdef NDEBUG
 	//if ( getSettings< bool >( "debug/very_vocal", false ) )
@@ -101,7 +101,7 @@ int main( int argc, char** argv )
 	spdlog::debug( "Debugging forcefully enabled due to not compiling with NDEBUG" );
 #endif
 
-	Database::initalize( config::paths::database::get() );
+	Database::initalize( config::paths::database::getPath() );
 
 	MainWindow w;
 	w.show();

@@ -22,7 +22,6 @@ batchImportDialog::batchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 
-	ui->tbFormat->setText( config::importer::pathparse::get() );
 
 	connect( this, &batchImportDialog::startProcessingDirectory, &processor, &ImportProcessor::processDirectory );
 	connect( &processor, &ImportProcessor::finishedDirectory, this, &batchImportDialog::processFinishedDirectory );
@@ -33,11 +32,38 @@ batchImportDialog::batchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		&batchImportDialog::addToModel,
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
+
+
+	loadConfig();
 }
+
+void batchImportDialog::loadConfig()
+{
+	ui->tbFormat->setText( config::importer::pathparse::get() );
+
+	ui->cbCheckLocal->setChecked(config::importer::searchGameInfo::get());
+	ui->cbSkipFilesize->setChecked(config::importer::skipFilesize::get());
+	ui->cbDownloadBanners->setChecked(config::importer::downloadBanner::get());
+	ui->cbDownloadVNDB->setChecked(config::importer::downloadVNDB::get());
+	ui->cbMoveImported->setChecked(config::importer::moveImported::get());
+}
+
+void batchImportDialog::saveConfig()
+{
+	config::importer::pathparse::set( ui->tbFormat->text() );
+
+	config::importer::searchGameInfo::set(ui->cbCheckLocal->isChecked());
+	config::importer::skipFilesize::set(ui->cbSkipFilesize->isChecked());
+	config::importer::downloadBanner::set(ui->cbDownloadBanners->isChecked());
+	config::importer::downloadVNDB::set(ui->cbDownloadVNDB->isChecked());
+	config::importer::moveImported::set(ui->cbMoveImported->isChecked());
+}
+
 
 batchImportDialog::~batchImportDialog()
 {
-	config::importer::pathparse::set( ui->tbFormat->text() );
+
+	saveConfig();
 
 	delete ui;
 }
@@ -82,7 +108,7 @@ void batchImportDialog::processFiles()
 
 	spdlog::info( "Scanning {} for games", base );
 
-	emit startProcessingDirectory( cleaned_regex, base, ui->moveImported->isChecked() );
+	emit startProcessingDirectory( cleaned_regex, base, ui->cbMoveImported->isChecked(), ui->cbSkipFilesize->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }

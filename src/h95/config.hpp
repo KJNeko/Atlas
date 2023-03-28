@@ -64,209 +64,61 @@ inline T getSettings( const QString setting_name )
 	}
 }
 
-#define SETTING_D( type, group, name, default_val )                                                                    \
-  namespace group::name                                                                                                \
-  {                                                                                                                    \
-	namespace internal                                                                                                 \
-	{                                                                                                                  \
-	  const std::string key { std::string( #group ) + "/" + #name };                                                   \
-	  const std::optional< type > default_value { default_val };                                                       \
-	}                                                                                                                  \
-                                                                                                                       \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  QSettings settings { getSettingsObject() };                                                                      \
-	  const QVariant value { settings.value( internal::key ) };                                                        \
-	  if ( value.template canConvert< type >() )                                                                       \
-		return value.template value< type >();                                                                         \
-	  else if ( internal::default_value.has_value() )                                                                  \
-		return internal::default_value.value();                                                                        \
-	  else                                                                                                             \
-		throw std::                                                                                                    \
-			runtime_error( fmt::format( "No setting with name {} found, No default value given.", internal::key ) );   \
-	}                                                                                                                  \
-                                                                                                                       \
-	inline void set( const type& value )                                                                               \
-	{                                                                                                                  \
-	  QSettings settings { getSettingsObject() };                                                                      \
-	  settings.setValue( internal::key, value );                                                                       \
-	}                                                                                                                  \
-  }
-
-#define SETTING( type, group, name ) SETTING_D( type, group, name, std::nullopt_t );
-
 template < typename T >
 void setSettings( const QString name, const T& value )
 {
 	getSettingsObject().setValue( name, value );
 }
 
-namespace config
-{
-	namespace paths
-	{
-		namespace database
-		{
-			inline QString getQString()
-			{
-				return "./data/hydrus95.db";
-				/*
-				QSettings settings { getSettingsObject() };
-				return settings.value( "paths/database", "./data/hydrus95.db" ).value< QString >();
-				 */
-			}
+#define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
 
-			inline std::filesystem::path get()
-			{
-				return { getQString().toStdString() };
-			}
+#define SETTINGS_D( group, name, type, default_value )                                                                 \
+  namespace config::group::name                                                                                        \
+  {                                                                                                                    \
+	inline type get()                                                                                                  \
+	{                                                                                                                  \
+	  return getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >();                                    \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline void set( const type& val )                                                                                 \
+	{                                                                                                                  \
+	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline void setDefault()                                                                                           \
+	{                                                                                                                  \
+	  set( default_value );                                                                                            \
+	}                                                                                                                  \
+  }
 
-			inline std::filesystem::path getCanonical()
-			{
-				const auto path { get() };
-				if ( std::filesystem::exists( path ) )
-					return std::filesystem::canonical( get() );
-				else
-					return path;
-			}
+#define SETTINGS_PATH( group, name, default_path )                                                                     \
+  SETTINGS_D( group, name, QString, default_path )                                                                     \
+  namespace config::group::name                                                                                        \
+  {                                                                                                                    \
+	inline std::filesystem::path getPath()                                                                             \
+	{                                                                                                                  \
+	  return { group::name::get().toStdString() };                                                                     \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline void setPath( const std::filesystem::path path )                                                            \
+	{                                                                                                                  \
+	  group::name::set( QString::fromStdString( path.string() ) );                                                     \
+	}                                                                                                                  \
+  }
 
-			/*
-			inline void set( const QString path )
-			{
-				setSettings( "paths/database", path );
-			}
+SETTINGS_PATH( paths, database, "./data/hydrus95.db" )
+SETTINGS_PATH( paths, images, "./data/images" )
+SETTINGS_PATH( paths, games, "./data/games" )
+SETTINGS_PATH( paths, theme, "./data/themes/default.qss" );
 
-			inline void set( std::filesystem::path path )
-			{
-				set( QString::fromStdString( path.string() ) );
-			}*/
+SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
+SETTINGS_D( importer, skipFilesize, bool, false )
+SETTINGS_D( importer, searchGameInfo, bool, true )
+SETTINGS_D( importer, downloadBanner, bool, false )
+SETTINGS_D( importer, downloadVNDB, bool, false )
+SETTINGS_D( importer, moveImported, bool, true )
 
-		} // namespace database
-
-		namespace images
-		{
-			inline QString getQString()
-			{
-				QSettings settings { getSettingsObject() };
-				return settings.value( "paths/images", "./data/images" ).value< QString >();
-			}
-
-			inline std::filesystem::path get()
-			{
-				return { getQString().toStdString() };
-			}
-
-			inline std::filesystem::path getCanonical()
-			{
-				const auto path { get() };
-				if ( std::filesystem::exists( path ) )
-					return std::filesystem::canonical( get() );
-				else
-					return path;
-			}
-
-			inline void set( const QString path )
-			{
-				setSettings( "paths/images", path );
-			}
-
-			inline void set( std::filesystem::path path )
-			{
-				set( QString::fromStdString( path.string() ) );
-			}
-
-		} // namespace images
-
-		namespace games
-		{
-			inline QString getQString()
-			{
-				QSettings settings { getSettingsObject() };
-				return settings.value( "paths/games", "./data/games" ).value< QString >();
-			}
-
-			inline std::filesystem::path get()
-			{
-				return { getQString().toStdString() };
-			}
-
-			inline std::filesystem::path getCanonical()
-			{
-				const auto path { get() };
-				if ( std::filesystem::exists( path ) )
-					return std::filesystem::canonical( get() );
-				else
-					return path;
-			}
-
-			inline void set( const QString path )
-			{
-				setSettings( "paths/games", path );
-			}
-
-			inline void set( std::filesystem::path path )
-			{
-				set( QString::fromStdString( path.string() ) );
-			}
-		} // namespace games
-
-		namespace theme
-		{
-			inline QString getQString()
-			{
-				QSettings settings { getSettingsObject() };
-				return settings.value( "paths/theme", "./data/themes/default.qss" ).value< QString >();
-			}
-
-			inline std::filesystem::path get()
-			{
-				return { getQString().toStdString() };
-			}
-
-			inline void setDefault()
-			{
-				setSettings( "paths/theme", "./data/themes/default.qss" );
-			}
-
-			inline void set( const QString path )
-
-			{
-				setSettings( "paths/theme", path );
-			}
-
-			inline void set( const std::filesystem::path& path )
-			{
-				set( QString::fromStdString( path.string() ) );
-			}
-
-		} // namespace theme
-
-	} // namespace paths
-
-	namespace importer
-	{
-		namespace pathparse
-		{
-			inline QString get()
-			{
-				QSettings settings { getSettingsObject() };
-				return settings.value( "import/pathparse", "{path}/{creator}/{title}/{version}" ).value< QString >();
-			}
-
-			inline void set( const QString path )
-
-			{
-				setSettings( "import/pathparse", path );
-			}
-
-		} // namespace pathparse
-
-	} // namespace importer
-
-	SETTING_D( bool, db, first_start, true )
-
-	SETTING_D( int, logging, level, 2 )
-
-} // namespace config
+SETTINGS_D( db, first_start, bool, true )
+SETTINGS_D( logging, level, int, 2 )
 
 #endif //HYDRUS95_CONFIG_HPP

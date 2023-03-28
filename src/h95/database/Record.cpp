@@ -68,7 +68,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			version_playtime );
 	};
 
-	const std::filesystem::path image_path { config::paths::images::get() };
+	const std::filesystem::path image_path { config::paths::images::getPath() };
 
 	transaction << "SELECT type, path FROM images WHERE record_id = ? " << id >>
 		[ this, &image_path ]( const uint16_t type, std::string path )

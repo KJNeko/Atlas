@@ -45,7 +45,7 @@ void SettingsDialog::prepareThemeSettings()
 	//Select current option
 	for ( int i = 0; i < ui->themeBox->count(); ++i )
 	{
-		if ( ui->themeBox->itemText( i ).toStdString() == config::paths::theme::get().filename().string() )
+		if ( ui->themeBox->itemText( i ).toStdString() == config::paths::theme::getPath().filename().string() )
 		{
 			//Found
 			ui->themeBox->setCurrentIndex( i );
@@ -68,30 +68,30 @@ void SettingsDialog::preparePathsSettings()
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
 	//Set paths
-	ui->imagesPath->setText( config::paths::images::getQString() );
-	ui->gamePath->setText( config::paths::games::getQString() );
-	ui->databasePath->setText( config::paths::database::getQString() );
+	ui->imagesPath->setText( config::paths::images::get() );
+	ui->gamePath->setText( config::paths::games::get() );
+	ui->databasePath->setText( config::paths::database::get() );
 
 	QLocale locale { this->locale() };
 
 	//Set filesizes
 	ui->imagesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::get() ) ) ) );
+		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::getPath() ) ) ) );
 
 	ui->gamesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::get() ) ) ) );
+		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::getPath() ) ) ) );
 
 	ui->databaseSizeLabel
 		->setText( locale
 	                   .formattedDataSize( static_cast<
-										   qint64 >( std::filesystem::file_size( config::paths::database::get() ) ) ) );
+										   qint64 >( std::filesystem::file_size( config::paths::database::getPath() ) ) ) );
 }
 
 void SettingsDialog::savePathsSettings()
 {
 	ZoneScoped;
 	//Handle pathSettings
-	if ( ui->gamePath->text() != config::paths::games::getQString() )
+	if ( ui->gamePath->text() != config::paths::games::get() )
 	{
 		const std::filesystem::path new_path { ui->gamePath->text().toStdString() };
 
@@ -121,7 +121,7 @@ void SettingsDialog::savePathsSettings()
 		progress_dialog.show();
 
 		std::vector< std::filesystem::path > folders;
-		for ( const auto& group : std::filesystem::directory_iterator( config::paths::games::get() ) )
+		for ( const auto& group : std::filesystem::directory_iterator( config::paths::games::getPath() ) )
 			if ( group.is_directory() ) folders.emplace_back( group.path() );
 
 		progress_dialog.setMax( static_cast< int >( folders.size() ) );
@@ -135,7 +135,7 @@ void SettingsDialog::savePathsSettings()
 
 			std::vector< std::filesystem::path > files;
 
-			const auto games_path { config::paths::games::get() };
+			const std::filesystem::path games_path { config::paths::games::getPath() };
 
 			//Find all files that we need to copy.
 			for ( const auto& file : std::filesystem::recursive_directory_iterator( folders.at( i ) ) )
@@ -175,26 +175,26 @@ void SettingsDialog::savePathsSettings()
 		}*/
 
 		//Delete old game folder
-		std::filesystem::remove_all( config::paths::games::get() );
+		std::filesystem::remove_all( config::paths::games::getPath() );
 
 		//Set new config option
-		config::paths::games::set( new_path );
+		config::paths::games::setPath( new_path );
 	}
 
-	if ( ui->imagesPath->text() != config::paths::images::getQString() )
+	if ( ui->imagesPath->text() != config::paths::images::get() )
 	{
 		const std::filesystem::path new_image_path { ui->imagesPath->text().toStdString() };
 
 		//TODO: Make progress bar for copying images
-		for ( const auto& image : std::filesystem::directory_iterator( config::paths::images::get() ) )
+		for ( const auto& image : std::filesystem::directory_iterator( config::paths::images::getPath() ) )
 			std::filesystem::copy( image, new_image_path / image.path().filename() );
 
 		//TODO: Might as well clean any orphans here too.
 
 		//Delete old image folder
-		std::filesystem::remove_all( config::paths::images::get() );
+		std::filesystem::remove_all( config::paths::images::getPath() );
 
-		config::paths::images::set( new_image_path );
+		config::paths::images::setPath( new_image_path );
 	}
 }
 
@@ -245,7 +245,7 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 void SettingsDialog::reloadTheme()
 {
 	ZoneScoped;
-	QFile file { config::paths::theme::getQString() };
+	QFile file { config::paths::theme::get() };
 
 	if ( !file.exists() )
 	{

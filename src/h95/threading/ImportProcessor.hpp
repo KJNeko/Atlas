@@ -36,7 +36,7 @@ class ImportProcessor : public QObject
 	~ImportProcessor();
 
   public slots:
-	void processDirectory( const QString regex, const std::filesystem::path base, const bool move_imported );
+	void processDirectory( const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize );
 
   signals:
 	void finishedProcessing();
