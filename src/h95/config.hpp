@@ -215,7 +215,7 @@ namespace config
 			inline QString getQString()
 			{
 				QSettings settings { getSettingsObject() };
-				return settings.value( "paths/theme", ":/themes/default.qss" ).value< QString >();
+				return settings.value( "paths/theme", "./data/themes/default.qss" ).value< QString >();
 			}
 
 			inline std::filesystem::path get()
@@ -225,7 +225,7 @@ namespace config
 
 			inline void setDefault()
 			{
-				setSettings( "paths/theme", ":/themes/default.qss" );
+				setSettings( "paths/theme", "./data/themes/default.qss" );
 			}
 
 			inline void set( const QString path )

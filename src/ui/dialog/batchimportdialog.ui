@@ -20,76 +20,18 @@
    <string>Import Games Wizard</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QStackedWidget &gt;QWidget{
-	/*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(45,56, 75, 255), stop:1 rgba(27, 33, 41, 255));*/
-	background-color: rgba(45,56, 75, 255);
-	border:none;
-}
-QStackedWidget{
-	border:none;
-}
-QWidget{
-	background-color:rgb(36,40,47);
-	color:rgb(200,200,200)
-}
-
-QFrame{
-	background-color: rgb(42,46,51);
-border:1px solid;
-border-color:rgb(33, 34, 43);}
-
-QLabel{
-color: rgb(243, 244, 245);
-border:none;}
-
-QPushButton{
-background-color: rgb(43,45,49);
-color:rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
-
-QPushButton:hover:!pressed
-{
-background-color: rgb(54, 55, 61);
-}
-
-QTextEdit{
-background-color:rgb(130,133,143);
-color: rgb(243, 244, 245);
-border:none;}
-
-QPlainTextEdit{
-color: rgb(130,133,143);
-border:none;}
-
-QListWidget{
-background-color:rgb(130,133,143);
-color: rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
-
-QTableWidget{
-background-color:rgb(130,133,143);
-color: rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
-
-QToolButton{
-background-color: rgb(43,45,49);
-color:rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
-QToolButton:hover:!pressed
-{
-background-color: rgb(54, 55, 61);
-}
-
-QCheckBox{
-background-color:none;
-color: rgb(243, 244, 245);
-border:none;}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QStackedWidget" name="swImportGames">
      <property name="sizePolicy">

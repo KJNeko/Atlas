@@ -1,0 +1,174 @@
+
+/* BASE WIDGETS */
+QStackedWidget >QWidget{
+        /*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(45,56, 75, 255), stop:1 rgba(27, 33, 41, 255));*/
+        background-color: rgba(45,56, 75, 255);
+        border:none;
+}
+QStackedWidget{
+        border:none;
+}
+QWidget{
+        background-color: rgb(0, 0, 0);
+                border:none;
+}
+
+QFrame{
+        background-color: rgb(42,46,51);
+                border:none;
+}
+
+/* MENU BAR*/
+QMenuBar{
+        background-color: rgb(42,46,51);
+        color: rgb(200,200,200);
+        border:none;}
+
+QMenuBar::item:selected {
+        background-color: rgb(42,46,51);
+        color:rgb(255,255,255);
+}
+ QMenu{
+        background-color: rgb(42,46,51);
+        color: rgb(255, 255, 255);
+ }
+
+ QMenu::item:selected{
+        background-color:rgb(45,56, 75);
+        color: rgb(255, 255, 255);
+ }
+
+/* STATUS BAR*/
+
+QStatusBar{
+        background-color: rgb(42,46,51);
+        border:none;}
+
+QSizeGrip {
+        background-color: transparent;
+    image: url(:/images/assets/sizegrip.png);
+    width: 16px;
+    height: 16px;}
+
+QListView{
+background-color:rgb(45,51,60);
+}
+
+QTreeWidget{
+background-color:rgb(36,40,47);
+color:rgb(200,200,200);
+border: none;
+}
+
+QTreeWidget::item::selected{
+        background-color:rgb(45,56, 75);
+        color: rgb(255, 255, 255);
+}
+
+QTableWidget{
+background-color:rgb(130,133,143);
+color: rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+
+/* BUTTONS & TEXT*/
+QLineEdit{
+    background-color:rgb(35,37,42);
+    border:none;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    margin-right:5px;
+    color:rgb(200,200,200)
+}
+
+QLineEdit::Text{
+    color:rgb(200,200,200)
+}
+
+QTextEdit{
+    background-color:rgb(130,133,143);
+    color: rgb(243, 244, 245);
+    border:none;
+}
+
+QPlainTextEdit{
+    color: rgb(130,133,143);
+    border:none;
+}
+
+QToolButton{
+border-radius:5px;
+background-color:rgb(35,37,42);
+border:none;
+color:rgb(200,200,200);
+}
+
+QToolButton::Hover{
+background-color:rgb(35,37,42);
+border:none;
+color:rgb(255,255,255);
+}
+
+QPushButton{
+background-color: rgb(43,45,49);
+color:rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+
+QPushButton:hover:!pressed
+{
+background-color: rgb(54, 55, 61);
+}
+
+QLabel{
+color:rgb(200,200,200);
+}
+
+QCheckBox{
+background-color:none;
+color: rgb(243, 244, 245);
+border:none;}
+
+/* CUSTOM*/
+#searchIcon{
+background-color:rgb(35,37,42);
+border:none;
+margin-left:4px;
+border-top-left-radius:5px;
+border-bottom-left-radius:5px;
+}
+
+#Logo{
+background-color:rgb(35,37,42);
+border:none;
+margin-left:4px;
+border-top-left-radius:5px;
+border-bottom-left-radius:5px;
+}
+
+#HomeButton{
+background-color:rgb(35,37,42);
+border:none;
+border-top-right-radius:5px;
+border-bottom-right-radius:5px;
+margin-right:5px;
+color:rgb(200,200,200)
+}
+
+#HomeButton::Hover{
+background-color:rgb(62,64,71);
+color:rgb(255,255,255);
+}
+
+#AddGame{
+background-color: transparent;
+}
+
+/*BatchImportDialog Specific*/
+#batchImportDialog{
+        background-color:rgb(36,40,47);
+}
+
+#batchImportDialog > QWidget{
+        background-color:rgb(36,40,47);
+}

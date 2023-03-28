@@ -17,134 +17,7 @@
    <string>Hydrus95</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QStackedWidget &gt;QWidget{
-	/*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(45,56, 75, 255), stop:1 rgba(27, 33, 41, 255));*/
-	background-color: rgba(45,56, 75, 255);
-	border:none;
-}
-QStackedWidget{
-	border:none;
-}
-QWidget{
-	background-color: rgb(0, 0, 0);}
-
-QFrame{
-	background-color: rgb(42,46,51);
-	border:none;}
-
-/*MENU BAR*/
-QMenuBar{
-	background-color: rgb(42,46,51);
-	color: rgb(200,200,200);
-	border:none;}
-
-QMenuBar::item:selected {    
-	background-color: rgb(42,46,51);
-	color:rgb(255,255,255);
-}
- QMenu{
-	background-color: rgb(42,46,51);
- 	color: rgb(255, 255, 255);
- }
-
- QMenu::item:selected{
-	background-color:rgb(45,56, 75);
- 	color: rgb(255, 255, 255);
- }
-
-/*END MENU BAR*/
-
-QStatusBar{
-	background-color: rgb(42,46,51);
-	border:none;}
-
-
-
-QSizeGrip {
-	background-color: transparent;
-    image: url(:/images/assets/sizegrip.png);
-    width: 16px;
-    height: 16px;}
-
-QListView{
-background-color:rgb(45,51,60);
-}
-
-QTreeWidget{
-background-color:rgb(36,40,47);
-color:rgb(200,200,200)
-}
-
-QTreeWidget::item::selected{
-	background-color:rgb(45,56, 75);
- 	color: rgb(255, 255, 255);
-}
-
-QLineEdit{
-background-color:rgb(35,37,42);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-margin-right:5px;
-color:rgb(200,200,200)
-}
-
-QLineEdit::Text{
-color:rgb(200,200,200)
-}
-
-QToolButton{
-border-radius:5px;
-background-color:rgb(35,37,42);
-border:none;
-color:rgb(200,200,200);
-}
-
-QToolButton::Hover{
-background-color:rgb(35,37,42);
-border:none;
-color:rgb(255,255,255);
-}
-
-QLabel{
-color:rgb(200,200,200);
-}
-
-#searchIcon{
-background-color:rgb(35,37,42);
-border:none;
-margin-left:4px;
-border-top-left-radius:5px;
-border-bottom-left-radius:5px;
-}
-
-#Logo{
-background-color:rgb(35,37,42);
-border:none;
-margin-left:4px;
-border-top-left-radius:5px;
-border-bottom-left-radius:5px;
-}
-
-#HomeButton{
-background-color:rgb(35,37,42);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-margin-right:5px;
-color:rgb(200,200,200)
-}
-
-#HomeButton::Hover{
-background-color:rgb(62,64,71);
-color:rgb(255,255,255);
-}
-
-#AddGame{
-background-color: transparent;
-}
-
-</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -391,8 +264,8 @@ background-color: transparent;
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/ui/images/addgame.png</normaloff>:/ui/images/addgame.png</iconset>
+          <iconset resource="../resources.qrc">
+           <normaloff>:/images/assets/addgame.png</normaloff>:/images/assets/addgame.png</iconset>
          </property>
          <property name="toolButtonStyle">
           <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -627,6 +500,7 @@ background-color: transparent;
   </action>
  </widget>
  <resources>
+  <include location="../resources.qrc"/>
   <include location="../resources.qrc"/>
  </resources>
  <connections/>
