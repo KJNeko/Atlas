@@ -108,6 +108,25 @@ void setSettings( const QString name, const T& value )
 	}                                                                                                                  \
   }
 
+#define SETTINGS( group, name, type )                                                                                  \
+  namespace config::group::name                                                                                        \
+  {                                                                                                                    \
+	inline bool hasValue()                                                                                             \
+	{                                                                                                                  \
+	  return getSettingsObject().contains( KEY_VALUE( group, name ) );                                                 \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline type get()                                                                                                  \
+	{                                                                                                                  \
+	  return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                                \
+	}                                                                                                                  \
+                                                                                                                       \
+	inline void set( const type val )                                                                                  \
+	{                                                                                                                  \
+	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
+	}                                                                                                                  \
+  }
+
 SETTINGS_PATH( paths, database, "./data/hydrus95.db" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
@@ -125,5 +144,8 @@ SETTINGS_D( logging, level, int, 2 )
 
 SETTINGS_D( delegate, banner_x, int, 600 )
 SETTINGS_D( delegate, banner_y, int, 250 )
+
+SETTINGS( geometry, main_window, QByteArray )
+SETTINGS( geometry, batch_import_dialog, QByteArray )
 
 #endif //HYDRUS95_CONFIG_HPP

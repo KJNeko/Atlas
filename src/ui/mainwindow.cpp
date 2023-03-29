@@ -3,6 +3,7 @@
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./ui_mainwindow.h"
+#include "h95/config.hpp"
 
 MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -15,14 +16,17 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	addTreeRoot( "Games", "0" );
 
-	connect(this, &MainWindow::triggerSearch, &record_search, &Search::triggerSearch);
-	connect(&record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords);
+	connect( this, &MainWindow::triggerSearch, &record_search, &Search::triggerSearch );
+	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
+
+	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 
 	emit triggerSearch();
 }
 
 MainWindow::~MainWindow()
 {
+	config::geometry::main_window::set( saveGeometry() );
 	delete ui;
 }
 

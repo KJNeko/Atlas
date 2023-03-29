@@ -49,6 +49,9 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 	progress.showSubProgress( true );
 
+	if ( config::geometry::batch_import_dialog::hasValue() )
+		restoreGeometry( config::geometry::batch_import_dialog::get() );
+
 	loadConfig();
 }
 
@@ -77,6 +80,7 @@ void BatchImportDialog::saveConfig()
 BatchImportDialog::~BatchImportDialog()
 {
 	saveConfig();
+	config::geometry::batch_import_dialog::set( saveGeometry() );
 
 	delete ui;
 }
@@ -201,6 +205,6 @@ void BatchImportDialog::finishedProcessing()
 
 void BatchImportDialog::finishedImporting()
 {
-	emit importComplete(this->processor.getCompleted());
+	emit importComplete( this->processor.getCompleted() );
 	this->close();
 }
