@@ -380,7 +380,7 @@
             <number>0</number>
            </property>
            <item row="0" column="0">
-            <widget class="QListView" name="BannerView"/>
+            <widget class="RecordView" name="recordView"/>
            </item>
           </layout>
          </widget>
@@ -499,6 +499,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RecordView</class>
+   <extends>QListView</extends>
+   <header>ui/views/RecordView.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources.qrc"/>
   <include location="../resources.qrc"/>
