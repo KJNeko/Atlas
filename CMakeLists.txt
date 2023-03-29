@@ -121,6 +121,7 @@ set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 
 add_library(H95Obj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
 target_link_libraries(H95Obj ${REQUIRED_LIBS})
 target_include_directories(H95Obj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(H95Obj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 if (DEFINED DISABLE_FLYWEIGHT)
     target_compile_definitions(H95Obj PRIVATE HYDRUS95_DISABLE_FLYWEIGHT)
