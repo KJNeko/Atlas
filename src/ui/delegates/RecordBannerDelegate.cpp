@@ -20,6 +20,8 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	const QPixmap banner { record->getBanner() };
 	painter->drawPixmap( options.rect, banner );
 
+	if ( options.state & QStyle::State_Selected ) painter->fillRect( options.rect, QColor( 0, 0, 255, 50 ) );
+
 	//Draw game name
 	//The bottom strip should be about (text_height * 1.2)
 	const int stripe_height { static_cast< int >( options.fontMetrics.height() * 1.4 ) };
@@ -44,7 +46,6 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );
 
-	if ( options.state & QStyle::State_Selected ) painter->fillRect( options.rect, QColor( 0, 0, 255, 50 ) );
 
 	painter->drawRect( options.rect );
 	painter->restore();
