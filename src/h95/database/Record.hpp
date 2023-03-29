@@ -27,9 +27,9 @@ struct RecordData : public QObject
   private:
 
 	RecordID m_id { 0 };
-	QString m_title;
-	QString m_creator;
-	QString m_engine;
+	QString m_title {};
+	QString m_creator {};
+	QString m_engine {};
 
 	//! Unix timestamp (Jan 01 1970 Epoch)
 	std::uint64_t m_last_played { 0 };
@@ -56,7 +56,7 @@ struct RecordData : public QObject
 	QPixmap getBanner() const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
-	std::optional< GameMetadata > getLatestVersion() const;
+	const std::optional< const GameMetadata > getLatestVersion() const;
 
 	//Setters
 	void setTitle( QString, Transaction = Transaction( true ) );

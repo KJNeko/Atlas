@@ -15,9 +15,9 @@ class ImportProcessor : public QObject
 {
 	Q_OBJECT
 
-	QThread thread;
+	QThread thread {};
 
-	std::vector< RecordID > completed_records;
+	std::vector< RecordID > completed_records {};
 
   public:
 

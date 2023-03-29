@@ -24,7 +24,7 @@ ImportProcessor::~ImportProcessor() noexcept
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {
 	emit startProgressBar();
-	emit updateMax( data.size() );
+	emit updateMax( static_cast<int>(data.size()) );
 
 	int counter { 0 };
 
@@ -49,10 +49,10 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 				const auto dest_folder { dest_root / creator.toStdString() / title.toStdString()
 					                     / version.toStdString() };
 
-				emit updateSubMax( files.size() );
+				emit updateSubMax( static_cast<int>(files.size()) );
 
 				//Scan through and copy every file.
-				for ( int i = 0; i < files.size(); ++i )
+				for ( std::size_t i = 0; i < files.size(); ++i )
 				{
 					const auto source_path { source_folder / files.at( i ) };
 					const auto dest_path { dest_folder / std::filesystem::relative( files.at( i ), source_folder ) };
@@ -65,7 +65,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					                        .arg( title )
 					                        .arg( QString::fromStdString( source_path.filename() ) ) );
 
-					emit updateSubValue( i );
+					emit updateSubValue( static_cast<int>(i) );
 				}
 
 				//std::filesystem::remove( source_folder );

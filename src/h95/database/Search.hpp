@@ -17,7 +17,7 @@ class Search : public QObject
 {
 	Q_OBJECT
 
-	std::vector< QString > active_tags;
+	std::vector< QString > active_tags {};
 
   public:
 

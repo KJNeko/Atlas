@@ -76,12 +76,15 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			case PREVIEW_PREVIEW:
 				{
 					m_previews.emplace_back( image_path / path );
+					break;
 				}
 			case PREVIEW_BANNER:
 				{
 					m_banner = image_path / path;
+					break;
 				}
-			case PREVIEW_UNKNOWN:
+			case PREVIEW_UNKNOWN: [[fallthrough]];
+			default:
 				break;
 		}
 	};
@@ -303,7 +306,7 @@ RecordData::RecordData(
 	}
 }
 
-std::optional< GameMetadata > RecordData::getLatestVersion() const
+const std::optional< const GameMetadata > RecordData::getLatestVersion() const
 {
 	if ( m_versions.size() == 0 ) return std::nullopt;
 

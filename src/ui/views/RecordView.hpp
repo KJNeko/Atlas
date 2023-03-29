@@ -32,6 +32,7 @@ class RecordView : public QListView
 	void addRecords( const std::vector< RecordID > records );
 	void setRecords( const std::vector< Record > records );
 	void setRenderMode( const DelegateType type );
+	void on_customContextMenuRequested( const QPoint& pos );
 };
 
 #endif //HYDRUS95_RECORDVIEW_HPP

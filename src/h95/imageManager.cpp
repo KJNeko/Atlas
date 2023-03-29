@@ -20,7 +20,7 @@ namespace imageManager
 	std::filesystem::path getImagePath()
 	{
 		ZoneScoped;
-		const auto path { std::filesystem::path( config::paths::images::getPath() ) };
+		const auto path { config::paths::images::getPath() };
 
 		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
 

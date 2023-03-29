@@ -120,11 +120,11 @@ TransactionData::TransactionData() : guard( getLock() )
 TransactionData::~TransactionData()
 {
 #ifndef NDEBUG
-	internal::last_locked = std::thread::id( -1 );
+	internal::last_locked = std::thread::id( 0 );
 #endif
 }
 
-Transaction::Transaction( const bool autocommit ) : m_autocommit( autocommit ), data( new TransactionData() )
+Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
 {
 	ZoneScoped;
 	if ( internal::db == nullptr )

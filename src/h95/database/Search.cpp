@@ -4,17 +4,17 @@
 
 #include "Search.hpp"
 
-void Search::searchTextChanged( QString text )
+void Search::searchTextChanged( [[maybe_unused]] QString text )
 {
 	//
 }
 
-void Search::addTag( QString )
+void Search::addTag( [[maybe_unused]] QString tag_text)
 {
 	emit searchCompleted( search() );
 }
 
-void Search::removeTag( QString )
+void Search::removeTag( [[maybe_unused]] QString tag_text)
 {
 	emit searchCompleted( search() );
 }

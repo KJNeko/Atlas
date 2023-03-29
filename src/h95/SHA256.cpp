@@ -73,5 +73,5 @@ std::string SHA256::toHex() const
 
 QByteArrayView SHA256::toByteView() const
 {
-	return QByteArrayView( m_data.data(), m_data.size() );
+	return QByteArrayView( m_data.data(), static_cast< qsizetype >( m_data.size() ) );
 }

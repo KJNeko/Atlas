@@ -51,7 +51,7 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	painter->restore();
 }
 
-QSize RecordBannerDelegate::sizeHint( const QStyleOptionViewItem &item, const QModelIndex &index ) const
+QSize RecordBannerDelegate::sizeHint( [[maybe_unused]] const QStyleOptionViewItem &item, [[maybe_unused]] const QModelIndex &index ) const
 {
 	return { config::delegate::banner_x::get(), config::delegate::banner_y::get() };
 }

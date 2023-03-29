@@ -26,7 +26,7 @@ class SHA256
 
 	const char* data() const { return m_data.data(); }
 
-	const std::size_t size() const { return m_data.size(); }
+	std::size_t size() const { return m_data.size(); }
 
 	SHA256( std::istream& istream );
 
