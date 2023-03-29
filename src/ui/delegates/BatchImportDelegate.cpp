@@ -39,11 +39,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				};
 				if ( file_options.size() > 1 )
 				{
-					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
-					painter->drawText(
-						options.rect,
-						Qt::AlignRight | Qt::AlignVCenter,
-						QString( "%1 options" ).arg( file_options.size() ) );
+					constexpr int black_medium_down_pointing_triangle_unicode {0x23F7}; //U+23F7 (⏷)
+					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data + ' ' + QChar(black_medium_down_pointing_triangle_unicode));
 				}
 				else
 					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
@@ -71,7 +68,7 @@ QSize BatchImportDelegate::
 	if ( index.column() == EXECUTABLES )
 	{
 		const auto size { info.size( Qt::TextSingleLine, text ) };
-		return { size.width() + 50, size.height() };
+		return { size.width() + 15, size.height() };
 	}
 	else
 		return info.size( Qt::TextSingleLine, text );
