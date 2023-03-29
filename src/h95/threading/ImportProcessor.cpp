@@ -17,8 +17,8 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 
 ImportProcessor::~ImportProcessor() noexcept
 {
-	this->moveToThread( this->parent()->thread() );
-	thread.exit();
+	thread.quit();
+	thread.wait( QDeadlineTimer::Forever );
 }
 
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )

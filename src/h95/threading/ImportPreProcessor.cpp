@@ -19,8 +19,8 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 
 ImportPreProcessor::~ImportPreProcessor() noexcept
 {
-	this->moveToThread( this->parent()->thread() );
-	if ( thread.isRunning() ) thread.exit();
+	thread.quit();
+	thread.wait( QDeadlineTimer::Forever );
 }
 
 void ImportPreProcessor::processDirectory(
