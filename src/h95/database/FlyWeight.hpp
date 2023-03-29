@@ -97,7 +97,7 @@ class FlyWeight : public std::shared_ptr< T >
 
   public:
 
-	FlyWeight() : std::shared_ptr<T>(nullptr) {}
+	FlyWeight() : std::shared_ptr< T >( nullptr ) {}
 
 	//! Passthrough for ctor to T
 	template < typename... T_Args >

@@ -56,7 +56,7 @@ struct RecordData : public QObject
 	QPixmap getBanner() const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
-	std::optional<GameMetadata> getLatestVersion() const;
+	std::optional< GameMetadata > getLatestVersion() const;
 
 	//Setters
 	void setTitle( QString, Transaction = Transaction( true ) );

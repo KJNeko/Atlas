@@ -19,8 +19,8 @@ class RecordListModel : public QAbstractListModel
 
 	RecordListModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) {}
 
-	int rowCount(const QModelIndex& index = QModelIndex()) const override;
-	QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+	int rowCount( const QModelIndex& index = QModelIndex() ) const override;
+	QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const override;
 
   public slots:
 	void setRecords( std::vector< Record > records );

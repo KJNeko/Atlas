@@ -30,7 +30,7 @@ class RecordView : public QListView
 
   public slots:
 	void addRecords( const std::vector< RecordID > records );
-	void setRecords(const std::vector<Record> records);
+	void setRecords( const std::vector< Record > records );
 	void setRenderMode( const DelegateType type );
 };
 

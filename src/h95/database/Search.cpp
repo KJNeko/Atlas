@@ -39,5 +39,5 @@ std::vector< Record > Search::search()
 
 void Search::triggerSearch()
 {
-	emit searchCompleted(search());
+	emit searchCompleted( search() );
 }

@@ -288,14 +288,13 @@ RecordData::RecordData(
 		for ( const auto& version : versions ) addVersion( version, transaction );
 
 		//Handle banner stuff
-		if(!m_banner.empty())
+		if ( !m_banner.empty() )
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER
-					<< m_banner.string();
+						<< m_banner.string();
 
 		for ( const auto& preview : m_previews )
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
 						<< preview.string();
-
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{

@@ -41,6 +41,7 @@ class Search : public QObject
 	const std::vector< QString >& getTagsActive() const;
 
   private:
+
 	std::vector< Record > search();
 };
 
