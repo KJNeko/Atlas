@@ -97,6 +97,8 @@ class FlyWeight : public std::shared_ptr< T >
 
   public:
 
+	FlyWeight() : std::shared_ptr<T>(nullptr) {}
+
 	//! Passthrough for ctor to T
 	template < typename... T_Args >
 		requires HasKeyFunc< T, T_Key, T_Args... > && std::constructible_from< T, T_Args... >
