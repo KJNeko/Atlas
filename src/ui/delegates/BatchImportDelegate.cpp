@@ -27,7 +27,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 		case SIZE:
 			{
 				const auto data { index.data().value< QString >() };
-				painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
+				painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
 				break;
 			}
 			//print size
@@ -39,11 +39,14 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				};
 				if ( file_options.size() > 1 )
 				{
-					constexpr int black_medium_down_pointing_triangle_unicode {0x23F7}; //U+23F7 (⏷)
-					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data + ' ' + QChar(black_medium_down_pointing_triangle_unicode));
+					constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
+					painter->drawText(
+						options.rect,
+						Qt::AlignLeft | Qt::AlignVCenter,
+						data + ' ' + QChar( black_medium_down_pointing_triangle_unicode ) );
 				}
 				else
-					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
+					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
 
 				break;
 			}
@@ -67,8 +70,16 @@ QSize BatchImportDelegate::
 
 	if ( index.column() == EXECUTABLES )
 	{
-		const auto size { info.size( Qt::TextSingleLine, text ) };
-		return { size.width() + 15, size.height() };
+		const auto file_options {
+			index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+		};
+		constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
+
+		const QString text_modified { file_options.size() > 1 ?
+			                              text + ' ' + QChar( black_medium_down_pointing_triangle_unicode ) :
+			                              text };
+
+		return info.size( Qt::TextSingleLine, text_modified );
 	}
 	else
 		return info.size( Qt::TextSingleLine, text );
