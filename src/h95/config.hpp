@@ -123,4 +123,7 @@ SETTINGS_D( importer, moveImported, bool, true )
 SETTINGS_D( db, first_start, bool, true )
 SETTINGS_D( logging, level, int, 2 )
 
+SETTINGS_D( delegate, banner_x, int, 600 )
+SETTINGS_D( delegate, banner_y, int, 250 )
+
 #endif //HYDRUS95_CONFIG_HPP

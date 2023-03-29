@@ -35,11 +35,12 @@ class Search : public QObject
 	//! Removes a tag from the search. Does nothing if tag wasn't present
 	void removeTag( QString );
 
+	void triggerSearch();
+
 	//! Returns a list of all the tags active in the search.
 	const std::vector< QString >& getTagsActive() const;
 
   private:
-
 	std::vector< Record > search();
 };
 

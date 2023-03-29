@@ -19,6 +19,9 @@ class RecordListModel : public QAbstractListModel
 
 	RecordListModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) {}
 
+	int rowCount(const QModelIndex& index = QModelIndex()) const override;
+	QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+
   public slots:
 	void setRecords( std::vector< Record > records );
 
@@ -26,7 +29,7 @@ class RecordListModel : public QAbstractListModel
 	 * @param record
 	 * @param place_at where to place in the list (place_at > m_records.size()) will place at the end
 	 */
-	void addRecord( Record& record, const std::size_t place_at = 0 );
+	void addRecord( Record record, const std::size_t place_at = 0 );
 
 	void removeRecord( QPersistentModelIndex index );
 

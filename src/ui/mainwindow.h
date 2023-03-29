@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include <QTreeWidget>
 
+#include "h95/database/Search.hpp"
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -20,6 +22,8 @@ class MainWindow : public QMainWindow
 	Q_DISABLE_COPY_MOVE( MainWindow )
 	Q_OBJECT
 
+	Search record_search;
+
   public:
 
 	MainWindow( QWidget *parent = nullptr );
@@ -32,6 +36,9 @@ class MainWindow : public QMainWindow
 	void addTreeRoot( QString name, QString record_id );
 	void addTreeChild( QTreeWidgetItem *parent, QString name, QString record_id );
 	void openBatchImportDialog();
+
+  signals:
+	void triggerSearch();
 
   private slots:
 	void on_actionImport_triggered();

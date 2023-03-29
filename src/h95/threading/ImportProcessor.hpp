@@ -8,6 +8,7 @@
 #include <QtCore>
 
 #include "ImportPreProcessor.hpp"
+#include "h95/Types.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 
 class ImportProcessor : public QObject
@@ -16,11 +17,15 @@ class ImportProcessor : public QObject
 
 	QThread thread;
 
+	std::vector< RecordID > completed_records;
+
   public:
 
 	ImportProcessor();
 
 	~ImportProcessor();
+
+	std::vector< RecordID > getCompleted() { return completed_records; }
 
   public slots:
 

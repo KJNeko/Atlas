@@ -201,5 +201,6 @@ void BatchImportDialog::finishedProcessing()
 
 void BatchImportDialog::finishedImporting()
 {
+	emit importComplete(this->processor.getCompleted());
 	this->close();
 }

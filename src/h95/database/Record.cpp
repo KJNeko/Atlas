@@ -46,12 +46,10 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 
 	if ( !found ) throw InvalidRecordID( id );
 
-	std::vector< GameMetadata > metadata;
-
 	transaction
 			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime FROM game_metadata WHERE record_id = ?"
 			<< id
-		>> [ &metadata ](
+		>> [ this ](
 			   std::string version,
 			   std::string game_path,
 			   std::string exec_path,
@@ -59,7 +57,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			   uint64_t last_played,
 			   uint32_t version_playtime )
 	{
-		metadata.emplace_back(
+		m_versions.emplace_back(
 			QString::fromStdString( std::move( version ) ),
 			std::move( game_path ),
 			std::move( exec_path ),
@@ -263,7 +261,6 @@ RecordData::RecordData(
   m_engine( std::move( engine ) ),
   m_last_played( last_played ),
   m_total_playtime( total_playtime ),
-  m_versions( std::move( versions ) ),
   m_banner( std::move( banner ) ),
   m_previews( std::move( previews ) )
 {
@@ -287,19 +284,29 @@ RecordData::RecordData(
 				<< m_total_playtime
 			>> [ & ]( const RecordID id ) { m_id = id; };
 
+		//In this case we use `addVersion` to add the versions. We should NOT initalize m_versions with it.
+		for ( const auto& version : versions ) addVersion( version, transaction );
+
 		//Handle banner stuff
-		transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER
+		if(!m_banner.empty())
+			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER
 					<< m_banner.string();
 
 		for ( const auto& preview : m_previews )
 			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
 						<< preview.string();
 
-		for ( const auto& version : m_versions ) addVersion( version, transaction );
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
 		spdlog::error( "{}", e.get_sql() );
 		std::rethrow_exception( std::current_exception() );
 	}
+}
+
+std::optional< GameMetadata > RecordData::getLatestVersion() const
+{
+	if ( m_versions.size() == 0 ) return std::nullopt;
+
+	return m_versions.at( m_versions.size() - 1 );
 }

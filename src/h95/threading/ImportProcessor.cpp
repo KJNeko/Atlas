@@ -86,6 +86,8 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 				{},
 				{} ) };
 
+			completed_records.emplace_back( record.getID() );
+
 			//No crash! Yay. Continue to import
 			spdlog::info( "Import succeeded with id {}", record.getID() );
 			emit updateValue( ++counter );

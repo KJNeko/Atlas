@@ -15,7 +15,7 @@ void RecordListModel::setRecords( std::vector< Record > records )
 	emit recordsChanged( m_records );
 }
 
-void RecordListModel::addRecord( Record& record, const std::size_t place_at )
+void RecordListModel::addRecord( Record record, const std::size_t place_at )
 {
 	ZoneScoped;
 	const int pos { static_cast< int >( std::min( place_at, m_records.size() ) ) };
@@ -36,4 +36,19 @@ void RecordListModel::removeRecord( QPersistentModelIndex index )
 	m_records.erase( itter );
 	endRemoveRows();
 	emit recordsChanged( m_records );
+}
+
+int RecordListModel::rowCount( const QModelIndex& index ) const
+{
+	return m_records.size();
+}
+
+QVariant RecordListModel::data( const QModelIndex& index, int role ) const
+{
+	if ( role == Qt::DisplayRole )
+	{
+		return { QVariant::fromStdVariant( std::variant< Record >( m_records.at( index.row() ) ) ) };
+	}
+
+	return {};
 }

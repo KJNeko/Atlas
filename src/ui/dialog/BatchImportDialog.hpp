@@ -49,6 +49,7 @@ class BatchImportDialog : public QDialog
 		const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize );
 	void addToModel( const GameImportData data );
 	void startImportingGames( const std::vector< GameImportData > data, const std::filesystem::path source );
+	void importComplete(std::vector<RecordID> records);
 };
 
 #endif // BATCHIMPORTDIALOG_H

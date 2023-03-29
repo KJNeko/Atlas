@@ -14,6 +14,11 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//default
 	addTreeRoot( "Games", "0" );
+
+	connect(this, &MainWindow::triggerSearch, &record_search, &Search::triggerSearch);
+	connect(&record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords);
+
+	emit triggerSearch();
 }
 
 MainWindow::~MainWindow()
@@ -25,6 +30,12 @@ void MainWindow::on_actionImport_triggered()
 {
 	BatchImportDialog biDialog;
 	//connect( &biDialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
+	connect(
+		&biDialog,
+		&BatchImportDialog::importComplete,
+		ui->recordView,
+		&RecordView::addRecords,
+		Qt::SingleShotConnection );
 	biDialog.exec();
 }
 
