@@ -25,12 +25,29 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 		case VERSION:
 			[[fallthrough]]; // print version
 		case SIZE:
-			[[fallthrough]];
+			{
+				const auto data { index.data().value< QString >() };
+				painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
+				break;
+			}
 			//print size
 		case EXECUTABLES: //print executables
 			{
 				const auto data { index.data().value< QString >() };
-				painter->drawText( options.rect, data );
+				const auto file_options {
+					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+				};
+				if ( file_options.size() > 1 )
+				{
+					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
+					painter->drawText(
+						options.rect,
+						Qt::AlignRight | Qt::AlignVCenter,
+						QString( "%1 options" ).arg( file_options.size() ) );
+				}
+				else
+					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter | Qt::ElideRight, data );
+
 				break;
 			}
 		case MOVE_FLAG:
@@ -49,10 +66,15 @@ QSize BatchImportDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
 	const auto info { item.fontMetrics };
-
 	const auto text { index.data().value< QString >() };
 
-	return info.size( Qt::TextSingleLine, text );
+	if ( index.column() == EXECUTABLES )
+	{
+		const auto size { info.size( Qt::TextSingleLine, text ) };
+		return { size.width() + 50, size.height() };
+	}
+	else
+		return info.size( Qt::TextSingleLine, text );
 }
 
 QWidget* BatchImportDelegate::
@@ -69,7 +91,14 @@ QWidget* BatchImportDelegate::
 				if ( data.size() > 1 )
 				{
 					QComboBox* box { new QComboBox( parent ) };
-					box->move( options.rect.topLeft() );
+
+					box->show();
+
+					const QPoint point { options.rect.topLeft().x(),
+						                 options.rect.center().y() - ( box->height() / 2 ) };
+
+					box->move( point );
+
 					return box;
 				}
 				break;
