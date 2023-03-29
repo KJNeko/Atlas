@@ -4,6 +4,7 @@
 
 #include "RecordBannerDelegate.hpp"
 
+#include <QMenu>
 #include <QPainter>
 
 #include "h95/config.hpp"
@@ -42,6 +43,8 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, latest.value().m_version ); //latest version
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );
+
+	if ( options.state & QStyle::State_Selected ) painter->fillRect( options.rect, QColor( 0, 0, 255, 50 ) );
 
 	painter->drawRect( options.rect );
 	painter->restore();
