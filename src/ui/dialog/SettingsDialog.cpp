@@ -63,7 +63,7 @@ void SettingsDialog::prepareThemeSettings()
 void SettingsDialog::saveThemeSettings()
 {
 	config::ui::use_system_theme::set( ui->cbUseSystemTheme->isChecked() );
-	config::paths::theme::set( "./data/qss/" + ui->themeBox->currentText() );
+	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
 
 	reloadTheme();
 }

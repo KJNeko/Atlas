@@ -4,22 +4,27 @@
 
 #include "RecordView.hpp"
 
+#include <QFileDialog>
 #include <QMenu>
 #include <QMouseEvent>
+
+#include <tracy/Tracy.hpp>
 
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 RecordView::RecordView( QWidget *parent ) : QListView( parent )
 {
+	ZoneScoped;
 	QListView::setModel( new RecordListModel() );
 	setRenderMode( BANNER_VIEW );
 
+	/*
 	QListView::setFlow( QListView::LeftToRight );
 	QListView::setWrapping( true );
 	QListView::setSpacing( 5 );
 	QListView::setResizeMode( QListView::Adjust );
-	QListView::setMovement( QListView::Free );
+	QListView::setMovement( QListView::Free );*/
 
 	setContextMenuPolicy( Qt::CustomContextMenu );
 
@@ -28,6 +33,7 @@ RecordView::RecordView( QWidget *parent ) : QListView( parent )
 
 void RecordView::setRenderMode( const DelegateType type )
 {
+	ZoneScoped;
 	if ( type == current_render_mode ) return;
 
 	switch ( type )
@@ -44,6 +50,7 @@ void RecordView::setRenderMode( const DelegateType type )
 
 void RecordView::addRecords( const std::vector< RecordID > records )
 {
+	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel * >( QListView::model() ) };
 
 	for ( const auto record : records ) model->addRecord( Record( record ) );
@@ -51,6 +58,7 @@ void RecordView::addRecords( const std::vector< RecordID > records )
 
 void RecordView::setRecords( const std::vector< Record > records )
 {
+	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel * >( QListView::model() ) };
 
 	model->setRecords( records );
@@ -58,6 +66,7 @@ void RecordView::setRecords( const std::vector< Record > records )
 
 void RecordView::on_customContextMenuRequested( const QPoint &pos )
 {
+	ZoneScoped;
 	QMenu menu { this };
 	menu.move( mapToGlobal( pos ) );
 
@@ -65,6 +74,13 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );
 	//menu.addAction( QString( "Creator: %1" ).arg( record->getCreator() ) );
+
+	const auto connection { connect(
+		record.get(),
+		&RecordData::dataChanged,
+		this,
+		[ this, pos ]() { this->dataChanged( this->indexAt( pos ), this->indexAt( pos ) ); },
+		Qt::SingleShotConnection ) };
 
 	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( record->getVersions().size() ) ) };
 	for ( const auto &version : record->getVersions() )
@@ -89,18 +105,39 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 
 	image_menu->addAction( QString( "%1 previews" ).arg( record->getPreviewPaths().size() ) );
 	image_menu->addSeparator();
-	image_menu->addAction( "Set banner" );
-	image_menu->addAction( "Add preview" );
+	image_menu->addAction(
+		"Set banner",
+		[ record, this ]()
+		{
+			const auto path {
+				QFileDialog::
+					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
+			};
+			if ( !path.isEmpty() ) record->setBanner( path.toStdString() );
+		} );
+	image_menu->addAction(
+		"Add preview",
+		[ record, this ]()
+		{
+			const auto path {
+				QFileDialog::
+					getOpenFileName( this, "Select preview", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
+			};
+			if ( !path.isEmpty() ) record->addPreview( path.toStdString() );
+		} );
 	image_menu->addAction( "Manage images" );
 
 	menu.addAction( "Manage record" );
 
 	menu.exec();
+
+	disconnect( connection );
 }
 
 void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent *event )
 {
-	if(selectionModel()->hasSelection())
+	ZoneScoped;
+	if ( selectionModel()->hasSelection() )
 	{
 		emit openDetailedView( selectionModel()->currentIndex().data().value< Record >() );
 		event->accept();

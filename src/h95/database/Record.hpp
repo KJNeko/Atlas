@@ -54,6 +54,7 @@ struct RecordData : public QObject
 	const std::vector< GameMetadata >& getVersions();
 	const std::filesystem::path& getBannerPath() const;
 	QPixmap getBanner() const;
+	QPixmap getBanner(int width, int height) const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
 	const std::optional< const GameMetadata > getLatestVersion() const;
@@ -66,6 +67,9 @@ struct RecordData : public QObject
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
 	void addVersion( const GameMetadata&, Transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
+
+	void setBanner( const std::filesystem::path&, Transaction = Transaction( true ) );
+	void addPreview( const std::filesystem::path&, Transaction = Transaction( true ) );
 
 	//! Syncs the data from the database
 	void sync( Transaction transaction = Transaction( true ) );

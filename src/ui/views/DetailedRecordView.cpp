@@ -8,6 +8,8 @@
 
 #include <QDateTime>
 
+#include <tracy/Tracy.hpp>
+
 #include "ui_DetailedRecordView.h"
 
 DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::DetailedRecordView )
@@ -22,6 +24,7 @@ DetailedRecordView::~DetailedRecordView()
 
 void DetailedRecordView::setRecord( const Record record_in )
 {
+	ZoneScoped;
 	m_record = record_in;
 
 	const auto& record { m_record.value() };

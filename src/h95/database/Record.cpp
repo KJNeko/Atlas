@@ -83,7 +83,8 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 					m_banner = image_path / path;
 					break;
 				}
-			case PREVIEW_UNKNOWN: [[fallthrough]];
+			case PREVIEW_UNKNOWN:
+				[[fallthrough]];
 			default:
 				break;
 		}
@@ -132,7 +133,36 @@ const std::filesystem::path& RecordData::getBannerPath() const
 
 QPixmap RecordData::getBanner() const
 {
-	return QPixmap { QString::fromStdString( m_banner.string() ) };
+	ZoneScoped;
+	if ( !std::filesystem::exists( m_banner ) )
+		return {};
+	else
+		return QPixmap { QString::fromStdString( m_banner.string() ) };
+}
+
+QPixmap RecordData::getBanner( int width, int height ) const
+{
+	ZoneScoped;
+	const auto key { QString::fromStdString( m_banner.filename().string() ) + QString::number( width ) + "x"
+		             + QString::number( height ) };
+
+	QPixmap banner;
+	if ( QPixmapCache::find( key, &banner ) )
+		return banner;
+	else
+	{
+		banner = getBanner();
+		if ( banner.isNull() )
+			return {};
+		else
+		{
+			banner = banner.scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation );
+			if ( !QPixmapCache::insert( key, banner ) )
+				spdlog::warn( "failed to insert banner into cache with key: {}", key );
+			return banner;
+		}
+	}
+	return {};
 }
 
 const std::vector< std::filesystem::path >& RecordData::getPreviewPaths() const
@@ -241,6 +271,54 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
+}
+
+void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
+{
+	ZoneScoped;
+	spdlog::info( "Setting baner to {}", path );
+
+	//Move banner to image folder
+	m_banner = imageManager::importImage( path );
+
+	//Check if it exists
+	bool found { false };
+	transaction << "SELECT path FROM images WHERE record_id = ? AND type = ?" << m_id << PREVIEW_BANNER >> [ &found ]()
+	{ found = true; };
+
+	if ( found )
+		transaction << "UPDATE images SET path = ? WHERE record_id = ? AND type = ?" << m_banner.string() << m_id
+					<< PREVIEW_BANNER;
+	else
+		transaction << "INSERT INTO images (record_id, path, type) VALUES (?, ?, ?)" << m_id << m_banner.string()
+					<< PREVIEW_BANNER;
+
+	spdlog::info( "Banner set to {}", m_banner );
+
+	emit dataChanged();
+	emit bannerChanged( getBanner() );
+}
+
+void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
+{
+	ZoneScoped;
+	//Move preview to image folder
+	m_previews.emplace_back( imageManager::importImage( path ) );
+
+	try
+	{
+		transaction << "INSERT INTO images (record_id, preview_path, type) VALUES (?, ?, ?)" << m_id
+					<< m_previews.back().string() << PREVIEW_PREVIEW;
+	}
+	catch ( const std::exception& e )
+	{
+		spdlog::error( "Failed to add preview to database: {}", e.what() );
+		//Undo adding to m_previews
+		m_previews.pop_back();
+	}
+
+	emit dataChanged();
+	emit previewsChanged( getPreviews() );
 }
 
 void RecordData::sync( Transaction transaction )

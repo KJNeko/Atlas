@@ -7,18 +7,29 @@
 #include <QMenu>
 #include <QPainter>
 
+#include <tracy/Tracy.hpp>
+
 #include "h95/config.hpp"
 #include "h95/database/Record.hpp"
 
 void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index )
 	const
 {
+	ZoneScoped;
 	painter->save();
 
 	//Draw banner if present
 	const Record record { index.data().value< Record >() };
-	const QPixmap banner { record->getBanner() };
-	painter->drawPixmap( options.rect, banner );
+
+	const auto pixmap { record->getBanner( config::delegate::banner_x::get(), config::delegate::banner_y::get() ) };
+
+	if(!pixmap.isNull())
+	{
+		const QRect pixmap_rect { options.rect.center() - QPoint( pixmap.width() / 2, pixmap.height() / 2 ),
+			                      pixmap.size() };
+
+		painter->drawPixmap( pixmap_rect, pixmap );
+	}
 
 	if ( options.state & QStyle::State_Selected ) painter->fillRect( options.rect, QColor( 0, 0, 255, 50 ) );
 
@@ -35,10 +46,11 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 
 	const QRect strip_rect { stripe_top_left, stripe_size };
 
-	painter->fillRect( strip_rect, QColor( 0, 0, 0, 50 ) );
+	painter->fillRect( strip_rect, QColor( 0, 0, 0, 200 ) );
 
 	//painter->drawText(); //engine
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
+	painter->drawText( strip_rect, Qt::AlignLeft, record->getCreator() ); //Creator
 
 	const auto latest { record->getLatestVersion() };
 	if ( latest.has_value() )
@@ -46,12 +58,13 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );
 
-
 	painter->drawRect( options.rect );
 	painter->restore();
 }
 
-QSize RecordBannerDelegate::sizeHint( [[maybe_unused]] const QStyleOptionViewItem &item, [[maybe_unused]] const QModelIndex &index ) const
+QSize RecordBannerDelegate::
+	sizeHint( [[maybe_unused]] const QStyleOptionViewItem &item, [[maybe_unused]] const QModelIndex &index ) const
 {
+	ZoneScoped;
 	return { config::delegate::banner_x::get(), config::delegate::banner_y::get() };
 }

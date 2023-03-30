@@ -17,7 +17,7 @@ namespace imageManager
 	void cleanOrphans();
 
 	//! Stores the image located at `path` in the data folder
-	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after = false );
+	std::filesystem::path importImage( const std::filesystem::path& path );
 } // namespace imageManager
 
 #endif //HYDRUS95_IMAGEMANAGER_HPP

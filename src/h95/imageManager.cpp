@@ -49,21 +49,26 @@ namespace imageManager
 		}
 	}
 
-	std::filesystem::path importImage( const std::filesystem::path& path, bool delete_after )
+	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
 		ZoneScoped;
 		spdlog::debug( "Importing image {}", path );
 		if ( std::filesystem::exists( path ) )
 		{
-			if ( std::ifstream ifs( path ); ifs )
+			QImage temp_image;
+			temp_image.load( QString::fromStdString( path.string() ) );
+
+			//Save the image to a temp file depending on os
+			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "h95" / "temp.webp" };
+			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );
+
+			temp_image.save( QString::fromStdString( temp_path.string() ), "WEBP", 99 );
+
+			if ( std::ifstream ifs( temp_path ); ifs )
 			{
 				std::vector< char > data;
-				data.resize( std::filesystem::file_size( path ) );
+				data.resize( std::filesystem::file_size( temp_path ) );
 				ifs.read( data.data(), static_cast< long >( data.size() ) );
-
-				QImage image;
-				image.loadFromData(
-					reinterpret_cast< const unsigned char* >( data.data() ), static_cast< int >( data.size() ) );
 
 				QCryptographicHash hash { QCryptographicHash::Sha256 };
 				hash.addData( { reinterpret_cast< const char* >( data.data() ),
@@ -78,16 +83,14 @@ namespace imageManager
 						throw std::runtime_error( fmt::format( "Failed to create directory {}", dest.parent_path() ) );
 				}
 
-				//Save as webp
-				if ( !image.save( QString::fromStdString( dest.string() ), "WEBP", 99 ) )
-					throw std::runtime_error( fmt::format( "QImage failed to save at {}", dest ) );
+				//Copy the temp_file to the destination
+				std::filesystem::copy( temp_path, dest );
 
 				if ( !std::filesystem::exists( dest ) ) throw std::runtime_error( "Save failed!" );
 
-				if ( delete_after ) std::filesystem::remove( path );
-
 				return dest;
 			}
+			spdlog::warn( "Failed to open converted webp: Temp:{}, Input:{}", temp_path, path );
 		}
 
 		return { ":/invalid.jpg" };

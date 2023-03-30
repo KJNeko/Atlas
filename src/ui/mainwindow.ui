@@ -380,7 +380,32 @@
             <number>0</number>
            </property>
            <item row="0" column="0">
-            <widget class="RecordView" name="recordView"/>
+            <widget class="RecordView" name="recordView">
+             <property name="verticalScrollMode">
+              <enum>QAbstractItemView::ScrollPerPixel</enum>
+             </property>
+             <property name="movement">
+              <enum>QListView::Static</enum>
+             </property>
+             <property name="flow">
+              <enum>QListView::LeftToRight</enum>
+             </property>
+             <property name="isWrapping" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="resizeMode">
+              <enum>QListView::Adjust</enum>
+             </property>
+             <property name="spacing">
+              <number>5</number>
+             </property>
+             <property name="uniformItemSizes">
+              <bool>true</bool>
+             </property>
+             <property name="selectionRectVisible">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
