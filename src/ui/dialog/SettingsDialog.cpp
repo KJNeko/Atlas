@@ -35,8 +35,14 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::prepareThemeSettings()
 {
 	ZoneScoped;
+
+	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
+
+	if(!std::filesystem::exists("./data/themes"))
+		std::filesystem::create_directories("./data/themes");
+
 	//Load all valid options.
-	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/qss" ) )
+	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/themes" ) )
 	{
 		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
 			ui->themeBox->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
@@ -56,6 +62,7 @@ void SettingsDialog::prepareThemeSettings()
 
 void SettingsDialog::saveThemeSettings()
 {
+	config::ui::use_system_theme::set( ui->cbUseSystemTheme->isChecked() );
 	config::paths::theme::set( "./data/qss/" + ui->themeBox->currentText() );
 
 	reloadTheme();
@@ -233,7 +240,7 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 	ZoneScoped;
 	spdlog::info( "Theme changed to {}", text );
 
-	QFile file { "./data/qss/" + text };
+	QFile file { "./data/themes/" + text };
 	file.open( QFile::ReadOnly );
 
 	QString style { file.readAll() };
@@ -246,11 +253,30 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 void SettingsDialog::reloadTheme()
 {
 	ZoneScoped;
-	QFile file { config::paths::theme::get() };
-
-	if ( !file.exists() )
+	if ( config::ui::use_system_theme::get() )
 	{
-		config::paths::theme::setDefault();
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
+		ensurePolished();
+		return;
+	}
+	else
+	{
+		QFile file { config::paths::theme::get() };
+
+		if ( !file.exists() )
+		{
+			config::paths::theme::setDefault();
+
+			file.open( QFile::ReadOnly );
+
+			QString style { file.readAll() };
+
+			dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+
+			ensurePolished();
+
+			return;
+		}
 
 		file.open( QFile::ReadOnly );
 
@@ -259,15 +285,5 @@ void SettingsDialog::reloadTheme()
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
 
 		ensurePolished();
-
-		return;
 	}
-
-	file.open( QFile::ReadOnly );
-
-	QString style { file.readAll() };
-
-	dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
-
-	ensurePolished();
 }
