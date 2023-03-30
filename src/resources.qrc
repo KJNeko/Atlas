@@ -6,5 +6,6 @@
         <file>assets/Logo_03.png</file>
         <file>assets/search.svg</file>
         <file>assets/sizegrip.svg</file>
+        <file>assets/dropdownicon.svg</file>
     </qresource>
 </RCC>

@@ -19,6 +19,8 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::triggerSearch );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
+	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
+
 	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 
 	emit triggerSearch();
@@ -73,3 +75,16 @@ void MainWindow::on_actionOptions_triggered()
 	settingsDialog->exec();
 	settingsDialog->deleteLater();
 }
+
+void MainWindow::switchToDetailed( const Record record )
+{
+	ui->detailedRecordView->setRecord( record );
+	ui->stackedWidget->setCurrentIndex( 1 );
+}
+
+/*
+void MainWindow::on_homeButton_pressed()
+{
+	ui->detailedRecordView->clearRecord();
+	ui->stackedWidget->setCurrentIndex( 0 );
+}*/

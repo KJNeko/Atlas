@@ -5,6 +5,7 @@
 #include "RecordView.hpp"
 
 #include <QMenu>
+#include <QMouseEvent>
 
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/models/RecordListModel.hpp"
@@ -95,4 +96,17 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 	menu.addAction( "Manage record" );
 
 	menu.exec();
+}
+
+void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent *event )
+{
+	if(selectionModel()->hasSelection())
+	{
+		emit openDetailedView( selectionModel()->currentIndex().data().value< Record >() );
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
 }

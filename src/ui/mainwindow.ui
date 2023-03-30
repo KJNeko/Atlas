@@ -85,7 +85,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="Logo">
+        <widget class="QLabel" name="logo">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -192,7 +192,7 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QLabel" name="HomeButton">
+        <widget class="QLabel" name="homeButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -384,7 +384,13 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="cv"/>
+         <widget class="QWidget" name="cv">
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="DetailedRecordView" name="detailedRecordView" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -504,6 +510,12 @@
    <class>RecordView</class>
    <extends>QListView</extends>
    <header>ui/views/RecordView.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>DetailedRecordView</class>
+   <extends>QWidget</extends>
+   <header>ui/views/DetailedRecordView.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

@@ -28,6 +28,11 @@ class RecordView : public QListView
 
 	RecordView( QWidget* parent = nullptr );
 
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
+
+  signals:
+	void openDetailedView( const Record record );
+
   public slots:
 	void addRecords( const std::vector< RecordID > records );
 	void setRecords( const std::vector< Record > records );
