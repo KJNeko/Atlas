@@ -45,4 +45,6 @@ void DetailedRecordView::setRecord( const Record record_in )
 }
 
 void DetailedRecordView::clearRecord()
-{}
+{
+	m_record = std::nullopt;
+}
