@@ -15,7 +15,7 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 	this->moveToThread( &thread );
 }
 
-ImportProcessor::~ImportProcessor() noexcept
+ImportProcessor::~ImportProcessor()
 {
 	thread.quit();
 	thread.wait( QDeadlineTimer::Forever );
