@@ -4,12 +4,9 @@
 
 #include "Database.hpp"
 
-#include <filesystem>
-
 #include <tracy/Tracy.hpp>
 
 #include "h95/config.hpp"
-#include "h95/logging.hpp"
 
 namespace internal
 {
@@ -72,8 +69,7 @@ try
 		"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)"*/
 	};
 
-	for ( const auto& query_str : table_queries )
-		transaction << query_str;
+	for ( const auto& query_str : table_queries ) transaction << query_str;
 
 	transaction.commit();
 

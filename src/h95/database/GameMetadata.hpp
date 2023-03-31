@@ -12,7 +12,6 @@
 
 #include "h95/Types.hpp"
 #include "h95/database/Database.hpp"
-#include "h95/logging.hpp"
 
 struct RecordData;
 
@@ -128,7 +127,7 @@ struct MetadataAlreadyExists : public MetadataException
 	const QString m_metadata;
 
 	MetadataAlreadyExists( const RecordID id, const GameMetadata& metadata ) :
-	  MetadataException( fmt::format( "Tried to insert duplicate metadata under id {}", id ) ),
+	  MetadataException( "Tried to insert duplicate metadata" ),
 	  m_id( id ),
 	  m_metadata( metadata.getVersionName() )
 	{}

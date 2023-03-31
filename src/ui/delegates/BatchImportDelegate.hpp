@@ -6,7 +6,6 @@
 #define HYDRUS95_BATCHIMPORTDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
-#include <QSize>
 
 class BatchImportDelegate final : public QAbstractItemDelegate
 {

@@ -4,8 +4,10 @@
 
 #include "BatchImportDelegate.hpp"
 
+#include <QComboBox>
 #include <QLineEdit>
 #include <QPainter>
+#include <QString>
 
 #include "ui/models/BatchImportModel.hpp"
 

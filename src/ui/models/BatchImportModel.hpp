@@ -8,8 +8,6 @@
 #include <filesystem>
 
 #include <QAbstractTableModel>
-#include <QComboBox>
-#include <QString>
 
 #include "h95/threading/ImportPreProcessor.hpp"
 

@@ -6,7 +6,6 @@
 #define HYDRUS95_SETTINGSDIALOG_HPP
 
 #include <QDialog>
-#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 

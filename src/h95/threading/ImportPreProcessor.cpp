@@ -8,12 +8,12 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "h95/logging.hpp"
 #include "h95/regex.hpp"
 #include "h95/utils.hpp"
 
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
-{
-}
+{}
 
 void ImportPreProcessor::processDirectory(
 	const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )

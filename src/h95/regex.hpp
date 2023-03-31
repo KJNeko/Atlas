@@ -5,85 +5,19 @@
 #ifndef HYDRUS95_REGEX_HPP
 #define HYDRUS95_REGEX_HPP
 
-#include <QDir>
-#include <QRegularExpression>
 #include <QString>
 
-#include <tracy/Tracy.hpp>
-
-#include "h95/logging.hpp"
-
-inline QString groupify( const QString group_name )
-{
-	return R"((?P<)" + group_name.mid( 1, group_name.size() - 2 ) + R"(>[^\\\/]+))";
-}
+QString groupify( const QString group_name );
 
 //! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
-inline QString escapeStr( QString pattern )
-{
-	ZoneScoped;
-	const QRegularExpression regex { R"((?<!\\)[\(\)]|(?<!\\)[\\](?![\/\\\(\)\?$]))" };
+QString escapeStr( QString pattern );
 
-	while ( pattern.contains( regex ) )
-	{
-		const auto index { pattern.indexOf( regex ) };
-		const auto character { pattern.at( index ) };
-		pattern.replace( index, 1, QString( "\\" ) + character );
-	}
+QString processRegexify( QString pattern );
 
-	return pattern;
-}
+QString regexify( QString pattern );
 
-inline QString processRegexify( QString pattern )
-{
-	ZoneScoped;
-	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
-	{
-		//We found a complete set.
-		const auto start { pattern.indexOf( '{' ) };
-		const auto end { pattern.indexOf( '}', start ) };
+bool valid( QString pattern, QString text );
 
-		const auto extract { pattern.mid( start, ( end - start ) + 1 ) };
-		pattern.replace( extract, groupify( extract ) );
-		TracyMessageL( "Recurse" );
-		return processRegexify( std::move( pattern ) );
-	}
-	else
-		return "^" + std::move( pattern ) + "$";
-}
-
-inline QString regexify( QString pattern )
-{
-	ZoneScoped;
-	return processRegexify( escapeStr( std::move( pattern ) ) );
-}
-
-inline bool valid( QString pattern, QString text )
-{
-	ZoneScoped;
-	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
-	const QRegularExpression regex { pattern };
-	const auto match { regex.match( text ) };
-	return match.hasMatch();
-}
-
-inline std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
-{
-	ZoneScoped;
-	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
-	const QRegularExpression regex { pattern };
-	const auto match { regex.match( text ) };
-
-	if ( match.hasMatch() && match.hasCaptured( "title" ) )
-	{
-		auto title { match.captured( "title" ) };
-		auto creator { match.hasCaptured( "creator" ) ? match.captured( "creator" ) : "" };
-		auto version { match.hasCaptured( "version" ) ? match.captured( "version" ) : "" };
-
-		return { std::move( title ), std::move( creator ), std::move( version ) };
-	}
-	else
-		throw std::runtime_error( "Missing required title capture" );
-}
+std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text );
 
 #endif //HYDRUS95_REGEX_HPP

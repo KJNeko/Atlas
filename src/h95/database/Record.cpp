@@ -122,6 +122,26 @@ uint32_t RecordData::getTotalPlaytime() const
 	return m_total_playtime;
 }
 
+GameMetadata& RecordData::getVersion( const QString version_name )
+{
+	ZoneScoped;
+
+	const auto idx { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version_name ]( const GameMetadata& version ) { return version.getVersionName() == version_name; } ) };
+
+	if ( idx == m_versions.end() )
+		throw std::runtime_error( "Version not found" );
+	else
+		return *idx;
+}
+
+GameMetadata& RecordData::getLatestVersion()
+{
+	return m_versions.at( m_versions.size() - 1 );
+}
+
 std::vector< GameMetadata >& RecordData::getVersions()
 {
 	return m_versions;
@@ -230,6 +250,15 @@ void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
 
 	emit dataChanged();
 	emit lastPlayedChanged( time );
+}
+
+void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
+{
+	ZoneScoped;
+
+	m_total_playtime += time;
+
+	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << m_total_playtime << m_id;
 }
 
 void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction )
@@ -378,35 +407,6 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 		spdlog::error( "{}", e.get_sql() );
 		std::rethrow_exception( std::current_exception() );
 	}
-}
-
-GameMetadata& RecordData::getLatestVersion()
-{
-	return m_versions.at( m_versions.size() - 1 );
-}
-
-GameMetadata& RecordData::getVersion( const QString version_name )
-{
-	ZoneScoped;
-
-	const auto idx { std::find_if(
-		m_versions.begin(),
-		m_versions.end(),
-		[ &version_name ]( const GameMetadata& version ) { return version.getVersionName() == version_name; } ) };
-
-	if ( idx == m_versions.end() )
-		throw std::runtime_error( "Version not found" );
-	else
-		return *idx;
-}
-
-void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
-{
-	ZoneScoped;
-
-	m_total_playtime += time;
-
-	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << m_total_playtime << m_id;
 }
 
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )

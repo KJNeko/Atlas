@@ -5,6 +5,7 @@
 #include "BatchImportModel.hpp"
 
 #include <QLineEdit>
+#include <QLocale>
 
 #include <tracy/Tracy.hpp>
 

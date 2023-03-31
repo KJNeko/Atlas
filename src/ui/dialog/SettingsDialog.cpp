@@ -6,7 +6,7 @@
 
 #include "SettingsDialog.hpp"
 
-#include <QDirIterator>
+#include <QFile>
 #include <QMessageBox>
 
 #include <tracy/Tracy.hpp>

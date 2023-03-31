@@ -38,38 +38,6 @@ inline QSettings getSettingsObject()
 	return { "./data/config.ini", QSettings::IniFormat };
 }
 
-/**
- * @throws std::runtime_error when setting T not default constructable and no setting given
- * @tparam T type for setting
- * @param setting_name
- * @return
- */
-//! Returns T for the given setting_name
-template < typename T >
-inline T getSettings( const QString setting_name )
-{
-	QSettings settings { getSettingsObject() };
-	const auto variant { settings.value( setting_name ) };
-	if ( variant.template canConvert< T >() )
-		return variant.template value< T >();
-	else
-	{
-		spdlog::warn( "Setting for {} was not populated!", setting_name );
-
-		if constexpr ( std::is_default_constructible_v< T > )
-			return {};
-		else
-			throw std::runtime_error(
-				"T was not default constructable! Throwing instead! For given setting:" + setting_name.toStdString() );
-	}
-}
-
-template < typename T >
-void setSettings( const QString name, const T& value )
-{
-	getSettingsObject().setValue( name, value );
-}
-
 #define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
 
 #define SETTINGS_D( group, name, type, default_value )                                                                 \

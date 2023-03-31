@@ -10,9 +10,7 @@
 #include "h95/database/Record.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
-{
-}
-
+{}
 
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {

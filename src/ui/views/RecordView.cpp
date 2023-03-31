@@ -53,7 +53,7 @@ void RecordView::addRecords( const std::vector< RecordID > records )
 	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel * >( QListView::model() ) };
 
-	for ( const auto record : records ) model->addRecord( Record( record ) );
+	for ( const auto &record : records ) model->addRecord( Record( record ) );
 }
 
 void RecordView::setRecords( const std::vector< Record > records )

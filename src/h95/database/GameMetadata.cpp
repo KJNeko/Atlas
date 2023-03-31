@@ -2,14 +2,12 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include <string>
-
-#include <h95/database/GameMetadata.hpp>
-#include <h95/logging.hpp>
+#include "h95/database/GameMetadata.hpp"
 
 #include "Record.hpp"
 #include "h95/config.hpp"
 #include "h95/executeProc.hpp"
+#include "h95/logging.hpp"
 
 QString GameMetadata::getVersionName() const
 {
@@ -19,7 +17,6 @@ QString GameMetadata::getVersionName() const
 bool GameMetadata::isInPlace() const
 {
 	return m_in_place;
-	;
 }
 
 std::uint32_t GameMetadata::getPlaytime() const
