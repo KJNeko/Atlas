@@ -17,6 +17,7 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 
 ImportProcessor::~ImportProcessor()
 {
+	spdlog::info("Quitting ImportProcessor thread");
 	thread.quit();
 	thread.wait( QDeadlineTimer::Forever );
 }

@@ -17,8 +17,9 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 	this->moveToThread( &thread );
 }
 
-ImportPreProcessor::~ImportPreProcessor() noexcept
+ImportPreProcessor::~ImportPreProcessor()
 {
+	spdlog::info("Quitting preprocessor thread");
 	thread.quit();
 	thread.wait( QDeadlineTimer::Forever );
 }
