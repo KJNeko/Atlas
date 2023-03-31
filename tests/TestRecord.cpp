@@ -9,12 +9,11 @@
 
 class TestRecord : public ::testing::Test
 {
-	void SetUp() override { Database::initalize( "./data/testing.db" ); }
+	void SetUp() override { Database::initalize( ":memory:" ); }
 
 	void TearDown() override
 	{
 		Database::deinit();
-		std::filesystem::remove_all( "./data" );
 	}
 };
 
@@ -23,14 +22,9 @@ TEST_F( TestRecord, createRecord )
 	QString title { "my title" };
 	QString creator { "Some Person" };
 	QString engine { "Some Engine" };
-	const std::uint64_t last_played { 0 };
-	const std::uint32_t total_playtime { 0 };
-	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
-	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
-	Record record { title,  creator, engine, last_played, total_playtime, std::vector< GameMetadata > {},
-		            banner, previews };
-	//record->addVersion( {record->getID(), "V1.0", "./bin/", "Hydrus95.exe", false, 0, 0} );
+	Record record { title, creator, engine };
+	record->addVersion( "V1.0", "./bin/", "Hydrus95.exe", false );
 }
 
 TEST_F( TestRecord, createExistingRecord )
@@ -38,21 +32,13 @@ TEST_F( TestRecord, createExistingRecord )
 	QString title { "my title" };
 	QString creator { "Some Person" };
 	QString engine { "Some Engine" };
-	const std::uint64_t last_played { 0 };
-	const std::uint32_t total_playtime { 0 };
-	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
-	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
 	{
-		Record record { title,  creator, engine, last_played, total_playtime, std::vector< GameMetadata > {},
-			            banner, previews };
+		Record record { title, creator, engine };
 	}
 
 	{
-		ASSERT_THROW(
-			Record(
-				title, creator, engine, last_played, total_playtime, std::vector< GameMetadata > {}, banner, previews ),
-			RecordAlreadyExists );
+		ASSERT_THROW( Record( title, creator, engine ), RecordAlreadyExists );
 	}
 }
 
@@ -64,13 +50,8 @@ TEST_F( TestRecord, select )
 		QString title { "my title" };
 		QString creator { "Some Person" };
 		QString engine { "Some Engine" };
-		const uint64_t last_played { 0 };
-		const std::uint32_t total_playtime { 0 };
-		std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
-		std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
-		record = Record(
-			title, creator, engine, last_played, total_playtime, std::vector< GameMetadata > {}, banner, previews );
+		record = Record( title, creator, engine );
 	}
 
 	GTEST_ASSERT_TRUE( record.has_value() );
@@ -100,21 +81,14 @@ TEST_F( TestRecord, selectNonExisting )
 }
 
 #define PREPARE_RECORD_TEST                                                                                            \
-  Record record {                                                                                                      \
-	  []() -> Record                                                                                                   \
-	  {                                                                                                                \
-	  QString title { "my title" };                                                                                    \
-	  QString creator { "Some Person" };                                                                               \
-	  QString engine { "Some Engine" };                                                                                \
-	  const uint64_t last_played { 0 };                                                                                \
-	  const std::uint32_t total_playtime { 0 };                                                                        \
-	  std::filesystem::path banner { "./assets/banner/placeholder.jpg" };                                              \
-	  std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };                             \
+  Record record { []() -> Record                                                                                       \
+		          {                                                                                                    \
+				  QString title { "my title" };                                                                        \
+				  QString creator { "Some Person" };                                                                   \
+				  QString engine { "Some Engine" };                                                                    \
                                                                                                                        \
-	  return Record(                                                                                                   \
-		  title, creator, engine, last_played, total_playtime, std::vector< GameMetadata > {}, banner, previews );     \
-	  }()                                                                                                              \
-  };
+				  return Record( title, creator, engine );                                                             \
+				  }() };
 
 #define TEST_RECORD_EQ                                                                                                 \
   {                                                                                                                    \
@@ -198,12 +172,11 @@ TEST_F( TestRecord, addVersion )
 {
 	PREPARE_RECORD_TEST
 
-	const GameMetadata test_value { record->getID(), "v69.420", ".", "./Hydrus95.exe", false, 0, 0 };
-
-	record->addVersion( test_value );
+	record->addVersion( "V69.420", "creator/title1/v1.0", "Hydrus95.exe", true );
+	record->addVersion( "v1.0", "creator/title2/v1.0", "Game.exe", true );
 
 	ASSERT_EQ( record->getVersions().size(), 2 );
-	ASSERT_EQ( record->getVersions().at( 1 ), test_value );
+	ASSERT_EQ( record->getVersions().at( 1 ).getVersionName().toStdString(), "v1.0" );
 
 	TEST_RECORD_EQ
 }
@@ -212,7 +185,7 @@ TEST_F( TestRecord, removeVersion )
 {
 	PREPARE_RECORD_TEST
 
-	const GameMetadata test_value { record->getID(), "v69.420", ".", "./Hydrus95.exe", false, 0, 0 };
+	record->addVersion( "V69.420", ".", "./Hydrus95.exe", true );
 
 	record->removeVersion( record->getVersions().at( 0 ) );
 
@@ -241,13 +214,8 @@ TEST_F( TestRecord, Example1 )
 	QString title { "my title" };
 	QString creator { "Some Person" };
 	QString engine { "Some Engine" };
-	const uint64_t last_played { 0 };
-	const std::uint32_t total_playtime { 0 };
-	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
-	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
-	Record record { title,  creator, engine, last_played, total_playtime, std::vector< GameMetadata > {},
-		            banner, previews };
+	Record record { title, creator, engine };
 }
 
 TEST_F( TestRecord, Example2 )
@@ -257,13 +225,8 @@ TEST_F( TestRecord, Example2 )
 	QString title { "my title 2" };
 	QString creator { "Some Person 2" };
 	QString engine { "Some Engine 2" };
-	const uint64_t last_played { 0 };
-	const std::uint32_t total_playtime { 0 };
-	std::filesystem::path banner { "./assets/banner/placeholder.jpg" };
-	std::vector< std::filesystem::path > previews { "./assets/banner/placeholder.jpg" };
 
-	Record record { title,  creator,  engine,     last_played, total_playtime, std::vector< GameMetadata > {},
-		            banner, previews, transaction };
+	Record record { title, creator, engine, transaction };
 
 	transaction.commit();
 }

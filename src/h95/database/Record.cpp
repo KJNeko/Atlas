@@ -243,20 +243,27 @@ void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction 
 	emit totalPlaytimeChanged( time );
 }
 
-void RecordData::addVersion( GameMetadata version, Transaction transaction )
+void RecordData::addVersion(
+	QString version,
+	std::filesystem::path game_path,
+	std::filesystem::path exec_path,
+	bool in_place,
+	Transaction transaction )
 {
 	ZoneScoped;
-	spdlog::info( "Adding version {} to record {}", version.getVersionName().toStdString(), m_title.toStdString() );
+	spdlog::info( "Adding version {} to record {}", version.toStdString(), m_title.toStdString() );
 	//Check if version is already added
-	auto itter { std::find( m_versions.begin(), m_versions.end(), version ) };
+	auto itter { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version ]( const GameMetadata& other ) { return version == other.getVersionName(); } ) };
 	if ( itter != m_versions.end() ) return;
 
-	m_versions.emplace_back( std::move( version ) );
+	m_versions.emplace_back( *this, version, game_path, exec_path, in_place, 0, 0 );
 
 	transaction
-		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime) VALUES (?, ?, ?, ?, ?, ?, ?)"
-		<< m_id << version.getVersionName().toStdString() << version.getPath().string()
-		<< version.getExecPath().string() << version.isInPlace() << version.getLastPlayed() << version.getPlaytime();
+		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime) VALUES (?, ?, ?, ?, ?, 0, 0)"
+		<< m_id << version.toStdString() << game_path.string() << exec_path.string() << in_place;
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
@@ -332,23 +339,10 @@ void RecordData::sync( Transaction transaction )
 	new ( this ) RecordData( m_id, transaction );
 }
 
-RecordData::RecordData(
-	QString title,
-	QString creator,
-	QString engine,
-	const std::uint64_t last_played,
-	const std::uint32_t total_playtime,
-	std::vector< GameMetadata > versions,
-	std::filesystem::path banner,
-	std::vector< std::filesystem::path > previews,
-	Transaction transaction ) :
+RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction ) :
   m_title( std::move( title ) ),
   m_creator( std::move( creator ) ),
-  m_engine( std::move( engine ) ),
-  m_last_played( last_played ),
-  m_total_playtime( total_playtime ),
-  m_banner( std::move( banner ) ),
-  m_previews( std::move( previews ) )
+  m_engine( std::move( engine ) )
 {
 	ZoneScoped;
 	try
@@ -369,9 +363,6 @@ RecordData::RecordData(
 				<< m_title.toStdString() << m_creator.toStdString() << m_engine.toStdString() << m_last_played
 				<< m_total_playtime
 			>> [ & ]( const RecordID id ) { m_id = id; };
-
-		//In this case we use `addVersion` to add the versions. We should NOT initalize m_versions with it.
-		for ( auto& version : versions ) addVersion( std::move(version), transaction );
 
 		//Handle banner stuff
 		if ( !m_banner.empty() )
@@ -420,14 +411,5 @@ void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction 
 
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
-	return Record(
-		std::move( title ),
-		std::move( creator ),
-		std::move( engine ),
-		std::uint64_t( 0 ),
-		std::uint32_t( 0 ),
-		std::vector< GameMetadata >(),
-		std::filesystem::path(),
-		std::vector< std::filesystem::path >(),
-		transaction );
+	return Record( std::move( title ), std::move( creator ), std::move( engine ), transaction );
 }

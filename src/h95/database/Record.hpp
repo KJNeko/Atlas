@@ -68,7 +68,7 @@ struct RecordData : public QObject
 	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
 	void addPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
-	void addVersion( GameMetadata, Transaction = Transaction( true ) );
+	void addVersion(QString version, std::filesystem::path game_path, std::filesystem::path exec_path, bool in_place, Transaction transaction = Transaction(true));
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
 
 	void setBanner( const std::filesystem::path&, Transaction = Transaction( true ) );
@@ -136,11 +136,6 @@ struct RecordData : public QObject
 		QString title,
 		QString creator,
 		QString engine,
-		const std::uint64_t last_played,
-		const std::uint32_t total_playtime,
-		std::vector< GameMetadata > versions,
-		std::filesystem::path banner,
-		std::vector< std::filesystem::path > previews,
 		Transaction = Transaction( true ) );
 
 	//! Defined to comply with FlyWeight HasStaticKeyFunc constraint

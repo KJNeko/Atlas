@@ -64,7 +64,7 @@ void spdlog_flush()
 
 int main( int argc, char** argv )
 {
-	initLogging();
+	//initLogging();
 
 	(void)std::atexit( spdlog_flush );
 	spdlog::flush_on( spdlog::level::err );

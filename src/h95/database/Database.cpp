@@ -39,13 +39,16 @@ std::mutex& Database::lock()
 void Database::initalize( const std::filesystem::path init_path )
 try
 {
+	initLogging();
+
 	ZoneScoped;
-	spdlog::debug( "Initalizing database with path {}", init_path );
-	std::filesystem::create_directories( init_path.parent_path() );
+	spdlog::info( "Initalizing database with path {}", init_path );
+	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
+		std::filesystem::create_directories( init_path.parent_path() );
 
 	internal::db = new sqlite::database( init_path.string() );
 
-	if ( config::db::first_start::get() )
+	if ( config::db::first_start::get() || init_path == ":memory:" )
 	{
 		NonTransaction transaction;
 
@@ -209,7 +212,7 @@ void NonTransaction::abort()
 	if ( finished ) throw TransactionInvalid();
 	finished = true;
 	delete guard;
-	spdlog::error("Transaction aborted!");
+	spdlog::error( "Transaction aborted!" );
 }
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
