@@ -7,7 +7,7 @@
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wdtor-ctor-privacy"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 
 #include <fmt/ranges.h>
 #include <spdlog/logger.h>
