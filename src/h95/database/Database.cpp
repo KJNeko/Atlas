@@ -73,10 +73,7 @@ try
 	};
 
 	for ( const auto& query_str : table_queries )
-	{
 		transaction << query_str;
-		spdlog::debug( "Executing {}", query_str );
-	}
 
 	transaction.commit();
 
