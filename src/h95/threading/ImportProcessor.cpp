@@ -63,7 +63,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
 					emit updateSubText( QString( "Copying files for %1: %2" )
 					                        .arg( title )
-					                        .arg( QString::fromStdString( source_path.filename() ) ) );
+					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
 
 					emit updateSubValue( static_cast< int >( i ) );
 				}

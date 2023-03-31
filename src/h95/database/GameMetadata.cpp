@@ -49,7 +49,7 @@ void runGame( RecordData& record, const QString version_str )
 
 	const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
-	executeProc( version.getExecPath() );
+	executeProc( version.getExecPath().string() );
 
 	const auto duration {
 		std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )
