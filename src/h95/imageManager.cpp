@@ -84,7 +84,10 @@ namespace imageManager
 				}
 
 				//Copy the temp_file to the destination
-				std::filesystem::copy( temp_path, dest );
+				if(!std::filesystem::exists(dest))
+					std::filesystem::copy( temp_path, dest );
+				else
+					return dest;
 
 				if ( !std::filesystem::exists( dest ) ) throw std::runtime_error( "Save failed!" );
 

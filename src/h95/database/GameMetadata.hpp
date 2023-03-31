@@ -7,16 +7,23 @@
 
 #include <filesystem>
 
+#include <QObject>
 #include <QString>
 
 #include "h95/Types.hpp"
 #include "h95/database/Database.hpp"
 #include "h95/logging.hpp"
 
+struct RecordData;
+
 //! Representation of a game version
-struct GameMetadata
+struct GameMetadata : public QObject
 {
-	RecordID m_record_id{0};
+	Q_OBJECT
+
+  private:
+
+	RecordData& m_parent;
 
 	QString m_version {};
 
@@ -30,21 +37,38 @@ struct GameMetadata
 	std::uint32_t m_total_playtime;
 	std::uint64_t m_last_played;
 
-	std::filesystem::path getPath() const;
-	std::filesystem::path getExecPath() const;
+  public:
+
+	//Setters
+	void addPlaytime( const std::uint32_t playtime );
+	void setLastPlayed( const std::uint64_t last_played );
 	void playGame();
+
+	//Getters
+	QString getVersionName() const;
+	bool isInPlace() const;
+	std::uint32_t getPlaytime() const;
+	std::uint64_t getLastPlayed() const;
+	std::filesystem::path getPath() const;
+	std::filesystem::path getExecPath( bool full = false ) const;
+
+  signals:
+	void playtimeChanged( std::uint32_t playtime );
+	void lastPlayedChanged( std::uint64_t last_played );
+
+  public:
 
 	GameMetadata() = delete;
 
 	GameMetadata(
-		const RecordID parent_id,
+		RecordData& parent,
 		const QString& version_in,
 		const std::filesystem::path& game_path_in,
 		const std::filesystem::path& exec_path_in,
 		const bool in_place,
 		const std::uint64_t last_played,
 		const std::uint32_t total_playtime ) :
-	  m_record_id(parent_id),
+	  m_parent( parent ),
 	  m_version( version_in ),
 	  m_game_path( game_path_in ),
 	  m_exec_path( exec_path_in ),
@@ -53,10 +77,44 @@ struct GameMetadata
 	  m_last_played( last_played )
 	{}
 
-  //private:
+	GameMetadata( const GameMetadata& other ) :
+	  QObject( nullptr ),
+	  m_parent( other.m_parent ),
+	  m_version( other.m_version ),
+	  m_game_path( other.m_game_path ),
+	  m_exec_path( other.m_exec_path ),
+	  m_in_place( other.m_in_place ),
+	  m_total_playtime( other.m_total_playtime ),
+	  m_last_played( other.m_last_played )
+	{}
+
+	GameMetadata( GameMetadata&& other ) :
+	  QObject( nullptr ),
+	  m_parent( other.m_parent ),
+	  m_version( std::move( other.m_version ) ),
+	  m_game_path( std::move( other.m_game_path ) ),
+	  m_exec_path( std::move( other.m_exec_path ) ),
+	  m_in_place( other.m_in_place ),
+	  m_total_playtime( other.m_total_playtime ),
+	  m_last_played( other.m_last_played )
+	{
+		//connect(this, &GameMetadata::playtimeChanged, &m_parent, &RecordData::v_PlaytimeChanged);
+		//connect(this, &GameMetadata::lastPlayedChanged, &m_parent, &RecordData::v_lastPlayedChanged);
+	}
+
+	GameMetadata& operator=(const GameMetadata& other)
+	{
+		std::construct_at(this, other);
+		return *this;
+	}
+
+	//private:
 	//inline void setOwner(const RecordID owner) {m_record_id = owner;}
 
-	bool operator==( const GameMetadata& other ) const = default;
+	bool operator==( const GameMetadata& other ) const
+	{
+		return m_version == other.m_version && m_game_path == other.m_game_path && m_exec_path == other.m_exec_path;
+	}
 };
 
 struct MetadataException : public std::runtime_error
@@ -67,12 +125,12 @@ struct MetadataException : public std::runtime_error
 struct MetadataAlreadyExists : public MetadataException
 {
 	const RecordID m_id;
-	const GameMetadata m_metadata;
+	const QString m_metadata;
 
 	MetadataAlreadyExists( const RecordID id, const GameMetadata& metadata ) :
 	  MetadataException( fmt::format( "Tried to insert duplicate metadata under id {}", id ) ),
 	  m_id( id ),
-	  m_metadata( metadata )
+	  m_metadata( metadata.getVersionName() )
 	{}
 };
 

@@ -209,6 +209,7 @@ void NonTransaction::abort()
 	if ( finished ) throw TransactionInvalid();
 	finished = true;
 	delete guard;
+	spdlog::error("Transaction aborted!");
 }
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )

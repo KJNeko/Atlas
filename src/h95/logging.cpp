@@ -39,47 +39,48 @@ void initLogging()
 
 	logger->info( "Logger setup" );
 
-	logger->flush_on( spdlog::level::info );
+	logger->set_level(spdlog::level::debug);
+	logger->flush_on( spdlog::level::debug );
 
 	spdlog::set_default_logger( logger );
 
 #ifndef NDEBUG
-	console_sink->set_level( spdlog::level::debug );
-	//#else
+	switch(1)
+#else
 	switch ( config::logging::level::get() )
+#endif
 	{
 		case 0:
-			console_sink->set_level( spdlog::level::trace );
+			logger->set_level( spdlog::level::trace );
 			spdlog::debug( "Logging level set to \'trace\'" );
 			break;
 		case 1:
-			console_sink->set_level( spdlog::level::debug );
-			spdlog::info( "Logging level set to \'debug\'" );
+			logger->set_level( spdlog::level::debug );
+			spdlog::debug( "Logging level set to \'debug\'" );
 			break;
 		case 2:
-			console_sink->set_level( spdlog::level::info );
+			logger->set_level( spdlog::level::info );
 			spdlog::info( "Logging level set to \'info\'" );
 			break;
 		case 3:
-			console_sink->set_level( spdlog::level::warn );
+			logger->set_level( spdlog::level::warn );
 			spdlog::info( "Logging level set to \'warn\'" );
 			break;
 		case 4:
-			console_sink->set_level( spdlog::level::err );
+			logger->set_level( spdlog::level::err );
 			spdlog::info( "Logging level set to \'error\'" );
 			break;
 		case 5:
-			console_sink->set_level( spdlog::level::critical );
+			logger->set_level( spdlog::level::critical );
 			spdlog::info( "Logging level set to \'critical\'" );
 			break;
 		case 6:
-			console_sink->set_level( spdlog::level::off );
+			logger->set_level( spdlog::level::off );
 			break;
 		default:
-			console_sink->set_level( spdlog::level::info );
+			logger->set_level( spdlog::level::info );
 			break;
 	}
-#endif
 
 	spdlog::info( "Default logger set" );
 }

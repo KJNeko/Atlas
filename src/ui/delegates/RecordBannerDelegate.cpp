@@ -23,7 +23,7 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 
 	const auto pixmap { record->getBanner( config::delegate::banner_x::get(), config::delegate::banner_y::get() ) };
 
-	if(!pixmap.isNull())
+	if ( !pixmap.isNull() )
 	{
 		const QRect pixmap_rect { options.rect.center() - QPoint( pixmap.width() / 2, pixmap.height() / 2 ),
 			                      pixmap.size() };
@@ -52,9 +52,11 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
 	painter->drawText( strip_rect, Qt::AlignLeft, record->getCreator() ); //Creator
 
-	const auto latest { record->getLatestVersion() };
-	if ( latest.has_value() )
-		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, latest.value().m_version ); //latest version
+	if ( record->getVersions().size() > 0 )
+	{
+		auto &latest { record->getLatestVersion() };
+		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, latest.getVersionName() ); //latest version
+	}
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );
 

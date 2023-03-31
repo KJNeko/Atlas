@@ -38,8 +38,7 @@ void SettingsDialog::prepareThemeSettings()
 
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
-	if(!std::filesystem::exists("./data/themes"))
-		std::filesystem::create_directories("./data/themes");
+	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
 
 	//Load all valid options.
 	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/themes" ) )

@@ -40,14 +40,17 @@ void RecordListModel::removeRecord( QPersistentModelIndex index )
 
 int RecordListModel::rowCount( [[maybe_unused]] const QModelIndex& index ) const
 {
-	return static_cast<int>(m_records.size());
+	return static_cast< int >( m_records.size() );
 }
 
 QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 {
 	if ( role == Qt::DisplayRole )
 	{
-		return { QVariant::fromStdVariant( std::variant< Record >( m_records.at( static_cast<std::size_t>(index.row()) ) ) ) };
+		return {
+			QVariant::fromStdVariant( std::variant< Record >( m_records
+			                                                      .at( static_cast< std::size_t >( index.row() ) ) ) )
+		};
 	}
 
 	return {};

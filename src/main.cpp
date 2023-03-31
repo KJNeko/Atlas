@@ -92,17 +92,6 @@ int main( int argc, char** argv )
 	std::filesystem::create_directory( config::paths::games::getPath() );
 	std::filesystem::create_directory( config::paths::images::getPath() );
 
-#ifdef NDEBUG
-	//if ( getSettings< bool >( "debug/very_vocal", false ) )
-	{
-		spdlog::set_level( spdlog::level::debug );
-		spdlog::debug( "Debugging enabled." );
-	}
-#else
-	spdlog::set_level( spdlog::level::debug );
-	spdlog::debug( "Debugging forcefully enabled due to not compiling with NDEBUG" );
-#endif
-
 	Database::initalize( config::paths::database::getPath() );
 
 	QPixmapCache::setCacheLimit( 1024 * 128 );

@@ -23,11 +23,11 @@ class DetailedRecordView final : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( DetailedRecordView )
 
-	std::optional< Record > m_record { std::nullopt };
+	std::optional<Record> m_record { std::nullopt };
 
 	std::size_t selected_version_idx { 0 };
 
-	GameMetadata selectedVersion() const;
+	GameMetadata& selectedVersion();
 
 	void reloadRecord();
 
@@ -45,8 +45,8 @@ class DetailedRecordView final : public QWidget
 	void on_btnPlay_pressed();
 	void on_tbSelectVersion_pressed();
 
-
   private:
+
 	Ui::DetailedRecordView *ui;
 };
 

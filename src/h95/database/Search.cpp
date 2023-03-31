@@ -9,12 +9,12 @@ void Search::searchTextChanged( [[maybe_unused]] QString text )
 	//
 }
 
-void Search::addTag( [[maybe_unused]] QString tag_text)
+void Search::addTag( [[maybe_unused]] QString tag_text )
 {
 	emit searchCompleted( search() );
 }
 
-void Search::removeTag( [[maybe_unused]] QString tag_text)
+void Search::removeTag( [[maybe_unused]] QString tag_text )
 {
 	emit searchCompleted( search() );
 }

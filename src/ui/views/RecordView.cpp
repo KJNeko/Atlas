@@ -85,7 +85,7 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( record->getVersions().size() ) ) };
 	for ( const auto &version : record->getVersions() )
 	{
-		auto version_submenu { version_menu->addMenu( version.m_version ) };
+		auto version_submenu { version_menu->addMenu( version.getVersionName() ) };
 		version_submenu->addAction( "Launch" );
 		version_submenu->addSeparator();
 		version_submenu->addAction( "Delete version" );

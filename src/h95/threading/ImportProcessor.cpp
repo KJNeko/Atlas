@@ -71,37 +71,30 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 				//std::filesystem::remove( source_folder );
 				path = std::filesystem::relative( dest_folder, dest_root );
 			}
+			else
+				path = source_folder;
 
-			auto record { RecordData(
-				std::move( title ),
-				std::move( creator ),
-				{},
-				std::uint64_t( 0 ),
-				std::uint64_t( 0 ),
-				{},
-				{},
-				{} ) };
+			Transaction transaction;
 
-			GameMetadata metadata { record.getID(),
-				                    std::move( version ),
-				                    std::move( path ),
-				                    std::move( executable ),
-				                    !move_after_import,
-				                    0,
-				                    0 };
+			Record record { importRecord( std::move( title ), std::move( creator ), QString(), transaction ) };
 
-			record.addVersion( metadata );
+			//record->addVersion( std::move(version), std::move(path), std::move(executable), !move_after_import, transaction );
 
-			if(std::filesystem::exists( source_folder / "banner.jpg" ) || std::filesystem::exists( source_folder / "banner.png" ))
+			transaction.commit();
+
+			if ( std::filesystem::exists( source_folder / "banner.jpg" )
+			     || std::filesystem::exists( source_folder / "banner.png" ) )
 			{
-				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ? source_folder / "banner.jpg" : source_folder / "banner.png" };
-				record.setBanner( banner_path );
+				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
+					                         source_folder / "banner.jpg" :
+					                         source_folder / "banner.png" };
+				record->setBanner( banner_path );
 			}
 
-			completed_records.emplace_back( record.getID() );
+			completed_records.emplace_back( record->getID() );
 
 			//No crash! Yay. Continue to import
-			spdlog::info( "Import succeeded with id {}", record.getID() );
+			spdlog::info( "Import succeeded with id {}", record->getID() );
 			emit updateValue( ++counter );
 		}
 		catch ( RecordException& e )

@@ -36,8 +36,8 @@ void DetailedRecordView::setRecord( const Record record_in )
 
 void DetailedRecordView::reloadRecord()
 {
-	if ( !m_record.has_value() ) return;
-	const auto& record { m_record.value() };
+	if ( m_record == nullptr ) return;
+	const auto& record { *m_record };
 	ui->lbGameName->setText( record->getTitle() );
 
 	if ( record->getLastPlayed() == 0 )
@@ -60,8 +60,7 @@ void DetailedRecordView::reloadRecord()
 		total_size += folderSize( version.getPath() );
 	}
 
-	const auto& latest_version { record->getLatestVersion() };
-	const auto latest_size { latest_version.has_value() ? folderSize( latest_version->getPath() ) : 0 };
+	const auto latest_size { record->getVersions().size() > 0 ? folderSize( record->getLatestVersion().getPath() ) : 0 };
 
 	const auto& locale { this->locale() };
 
@@ -76,11 +75,11 @@ void DetailedRecordView::reloadRecord()
 
 	//If the record has a date/time that is larger then any of the versions then use that
 	using Index = std::uint64_t;
-	std::vector< std::pair< decltype( GameMetadata::m_last_played ), Index > > playtimes;
+	std::vector< std::pair< std::uint64_t, Index > > playtimes;
 	playtimes.reserve( record->getVersions().size() );
 	const auto& versions { record->getVersions() };
 	for ( Index i = 0; i < versions.size(); ++i )
-		if ( versions[ i ].m_last_played > 0 ) playtimes.emplace_back( versions[ i ].m_last_played, i );
+		if ( versions[ i ].getLastPlayed() > 0 ) playtimes.emplace_back( versions[ i ].getLastPlayed(), i );
 
 	std::sort(
 		playtimes.begin(), playtimes.end(), []( const auto& lhs, const auto& rhs ) { return lhs.first > rhs.first; } );
@@ -100,8 +99,11 @@ void DetailedRecordView::reloadRecord()
 		ui->lbLastPlayed->setText( QString( "Last Played:\n%1" ).arg( date.toString() ) );
 	}
 
-
-	ui->lbTotalPlaytime->setText(QString("Total Playtime:\n%1").arg(QDateTime::fromSecsSinceEpoch(static_cast<qint64>(record->getTotalPlaytime()), Qt::LocalTime).toUTC().toString("hh:mm:ss")));
+	ui->lbTotalPlaytime->setText(
+		QString( "Total Playtime:\n%1" )
+			.arg( QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getTotalPlaytime() ), Qt::LocalTime )
+	                  .toUTC()
+	                  .toString( "hh:mm:ss" ) ) );
 }
 
 void DetailedRecordView::clearRecord()
@@ -111,13 +113,13 @@ void DetailedRecordView::clearRecord()
 
 void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
-	if ( m_record.has_value() )
+	if ( m_record != nullptr )
 	{
 		QPainter painter { this };
 
 		painter.save();
 
-		const Record& record { m_record.value() };
+		const Record& record { *m_record };
 		//Paint the banner
 		const QSize size { ui->bannerFrame->size() };
 		const QPixmap banner { record->getBanner( size.width(), size.height() ) };
@@ -138,7 +140,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 	QWidget::paintEvent( event );
 }
 
-GameMetadata DetailedRecordView::selectedVersion() const
+GameMetadata& DetailedRecordView::selectedVersion()
 {
 	if ( !m_record.has_value() ) throw std::runtime_error( "Record invalid" );
 

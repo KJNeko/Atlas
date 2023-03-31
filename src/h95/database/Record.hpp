@@ -21,6 +21,7 @@ enum IMAGE_TYPE
 struct RecordData : public QObject
 {
 	Q_OBJECT
+	Q_DISABLE_COPY(RecordData)
 
 	RecordData() = default;
 
@@ -51,23 +52,23 @@ struct RecordData : public QObject
 	const QString& getEngine() const;
 	std::uint64_t getLastPlayed() const;
 	std::uint32_t getTotalPlaytime() const;
-	GameMetadata getVersion( const QString ) const;
-	const std::vector< GameMetadata >& getVersions();
+	GameMetadata& getVersion( const QString );
+	std::vector< GameMetadata >& getVersions();
 	const std::filesystem::path& getBannerPath() const;
 	QPixmap getBanner() const;
 	QPixmap getBanner( int width, int height, bool expanding = false ) const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
-	const std::optional< const GameMetadata > getLatestVersion() const;
+	GameMetadata& getLatestVersion();
 
 	//Setters
 	void setTitle( QString, Transaction = Transaction( true ) );
 	void setCreator( QString, Transaction = Transaction( true ) );
 	void setEngine( QString, Transaction = Transaction( true ) );
 	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
+	void addPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
-	void updateVersion( const GameMetadata&, Transaction = Transaction( true ) );
-	void addVersion( const GameMetadata&, Transaction = Transaction( true ) );
+	void addVersion( GameMetadata, Transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
 
 	void setBanner( const std::filesystem::path&, Transaction = Transaction( true ) );
@@ -155,6 +156,8 @@ struct RecordData : public QObject
 };
 
 using Record = FlyWeight< RecordData, RecordID >;
+
+Record importRecord( QString title, QString creator, QString engine, Transaction transaction = Transaction(true) );
 
 struct RecordException : public std::runtime_error
 {

@@ -28,7 +28,7 @@ class RecordView : public QListView
 
 	RecordView( QWidget* parent = nullptr );
 
-	void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent( QMouseEvent* event ) override;
 
   signals:
 	void openDetailedView( const Record record );

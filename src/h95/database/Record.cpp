@@ -58,7 +58,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			   uint32_t version_playtime )
 	{
 		m_versions.emplace_back(
-			id,
+			*this,
 			QString::fromStdString( std::move( version ) ),
 			std::move( game_path ),
 			std::move( exec_path ),
@@ -122,7 +122,7 @@ uint32_t RecordData::getTotalPlaytime() const
 	return m_total_playtime;
 }
 
-const std::vector< GameMetadata >& RecordData::getVersions()
+std::vector< GameMetadata >& RecordData::getVersions()
 {
 	return m_versions;
 }
@@ -243,20 +243,20 @@ void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction 
 	emit totalPlaytimeChanged( time );
 }
 
-void RecordData::addVersion( const GameMetadata& version, Transaction transaction )
+void RecordData::addVersion( GameMetadata version, Transaction transaction )
 {
 	ZoneScoped;
-	spdlog::info("Adding version {} to record {}", version.m_version.toStdString(), m_title.toStdString());
+	spdlog::info( "Adding version {} to record {}", version.getVersionName().toStdString(), m_title.toStdString() );
 	//Check if version is already added
-	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
+	auto itter { std::find( m_versions.begin(), m_versions.end(), version ) };
 	if ( itter != m_versions.end() ) return;
 
-	m_versions.emplace_back( version );
+	m_versions.emplace_back( std::move( version ) );
 
 	transaction
 		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime) VALUES (?, ?, ?, ?, ?, ?, ?)"
-		<< m_id << version.m_version.toStdString() << version.m_game_path.string() << version.m_exec_path.string()
-		<< version.m_in_place << version.m_last_played << version.m_total_playtime;
+		<< m_id << version.getVersionName().toStdString() << version.getPath().string()
+		<< version.getExecPath().string() << version.isInPlace() << version.getLastPlayed() << version.getPlaytime();
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
@@ -265,15 +265,14 @@ void RecordData::addVersion( const GameMetadata& version, Transaction transactio
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
 {
 	ZoneScoped;
-	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
-	if ( itter == m_versions.end() )
-		return;
-	else
-		m_versions.erase( itter );
+	auto itter { std::find( m_versions.begin(), m_versions.end(), version ) };
+	if ( itter == m_versions.end() ) return;
 
 	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ? AND game_path = ? AND exec_path = ?"
-				<< m_id << version.m_version.toStdString() << version.m_game_path.string()
-				<< version.m_exec_path.string();
+				<< m_id << version.getVersionName().toStdString() << version.getPath().string()
+				<< version.getExecPath().string();
+
+	m_versions.erase( itter );
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
@@ -372,7 +371,7 @@ RecordData::RecordData(
 			>> [ & ]( const RecordID id ) { m_id = id; };
 
 		//In this case we use `addVersion` to add the versions. We should NOT initalize m_versions with it.
-		for ( const auto& version : versions ) addVersion( version, transaction );
+		for ( auto& version : versions ) addVersion( std::move(version), transaction );
 
 		//Handle banner stuff
 		if ( !m_banner.empty() )
@@ -390,21 +389,19 @@ RecordData::RecordData(
 	}
 }
 
-const std::optional< const GameMetadata > RecordData::getLatestVersion() const
+GameMetadata& RecordData::getLatestVersion()
 {
-	if ( m_versions.size() == 0 ) return std::nullopt;
-
 	return m_versions.at( m_versions.size() - 1 );
 }
 
-GameMetadata RecordData::getVersion( const QString version_name ) const
+GameMetadata& RecordData::getVersion( const QString version_name )
 {
 	ZoneScoped;
 
 	const auto idx { std::find_if(
 		m_versions.begin(),
 		m_versions.end(),
-		[ &version_name ]( const GameMetadata& version ) { return version.m_version == version_name; } ) };
+		[ &version_name ]( const GameMetadata& version ) { return version.getVersionName() == version_name; } ) };
 
 	if ( idx == m_versions.end() )
 		throw std::runtime_error( "Version not found" );
@@ -412,20 +409,25 @@ GameMetadata RecordData::getVersion( const QString version_name ) const
 		return *idx;
 }
 
-void RecordData::updateVersion( const GameMetadata& version, Transaction transaction )
+void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
 {
 	ZoneScoped;
 
-	//Ensure that the version does exist
-	auto version_idx { std::find_if(
-		m_versions.begin(),
-		m_versions.end(),
-		[ &version ]( const GameMetadata& v ) { return v.m_version == version.m_version; } ) };
+	m_total_playtime += time;
 
-	if ( version_idx == m_versions.end() ) throw std::runtime_error( "Version not found" );
+	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << m_total_playtime << m_id;
+}
 
-	transaction
-		<< "UPDATE game_metadata SET last_played = ?, version_playtime = ? WHERE record_id = ? AND version = ?" << version.m_last_played << version.m_total_playtime << m_id << version.m_version.toStdString();
-
-	*version_idx = version;
+Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
+{
+	return Record(
+		std::move( title ),
+		std::move( creator ),
+		std::move( engine ),
+		std::uint64_t( 0 ),
+		std::uint32_t( 0 ),
+		std::vector< GameMetadata >(),
+		std::filesystem::path(),
+		std::vector< std::filesystem::path >(),
+		transaction );
 }
