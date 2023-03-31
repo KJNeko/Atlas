@@ -86,6 +86,9 @@ BatchImportDialog::~BatchImportDialog()
 	saveConfig();
 	config::geometry::batch_import_dialog::set( saveGeometry() );
 
+	processing_thread.quit();
+	processing_thread.wait();
+
 	delete ui;
 }
 
@@ -209,8 +212,6 @@ void BatchImportDialog::finishedProcessing()
 
 void BatchImportDialog::finishedImporting()
 {
-	processing_thread.quit();
-	processing_thread.wait();
 	emit importComplete( this->processor.getCompleted() );
 	this->close();
 }
