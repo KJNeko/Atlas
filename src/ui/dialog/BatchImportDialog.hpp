@@ -16,6 +16,7 @@ class BatchImportDialog : public QDialog
 	Q_DISABLE_COPY_MOVE( BatchImportDialog )
 	Q_OBJECT
 
+	QThread processing_thread {};
 	ImportPreProcessor preprocessor {};
 	ImportProcessor processor {};
 	ProgressBarDialog progress { this };

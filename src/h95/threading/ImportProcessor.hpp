@@ -15,15 +15,13 @@ class ImportProcessor : public QObject
 {
 	Q_OBJECT
 
-	QThread thread {};
-
 	std::vector< RecordID > completed_records {};
 
   public:
 
 	ImportProcessor();
 
-	~ImportProcessor();
+	~ImportProcessor() = default;
 
 	std::vector< RecordID > getCompleted() { return completed_records; }
 

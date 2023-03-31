@@ -11,16 +11,8 @@
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {
-	thread.start();
-	this->moveToThread( &thread );
 }
 
-ImportProcessor::~ImportProcessor()
-{
-	spdlog::info("Quitting ImportProcessor thread");
-	thread.quit();
-	thread.wait( QDeadlineTimer::Forever );
-}
 
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {

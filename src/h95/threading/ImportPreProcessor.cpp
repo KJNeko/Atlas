@@ -13,15 +13,6 @@
 
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {
-	thread.start();
-	this->moveToThread( &thread );
-}
-
-ImportPreProcessor::~ImportPreProcessor()
-{
-	spdlog::info("Quitting preprocessor thread");
-	thread.quit();
-	thread.wait( QDeadlineTimer::Forever );
 }
 
 void ImportPreProcessor::processDirectory(

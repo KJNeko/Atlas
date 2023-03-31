@@ -23,6 +23,10 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 
+	processor.moveToThread( &processing_thread );
+	preprocessor.moveToThread( &processing_thread );
+	processing_thread.start();
+
 	connect( this, &BatchImportDialog::startProcessingDirectory, &preprocessor, &ImportPreProcessor::processDirectory );
 	connect(
 		&preprocessor, &ImportPreProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
@@ -205,6 +209,8 @@ void BatchImportDialog::finishedProcessing()
 
 void BatchImportDialog::finishedImporting()
 {
+	processing_thread.quit();
+	processing_thread.wait();
 	emit importComplete( this->processor.getCompleted() );
 	this->close();
 }

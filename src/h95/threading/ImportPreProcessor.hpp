@@ -27,13 +27,11 @@ class ImportPreProcessor : public QObject
 {
 	Q_OBJECT
 
-	QThread thread {};
-
   public:
 
 	ImportPreProcessor();
 
-	~ImportPreProcessor();
+	~ImportPreProcessor() = default;
 
   public slots:
 	void processDirectory(
