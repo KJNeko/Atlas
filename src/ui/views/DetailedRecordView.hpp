@@ -21,22 +21,32 @@ QT_END_NAMESPACE
 class DetailedRecordView final : public QWidget
 {
 	Q_OBJECT
-	Q_DISABLE_COPY_MOVE(DetailedRecordView)
+	Q_DISABLE_COPY_MOVE( DetailedRecordView )
 
-	std::optional<Record> m_record {std::nullopt};
+	std::optional< Record > m_record { std::nullopt };
+
+	std::size_t selected_version_idx { 0 };
+
+	GameMetadata selectedVersion() const;
+
+	void reloadRecord();
 
   public:
 
 	explicit DetailedRecordView( QWidget *parent = nullptr );
 	~DetailedRecordView() override;
 
-
   public slots:
 	void setRecord( const Record record );
 	void clearRecord();
+	void paintEvent( QPaintEvent *event ) override;
+
+	//Button handling
+	void on_btnPlay_pressed();
+	void on_tbSelectVersion_pressed();
+
 
   private:
-
 	Ui::DetailedRecordView *ui;
 };
 

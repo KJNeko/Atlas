@@ -51,10 +51,11 @@ struct RecordData : public QObject
 	const QString& getEngine() const;
 	std::uint64_t getLastPlayed() const;
 	std::uint32_t getTotalPlaytime() const;
+	GameMetadata getVersion( const QString ) const;
 	const std::vector< GameMetadata >& getVersions();
 	const std::filesystem::path& getBannerPath() const;
 	QPixmap getBanner() const;
-	QPixmap getBanner(int width, int height) const;
+	QPixmap getBanner( int width, int height, bool expanding = false ) const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
 	const std::optional< const GameMetadata > getLatestVersion() const;
@@ -65,6 +66,7 @@ struct RecordData : public QObject
 	void setEngine( QString, Transaction = Transaction( true ) );
 	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
+	void updateVersion( const GameMetadata&, Transaction = Transaction( true ) );
 	void addVersion( const GameMetadata&, Transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
 

@@ -16,12 +16,12 @@
 //! Representation of a game version
 struct GameMetadata
 {
-	QString m_version;
+	RecordID m_record_id{0};
 
-	//! canonical ath to the game folder
+	QString m_version {};
+
 	std::filesystem::path m_game_path {};
 
-	//! canonical path to the executable
 	std::filesystem::path m_exec_path {};
 
 	//! Indicates that we don't control where the game was placed.
@@ -30,15 +30,21 @@ struct GameMetadata
 	std::uint32_t m_total_playtime;
 	std::uint64_t m_last_played;
 
+	std::filesystem::path getPath() const;
+	std::filesystem::path getExecPath() const;
+	void playGame();
+
 	GameMetadata() = delete;
 
 	GameMetadata(
+		const RecordID parent_id,
 		const QString& version_in,
 		const std::filesystem::path& game_path_in,
 		const std::filesystem::path& exec_path_in,
 		const bool in_place,
 		const std::uint64_t last_played,
 		const std::uint32_t total_playtime ) :
+	  m_record_id(parent_id),
 	  m_version( version_in ),
 	  m_game_path( game_path_in ),
 	  m_exec_path( exec_path_in ),
@@ -46,6 +52,9 @@ struct GameMetadata
 	  m_total_playtime( total_playtime ),
 	  m_last_played( last_played )
 	{}
+
+  //private:
+	//inline void setOwner(const RecordID owner) {m_record_id = owner;}
 
 	bool operator==( const GameMetadata& other ) const = default;
 };

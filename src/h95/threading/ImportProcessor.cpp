@@ -24,7 +24,7 @@ ImportProcessor::~ImportProcessor() noexcept
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {
 	emit startProgressBar();
-	emit updateMax( static_cast<int>(data.size()) );
+	emit updateMax( static_cast< int >( data.size() ) );
 
 	int counter { 0 };
 
@@ -49,7 +49,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 				const auto dest_folder { dest_root / creator.toStdString() / title.toStdString()
 					                     / version.toStdString() };
 
-				emit updateSubMax( static_cast<int>(files.size()) );
+				emit updateSubMax( static_cast< int >( files.size() ) );
 
 				//Scan through and copy every file.
 				for ( std::size_t i = 0; i < files.size(); ++i )
@@ -65,26 +65,38 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					                        .arg( title )
 					                        .arg( QString::fromStdString( source_path.filename() ) ) );
 
-					emit updateSubValue( static_cast<int>(i) );
+					emit updateSubValue( static_cast< int >( i ) );
 				}
 
 				//std::filesystem::remove( source_folder );
 				path = std::filesystem::relative( dest_folder, dest_root );
 			}
 
-			GameMetadata metadata {
-				std::move( version ), std::move( path ), std::move( executable ), !move_after_import, 0, 0
-			};
-
 			auto record { RecordData(
 				std::move( title ),
 				std::move( creator ),
-				std::move( version ),
+				{},
 				std::uint64_t( 0 ),
 				std::uint64_t( 0 ),
-				{ metadata },
+				{},
 				{},
 				{} ) };
+
+			GameMetadata metadata { record.getID(),
+				                    std::move( version ),
+				                    std::move( path ),
+				                    std::move( executable ),
+				                    !move_after_import,
+				                    0,
+				                    0 };
+
+			record.addVersion( metadata );
+
+			if(std::filesystem::exists( source_folder / "banner.jpg" ) || std::filesystem::exists( source_folder / "banner.png" ))
+			{
+				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ? source_folder / "banner.jpg" : source_folder / "banner.png" };
+				record.setBanner( banner_path );
+			}
 
 			completed_records.emplace_back( record.getID() );
 
@@ -94,7 +106,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 		}
 		catch ( RecordException& e )
 		{
-			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
+			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
 			emit updateValue( ++counter );
 		}
 		catch ( std::exception& e )

@@ -49,7 +49,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	transaction
 			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime FROM game_metadata WHERE record_id = ?"
 			<< id
-		>> [ this ](
+		>> [ this, id ](
 			   std::string version,
 			   std::string game_path,
 			   std::string exec_path,
@@ -58,6 +58,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			   uint32_t version_playtime )
 	{
 		m_versions.emplace_back(
+			id,
 			QString::fromStdString( std::move( version ) ),
 			std::move( game_path ),
 			std::move( exec_path ),
@@ -140,7 +141,7 @@ QPixmap RecordData::getBanner() const
 		return QPixmap { QString::fromStdString( m_banner.string() ) };
 }
 
-QPixmap RecordData::getBanner( int width, int height ) const
+QPixmap RecordData::getBanner( int width, int height, bool expanding ) const
 {
 	ZoneScoped;
 	const auto key { QString::fromStdString( m_banner.filename().string() ) + QString::number( width ) + "x"
@@ -156,7 +157,11 @@ QPixmap RecordData::getBanner( int width, int height ) const
 			return {};
 		else
 		{
-			banner = banner.scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation );
+			banner = banner.scaled(
+				width,
+				height,
+				expanding ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
+				Qt::SmoothTransformation );
 			if ( !QPixmapCache::insert( key, banner ) )
 				spdlog::warn( "failed to insert banner into cache with key: {}", key );
 			return banner;
@@ -241,6 +246,7 @@ void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction 
 void RecordData::addVersion( const GameMetadata& version, Transaction transaction )
 {
 	ZoneScoped;
+	spdlog::info("Adding version {} to record {}", version.m_version.toStdString(), m_title.toStdString());
 	//Check if version is already added
 	auto itter = std::find( m_versions.begin(), m_versions.end(), version );
 	if ( itter != m_versions.end() ) return;
@@ -389,4 +395,37 @@ const std::optional< const GameMetadata > RecordData::getLatestVersion() const
 	if ( m_versions.size() == 0 ) return std::nullopt;
 
 	return m_versions.at( m_versions.size() - 1 );
+}
+
+GameMetadata RecordData::getVersion( const QString version_name ) const
+{
+	ZoneScoped;
+
+	const auto idx { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version_name ]( const GameMetadata& version ) { return version.m_version == version_name; } ) };
+
+	if ( idx == m_versions.end() )
+		throw std::runtime_error( "Version not found" );
+	else
+		return *idx;
+}
+
+void RecordData::updateVersion( const GameMetadata& version, Transaction transaction )
+{
+	ZoneScoped;
+
+	//Ensure that the version does exist
+	auto version_idx { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version ]( const GameMetadata& v ) { return v.m_version == version.m_version; } ) };
+
+	if ( version_idx == m_versions.end() ) throw std::runtime_error( "Version not found" );
+
+	transaction
+		<< "UPDATE game_metadata SET last_played = ?, version_playtime = ? WHERE record_id = ? AND version = ?" << version.m_last_played << version.m_total_playtime << m_id << version.m_version.toStdString();
+
+	*version_idx = version;
 }

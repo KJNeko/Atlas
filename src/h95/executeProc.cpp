@@ -11,7 +11,7 @@ void executeProc( const std::string& path )
 {
 	spdlog::debug( "Executing game {}", path );
 
-	std::system( path.c_str() );
+	std::system( ( '\"' + path + '\"' ).c_str() );
 }
 
 #elif _WIN64
