@@ -60,7 +60,8 @@ void DetailedRecordView::reloadRecord()
 		total_size += folderSize( version.getPath() );
 	}
 
-	const auto latest_size { record->getVersions().size() > 0 ? folderSize( record->getLatestVersion().getPath() ) : 0 };
+	const auto latest_size { record->getVersions().size() > 0 ? folderSize( record->getLatestVersion().getPath() ) :
+		                                                        0 };
 
 	const auto& locale { this->locale() };
 

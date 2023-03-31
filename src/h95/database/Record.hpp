@@ -21,7 +21,7 @@ enum IMAGE_TYPE
 struct RecordData : public QObject
 {
 	Q_OBJECT
-	Q_DISABLE_COPY(RecordData)
+	Q_DISABLE_COPY( RecordData )
 
 	RecordData() = default;
 
@@ -68,7 +68,12 @@ struct RecordData : public QObject
 	void setLastPlayed( const std::uint64_t, Transaction = Transaction( true ) );
 	void addPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
 	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( true ) );
-	void addVersion(QString version, std::filesystem::path game_path, std::filesystem::path exec_path, bool in_place, Transaction transaction = Transaction(true));
+	void addVersion(
+		QString version,
+		std::filesystem::path game_path,
+		std::filesystem::path exec_path,
+		bool in_place,
+		Transaction transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
 
 	void setBanner( const std::filesystem::path&, Transaction = Transaction( true ) );
@@ -132,11 +137,7 @@ struct RecordData : public QObject
 	 * @param previews
 	 * @param transaction
 	 */
-	RecordData(
-		QString title,
-		QString creator,
-		QString engine,
-		Transaction = Transaction( true ) );
+	RecordData( QString title, QString creator, QString engine, Transaction = Transaction( true ) );
 
 	//! Defined to comply with FlyWeight HasStaticKeyFunc constraint
 	inline static RecordID key( const RecordID id, [[maybe_unused]] Transaction transaction = Transaction( true ) )
@@ -152,7 +153,7 @@ struct RecordData : public QObject
 
 using Record = FlyWeight< RecordData, RecordID >;
 
-Record importRecord( QString title, QString creator, QString engine, Transaction transaction = Transaction(true) );
+Record importRecord( QString title, QString creator, QString engine, Transaction transaction = Transaction( true ) );
 
 struct RecordException : public std::runtime_error
 {

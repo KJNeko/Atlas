@@ -11,10 +11,7 @@ class TestRecord : public ::testing::Test
 {
 	void SetUp() override { Database::initalize( ":memory:" ); }
 
-	void TearDown() override
-	{
-		Database::deinit();
-	}
+	void TearDown() override { Database::deinit(); }
 };
 
 TEST_F( TestRecord, createRecord )

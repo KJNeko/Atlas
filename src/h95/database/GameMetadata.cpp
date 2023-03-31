@@ -18,7 +18,8 @@ QString GameMetadata::getVersionName() const
 
 bool GameMetadata::isInPlace() const
 {
-	return m_in_place;;
+	return m_in_place;
+	;
 }
 
 std::uint32_t GameMetadata::getPlaytime() const
@@ -36,7 +37,7 @@ std::filesystem::path GameMetadata::getPath() const
 	return config::paths::games::getPath() / m_game_path;
 }
 
-std::filesystem::path GameMetadata::getExecPath(bool full) const
+std::filesystem::path GameMetadata::getExecPath( bool full ) const
 {
 	spdlog::info( "Exec path: {}", m_exec_path );
 	spdlog::info( "Output: {}", getPath() / m_exec_path );

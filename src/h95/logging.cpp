@@ -40,13 +40,13 @@ void initLogging()
 
 	logger->info( "Logger setup" );
 
-	logger->set_level(spdlog::level::debug);
+	logger->set_level( spdlog::level::debug );
 	logger->flush_on( spdlog::level::debug );
 
 	spdlog::set_default_logger( logger );
 
 #ifndef NDEBUG
-	switch(1)
+	switch ( 1 )
 #else
 	switch ( config::logging::level::get() )
 #endif

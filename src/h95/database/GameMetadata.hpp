@@ -102,9 +102,9 @@ struct GameMetadata : public QObject
 		//connect(this, &GameMetadata::lastPlayedChanged, &m_parent, &RecordData::v_lastPlayedChanged);
 	}
 
-	GameMetadata& operator=(const GameMetadata& other)
+	GameMetadata& operator=( const GameMetadata& other )
 	{
-		std::construct_at(this, other);
+		std::construct_at( this, other );
 		return *this;
 	}
 

@@ -84,7 +84,7 @@ namespace imageManager
 				}
 
 				//Copy the temp_file to the destination
-				if(!std::filesystem::exists(dest))
+				if ( !std::filesystem::exists( dest ) )
 					std::filesystem::copy( temp_path, dest );
 				else
 					return dest;
