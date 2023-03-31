@@ -1,15 +1,11 @@
 <map id="src/h95/database/Database.hpp" name="src/h95/database/Database.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="426,5,631,31"/>
-<area shape="rect" id="node2" href="$Database_8cpp.html" title=" " alt="" coords="50,79,255,104"/>
-<area shape="rect" id="node3" href="$GameMetadata_8cpp.html" title=" " alt="" coords="104,152,343,177"/>
-<area shape="rect" id="node4" href="$GameMetadata_8hpp.html" title=" " alt="" coords="331,79,569,104"/>
-<area shape="rect" id="node6" href="$Record_8cpp.html" title=" " alt="" coords="569,233,760,258"/>
-<area shape="rect" id="node12" href="$imageManager_8cpp.html" title=" " alt="" coords="645,79,823,104"/>
-<area shape="rect" id="node13" href="$main_8cpp.html" title=" " alt="" coords="847,79,943,104"/>
-<area shape="rect" id="node5" href="$Record_8hpp.html" title=" " alt="" coords="367,152,557,177"/>
-<area shape="rect" id="node7" href="$Search_8hpp.html" title=" " alt="" coords="5,233,196,258"/>
-<area shape="rect" id="node9" href="$logging_8cpp.html" title=" " alt="" coords="220,233,355,258"/>
-<area shape="rect" id="node10" href="$RecordListModel_8hpp.html" title=" " alt="" coords="379,225,545,265"/>
-<area shape="rect" id="node8" href="$Search_8cpp.html" title=" " alt="" coords="5,321,196,346"/>
-<area shape="rect" id="node11" href="$RecordListModel_8cpp.html" title=" " alt="" coords="379,313,545,353"/>
+<area shape="rect" id="node1" title=" " alt="" coords="381,5,587,31"/>
+<area shape="rect" id="node2" href="$Database_8cpp.html" title=" " alt="" coords="5,79,211,104"/>
+<area shape="rect" id="node3" href="$GameMetadata_8cpp.html" title=" " alt="" coords="71,152,310,177"/>
+<area shape="rect" id="node4" href="$GameMetadata_8hpp.html" title=" " alt="" coords="286,79,525,104"/>
+<area shape="rect" id="node6" href="$Record_8cpp.html" title=" " alt="" coords="467,225,658,251"/>
+<area shape="rect" id="node8" href="$imageManager_8cpp.html" title=" " alt="" coords="600,79,779,104"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title=" " alt="" coords="803,79,899,104"/>
+<area shape="rect" id="node5" href="$Record_8hpp.html" title=" " alt="" coords="334,152,525,177"/>
+<area shape="rect" id="node7" href="$logging_8cpp.html" title=" " alt="" coords="309,225,443,251"/>
 </map>

@@ -1,9 +1,5 @@
 <map id="src/h95/database/Record.hpp" name="src/h95/database/Record.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="313,5,504,31"/>
-<area shape="rect" id="node2" href="$Record_8cpp.html" title=" " alt="" coords="5,86,196,111"/>
-<area shape="rect" id="node3" href="$Search_8hpp.html" title=" " alt="" coords="220,86,411,111"/>
-<area shape="rect" id="node5" href="$logging_8cpp.html" title=" " alt="" coords="435,86,569,111"/>
-<area shape="rect" id="node6" href="$RecordListModel_8hpp.html" title=" " alt="" coords="593,79,760,119"/>
-<area shape="rect" id="node4" href="$Search_8cpp.html" title=" " alt="" coords="220,174,411,199"/>
-<area shape="rect" id="node7" href="$RecordListModel_8cpp.html" title=" " alt="" coords="593,167,760,207"/>
+<area shape="rect" id="node1" title=" " alt="" coords="99,5,289,31"/>
+<area shape="rect" id="node2" href="$Record_8cpp.html" title=" " alt="" coords="5,79,196,104"/>
+<area shape="rect" id="node3" href="$logging_8cpp.html" title=" " alt="" coords="220,79,355,104"/>
 </map>

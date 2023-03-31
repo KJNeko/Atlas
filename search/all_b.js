@@ -1,18 +1,9 @@
 var searchData=
 [
-  ['m_5fexec_5fpath_0',['m_exec_path',['../structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120',1,'GameMetadata']]],
-  ['m_5fgame_5fpath_1',['m_game_path',['../structGameMetadata.html#a91c33dc2dda86c4b171e1f104227bc88',1,'GameMetadata']]],
-  ['m_5fid_2',['m_id',['../structMetadataAlreadyExists.html#a1c7fe29feaf3482b489291ee3f024522',1,'MetadataAlreadyExists']]],
-  ['m_5fin_5fplace_3',['m_in_place',['../structGameMetadata.html#a5f350dbac3d533807a07c63537768ec1',1,'GameMetadata']]],
-  ['m_5flast_5fplayed_4',['m_last_played',['../structGameMetadata.html#a8a88044df3d122d2e89acd7250ab3783',1,'GameMetadata']]],
-  ['m_5fmetadata_5',['m_metadata',['../structMetadataAlreadyExists.html#a7c9ebd22a0f3b2c16a98bd5a41ee44fe',1,'MetadataAlreadyExists']]],
-  ['m_5ftotal_5fplaytime_6',['m_total_playtime',['../structGameMetadata.html#af44d3e870142ab47196005d9357a63af',1,'GameMetadata']]],
-  ['m_5fversion_7',['m_version',['../structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97',1,'GameMetadata']]],
-  ['main_8',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
-  ['main_2ecpp_9',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mainwindow_10',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow::MainWindow()'],['../classMainWindow.html',1,'MainWindow']]],
-  ['mainwindow_2ecpp_11',['mainwindow.cpp',['../mainwindow_8cpp.html',1,'']]],
-  ['mainwindow_2eh_12',['mainwindow.h',['../mainwindow_8h.html',1,'']]],
-  ['metadataalreadyexists_13',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'MetadataAlreadyExists'],['../structMetadataAlreadyExists.html#ab19d74f8d834c5921c9f775df41f3133',1,'MetadataAlreadyExists::MetadataAlreadyExists()']]],
-  ['metadataexception_14',['MetadataException',['../structMetadataException.html',1,'MetadataException'],['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException::MetadataException()']]]
+  ['parse_0',['parse',['../structfmt_1_1formatter_3_01QString_01_4.html#a0a51b8f0b49cfafb8bf46c32c5e7ea3d',1,'fmt::formatter&lt; QString &gt;::parse()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a13ee52f6dbea3d8dfce4e606c16eecf6',1,'fmt::formatter&lt; RecordID &gt;::parse()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a7efbb7163bc9d16c87c13f039e9f3c20',1,'fmt::formatter&lt; std::filesystem::path &gt;::parse()'],['../structfmt_1_1formatter_3_01Record_01_4.html#a157543893a4bf3f8c3c71ae70f406bd4',1,'fmt::formatter&lt; Record &gt;::parse()'],['../structfmt_1_1formatter_3_01GameMetadata_01_4.html#af42a95457c72223e8cc1a4f8b208fbf8',1,'fmt::formatter&lt; GameMetadata &gt;::parse()']]],
+  ['perflogging_2ehpp_1',['perfLogging.hpp',['../perfLogging_8hpp.html',1,'']]],
+  ['preview_5fbanner_2',['PREVIEW_BANNER',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46acadf8856990bcddac2907d588c7170e5',1,'Record.cpp']]],
+  ['preview_5fpreview_3',['PREVIEW_PREVIEW',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a2f03d87961c4d9ea96345b5c986585f6',1,'Record.cpp']]],
+  ['preview_5funknown_4',['PREVIEW_UNKNOWN',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46a88c9816c4c12a231f99d9cb2cb958077',1,'Record.cpp']]],
+  ['previewtype_5',['PreviewType',['../Record_8cpp.html#a22b599867262862da379e1191c4a1e46',1,'Record.cpp']]]
 ];

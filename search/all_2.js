@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['cleanorphans_0',['cleanOrphans',['../namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8',1,'imageManager']]],
-  ['commit_1',['commit',['../structTransaction.html#a109bd0f1d70b6ff69cf3abccf7eea8f8',1,'Transaction::commit()'],['../structNonTransaction.html#a633bf37120f5d78b5add3af573d34ee4',1,'NonTransaction::commit()']]],
-  ['config_2',['config',['../namespaceconfig.html',1,'']]],
-  ['config_2ehpp_3',['config.hpp',['../config_8hpp.html',1,'']]],
-  ['creatorchanged_4',['creatorChanged',['../structRecordData.html#abd1b53fc98bfcb32cfb252e26d34723b',1,'RecordData']]]
+  ['database_0',['Database',['../classDatabase.html',1,'']]],
+  ['database_2ecpp_1',['Database.cpp',['../Database_8cpp.html',1,'']]],
+  ['database_2ehpp_2',['Database.hpp',['../Database_8hpp.html',1,'']]],
+  ['datapath_3',['dataPath',['../config_8cpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp'],['../config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df',1,'dataPath():&#160;config.cpp']]],
+  ['deinit_4',['deinit',['../classDatabase.html#a95da77a6408fed05dfd75efa87400a2e',1,'Database']]]
 ];

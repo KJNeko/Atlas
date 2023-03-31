@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['importimage_0',['importImage',['../namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5',1,'imageManager']]],
-  ['initalize_1',['initalize',['../classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f',1,'Database']]],
-  ['initlogging_2',['initLogging',['../logging_8cpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp'],['../logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a',1,'initLogging():&#160;logging.cpp']]],
-  ['invalidrecordid_3',['InvalidRecordID',['../structInvalidRecordID.html#a132db5191179dca2ed2e5d54f89cafc0',1,'InvalidRecordID']]]
+  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['metadataalreadyexists_1',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html#ab19d74f8d834c5921c9f775df41f3133',1,'MetadataAlreadyExists']]],
+  ['metadataexception_2',['MetadataException',['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException']]]
 ];

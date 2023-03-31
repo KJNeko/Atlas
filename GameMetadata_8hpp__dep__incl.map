@@ -1,11 +1,7 @@
 <map id="src/h95/database/GameMetadata.hpp" name="src/h95/database/GameMetadata.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="169,5,408,31"/>
-<area shape="rect" id="node2" href="$GameMetadata_8cpp.html" title=" " alt="" coords="51,79,289,104"/>
-<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="313,79,504,104"/>
-<area shape="rect" id="node4" href="$Record_8cpp.html" title=" " alt="" coords="5,159,196,185"/>
-<area shape="rect" id="node5" href="$Search_8hpp.html" title=" " alt="" coords="220,159,411,185"/>
-<area shape="rect" id="node7" href="$logging_8cpp.html" title=" " alt="" coords="435,159,569,185"/>
-<area shape="rect" id="node8" href="$RecordListModel_8hpp.html" title=" " alt="" coords="593,152,760,192"/>
-<area shape="rect" id="node6" href="$Search_8cpp.html" title=" " alt="" coords="220,247,411,273"/>
-<area shape="rect" id="node9" href="$RecordListModel_8cpp.html" title=" " alt="" coords="593,240,760,280"/>
+<area shape="rect" id="node1" title=" " alt="" coords="124,5,363,31"/>
+<area shape="rect" id="node2" href="$GameMetadata_8cpp.html" title=" " alt="" coords="5,79,244,104"/>
+<area shape="rect" id="node3" href="$Record_8hpp.html" title=" " alt="" coords="268,79,459,104"/>
+<area shape="rect" id="node4" href="$Record_8cpp.html" title=" " alt="" coords="175,152,365,177"/>
+<area shape="rect" id="node5" href="$logging_8cpp.html" title=" " alt="" coords="389,152,524,177"/>
 </map>

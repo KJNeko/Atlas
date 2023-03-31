@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
-  ['mainwindow_1',['MainWindow',['../classMainWindow.html#a996c5a2b6f77944776856f08ec30858d',1,'MainWindow']]],
-  ['metadataalreadyexists_2',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html#ab19d74f8d834c5921c9f775df41f3133',1,'MetadataAlreadyExists']]],
-  ['metadataexception_3',['MetadataException',['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException']]]
+  ['record_0',['Record',['../structRecord.html#a70c21460e6838af59e35e38f0a597786',1,'Record']]],
+  ['recordalreadyexists_1',['RecordAlreadyExists',['../structRecordAlreadyExists.html#afee98167673b80eb76e112e034f66daa',1,'RecordAlreadyExists']]],
+  ['recordexception_2',['RecordException',['../structRecordException.html#a8d9445956d94d871b9c9f2f3e6153add',1,'RecordException']]]
 ];
