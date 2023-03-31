@@ -14,6 +14,8 @@
 #include "ui/mainwindow.h"
 
 #ifdef TRACY_ENABLE
+#include <QPixmapCache>
+
 #include <tracy/Tracy.hpp>
 
 void* operator new( std::size_t count )
@@ -102,6 +104,8 @@ int main( int argc, char** argv )
 #endif
 
 	Database::initalize( config::paths::database::getPath() );
+
+	QPixmapCache::setCacheLimit( 1024 * 128 );
 
 	MainWindow w;
 	w.show();
