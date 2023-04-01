@@ -34,9 +34,14 @@ std::filesystem::path GameMetadata::getPath() const
 	return config::paths::games::getPath() / m_game_path;
 }
 
-std::filesystem::path GameMetadata::getExecPath( bool full ) const
+std::filesystem::path GameMetadata::getRelativeExecPath( ) const
 {
-	return full ? getPath() / m_exec_path : m_exec_path;
+	return m_exec_path;
+}
+
+std::filesystem::path GameMetadata::getExecPath() const
+{
+	return getPath() / getRelativeExecPath();
 }
 
 void runGame( RecordData& record, const QString version_str )
@@ -59,7 +64,7 @@ void runGame( RecordData& record, const QString version_str )
 
 void GameMetadata::playGame()
 {
-	if ( !std::filesystem::exists( getExecPath( true ) ) )
+	if ( !std::filesystem::exists( getExecPath() ) )
 		throw MetadataException( "Executable does not exist" );
 	else
 		runGame( m_parent, m_version );

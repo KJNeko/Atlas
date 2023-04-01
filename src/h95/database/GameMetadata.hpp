@@ -49,7 +49,8 @@ struct GameMetadata : public QObject
 	std::uint32_t getPlaytime() const;
 	std::uint64_t getLastPlayed() const;
 	std::filesystem::path getPath() const;
-	std::filesystem::path getExecPath( bool full = false ) const;
+	std::filesystem::path getRelativeExecPath() const;
+	std::filesystem::path getExecPath() const;
 
   signals:
 	void playtimeChanged( std::uint32_t playtime );
