@@ -36,8 +36,6 @@ std::filesystem::path GameMetadata::getPath() const
 
 std::filesystem::path GameMetadata::getExecPath( bool full ) const
 {
-	spdlog::info( "Exec path: {}", m_exec_path );
-	spdlog::info( "Output: {}", getPath() / m_exec_path );
 	return full ? getPath() / m_exec_path : m_exec_path;
 }
 
