@@ -7,14 +7,13 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QPixmapCache>
 
 #include "h95/config.hpp"
 #include "h95/database/Database.hpp"
-#include "h95/logging.hpp"
 #include "ui/mainwindow.h"
 
 #ifdef TRACY_ENABLE
-#include <QPixmapCache>
 
 #include <tracy/Tracy.hpp>
 
