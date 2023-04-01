@@ -24,6 +24,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 	//TODO: Load qss options into ui->themeBox
 
 	prepareThemeSettings();
+	prepareBannerViewerSettings();
 	preparePathsSettings();
 }
 
@@ -66,6 +67,20 @@ void SettingsDialog::saveThemeSettings()
 	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
 
 	reloadTheme();
+}
+
+void SettingsDialog::prepareBannerViewerSettings()
+{
+	ZoneScoped;
+	ui->sbBannerX->setValue( config::delegate::banner_x::get() );
+	ui->sbBannerY->setValue( config::delegate::banner_y::get() );
+}
+
+void SettingsDialog::saveBannerViewerSettings()
+{
+	ZoneScoped;
+	config::delegate::banner_x::set( ui->sbBannerX->value() );
+	config::delegate::banner_y::set( ui->sbBannerY->value() );
 }
 
 void SettingsDialog::preparePathsSettings()
@@ -215,6 +230,7 @@ void SettingsDialog::on_applySettings_pressed()
 {
 	ZoneScoped;
 	savePathsSettings();
+	saveBannerViewerSettings();
 	saveThemeSettings();
 	this->accept();
 }

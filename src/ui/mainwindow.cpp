@@ -74,6 +74,8 @@ void MainWindow::on_actionOptions_triggered()
 
 	settingsDialog->exec();
 	settingsDialog->deleteLater();
+
+	QWidget::repaint();
 }
 
 void MainWindow::switchToDetailed( const Record record )

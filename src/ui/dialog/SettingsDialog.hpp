@@ -44,6 +44,8 @@ class SettingsDialog : public QDialog
 	void on_themeBox_currentTextChanged( const QString &text );
 	void reloadTheme();
 	void on_cbUseSystemTheme_stateChanged( int arg1 );
+	void prepareBannerViewerSettings();
+	void saveBannerViewerSettings();
 };
 
 #endif //HYDRUS95_SETTINGSDIALOG_HPP
