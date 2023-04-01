@@ -24,13 +24,26 @@
 
 #include <sqlite_modern_cpp.h>
 
+#include <client/TracyLock.hpp>
+
 #pragma GCC diagnostic pop
+
+namespace internal
+{
+#ifdef TRACY_ENABLE
+	using MtxType = tracy::Lockable<std::mutex>;
+	using LockGuardType = std::lock_guard< tracy::Lockable<std::mutex> >;
+#else
+	using MtxType = std::mutex;
+	using LockGuardType = std::lock_guard< std::mutex >;
+#endif
+}
 
 class Database
 {
 	static sqlite::database& ref();
 
-	static std::mutex& lock();
+	static internal::MtxType& lock();
 
   public:
 
@@ -53,9 +66,9 @@ struct TransactionInvalid : public std::runtime_error
 
 class TransactionData
 {
-	std::lock_guard< std::mutex > guard;
+	internal::LockGuardType guard;
 
-	std::lock_guard< std::mutex > getLock();
+	internal::LockGuardType getLock();
 
 	//! True if operator<< has been called at least once
 	bool ran_once { false };
@@ -131,7 +144,7 @@ struct NonTransaction
   private:
 
 	bool finished { false };
-	std::lock_guard< std::mutex >* guard { nullptr };
+	std::unique_ptr<internal::LockGuardType> guard;
 
   public:
 

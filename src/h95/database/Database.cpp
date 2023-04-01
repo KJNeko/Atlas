@@ -11,7 +11,11 @@
 namespace internal
 {
 	static sqlite::database* db { nullptr };
+#ifdef TRACY_ENABLE
+	static TracyLockable( std::mutex, db_mtx );
+#else
 	static std::mutex db_mtx;
+#endif
 
 #ifndef NDEBUG
 	static std::atomic< std::thread::id > last_locked { std::thread::id( 0 ) };
@@ -28,7 +32,7 @@ sqlite::database& Database::ref()
 		throw std::runtime_error( "Database was not initalized!" );
 }
 
-std::mutex& Database::lock()
+internal::MtxType& Database::lock()
 {
 	return internal::db_mtx;
 }
@@ -89,7 +93,7 @@ void Database::deinit()
 	internal::db = nullptr;
 }
 
-std::lock_guard< std::mutex > TransactionData::getLock()
+internal::LockGuardType TransactionData::getLock()
 {
 	ZoneScoped;
 	//Check if we are already locked
@@ -101,7 +105,7 @@ std::lock_guard< std::mutex > TransactionData::getLock()
 	}
 	else
 #endif
-		return std::lock_guard< std::mutex >( Database::lock() );
+		return internal::LockGuardType( Database::lock() );
 }
 
 TransactionData::TransactionData() : guard( getLock() )
@@ -185,12 +189,12 @@ Transaction::Transaction( Transaction& other ) :
   m_autocommit( other.m_autocommit )
 {}
 
-NonTransaction::NonTransaction() : guard( new std::lock_guard( Database::lock() ) )
+NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {
 	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
-		delete guard;
+		guard.reset();
 		throw TransactionInvalid();
 	}
 }
@@ -206,7 +210,7 @@ void NonTransaction::commit()
 	ZoneScoped;
 	if ( finished ) throw TransactionInvalid();
 	finished = true;
-	delete guard;
+	guard.reset();
 }
 
 void NonTransaction::abort()
@@ -214,7 +218,7 @@ void NonTransaction::abort()
 	ZoneScoped;
 	if ( finished ) throw TransactionInvalid();
 	finished = true;
-	delete guard;
+	guard.reset();
 	spdlog::error( "Transaction aborted!" );
 }
 
