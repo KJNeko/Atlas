@@ -59,7 +59,7 @@ void runGame( RecordData& record, const QString version_str )
 
 void GameMetadata::playGame()
 {
-	if ( !std::filesystem::exists( getExecPath() ) )
+	if ( !std::filesystem::exists( getExecPath( true ) ) )
 		throw MetadataException( "Executable does not exist" );
 	else
 		runGame( m_parent, m_version );
