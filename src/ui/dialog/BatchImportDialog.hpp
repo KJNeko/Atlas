@@ -39,6 +39,7 @@ class BatchImportDialog : public QDialog
 	void on_btnSetFolder_pressed();
 	void on_btnNext_pressed();
 	void on_btnBack_pressed();
+	void on_btnCancel_pressed();
 	void modelChanged(
 		const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList< int >& roles = QList< int >() );
 	void processFinishedDirectory( const GameImportData data );

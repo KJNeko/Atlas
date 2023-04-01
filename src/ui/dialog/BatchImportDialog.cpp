@@ -2,6 +2,7 @@
 
 #include <QFileDialog>
 #include <QFutureWatcher>
+#include <QMessageBox>
 #include <QMimeDatabase>
 #include <QtConcurrentRun>
 
@@ -22,7 +23,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
-	ui->twGames->setEditTriggers(QAbstractItemView::AllEditTriggers);
+	ui->twGames->setEditTriggers( QAbstractItemView::AllEditTriggers );
 
 	processor.moveToThread( &processing_thread );
 	preprocessor.moveToThread( &processing_thread );
@@ -56,7 +57,6 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 	if ( config::geometry::batch_import_dialog::hasValue() )
 		restoreGeometry( config::geometry::batch_import_dialog::get() );
-
 
 	loadConfig();
 }
@@ -216,4 +216,11 @@ void BatchImportDialog::finishedImporting()
 {
 	emit importComplete( this->processor.getCompleted() );
 	this->close();
+}
+
+void BatchImportDialog::on_btnCancel_pressed()
+{
+	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
+	     == QMessageBox::Yes )
+		this->close();
 }
