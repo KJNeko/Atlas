@@ -208,7 +208,8 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 
 void BatchImportDialog::finishedProcessing()
 {
-	ui->statusLabel->setText( "Finished processing all games" );
+	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
+	                              .arg( ui->twGames->model()->rowCount() ) );
 	ui->btnNext->setEnabled( true );
 }
 
