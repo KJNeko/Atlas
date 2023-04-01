@@ -39,7 +39,6 @@ void SettingsDialog::prepareThemeSettings()
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
 	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
-
 	//Load all valid options.
 	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/themes" ) )
 	{
@@ -57,6 +56,8 @@ void SettingsDialog::prepareThemeSettings()
 			break;
 		}
 	}
+
+	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
 }
 
 void SettingsDialog::saveThemeSettings()
@@ -239,14 +240,25 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 	ZoneScoped;
 	spdlog::info( "Theme changed to {}", text );
 
-	QFile file { "./data/themes/" + text };
-	file.open( QFile::ReadOnly );
+	reloadTheme();
 
-	QString style { file.readAll() };
+	if ( ui->cbUseSystemTheme->isChecked() )
+	{
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
+		ensurePolished();
+		return;
+	}
+	else
+	{
+		QFile file { "./data/themes/" + text };
+		file.open( QFile::ReadOnly );
 
-	dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+		QString style { file.readAll() };
 
-	ensurePolished();
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+
+		ensurePolished();
+	}
 }
 
 void SettingsDialog::reloadTheme()
@@ -285,4 +297,10 @@ void SettingsDialog::reloadTheme()
 
 		ensurePolished();
 	}
+}
+
+void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1 )
+{
+	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
+	on_themeBox_currentTextChanged( ui->themeBox->currentText() );
 }
