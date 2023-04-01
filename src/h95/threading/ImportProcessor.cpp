@@ -20,7 +20,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 	int counter { 0 };
 
 	//God I love decomposition
-	for ( auto [ path, title, creator, version, size, executables, executable, move_after_import ] : data )
+	for ( auto [ path, title, creator, engine, version, size, executables, executable, move_after_import ] : data )
 	{
 		emit updateText( QString( "Importing %1" ).arg( title ) );
 
@@ -66,9 +66,12 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			Transaction transaction { Transaction::NoAutocommit };
 
-			Record record { importRecord( std::move( title ), std::move( creator ), QString(), transaction ) };
+			Record record {
+				importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction )
+			};
 
-			record->addVersion( std::move(version), std::move(path), std::move(executable), !move_after_import, transaction );
+			record->addVersion(
+				std::move( version ), std::move( path ), std::move( executable ), !move_after_import, transaction );
 
 			transaction.commit();
 

@@ -16,6 +16,7 @@ enum ImportColumns
 	FOLDER_PATH,
 	TITLE,
 	CREATOR,
+	ENGINE,
 	VERSION,
 	SIZE,
 	EXECUTABLES,

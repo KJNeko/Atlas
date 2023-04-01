@@ -409,6 +409,17 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 	}
 }
 
+bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
+{
+	bool found { false };
+
+	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
+				<< creator.toStdString() << engine.toStdString()
+		>> [ &found ]( [[maybe_unused]] const RecordID id ) { found = true; };
+
+	return found;
+}
+
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
 	try

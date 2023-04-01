@@ -63,7 +63,7 @@ bool valid( QString pattern, QString text )
 	return match.hasMatch();
 }
 
-std::tuple< QString, QString, QString > extractGroups( QString pattern, QString text )
+std::tuple< QString, QString, QString, QString > extractGroups( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
@@ -75,8 +75,9 @@ std::tuple< QString, QString, QString > extractGroups( QString pattern, QString 
 		auto title { match.captured( "title" ) };
 		auto creator { match.hasCaptured( "creator" ) ? match.captured( "creator" ) : "" };
 		auto version { match.hasCaptured( "version" ) ? match.captured( "version" ) : "" };
+		auto engine { match.hasCaptured( "engine" ) ? match.captured( "engine" ) : "" };
 
-		return { std::move( title ), std::move( creator ), std::move( version ) };
+		return { std::move( title ), std::move( creator ), std::move( engine ), std::move( version ) };
 	}
 	else
 		throw std::runtime_error( "Missing required title capture" );

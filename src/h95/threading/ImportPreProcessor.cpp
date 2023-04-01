@@ -50,12 +50,13 @@ void ImportPreProcessor::processDirectory(
 			if ( potential_executables.size() > 0 )
 			{
 				ZoneScopedN( "Add to list" );
-				const auto [ title, creator, version ] =
+				const auto [ title, creator, engine, version ] =
 					extractGroups( regex, QString::fromStdString( folder.string() ) );
 
 				const GameImportData game_data { std::filesystem::relative( folder, base ),
 					                             title,
 					                             creator,
+					                             engine,
 					                             version,
 					                             skip_filesize ? 0 : folderSize( folder ),
 					                             potential_executables,

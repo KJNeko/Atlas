@@ -16,6 +16,7 @@ struct GameImportData
 	std::filesystem::path path {};
 	QString title { "SOMETHING WENT WRONG" };
 	QString creator { "SOMETHING WENT WRONG" };
+	QString engine { "SOMETHING WENT WRONG" };
 	QString version { "SOMETHING WENT WRONG" };
 	std::size_t size {};
 	std::vector< std::filesystem::path > executables {};

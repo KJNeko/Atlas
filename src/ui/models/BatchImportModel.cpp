@@ -9,11 +9,12 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "h95/database/Record.hpp"
 #include "h95/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
-	return 7;
+	return 8;
 }
 
 int BatchImportModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -21,46 +22,58 @@ int BatchImportModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) con
 	return static_cast< int >( m_data.size() );
 }
 
-QString temp( const QString temp )
-{
-	return "  " + temp;
-}
-
 QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 {
 	ZoneScoped;
 	const auto& item { m_data.at( static_cast< std::size_t >( index.row() ) ) };
-	if ( role == Qt::DisplayRole )
+
+	switch ( role )
 	{
-		switch ( index.column() )
-		{
-			case FOLDER_PATH:
-				return temp( QString::fromStdString( item.path.string() ) );
-			case TITLE:
-				return temp( item.title );
-			case CREATOR:
-				return temp( item.creator );
-			case VERSION:
-				return temp( item.version );
-			case SIZE:
+		case Qt::DisplayRole:
+			{
+				switch ( index.column() )
 				{
-					QLocale locale { QLocale::system() };
-					return temp( locale.formattedDataSize( static_cast< qint64 >( item.size ) ) );
+					case FOLDER_PATH:
+						return QString::fromStdString( item.path.string() );
+					case TITLE:
+						return item.title;
+					case CREATOR:
+						return item.creator;
+					case ENGINE:
+						return item.engine;
+					case VERSION:
+						return item.version;
+					case SIZE:
+						{
+							QLocale locale { QLocale::system() };
+							return locale.formattedDataSize( static_cast< qint64 >( item.size ) );
+						}
+					case EXECUTABLES:
+						return QString::fromStdString( item.executable.string() );
+					case MOVE_FLAG:
+						return item.move_after_import;
+					default:
+						return QString( "wtf?" );
 				}
-			case EXECUTABLES:
-				return temp( QString::fromStdString( item.executable.string() ) );
-			case MOVE_FLAG:
-				return item.move_after_import;
-			default:
-				return QString( "wtf?" );
-		}
+			}
+		case Qt::EditRole:
+			{
+				if ( index.column() == EXECUTABLES )
+					return QVariant::fromStdVariant( std::variant<
+													 std::vector< std::filesystem::path > >( item.executables ) );
+				else
+					return {};
+			}
+		case Qt::BackgroundRole:
+			{
+				if ( recordExists( item.title, item.creator, item.engine ) )
+					return QColor( 255, 0, 0 );
+				else
+					return {};
+			}
+		default:
+			return {};
 	}
-	else if ( role == Qt::CheckStateRole && index.column() == MOVE_FLAG )
-		return static_cast< int >( item.move_after_import ? Qt::Checked : Qt::Unchecked );
-	else if ( role == Qt::EditRole && index.column() == EXECUTABLES )
-		return QVariant::fromStdVariant( std::variant< std::vector< std::filesystem::path > >( item.executables ) );
-	else
-		return {};
 }
 
 void BatchImportModel::addGame( GameImportData data )
@@ -84,6 +97,8 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 				return QString( "Title" );
 			case CREATOR:
 				return QString( "Creator" );
+			case ENGINE:
+				return QString( "Engine" );
 			case VERSION:
 				return QString( "Version" );
 			case SIZE:
@@ -110,6 +125,8 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 		case CREATOR:
 			[[fallthrough]];
 		case VERSION:
+			[[fallthrough]];
+		case ENGINE:
 			[[fallthrough]];
 		case EXECUTABLES:
 			[[fallthrough]];
@@ -148,6 +165,12 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 		case CREATOR:
 			{
 				m_data.at( static_cast< std::size_t >( index.row() ) ).creator = value.value< QString >();
+				emit dataChanged( index, index );
+				return true;
+			}
+		case ENGINE:
+			{
+				m_data.at( static_cast< std::size_t >( index.row() ) ).engine = value.value< QString >();
 				emit dataChanged( index, index );
 				return true;
 			}

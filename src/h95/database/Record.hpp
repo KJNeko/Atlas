@@ -152,6 +152,11 @@ struct RecordData : public QObject
 
 using Record = FlyWeight< RecordData, RecordID >;
 
+bool recordExists(
+	const QString& title,
+	const QString& creator,
+	const QString& engine,
+	Transaction transaction = Transaction( true ) );
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction = Transaction( true ) );
 
 struct RecordException : public std::runtime_error
