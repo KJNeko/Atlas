@@ -57,17 +57,9 @@ void operator delete[]( void* ptr, std::size_t ) noexcept
 }
 #endif
 
-void spdlog_flush()
-{
-	spdlog::shutdown();
-}
-
 int main( int argc, char** argv )
 {
 	//initLogging();
-
-	(void)std::atexit( spdlog_flush );
-	spdlog::flush_on( spdlog::level::err );
 
 	QApplication app { argc, argv };
 
