@@ -68,7 +68,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			Record record { importRecord( std::move( title ), std::move( creator ), QString(), transaction ) };
 
-			//record->addVersion( std::move(version), std::move(path), std::move(executable), !move_after_import, transaction );
+			record->addVersion( std::move(version), std::move(path), std::move(executable), !move_after_import, transaction );
 
 			transaction.commit();
 
