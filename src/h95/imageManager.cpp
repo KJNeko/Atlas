@@ -31,7 +31,7 @@ namespace imageManager
 	{
 		ZoneScoped;
 		//Grab all images from the database
-		Transaction transaction;
+		Transaction transaction { Transaction::Autocommit };
 
 		spdlog::debug( "Clearing orphans" );
 

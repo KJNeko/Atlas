@@ -43,7 +43,7 @@ class Database
 
 	friend struct Transaction;
 	friend struct NonTransaction;
-	friend struct TransactionData;
+	friend class TransactionData;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -51,36 +51,60 @@ struct TransactionInvalid : public std::runtime_error
 	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
 };
 
-struct TransactionData
+class TransactionData
 {
-  private:
-
 	std::lock_guard< std::mutex > guard;
 
 	std::lock_guard< std::mutex > getLock();
+
+	//! True if operator<< has been called at least once
+	bool ran_once { false };
+
+	//! True if commit/abort has been called
+	bool invalid { false };
 
   public:
 
 	TransactionData();
 
 	~TransactionData();
+
+	friend struct Transaction;
+	friend struct NonTransaction;
+};
+
+enum TransactionAutocommit
+{
+	Autocommit = true,
+	NoAutocommit = false
 };
 
 //! Transaction unit to the database.
 struct Transaction
 {
+	using enum TransactionAutocommit;
+
   private:
 
+	Transaction* m_parent { nullptr };
 	std::shared_ptr< TransactionData > data;
 	bool m_autocommit { false };
-	bool ran_once { false };
+
+	inline void releaseData()
+	{
+		data.reset();
+		if ( m_parent != nullptr ) m_parent->releaseData();
+	}
 
   public:
 
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
+	Transaction() = delete;
 	Transaction( const bool autocommit = false );
-	Transaction( const Transaction& other ) = default;
-	Transaction( Transaction&& other ) = default;
+	Transaction( Transaction& other );
+	Transaction( const Transaction& other ) = delete;
+	Transaction( Transaction&& other ) = delete;
+	Transaction& operator=( const Transaction& other ) = delete;
 
 	//! @throws TransactionInvalid
 	sqlite::database_binder operator<<( const std::string& sql );

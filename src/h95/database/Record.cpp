@@ -384,7 +384,7 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 		if ( record_id != 0 )
 		{
 			transaction.abort();
-			throw RecordAlreadyExists( Record( record_id ) );
+			throw RecordAlreadyExists( Record( record_id, transaction ) );
 		}
 
 		transaction
@@ -411,5 +411,18 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
-	return Record( std::move( title ), std::move( creator ), std::move( engine ), transaction );
+	try
+	{
+		return Record( std::move( title ), std::move( creator ), std::move( engine ), transaction );
+	}
+	catch ( std::exception& e )
+	{
+		spdlog::error( "Failed to import record: {}", e.what() );
+		std::rethrow_exception( std::current_exception() );
+	}
+	catch ( ... )
+	{
+		spdlog::error( "Failed to import record: Unknown error" );
+		std::rethrow_exception( std::current_exception() );
+	}
 }

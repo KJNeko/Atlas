@@ -26,13 +26,15 @@ const std::vector< QString >& Search::getTagsActive() const
 
 std::vector< Record > Search::search()
 {
-	Transaction transaction;
+	Transaction transaction { Transaction::NoAutocommit };
 
 	std::vector< Record > records;
 
 	//TODO: Actual implement the search. For now this just returns ALL records.
 	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
 	{ records.emplace_back( id, transaction ); };
+
+	transaction.commit();
 
 	return records;
 }

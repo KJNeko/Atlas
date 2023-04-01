@@ -95,7 +95,10 @@ std::lock_guard< std::mutex > TransactionData::getLock()
 	//Check if we are already locked
 #ifndef NDEBUG
 	if ( internal::last_locked == std::this_thread::get_id() )
+	{
+		spdlog::critical( "Deadlock detected! Ejecting!" );
 		throw std::runtime_error( "Deadlock" );
+	}
 	else
 #endif
 		return std::lock_guard< std::mutex >( Database::lock() );
@@ -126,49 +129,61 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 	}
 
 	*this << "BEGIN TRANSACTION";
-	ran_once = false;
+	data->ran_once = false;
 }
 
 Transaction::~Transaction()
 {
 	ZoneScoped;
-	if ( data.use_count() == 1 )
+	if ( data.use_count() == 1 && !data->invalid )
 	{
 		if ( m_autocommit )
 			commit();
 		else
+		{
+			spdlog::warn( "Transaction defaulted to abort on dtor! Check if this is intended!" );
 			abort();
+		}
 	}
 }
 
 void Transaction::commit()
 {
 	ZoneScoped;
-	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
-	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
 	*this << "COMMIT TRANSACTION";
 
-	data.reset();
+	data->invalid = true;
+	releaseData();
 }
 
 void Transaction::abort()
 {
 	ZoneScoped;
-	if ( !ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
-	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	spdlog::error( "A transaction was aborted!" );
+	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
 	*this << "ROLLBACK TRANSACTION";
 
-	data.reset();
+	data->invalid = true;
+	releaseData();
 }
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
 	ZoneScoped;
-	ran_once = true;
+	data->ran_once = true;
 	spdlog::debug( "Executing {}", sql );
 	if ( data.use_count() == 0 ) throw TransactionInvalid();
 	return Database::ref() << sql;
 }
+
+Transaction::Transaction( Transaction& other ) :
+  m_parent( &other ),
+  data( other.data ),
+  m_autocommit( other.m_autocommit )
+{}
 
 NonTransaction::NonTransaction() : guard( new std::lock_guard( Database::lock() ) )
 {

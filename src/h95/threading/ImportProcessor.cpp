@@ -64,7 +64,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 			else
 				path = source_folder;
 
-			Transaction transaction;
+			Transaction transaction { Transaction::NoAutocommit };
 
 			Record record { importRecord( std::move( title ), std::move( creator ), QString(), transaction ) };
 
