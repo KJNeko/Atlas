@@ -250,7 +250,7 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
              <item>
               <widget class="QCheckBox" name="cbMoveImported">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Move to Hydrus95 Game folder (Can be set individually in next page)</string>

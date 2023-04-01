@@ -50,7 +50,7 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			case EXECUTABLES:
 				return temp( QString::fromStdString( item.executable.string() ) );
 			case MOVE_FLAG:
-				return temp( "To Move?" );
+				return item.move_after_import;
 			default:
 				return QString( "wtf?" );
 		}
@@ -157,7 +157,12 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 				emit dataChanged( index, index );
 				return true;
 			}
-
+		case MOVE_FLAG:
+			{
+				m_data.at( static_cast< std::size_t >( index.row() ) ).move_after_import = value.value< bool >();
+				emit dataChanged( index, index );
+				return true;
+			}
 		default:
 			return QAbstractItemModel::setData( index, value, role );
 	}

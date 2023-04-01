@@ -4,6 +4,7 @@
 
 #include "BatchImportDelegate.hpp"
 
+#include <QCheckBox>
 #include <QComboBox>
 #include <QLineEdit>
 #include <QPainter>
@@ -54,7 +55,15 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 			}
 		case MOVE_FLAG:
 			{
-				painter->drawText( options.rect, "Move after import" );
+				//Draw checkmark if checked
+				const auto data { index.data().value< bool >() };
+				constexpr int heavy_check_mark_unicode { 0x2714 }; //U+2714 (✔)
+				constexpr int heavy_multiplication_x_unicode { 0x2716 }; //U+2716 (✖)
+				painter->drawText(
+					options.rect,
+					Qt::AlignLeft | Qt::AlignVCenter,
+					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) );
+
 				break;
 			} // print flag
 		default:
@@ -125,6 +134,14 @@ QWidget* BatchImportDelegate::
 				edit->resize( options.rect.size() );
 				return edit;
 			}
+		case MOVE_FLAG:
+			{
+				QCheckBox* check { new QCheckBox( parent ) };
+				check->setText( "Move after import?" );
+				check->move( options.rect.topLeft() );
+				check->resize( options.rect.size() );
+				return check;
+			}
 		default:
 			return QAbstractItemDelegate::createEditor( parent, options, index );
 	}
@@ -152,6 +169,12 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 			{
 				auto edit { dynamic_cast< QLineEdit* >( editor ) };
 				model->setData( index, edit->text() );
+				break;
+			}
+		case MOVE_FLAG:
+			{
+				auto check { dynamic_cast< QCheckBox* >( editor ) };
+				model->setData( index, check->isChecked() );
 				break;
 			}
 		default:
@@ -185,6 +208,12 @@ void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& ind
 			{
 				auto edit { dynamic_cast< QLineEdit* >( editor ) };
 				edit->setText( index.data( Qt::DisplayRole ).value< QString >() );
+				break;
+			}
+		case MOVE_FLAG:
+			{
+				auto check { dynamic_cast< QCheckBox* >( editor ) };
+				check->setChecked( index.data( Qt::DisplayRole ).value< bool >() );
 				break;
 			}
 		default:
