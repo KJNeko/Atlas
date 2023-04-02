@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>936</width>
+    <width>1280</width>
     <height>720</height>
    </rect>
   </property>
@@ -84,34 +84,6 @@
        <property name="horizontalSpacing">
         <number>0</number>
        </property>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="logo">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/Logo_03.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="margin">
-          <number>4</number>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1" colspan="4">
         <widget class="QLineEdit" name="SearchBox">
          <property name="minimumSize">
@@ -191,7 +163,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="0" colspan="5">
         <widget class="QLabel" name="homeButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -213,6 +185,9 @@
          </property>
          <property name="text">
           <string>hydrus95</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -428,8 +403,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>936</width>
-     <height>23</height>
+     <width>1280</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -544,7 +519,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resources.qrc"/>
   <include location="../resources.qrc"/>
  </resources>
  <connections/>

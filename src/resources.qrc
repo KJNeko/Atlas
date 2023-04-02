@@ -1,9 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file>assets/addgame.svg</file>
-        <file>assets/Logo_01.png</file>
-        <file>assets/Logo_02.png</file>
-        <file>assets/Logo_03.png</file>
         <file>assets/search.svg</file>
         <file>assets/sizegrip.svg</file>
         <file>assets/dropdownicon.svg</file>
