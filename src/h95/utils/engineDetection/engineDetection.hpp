@@ -34,6 +34,9 @@ enum Engine : int
 template < Engine engine >
 bool isEngine( const std::filesystem::path& path );
 
+template<Engine engine>
+QString engineNameT();
+
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
 //! Returns an engine type of ENGINES_END if no engine is determined

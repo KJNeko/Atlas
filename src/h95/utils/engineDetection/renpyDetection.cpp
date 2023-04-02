@@ -9,3 +9,9 @@ bool isEngine< RenPy >( const std::filesystem::path& path )
 {
 	return std::filesystem::exists( path / "renpy" );
 }
+
+template<>
+QString engineNameT<RenPy>()
+{
+	return "Ren'Py";
+}
