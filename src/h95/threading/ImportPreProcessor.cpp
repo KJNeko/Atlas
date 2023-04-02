@@ -52,7 +52,7 @@ void ImportPreProcessor::processDirectory(
 			if ( potential_executables.size() > 0 )
 			{
 				ZoneScopedN( "Add to list" );
-				const auto [ title, creator, engine, version ] =
+				const auto [ title, creator, version, engine ] =
 					extractGroups( regex, QString::fromStdString( folder.string() ) );
 
 				const GameImportData game_data {
