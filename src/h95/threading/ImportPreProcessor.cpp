@@ -19,6 +19,7 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 void ImportPreProcessor::processDirectory(
 	const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )
 {
+	spdlog::debug( "Processing directory {} with regex {}", base, regex );
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
 	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
