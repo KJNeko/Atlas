@@ -88,19 +88,6 @@ void initLogging()
 
 //fmt stuff
 
-auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::path& path, format_context& ctx ) const
-	-> decltype( ctx.out() )
-{
-	if ( std::filesystem::exists( path ) )
-		return format_to(
-			ctx.out(),
-			"[\"{}\" (Canonical: \"{}\"), Exists: True]",
-			path.string(),
-			std::filesystem::canonical( path ).string() );
-	else
-		return format_to(
-			ctx.out(), "[\"{}\", Exists: \"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
-}
 
 /*
 auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )

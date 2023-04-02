@@ -52,9 +52,57 @@ struct fmt::formatter< RecordID >
 template <>
 struct fmt::formatter< std::filesystem::path >
 {
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
+	bool print_canonical { false };
+	bool print_exists { false };
 
-	auto format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() );
+	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() )
+	{
+		//Check if ctx has 'c' 'ce' or 'e' and return the itterator after it
+		auto idx { ctx.begin() };
+		const auto end { ctx.end() };
+
+		if ( idx != end && *idx == 'c' )
+		{
+			print_canonical = true;
+			++idx;
+		}
+
+		if ( idx != end && *idx == 'e' )
+		{
+			print_exists = true;
+			++idx;
+		}
+
+		return idx;
+	}
+
+	auto format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() )
+	{
+		if ( print_canonical && std::filesystem::exists( path ) )
+		{
+			if ( print_exists )
+				return format_to(
+					ctx.out(),
+					"[\"{}\", (Canonical: \"{}\") Exists: \"{}\"]",
+					path.string(),
+					std::filesystem::canonical( path ).string(),
+					std::filesystem::exists( path ) ? "True" : "False" );
+			else
+				return format_to(
+					ctx.out(),
+					"[\"{}\" (Canonical: \"{}\")]",
+					path.string(),
+					std::filesystem::canonical( path ).string() );
+		}
+		else
+		{
+			if ( print_exists )
+				return format_to(
+					ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
+			else
+				return format_to( ctx.out(), "[\"{}\"]", path.string() );
+		}
+	}
 };
 
 #endif //HYDRUS95_LOGGING_HPP
