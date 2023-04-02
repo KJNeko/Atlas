@@ -23,5 +23,5 @@ TEST_F( TestGameMetadata, getPath )
 
 	GTEST_ASSERT_EQ( config::paths::games::getPath().string(), "./data/games" );
 	GTEST_ASSERT_EQ( metadata.getPath().string(), "./data/games/my/game/1.0" );
-	GTEST_ASSERT_EQ( metadata.getExecPath( true ).string(), "./data/games/my/game/1.0/executable.exe" );
+	GTEST_ASSERT_EQ( metadata.getExecPath().string(), "./data/games/my/game/1.0/executable.exe" );
 }

@@ -7,7 +7,7 @@
 
 TEST( TestDatabase, testTransactionUnloaded )
 {
-	EXPECT_THROW( []() { Transaction trans; }(), TransactionInvalid );
+	EXPECT_THROW( []() { Transaction trans { Transaction::NoAutocommit }; }(), TransactionInvalid );
 }
 
 TEST( TestDatabase, testInit )
@@ -25,7 +25,7 @@ TEST( TestDatabase, testTransaction )
 {
 	Database::initalize( "./data/testing.db" );
 	{
-		Transaction transaction;
+		Transaction transaction { Transaction::Autocommit };
 	}
 	Database::deinit();
 	std::filesystem::remove_all( "./data" );
@@ -43,8 +43,8 @@ TEST( TestDatabase, testDeadlock )
 	EXPECT_THROW(
 		[]()
 		{
-			Transaction transaction_1;
-			Transaction transaction_2;
+			Transaction transaction_1 { Transaction::NoAutocommit };
+			Transaction transaction_2 { Transaction::NoAutocommit };
 		}(),
 		std::runtime_error );
 }

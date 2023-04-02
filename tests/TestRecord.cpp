@@ -195,7 +195,7 @@ TEST_F( TestRecord, sync )
 {
 	PREPARE_RECORD_TEST
 
-	Transaction trans;
+	Transaction trans {Transaction::Autocommit};
 
 	record->setTitle( "Some new title", trans );
 
@@ -217,7 +217,7 @@ TEST_F( TestRecord, Example1 )
 
 TEST_F( TestRecord, Example2 )
 {
-	Transaction transaction;
+	Transaction transaction {Transaction::Autocommit};
 
 	QString title { "my title 2" };
 	QString creator { "Some Person 2" };
