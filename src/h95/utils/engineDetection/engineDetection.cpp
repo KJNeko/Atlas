@@ -73,7 +73,8 @@ QString engineName( const Engine engine )
 //Define all specializations of isEngine and engineNameT here
 
 template <>
-bool isEngine< RenPy >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
+bool isEngine<
+	RenPy >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	return std::filesystem::exists( path / "renpy" );
 }
@@ -85,7 +86,8 @@ QString engineNameT< RenPy >()
 }
 
 template <>
-bool isEngine< Unity >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
+bool isEngine<
+	Unity >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	return std::filesystem::exists( path / "Data" / "Managed" / "Assembly-CSharp.dll" );
 }
@@ -97,8 +99,11 @@ QString engineNameT< Unity >()
 }
 
 template <>
-bool isEngine< Unreal >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< Unreal >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< Unreal >()
@@ -107,8 +112,11 @@ QString engineNameT< Unreal >()
 }
 
 template <>
-bool isEngine< RPGM >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< RPGM >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< RPGM >()
@@ -117,8 +125,11 @@ QString engineNameT< RPGM >()
 }
 
 template <>
-bool isEngine< WolfRPG >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< WolfRPG >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< WolfRPG >()
@@ -127,7 +138,8 @@ QString engineNameT< WolfRPG >()
 }
 
 template <>
-bool isEngine< HTML >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
+bool isEngine<
+	HTML >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	return std::filesystem::exists( path / "index.html" );
 }
@@ -139,8 +151,11 @@ QString engineNameT< HTML >()
 }
 
 template <>
-bool isEngine< VisualNovelMaker >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< VisualNovelMaker >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< VisualNovelMaker >()
@@ -149,8 +164,11 @@ QString engineNameT< VisualNovelMaker >()
 }
 
 template <>
-bool isEngine< TyanoBuilder >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< TyanoBuilder >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< TyanoBuilder >()
@@ -159,8 +177,11 @@ QString engineNameT< TyanoBuilder >()
 }
 
 template <>
-bool isEngine< Java >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< Java >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< Java >()
@@ -169,7 +190,8 @@ QString engineNameT< Java >()
 }
 
 template <>
-bool isEngine< Flash >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
+bool isEngine<
+	Flash >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	return std::filesystem::exists( path / "index.html" );
 }
@@ -181,8 +203,11 @@ QString engineNameT< Flash >()
 }
 
 template <>
-bool isEngine< RAGS >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< RAGS >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< RAGS >()
@@ -191,8 +216,11 @@ QString engineNameT< RAGS >()
 }
 
 template <>
-bool isEngine< KiriKiri >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< KiriKiri >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< KiriKiri >()
@@ -201,8 +229,11 @@ QString engineNameT< KiriKiri >()
 }
 
 template <>
-bool isEngine< NScripter >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< NScripter >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< NScripter >()
@@ -211,8 +242,11 @@ QString engineNameT< NScripter >()
 }
 
 template <>
-bool isEngine< NVList >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< NVList >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< NVList >()
@@ -221,8 +255,11 @@ QString engineNameT< NVList >()
 }
 
 template <>
-bool isEngine< Sukai2 >( const std::filesystem::path& path, const std::filesystem::path& executable_path )
-{}
+bool isEngine< Sukai2 >(
+	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+{
+	return false;
+}
 
 template <>
 QString engineNameT< Sukai2 >()
