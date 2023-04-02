@@ -34,3 +34,46 @@ Engine determineEngine( const std::filesystem::path path )
 {
 	return findEngine< ENGINES_BEGIN >( path );
 }
+
+QString engineName( const Engine engine )
+{
+	switch ( engine )
+	{
+		case RenPy:
+			return "Ren'Py";
+		case Unity:
+			return "Unity";
+		case Unreal:
+			return "Unreal Engine";
+		case RPGM:
+			return "RPG Maker";
+		case WolfRPG:
+			return "Wolf RPG Editor";
+		case HTML:
+			return "HTML";
+		case VisualNovelMaker:
+			return "Visual Novel Maker";
+		case TyanoBuilder:
+			return "Tyano Builder";
+		case Java:
+			return "Java";
+		case Flash:
+			return "Flash";
+		case RAGS:
+			return "RAGS";
+		case KiriKiri:
+			return "KiriKiri";
+		case NScripter:
+			return "NScripter";
+		case NVList:
+			return "NVList";
+		case Sukai2:
+			return "Sukai2";
+		case ENGINES_END:
+			[[fallthrough]];
+		case ENGINES_BEGIN:
+			[[fallthrough]];
+		defauolt:
+			return "Unknown";
+	}
+}

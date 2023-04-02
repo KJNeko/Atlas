@@ -36,7 +36,10 @@ bool isEngine( const std::filesystem::path& path );
 
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
+//! Returns an engine type of ENGINES_END if no engine is determined
 Engine determineEngine( const std::filesystem::path );
+
+//! Returns a string name of the engine
 QString engineName( const Engine engine );
 
 #endif //HYDRUS95_ENGINEDETECTION_HPP
