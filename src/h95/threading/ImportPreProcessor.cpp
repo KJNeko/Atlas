@@ -11,6 +11,7 @@
 #include "h95/logging.hpp"
 #include "h95/regex.hpp"
 #include "h95/utils.hpp"
+#include "h95/utils/engineDetection/engineDetection.hpp"
 
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}
@@ -56,7 +57,7 @@ void ImportPreProcessor::processDirectory(
 				const GameImportData game_data { std::filesystem::relative( folder, base ),
 					                             title,
 					                             creator,
-					                             engine,
+					                             engine.isEmpty() ? engineName(determineEngine(folder)) : engine,
 					                             version,
 					                             skip_filesize ? 0 : folderSize( folder ),
 					                             potential_executables,
