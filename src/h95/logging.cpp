@@ -91,27 +91,12 @@ void initLogging()
 auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::path& path, format_context& ctx ) const
 	-> decltype( ctx.out() )
 {
-	bool can_canonical { false };
-
-	try
-	{
-		if ( std::filesystem::canonical( path ) == path )
-			can_canonical = false;
-		else
-			can_canonical = true;
-	}
-	catch ( std::filesystem::filesystem_error& e )
-	{
-		can_canonical = false;
-	}
-
-	if ( can_canonical )
+	if ( std::filesystem::exists( path ) )
 		return format_to(
 			ctx.out(),
-			"[\"{}\" (Canonical: \"{}\"), Exists: {}]",
+			"[\"{}\" (Canonical: \"{}\"), Exists: True]",
 			path.string(),
-			std::filesystem::canonical( path ).string(),
-			std::filesystem::exists( path ) ? "True" : "False" );
+			std::filesystem::canonical( path ).string() );
 	else
 		return format_to(
 			ctx.out(), "[\"{}\", Exists: \"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
