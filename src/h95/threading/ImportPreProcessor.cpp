@@ -19,7 +19,7 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 void ImportPreProcessor::processDirectory(
 	const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )
 {
-	spdlog::debug( "Processing directory {} with regex {}", base, regex );
+	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
 	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
@@ -29,6 +29,7 @@ void ImportPreProcessor::processDirectory(
 		const std::filesystem::path& folder { *itter };
 		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
 		{
+			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 			ZoneScopedN( "Test folder for executables" );
 			std::vector< std::filesystem::path > potential_executables;
 
@@ -45,7 +46,12 @@ void ImportPreProcessor::processDirectory(
 					if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
 					     || ( type.inherits( "application/x-ms-dos-executable" )
 					          && file.path().extension() == ".exe" ) )
+					{
+						spdlog::debug( "Executable {} passed check", file.path() );
 						potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
+					}
+					else
+						spdlog::debug( "File {} failed check", file.path() );
 				}
 			}
 
