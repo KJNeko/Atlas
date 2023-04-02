@@ -81,21 +81,28 @@ QSize BatchImportDelegate::
 	const auto info { item.fontMetrics };
 	const auto text { index.data().value< QString >() };
 
-	if ( index.column() == EXECUTABLES )
+	switch ( index.column() )
 	{
-		const auto file_options {
-			index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
-		};
-		constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
+		case EXECUTABLES:
+			{
+				const auto file_options {
+					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+				};
+				constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
 
-		const QString text_modified { file_options.size() > 1 ?
-			                              text + ' ' + QChar( black_medium_down_pointing_triangle_unicode ) :
-			                              text };
+				const QString text_modified { file_options.size() > 1 ?
+					                              text + ' ' + QChar( black_medium_down_pointing_triangle_unicode ) :
+					                              text };
 
-		return info.size( Qt::TextSingleLine, text_modified );
+				return info.size( Qt::TextSingleLine, text_modified ) + QSize( 15, 0 );
+			}
+		case MOVE_FLAG:
+			{
+				return info.size( Qt::TextSingleLine, "move after import" ) + QSize( 15, 0 );
+			}
+		default:
+			return info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 );
 	}
-	else
-		return info.size( Qt::TextSingleLine, text );
 }
 
 QWidget* BatchImportDelegate::
