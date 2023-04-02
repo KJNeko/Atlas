@@ -50,8 +50,6 @@ void ImportPreProcessor::processDirectory(
 						spdlog::debug( "Executable {} passed check", file.path() );
 						potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
 					}
-					else
-						spdlog::debug( "File {} failed check", file.path() );
 				}
 			}
 
