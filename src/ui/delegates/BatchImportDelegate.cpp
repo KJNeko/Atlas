@@ -27,6 +27,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 			[[fallthrough]]; //print creator
 		case VERSION:
 			[[fallthrough]]; // print version
+		case ENGINE:
+			[[fallthrough]];
 		case SIZE:
 			{
 				const auto data { index.data().value< QString >() };
@@ -128,6 +130,8 @@ QWidget* BatchImportDelegate::
 		case CREATOR:
 			[[fallthrough]];
 		case VERSION:
+			[[fallthrough]];
+		case ENGINE:
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
 				edit->move( options.rect.topLeft() );
@@ -164,6 +168,8 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 		case TITLE:
 			[[fallthrough]];
 		case CREATOR:
+			[[fallthrough]];
+		case ENGINE:
 			[[fallthrough]];
 		case VERSION:
 			{
@@ -203,6 +209,8 @@ void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& ind
 		case TITLE:
 			[[fallthrough]];
 		case CREATOR:
+			[[fallthrough]];
+		case ENGINE:
 			[[fallthrough]];
 		case VERSION:
 			{
