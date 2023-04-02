@@ -32,15 +32,15 @@ enum Engine : int
 };
 
 template < Engine engine >
-bool isEngine( const std::filesystem::path& path );
+bool isEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path );
 
-template<Engine engine>
+template < Engine engine >
 QString engineNameT();
 
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
 //! Returns an engine type of ENGINES_END if no engine is determined
-Engine determineEngine( const std::filesystem::path );
+Engine determineEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path );
 
 //! Returns a string name of the engine
 QString engineName( const Engine engine );

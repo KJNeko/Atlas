@@ -54,15 +54,17 @@ void ImportPreProcessor::processDirectory(
 				const auto [ title, creator, engine, version ] =
 					extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-				const GameImportData game_data { std::filesystem::relative( folder, base ),
-					                             title,
-					                             creator,
-					                             engine.isEmpty() ? engineName(determineEngine(folder)) : engine,
-					                             version,
-					                             skip_filesize ? 0 : folderSize( folder ),
-					                             potential_executables,
-					                             potential_executables.at( 0 ),
-					                             move_imported };
+				const GameImportData game_data {
+					std::filesystem::relative( folder, base ),
+					title,
+					creator,
+					engine.isEmpty() ? engineName( determineEngine( folder, potential_executables.at( 0 ) ) ) : engine,
+					version,
+					skip_filesize ? 0 : folderSize( folder ),
+					potential_executables,
+					potential_executables.at( 0 ),
+					move_imported
+				};
 				emit finishedDirectory( game_data );
 			}
 			else
