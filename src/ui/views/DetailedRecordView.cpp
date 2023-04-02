@@ -147,7 +147,7 @@ GameMetadata& DetailedRecordView::selectedVersion()
 
 	if ( m_record.value()->getVersions().size() == 0 ) throw std::runtime_error( "No versions available" );
 
-	return m_record.value()->getVersions().at( selected_version_idx );
+	return m_record.value()->getVersions()[selected_version_idx];
 }
 
 void DetailedRecordView::on_btnPlay_pressed()

@@ -35,6 +35,13 @@ class ImportPreProcessor : public QObject
 	~ImportPreProcessor() = default;
 
   public slots:
+	/**
+	 *
+	 * @param regex Regex to scan with
+	 * @param base Base filepath to scan
+	 * @param move_imported Default move state for all records when processed. (Can be set individually after)
+	 * @param skip_filesize Causes the filesize calculation to be skipped. Increasing processing speed by a large amount.
+	 */
 	void processDirectory(
 		const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize );
 

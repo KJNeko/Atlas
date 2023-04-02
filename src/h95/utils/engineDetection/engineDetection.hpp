@@ -31,9 +31,11 @@ enum Engine : int
 	ENGINES_END
 };
 
+//! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
 bool isEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path );
 
+//! String name of the engine.
 template < Engine engine >
 QString engineNameT();
 

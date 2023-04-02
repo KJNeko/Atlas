@@ -48,6 +48,8 @@ QString processRegexify( QString pattern )
 		return "^" + std::move( pattern ) + "$";
 }
 
+bool passesRegexTest(QString regex);
+
 QString regexify( QString pattern )
 {
 	ZoneScoped;

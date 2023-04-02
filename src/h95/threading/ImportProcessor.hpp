@@ -31,7 +31,6 @@ class ImportProcessor : public QObject
 
   signals:
 	void importComplete();
-	void importCount( const int count );
 	void startProgressBar();
 	void updateMax( const int max );
 	void updateSubMax( const int max );

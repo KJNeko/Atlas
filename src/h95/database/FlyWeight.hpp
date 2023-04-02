@@ -32,6 +32,7 @@ concept HasKeyFunc = HasObjectKeyFunc< T, T_Key > || HasStaticKeyFunc< T, T_Key,
  * @brief Allows for objects of the same 'key' to be in a shared memory space.
  * @tparam T Object to store in the flyweight
  * @tparam T_Key Key to use as the index.
+ * @note If you have to debug this. I'm sorry.
  */
 template < typename T, typename T_Key >
 	requires HasObjectKeyFunc< T, T_Key >
@@ -100,6 +101,10 @@ class FlyWeight : public std::shared_ptr< T >
 	FlyWeight() : std::shared_ptr< T >( nullptr ) {}
 
 	//! Passthrough for ctor to T
+	/**
+	 * @tparam T_Args Argument list. Must follow constraint std::constructible_from. Where T is constructible from T_Args
+	 * @param args Args to construct with
+	 */
 	template < typename... T_Args >
 		requires HasKeyFunc< T, T_Key, T_Args... > && std::constructible_from< T, T_Args... >
 	FlyWeight( T_Args&&... args ) : std::shared_ptr< T >( determinePtr( std::forward< T_Args >( args )... ) )
@@ -116,6 +121,7 @@ class FlyWeight : public std::shared_ptr< T >
 			if ( auto itter = map.find( key() ); itter != map.end() ) map.erase( itter );
 	}
 
+	//! Returns the size of this flyweight's map
 	inline static std::size_t flyweightSize() { return map.size(); }
 };
 

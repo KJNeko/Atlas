@@ -75,8 +75,6 @@ void GameMetadata::addPlaytime( const std::uint32_t playtime )
 	m_total_playtime += playtime;
 
 	m_parent.addPlaytime( playtime );
-
-	emit playtimeChanged( playtime );
 }
 
 void GameMetadata::setLastPlayed( const std::uint64_t last_played )
@@ -84,6 +82,4 @@ void GameMetadata::setLastPlayed( const std::uint64_t last_played )
 	m_last_played = last_played;
 
 	m_parent.setLastPlayed( last_played );
-
-	emit lastPlayedChanged( last_played );
 }

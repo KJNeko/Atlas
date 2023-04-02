@@ -41,13 +41,17 @@ namespace internal
 
 class Database
 {
+	//! Returns a ref to the sqlite DB
 	static sqlite::database& ref();
 
+	//! Returns a ref to the global DB lock
 	static internal::MtxType& lock();
 
   public:
 
+	//! Initalizes the database with init_path. Does not have to be caonical
 	static void initalize( const std::filesystem::path init_path );
+	//! Deinitalizes the DB.
 	static void deinit();
 
 	//static void update();
@@ -64,6 +68,7 @@ struct TransactionInvalid : public std::runtime_error
 	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
 };
 
+//! Internal class used for Transaction and NonTransaction's shared data
 class TransactionData
 {
 	internal::LockGuardType guard;
@@ -103,6 +108,7 @@ struct Transaction
 	std::shared_ptr< TransactionData > data;
 	bool m_autocommit { false };
 
+	//! Releases the pointer to the shared data section for all Transactions up the chain.
 	inline void releaseData()
 	{
 		data.reset();
@@ -113,6 +119,10 @@ struct Transaction
 
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
 	Transaction() = delete;
+
+	/**
+	 * @param autocommit if commit() should be called on dtor, Otherwise abort() is called if not called previously
+	 */
 	Transaction( const bool autocommit = false );
 	Transaction( Transaction& other );
 	Transaction( const Transaction& other ) = delete;

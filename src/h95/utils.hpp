@@ -7,6 +7,7 @@
 
 #include <filesystem>
 
+//! Returns the byte size of a folder
 std::size_t folderSize( const std::filesystem::path& folder );
 
 #endif //HYDRUS95_UTILS_HPP

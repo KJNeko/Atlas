@@ -7,7 +7,6 @@
 
 #include <filesystem>
 
-#include <QObject>
 #include <QString>
 
 #include "h95/Types.hpp"
@@ -16,10 +15,8 @@
 struct RecordData;
 
 //! Representation of a game version
-struct GameMetadata : public QObject
+struct GameMetadata
 {
-	Q_OBJECT
-
   private:
 
 	RecordData& m_parent;
@@ -39,22 +36,22 @@ struct GameMetadata : public QObject
   public:
 
 	//Setters
+	//! Adds playtime to this and it's parent record
 	void addPlaytime( const std::uint32_t playtime );
+	//! Sets the last played timestamp for this and it's parent record
 	void setLastPlayed( const std::uint64_t last_played );
+	//! Executes the game for this record.
 	void playGame();
 
 	//Getters
 	QString getVersionName() const;
+	//! If return true then the game is not located in config::paths::games::get()
 	bool isInPlace() const;
 	std::uint32_t getPlaytime() const;
 	std::uint64_t getLastPlayed() const;
 	std::filesystem::path getPath() const;
 	std::filesystem::path getRelativeExecPath() const;
 	std::filesystem::path getExecPath() const;
-
-  signals:
-	void playtimeChanged( std::uint32_t playtime );
-	void lastPlayedChanged( std::uint64_t last_played );
 
   public:
 
@@ -77,8 +74,12 @@ struct GameMetadata : public QObject
 	  m_last_played( last_played )
 	{}
 
+	bool operator==( const GameMetadata& other ) const
+	{
+		return m_version == other.m_version && m_game_path == other.m_game_path && m_exec_path == other.m_exec_path;
+	}
+
 	GameMetadata( const GameMetadata& other ) :
-	  QObject( nullptr ),
 	  m_parent( other.m_parent ),
 	  m_version( other.m_version ),
 	  m_game_path( other.m_game_path ),
@@ -86,10 +87,10 @@ struct GameMetadata : public QObject
 	  m_in_place( other.m_in_place ),
 	  m_total_playtime( other.m_total_playtime ),
 	  m_last_played( other.m_last_played )
-	{}
+	{
+	}
 
 	GameMetadata( GameMetadata&& other ) :
-	  QObject( nullptr ),
 	  m_parent( other.m_parent ),
 	  m_version( std::move( other.m_version ) ),
 	  m_game_path( std::move( other.m_game_path ) ),
@@ -98,22 +99,13 @@ struct GameMetadata : public QObject
 	  m_total_playtime( other.m_total_playtime ),
 	  m_last_played( other.m_last_played )
 	{
-		//connect(this, &GameMetadata::playtimeChanged, &m_parent, &RecordData::v_PlaytimeChanged);
-		//connect(this, &GameMetadata::lastPlayedChanged, &m_parent, &RecordData::v_lastPlayedChanged);
 	}
 
+	//! Required to make std::vector happy
 	GameMetadata& operator=( const GameMetadata& other )
 	{
 		std::construct_at( this, other );
 		return *this;
-	}
-
-	//private:
-	//inline void setOwner(const RecordID owner) {m_record_id = owner;}
-
-	bool operator==( const GameMetadata& other ) const
-	{
-		return m_version == other.m_version && m_game_path == other.m_game_path && m_exec_path == other.m_exec_path;
 	}
 };
 

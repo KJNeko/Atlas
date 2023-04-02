@@ -97,6 +97,7 @@ struct RecordData : public QObject
 
   public:
 
+	//! Should not be used. Internal use only. (Used by Flyweight)
 	RecordData(
 		RecordID id,
 		QString title,
@@ -118,11 +119,12 @@ struct RecordData : public QObject
 	  m_previews( std::move( previews ) )
 	{}
 
+	//! Fetches the RecordData for the given ID
 	/**
 	 * @param id
-	 * @param transaction
+	 * @param transaction. Defaults to autocommit on return
 	 */
-	RecordData( const RecordID id, Transaction transaction = Transaction( true ) );
+	RecordData( const RecordID id, Transaction transaction = Transaction( Transaction::Autocommit ) );
 
 	/**
 	 * @warning Constructing will create a new record in the database. Pass in Transaction as last parameter in order to not commit on return
@@ -136,10 +138,11 @@ struct RecordData : public QObject
 	 * @param previews
 	 * @param transaction
 	 */
-	RecordData( QString title, QString creator, QString engine, Transaction = Transaction( true ) );
+	RecordData( QString title, QString creator, QString engine, Transaction = Transaction( Transaction::Autocommit ) );
 
 	//! Defined to comply with FlyWeight HasStaticKeyFunc constraint
-	inline static RecordID key( const RecordID id, [[maybe_unused]] Transaction transaction = Transaction( true ) )
+	inline static RecordID
+		key( const RecordID id, [[maybe_unused]] Transaction transaction = Transaction( Transaction::Autocommit ) )
 	{
 		return id;
 	}
@@ -152,12 +155,25 @@ struct RecordData : public QObject
 
 using Record = FlyWeight< RecordData, RecordID >;
 
+//! Checks if a record exists with the given parameters
 bool recordExists(
 	const QString& title,
 	const QString& creator,
 	const QString& engine,
-	Transaction transaction = Transaction( true ) );
-Record importRecord( QString title, QString creator, QString engine, Transaction transaction = Transaction( true ) );
+	Transaction transaction = Transaction( Transaction::Autocommit ) );
+
+//! Imports a record into the database
+/**
+ *
+ * @param title
+ * @param creator
+ * @param engine
+ * @param transaction
+ * @throws RecordAlreadyExists
+ * @return
+ */
+Record importRecord(
+	QString title, QString creator, QString engine, Transaction transaction = Transaction( Transaction::Autocommit ) );
 
 struct RecordException : public std::runtime_error
 {
