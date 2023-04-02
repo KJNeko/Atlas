@@ -63,7 +63,9 @@ bool valid( QString pattern, QString text )
 	return match.hasMatch();
 }
 
-std::tuple< QString, QString, QString, QString > extractGroups( QString pattern, QString text )
+
+//std::tuple< QString, QString, QString, QString >
+GroupsOutput extractGroups( QString pattern, QString text )
 {
 	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );

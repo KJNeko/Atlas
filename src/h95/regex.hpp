@@ -18,6 +18,15 @@ QString regexify( QString pattern );
 
 bool valid( QString pattern, QString text );
 
-std::tuple< QString, QString, QString, QString > extractGroups( QString pattern, QString text );
+struct GroupsOutput
+{
+	QString title;
+	QString creator;
+	QString version;
+	QString engine;
+};
+
+//std::tuple< QString, QString, QString, QString >
+    GroupsOutput extractGroups( QString pattern, QString text );
 
 #endif //HYDRUS95_REGEX_HPP
