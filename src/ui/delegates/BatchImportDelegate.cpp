@@ -58,6 +58,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 		case MOVE_FLAG:
 			{
 				//Draw checkmark if checked
+				//TODO: Add text for import or not import
 				const auto data { index.data().value< bool >() };
 				constexpr int heavy_check_mark_unicode { 0x2714 }; //U+2714 (✔)
 				constexpr int heavy_multiplication_x_unicode { 0x2716 }; //U+2716 (✖)
@@ -141,6 +142,7 @@ QWidget* BatchImportDelegate::
 		case ENGINE:
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
+				//edit->setObjectName("QTableItemLineEdit");
 				edit->move( options.rect.topLeft() );
 				edit->resize( options.rect.size() );
 				return edit;
@@ -149,6 +151,7 @@ QWidget* BatchImportDelegate::
 			{
 				QCheckBox* check { new QCheckBox( parent ) };
 				check->setText( "Move after import?" );
+				//check->setObjectName("QTableItemCheckBox");
 				check->move( options.rect.topLeft() );
 				check->resize( options.rect.size() );
 				return check;
