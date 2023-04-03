@@ -189,6 +189,9 @@ void BatchImportDialog::on_btnBack_pressed()
 {
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
+
+	ui->btnNext->setText( "Next" );
+	ui->swImportGames->setCurrentIndex( 0 );
 }
 
 void BatchImportDialog::modelChanged(
