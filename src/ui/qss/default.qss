@@ -1,174 +1,226 @@
+/*
+color1 - rgb(0, 0, 0): Background Window Color
+color2 - rgb(25, 25, 28):
+color3 - rgb(30, 31, 34):
+color4 - rgb(35, 36, 40): Default color for all Widgets
+color5 - rgb(43, 45, 49): Tree Widget, Button Main
+color6 - rgb(49, 51, 56): ListView
+color7 - rgb(56, 58, 64): Selected item color
+color8 - rgb(64, 66, 73): Button Selected
+color9 - rgb(81, 83, 90): Button Border
+colorA - rgb(97, 99, 105):
+colorB - TBD
+colorC - rgb(180,180,180): Default text color
+colorD - rgb(255, 255, 255): Selected text color
+*/
 
 /* BASE WIDGETS */
-QStackedWidget >QWidget{
-        /*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(45,56, 75, 255), stop:1 rgba(27, 33, 41, 255));*/
-        background-color: rgba(45,56, 75, 255);
+QStackedWidget>QWidget>QFrame{
+        background-color: rgb(49, 51, 56);
+        border:none;
+}
+QStackedWidget>QWidget>QFrame>QFrame{
+        background-color: rgb(49, 51, 56);
         border:none;
 }
 QStackedWidget{
         border:none;
 }
+
 QWidget{
         background-color: rgb(0, 0, 0);
-                border:none;
+        border:none;
 }
 
 QFrame{
-        background-color: rgb(42,46,51);
-                border:none;
+        background-color: rgb(35, 36, 40);
+        border:none;
 }
 
 /* MENU BAR*/
 QMenuBar{
-        background-color: rgb(42,46,51);
-        color: rgb(200,200,200);
-        border:none;}
-
-QMenuBar::item:selected {
-        background-color: rgb(42,46,51);
-        color:rgb(255,255,255);
+        background-color: rgb(35, 36, 40);
+        color: rgb(180, 180, 180);
+        border:none;
 }
- QMenu{
-        background-color: rgb(42,46,51);
-        color: rgb(255, 255, 255);
- }
 
- QMenu::item:selected{
-        background-color:rgb(45,56, 75);
+QMenuBar::item:selected{
+        background-color: rgb(35, 36, 40);
+        color:rgb(255, 255, 255);
+}
+
+QMenu{
+        background-color: rgb(35, 36, 40);
         color: rgb(255, 255, 255);
- }
+}
+QMenu::item:selected{
+        background-color: rgb(56, 58, 64);
+        color: rgb(255, 255, 255);
+}
 
 /* STATUS BAR*/
 
 QStatusBar{
-        background-color: rgb(42,46,51);
-        border:none;}
+        background-color: rgb(35, 36, 40);
+        border:none;
+}
 
 QSizeGrip {
-        background-color: transparent;
-    image: url(:/images/assets/sizegrip.png);
-    width: 16px;
-    height: 16px;}
+    background-color: transparent;
+    image: url(:/images/assets/sizegrip.svg);
+    width: 24;
+    height: 24;}
 
+/* LIST VIEW*/
 QListView{
-background-color:rgb(45,51,60);
+background-color:rgb(49, 51, 56);
 }
 
+/* TREE VIEW*/
 QTreeWidget{
-background-color:rgb(36,40,47);
-color:rgb(200,200,200);
-border: none;
+        border-top-right-radius:5px;
+        border-top-left-radius:5px;
+        background-color:rgb(43, 45, 49);
+        color:rgb(180,180,180);
+        border: none;
 }
-
+QTreeWidget::item{
+    color: rgb(180, 180, 180);
+        border: none;
+}
 QTreeWidget::item::selected{
-        background-color:rgb(45,56, 75);
-        color: rgb(255, 255, 255);
+        background-color: rgb(56, 58, 64);
+    color: rgb(255, 255, 255);
+        border: none;
+}
+QTreeWidget::item::hover{
+        background-color: rgb(56, 58, 64);
+    color: rgb(255, 255, 255);
+}
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+    border-image: none;
+    image: url(:/images/assets/treeview_downarrow_N.svg);
+        margin: 4px;
+}
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    border-image: none;
+    image: url(:/images/assets/treeview_rightarrow_N.svg);
+        margin: 4px;
 }
 
-QTableWidget{
-background-color:rgb(130,133,143);
-color: rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
+/* TABLE View*/
+QHeaderView{
+        background-color: transparent;
+        color:rgb(180,180,180);
+}
 
-/* BUTTONS & TEXT*/
+QTableCornerButton::section{
+        background-color: transparent;
+        color:rgb(180,180,180);
+}
+
+QTableView{
+        background-color:rgb(43, 45, 49);
+        color:rgb(180,180,180);
+        border:none;
+        gridline-color:rgb(180,180,180);
+}
+
+QTableView > QCheckBox{
+        background-color: transparent;
+        color:rgb(180,180,180);
+}
+
+QTableView::item::selected{
+        background-color:(81, 83, 90);
+        color:rgb(255,255,255);
+}
+
+QHeaderView::section{
+        border: 1px solid rgb(180, 180, 180);
+        background-color: rgb(64, 66, 73);
+}
+
+/* Label*/
+QLabel{
+        background-color: transparent;
+        color:rgb(180,180,180);
+}
+
+/* Line Edit*/
 QLineEdit{
-    background-color:rgb(35,37,42);
+    background-color:rgb(56, 58, 64);
     border:none;
-    border-top-right-radius:5px;
-    border-bottom-right-radius:5px;
+    border-radius:5px;
     margin-right:5px;
-    color:rgb(200,200,200)
+    color:rgb(180,100,180)
 }
-
 QLineEdit::Text{
-    color:rgb(200,200,200)
+    color:rgb(180,180,180)
 }
 
-QTextEdit{
-    background-color:rgb(130,133,143);
-    color: rgb(243, 244, 245);
-    border:none;
-}
-
-QPlainTextEdit{
-    color: rgb(130,133,143);
-    border:none;
-}
-
-QToolButton{
-border-radius:5px;
-background-color:rgb(35,37,42);
-border:none;
-color:rgb(200,200,200);
-}
-
-QToolButton::Hover{
-background-color:rgb(35,37,42);
-border:none;
-color:rgb(255,255,255);
-}
-
+/* Buttons */
 QPushButton{
-background-color: rgb(43,45,49);
-color:rgb(243, 244, 245);
-border:1px solid;
-border-color:rgb(64,66,73);}
+        background-color: rgb(43, 45, 49);
+        color:rgb(180, 180, 180);
+        border:1px solid;
+        border-color:rgb(81, 83, 90);
+}
 
 QPushButton:hover:!pressed
 {
-background-color: rgb(54, 55, 61);
+background-color: rgb(64, 66, 73)
 }
 
-QLabel{
-color:rgb(200,200,200);
-}
-
+/* Checkbox */
 QCheckBox{
-background-color:none;
-color: rgb(243, 244, 245);
-border:none;}
+        background-color:transparent;
+        color: rgb(180, 180, 180);
+        border:none;
+}
+
 
 /* CUSTOM*/
-#searchIcon{
-background-color:rgb(35,37,42);
-border:none;
-margin-left:4px;
-border-top-left-radius:5px;
-border-bottom-left-radius:5px;
+#SearchIcon{
+        background-color:rgb(56, 58, 64);
+        border:none;
+        margin-left:4px;
+        border-top-left-radius:5px;
+        border-bottom-left-radius:5px;
 }
 
-#Logo{
-background-color:rgb(35,37,42);
-border:none;
-margin-left:4px;
-border-top-left-radius:5px;
-border-bottom-left-radius:5px;
-}
-
-#HomeButton{
-background-color:rgb(35,37,42);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-margin-right:5px;
-color:rgb(200,200,200)
-}
-
-#HomeButton::Hover{
-background-color:rgb(62,64,71);
-color:rgb(255,255,255);
+#SearchBox{
+    background-color:rgb(56, 58, 64);
+    border:none;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+        border-bottom-left-radius:0px;
+        border-top-left-radius:0px;
+    margin-right:5px;
+    color:rgb(180, 180, 180)
 }
 
 #AddGame{
-background-color: transparent;
+        background-color: transparent;
+        color:rgb(180,180,180);
+}
+#AddGame::hover{
+        background-color: transparent;
+        color:rgb(255,255,255);
 }
 
 /*BatchImportDialog Specific*/
 #BatchImportDialog{
-        background-color:rgb(36,40,47);
+        background-color:rgb(35, 36, 40)
+}
+
+#BatchImportDialog > QFrame{
+        background-color:rgb(49, 51, 56);
 }
 
 #BatchImportDialog > QWidget{
-        background-color:rgb(36,40,47);
+        background-color:rgb(35, 36, 40)
 }
+
