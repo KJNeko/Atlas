@@ -41,25 +41,25 @@ inline QSettings getSettingsObject()
 #define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
 
 #define SETTINGS_D( group, name, type, default_value )                                                                 \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-                                                                                                                       \
-	inline void set( const type& val )                                                                                 \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
-	}                                                                                                                  \
                                                                                                                        \
-	inline void setDefault()                                                                                           \
-	{                                                                                                                  \
-	  set( default_value );                                                                                            \
-	}                                                                                                                  \
+		inline void set( const type& val )                                                                             \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
+		}                                                                                                              \
                                                                                                                        \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                                   \
-	  return getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >();                                    \
-	}                                                                                                                  \
-  }
+		inline void setDefault()                                                                                       \
+		{                                                                                                              \
+			set( default_value );                                                                                      \
+		}                                                                                                              \
+                                                                                                                       \
+		inline type get()                                                                                              \
+		{                                                                                                              \
+			if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                             \
+			return getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >();                              \
+		}                                                                                                              \
+	}
 
 #define SETTINGS_PATH( group, name, default_path )                                                                     \
   SETTINGS_D( group, name, QString, default_path )                                                                     \
@@ -70,30 +70,30 @@ inline QSettings getSettingsObject()
 	  return { group::name::get().toStdString() };                                                                     \
 	}                                                                                                                  \
                                                                                                                        \
-	inline void setPath( const std::filesystem::path path )                                                            \
-	{                                                                                                                  \
-	  group::name::set( QString::fromStdString( path.string() ) );                                                     \
-	}                                                                                                                  \
-  }
+		inline void setPath( const std::filesystem::path path )                                                        \
+		{                                                                                                              \
+			group::name::set( QString::fromStdString( path.string() ) );                                               \
+		}                                                                                                              \
+	}
 
 #define SETTINGS( group, name, type )                                                                                  \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline bool hasValue()                                                                                             \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  return getSettingsObject().contains( KEY_VALUE( group, name ) );                                                 \
-	}                                                                                                                  \
+		inline bool hasValue()                                                                                         \
+		{                                                                                                              \
+			return getSettingsObject().contains( KEY_VALUE( group, name ) );                                           \
+		}                                                                                                              \
                                                                                                                        \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                                \
-	}                                                                                                                  \
+		inline type get()                                                                                              \
+		{                                                                                                              \
+			return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                          \
+		}                                                                                                              \
                                                                                                                        \
-	inline void set( const type val )                                                                                  \
-	{                                                                                                                  \
-	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
-	}                                                                                                                  \
-  }
+		inline void set( const type val )                                                                              \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
+		}                                                                                                              \
+	}
 
 SETTINGS_PATH( paths, database, "./data/hydrus95.db" )
 SETTINGS_PATH( paths, images, "./data/images" )
