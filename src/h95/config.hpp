@@ -62,13 +62,15 @@ inline QSettings getSettingsObject()
 	}
 
 #define SETTINGS_PATH( group, name, default_path )                                                                     \
-  SETTINGS_D( group, name, QString, default_path )                                                                     \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline std::filesystem::path getPath()                                                                             \
+	SETTINGS_D( group, name, QString, default_path )                                                                   \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  return { group::name::get().toStdString() };                                                                     \
-	}                                                                                                                  \
+		inline std::filesystem::path getPath()                                                                         \
+		{                                                                                                              \
+			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
+			std::filesystem::create_directories( filepath );                                                           \
+			return filepath;                                                                                           \
+		}                                                                                                              \
                                                                                                                        \
 		inline void setPath( const std::filesystem::path path )                                                        \
 		{                                                                                                              \
