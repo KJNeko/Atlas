@@ -109,11 +109,6 @@ void BatchImportDialog::processFiles()
 	ZoneScoped;
 	ui->btnNext->setEnabled( false );
 	ui->btnNext->setText( "Import Games" );
-	/*
-	 * base: /run/media/kj16609/HDDWIN/NSFWSorted/
-	 * regex: {path}/{creator}/{title}/{version}
-	 *
-	 */
 
 	auto stripEndSlash = []( const std::filesystem::path path ) -> std::filesystem::path
 	{
