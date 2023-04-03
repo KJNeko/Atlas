@@ -167,6 +167,8 @@ QPushButton{
         color:rgb(180, 180, 180);
         border:1px solid;
         border-color:rgb(81, 83, 90);
+		width: 75px;
+		height: 30px;
 }
 
 QPushButton:hover:!pressed
@@ -224,3 +226,12 @@ QCheckBox{
         background-color:rgb(35, 36, 40)
 }
 
+
+/* QMessageBox */
+QMessageBox {
+    background-color: rgb(35, 36, 40)
+}
+
+QMessageBox > QLabel {
+    color: rgb(180, 180, 180)
+}
