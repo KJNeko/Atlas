@@ -20,6 +20,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 {
 	ui->setupUi( this );
 	ui->progressBar->hide();
+	ui->btnBack->setHidden( true );
 
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
@@ -108,7 +109,8 @@ void BatchImportDialog::processFiles()
 {
 	ZoneScoped;
 	ui->btnNext->setEnabled( false );
-	ui->btnNext->setText( "Import Games" );
+	ui->btnNext->setText( "Import" );
+	ui->btnBack->setHidden( false );
 	/*
 	 * base: /run/media/kj16609/HDDWIN/NSFWSorted/
 	 * regex: {path}/{creator}/{title}/{version}
@@ -151,7 +153,7 @@ void BatchImportDialog::importFiles()
 
 void BatchImportDialog::on_btnNext_pressed()
 {
-	if ( ui->btnNext->text() == "Import Games" )
+	if ( ui->btnNext->text() == "Import" )
 	{
 		importFiles();
 	}
@@ -189,6 +191,9 @@ void BatchImportDialog::on_btnBack_pressed()
 {
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
+	ui->btnNext->setText("Next");
+	ui->swImportGames->setCurrentIndex( 0 );
+	ui->btnBack->setHidden( true );
 }
 
 void BatchImportDialog::modelChanged(
