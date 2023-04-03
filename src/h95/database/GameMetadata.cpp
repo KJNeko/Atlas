@@ -34,7 +34,7 @@ std::filesystem::path GameMetadata::getPath() const
 	return config::paths::games::getPath() / m_game_path;
 }
 
-std::filesystem::path GameMetadata::getRelativeExecPath( ) const
+std::filesystem::path GameMetadata::getRelativeExecPath() const
 {
 	return m_exec_path;
 }

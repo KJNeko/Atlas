@@ -31,13 +31,13 @@
 namespace internal
 {
 #ifdef TRACY_ENABLE
-	using MtxType = tracy::Lockable<std::mutex>;
-	using LockGuardType = std::lock_guard< tracy::Lockable<std::mutex> >;
+	using MtxType = tracy::Lockable< std::mutex >;
+	using LockGuardType = std::lock_guard< tracy::Lockable< std::mutex > >;
 #else
 	using MtxType = std::mutex;
 	using LockGuardType = std::lock_guard< std::mutex >;
 #endif
-}
+} // namespace internal
 
 class Database
 {
@@ -154,7 +154,7 @@ struct NonTransaction
   private:
 
 	bool finished { false };
-	std::unique_ptr<internal::LockGuardType> guard;
+	std::unique_ptr< internal::LockGuardType > guard;
 
   public:
 

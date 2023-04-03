@@ -87,8 +87,7 @@ struct GameMetadata
 	  m_in_place( other.m_in_place ),
 	  m_total_playtime( other.m_total_playtime ),
 	  m_last_played( other.m_last_played )
-	{
-	}
+	{}
 
 	GameMetadata( GameMetadata&& other ) :
 	  m_parent( other.m_parent ),
@@ -98,8 +97,7 @@ struct GameMetadata
 	  m_in_place( other.m_in_place ),
 	  m_total_playtime( other.m_total_playtime ),
 	  m_last_played( other.m_last_played )
-	{
-	}
+	{}
 
 	//! Required to make std::vector happy
 	GameMetadata& operator=( const GameMetadata& other )

@@ -12,18 +12,18 @@
 //! Requires `FlyWeightID<T_Key> key() const` to be defined
 template < typename T, typename T_Key >
 concept HasObjectKeyFunc = requires( const T t ) {
-							   {
-								   t.key()
-							   } -> std::same_as< T_Key >;
-						   };
+	{
+		t.key()
+	} -> std::same_as< T_Key >;
+};
 
 //! Requires `static FlyWeightID<T_Key> key(T_Args...)` to be defined
 template < typename T, typename T_Key, typename... T_Args >
 concept HasStaticKeyFunc = requires( T_Args... args ) {
-							   {
-								   T::key( args... )
-							   } -> std::same_as< T_Key >;
-						   };
+	{
+		T::key( args... )
+	} -> std::same_as< T_Key >;
+};
 
 template < typename T, typename T_Key, typename... T_Args >
 concept HasKeyFunc = HasObjectKeyFunc< T, T_Key > || HasStaticKeyFunc< T, T_Key, T_Args... >;

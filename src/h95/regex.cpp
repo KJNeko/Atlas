@@ -48,8 +48,6 @@ QString processRegexify( QString pattern )
 		return "^" + std::move( pattern ) + "$";
 }
 
-bool passesRegexTest(QString regex);
-
 QString regexify( QString pattern )
 {
 	ZoneScoped;
@@ -64,7 +62,6 @@ bool valid( QString pattern, QString text )
 	const auto match { regex.match( text ) };
 	return match.hasMatch();
 }
-
 
 //std::tuple< QString, QString, QString, QString >
 GroupsOutput extractGroups( QString pattern, QString text )

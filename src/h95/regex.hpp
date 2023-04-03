@@ -7,7 +7,6 @@
 
 #include <QString>
 
-
 /**
  * @page RegexGuide
  * @section RegexGuideGettingStarted Getting Started
@@ -45,9 +44,6 @@
  * - You MUST fill in the capture group `title`.
  * - Capture groups `creator` `version` and `engine` exist and are searched for. But are ultimately optional
  */
-
-
-
 
 QString groupify( const QString group_name );
 

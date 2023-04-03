@@ -88,7 +88,6 @@ void initLogging()
 
 //fmt stuff
 
-
 /*
 auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )
 {
