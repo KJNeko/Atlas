@@ -58,15 +58,13 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 		case MOVE_FLAG:
 			{
 				//Draw checkmark if checked
-				//TODO: Add text for import or not import
 				const auto data { index.data().value< bool >() };
 				constexpr int heavy_check_mark_unicode { 0x2714 }; //U+2714 (✔)
 				constexpr int heavy_multiplication_x_unicode { 0x2716 }; //U+2716 (✖)
 				painter->drawText(
 					options.rect,
 					Qt::AlignLeft | Qt::AlignVCenter,
-					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) );
-
+					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) + " move after import" );
 				break;
 			} // print flag
 		default:
