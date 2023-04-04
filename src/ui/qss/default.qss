@@ -131,18 +131,6 @@ QTableView{
 		selection-background-color: rgb(81, 83, 90);
 }
 
-.BatchImportDelegate>QLineEdit{
-    background-color: rgb(43, 45, 49);
-    border:none;
-    border-radius:none;
-    margin-right:none;
-}
-
-QTableView > QCheckBox{
-        background-color: transparent;
-        color:rgb(180,180,180);
-}
-
 QTableView::item::selected{
         background-color:(81, 83, 90);
         color:rgb(255,255,255);
@@ -225,7 +213,7 @@ QCheckBox{
 
 /*BatchImportDialog Specific*/
 #BatchImportDialog{
-        background-color:rgb(35, 36, 40)
+        background-color:rgb(35, 36, 40);
 }
 
 #BatchImportDialog > QFrame{
@@ -239,9 +227,29 @@ QCheckBox{
 
 /* QMessageBox */
 QMessageBox {
-    background-color: rgb(35, 36, 40)
+    background-color: rgb(35, 36, 40);
 }
 
 QMessageBox > QLabel {
-    color: rgb(180, 180, 180)
+    color: rgb(180, 180, 180);
+}
+
+/**/
+
+#QTableItemLineEdit{
+	border-radius:none;
+	margin-right:0px;
+}
+
+#QTableItemLineEdit{
+	border-radius:none;
+	margin-right:0px;
+}
+
+#QTableItemLineEdit{
+	border-radius:none;
+	margin-right:0px;
+	selection-color: rgb(255, 255, 255);
+	selection-background-color: rgb(81, 83, 90);
+	background-color: rgb(81, 83, 90);
 }
