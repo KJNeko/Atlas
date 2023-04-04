@@ -225,7 +225,7 @@ QCheckBox{
 
 /*BatchImportDialog Specific*/
 #BatchImportDialog{
-        background-color:rgb(35, 36, 40)
+        background-color:rgb(35, 36, 40);
 }
 
 #BatchImportDialog > QFrame{
@@ -239,9 +239,15 @@ QCheckBox{
 
 /* QMessageBox */
 QMessageBox {
-    background-color: rgb(35, 36, 40)
+    background-color: rgb(35, 36, 40);
 }
 
 QMessageBox > QLabel {
-    color: rgb(180, 180, 180)
+    color: rgb(180, 180, 180);
+}
+
+/**/
+
+QTableItemLineEdit{
+        background-color:rgb(35, 36, 40);
 }
