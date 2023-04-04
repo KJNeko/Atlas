@@ -78,7 +78,7 @@ GroupsOutput extractGroups( QString pattern, QString text )
 		auto version { match.hasCaptured( "version" ) ? match.captured( "version" ) : "" };
 		auto engine { match.hasCaptured( "engine" ) ? match.captured( "engine" ) : "" };
 
-		return { std::move( title ), std::move( creator ), std::move( engine ), std::move( version ) };
+		return { std::move( title ), std::move( creator ), std::move( version ), std::move( engine ) };
 	}
 	else
 		throw std::runtime_error( "Missing required title capture" );
