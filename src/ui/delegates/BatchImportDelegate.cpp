@@ -64,7 +64,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				painter->drawText(
 					options.rect,
 					Qt::AlignLeft | Qt::AlignVCenter,
-					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) + " move after import" );
+					QString( QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) )
+						+ " move after import" );
 				break;
 			} // print flag
 		default:
