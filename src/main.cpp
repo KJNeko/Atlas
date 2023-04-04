@@ -83,7 +83,7 @@ int main( int argc, char** argv )
 	std::filesystem::create_directory( config::paths::games::getPath() );
 	std::filesystem::create_directory( config::paths::images::getPath() );
 
-	Database::initalize( config::paths::database::getPath() );
+	Database::initalize( config::paths::database::getPath() / "hydrus95.db" );
 
 	QPixmapCache::setCacheLimit( 1024 * 128 );
 
