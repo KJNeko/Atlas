@@ -64,8 +64,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				painter->drawText(
 					options.rect,
 					Qt::AlignLeft | Qt::AlignVCenter,
-					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) );
-
+					QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) + " move after import" );
 				break;
 			} // print flag
 		default:
@@ -141,6 +140,7 @@ QWidget* BatchImportDelegate::
 		case ENGINE:
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
+				//edit->setObjectName("QTableItemLineEdit");
 				edit->move( options.rect.topLeft() );
 				edit->resize( options.rect.size() );
 				return edit;
@@ -149,6 +149,7 @@ QWidget* BatchImportDelegate::
 			{
 				QCheckBox* check { new QCheckBox( parent ) };
 				check->setText( "Move after import?" );
+				//check->setObjectName("QTableItemCheckBox");
 				check->move( options.rect.topLeft() );
 				check->resize( options.rect.size() );
 				return check;
