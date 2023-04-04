@@ -6,6 +6,7 @@
 
 #include <QCheckBox>
 #include <QComboBox>
+#include <QEvent>
 #include <QLineEdit>
 #include <QPainter>
 #include <QString>
@@ -55,19 +56,6 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 
 				break;
 			}
-		case MOVE_FLAG:
-			{
-				//Draw checkmark if checked
-				const auto data { index.data().value< bool >() };
-				constexpr int heavy_check_mark_unicode { 0x2714 }; //U+2714 (✔)
-				constexpr int heavy_multiplication_x_unicode { 0x2716 }; //U+2716 (✖)
-				painter->drawText(
-					options.rect,
-					Qt::AlignLeft | Qt::AlignVCenter,
-					QString( QChar( data ? heavy_check_mark_unicode : heavy_multiplication_x_unicode ) )
-						+ " move after import" );
-				break;
-			} // print flag
 		default:
 			break;
 	}
@@ -79,12 +67,12 @@ QSize BatchImportDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
 	const auto info { item.fontMetrics };
-	const auto text { index.data().value< QString >() };
 
 	switch ( index.column() )
 	{
 		case EXECUTABLES:
 			{
+				const auto text { index.data().value< QString >() };
 				const auto file_options {
 					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
 				};
@@ -96,12 +84,11 @@ QSize BatchImportDelegate::
 
 				return info.size( Qt::TextSingleLine, text_modified ) + QSize( 15, 0 );
 			}
-		case MOVE_FLAG:
-			{
-				return info.size( Qt::TextSingleLine, "move after import" ) + QSize( 15, 0 );
-			}
 		default:
-			return info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 );
+			{
+				const auto text { index.data().value< QString >() };
+				return info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 );
+			}
 	}
 }
 
@@ -141,19 +128,10 @@ QWidget* BatchImportDelegate::
 		case ENGINE:
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
-				//edit->setObjectName("QTableItemLineEdit");
+				edit->setObjectName("QTableItemLineEdit");
 				edit->move( options.rect.topLeft() );
 				edit->resize( options.rect.size() );
 				return edit;
-			}
-		case MOVE_FLAG:
-			{
-				QCheckBox* check { new QCheckBox( parent ) };
-				check->setText( "Move after import?" );
-				//check->setObjectName("QTableItemCheckBox");
-				check->move( options.rect.topLeft() );
-				check->resize( options.rect.size() );
-				return check;
 			}
 		default:
 			return QAbstractItemDelegate::createEditor( parent, options, index );
@@ -184,12 +162,6 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 			{
 				auto edit { dynamic_cast< QLineEdit* >( editor ) };
 				model->setData( index, edit->text() );
-				break;
-			}
-		case MOVE_FLAG:
-			{
-				auto check { dynamic_cast< QCheckBox* >( editor ) };
-				model->setData( index, check->isChecked() );
 				break;
 			}
 		default:
@@ -225,12 +197,6 @@ void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& ind
 			{
 				auto edit { dynamic_cast< QLineEdit* >( editor ) };
 				edit->setText( index.data( Qt::DisplayRole ).value< QString >() );
-				break;
-			}
-		case MOVE_FLAG:
-			{
-				auto check { dynamic_cast< QCheckBox* >( editor ) };
-				check->setChecked( index.data( Qt::DisplayRole ).value< bool >() );
 				break;
 			}
 		default:

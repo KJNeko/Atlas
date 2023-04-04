@@ -14,7 +14,7 @@
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
-	return 8;
+	return 7;
 }
 
 int BatchImportModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -50,8 +50,6 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						}
 					case EXECUTABLES:
 						return QString::fromStdString( item.executable.string() );
-					case MOVE_FLAG:
-						return item.move_after_import;
 					default:
 						return QString( "wtf?" );
 				}
@@ -105,8 +103,6 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 				return QString( "Size" );
 			case EXECUTABLES:
 				return QString( "Executable" );
-			case MOVE_FLAG:
-				return QString( "Should Move" );
 			default:
 				return QString( "Oh fuck?" );
 		}
@@ -129,8 +125,6 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 		case ENGINE:
 			[[fallthrough]];
 		case EXECUTABLES:
-			[[fallthrough]];
-		case MOVE_FLAG:
 			return Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 		case SIZE:
 			[[fallthrough]];
@@ -177,12 +171,6 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 		case VERSION:
 			{
 				m_data.at( static_cast< std::size_t >( index.row() ) ).version = value.value< QString >();
-				emit dataChanged( index, index );
-				return true;
-			}
-		case MOVE_FLAG:
-			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).move_after_import = value.value< bool >();
 				emit dataChanged( index, index );
 				return true;
 			}

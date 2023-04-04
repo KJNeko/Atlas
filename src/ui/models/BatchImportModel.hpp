@@ -19,8 +19,7 @@ enum ImportColumns
 	ENGINE,
 	VERSION,
 	SIZE,
-	EXECUTABLES,
-	MOVE_FLAG
+	EXECUTABLES
 };
 
 class BatchImportModel final : public QAbstractTableModel
