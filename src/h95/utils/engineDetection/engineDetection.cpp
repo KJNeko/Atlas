@@ -4,6 +4,8 @@
 
 #include "engineDetection.hpp"
 
+#include <spdlog/spdlog.h>
+
 template <>
 bool isEngine< ENGINES_BEGIN >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
@@ -38,7 +40,9 @@ Engine findEngine( const std::filesystem::path& path, const std::filesystem::pat
 	else
 	{
 		if ( isEngine< engine >( path, executable_path ) )
+		{
 			return engine;
+		}
 		else
 			return findEngine< static_cast< Engine >( engine + 1 ) >( path, executable_path );
 	}
@@ -55,7 +59,7 @@ QString getEngineNameT( const Engine engine )
 	if constexpr ( engine_t == ENGINES_END )
 		return engineNameT< ENGINES_END >();
 	else if constexpr ( engine_t == ENGINES_BEGIN )
-		return engineNameT< static_cast< Engine >( ENGINES_BEGIN + 1 ) >();
+		return getEngineNameT< static_cast< Engine >( ENGINES_BEGIN + 1 ) >( engine );
 	else
 	{
 		if ( engine == engine_t )
