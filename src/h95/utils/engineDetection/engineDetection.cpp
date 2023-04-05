@@ -307,7 +307,7 @@ QString engineNameT< Java >()
 
 template <>
 bool isEngine<
-	Flash >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
+	Flash >( [[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	ZoneScoped;
 	return false;
