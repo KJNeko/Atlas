@@ -78,6 +78,23 @@ inline QSettings getSettingsObject()
 		}                                                                                                              \
 	}
 
+#define SETTINGS_FILE( group, name, default_path )                                                                     \
+	SETTINGS_D( group, name, QString, default_path )                                                                   \
+	namespace config::group::name                                                                                      \
+	{                                                                                                                  \
+		inline std::filesystem::path getPath()                                                                         \
+		{                                                                                                              \
+			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
+			std::filesystem::create_directories( filepath.parent_path() );                                             \
+			return filepath;                                                                                           \
+		}                                                                                                              \
+                                                                                                                       \
+		inline void setPath( const std::filesystem::path path )                                                        \
+		{                                                                                                              \
+			group::name::set( QString::fromStdString( path.string() ) );                                               \
+		}                                                                                                              \
+	}
+
 #define SETTINGS( group, name, type )                                                                                  \
 	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
@@ -100,7 +117,7 @@ inline QSettings getSettingsObject()
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
-SETTINGS_PATH( paths, theme, "./data/themes/default.qss" )
+SETTINGS_FILE( paths, theme, "./data/themes/default.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
 SETTINGS_D( importer, skipFilesize, bool, false )
