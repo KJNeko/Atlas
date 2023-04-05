@@ -17,9 +17,7 @@ namespace internal
 	static std::mutex db_mtx;
 #endif
 
-#ifndef NDEBUG
 	static std::atomic< std::thread::id > last_locked { std::thread::id( 0 ) };
-#endif
 
 	//static std::mutex db_mtx {};
 } // namespace internal
@@ -97,29 +95,23 @@ internal::LockGuardType TransactionData::getLock()
 {
 	ZoneScoped;
 	//Check if we are already locked
-#ifndef NDEBUG
 	if ( internal::last_locked == std::this_thread::get_id() )
 	{
 		spdlog::critical( "Deadlock detected! Ejecting!" );
 		throw std::runtime_error( "Deadlock" );
 	}
 	else
-#endif
 		return internal::LockGuardType( Database::lock() );
 }
 
 TransactionData::TransactionData() : guard( getLock() )
 {
-#ifndef NDEBUG
 	internal::last_locked = std::this_thread::get_id();
-#endif
 }
 
 TransactionData::~TransactionData()
 {
-#ifndef NDEBUG
 	internal::last_locked = std::thread::id( 0 );
-#endif
 }
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
