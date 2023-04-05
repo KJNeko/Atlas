@@ -65,7 +65,7 @@ std::vector< std::filesystem::path > detectExecutables( const std::filesystem::p
 		{
 			const auto ext { file.path().extension() };
 
-			if ( isBlacklist( file.path().filename() ) ) continue;
+			if ( isBlacklist( file.path().filename().string() ) ) continue;
 
 			QMimeDatabase mime_db;
 			const auto type {
