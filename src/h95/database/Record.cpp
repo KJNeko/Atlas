@@ -10,7 +10,6 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/SHA256.hpp"
 #include "h95/config.hpp"
 #include "h95/database/Database.hpp"
 #include "h95/imageManager.hpp"

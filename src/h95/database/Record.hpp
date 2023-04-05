@@ -7,6 +7,8 @@
 
 #include <QPixmap>
 
+#include <tracy/Tracy.hpp>
+
 #include "FlyWeight.hpp"
 #include "h95/Types.hpp"
 #include "h95/database/GameMetadata.hpp"
