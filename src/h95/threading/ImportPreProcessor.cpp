@@ -53,10 +53,7 @@ void ImportPreProcessor::processDirectory(
 				emit finishedDirectory( game_data );
 			}
 			else
-			{
-				TracyMessageL( "No executables found" );
 				spdlog::warn( "No executables found for path {}", folder );
-			}
 
 			itter.pop();
 			if ( itter == std::filesystem::recursive_directory_iterator() ) break;

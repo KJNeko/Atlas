@@ -146,7 +146,7 @@ Transaction::~Transaction()
 void Transaction::commit()
 {
 	ZoneScoped;
-	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction? Check if this is intended" );
 	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
 	*this << "COMMIT TRANSACTION";
 
@@ -158,7 +158,7 @@ void Transaction::abort()
 {
 	ZoneScoped;
 	spdlog::error( "A transaction was aborted!" );
-	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction?" );
+	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction? Check if this is intended" );
 	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
 	*this << "ROLLBACK TRANSACTION";
 

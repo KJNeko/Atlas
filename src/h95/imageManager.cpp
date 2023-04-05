@@ -17,16 +17,6 @@
 
 namespace imageManager
 {
-	std::filesystem::path getImagePath()
-	{
-		ZoneScoped;
-		const auto path { config::paths::images::getPath() };
-
-		if ( !std::filesystem::exists( path ) ) std::filesystem::create_directories( path );
-
-		return std::filesystem::canonical( path );
-	}
-
 	void cleanOrphans()
 	{
 		ZoneScoped;
@@ -34,15 +24,13 @@ namespace imageManager
 		//Grab all images from the database
 		Transaction transaction { Transaction::Autocommit };
 
-		spdlog::debug( "Clearing orphans" );
-
-		for ( const auto& path : std::filesystem::directory_iterator( getImagePath() ) )
+		for ( const auto& path : std::filesystem::directory_iterator( config::paths::images::getPath() ) )
 		{
 			if ( !path.is_regular_file() ) continue;
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
-						<< std::filesystem::relative( path, getImagePath() ).string()
+						<< std::filesystem::relative( path, config::paths::images::getPath() ).string()
 				>> [ & ]( [[maybe_unused]] int count ) { found = true; };
 
 			if ( !found ) std::filesystem::remove( path );
@@ -73,8 +61,9 @@ namespace imageManager
 				hash.addData( { reinterpret_cast< const char* >( data.data() ),
 				                static_cast< qsizetype >( data.size() ) } );
 
-				const std::filesystem::path dest { ( getImagePath() / hash.result().toHex().toStdString() ).string()
-					                               + ".webp" };
+				const std::filesystem::path dest {
+					( config::paths::images::getPath() / hash.result().toHex().toStdString() ).string() + ".webp"
+				};
 
 				if ( !std::filesystem::exists( dest.parent_path() ) )
 				{

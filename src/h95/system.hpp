@@ -17,7 +17,7 @@ namespace sys
 #ifdef _WIN32
 	constexpr bool is_windows { true };
 #else
-	constexpr bool is_windows { false };
+	[[maybe_unused]] constexpr bool is_windows { false };
 #endif
 
 }

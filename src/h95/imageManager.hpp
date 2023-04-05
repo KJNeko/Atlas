@@ -11,9 +11,6 @@
 
 namespace imageManager
 {
-	//! Returns the canonical preview path (Creates if it doesn't exist)
-	std::filesystem::path getImagePath();
-
 	//! Clears all images not found attached to any record
 	void cleanOrphans();
 

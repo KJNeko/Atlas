@@ -102,7 +102,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 		}
 		catch ( ... )
 		{
-			spdlog::critical( "Something went seriously wrong in the import thread!" );
+			spdlog::error( "Something went seriously wrong in the import thread!" );
 			emit updateValue( ++counter );
 		}
 	}
