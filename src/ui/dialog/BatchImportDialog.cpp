@@ -149,6 +149,8 @@ void BatchImportDialog::importFiles()
 	const auto& games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
 
 	emit startImportingGames( games, ui->tbPath->text().toStdString() );
+
+	this->setDisabled(true);
 }
 
 void BatchImportDialog::on_btnNext_pressed()
