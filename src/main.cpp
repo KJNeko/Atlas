@@ -13,49 +13,6 @@
 #include "h95/database/Database.hpp"
 #include "ui/mainwindow.h"
 
-#ifdef TRACY_ENABLE
-
-#include <tracy/Tracy.hpp>
-
-void* operator new( std::size_t count )
-{
-	auto ptr = malloc( count );
-	TracySecureAlloc( ptr, count );
-	return ptr;
-}
-
-void* operator new[]( std::size_t count )
-{
-	auto ptr = malloc( count );
-	TracySecureAlloc( ptr, count );
-	return ptr;
-}
-
-void operator delete( void* ptr ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete[]( void* ptr ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete( void* ptr, std::size_t ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete[]( void* ptr, std::size_t ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-#endif
-
 int main( int argc, char** argv )
 {
 	//initLogging();
