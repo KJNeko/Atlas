@@ -278,6 +278,7 @@ void RecordData::addVersion(
 	std::filesystem::path exec_path,
 	bool in_place,
 	Transaction transaction )
+try
 {
 	ZoneScoped;
 	spdlog::info( "Adding version {} to record {}", version.toStdString(), m_title.toStdString() );
@@ -296,6 +297,16 @@ void RecordData::addVersion(
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );
+}
+catch ( std::exception& e )
+{
+	spdlog::error( "An exception was throw in addVersion: {}", e.what() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( ... )
+{
+	spdlog::error( "An unknown exception was thrown in addVersion!" );
+	std::rethrow_exception( std::current_exception() );
 }
 
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
