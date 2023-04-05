@@ -8,8 +8,9 @@
 
 #include <QMimeDatabase>
 
-#include "../../system.hpp"
+#include <tracy/Tracy.hpp>
 
+#include "../../system.hpp"
 #include "h95/logging.hpp"
 
 template <>
@@ -43,6 +44,7 @@ bool isBlacklistT( const std::string& name, T comp, Ts... comps )
 //Formatter eats shit here
 bool isBlacklist( const std::string& name )
 {
+	ZoneScoped;
 	// In order to 'inject' name into the arguments we have to create a function
 	// to unpack the parameter pack and slam it straight back into the function.
 	auto func = [ &name ]( auto&&... args ) noexcept
@@ -53,6 +55,7 @@ bool isBlacklist( const std::string& name )
 
 std::vector< std::filesystem::path > detectExecutables( const std::filesystem::path& path )
 {
+	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
 
 	//Check for a valid game executable in the folder
@@ -103,6 +106,7 @@ std::vector< std::filesystem::path > detectExecutables( const std::filesystem::p
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, [[maybe_unused]] const Engine engine_type )
 {
+	ZoneScoped;
 	std::vector< std::pair< std::filesystem::path, int > > execs;
 
 	for ( auto& path : paths )
@@ -133,6 +137,7 @@ QString engineNameT< UNKNOWN >()
 template < Engine engine >
 Engine findEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	if constexpr ( engine == ENGINES_END )
 		return UNKNOWN;
 	else
@@ -146,12 +151,14 @@ Engine findEngine( const std::filesystem::path& path, const std::filesystem::pat
 
 Engine determineEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return findEngine< ENGINES_BEGIN >( path, executable_path );
 }
 
 template < Engine engine_t >
 QString getEngineNameT( const Engine engine )
 {
+	ZoneScoped;
 	if constexpr ( engine_t == ENGINES_END )
 		return engineNameT< UNKNOWN >();
 	else if constexpr ( engine_t == ENGINES_BEGIN )
@@ -176,6 +183,7 @@ template <>
 bool isEngine<
 	RenPy >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return std::filesystem::exists( path / "renpy" );
 }
 
@@ -189,6 +197,7 @@ template <>
 bool isEngine<
 	Unity >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return std::filesystem::exists( path / "Data" / "Managed" / "Assembly-CSharp.dll" );
 }
 
@@ -202,6 +211,7 @@ template <>
 bool isEngine< Unreal >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -215,6 +225,7 @@ template <>
 bool isEngine< RPGM >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -228,6 +239,7 @@ template <>
 bool isEngine< WolfRPG >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -241,6 +253,7 @@ template <>
 bool isEngine<
 	HTML >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return std::filesystem::exists( path / "index.html" );
 }
 
@@ -254,6 +267,7 @@ template <>
 bool isEngine< VisualNovelMaker >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -267,6 +281,7 @@ template <>
 bool isEngine< TyanoBuilder >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -280,6 +295,7 @@ template <>
 bool isEngine< Java >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -293,7 +309,8 @@ template <>
 bool isEngine<
 	Flash >( const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
-	return std::filesystem::exists( path / "index.html" );
+	ZoneScoped;
+	return false;
 }
 
 template <>
@@ -306,6 +323,7 @@ template <>
 bool isEngine< RAGS >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -319,6 +337,7 @@ template <>
 bool isEngine< KiriKiri >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -332,6 +351,7 @@ template <>
 bool isEngine< NScripter >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -345,6 +365,7 @@ template <>
 bool isEngine< NVList >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
@@ -358,6 +379,7 @@ template <>
 bool isEngine< Sukai2 >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
+	ZoneScoped;
 	return false;
 }
 
