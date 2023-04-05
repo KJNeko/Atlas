@@ -5,7 +5,7 @@
 #include <QString>
 
 #include "GTestBox.hpp"
-#include "h95/regex.hpp"
+#include "h95/utils/regex/regex.hpp"
 
 TEST( Regex, regexify )
 {

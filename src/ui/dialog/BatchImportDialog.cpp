@@ -10,8 +10,8 @@
 
 #include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
-#include "h95/regex.hpp"
-#include "h95/utils.hpp"
+#include "h95/foldersize.hpp"
+#include "h95/utils/regex/regex.hpp"
 #include "ui/delegates/BatchImportDelegate.hpp"
 #include "ui/models/BatchImportModel.hpp"
 #include "ui_BatchImportDialog.h"

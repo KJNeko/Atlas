@@ -2,13 +2,17 @@
 // Created by kj16609 on 3/27/23.
 //
 
-#include "utils.hpp"
+#ifndef HYDRUS95_FOLDERSIZE_HPP
+#define HYDRUS95_FOLDERSIZE_HPP
+
+#include <filesystem>
 
 #include <tracy/Tracy.hpp>
 
 #include "h95/logging.hpp"
 
-std::size_t folderSize( const std::filesystem::path& folder )
+//! Returns the byte size of a folder
+inline std::size_t folderSize( const std::filesystem::path& folder )
 {
 	ZoneScoped;
 	std::size_t counter { 0 };
@@ -22,3 +26,5 @@ std::size_t folderSize( const std::filesystem::path& folder )
 
 	return counter;
 }
+
+#endif //HYDRUS95_FOLDERSIZE_HPP

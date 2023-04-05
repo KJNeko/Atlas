@@ -1,7 +1,7 @@
 
 #include "executeProc.hpp"
 
-#include <h95/logging.hpp>
+#include "h95/logging.hpp"
 
 #ifdef __linux__
 

@@ -13,8 +13,8 @@
 
 #include "ProgressBarDialog.hpp"
 #include "h95/config.hpp"
+#include "h95/foldersize.hpp"
 #include "h95/logging.hpp"
-#include "h95/utils.hpp"
 #include "ui_SettingsDialog.h"
 
 SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
