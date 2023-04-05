@@ -440,7 +440,7 @@ bool recordExists( const QString& title, const QString& creator, const QString& 
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
 	if ( recordExists( title, creator, engine, transaction ) )
-		return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ) };
+		return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction };
 
 	try
 	{
