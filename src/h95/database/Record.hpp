@@ -162,6 +162,10 @@ bool recordExists(
 	const QString& engine,
 	Transaction transaction = Transaction( Transaction::Autocommit ) );
 
+//! Returns 0 if there is not record with this data
+RecordID recordID(const QString& title, const QString& creator, const QString& engine, Transaction transaction);
+
+
 //! Imports a record into the database
 /**
  *

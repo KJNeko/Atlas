@@ -420,19 +420,28 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 	}
 }
 
-bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
+RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
-	bool found { false };
+	RecordID record_id { 0 };
 
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
 				<< creator.toStdString() << engine.toStdString()
-		>> [ &found ]( [[maybe_unused]] const RecordID id ) { found = true; };
+		>> [ &record_id ]( [[maybe_unused]] const RecordID id ) { record_id = id; };
 
-	return found;
+	return record_id;
 }
 
+bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
+{
+	return recordID( title, creator, engine, transaction );
+}
+
+//! imports a new record and returns it. Will return an existing record if the record already exists
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
+	if ( recordExists( title, creator, engine, transaction ) )
+		return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ) };
+
 	try
 	{
 		return Record( std::move( title ), std::move( creator ), std::move( engine ), transaction );
