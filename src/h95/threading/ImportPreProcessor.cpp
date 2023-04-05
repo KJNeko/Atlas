@@ -31,27 +31,7 @@ void ImportPreProcessor::processDirectory(
 		{
 			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 			ZoneScopedN( "Test folder for executables" );
-			std::vector< std::filesystem::path > potential_executables;
-
-			//Check for a valid game executable in the folder
-			for ( const auto& file : std::filesystem::directory_iterator( folder ) )
-			{
-				ZoneScopedN( "Scan files" );
-				if ( file.is_regular_file() )
-				{
-					QMimeDatabase mime_db;
-					const auto type { mime_db.mimeTypeForFile(
-						QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent ) };
-
-					if ( ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
-					     || ( type.inherits( "application/x-ms-dos-executable" )
-					          && file.path().extension() == ".exe" ) )
-					{
-						spdlog::debug( "Executable {} passed check", file.path() );
-						potential_executables.emplace_back( std::filesystem::relative( file, folder ) );
-					}
-				}
-			}
+			std::vector< std::filesystem::path > potential_executables {detectExecutables(folder)};
 
 			if ( potential_executables.size() > 0 )
 			{

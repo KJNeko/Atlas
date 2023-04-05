@@ -28,7 +28,8 @@ enum Engine : int
 	NScripter,
 	NVList,
 	Sukai2,
-	ENGINES_END
+	ENGINES_END,
+	UNKNOWN
 };
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
@@ -46,5 +47,10 @@ Engine determineEngine( const std::filesystem::path& path, const std::filesystem
 
 //! Returns a string name of the engine
 QString engineName( const Engine engine );
+
+std::vector< std::filesystem::path > detectExecutables( const std::filesystem::path& path );
+
+std::vector< std::filesystem::path >
+	scoreExecutables( std::vector< std::filesystem::path > paths, const Engine engine = UNKNOWN );
 
 #endif //HYDRUS95_ENGINEDETECTION_HPP
