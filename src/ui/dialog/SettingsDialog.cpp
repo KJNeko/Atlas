@@ -187,16 +187,6 @@ void SettingsDialog::savePathsSettings()
 
 		progress_dialog.hide();
 
-		/*
-		for ( const auto& game : std::filesystem::directory_iterator( config::paths::games::get() ) )
-		{
-			spdlog::info( "copying {} to {}", game.path(), new_path / game.path().filename() );
-			std::filesystem::copy(
-				game,
-				new_path / game.path().filename(),
-				std::filesystem::copy_options::recursive | std::filesystem::copy_options::copy_symlinks );
-		}*/
-
 		//Delete old game folder
 		std::filesystem::remove_all( config::paths::games::getPath() );
 

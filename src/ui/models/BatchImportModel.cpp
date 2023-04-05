@@ -139,8 +139,6 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value, int role )
 {
 	ZoneScoped;
-	spdlog::info( "Data set" );
-
 	switch ( index.column() )
 	{
 		case EXECUTABLES:

@@ -281,7 +281,7 @@ void RecordData::addVersion(
 try
 {
 	ZoneScoped;
-	spdlog::info( "Adding version {} to record {}", version.toStdString(), m_title.toStdString() );
+	spdlog::info( "Adding version {} to record {}:{}", version.toStdString(), m_id, m_title.toStdString() );
 	//Check if version is already added
 	auto itter { std::find_if(
 		m_versions.begin(),
@@ -344,8 +344,6 @@ void RecordData::setBanner( const std::filesystem::path& path, Transaction trans
 	else
 		transaction << "INSERT INTO images (record_id, path, type) VALUES (?, ?, ?)" << m_id << m_banner.string()
 					<< PREVIEW_BANNER;
-
-	spdlog::info( "Banner set to {}", m_banner );
 
 	emit dataChanged();
 	emit bannerChanged( getBanner() );

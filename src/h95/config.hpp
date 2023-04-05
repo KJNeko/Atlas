@@ -69,7 +69,7 @@ inline QSettings getSettingsObject()
 		{                                                                                                              \
 			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
 			std::filesystem::create_directories( filepath );                                                           \
-			return filepath;                                                                                           \
+			return std::filesystem::canonical( filepath );                                                             \
 		}                                                                                                              \
                                                                                                                        \
 		inline void setPath( const std::filesystem::path path )                                                        \
@@ -86,7 +86,7 @@ inline QSettings getSettingsObject()
 		{                                                                                                              \
 			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
 			std::filesystem::create_directories( filepath.parent_path() );                                             \
-			return filepath;                                                                                           \
+			return std::filesystem::canonical( filepath );                                                             \
 		}                                                                                                              \
                                                                                                                        \
 		inline void setPath( const std::filesystem::path path )                                                        \

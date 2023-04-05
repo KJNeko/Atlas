@@ -30,6 +30,7 @@ namespace imageManager
 	void cleanOrphans()
 	{
 		ZoneScoped;
+		spdlog::info( "Clearing orphan previews/banners" );
 		//Grab all images from the database
 		Transaction transaction { Transaction::Autocommit };
 
@@ -38,7 +39,6 @@ namespace imageManager
 		for ( const auto& path : std::filesystem::directory_iterator( getImagePath() ) )
 		{
 			if ( !path.is_regular_file() ) continue;
-			spdlog::debug( "Testing if file {} exists in DB", path.path() );
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
@@ -52,7 +52,6 @@ namespace imageManager
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
 		ZoneScoped;
-		spdlog::debug( "Importing image {}", path );
 		if ( std::filesystem::exists( path ) )
 		{
 			QImage temp_image;
@@ -93,8 +92,11 @@ namespace imageManager
 
 				return dest;
 			}
-			spdlog::warn( "Failed to open converted webp: Temp:{}, Input:{}", temp_path, path );
+			else
+				spdlog::warn( "Failed to open converted webp: Temp:{:e}, Input:{:e}", temp_path, path );
 		}
+		else
+			spdlog::warn( "Failed to set open path for new banner at {:ce}", path );
 
 		return { ":/invalid.jpg" };
 	}
