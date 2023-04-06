@@ -19,21 +19,24 @@ int main( int argc, char** argv )
 
 	QApplication app { argc, argv };
 
-	QFile style_sheet_file { config::paths::theme::get() };
-
-	if ( !style_sheet_file.exists() )
+	if ( !config::ui::use_system_theme::get() )
 	{
-		config::paths::theme::setDefault();
-		QFile default_sheet { config::paths::theme::get() };
-		default_sheet.open( QFile::ReadOnly );
+		QFile style_sheet_file { config::paths::theme::get() };
 
-		app.setStyleSheet( default_sheet.readAll() );
-	}
-	else
-	{
-		style_sheet_file.open( QFile::ReadOnly );
+		if ( !style_sheet_file.exists() && !config::ui::use_system_theme::get() )
+		{
+			config::paths::theme::setDefault();
+			QFile default_sheet { config::paths::theme::get() };
+			default_sheet.open( QFile::ReadOnly );
 
-		app.setStyleSheet( style_sheet_file.readAll() );
+			app.setStyleSheet( default_sheet.readAll() );
+		}
+		else
+		{
+			style_sheet_file.open( QFile::ReadOnly );
+
+			app.setStyleSheet( style_sheet_file.readAll() );
+		}
 	}
 
 	std::filesystem::create_directory( config::paths::database::getPath().parent_path() );
