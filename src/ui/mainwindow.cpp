@@ -20,6 +20,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
+	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed);
 
 	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 
@@ -89,9 +90,9 @@ void MainWindow::switchToDetailed( const Record record )
 	ui->stackedWidget->setCurrentIndex( 1 );
 }
 
-/*
+
 void MainWindow::on_homeButton_pressed()
 {
-	ui->detailedRecordView->clearRecord();
+	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
-}*/
+}

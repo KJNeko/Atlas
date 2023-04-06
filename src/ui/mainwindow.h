@@ -42,7 +42,7 @@ class MainWindow : public QMainWindow
 	void on_actionImport_triggered();
 	void on_actionOptions_triggered();
 	void switchToDetailed( const Record record );
-	//void on_homeButton_pressed();
+	void on_homeButton_pressed();
 };
 
 #endif // MAINWINDOW_H
