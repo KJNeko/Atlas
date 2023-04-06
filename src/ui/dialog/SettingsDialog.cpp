@@ -107,7 +107,7 @@ void SettingsDialog::preparePathsSettings()
 	ui->databaseSizeLabel
 		->setText( locale
 	                   .formattedDataSize( static_cast< qint64 >( std::filesystem::file_size( config::paths::database::
-	                                                                                              getPath() ) ) ) );
+	                                                                                              getPath() / "hydrus95.db" ) ) ) );
 }
 
 void SettingsDialog::savePathsSettings()
