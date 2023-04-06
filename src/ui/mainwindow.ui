@@ -184,7 +184,7 @@
           </font>
          </property>
          <property name="text">
-          <string>LOGO HERE</string>
+          <string>ATLAS</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
