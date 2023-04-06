@@ -29,10 +29,6 @@ class RecordEditor : public QDialog
   private:
 
 	Ui::RecordEditor *ui;
-
-
-  private slots:
-	void on_
 };
 
 #endif //HYDRUS95_RECORDEDITOR_HPP
