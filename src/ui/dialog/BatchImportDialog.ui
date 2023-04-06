@@ -220,7 +220,10 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
              <item>
               <widget class="QCheckBox" name="cbSkipFilesize">
                <property name="text">
-                <string>Skip filesize calculation until import (Will make the next step MUCH faster)</string>
+                <string>Skip filesize calculation until import (Will make the pre-scan much faster)</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
