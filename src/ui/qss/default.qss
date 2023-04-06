@@ -10,7 +10,7 @@ color8 - rgb(64, 66, 73): Button Selected
 color9 - rgb(81, 83, 90): Button Border
 colorA - rgb(97, 99, 105):
 colorB - TBD
-colorC - rgb(180,180,180): Default text color
+colorC - rgb(210,210,210): Default text color
 colorD - rgb(255, 255, 255): Selected text color
 */
 
@@ -40,7 +40,7 @@ QFrame{
 /* MENU BAR*/
 QMenuBar{
         background-color: rgb(35, 36, 40);
-        color: rgb(180, 180, 180);
+        color: rgb(210, 210, 210);
         border:none;
 }
 
@@ -81,11 +81,11 @@ QTreeWidget{
         border-top-right-radius:5px;
         border-top-left-radius:5px;
         background-color:rgb(43, 45, 49);
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
         border: none;
 }
 QTreeWidget::item{
-    color: rgb(180, 180, 180);
+    color: rgb(210, 210, 210);
         border: none;
 }
 QTreeWidget::item::selected{
@@ -113,20 +113,20 @@ QTreeView::branch:closed:has-children:has-siblings {
 /* TABLE View*/
 QHeaderView{
         background-color: transparent;
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
 }
 
 QTableCornerButton::section{
         background-color: transparent;
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
 }
 
 QTableView{
         background-color: rgb(43, 45, 49);
 		alternate-background-color: rgb(49, 51, 56);
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
         border:none;
-        gridline-color:rgb(180,180,180);
+        gridline-color:rgb(210,210,210);
 		selection-color:rgb(255,255,255);
 		selection-background-color: rgb(81, 83, 90);
 }
@@ -137,14 +137,14 @@ QTableView::item::selected{
 }
 
 QHeaderView::section{
-        border: 1px solid rgb(180, 180, 180);
+        border: 1px solid rgb(210, 210, 210);
         background-color: rgb(64, 66, 73);
 }
 
 /* Label*/
 QLabel{
         background-color: transparent;
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
 }
 
 /* Line Edit*/
@@ -153,16 +153,16 @@ QLineEdit{
     border:none;
     border-radius:5px;
     margin-right:5px;
-    color:rgb(180,100,180);
+    color:rgb(210,100,210);
 }
 QLineEdit::Text{
-    color:rgb(180,180,180);
+    color:rgb(210,210,210);
 }
 
 /* Buttons */
 QPushButton{
         background-color: rgb(43, 45, 49);
-        color:rgb(180, 180, 180);
+        color:rgb(210, 210, 210);
         border:1px solid;
         border-color:rgb(81, 83, 90);
 		width: 75px;
@@ -177,7 +177,7 @@ background-color: rgb(64, 66, 73)
 /* Checkbox */
 QCheckBox{
         background-color:transparent;
-        color: rgb(180, 180, 180);
+        color: rgb(210, 210, 210);
         border:none;
 }
 
@@ -199,12 +199,12 @@ QCheckBox{
         border-bottom-left-radius:0px;
         border-top-left-radius:0px;
     margin-right:5px;
-    color:rgb(180, 180, 180)
+    color:rgb(210, 210, 210)
 }
 
 #AddGame{
         background-color: transparent;
-        color:rgb(180,180,180);
+        color:rgb(210,210,210);
 }
 #AddGame::hover{
         background-color: transparent;
@@ -216,12 +216,16 @@ QCheckBox{
         background-color:rgb(35, 36, 40);
 }
 
-#BatchImportDialog > QFrame{
-        background-color:rgb(49, 51, 56);
+#BatchImportDialog > QStackedWidget> QWidget > QFrame{
+        background-color:rgb(43, 45, 49);
+}
+
+#BatchImportDialog > QStackedWidget> QWidget > QFrame > QFrame{
+        background-color:rgb(43, 45, 49);
 }
 
 #BatchImportDialog > QWidget{
-        background-color:rgb(35, 36, 40)
+        background-color:rgb(35, 36, 40);
 }
 
 
@@ -231,7 +235,7 @@ QMessageBox {
 }
 
 QMessageBox > QLabel {
-    color: rgb(180, 180, 180);
+    color: rgb(210, 210, 210);
 }
 
 /**/
