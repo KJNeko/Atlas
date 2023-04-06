@@ -8,6 +8,7 @@
 
 #include "h95/config.hpp"
 #include "h95/database/Record.hpp"
+#include "h95/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {}
@@ -28,6 +29,8 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 		try
 		{
+			const bool scan_size { size == 0 };
+
 			if ( move_after_import )
 			{
 				//Gather all files to copy
@@ -55,6 +58,9 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					emit updateSubText( QString( "Copying: %1" )
 					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
 
+					if(scan_size)
+						size += std::filesystem::file_size( source_path );
+
 					emit updateSubValue( static_cast< int >( i ) );
 				}
 
@@ -62,7 +68,12 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 				path = std::filesystem::relative( dest_folder, dest_root );
 			}
 			else
+			{
+				emit updateSubText( "Scanning folder size... This could take awhile" );
 				path = source_folder;
+				if(scan_size)
+					size = folderSize( path );
+			}
 
 			Transaction transaction { Transaction::NoAutocommit };
 
@@ -71,7 +82,12 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 			};
 
 			record->addVersion(
-				std::move( version ), std::move( path ), std::move( executable ), !move_after_import, transaction );
+				std::move( version ),
+				std::move( path ),
+				std::move( executable ),
+				!move_after_import,
+				size,
+				transaction );
 
 			transaction.commit();
 

@@ -74,6 +74,7 @@ struct RecordData : public QObject
 		QString version,
 		std::filesystem::path game_path,
 		std::filesystem::path exec_path,
+		const uint64_t folder_size,
 		bool in_place,
 		Transaction transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );

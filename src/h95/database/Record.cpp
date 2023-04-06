@@ -46,7 +46,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 	if ( !found ) throw InvalidRecordID( id );
 
 	transaction
-			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime FROM game_metadata WHERE record_id = ?"
+			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime, folder_size FROM game_metadata WHERE record_id = ?"
 			<< id
 		>> [ this, id ](
 			   std::string version,
@@ -54,7 +54,8 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			   std::string exec_path,
 			   bool in_place,
 			   uint64_t last_played,
-			   uint32_t version_playtime )
+			   uint32_t version_playtime,
+			   uint64_t folder_size )
 	{
 		m_versions.emplace_back(
 			*this,
@@ -63,7 +64,8 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			std::move( exec_path ),
 			in_place,
 			last_played,
-			version_playtime );
+			version_playtime,
+			folder_size );
 	};
 
 	const std::filesystem::path image_path { config::paths::images::getPath() };
@@ -275,6 +277,7 @@ void RecordData::addVersion(
 	QString version,
 	std::filesystem::path game_path,
 	std::filesystem::path exec_path,
+	const uint64_t folder_size,
 	bool in_place,
 	Transaction transaction )
 try
@@ -288,11 +291,11 @@ try
 		[ &version ]( const GameMetadata& other ) { return version == other.getVersionName(); } ) };
 	if ( itter != m_versions.end() ) return;
 
-	m_versions.emplace_back( *this, version, game_path, exec_path, in_place, 0, 0 );
+	m_versions.emplace_back( *this, version, game_path, exec_path, in_place, 0, 0, folder_size );
 
 	transaction
-		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime) VALUES (?, ?, ?, ?, ?, 0, 0)"
-		<< m_id << version.toStdString() << game_path.string() << exec_path.string() << in_place;
+		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, 0, 0, ?)"
+		<< m_id << version.toStdString() << game_path.string() << exec_path.string() << in_place << folder_size;
 
 	emit dataChanged();
 	emit versionsChanged( m_versions );

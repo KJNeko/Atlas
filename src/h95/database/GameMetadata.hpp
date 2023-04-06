@@ -28,10 +28,12 @@ struct GameMetadata
 	std::filesystem::path m_exec_path {};
 
 	//! Indicates that we don't control where the game was placed.
-	bool m_in_place;
+	bool m_in_place { false };
 
-	std::uint32_t m_total_playtime;
-	std::uint64_t m_last_played;
+	std::uint32_t m_total_playtime { 0 };
+	std::uint64_t m_last_played { 0 };
+
+	std::uint64_t m_folder_size { 0 };
 
   public:
 
@@ -64,14 +66,16 @@ struct GameMetadata
 		const std::filesystem::path& exec_path_in,
 		const bool in_place,
 		const std::uint64_t last_played,
-		const std::uint32_t total_playtime ) :
+		const std::uint32_t total_playtime,
+		const std::uint64_t folder_size ) :
 	  m_parent( parent ),
 	  m_version( version_in ),
 	  m_game_path( game_path_in ),
 	  m_exec_path( exec_path_in ),
 	  m_in_place( in_place ),
 	  m_total_playtime( total_playtime ),
-	  m_last_played( last_played )
+	  m_last_played( last_played ),
+	  m_folder_size( folder_size )
 	{}
 
 	bool operator==( const GameMetadata& other ) const
