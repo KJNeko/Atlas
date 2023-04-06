@@ -3,6 +3,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
 #include <QTreeWidget>
 
 #include "h95/database/Search.hpp"
@@ -21,6 +22,7 @@ class MainWindow : public QMainWindow
 	Q_DISABLE_COPY_MOVE( MainWindow )
 	Q_OBJECT
 
+	QThread search_thread {};
 	Search record_search {};
 
   public:
@@ -35,9 +37,6 @@ class MainWindow : public QMainWindow
 	void addTreeRoot( QString name, QString record_id );
 	void addTreeChild( QTreeWidgetItem *parent, QString name, QString record_id );
 	void openBatchImportDialog();
-
-  signals:
-	void triggerSearch();
 
   private slots:
 	void on_actionImport_triggered();

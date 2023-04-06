@@ -28,6 +28,9 @@ class ImportPreProcessor : public QObject
 {
 	Q_OBJECT
 
+	std::chrono::time_point<std::chrono::steady_clock> last_update {std::chrono::steady_clock::now()};
+	std::vector<GameImportData> buffer {};
+
   public:
 
 	ImportPreProcessor();
@@ -47,7 +50,7 @@ class ImportPreProcessor : public QObject
 
   signals:
 	void finishedProcessing();
-	void finishedDirectory( const GameImportData info );
+	void finishedDirectory( const std::vector<GameImportData> info );
 };
 
 #endif //HYDRUS95_IMPORTPREPROCESSOR_HPP

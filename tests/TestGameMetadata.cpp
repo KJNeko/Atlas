@@ -18,7 +18,7 @@ class TestGameMetadata : public ::testing::Test
 TEST_F( TestGameMetadata, getPath )
 {
 	Record record { "TestTitle", "", "" };
-	record->addVersion( "1.0", "my/game/1.0", "executable.exe", false );
+	record->addVersion( "1.0", "my/game/1.0", "executable.exe", false, 0 );
 	GameMetadata& metadata { record->getLatestVersion() };
 
 	GTEST_ASSERT_EQ( config::paths::games::getPath().string(), "./data/games" );

@@ -82,6 +82,14 @@ void BatchImportModel::addGame( GameImportData data )
 	endInsertRows();
 }
 
+void BatchImportModel::addGames( std::vector< GameImportData > data )
+{
+	ZoneScoped;
+	beginInsertRows( {}, static_cast< int >( m_data.size() ), static_cast< int >( m_data.size() + data.size() - 1 ) );
+	for ( auto& item : data ) m_data.emplace_back( std::move( item ) );
+	endInsertRows();
+}
+
 QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
 	ZoneScoped;

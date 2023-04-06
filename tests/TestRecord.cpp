@@ -21,7 +21,7 @@ TEST_F( TestRecord, createRecord )
 	QString engine { "Some Engine" };
 
 	Record record { title, creator, engine };
-	record->addVersion( "V1.0", "./bin/", "Hydrus95.exe", false );
+	record->addVersion( "V1.0", "./bin/", "Hydrus95.exe", false, 0 );
 }
 
 TEST_F( TestRecord, createExistingRecord )
@@ -169,8 +169,8 @@ TEST_F( TestRecord, addVersion )
 {
 	PREPARE_RECORD_TEST
 
-	record->addVersion( "V69.420", "creator/title1/v1.0", "Hydrus95.exe", true );
-	record->addVersion( "v1.0", "creator/title2/v1.0", "Game.exe", true );
+	record->addVersion( "V69.420", "creator/title1/v1.0", "Hydrus95.exe", true, 0 );
+	record->addVersion( "v1.0", "creator/title2/v1.0", "Game.exe", true, 0 );
 
 	ASSERT_EQ( record->getVersions().size(), 2 );
 	ASSERT_EQ( record->getVersions().at( 1 ).getVersionName().toStdString(), "v1.0" );
@@ -182,7 +182,7 @@ TEST_F( TestRecord, removeVersion )
 {
 	PREPARE_RECORD_TEST
 
-	record->addVersion( "V69.420", ".", "./Hydrus95.exe", true );
+	record->addVersion( "V69.420", ".", "./Hydrus95.exe", true, 0 );
 
 	record->removeVersion( record->getVersions().at( 0 ) );
 

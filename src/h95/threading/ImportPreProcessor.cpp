@@ -31,7 +31,7 @@ void ImportPreProcessor::processDirectory(
 		{
 			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 			ZoneScopedN( "Test folder for executables" );
-			std::vector< std::filesystem::path > potential_executables {detectExecutables(folder)};
+			std::vector< std::filesystem::path > potential_executables { detectExecutables( folder ) };
 
 			if ( potential_executables.size() > 0 )
 			{
@@ -39,7 +39,7 @@ void ImportPreProcessor::processDirectory(
 				const auto [ title, creator, version, engine ] =
 					extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-				const GameImportData game_data {
+				buffer.emplace_back(
 					std::filesystem::relative( folder, base ),
 					title,
 					creator,
@@ -48,9 +48,14 @@ void ImportPreProcessor::processDirectory(
 					skip_filesize ? 0 : folderSize( folder ),
 					potential_executables,
 					potential_executables.at( 0 ),
-					move_imported
-				};
-				emit finishedDirectory( game_data );
+					move_imported );
+
+				using namespace std::chrono_literals;
+				if ( buffer.size() > 256 || last_update + 1s < std::chrono::steady_clock::now() )
+				{
+					emit finishedDirectory( std::move( buffer ) );
+					last_update = std::chrono::steady_clock::now();
+				}
 			}
 			else
 				spdlog::warn( "No executables found for path {}", folder );
@@ -59,5 +64,8 @@ void ImportPreProcessor::processDirectory(
 			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
 		}
 	}
+
+	if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
+
 	emit finishedProcessing();
 }

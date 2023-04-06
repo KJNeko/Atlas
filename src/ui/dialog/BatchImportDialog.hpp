@@ -42,14 +42,14 @@ class BatchImportDialog : public QDialog
 	void on_btnCancel_pressed();
 	void modelChanged(
 		const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList< int >& roles = QList< int >() );
-	void processFinishedDirectory( const GameImportData data );
+	void processFinishedDirectory( const std::vector<GameImportData> data );
 	void finishedProcessing();
 	void finishedImporting();
 
   signals:
 	void startProcessingDirectory(
 		const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize );
-	void addToModel( const GameImportData data );
+	void addToModel( const std::vector<GameImportData> data );
 	void startImportingGames( const std::vector< GameImportData > data, const std::filesystem::path source );
 	void importComplete( std::vector< RecordID > records );
 };

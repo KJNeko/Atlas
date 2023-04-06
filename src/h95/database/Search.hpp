@@ -17,32 +17,17 @@ class Search : public QObject
 {
 	Q_OBJECT
 
-	std::vector< QString > active_tags {};
+	std::string query {};
 
   public:
 
   signals:
 	//! Emitted when a search is completed
 	void searchCompleted( std::vector< Record > );
-	//! Emitted when the autocomplete is finished
-	void autoCompleteCompleted( std::vector< QString > );
 
   public slots:
 	//! Submits a text to get autocompleted.
 	void searchTextChanged( QString text );
-	//! Adds a tag to the search. Does nothing if already present
-	void addTag( QString );
-	//! Removes a tag from the search. Does nothing if tag wasn't present
-	void removeTag( QString );
-
-	void triggerSearch();
-
-	//! Returns a list of all the tags active in the search.
-	const std::vector< QString >& getTagsActive() const;
-
-  private:
-
-	std::vector< Record > search();
 };
 
 #endif //HYDRUS95_SEARCH_HPP

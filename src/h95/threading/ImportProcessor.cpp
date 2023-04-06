@@ -15,6 +15,7 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 
 void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
 {
+	ZoneScoped;
 	emit startProgressBar();
 	emit updateMax( static_cast< int >( data.size() ) );
 
@@ -23,6 +24,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 	//God I love decomposition
 	for ( auto [ path, title, creator, engine, version, size, executables, executable, move_after_import ] : data )
 	{
+		ZoneScopedN("Import game");
 		emit updateText( QString( "Importing %1" ).arg( title ) );
 
 		const auto source_folder { source / path };
@@ -33,6 +35,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			if ( move_after_import )
 			{
+				ZoneScopedN("Copy game");
 				//Gather all files to copy
 				std::vector< std::filesystem::path > files;
 				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
@@ -64,7 +67,6 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					emit updateSubValue( static_cast< int >( i ) );
 				}
 
-				//std::filesystem::remove( source_folder );
 				path = std::filesystem::relative( dest_folder, dest_root );
 			}
 			else
@@ -101,6 +103,8 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 			}
 
 			completed_records.emplace_back( record->getID() );
+
+			//std::filesystem::remove( source_folder );
 
 			//No crash! Yay. Continue to import
 			spdlog::info( "Import succeeded with id {}", record->getID() );

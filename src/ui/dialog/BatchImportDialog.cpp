@@ -39,7 +39,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		this,
 		&BatchImportDialog::addToModel,
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
-		&BatchImportModel::addGame );
+		&BatchImportModel::addGames );
 
 	connect( this, &BatchImportDialog::startImportingGames, &processor, &ImportProcessor::importGames );
 	connect( &processor, &ImportProcessor::importComplete, this, &BatchImportDialog::finishedImporting );
@@ -206,7 +206,7 @@ void BatchImportDialog::modelChanged(
 	ui->twGames->resizeColumnsToContents();
 }
 
-void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
+void BatchImportDialog::processFinishedDirectory( const std::vector<GameImportData> game_data )
 {
 	emit addToModel( game_data );
 	ui->twGames->resizeColumnsToContents();

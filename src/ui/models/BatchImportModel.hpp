@@ -28,7 +28,6 @@ class BatchImportModel final : public QAbstractTableModel
 
   public:
 
-	void addGame( GameImportData data );
 
 	const std::vector< GameImportData >& getData() const { return m_data; }
 
@@ -40,6 +39,11 @@ class BatchImportModel final : public QAbstractTableModel
 	bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole ) override;
 
 	void clearData();
+
+
+  public slots:
+	void addGame( GameImportData data );
+	void addGames( std::vector<GameImportData> data );
 
 	friend class BatchImportDelegate;
 };

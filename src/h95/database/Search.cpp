@@ -4,42 +4,41 @@
 
 #include "Search.hpp"
 
+#include "h95/search/QueryBuilder.hpp"
+
 void Search::searchTextChanged( [[maybe_unused]] QString text )
 {
-	//
-}
+	ZoneScoped;
+	if(text.isEmpty())
+	{
+		Transaction transaction { Transaction::NoAutocommit };
 
-void Search::addTag( [[maybe_unused]] QString tag_text )
-{
-	emit searchCompleted( search() );
-}
+		std::vector< Record > records;
 
-void Search::removeTag( [[maybe_unused]] QString tag_text )
-{
-	emit searchCompleted( search() );
-}
+		//TODO: Actual implement the search. For now this just returns ALL records.
+		transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
+		{ records.emplace_back( id, transaction ); };
 
-const std::vector< QString >& Search::getTagsActive() const
-{
-	return active_tags;
-}
+		transaction.commit();
 
-std::vector< Record > Search::search()
-{
-	Transaction transaction { Transaction::NoAutocommit };
+		emit searchCompleted(std::move(records));
+	}
 
-	std::vector< Record > records;
+	try
+	{
+		query = generateQuery( text.toStdString() );
+		Transaction transaction { Transaction::NoAutocommit };
 
-	//TODO: Actual implement the search. For now this just returns ALL records.
-	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
-	{ records.emplace_back( id, transaction ); };
+		std::vector< Record > records;
 
-	transaction.commit();
+		transaction << query >> [ & ]( const RecordID id ) { records.emplace_back( id, transaction ); };
 
-	return records;
-}
+		transaction.commit();
 
-void Search::triggerSearch()
-{
-	emit searchCompleted( search() );
+		emit searchCompleted( std::move(records ));
+	}
+	catch ( std::exception& e )
+	{
+		spdlog::error( "{}", e.what() );
+	}
 }

@@ -16,18 +16,23 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	addTreeRoot( "Games", "0" );
 
-	connect( this, &MainWindow::triggerSearch, &record_search, &Search::triggerSearch );
+	connect( ui->SearchBox, &QLineEdit::textChanged, &record_search, &Search::searchTextChanged );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
 
 	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 
-	emit triggerSearch();
+	// To trigger the inital search
+	ui->SearchBox->setText("");
+
+	record_search.moveToThread(&search_thread);
+	search_thread.start();
 }
 
 MainWindow::~MainWindow()
 {
+	search_thread.exit();
 	config::geometry::main_window::set( saveGeometry() );
 	delete ui;
 }
