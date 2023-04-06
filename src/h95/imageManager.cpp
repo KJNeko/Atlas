@@ -39,17 +39,30 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
+		spdlog::info("Attemping To Load Image");
 		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
+			QString qstr = QString::fromStdString( path.string() );
 			QImage temp_image;
-			temp_image.load( QString::fromStdString( path.string() ) );
+			temp_image.load(qstr);
+			if(temp_image.load(qstr) == true){spdlog::info("Image Loaded Sucessfully");}
 
 			//Save the image to a temp file depending on os
 			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "h95" / "temp.webp" };
-			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );
+			spdlog::info("Output Path:{}", temp_path.string());
+			if ( !std::filesystem::exists( temp_path.parent_path() ) ) 
+			{
+				create_directories( temp_path.parent_path() );
+			}
 
-			temp_image.save( QString::fromStdString( temp_path.string() ), "WEBP", 99 );
+			if(WIN32)
+			{
+				temp_image.save( QString::fromStdString( temp_path.string() ), "png", 100 );
+			}
+			else{			
+				temp_image.save( QString::fromStdString( temp_path.string() ), "webp", 100 );
+			}
 
 			if ( std::ifstream ifs( temp_path ); ifs )
 			{
