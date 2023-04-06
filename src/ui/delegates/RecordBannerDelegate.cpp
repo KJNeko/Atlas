@@ -50,6 +50,7 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	painter->fillRect( strip_rect, QColor( 0, 0, 0, 200 ) );
 
 	//painter->drawText(); //engine
+	painter ->setPen(qRgb(210,210,210));
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
 	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, record->getCreator() ); //Creator
 
