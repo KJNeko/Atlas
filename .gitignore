@@ -15,3 +15,4 @@
 /CMakeFiles
 /CMakeCache.txt
 *.user
+.vscode
