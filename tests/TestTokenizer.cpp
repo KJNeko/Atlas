@@ -33,7 +33,7 @@ TEST( Search, QueryGen )
 	const std::string str { "system:size > 2G & creator:my name & !( engine:unity | engine:ren'py )" };
 	const std::string generated_str { generateQuery( str ) };
 
-	GTEST_ASSERT_EQ( "SELECT record_id FROM records WHERE record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > 2000000000) AND creator = 'my name' AND NOT ( engine = 'unity' OR engine = 'ren'py' )"
+	GTEST_ASSERT_EQ( "SELECT record_id FROM records WHERE record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > 2000000000) AND creator LIKE 'my name' AND NOT ( engine LIKE 'unity' OR engine LIKE 'ren'py' )"
 	                 , generated_str );
 }
 

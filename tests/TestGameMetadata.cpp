@@ -21,7 +21,10 @@ TEST_F( TestGameMetadata, getPath )
 	record->addVersion( "1.0", "my/game/1.0", "executable.exe", false, 0 );
 	GameMetadata& metadata { record->getLatestVersion() };
 
-	GTEST_ASSERT_EQ( config::paths::games::getPath().string(), "./data/games" );
-	GTEST_ASSERT_EQ( metadata.getPath().string(), "./data/games/my/game/1.0" );
-	GTEST_ASSERT_EQ( metadata.getExecPath().string(), "./data/games/my/game/1.0/executable.exe" );
+	std::filesystem::create_directories("./data/games");
+	std::filesystem::create_directories("./data/games/my/game/1.0");
+
+	GTEST_ASSERT_EQ( config::paths::games::getPath().string(), std::filesystem::canonical("./data/games").string() );
+	GTEST_ASSERT_EQ( metadata.getPath().string(), std::filesystem::canonical("./data/games/my/game/1.0") );
+	GTEST_ASSERT_EQ( metadata.getExecPath().string(), std::filesystem::current_path() / "data/games/my/game/1.0/executable.exe" );
 }
