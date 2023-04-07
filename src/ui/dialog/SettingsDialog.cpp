@@ -21,8 +21,6 @@ SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new U
 {
 	ui->setupUi( this );
 
-	//TODO: Load qss options into ui->themeBox
-
 	prepareThemeSettings();
 	prepareBannerViewerSettings();
 	preparePathsSettings();
@@ -137,8 +135,6 @@ void SettingsDialog::savePathsSettings()
 			else
 				std::filesystem::create_directories( new_path );
 		}
-
-		//TODO: Make progress bar dialog
 
 		ProgressBarDialog progress_dialog { this };
 		progress_dialog.show();

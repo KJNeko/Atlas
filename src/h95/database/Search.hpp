@@ -11,8 +11,6 @@
 
 #include "h95/database/Record.hpp"
 
-//TODO: Fucking EVERYTHING
-
 class Search : public QObject
 {
 	Q_OBJECT

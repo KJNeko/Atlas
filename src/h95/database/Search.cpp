@@ -15,7 +15,6 @@ void Search::searchTextChanged( [[maybe_unused]] QString text )
 
 		std::vector< Record > records;
 
-		//TODO: Actual implement the search. For now this just returns ALL records.
 		transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
 		{ records.emplace_back( id, transaction ); };
 
