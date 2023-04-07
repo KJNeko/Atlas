@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(Hydrus95 LANGUAGES CXX)
+project(AtlasGameManager LANGUAGES CXX)
 
 enable_testing()
 
@@ -101,7 +101,7 @@ if (${CMAKE_COMPILER_IS_GNUCXX})
     set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
     set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
 else ()
-    message("Note that you are compiling Hydrus95 with an unsupported compiler (Only GCC is offically supported) You can still make bug reports but MENTION YOUR COMPILER AND BUILD SYSTEM")
+    message("Note that you are compiling with an unsupported compiler (Only GCC is offically supported) You can still make bug reports but MENTION YOUR COMPILER AND BUILD SYSTEM")
 endif ()
 
 message("Compiling with: ${FGL_FLAGS}")
@@ -118,47 +118,47 @@ set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent Qt6::QWebpPlugin SQLite::SQLite3 spdlog::spdlog fmt Tracy::TracyClient)
 
 #Lib for EXE and Python
-add_library(H95Obj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
-target_link_libraries(H95Obj ${REQUIRED_LIBS})
-target_include_directories(H95Obj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set_target_properties(H95Obj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+add_library(AtlasObj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
+target_link_libraries(AtlasObj ${REQUIRED_LIBS})
+target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 if (DEFINED DISABLE_FLYWEIGHT)
     target_compile_definitions(H95Obj PRIVATE HYDRUS95_DISABLE_FLYWEIGHT)
 endif ()
 
 #Build exe
-add_executable(Hydrus95 ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
-    set_target_properties(Hydrus95 PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+    set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 endif ()
 
-target_include_directories(Hydrus95 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if (WIN32)
     include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 endif ()
 
-target_link_libraries(Hydrus95 ${REQUIRED_LIBS} H95Obj)
+target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 
 #Post setup (Windows only)
 if (WIN32)
-    add_custom_command(TARGET Hydrus95 POST_BUILD
+    add_custom_command(TARGET Atlas POST_BUILD
             COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
-            $<TARGET_FILE:Hydrus95>
+            $<TARGET_FILE:Atlas>
             COMMENT "Running windeployqt")
 
-    add_custom_command(TARGET Hydrus95 POST_BUILD
+    add_custom_command(TARGET Atlas POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_RUNTIME_DLLS:Hydrus95> $<TARGET_FILE_DIR:Hydrus95>
+            $<TARGET_RUNTIME_DLLS:Atlas> $<TARGET_FILE_DIR:Atlas>
             COMMAND_EXPAND_LISTS)
 
-    add_custom_command(TARGET Hydrus95 POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95>)
+    add_custom_command(TARGET Atlas POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
 endif ()
 
-add_custom_command(TARGET Hydrus95 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Hydrus95>/data/themes COMMENT "Compiling qss files")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Compiling qss files")
 
 #Test builds
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
@@ -175,29 +175,29 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-    add_executable(Hydrus95TESTS ${TESTS})
+    add_executable(AtlasTESTS ${TESTS})
 
-    set_target_properties(Hydrus95TESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-    target_include_directories(Hydrus95TESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_link_libraries(Hydrus95TESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Obj)
+    set_target_properties(AtlasTESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+    target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(AtlasTESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Obj)
 
     #Test post setup (Windows only)
     if (WIN32)
-        add_custom_command(TARGET Hydrus95TESTS POST_BUILD
+        add_custom_command(TARGET AtlasTESTS POST_BUILD
                 COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
-                $<TARGET_FILE:Hydrus95TESTS>
+                $<TARGET_FILE:AtlasTESTS>
                 COMMENT "Running windeployqt")
 
-        add_custom_command(TARGET Hydrus95TESTS POST_BUILD
+        add_custom_command(TARGET AtlasTESTS POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                $<TARGET_RUNTIME_DLLS:Hydrus95> $<TARGET_FILE_DIR:Hydrus95TESTS>
+                $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
                 COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
 
-        add_custom_command(TARGET Hydrus95TESTS POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Hydrus95TESTS> COMMENT "Copying sqlite lib files")
+        add_custom_command(TARGET AtlasTESTS POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
     endif ()
 
     include(GoogleTest)
-    gtest_discover_tests(Hydrus95TESTS)
+    gtest_discover_tests(AtlasTESTS)
 
 endif ()
