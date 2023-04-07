@@ -9,13 +9,13 @@ namespace sys
 {
 
 #ifdef __unix__
-	constexpr bool is_unix { true };
+	[[maybe_unused]] constexpr bool is_unix { true };
 #else
-	constexpr bool is_unix { false };
+	[[maybe_unused]] constexpr bool is_unix { false };
 #endif
 
 #ifdef _WIN32
-	constexpr bool is_windows { true };
+	[[maybe_unused]] constexpr bool is_windows { true };
 #else
 	[[maybe_unused]] constexpr bool is_windows { false };
 #endif
