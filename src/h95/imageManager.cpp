@@ -14,6 +14,7 @@
 
 #include "config.hpp"
 #include "h95/database/Database.hpp"
+#include "system.hpp"
 
 namespace imageManager
 {
@@ -51,16 +52,16 @@ namespace imageManager
 			//Save the image to a temp file depending on os
 			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "h95" / "temp.webp" };
 			spdlog::info("Output Path:{}", temp_path.string());
-			if ( !std::filesystem::exists( temp_path.parent_path() ) ) 
+			if ( !std::filesystem::exists( temp_path.parent_path() ) )
 			{
 				create_directories( temp_path.parent_path() );
 			}
 
-			if(WIN32)
+			if constexpr(sys::is_windows)
 			{
 				temp_image.save( QString::fromStdString( temp_path.string() ), "png", 100 );
 			}
-			else{			
+			else{
 				temp_image.save( QString::fromStdString( temp_path.string() ), "webp", 100 );
 			}
 
