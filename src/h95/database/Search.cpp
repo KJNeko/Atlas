@@ -9,19 +9,7 @@
 void Search::searchTextChanged( [[maybe_unused]] QString text )
 {
 	ZoneScoped;
-	if(text.isEmpty())
-	{
-		Transaction transaction { Transaction::NoAutocommit };
-
-		std::vector< Record > records;
-
-		transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
-		{ records.emplace_back( id, transaction ); };
-
-		transaction.commit();
-
-		emit searchCompleted(std::move(records));
-	}
+	if ( text.isEmpty() ) return triggerEmptySearch();
 
 	try
 	{
@@ -34,10 +22,24 @@ void Search::searchTextChanged( [[maybe_unused]] QString text )
 
 		transaction.commit();
 
-		emit searchCompleted( std::move(records ));
+		emit searchCompleted( std::move( records ) );
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "{}", e.what() );
+		spdlog::error( "Search failed: {}", e.what() );
 	}
+}
+
+void Search::triggerEmptySearch()
+{
+	Transaction transaction { Transaction::NoAutocommit };
+
+	std::vector< Record > records;
+
+	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
+	{ records.emplace_back( id, transaction ); };
+
+	transaction.commit();
+
+	emit searchCompleted( std::move( records ) );
 }
