@@ -130,7 +130,7 @@ SETTINGS_D( db, first_start, bool, true )
 SETTINGS_D( logging, level, int, 2 )
 
 SETTINGS_D( delegate, banner_x, int, 600 )
-SETTINGS_D( delegate, banner_y, int, 250 )
+SETTINGS_D( delegate, banner_y, int, 280 )
 
 SETTINGS( geometry, main_window, QByteArray )
 SETTINGS( geometry, batch_import_dialog, QByteArray )
