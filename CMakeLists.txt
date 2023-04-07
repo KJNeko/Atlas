@@ -123,10 +123,6 @@ target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
-if (DEFINED DISABLE_FLYWEIGHT)
-    target_compile_definitions(H95Obj PRIVATE HYDRUS95_DISABLE_FLYWEIGHT)
-endif ()
-
 #Build exe
 add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
@@ -179,7 +175,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
 
     set_target_properties(AtlasTESTS PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
     target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_link_libraries(AtlasTESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main H95Obj)
+    target_link_libraries(AtlasTESTS ${REQUIRED_LIBS} Qt::Test GTest::gtest_main AtlasObj)
 
     #Test post setup (Windows only)
     if (WIN32)
