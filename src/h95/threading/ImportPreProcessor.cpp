@@ -51,7 +51,7 @@ void ImportPreProcessor::processDirectory(
 					move_imported );
 
 				using namespace std::chrono_literals;
-				if ( buffer.size() > 256 || last_update + 1s < std::chrono::steady_clock::now() )
+				if ( buffer.size() > 8 || last_update + 500ms < std::chrono::steady_clock::now() )
 				{
 					emit finishedDirectory( std::move( buffer ) );
 					last_update = std::chrono::steady_clock::now();
