@@ -143,9 +143,9 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 GameMetadata& DetailedRecordView::selectedVersion()
 {
-	if ( !m_record.has_value() ) throw std::runtime_error( "Record invalid" );
+	if ( !m_record.has_value() ) throw std::runtime_error( "selectedVersion: Record invalid" );
 
-	if ( m_record.value()->getVersions().size() == 0 ) throw std::runtime_error( "No versions available" );
+	if ( m_record.value()->getVersions().size() == 0 ) throw std::runtime_error( "selectedVersion: No versions available" );
 
 	return m_record.value()->getVersions()[selected_version_idx];
 }

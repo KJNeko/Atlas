@@ -9,6 +9,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "h95/logging.hpp"
+
 QString groupify( const QString group_name )
 {
 	return R"((?P<)" + group_name.mid( 1, group_name.size() - 2 ) + R"(>[^\\\/]+))";
@@ -81,5 +83,5 @@ GroupsOutput extractGroups( QString pattern, QString text )
 		return { std::move( title ), std::move( creator ), std::move( version ), std::move( engine ) };
 	}
 	else
-		throw std::runtime_error( "Missing required title capture" );
+		throw std::runtime_error( fmt::format( "extractGroups: Missing required title capture, Text: {}", text ) );
 }

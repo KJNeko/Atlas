@@ -27,7 +27,7 @@ sqlite::database& Database::ref()
 	if ( internal::db != nullptr )
 		return *internal::db;
 	else
-		throw std::runtime_error( "Database was not initalized!" );
+		throw std::runtime_error( "ref: Database was not initalized!" );
 }
 
 internal::MtxType& Database::lock()

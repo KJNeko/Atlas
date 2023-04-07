@@ -33,7 +33,7 @@ enum Namespaces
 };
 
 inline static constexpr std::array< std::pair< std::string_view, Namespaces >, NAMESPACE_END > namespaces {
-	{ { "system:", SYSTEM }, { "creator:", CREATOR }, { "engine:", ENGINE }, { "title:", TITLE }, {"tag", TAG} }
+	{ { "system:", SYSTEM }, { "creator:", CREATOR }, { "engine:", ENGINE }, { "title:", TITLE }, { "tag", TAG } }
 };
 
 enum SystemTokens
@@ -137,12 +137,12 @@ std::string parseOperator( const std::string_view str )
 					[[fallthrough]];
 				default:
 					throw std::runtime_error(
-						fmt::format( "Failed to process \"{}\" in switch statement for {}", str, __func__ ) );
+						fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "Failed to process {} in {}", str, __func__ ) );
+	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 std::string parseSystem( const std::string_view str )
@@ -176,13 +176,13 @@ std::string parseSystem( const std::string_view str )
 				case INVALID_SYSTEM:
 					[[fallthrough]];
 				default:
-					throw std::runtime_error( fmt::format(
-						"Failed to process \"{}\" in switch statement for {}: NO HANDLER FOR THIS!", str, __func__ ) );
+					throw std::runtime_error(
+						fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "Failed to process {} in {}", str, __func__ ) );
+	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 std::pair< std::string_view, std::string_view > seperateNamespace( const std::string_view str )
@@ -223,13 +223,13 @@ std::string parseNamespace( const std::string_view str )
 						[[fallthrough]];
 					default:
 						throw std::runtime_error(
-							fmt::format( "Failed to process \"{}\" in switch statement for {}", str, __func__ ) );
+							fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 				}
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "Failed to process {} in {}", str, __func__ ) );
+	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 std::string parse( const std::string_view str )
