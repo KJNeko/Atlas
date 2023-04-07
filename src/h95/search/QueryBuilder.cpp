@@ -192,6 +192,11 @@ std::pair< std::string_view, std::string_view > seperateNamespace( const std::st
 	return { str.substr( 0, pos ), str.substr( pos + 1, str.size() - pos ) };
 }
 
+//! Parses a given \ref NamespaceParsing from a string
+/**
+ * @param str
+ * @return
+ */
 std::string parseNamespace( const std::string_view str )
 {
 	ZoneScoped;
@@ -232,6 +237,12 @@ std::string parseNamespace( const std::string_view str )
 	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
+//! Parses the string via `parseNamespace(const std::string_view)` or `parseOperator(const std::string_view)`.
+/**
+ * @warning Calling this with a single operator is considered undefined behaviour
+ * @throws ParseError if `isNamespace(const std::string_view)` and `isOperator(const std::string_view)` are both false
+ * @param str
+ */
 std::string parse( const std::string_view str )
 {
 	ZoneScoped;
