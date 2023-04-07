@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/h95/config.hpp File Reference</title>
+<title>Atlas Game Manager: src/h95/config.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -106,6 +106,7 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">config.hpp File Reference</div></div>
 </div><!--header-->
@@ -113,175 +114,84 @@ $(document).ready(function(){initNavTree('config_8hpp.html',''); initResizable()
 <div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;QSettings&gt;</code><br />
 <code>#include &lt;QVariant&gt;</code><br />
-<code>#include &lt;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for config.hpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#asrc_2h95_2config_8hpp" alt=""/></div>
-<map name="asrc_2h95_2config_8hpp" id="asrc_2h95_2config_8hpp">
-<area shape="rect" title=" " alt="" coords="86,5,213,31"/>
-<area shape="rect" title=" " alt="" coords="5,152,85,177"/>
-<area shape="rect" title=" " alt="" coords="59,79,139,104"/>
-<area shape="rect" title=" " alt="" coords="163,79,237,104"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="261,79,373,104"/>
-<area shape="rect" title=" " alt="" coords="121,152,233,177"/>
-<area shape="rect" title=" " alt="" coords="258,152,353,177"/>
-<area shape="rect" title=" " alt="" coords="377,152,444,177"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="469,152,550,177"/>
-<area shape="rect" title=" " alt="" coords="479,225,540,251"/>
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="config_8hpp__dep__incl.png" border="0" usemap="#asrc_2h95_2config_8hppdep" alt=""/></div>
-<map name="asrc_2h95_2config_8hppdep" id="asrc_2h95_2config_8hppdep">
-<area shape="rect" title=" " alt="" coords="292,5,419,31"/>
-<area shape="rect" href="config_8cpp.html" title=" " alt="" coords="5,79,132,104"/>
-<area shape="rect" href="Record_8cpp.html" title=" " alt="" coords="156,79,347,104"/>
-<area shape="rect" href="imageManager_8cpp.html" title=" " alt="" coords="371,79,550,104"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="574,79,670,104"/>
-</map>
-</div>
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&quot;</code><br />
 </div>
 <p><a href="config_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a556935838af6218d9004cddb65224f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>(group,  name)&#160;&#160;&#160;QString( #group ) + &quot;/&quot; + #name</td></tr>
+<tr class="separator:a556935838af6218d9004cddb65224f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36bda3707802fb73ce08a672c85c88ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a36bda3707802fb73ce08a672c85c88ed">SETTINGS_D</a>(group,  name,  type,  default_value)</td></tr>
+<tr class="separator:a36bda3707802fb73ce08a672c85c88ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8841d1720125b3bb63e720fe9ca240f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8841d1720125b3bb63e720fe9ca240f5">SETTINGS_PATH</a>(group,  name,  default_path)</td></tr>
+<tr class="separator:a8841d1720125b3bb63e720fe9ca240f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97ebbf0df50c39d3eddcadbff853434b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a97ebbf0df50c39d3eddcadbff853434b">SETTINGS_FILE</a>(group,  name,  default_path)</td></tr>
+<tr class="separator:a97ebbf0df50c39d3eddcadbff853434b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15e9adc66c24bd8b13cb15187cd85f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab15e9adc66c24bd8b13cb15187cd85f5">SETTINGS</a>(group,  name,  type)</td></tr>
+<tr class="separator:ab15e9adc66c24bd8b13cb15187cd85f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a37af631e4a1b0741f0c9bf9cc22a693d"><td class="memItemLeft" align="right" valign="top">QSettings&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a> ()</td></tr>
 <tr class="separator:a37af631e4a1b0741f0c9bf9cc22a693d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50dc6d389eb806c8197e211128d06782"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a50dc6d389eb806c8197e211128d06782"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a50dc6d389eb806c8197e211128d06782">getSettings</a> (const QString setting_name)</td></tr>
-<tr class="memdesc:a50dc6d389eb806c8197e211128d06782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns T for the given setting_name.  <br /></td></tr>
-<tr class="separator:a50dc6d389eb806c8197e211128d06782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e">getSettings</a> (const QString setting_name, const T default_value)</td></tr>
-<tr class="separator:a7d7ab716d6ac8c84591d74209875ae4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab96dee737e985f98d61752ed9cabcdc9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9">setSettings</a> (const QString settings_name, const T value)</td></tr>
-<tr class="separator:ab96dee737e985f98d61752ed9cabcdc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba22929f0d72383a1b32b20732e72df"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0ba22929f0d72383a1b32b20732e72df">dataPath</a> ()</td></tr>
-<tr class="memdesc:a0ba22929f0d72383a1b32b20732e72df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>)  <br /></td></tr>
-<tr class="separator:a0ba22929f0d72383a1b32b20732e72df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8001ae5af09e3e54158e2fdf61fb1adb">imagePath</a> ()</td></tr>
-<tr class="memdesc:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>)  <br /></td></tr>
-<tr class="separator:a8001ae5af09e3e54158e2fdf61fb1adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a0f1f79428b9d5612da52d47bdad840"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840">gamePath</a> ()</td></tr>
-<tr class="memdesc:a1a0f1f79428b9d5612da52d47bdad840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>)  <br /></td></tr>
-<tr class="separator:a1a0f1f79428b9d5612da52d47bdad840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaab6066f011bf1addaceb0724c84da9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#acaab6066f011bf1addaceb0724c84da9">SETTINGS_D</a> (ui, stretch_banner_images, bool, false)</td></tr>
+<tr class="separator:acaab6066f011bf1addaceb0724c84da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99143ea97c6616cbcb3629214140809d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a99143ea97c6616cbcb3629214140809d">SETTINGS_D</a> (ui, use_simple_layout, bool, true)</td></tr>
+<tr class="separator:a99143ea97c6616cbcb3629214140809d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a0ba22929f0d72383a1b32b20732e72df" name="a0ba22929f0d72383a1b32b20732e72df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ba22929f0d72383a1b32b20732e72df">&#9670;&#160;</a></span>dataPath()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a556935838af6218d9004cddb65224f2f" name="a556935838af6218d9004cddb65224f2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a556935838af6218d9004cddb65224f2f">&#9670;&#160;</a></span>KEY_VALUE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::filesystem::path dataPath </td>
+          <td class="memname">#define KEY_VALUE</td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>) </p>
-<p>Returns the canonical path for setting <code>path/data</code> (Default <code>./data/</code>) </p>
-
-</div>
-</div>
-<a id="a1a0f1f79428b9d5612da52d47bdad840" name="a1a0f1f79428b9d5612da52d47bdad840"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a0f1f79428b9d5612da52d47bdad840">&#9670;&#160;</a></span>gamePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path gamePath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>) </p>
-<p>Returns the canonical path for setting <code>path/games</code> (Default <code>./data/games</code>) </p>
-
-</div>
-</div>
-<a id="a50dc6d389eb806c8197e211128d06782" name="a50dc6d389eb806c8197e211128d06782"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50dc6d389eb806c8197e211128d06782">&#9670;&#160;</a></span>getSettings() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T getSettings </td>
-          <td>(</td>
-          <td class="paramtype">const QString&#160;</td>
-          <td class="paramname"><em>setting_name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns T for the given setting_name. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>when setting T not default constructable and no setting given </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>type for setting </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">setting_name</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a7d7ab716d6ac8c84591d74209875ae4e" name="a7d7ab716d6ac8c84591d74209875ae4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d7ab716d6ac8c84591d74209875ae4e">&#9670;&#160;</a></span>getSettings() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T getSettings </td>
-          <td>(</td>
-          <td class="paramtype">const QString&#160;</td>
-          <td class="paramname"><em>setting_name</em>, </td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const T&#160;</td>
-          <td class="paramname"><em>default_value</em>&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;QString( #group ) + &quot;/&quot; + #name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab15e9adc66c24bd8b13cb15187cd85f5" name="ab15e9adc66c24bd8b13cb15187cd85f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab15e9adc66c24bd8b13cb15187cd85f5">&#9670;&#160;</a></span>SETTINGS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTINGS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -289,29 +199,188 @@ template&lt;typename T &gt; </div>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>type for setting </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">setting_name</td><td></td></tr>
-    <tr><td class="paramname">default_value</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>default_value if setting_name is not set </dd></dl>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">namespace </span>config::group::name                                                                                      \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">bool</span> hasValue()                                                                                         \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>().contains( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ) );                                           \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> type get()                                                                                              \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            <span class="keywordflow">return</span> { <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>().value( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ) ).value&lt; type &gt;() };                          \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">void</span> set( <span class="keyword">const</span> type val )                                                                              \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            getSettingsObject().setValue( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ), val );                                             \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">    }</div>
+<div class="ttc" id="aconfig_8hpp_html_a37af631e4a1b0741f0c9bf9cc22a693d"><div class="ttname"><a href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a></div><div class="ttdeci">QSettings getSettingsObject()</div><div class="ttdef"><b>Definition:</b> config.hpp:36</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a556935838af6218d9004cddb65224f2f"><div class="ttname"><a href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a></div><div class="ttdeci">#define KEY_VALUE(group, name)</div><div class="ttdef"><b>Definition:</b> config.hpp:41</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a36bda3707802fb73ce08a672c85c88ed" name="a36bda3707802fb73ce08a672c85c88ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36bda3707802fb73ce08a672c85c88ed">&#9670;&#160;</a></span>SETTINGS_D</h2>
 
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTINGS_D</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">default_value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">namespace </span>config::group::name                                                                                      \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">void</span> set( <span class="keyword">const</span> type&amp; val )                                                                             \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            getSettingsObject().setValue( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ), val );                                             \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">void</span> setDefault()                                                                                       \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            set( default_value );                                                                                      \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> type get()                                                                                              \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            if ( !<a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>().contains( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ) ) ) setDefault();                             \</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="code hl_function" href="config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d">getSettingsObject</a>().value( <a class="code hl_define" href="config_8hpp.html#a556935838af6218d9004cddb65224f2f">KEY_VALUE</a>( group, name ) ).value&lt; type &gt;();                              \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
 </div>
 </div>
+<a id="a97ebbf0df50c39d3eddcadbff853434b" name="a97ebbf0df50c39d3eddcadbff853434b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97ebbf0df50c39d3eddcadbff853434b">&#9670;&#160;</a></span>SETTINGS_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTINGS_FILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">default_path&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_define" href="config_8hpp.html#a36bda3707802fb73ce08a672c85c88ed">SETTINGS_D</a>( group, name, QString, default_path )                                                                   \</div>
+<div class="line">    <span class="keyword">namespace </span>config::group::name                                                                                      \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">        <span class="keyword">inline</span> std::filesystem::path getPath()                                                                         \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            <span class="keyword">const</span> std::filesystem::path filepath { group::name::get().toStdString() };                                 \</div>
+<div class="line">            std::filesystem::create_directories( filepath.parent_path() );                                             \</div>
+<div class="line">            <span class="keywordflow">return</span> std::filesystem::canonical( filepath );                                                             \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">void</span> setPath( <span class="keyword">const</span> std::filesystem::path path )                                                        \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            group::name::set( QString::fromStdString( path.string() ) );                                               \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">    }</div>
+<div class="ttc" id="aconfig_8hpp_html_a36bda3707802fb73ce08a672c85c88ed"><div class="ttname"><a href="config_8hpp.html#a36bda3707802fb73ce08a672c85c88ed">SETTINGS_D</a></div><div class="ttdeci">#define SETTINGS_D(group, name, type, default_value)</div><div class="ttdef"><b>Definition:</b> config.hpp:43</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8841d1720125b3bb63e720fe9ca240f5" name="a8841d1720125b3bb63e720fe9ca240f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8841d1720125b3bb63e720fe9ca240f5">&#9670;&#160;</a></span>SETTINGS_PATH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETTINGS_PATH</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">group, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">default_path&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_define" href="config_8hpp.html#a36bda3707802fb73ce08a672c85c88ed">SETTINGS_D</a>( group, name, QString, default_path )                                                                   \</div>
+<div class="line">    <span class="keyword">namespace </span>config::group::name                                                                                      \</div>
+<div class="line">    {                                                                                                                  \</div>
+<div class="line">        <span class="keyword">inline</span> std::filesystem::path getPath()                                                                         \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            <span class="keyword">const</span> std::filesystem::path filepath { group::name::get().toStdString() };                                 \</div>
+<div class="line">            std::filesystem::create_directories( filepath );                                                           \</div>
+<div class="line">            <span class="keywordflow">return</span> std::filesystem::canonical( filepath );                                                             \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">                                                                                                                       \</div>
+<div class="line">        <span class="keyword">inline</span> <span class="keywordtype">void</span> setPath( <span class="keyword">const</span> std::filesystem::path path )                                                        \</div>
+<div class="line">        {                                                                                                              \</div>
+<div class="line">            group::name::set( QString::fromStdString( path.string() ) );                                               \</div>
+<div class="line">        }                                                                                                              \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a37af631e4a1b0741f0c9bf9cc22a693d" name="a37af631e4a1b0741f0c9bf9cc22a693d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37af631e4a1b0741f0c9bf9cc22a693d">&#9670;&#160;</a></span>getSettingsObject()</h2>
 
@@ -337,48 +406,35 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a8001ae5af09e3e54158e2fdf61fb1adb" name="a8001ae5af09e3e54158e2fdf61fb1adb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8001ae5af09e3e54158e2fdf61fb1adb">&#9670;&#160;</a></span>imagePath()</h2>
+<a id="acaab6066f011bf1addaceb0724c84da9" name="acaab6066f011bf1addaceb0724c84da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaab6066f011bf1addaceb0724c84da9">&#9670;&#160;</a></span>SETTINGS_D() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::filesystem::path imagePath </td>
+          <td class="memname">SETTINGS_D </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>) </p>
-<p>Returns the canonical path for setting <code>path/images</code> (Default <code>./data/images</code>) </p>
-
-</div>
-</div>
-<a id="ab96dee737e985f98d61752ed9cabcdc9" name="ab96dee737e985f98d61752ed9cabcdc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab96dee737e985f98d61752ed9cabcdc9">&#9670;&#160;</a></span>setSettings()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setSettings </td>
-          <td>(</td>
-          <td class="paramtype">const QString&#160;</td>
-          <td class="paramname"><em>settings_name</em>, </td>
+          <td class="paramtype">ui&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const T&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramtype">stretch_banner_images&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">false&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -386,11 +442,46 @@ template&lt;typename T &gt; </div>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a99143ea97c6616cbcb3629214140809d" name="a99143ea97c6616cbcb3629214140809d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99143ea97c6616cbcb3629214140809d">&#9670;&#160;</a></span>SETTINGS_D() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SETTINGS_D </td>
+          <td>(</td>
+          <td class="paramtype">ui&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">use_simple_layout&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">true&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>

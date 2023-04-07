@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/h95/database/Database.cpp File Reference</title>
+<title>Atlas Game Manager: src/h95/database/Database.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -106,38 +106,28 @@ $(document).ready(function(){initNavTree('Database_8cpp.html',''); initResizable
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Database.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="Database_8hpp_source.html">Database.hpp</a>&quot;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
-<code>#include &quot;<a class="el" href="Database_8hpp_source.html">Database.hpp</a>&quot;</code><br />
-<code>#include &lt;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for Database.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="Database_8cpp__incl.png" border="0" usemap="#asrc_2h95_2database_2Database_8cpp" alt=""/></div>
-<map name="asrc_2h95_2database_2Database_8cpp" id="asrc_2h95_2database_2Database_8cpp">
-<area shape="rect" title=" " alt="" coords="281,5,487,31"/>
-<area shape="rect" title=" " alt="" coords="267,152,347,177"/>
-<area shape="rect" title=" " alt="" coords="282,79,393,104"/>
-<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="156,79,257,104"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="472,79,584,104"/>
-<area shape="rect" title=" " alt="" coords="5,152,147,177"/>
-<area shape="rect" title=" " alt="" coords="171,152,242,177"/>
-<area shape="rect" title=" " alt="" coords="477,152,589,177"/>
-<area shape="rect" title=" " alt="" coords="614,152,709,177"/>
-<area shape="rect" title=" " alt="" coords="733,152,800,177"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="371,152,453,177"/>
-<area shape="rect" title=" " alt="" coords="381,225,443,251"/>
-</map>
-</div>
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">h95/config.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceinternal"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html">internal</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a0aa672c01f384b6b178a2a310df74a7d"><td class="memItemLeft" align="right" valign="top">static sqlite::database *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a0aa672c01f384b6b178a2a310df74a7d">internal::db</a> { nullptr }</td></tr>
+<tr class="separator:a0aa672c01f384b6b178a2a310df74a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4660841261a4134fdc50bf8d7481d6a5"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a4660841261a4134fdc50bf8d7481d6a5">internal::db_mtx</a></td></tr>
+<tr class="separator:a4660841261a4134fdc50bf8d7481d6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac254ba7935bf14770e627959152c7be2"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; std::thread::id &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#ac254ba7935bf14770e627959152c7be2">internal::last_locked</a> { std::thread::id( 0 ) }</td></tr>
+<tr class="separator:ac254ba7935bf14770e627959152c7be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

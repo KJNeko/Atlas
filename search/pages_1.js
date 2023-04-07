@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['settings_20list_0',['Settings list',['../H95Settings.html',1,'']]]
+  ['hydrus95_0',['Hydrus95',['../md_README.html',1,'']]]
 ];

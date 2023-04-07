@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: Member List</title>
+<title>Atlas Game Manager: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -111,15 +111,30 @@ $(document).ready(function(){initNavTree('structGameMetadata.html',''); initResi
 
 <p>This is the complete list of members for <a class="el" href="structGameMetadata.html">GameMetadata</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a5ee2bf7970c2a1242639492b3a13a524">erase</a>(const RecordID id, const GameMetadata &amp;metadata, Transaction &amp;transaction)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#ab75e05ba804ecdf58dddd2c59c0f2895">addPlaytime</a>(const std::uint32_t playtime)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e">GameMetadata</a>()=delete</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe">GameMetadata</a>(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a85d2ed0262865f298f18ae20abd3bfd8">insert</a>(const RecordID id, const GameMetadata &amp;metadata, Transaction &amp;transaction)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120">m_exec_path</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a91c33dc2dda86c4b171e1f104227bc88">m_game_path</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97">m_version</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#ab302459c96a07a9220ced9e37ad9abcb">operator==</a>(const GameMetadata &amp;other) const =default</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1">select</a>(const RecordID id, Transaction &amp;transaction)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a7ea681d53bfba7051690dfaebc0625d4">GameMetadata</a>(RecordData &amp;parent, const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in, const bool in_place, const std::uint64_t last_played, const std::uint32_t total_playtime, const std::uint64_t folder_size)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#ad808871192c8a6351e33736e6faf0371">GameMetadata</a>(const GameMetadata &amp;other)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a75267d64ba7301380c8a3623cf442dd5">GameMetadata</a>(GameMetadata &amp;&amp;other)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a16926d41e88c9650dca3ef0f7c612086">getExecPath</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#ad8163f961911cfcd8e415e1a694b3b62">getLastPlayed</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a58287a9198fae18e60e7594b0a7c5be9">getPath</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a2e74e7afd5160602b2f1e25290e12efe">getPlaytime</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a4595dbf0d5944c5ee409596e85d2b924">getRelativeExecPath</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a899dcac169e94712d26b60ed3139c631">getVersionName</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a8a7b30b562d67b7ecbbba4bb3d29041d">isInPlace</a>() const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120">m_exec_path</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a306039386c64e01a6fe4b0586562210a">m_folder_size</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a91c33dc2dda86c4b171e1f104227bc88">m_game_path</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a5f350dbac3d533807a07c63537768ec1">m_in_place</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a8a88044df3d122d2e89acd7250ab3783">m_last_played</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a3d45160adef7898311148766f0a24d33">m_parent</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#af44d3e870142ab47196005d9357a63af">m_total_playtime</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97">m_version</a></td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a5059f012f1e167ff5f2c84d7f664508b">operator=</a>(const GameMetadata &amp;other)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa">operator==</a>(const GameMetadata &amp;other) const</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structGameMetadata.html#a70e15372cc07aa5eb449a58692975af7">playGame</a>()</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="structGameMetadata.html#a3789efd281255b4d419d43f20c0f1321">setLastPlayed</a>(const std::uint64_t last_played)</td><td class="entry"><a class="el" href="structGameMetadata.html">GameMetadata</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

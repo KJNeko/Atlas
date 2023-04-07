@@ -1,0 +1,26 @@
+var classBatchImportDialog =
+[
+    [ "BatchImportDialog", "classBatchImportDialog.html#a876bb4844b1df3c2acb003821ee70fb2", null ],
+    [ "~BatchImportDialog", "classBatchImportDialog.html#ac5267e0779844ef998845ed9ec61c255", null ],
+    [ "addToModel", "classBatchImportDialog.html#a054129fb96f49faefed190c200f00de8", null ],
+    [ "finishedImporting", "classBatchImportDialog.html#a3d99062e7d9f6c0c0dfa30b66ef78977", null ],
+    [ "finishedProcessing", "classBatchImportDialog.html#aac46f0e065c1760fd29677bbe32ccb34", null ],
+    [ "importComplete", "classBatchImportDialog.html#a04b7af1c07bb900476b9d9b1e410aaa3", null ],
+    [ "importFiles", "classBatchImportDialog.html#a111425f4ebdde4355acd5b38d6d85360", null ],
+    [ "loadConfig", "classBatchImportDialog.html#a8a1d99e6feb326842c27762daa7a837d", null ],
+    [ "modelChanged", "classBatchImportDialog.html#a2dc09848c1b774d4e9943ffec538eb4c", null ],
+    [ "on_btnBack_pressed", "classBatchImportDialog.html#a993cefae57a96344c287b8de704e3536", null ],
+    [ "on_btnCancel_pressed", "classBatchImportDialog.html#a314de23811fdbafed0e766dfd28ea8b4", null ],
+    [ "on_btnNext_pressed", "classBatchImportDialog.html#a458bb42c01b7bbf79c1c94b6b4404e41", null ],
+    [ "on_btnSetFolder_pressed", "classBatchImportDialog.html#a008e8acdf284847dbd45e33de417d2e4", null ],
+    [ "processFiles", "classBatchImportDialog.html#ae474177b92139b93013d2832c826781f", null ],
+    [ "processFinishedDirectory", "classBatchImportDialog.html#abf9d14927d964526348bcb4ac533025b", null ],
+    [ "saveConfig", "classBatchImportDialog.html#ae8bf9ea28f59f136a0268ac155d6eb30", null ],
+    [ "startImportingGames", "classBatchImportDialog.html#a21d1854d3fa611f17d2477a79f395e39", null ],
+    [ "startProcessingDirectory", "classBatchImportDialog.html#a0574471bc5c01d203c8616ef11718079", null ],
+    [ "preprocessor", "classBatchImportDialog.html#af7e765e0e7080ac0d94279459b607014", null ],
+    [ "processing_thread", "classBatchImportDialog.html#ac7f90e43bd28caf159e57717b81af446", null ],
+    [ "processor", "classBatchImportDialog.html#ad732b62ce4780d4048322fdb382b01b6", null ],
+    [ "progress", "classBatchImportDialog.html#aa789b9a74416a92abbe0d82e50167d96", null ],
+    [ "ui", "classBatchImportDialog.html#afa28c0ad79ad564d967f80c9e3ac73cc", null ]
+];

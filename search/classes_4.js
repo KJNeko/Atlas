@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['metadataalreadyexists_0',['MetadataAlreadyExists',['../structMetadataAlreadyExists.html',1,'']]],
-  ['metadataexception_1',['MetadataException',['../structMetadataException.html',1,'']]]
+  ['gameimportdata_0',['GameImportData',['../structGameImportData.html',1,'']]],
+  ['gamemetadata_1',['GameMetadata',['../structGameMetadata.html',1,'']]],
+  ['groupsoutput_2',['GroupsOutput',['../structGroupsOutput.html',1,'']]]
 ];

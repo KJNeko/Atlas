@@ -24,8 +24,15 @@
 */
 var NAVTREE =
 [
-  [ "Hydrus95", "index.html", [
+  [ "Atlas Game Manager", "index.html", [
     [ "Settings list", "H95Settings.html", null ],
+    [ "Searching", "SearchParsing.html", null ],
+    [ "RegexGuide", "RegexGuide.html", [
+      [ "Getting Started", "RegexGuide.html#RegexGuideGettingStarted", null ]
+    ] ],
+    [ "AdvRegexGuide", "AdvRegexGuide.html", [
+      [ "Advanced Parsing", "AdvRegexGuide.html#AdvRegexGuideParsing", null ]
+    ] ],
     [ "Hydrus95", "md_README.html", [
       [ "Features:", "md_README.html#autotoc_md1", [
         [ "F95Zone integration https://github.com/KJNeko/Hydrus95/issues/2", "md_README.html#autotoc_md2", null ],
@@ -37,16 +44,19 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ]
+        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ],
+        [ "Typedefs", "namespacemembers_type.html", null ]
       ] ]
     ] ],
+    [ "Concepts", "concepts.html", "concepts" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
@@ -56,9 +66,11 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ]
+        [ "Enumerator", "globals_eval.html", null ],
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -66,7 +78,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"Database_8cpp.html"
+"AddGameDialog_8cpp.html",
+"classMainWindow.html#a0cf07357600379a356c56f377036f602",
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

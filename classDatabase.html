@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: Database Class Reference</title>
+<title>Atlas Game Manager: Database Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classDatabase.html',''); initResizable
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classDatabase-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Database Class Reference</div></div>
@@ -118,14 +119,29 @@ $(document).ready(function(){initNavTree('classDatabase.html',''); initResizable
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae81f8f9992ec7c99d97b46153c67773f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">initalize</a> (const std::filesystem::path init_path)</td></tr>
+<tr class="memdesc:ae81f8f9992ec7c99d97b46153c67773f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalizes the database with init_path. Does not have to be caonical.  <br /></td></tr>
 <tr class="separator:ae81f8f9992ec7c99d97b46153c67773f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95da77a6408fed05dfd75efa87400a2e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">deinit</a> ()</td></tr>
+<tr class="memdesc:a95da77a6408fed05dfd75efa87400a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitalizes the DB.  <br /></td></tr>
 <tr class="separator:a95da77a6408fed05dfd75efa87400a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a917b05136098f15260a6097ded41beb4"><td class="memItemLeft" align="right" valign="top">static sqlite::database &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a917b05136098f15260a6097ded41beb4">ref</a> ()</td></tr>
+<tr class="memdesc:a917b05136098f15260a6097ded41beb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a ref to the sqlite DB.  <br /></td></tr>
+<tr class="separator:a917b05136098f15260a6097ded41beb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a078650d45ee5e164a5d8d27a9569db"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db">lock</a> ()</td></tr>
+<tr class="memdesc:a5a078650d45ee5e164a5d8d27a9569db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a ref to the global DB lock.  <br /></td></tr>
+<tr class="separator:a5a078650d45ee5e164a5d8d27a9569db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a157204bdd68859eaffcd09a886111f2b"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a157204bdd68859eaffcd09a886111f2b">Transaction</a></td></tr>
 <tr class="separator:a157204bdd68859eaffcd09a886111f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a554d5d7f40317657f67a36f0ed43ea18"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#a554d5d7f40317657f67a36f0ed43ea18">NonTransaction</a></td></tr>
+<tr class="separator:a554d5d7f40317657f67a36f0ed43ea18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae52ef601f6374018ed7d36c5da232cad"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDatabase.html#ae52ef601f6374018ed7d36c5da232cad">TransactionData</a></td></tr>
+<tr class="separator:ae52ef601f6374018ed7d36c5da232cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a95da77a6408fed05dfd75efa87400a2e" name="a95da77a6408fed05dfd75efa87400a2e"></a>
@@ -150,6 +166,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Deinitalizes the DB. </p>
 
 </div>
 </div>
@@ -177,9 +195,87 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Initalizes the database with init_path. Does not have to be caonical. </p>
+
+</div>
+</div>
+<a id="a5a078650d45ee5e164a5d8d27a9569db" name="a5a078650d45ee5e164a5d8d27a9569db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a078650d45ee5e164a5d8d27a9569db">&#9670;&#160;</a></span>lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a> &amp; Database::lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a ref to the global DB lock. </p>
+
+</div>
+</div>
+<a id="a917b05136098f15260a6097ded41beb4" name="a917b05136098f15260a6097ded41beb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a917b05136098f15260a6097ded41beb4">&#9670;&#160;</a></span>ref()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sqlite::database &amp; Database::ref </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a ref to the sqlite DB. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a554d5d7f40317657f67a36f0ed43ea18" name="a554d5d7f40317657f67a36f0ed43ea18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a554d5d7f40317657f67a36f0ed43ea18">&#9670;&#160;</a></span>NonTransaction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct <a class="el" href="structNonTransaction.html">NonTransaction</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a157204bdd68859eaffcd09a886111f2b" name="a157204bdd68859eaffcd09a886111f2b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a157204bdd68859eaffcd09a886111f2b">&#9670;&#160;</a></span>Transaction</h2>
 
@@ -191,6 +287,28 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">friend struct <a class="el" href="structTransaction.html">Transaction</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae52ef601f6374018ed7d36c5da232cad" name="ae52ef601f6374018ed7d36c5da232cad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae52ef601f6374018ed7d36c5da232cad">&#9670;&#160;</a></span>TransactionData</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classTransactionData.html">TransactionData</a></td>
         </tr>
       </table>
   </td>

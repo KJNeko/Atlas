@@ -1,4 +1,4 @@
 var structTransactionInvalid =
 [
-    [ "TransactionInvalid", "structTransactionInvalid.html#a0e97ce4bbf36e0b3f9ac1a8c068f03c4", null ]
+    [ "TransactionInvalid", "structTransactionInvalid.html#a18431d9c23b25be32b89d065a0a8e6ef", null ]
 ];

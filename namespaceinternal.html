@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: internal Namespace Reference</title>
+<title>Atlas Game Manager: internal Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -105,9 +105,125 @@ $(document).ready(function(){initNavTree('namespaceinternal.html',''); initResiz
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">internal Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a337683e9c7c25e1bbc6c59356459fa73"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">MtxType</a> = std::mutex</td></tr>
+<tr class="separator:a337683e9c7c25e1bbc6c59356459fa73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9986a9e137877a9e729fac766d5c47b2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a9986a9e137877a9e729fac766d5c47b2">LockGuardType</a> = std::lock_guard&lt; std::mutex &gt;</td></tr>
+<tr class="separator:a9986a9e137877a9e729fac766d5c47b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a0aa672c01f384b6b178a2a310df74a7d"><td class="memItemLeft" align="right" valign="top">static sqlite::database *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a0aa672c01f384b6b178a2a310df74a7d">db</a> { nullptr }</td></tr>
+<tr class="separator:a0aa672c01f384b6b178a2a310df74a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4660841261a4134fdc50bf8d7481d6a5"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a4660841261a4134fdc50bf8d7481d6a5">db_mtx</a></td></tr>
+<tr class="separator:a4660841261a4134fdc50bf8d7481d6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac254ba7935bf14770e627959152c7be2"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; std::thread::id &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#ac254ba7935bf14770e627959152c7be2">last_locked</a> { std::thread::id( 0 ) }</td></tr>
+<tr class="separator:ac254ba7935bf14770e627959152c7be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9986a9e137877a9e729fac766d5c47b2" name="a9986a9e137877a9e729fac766d5c47b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9986a9e137877a9e729fac766d5c47b2">&#9670;&#160;</a></span>LockGuardType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceinternal.html#a9986a9e137877a9e729fac766d5c47b2">internal::LockGuardType</a> = typedef std::lock_guard&lt; std::mutex &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a337683e9c7c25e1bbc6c59356459fa73" name="a337683e9c7c25e1bbc6c59356459fa73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a337683e9c7c25e1bbc6c59356459fa73">&#9670;&#160;</a></span>MtxType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a> = typedef std::mutex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a0aa672c01f384b6b178a2a310df74a7d" name="a0aa672c01f384b6b178a2a310df74a7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0aa672c01f384b6b178a2a310df74a7d">&#9670;&#160;</a></span>db</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sqlite::database* internal::db { nullptr }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4660841261a4134fdc50bf8d7481d6a5" name="a4660841261a4134fdc50bf8d7481d6a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4660841261a4134fdc50bf8d7481d6a5">&#9670;&#160;</a></span>db_mtx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex internal::db_mtx</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac254ba7935bf14770e627959152c7be2" name="ac254ba7935bf14770e627959152c7be2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac254ba7935bf14770e627959152c7be2">&#9670;&#160;</a></span>last_locked</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; std::thread::id &gt; internal::last_locked { std::thread::id( 0 ) }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

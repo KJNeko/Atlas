@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['id_0',['id',['../structInvalidRecordID.html#acf01c40f2e25a8486ddd4f982cfdd8e3',1,'InvalidRecordID']]]
+  ['blacklist_5fexecs_0',['blacklist_execs',['../engineDetection_8cpp.html#ab628e1c1e0e606138c415915c49a2a55',1,'engineDetection.cpp']]],
+  ['buffer_1',['buffer',['../classImportPreProcessor.html#a13154883f693d2aa2fe6a2cfb7736d8d',1,'ImportPreProcessor']]]
 ];

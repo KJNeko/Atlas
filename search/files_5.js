@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['logging_2ecpp_0',['logging.cpp',['../logging_8cpp.html',1,'']]],
-  ['logging_2ehpp_1',['logging.hpp',['../logging_8hpp.html',1,'']]]
+  ['flyweight_2ehpp_0',['FlyWeight.hpp',['../FlyWeight_8hpp.html',1,'']]],
+  ['foldersize_2ehpp_1',['foldersize.hpp',['../foldersize_8hpp.html',1,'']]]
 ];

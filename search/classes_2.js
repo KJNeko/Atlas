@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html',1,'']]]
+  ['database_0',['Database',['../classDatabase.html',1,'']]],
+  ['detailedrecordview_1',['DetailedRecordView',['../classDetailedRecordView.html',1,'']]]
 ];

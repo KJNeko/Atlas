@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['search_0',['search',['../structRecord.html#ad9f5516d966492b0cef8b78ce0378814',1,'Record']]],
-  ['select_1',['select',['../structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1',1,'GameMetadata::select()'],['../structRecord.html#a8f70ee2a9b2639d7e0464f93581014a9',1,'Record::select()']]],
-  ['setsettings_2',['setSettings',['../config_8hpp.html#ab96dee737e985f98d61752ed9cabcdc9',1,'config.hpp']]],
-  ['settings_20list_3',['Settings list',['../H95Settings.html',1,'']]],
-  ['spdlog_5fflush_4',['spdlog_flush',['../main_8cpp.html#adf56f93cae52ff0ce976afbc9c1242b0',1,'main.cpp']]],
-  ['sqlite_5',['sqlite',['../namespacesqlite.html',1,'']]]
+  ['namespace_5fend_0',['NAMESPACE_END',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99',1,'QueryBuilder.cpp']]],
+  ['namespaces_1',['namespaces',['../QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c',1,'QueryBuilder.cpp']]],
+  ['namespaces_2',['Namespaces',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe',1,'QueryBuilder.cpp']]],
+  ['no_5fmode_3',['NO_MODE',['../RecordView_8hpp.html#a2a9a5701c968ac6cae20f29fb75c0ae0a3e51fb946570e643ba0a3ffd95c70537',1,'RecordView.hpp']]],
+  ['noautocommit_4',['NoAutocommit',['../Database_8hpp.html#ad381b2404043a4c046849f08cf304ed4aa3b57735932d6fe699b4ed339bf97aad',1,'Database.hpp']]],
+  ['nontransaction_5',['NonTransaction',['../structNonTransaction.html',1,'NonTransaction'],['../classDatabase.html#a554d5d7f40317657f67a36f0ed43ea18',1,'Database::NonTransaction()'],['../classTransactionData.html#a554d5d7f40317657f67a36f0ed43ea18',1,'TransactionData::NonTransaction()'],['../structNonTransaction.html#af54f4f27445bc83dc6dc0dd2d30d21be',1,'NonTransaction::NonTransaction()']]],
+  ['not_6',['NOT',['../QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6',1,'QueryBuilder.cpp']]],
+  ['nscripter_7',['NScripter',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a069a66c972704d69e704f2f3a7899c00',1,'engineDetection.hpp']]],
+  ['nvlist_8',['NVList',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ac82c045d33036f34003a8fc7d825eeb3',1,'engineDetection.hpp']]]
 ];

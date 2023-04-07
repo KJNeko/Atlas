@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: GameMetadata Struct Reference</title>
+<title>Atlas Game Manager: GameMetadata Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -107,8 +107,7 @@ $(document).ready(function(){initNavTree('structGameMetadata.html',''); initResi
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="structGameMetadata-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GameMetadata Struct Reference</div></div>
 </div><!--header-->
@@ -121,41 +120,69 @@ $(document).ready(function(){initNavTree('structGameMetadata.html',''); initResi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ab75e05ba804ecdf58dddd2c59c0f2895"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ab75e05ba804ecdf58dddd2c59c0f2895">addPlaytime</a> (const std::uint32_t playtime)</td></tr>
+<tr class="memdesc:ab75e05ba804ecdf58dddd2c59c0f2895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds playtime to this and it's parent record.  <br /></td></tr>
+<tr class="separator:ab75e05ba804ecdf58dddd2c59c0f2895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3789efd281255b4d419d43f20c0f1321"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a3789efd281255b4d419d43f20c0f1321">setLastPlayed</a> (const std::uint64_t last_played)</td></tr>
+<tr class="memdesc:a3789efd281255b4d419d43f20c0f1321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the last played timestamp for this and it's parent record.  <br /></td></tr>
+<tr class="separator:a3789efd281255b4d419d43f20c0f1321"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70e15372cc07aa5eb449a58692975af7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a70e15372cc07aa5eb449a58692975af7">playGame</a> ()</td></tr>
+<tr class="memdesc:a70e15372cc07aa5eb449a58692975af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the game for this record.  <br /></td></tr>
+<tr class="separator:a70e15372cc07aa5eb449a58692975af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a899dcac169e94712d26b60ed3139c631"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a899dcac169e94712d26b60ed3139c631">getVersionName</a> () const</td></tr>
+<tr class="separator:a899dcac169e94712d26b60ed3139c631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7b30b562d67b7ecbbba4bb3d29041d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a8a7b30b562d67b7ecbbba4bb3d29041d">isInPlace</a> () const</td></tr>
+<tr class="memdesc:a8a7b30b562d67b7ecbbba4bb3d29041d"><td class="mdescLeft">&#160;</td><td class="mdescRight">If return true then the game is not located in config::paths::games::get()  <br /></td></tr>
+<tr class="separator:a8a7b30b562d67b7ecbbba4bb3d29041d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e74e7afd5160602b2f1e25290e12efe"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a2e74e7afd5160602b2f1e25290e12efe">getPlaytime</a> () const</td></tr>
+<tr class="separator:a2e74e7afd5160602b2f1e25290e12efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8163f961911cfcd8e415e1a694b3b62"><td class="memItemLeft" align="right" valign="top">std::uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ad8163f961911cfcd8e415e1a694b3b62">getLastPlayed</a> () const</td></tr>
+<tr class="separator:ad8163f961911cfcd8e415e1a694b3b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58287a9198fae18e60e7594b0a7c5be9"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a58287a9198fae18e60e7594b0a7c5be9">getPath</a> () const</td></tr>
+<tr class="separator:a58287a9198fae18e60e7594b0a7c5be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4595dbf0d5944c5ee409596e85d2b924"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a4595dbf0d5944c5ee409596e85d2b924">getRelativeExecPath</a> () const</td></tr>
+<tr class="separator:a4595dbf0d5944c5ee409596e85d2b924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16926d41e88c9650dca3ef0f7c612086"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a16926d41e88c9650dca3ef0f7c612086">getExecPath</a> () const</td></tr>
+<tr class="separator:a16926d41e88c9650dca3ef0f7c612086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62316e65e2cebb3220279e99bc6e0a6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e">GameMetadata</a> ()=delete</td></tr>
 <tr class="separator:a62316e65e2cebb3220279e99bc6e0a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2dfd2d398b598c415397119db5abfbe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe">GameMetadata</a> (const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)</td></tr>
-<tr class="separator:ad2dfd2d398b598c415397119db5abfbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab302459c96a07a9220ced9e37ad9abcb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ab302459c96a07a9220ced9e37ad9abcb">operator==</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other) const =default</td></tr>
-<tr class="separator:ab302459c96a07a9220ced9e37ad9abcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea681d53bfba7051690dfaebc0625d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a7ea681d53bfba7051690dfaebc0625d4">GameMetadata</a> (<a class="el" href="structRecordData.html">RecordData</a> &amp;parent, const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in, const bool in_place, const std::uint64_t last_played, const std::uint32_t total_playtime, const std::uint64_t folder_size)</td></tr>
+<tr class="separator:a7ea681d53bfba7051690dfaebc0625d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57bc27b39976ceb2f59e0d0f75f45daa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa">operator==</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other) const</td></tr>
+<tr class="separator:a57bc27b39976ceb2f59e0d0f75f45daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad808871192c8a6351e33736e6faf0371"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ad808871192c8a6351e33736e6faf0371">GameMetadata</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other)</td></tr>
+<tr class="separator:ad808871192c8a6351e33736e6faf0371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75267d64ba7301380c8a3623cf442dd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a75267d64ba7301380c8a3623cf442dd5">GameMetadata</a> (<a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&amp;other)</td></tr>
+<tr class="separator:a75267d64ba7301380c8a3623cf442dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5059f012f1e167ff5f2c84d7f664508b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a5059f012f1e167ff5f2c84d7f664508b">operator=</a> (const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;other)</td></tr>
+<tr class="memdesc:a5059f012f1e167ff5f2c84d7f664508b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Required to make std::vector happy.  <br /></td></tr>
+<tr class="separator:a5059f012f1e167ff5f2c84d7f664508b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a51802300df7cdc0f2bd73c1f7cbc5eb1">select</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a populated <a class="el" href="structGameMetadata.html" title="Representation of a game version.">GameMetadata</a> for the given id from the database.  <br /></td></tr>
-<tr class="separator:a51802300df7cdc0f2bd73c1f7cbc5eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85d2ed0262865f298f18ae20abd3bfd8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structGameMetadata.html">GameMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a85d2ed0262865f298f18ae20abd3bfd8">insert</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a85d2ed0262865f298f18ae20abd3bfd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new set of metadata.  <br /></td></tr>
-<tr class="separator:a85d2ed0262865f298f18ae20abd3bfd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ee2bf7970c2a1242639492b3a13a524"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a5ee2bf7970c2a1242639492b3a13a524">erase</a> (const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a> id, const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;metadata, <a class="el" href="structTransaction.html">Transaction</a> &amp;transaction)</td></tr>
-<tr class="memdesc:a5ee2bf7970c2a1242639492b3a13a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases metadata from the given id.  <br /></td></tr>
-<tr class="separator:a5ee2bf7970c2a1242639492b3a13a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a9ca26d0ecb32d4390068c6542f0efd97"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97">m_version</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3d45160adef7898311148766f0a24d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structRecordData.html">RecordData</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a3d45160adef7898311148766f0a24d33">m_parent</a></td></tr>
+<tr class="separator:a3d45160adef7898311148766f0a24d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca26d0ecb32d4390068c6542f0efd97"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97">m_version</a> {}</td></tr>
 <tr class="separator:a9ca26d0ecb32d4390068c6542f0efd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91c33dc2dda86c4b171e1f104227bc88"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a91c33dc2dda86c4b171e1f104227bc88">m_game_path</a> {}</td></tr>
-<tr class="memdesc:a91c33dc2dda86c4b171e1f104227bc88"><td class="mdescLeft">&#160;</td><td class="mdescRight">canonical ath to the game folder  <br /></td></tr>
 <tr class="separator:a91c33dc2dda86c4b171e1f104227bc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace552832959f9b2b2ddd2e1482072120"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120">m_exec_path</a> {}</td></tr>
-<tr class="memdesc:ace552832959f9b2b2ddd2e1482072120"><td class="mdescLeft">&#160;</td><td class="mdescRight">canonical path to the executable  <br /></td></tr>
 <tr class="separator:ace552832959f9b2b2ddd2e1482072120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f350dbac3d533807a07c63537768ec1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a5f350dbac3d533807a07c63537768ec1">m_in_place</a> { false }</td></tr>
+<tr class="memdesc:a5f350dbac3d533807a07c63537768ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that we don't control where the game was placed.  <br /></td></tr>
+<tr class="separator:a5f350dbac3d533807a07c63537768ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44d3e870142ab47196005d9357a63af"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#af44d3e870142ab47196005d9357a63af">m_total_playtime</a> { 0 }</td></tr>
+<tr class="separator:af44d3e870142ab47196005d9357a63af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a88044df3d122d2e89acd7250ab3783"><td class="memItemLeft" align="right" valign="top">std::uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a8a88044df3d122d2e89acd7250ab3783">m_last_played</a> { 0 }</td></tr>
+<tr class="separator:a8a88044df3d122d2e89acd7250ab3783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a306039386c64e01a6fe4b0586562210a"><td class="memItemLeft" align="right" valign="top">std::uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGameMetadata.html#a306039386c64e01a6fe4b0586562210a">m_folder_size</a> { 0 }</td></tr>
+<tr class="separator:a306039386c64e01a6fe4b0586562210a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Representation of a game version. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a62316e65e2cebb3220279e99bc6e0a6e" name="a62316e65e2cebb3220279e99bc6e0a6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62316e65e2cebb3220279e99bc6e0a6e">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a62316e65e2cebb3220279e99bc6e0a6e">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,8 +206,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad2dfd2d398b598c415397119db5abfbe" name="ad2dfd2d398b598c415397119db5abfbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2dfd2d398b598c415397119db5abfbe">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[2/2]</span></h2>
+<a id="a7ea681d53bfba7051690dfaebc0625d4" name="a7ea681d53bfba7051690dfaebc0625d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ea681d53bfba7051690dfaebc0625d4">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,6 +218,12 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">GameMetadata::GameMetadata </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="structRecordData.html">RecordData</a> &amp;&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>version_in</em>, </td>
         </tr>
@@ -204,7 +237,31 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>exec_path_in</em>&#160;</td>
+          <td class="paramname"><em>exec_path_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>in_place</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::uint64_t&#160;</td>
+          <td class="paramname"><em>last_played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::uint32_t&#160;</td>
+          <td class="paramname"><em>total_playtime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::uint64_t&#160;</td>
+          <td class="paramname"><em>folder_size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -221,9 +278,202 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad808871192c8a6351e33736e6faf0371" name="ad808871192c8a6351e33736e6faf0371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad808871192c8a6351e33736e6faf0371">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameMetadata::GameMetadata </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a75267d64ba7301380c8a3623cf442dd5" name="a75267d64ba7301380c8a3623cf442dd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75267d64ba7301380c8a3623cf442dd5">&#9670;&#160;</a></span>GameMetadata() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameMetadata::GameMetadata </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5ee2bf7970c2a1242639492b3a13a524" name="a5ee2bf7970c2a1242639492b3a13a524"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ee2bf7970c2a1242639492b3a13a524">&#9670;&#160;</a></span>erase()</h2>
+<a id="ab75e05ba804ecdf58dddd2c59c0f2895" name="ab75e05ba804ecdf58dddd2c59c0f2895"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab75e05ba804ecdf58dddd2c59c0f2895">&#9670;&#160;</a></span>addPlaytime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameMetadata::addPlaytime </td>
+          <td>(</td>
+          <td class="paramtype">const std::uint32_t&#160;</td>
+          <td class="paramname"><em>playtime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds playtime to this and it's parent record. </p>
+
+</div>
+</div>
+<a id="a16926d41e88c9650dca3ef0f7c612086" name="a16926d41e88c9650dca3ef0f7c612086"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16926d41e88c9650dca3ef0f7c612086">&#9670;&#160;</a></span>getExecPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path GameMetadata::getExecPath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad8163f961911cfcd8e415e1a694b3b62" name="ad8163f961911cfcd8e415e1a694b3b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8163f961911cfcd8e415e1a694b3b62">&#9670;&#160;</a></span>getLastPlayed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint64_t GameMetadata::getLastPlayed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58287a9198fae18e60e7594b0a7c5be9" name="a58287a9198fae18e60e7594b0a7c5be9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58287a9198fae18e60e7594b0a7c5be9">&#9670;&#160;</a></span>getPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path GameMetadata::getPath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e74e7afd5160602b2f1e25290e12efe" name="a2e74e7afd5160602b2f1e25290e12efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e74e7afd5160602b2f1e25290e12efe">&#9670;&#160;</a></span>getPlaytime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t GameMetadata::getPlaytime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4595dbf0d5944c5ee409596e85d2b924" name="a4595dbf0d5944c5ee409596e85d2b924"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4595dbf0d5944c5ee409596e85d2b924">&#9670;&#160;</a></span>getRelativeExecPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path GameMetadata::getRelativeExecPath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a899dcac169e94712d26b60ed3139c631" name="a899dcac169e94712d26b60ed3139c631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a899dcac169e94712d26b60ed3139c631">&#9670;&#160;</a></span>getVersionName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString GameMetadata::getVersionName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a7b30b562d67b7ecbbba4bb3d29041d" name="a8a7b30b562d67b7ecbbba4bb3d29041d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7b30b562d67b7ecbbba4bb3d29041d">&#9670;&#160;</a></span>isInPlace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameMetadata::isInPlace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If return true then the game is not located in config::paths::games::get() </p>
+
+</div>
+</div>
+<a id="a5059f012f1e167ff5f2c84d7f664508b" name="a5059f012f1e167ff5f2c84d7f664508b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5059f012f1e167ff5f2c84d7f664508b">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,109 +482,26 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GameMetadata::erase </td>
+          <td class="memname"><a class="el" href="structGameMetadata.html">GameMetadata</a> &amp; GameMetadata::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
-          <td class="paramname"><em>metadata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>other</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Erases metadata from the given id. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td></td></tr>
-    <tr><td class="paramname">metadata</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Required to make std::vector happy. </p>
 
 </div>
 </div>
-<a id="a85d2ed0262865f298f18ae20abd3bfd8" name="a85d2ed0262865f298f18ae20abd3bfd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85d2ed0262865f298f18ae20abd3bfd8">&#9670;&#160;</a></span>insert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structGameMetadata.html">GameMetadata</a> GameMetadata::insert </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structGameMetadata.html">GameMetadata</a> &amp;&#160;</td>
-          <td class="paramname"><em>metadata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Inserts a new set of metadata. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="structMetadataAlreadyExists.html">MetadataAlreadyExists</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>id of the record. </td></tr>
-    <tr><td class="paramname">metadata</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="ab302459c96a07a9220ced9e37ad9abcb" name="ab302459c96a07a9220ced9e37ad9abcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab302459c96a07a9220ced9e37ad9abcb">&#9670;&#160;</a></span>operator==()</h2>
+<a id="a57bc27b39976ceb2f59e0d0f75f45daa" name="a57bc27b39976ceb2f59e0d0f75f45daa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57bc27b39976ceb2f59e0d0f75f45daa">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -352,56 +519,49 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a51802300df7cdc0f2bd73c1f7cbc5eb1" name="a51802300df7cdc0f2bd73c1f7cbc5eb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51802300df7cdc0f2bd73c1f7cbc5eb1">&#9670;&#160;</a></span>select()</h2>
+<a id="a70e15372cc07aa5eb449a58692975af7" name="a70e15372cc07aa5eb449a58692975af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70e15372cc07aa5eb449a58692975af7">&#9670;&#160;</a></span>playGame()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="structGameMetadata.html">GameMetadata</a> &gt; GameMetadata::select </td>
+          <td class="memname">void GameMetadata::playGame </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="Types_8hpp.html#a7781c4e1eb7252d6c4f422f1d180c49e">RecordID</a>&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structTransaction.html">Transaction</a> &amp;&#160;</td>
-          <td class="paramname"><em>transaction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Returns a populated <a class="el" href="structGameMetadata.html" title="Representation of a game version.">GameMetadata</a> for the given id from the database. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td></td></tr>
-    <tr><td class="paramname">transaction</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Executes the game for this record. </p>
+
+</div>
+</div>
+<a id="a3789efd281255b4d419d43f20c0f1321" name="a3789efd281255b4d419d43f20c0f1321"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3789efd281255b4d419d43f20c0f1321">&#9670;&#160;</a></span>setLastPlayed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameMetadata::setLastPlayed </td>
+          <td>(</td>
+          <td class="paramtype">const std::uint64_t&#160;</td>
+          <td class="paramname"><em>last_played</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the last played timestamp for this and it's parent record. </p>
 
 </div>
 </div>
@@ -411,14 +571,42 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::filesystem::path GameMetadata::m_exec_path {}</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>canonical path to the executable </p>
+</div>
+</div>
+<a id="a306039386c64e01a6fe4b0586562210a" name="a306039386c64e01a6fe4b0586562210a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a306039386c64e01a6fe4b0586562210a">&#9670;&#160;</a></span>m_folder_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint64_t GameMetadata::m_folder_size { 0 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -427,14 +615,110 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::filesystem::path GameMetadata::m_game_path {}</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>canonical ath to the game folder </p>
+</div>
+</div>
+<a id="a5f350dbac3d533807a07c63537768ec1" name="a5f350dbac3d533807a07c63537768ec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f350dbac3d533807a07c63537768ec1">&#9670;&#160;</a></span>m_in_place</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameMetadata::m_in_place { false }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates that we don't control where the game was placed. </p>
+
+</div>
+</div>
+<a id="a8a88044df3d122d2e89acd7250ab3783" name="a8a88044df3d122d2e89acd7250ab3783"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a88044df3d122d2e89acd7250ab3783">&#9670;&#160;</a></span>m_last_played</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint64_t GameMetadata::m_last_played { 0 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3d45160adef7898311148766f0a24d33" name="a3d45160adef7898311148766f0a24d33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d45160adef7898311148766f0a24d33">&#9670;&#160;</a></span>m_parent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structRecordData.html">RecordData</a>&amp; GameMetadata::m_parent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af44d3e870142ab47196005d9357a63af" name="af44d3e870142ab47196005d9357a63af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af44d3e870142ab47196005d9357a63af">&#9670;&#160;</a></span>m_total_playtime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t GameMetadata::m_total_playtime { 0 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -443,11 +727,19 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">QString GameMetadata::m_version</td>
+          <td class="memname">QString GameMetadata::m_version {}</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

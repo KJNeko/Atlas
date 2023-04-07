@@ -1,11 +1,22 @@
 var searchData=
 [
-  ['gamemetadata_0',['GameMetadata',['../structGameMetadata.html',1,'GameMetadata'],['../structGameMetadata.html#a62316e65e2cebb3220279e99bc6e0a6e',1,'GameMetadata::GameMetadata()=delete'],['../structGameMetadata.html#ad2dfd2d398b598c415397119db5abfbe',1,'GameMetadata::GameMetadata(const QString &amp;version_in, const std::filesystem::path &amp;game_path_in, const std::filesystem::path &amp;exec_path_in)']]],
-  ['gamemetadata_2ecpp_1',['GameMetadata.cpp',['../GameMetadata_8cpp.html',1,'']]],
-  ['gamemetadata_2ehpp_2',['GameMetadata.hpp',['../GameMetadata_8hpp.html',1,'']]],
-  ['gamepath_3',['gamePath',['../config_8cpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp'],['../config_8hpp.html#a1a0f1f79428b9d5612da52d47bdad840',1,'gamePath():&#160;config.cpp']]],
-  ['getbanner_4',['getBanner',['../structRecord.html#a40d83547e0b2d07d854368fc7996acbc',1,'Record::getBanner() const'],['../structRecord.html#aba82f2ee194cfbf05889c7b8d8c92238',1,'Record::getBanner(const int banner_width, const int banner_height) const']]],
-  ['getimagepath_5',['getImagePath',['../namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031',1,'imageManager']]],
-  ['getsettings_6',['getSettings',['../config_8hpp.html#a50dc6d389eb806c8197e211128d06782',1,'getSettings(const QString setting_name):&#160;config.hpp'],['../config_8hpp.html#a7d7ab716d6ac8c84591d74209875ae4e',1,'getSettings(const QString setting_name, const T default_value):&#160;config.hpp']]],
-  ['getsettingsobject_7',['getSettingsObject',['../config_8hpp.html#a37af631e4a1b0741f0c9bf9cc22a693d',1,'config.hpp']]]
+  ['filesize_0',['FILESIZE',['../QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a',1,'QueryBuilder.cpp']]],
+  ['findengine_1',['findEngine',['../engineDetection_8cpp.html#af3f39ba094b66349ae429764da1b678c',1,'engineDetection.cpp']]],
+  ['finished_2',['finished',['../structNonTransaction.html#a42c1156600584673684a0b3d1a27cf1b',1,'NonTransaction']]],
+  ['finisheddirectory_3',['finishedDirectory',['../classImportPreProcessor.html#adc35cae90f3fee8f574e9efe7f16f4a0',1,'ImportPreProcessor']]],
+  ['finishedimporting_4',['finishedImporting',['../classBatchImportDialog.html#a3d99062e7d9f6c0c0dfa30b66ef78977',1,'BatchImportDialog']]],
+  ['finishedprocessing_5',['finishedProcessing',['../classImportPreProcessor.html#aa2612ba3c7222943c67efee031858a72',1,'ImportPreProcessor::finishedProcessing()'],['../classBatchImportDialog.html#aac46f0e065c1760fd29677bbe32ccb34',1,'BatchImportDialog::finishedProcessing()']]],
+  ['flags_6',['flags',['../classBatchImportModel.html#a2fc0de43aa0d45bdfa24032d48c63f51',1,'BatchImportModel']]],
+  ['flash_7',['Flash',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ab5fcae55946da2e578e45bef020fa9e2',1,'engineDetection.hpp']]],
+  ['flyweight_8',['FlyWeight',['../classFlyWeight.html',1,'FlyWeight&lt; T, T_Key &gt;'],['../classFlyWeight.html#a350da49a1a01ea4e8ff01793a80a0363',1,'FlyWeight::FlyWeight(FlyWeight &amp;&amp;other)=default'],['../classFlyWeight.html#a3215caaa24766d86ed233d7d4bec3ff6',1,'FlyWeight::FlyWeight()'],['../classFlyWeight.html#a4d6fb2c7a3eec9524faa36fa28210e5f',1,'FlyWeight::FlyWeight(T_Args &amp;&amp;... args)'],['../classFlyWeight.html#aa4ae9d30dd6c4d0a6ed8bb62d9b34b36',1,'FlyWeight::FlyWeight(const FlyWeight &amp;other)=default']]],
+  ['flyweight_2ehpp_9',['FlyWeight.hpp',['../FlyWeight_8hpp.html',1,'']]],
+  ['flyweight_3c_20recorddata_2c_20recordid_20_3e_10',['FlyWeight&lt; RecordData, RecordID &gt;',['../classFlyWeight.html',1,'']]],
+  ['flyweightsize_11',['flyweightSize',['../classFlyWeight.html#a915708b171ec8c51ea31b9e491f368ab',1,'FlyWeight']]],
+  ['folder_5fpath_12',['FOLDER_PATH',['../BatchImportModel_8hpp.html#a52a4da3f571341b520f98bd8825d681ba74046458761955e668a3815c13201b2b',1,'BatchImportModel.hpp']]],
+  ['foldersize_13',['folderSize',['../foldersize_8hpp.html#acebd22f2ebc152ef581923190f70c3b3',1,'foldersize.hpp']]],
+  ['foldersize_2ehpp_14',['foldersize.hpp',['../foldersize_8hpp.html',1,'']]],
+  ['format_15',['format',['../structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300',1,'fmt::formatter&lt; QString &gt;::format()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a00f2d6931a5285fb757d7aa0523bd498',1,'fmt::formatter&lt; RecordID &gt;::format()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a8e7ce96ba8a0f562555952da1b00c9c6',1,'fmt::formatter&lt; std::filesystem::path &gt;::format()']]],
+  ['formatter_3c_20qstring_20_3e_16',['formatter&lt; QString &gt;',['../structfmt_1_1formatter_3_01QString_01_4.html',1,'fmt']]],
+  ['formatter_3c_20recordid_20_3e_17',['formatter&lt; RecordID &gt;',['../structfmt_1_1formatter_3_01RecordID_01_4.html',1,'fmt']]],
+  ['formatter_3c_20std_3a_3afilesystem_3a_3apath_20_3e_18',['formatter&lt; std::filesystem::path &gt;',['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html',1,'fmt']]]
 ];

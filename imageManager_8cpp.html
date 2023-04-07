@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: src/h95/imageManager.cpp File Reference</title>
+<title>Atlas Game Manager: src/h95/imageManager.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -111,40 +111,15 @@ $(document).ready(function(){initNavTree('imageManager_8cpp.html',''); initResiz
   <div class="headertitle"><div class="title">imageManager.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;QPixmap&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="imageManager_8hpp_source.html">imageManager.hpp</a>&quot;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;QCryptographicHash&gt;</code><br />
 <code>#include &lt;QFile&gt;</code><br />
-<code>#include &quot;<a class="el" href="imageManager_8hpp_source.html">imageManager.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Database_8hpp_source.html">h95/database/Database.hpp</a>&quot;</code><br />
+<code>#include &lt;QPixmap&gt;</code><br />
+<code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
 <code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for imageManager.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="imageManager_8cpp__incl.png" border="0" usemap="#asrc_2h95_2imageManager_8cpp" alt=""/></div>
-<map name="asrc_2h95_2imageManager_8cpp" id="asrc_2h95_2imageManager_8cpp">
-<area shape="rect" title=" " alt="" coords="300,5,479,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,72,104"/>
-<area shape="rect" title=" " alt="" coords="96,79,171,104"/>
-<area shape="rect" title=" " alt="" coords="195,79,338,104"/>
-<area shape="rect" title=" " alt="" coords="363,79,416,104"/>
-<area shape="rect" href="imageManager_8hpp.html" title=" " alt="" coords="440,79,571,104"/>
-<area shape="rect" href="Database_8hpp.html" title=" " alt="" coords="595,79,778,104"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="925,79,1005,104"/>
-<area shape="rect" title=" " alt="" coords="716,225,796,251"/>
-<area shape="rect" title=" " alt="" coords="481,152,538,177"/>
-<area shape="rect" title=" " alt="" coords="613,152,755,177"/>
-<area shape="rect" title=" " alt="" coords="779,152,850,177"/>
-<area shape="rect" title=" " alt="" coords="925,152,1005,177"/>
-<area shape="rect" title=" " alt="" coords="1030,152,1103,177"/>
-<area shape="rect" href="logging_8hpp.html" title=" " alt="" coords="1128,152,1240,177"/>
-<area shape="rect" title=" " alt="" coords="947,225,1059,251"/>
-<area shape="rect" title=" " alt="" coords="1083,225,1178,251"/>
-<area shape="rect" title=" " alt="" coords="1203,225,1269,251"/>
-<area shape="rect" href="Types_8hpp.html" title=" " alt="" coords="1294,225,1375,251"/>
-<area shape="rect" title=" " alt="" coords="1304,299,1365,324"/>
-</map>
-</div>
+<code>#include &quot;<a class="el" href="Database_8hpp_source.html">h95/database/Database.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="system_8hpp_source.html">system.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -153,14 +128,12 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa3a51436b39123f7cd4d42731e15c031"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#aa3a51436b39123f7cd4d42731e15c031">imageManager::getImagePath</a> ()</td></tr>
-<tr class="memdesc:aa3a51436b39123f7cd4d42731e15c031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the canonical preview path (Creates if it doesn't exist)  <br /></td></tr>
-<tr class="separator:aa3a51436b39123f7cd4d42731e15c031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ef0f334a8cd620bb535fb2e4b335fe8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8">imageManager::cleanOrphans</a> ()</td></tr>
+<tr class="memdesc:a8ef0f334a8cd620bb535fb2e4b335fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all images not found attached to any record.  <br /></td></tr>
 <tr class="separator:a8ef0f334a8cd620bb535fb2e4b335fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6999d22aaaef0807b26ebd75f41d00e5"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#a6999d22aaaef0807b26ebd75f41d00e5">imageManager::importImage</a> (const std::filesystem::path &amp;path, bool delete_after=false)</td></tr>
-<tr class="memdesc:a6999d22aaaef0807b26ebd75f41d00e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the image located at <code>path</code> in the data folder.  <br /></td></tr>
-<tr class="separator:a6999d22aaaef0807b26ebd75f41d00e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe41aec60064ed370efdfe40be3c6ac5"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceimageManager.html#abe41aec60064ed370efdfe40be3c6ac5">imageManager::importImage</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:abe41aec60064ed370efdfe40be3c6ac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the image located at <code>path</code> in the data folder.  <br /></td></tr>
+<tr class="separator:abe41aec60064ed370efdfe40be3c6ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

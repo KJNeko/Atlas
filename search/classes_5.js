@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['record_0',['Record',['../structRecord.html',1,'']]],
-  ['recordalreadyexists_1',['RecordAlreadyExists',['../structRecordAlreadyExists.html',1,'']]],
-  ['recordexception_2',['RecordException',['../structRecordException.html',1,'']]]
+  ['importpreprocessor_0',['ImportPreProcessor',['../classImportPreProcessor.html',1,'']]],
+  ['importprocessor_1',['ImportProcessor',['../classImportProcessor.html',1,'']]],
+  ['invalidrecordid_2',['InvalidRecordID',['../structInvalidRecordID.html',1,'']]]
 ];

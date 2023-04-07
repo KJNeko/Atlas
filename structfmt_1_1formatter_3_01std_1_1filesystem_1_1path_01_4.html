@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hydrus95: fmt::formatter&lt; std::filesystem::path &gt; Struct Reference</title>
+<title>Atlas Game Manager: fmt::formatter&lt; std::filesystem::path &gt; Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="TitorV2.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Hydrus95
+   <div id="projectname">Atlas Game Manager
    </div>
    <div id="projectbrief">A game manager for f95 and dlsite written in c++</div>
   </td>
@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('structfmt_1_1formatter_3_01std_1_1file
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">fmt::formatter&lt; std::filesystem::path &gt; Struct Reference</div></div>
 </div><!--header-->
@@ -120,6 +121,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7efbb7163bc9d16c87c13f039e9f3c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e7ce96ba8a0f562555952da1b00c9c6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a8e7ce96ba8a0f562555952da1b00c9c6">format</a> (const std::filesystem::path &amp;path, format_context &amp;ctx) const -&gt; decltype(ctx.out())</td></tr>
 <tr class="separator:a8e7ce96ba8a0f562555952da1b00c9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a390aa5ddc4ba7bd40f183723aad561fe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a390aa5ddc4ba7bd40f183723aad561fe">print_canonical</a> { false }</td></tr>
+<tr class="separator:a390aa5ddc4ba7bd40f183723aad561fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af324f4bca94317a78cea15e0342e7a33"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#af324f4bca94317a78cea15e0342e7a33">print_exists</a> { false }</td></tr>
+<tr class="separator:af324f4bca94317a78cea15e0342e7a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8e7ce96ba8a0f562555952da1b00c9c6" name="a8e7ce96ba8a0f562555952da1b00c9c6"></a>
@@ -127,6 +135,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">auto fmt::formatter&lt; std::filesystem::path &gt;::format </td>
@@ -143,9 +154,15 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const -&gt; decltype( ctx.out() )</td>
+          <td></td><td> const -&gt; decltype( ctx.out() )
+	</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -164,7 +181,8 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">format_parse_context &amp;&#160;</td>
           <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td> -&gt; decltype( ctx.begin() ) </td>
+          <td> -&gt; decltype( ctx.begin() )
+	</td>
         </tr>
       </table>
   </td>
@@ -176,9 +194,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a390aa5ddc4ba7bd40f183723aad561fe" name="a390aa5ddc4ba7bd40f183723aad561fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a390aa5ddc4ba7bd40f183723aad561fe">&#9670;&#160;</a></span>print_canonical</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool fmt::formatter&lt; std::filesystem::path &gt;::print_canonical { false }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af324f4bca94317a78cea15e0342e7a33" name="af324f4bca94317a78cea15e0342e7a33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af324f4bca94317a78cea15e0342e7a33">&#9670;&#160;</a></span>print_exists</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool fmt::formatter&lt; std::filesystem::path &gt;::print_exists { false }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/h95/<a class="el" href="logging_8hpp_source.html">logging.hpp</a></li>
-<li>src/h95/<a class="el" href="logging_8cpp.html">logging.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
