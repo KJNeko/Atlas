@@ -28,6 +28,8 @@
 
 #pragma GCC diagnostic pop
 
+#include "h95/logging.hpp"
+
 namespace internal
 {
 #ifdef TRACY_ENABLE
@@ -65,7 +67,9 @@ class Database
 
 struct TransactionInvalid : public std::runtime_error
 {
-	TransactionInvalid() : std::runtime_error( "Transaction accessed while invalid" ) {}
+	TransactionInvalid( std::string m_sql_string ) :
+	  std::runtime_error( fmt::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
+	{}
 };
 
 //! Internal class used for Transaction and NonTransaction's shared data
@@ -107,6 +111,7 @@ struct Transaction
 	Transaction* m_parent { nullptr };
 	std::shared_ptr< TransactionData > data;
 	bool m_autocommit { false };
+	std::string m_previous_statement {};
 
 	//! Releases the pointer to the shared data section for all Transactions up the chain.
 	inline void releaseData()
@@ -155,6 +160,7 @@ struct NonTransaction
 
 	bool finished { false };
 	std::unique_ptr< internal::LockGuardType > guard;
+	std::string m_previous_statement {};
 
   public:
 

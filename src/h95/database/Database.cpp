@@ -79,7 +79,7 @@ try
 }
 catch ( sqlite::sqlite_exception& e )
 {
-	spdlog::error( "{}", e.get_sql() );
+	spdlog::error( "initalize: Database has failed to initalize: {}", e.get_sql() );
 	std::rethrow_exception( std::current_exception() );
 }
 
@@ -119,9 +119,9 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
-		spdlog::error( "Database was not ready!" );
+		spdlog::error( "Transaction: Database was not ready!" );
 		data.reset();
-		throw TransactionInvalid();
+		throw TransactionInvalid(m_previous_statement);
 	}
 
 	*this << "BEGIN TRANSACTION";
@@ -146,8 +146,11 @@ Transaction::~Transaction()
 void Transaction::commit()
 {
 	ZoneScoped;
-	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction? Check if this is intended" );
-	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
+	if ( !data->ran_once )
+	{
+		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
+	}
+	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid( m_previous_statement );
 	*this << "COMMIT TRANSACTION";
 
 	data->invalid = true;
@@ -157,9 +160,12 @@ void Transaction::commit()
 void Transaction::abort()
 {
 	ZoneScoped;
-	spdlog::error( "A transaction was aborted!" );
-	if ( !data->ran_once ) spdlog::warn( "Nothing was done in this Transaction? Check if this is intended" );
-	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid();
+	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
+	if ( !data->ran_once )
+	{
+		spdlog::warn( "abort(): Nothing was done in this Transaction? Check if this is intended" );
+	}
+	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid( m_previous_statement );
 	*this << "ROLLBACK TRANSACTION";
 
 	data->invalid = true;
@@ -170,8 +176,9 @@ sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
 	ZoneScoped;
 	data->ran_once = true;
-	spdlog::debug( "Executing {}", sql );
-	if ( data.use_count() == 0 ) throw TransactionInvalid();
+	spdlog::debug( "Executing \"{}\"", sql );
+	if ( data.use_count() == 0 ) throw TransactionInvalid( sql );
+	m_previous_statement = sql;
 	return Database::ref() << sql;
 }
 
@@ -187,7 +194,7 @@ NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database:
 	if ( internal::db == nullptr )
 	{
 		guard.reset();
-		throw TransactionInvalid();
+		throw TransactionInvalid( m_previous_statement );
 	}
 }
 
@@ -200,7 +207,7 @@ NonTransaction::~NonTransaction()
 void NonTransaction::commit()
 {
 	ZoneScoped;
-	if ( finished ) throw TransactionInvalid();
+	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
 }
@@ -208,7 +215,7 @@ void NonTransaction::commit()
 void NonTransaction::abort()
 {
 	ZoneScoped;
-	if ( finished ) throw TransactionInvalid();
+	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
 	spdlog::error( "Transaction aborted!" );
@@ -217,7 +224,8 @@ void NonTransaction::abort()
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
 	ZoneScoped;
+	m_previous_statement = sql;
 	spdlog::debug( "Executing {} without transaction", sql );
-	if ( finished ) throw TransactionInvalid();
+	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	return Database::ref() << sql;
 }
