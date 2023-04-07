@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>assets/addgame.svg</file>
+        <file>assets/search.svg</file>
+        <file>assets/sizegrip.svg</file>
+        <file>assets/dropdownicon.svg</file>
+        <file>assets/treeview_downarrow_N.svg</file>
+        <file>assets/treeview_downarrow_S.svg</file>
+        <file>assets/treeview_rightarrow_N.svg</file>
+        <file>assets/treeview_rightarrow_S.svg</file>
+    </qresource>
+</RCC>

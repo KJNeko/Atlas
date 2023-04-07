@@ -3,8 +3,16 @@
 
 /.idea/
 
+/venv/
+
 /build/
 /cmake-build-debug/
 /cmake-build-relwithdebinfo/
 /cmake-build-release/
 /cmake-build-debug-mingw/
+/.vs
+/out/build/x64-Debug
+/CMakeFiles
+/CMakeCache.txt
+*.user
+.vscode

@@ -2,14 +2,16 @@
 // Created by kj16609 on 1/15/23.
 //
 
+#include "Record.hpp"
+
+#include <iostream>
+
 #include <QPixmapCache>
 
 #include <tracy/Tracy.hpp>
 
-#include <h95/database/Database.hpp>
-#include <h95/config.hpp>
-
-#include <h95/database/Record.hpp>
+#include "h95/config.hpp"
+#include "h95/database/Database.hpp"
 #include "h95/imageManager.hpp"
 
 enum PreviewType
@@ -19,354 +21,439 @@ enum PreviewType
 	PREVIEW_PREVIEW
 };
 
-Record Record::create(
-	const QString& title,
-	const QString& creator,
-	const QString& engine,
-	const std::vector< GameMetadata >& metadata,
-	const std::filesystem::path& banner,
-	const std::vector< std::filesystem::path >& previews,
-	Transaction& transaction )
+RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
 	ZoneScoped;
-	RecordID id { 0 };
+	bool found { false };
 
-	spdlog::debug(
-		"Adding record with following values: title={}, creator={}, engine={}, banner={}, {} previews",
-		title.toStdString(),
-		creator.toStdString(),
-		engine.toStdString(),
-		banner.string(),
-		previews.size() );
-
+	transaction << "SELECT title, creator, engine, last_played_r, total_playtime FROM records WHERE record_id = ?" << id
+		>> [ this, &found ](
+			   std::string title_in,
+			   std::string creator_in,
+			   std::string engine_in,
+			   uint64_t last_played_in,
+			   uint32_t total_playtime_in )
 	{
-		ZoneScopedN( "Query Check" );
-		spdlog::debug( "Checking if game already exists in record." );
+		found = true;
 
-		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
-					<< title.toStdString() << creator.toStdString() << engine.toStdString()
-			>> [&]( const RecordID record_id )
+		m_title = QString::fromStdString( std::move( title_in ) );
+		m_creator = QString::fromStdString( std::move( creator_in ) );
+		m_engine = QString::fromStdString( std::move( engine_in ) );
+		m_last_played = last_played_in;
+		m_total_playtime = total_playtime_in;
+	};
+
+	if ( !found ) throw InvalidRecordID( id );
+
+	transaction
+			<< "SELECT version, game_path, exec_path, in_place, last_played, version_playtime, folder_size FROM game_metadata WHERE record_id = ?"
+			<< id
+		>> [ this, id ](
+			   std::string version,
+			   std::string game_path,
+			   std::string exec_path,
+			   bool in_place,
+			   uint64_t last_played,
+			   uint32_t version_playtime,
+			   uint64_t folder_size )
+	{
+		m_versions.emplace_back(
+			*this,
+			QString::fromStdString( std::move( version ) ),
+			std::move( game_path ),
+			std::move( exec_path ),
+			in_place,
+			last_played,
+			version_playtime,
+			folder_size );
+	};
+
+	const std::filesystem::path image_path { config::paths::images::getPath() };
+
+	transaction << "SELECT type, path FROM images WHERE record_id = ? " << id >>
+		[ this, &image_path ]( const uint16_t type, std::string path )
+	{
+		switch ( static_cast< PreviewType >( type ) )
 		{
-			spdlog::error( "Found record id {}", id );
-			id = record_id;
-		};
+			case PREVIEW_PREVIEW:
+				{
+					m_previews.emplace_back( image_path / path );
+					break;
+				}
+			case PREVIEW_BANNER:
+				{
+					m_banner = image_path / path;
+					break;
+				}
+			case PREVIEW_UNKNOWN:
+				[[fallthrough]];
+			default:
+				break;
+		}
+	};
+}
 
-		if ( id != 0 )
+RecordID RecordData::getID() const
+{
+	return m_id;
+}
+
+const QString& RecordData::getTitle() const
+{
+	return m_title;
+}
+
+const QString& RecordData::getCreator() const
+{
+	return m_creator;
+}
+
+const QString& RecordData::getEngine() const
+{
+	return m_engine;
+}
+
+uint64_t RecordData::getLastPlayed() const
+{
+	return m_last_played;
+}
+
+uint32_t RecordData::getTotalPlaytime() const
+{
+	return m_total_playtime;
+}
+
+GameMetadata& RecordData::getVersion( const QString version_name )
+{
+	ZoneScoped;
+
+	const auto idx { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version_name ]( const GameMetadata& version ) { return version.getVersionName() == version_name; } ) };
+
+	if ( idx == m_versions.end() )
+		throw std::runtime_error( fmt::format("getVersion: Version {} not found", version_name) );
+	else
+		return *idx;
+}
+
+GameMetadata& RecordData::getLatestVersion()
+{
+	return m_versions.at( m_versions.size() - 1 );
+}
+
+std::vector< GameMetadata >& RecordData::getVersions()
+{
+	return m_versions;
+}
+
+const std::filesystem::path& RecordData::getBannerPath() const
+{
+	return m_banner;
+}
+
+QPixmap RecordData::getBanner() const
+{
+	ZoneScoped;
+	if ( !std::filesystem::exists( m_banner ) )
+		return {};
+	else
+		return QPixmap { QString::fromStdString( m_banner.string() ) };
+}
+
+QPixmap RecordData::getBanner( int width, int height, bool expanding ) const
+{
+	ZoneScoped;
+	const auto key { QString::fromStdString( m_banner.filename().string() ) + QString::number( width ) + "x"
+		             + QString::number( height ) };
+
+	QPixmap banner;
+	if ( QPixmapCache::find( key, &banner ) )
+		return banner;
+	else
+	{
+		banner = getBanner();
+		if ( banner.isNull() )
+			return {};
+		else
 		{
-			auto record { Record::select( id, transaction ) };
-
-			spdlog::error(
-				"Found record {} already exists. {} == {}, {} == {}, {} == {}",
-				id,
-				title,
-				record.m_title,
-				creator,
-				record.m_creator,
-				engine,
-				record.m_engine );
-
-			transaction.abort();
-			throw RecordAlreadyExists( std::move( record ) );
+			banner = banner.scaled(
+				width,
+				height,
+				expanding ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
+				Qt::SmoothTransformation );
+			if ( !QPixmapCache::insert( key, banner ) )
+				spdlog::warn( "failed to insert banner into cache with key: {}", key );
+			return banner;
 		}
 	}
-
-	{
-		ZoneScopedN( "Query" );
-
-		spdlog::debug( "Inserting new record" );
-
-		transaction << "INSERT INTO records (title, creator, engine) VALUES (?, ?, ?) RETURNING record_id"
-					<< title.toStdString() << creator.toStdString() << engine.toStdString()
-			>> [&]( const RecordID record_id )
-		{
-			id = record_id;
-		};
-
-		spdlog::debug( "Record successfully imported with id = {}", id );
-
-		std::vector< std::pair< std::string, PreviewType > > image_paths;
-		if ( !banner.empty() && ( std::filesystem::exists( banner ) || banner.string().starts_with( ':' ) ) )
-			image_paths.emplace_back( banner.string(), PREVIEW_BANNER );
-		for ( const auto& preview : previews )
-			if ( std::filesystem::exists( banner ) ) image_paths.emplace_back( preview.string(), PREVIEW_PREVIEW );
-
-		spdlog::debug( "Inserting {} images for record id {}", previews.size(), id );
-
-		for ( const auto& [path, type] : image_paths )
-			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << id
-						<< static_cast< uint8_t >( type ) << path;
-	}
-
-	std::vector< GameMetadata > metadata_inserted;
-	for ( const auto& m_data : metadata )
-	{
-		metadata_inserted.emplace_back( GameMetadata::insert( id, m_data, transaction ) );
-	}
-
-	Record record { id, title, creator, engine, std::move( metadata_inserted ), banner, std::move( previews ) };
-
-	return record;
+	return {};
 }
 
-Record Record::select( const RecordID id, Transaction& transaction )
+const std::vector< std::filesystem::path >& RecordData::getPreviewPaths() const
+{
+	return m_previews;
+}
+
+std::vector< QPixmap > RecordData::getPreviews() const
 {
 	ZoneScoped;
-	QString title;
-	QString creator;
-	QString engine;
-	bool record_found { false };
+	std::vector< QPixmap > images;
 
-	if ( id == 0 )
+	for ( const auto& link : m_previews )
 	{
-		transaction.abort();
-		throw InvalidRecordID( id );
+		images.emplace_back( QString::fromStdString( link.string() ) );
 	}
 
-	spdlog::debug( "Selecting record {} from database", id );
-
-	{
-		ZoneScopedN( "Query inital" );
-		transaction << "SELECT title, creator, engine FROM records WHERE record_id = ?" << id >>
-			[&]( const std::string& title_in, const std::string& creator_in, const std::string& engine_in )
-		{
-			title = QString::fromStdString( title_in );
-			creator = QString::fromStdString( creator_in );
-			engine = QString::fromStdString( engine_in );
-			record_found = true;
-		};
-	}
-
-	if ( !record_found )
-	{
-		transaction.abort();
-		throw InvalidRecordID( id );
-	}
-
-	std::filesystem::path banner_path { ":/banner/placeholder.jpg" };
-	std::vector< std::filesystem::path > preview_paths;
-
-	{
-		ZoneScopedN( "Query previews" );
-
-		spdlog::debug( "Selecting previews and banner from DB for record {}", id );
-
-		transaction << "SELECT path, type FROM images WHERE record_id = ?" << id >>
-			[&banner_path, &preview_paths]( const std::string& path, const uint8_t type )
-		{
-			ZoneScopedN( "Process row" );
-
-			if ( !std::filesystem::exists( path ) && !path.starts_with( ':' ) )
-			{
-				spdlog::warn( "Path {} was expected to exist but does not", path );
-				return;
-			}
-
-			switch ( static_cast< PreviewType >( type ) )
-			{
-				default:
-					[[fallthrough]];
-				case PREVIEW_UNKNOWN:
-					break;
-				case PREVIEW_BANNER:
-					banner_path = std::move( path );
-					break;
-				case PREVIEW_PREVIEW:
-					preview_paths.emplace_back( std::move( path ) );
-					break;
-			}
-		};
-	}
-
-	return { id, title, creator, engine, GameMetadata::select( id, transaction ), banner_path, preview_paths };
+	return images;
 }
 
-RecordID Record::search( const QString& title, const QString& creator, const QString& engine, Transaction& transaction )
+void RecordData::setTitle( QString new_title, Transaction transaction )
+{
+	ZoneScoped;
+	m_title = std::move( new_title );
+
+	transaction << "UPDATE records SET title = ? WHERE record_id = ? " << new_title.toStdString() << m_id;
+
+	emit dataChanged();
+	emit titleChanged( m_title );
+}
+
+void RecordData::setCreator( QString new_creator, Transaction transaction )
+{
+	ZoneScoped;
+	m_creator = std::move( new_creator );
+
+	transaction << "UPDATE records SET creator = ? WHERE record_id = ?" << new_creator.toStdString() << m_id;
+
+	emit dataChanged();
+	emit creatorChanged( m_creator );
+}
+
+void RecordData::setEngine( QString new_engine, Transaction transaction )
+{
+	ZoneScoped;
+	m_engine = std::move( new_engine );
+
+	transaction << "UPDATE records SET engine = ? WHERE record_id = ?" << new_engine.toStdString() << m_id;
+
+	emit dataChanged();
+	emit engineChanged( m_engine );
+}
+
+void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
+{
+	ZoneScoped;
+	m_last_played = time;
+
+	transaction << "UPDATE records SET last_played_r = ? WHERE record_id = ?" << time << m_id;
+
+	emit dataChanged();
+	emit lastPlayedChanged( time );
+}
+
+void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
+{
+	ZoneScoped;
+
+	m_total_playtime += time;
+
+	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << m_total_playtime << m_id;
+}
+
+void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction )
+{
+	ZoneScoped;
+	m_total_playtime = time;
+
+	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time << m_id;
+
+	emit dataChanged();
+	emit totalPlaytimeChanged( time );
+}
+
+void RecordData::addVersion(
+	QString version,
+	std::filesystem::path game_path,
+	std::filesystem::path exec_path,
+	const uint64_t folder_size,
+	bool in_place,
+	Transaction transaction )
+try
+{
+	ZoneScoped;
+	spdlog::info( "Adding version {} to record {}:{}", version.toStdString(), m_id, m_title.toStdString() );
+	//Check if version is already added
+	auto itter { std::find_if(
+		m_versions.begin(),
+		m_versions.end(),
+		[ &version ]( const GameMetadata& other ) { return version == other.getVersionName(); } ) };
+	if ( itter != m_versions.end() ) return;
+
+	m_versions.emplace_back( *this, version, game_path, exec_path, in_place, 0, 0, folder_size );
+
+	transaction
+		<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, 0, 0, ?)"
+		<< m_id << version.toStdString() << game_path.string() << exec_path.string() << in_place << folder_size;
+
+	emit dataChanged();
+	emit versionsChanged( m_versions );
+}
+catch ( std::exception& e )
+{
+	spdlog::error( "An exception was throw in addVersion: {}", e.what() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( ... )
+{
+	spdlog::error( "An unknown exception was thrown in addVersion!" );
+	std::rethrow_exception( std::current_exception() );
+}
+
+void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
+{
+	ZoneScoped;
+	auto itter { std::find( m_versions.begin(), m_versions.end(), version ) };
+	if ( itter == m_versions.end() ) return;
+
+	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ? AND game_path = ? AND exec_path = ?"
+				<< m_id << version.getVersionName().toStdString() << version.getPath().string()
+				<< version.getExecPath().string();
+
+	m_versions.erase( itter );
+
+	emit dataChanged();
+	emit versionsChanged( m_versions );
+}
+
+void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
+{
+	ZoneScoped;
+	spdlog::info( "Setting baner to {}", path );
+
+	//Move banner to image folder
+	m_banner = imageManager::importImage( path );
+
+	//Check if it exists
+	bool found { false };
+	transaction << "SELECT path FROM images WHERE record_id = ? AND type = ?" << m_id << PREVIEW_BANNER >> [ &found ]()
+	{ found = true; };
+
+	if ( found )
+		transaction << "UPDATE images SET path = ? WHERE record_id = ? AND type = ?" << m_banner.string() << m_id
+					<< PREVIEW_BANNER;
+	else
+		transaction << "INSERT INTO images (record_id, path, type) VALUES (?, ?, ?)" << m_id << m_banner.string()
+					<< PREVIEW_BANNER;
+
+	emit dataChanged();
+	emit bannerChanged( getBanner() );
+}
+
+void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
+{
+	ZoneScoped;
+	//Move preview to image folder
+	m_previews.emplace_back( imageManager::importImage( path ) );
+
+	try
+	{
+		transaction << "INSERT INTO images (record_id, preview_path, type) VALUES (?, ?, ?)" << m_id
+					<< m_previews.back().string() << PREVIEW_PREVIEW;
+	}
+	catch ( const std::exception& e )
+	{
+		spdlog::error( "Failed to add preview to database: {}", e.what() );
+		//Undo adding to m_previews
+		m_previews.pop_back();
+	}
+
+	emit dataChanged();
+	emit previewsChanged( getPreviews() );
+}
+
+void RecordData::sync( Transaction transaction )
+{
+	ZoneScoped;
+	new ( this ) RecordData( m_id, transaction );
+}
+
+RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction ) :
+  m_title( std::move( title ) ),
+  m_creator( std::move( creator ) ),
+  m_engine( std::move( engine ) )
+{
+	ZoneScoped;
+	try
+	{
+		RecordID record_id { 0 };
+		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
+					<< m_title.toStdString() << m_creator.toStdString() << m_engine.toStdString()
+			>> [ & ]( const RecordID id ) { record_id = id; };
+
+		if ( record_id != 0 )
+		{
+			transaction.abort();
+			throw RecordAlreadyExists( Record( record_id, transaction ) );
+		}
+
+		transaction
+				<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, ?, ?) RETURNING record_id"
+				<< m_title.toStdString() << m_creator.toStdString() << m_engine.toStdString() << m_last_played
+				<< m_total_playtime
+			>> [ & ]( const RecordID id ) { m_id = id; };
+
+		//Handle banner stuff
+		if ( !m_banner.empty() )
+			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_BANNER
+						<< m_banner.string();
+
+		for ( const auto& preview : m_previews )
+			transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << m_id << IMAGE_PREVIEW
+						<< preview.string();
+	}
+	catch ( sqlite::sqlite_exception& e )
+	{
+		spdlog::error( "{}", e.get_sql() );
+		std::rethrow_exception( std::current_exception() );
+	}
+}
+
+RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
 	RecordID record_id { 0 };
 
-	{
-		ZoneScopedN( "Query" );
-
-		spdlog::debug( "Searching for {} {} {}", title, creator, engine );
-
-		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
-					<< title.toStdString() << creator.toStdString() << engine.toStdString()
-			>> [&]( const RecordID id )
-		{
-			record_id = id;
-		};
-	}
+	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
+				<< creator.toStdString() << engine.toStdString()
+		>> [ &record_id ]( [[maybe_unused]] const RecordID id ) { record_id = id; };
 
 	return record_id;
 }
 
-
-QPixmap Record::getBanner() const
+bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
-	ZoneScoped;
-
-	spdlog::debug( "Getting banner for {}", m_id );
-
-	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
-	const std::filesystem::path banner_path { banner_path_str.toStdString() };
-
-	QPixmap banner { ":/banner/placeholder.jpg" };
-	if ( !QPixmapCache::find( banner_path_str, &banner ) && std::filesystem::exists( banner_path ) )
-	{
-		banner = QPixmap( banner_path_str );
-		QPixmapCache::insert( banner_path_str, banner );
-		return banner;
-	}
-
-	return banner;
+	return recordID( title, creator, engine, transaction );
 }
 
-QPixmap Record::getBanner( const int banner_width, const int banner_height ) const
+//! imports a new record and returns it. Will return an existing record if the record already exists
+Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
-	ZoneScopedN( "getBannerResized" );
+	if ( recordExists( title, creator, engine, transaction ) )
+		return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction };
 
-	spdlog::debug( "Getting banner for id {} resized to {}x{}", m_id, banner_width, banner_height );
-
-	const auto banner_path_str { QString::fromStdString( m_banner.string() ) };
-	const std::filesystem::path banner_path { banner_path_str.toStdString() };
-
-	const auto key { banner_path_str + QString::number( banner_width ) + QString::number( banner_width ) };
-
-	QPixmap resized_banner { ":/invalid_banner.jpg" };
-	if ( !QPixmapCache::find( key, &resized_banner )
-		 && ( std::filesystem::exists( banner_path ) || banner_path.string().starts_with( ':' ) ) )
+	try
 	{
-		QPixmap banner { getBanner() };
-
-		banner = banner.scaledToHeight( banner_height, Qt::SmoothTransformation );
-		if ( banner.width() > banner_width ) banner = banner.scaledToWidth( banner_width, Qt::SmoothTransformation );
-
-		QPixmapCache::insert( key, banner );
-		return banner;
+		return Record( std::move( title ), std::move( creator ), std::move( engine ), transaction );
 	}
-
-	return resized_banner;
-}
-
-void Record::update( const RecordID id, Record& record, Transaction& transaction )
-try
-{
-	ZoneScoped;
-
-	spdlog::debug( "Updating record {}", id );
-
-	const auto original { Record::select( id, transaction ) };
-
+	catch ( std::exception& e )
 	{
-		ZoneScopedN( "Update basic info" );
-		transaction << "UPDATE records SET title = ?, creator = ?, engine = ? WHERE record_id = ?"
-					<< record.m_title.toStdString() << record.m_creator.toStdString() << record.m_engine.toStdString()
-					<< record.m_id;
+		spdlog::error( "Failed to import record: {}", e.what() );
+		std::rethrow_exception( std::current_exception() );
 	}
-
+	catch ( ... )
 	{
-		ZoneScopedN( "Update versions" );
-
-		std::vector< GameMetadata > to_remove;
-
-		for ( const auto& version : record.m_versions )
-		{
-			//Check if the version is already in the list
-			if ( std::find( original.m_versions.begin(), original.m_versions.end(), version )
-				 != original.m_versions.end() )
-				continue;
-			else
-				//Not in list. Need to add.
-				(void) GameMetadata::insert( id, version, transaction );
-		}
-
-		//Check if we need to remove any.
-		for ( const auto& version : original.m_versions )
-		{
-			if ( std::find( record.m_versions.begin(), record.m_versions.end(), version ) == record.m_versions.end() )
-				transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ?" << id
-							<< version.m_version.toStdString();
-			else
-				continue;
-		}
+		spdlog::error( "Failed to import record: Unknown error" );
+		std::rethrow_exception( std::current_exception() );
 	}
-
-	{
-		ZoneScopedN( "Update images" );
-
-		const std::filesystem::path image_path { imageManager::getImagePath() };
-
-		if ( !record.m_banner.string().starts_with( image_path.string() ) )
-			record.m_banner = imageManager::importImage( record.m_banner );
-
-		if ( original.m_banner != record.m_banner )
-			transaction << "UPDATE images SET path = ? WHERE type = ? AND record_id = ?" << record.m_banner.string()
-						<< PREVIEW_BANNER << record.m_id;
-
-		for ( auto& preview : record.m_previews )
-		{
-			if ( !preview.string().starts_with( image_path.string() ) ) preview = imageManager::importImage( preview );
-		}
-
-		//Remove all previews that are not in the list
-		transaction << "SELECT path FROM images WHERE type = ? AND record_id = ?" << PREVIEW_PREVIEW << record.m_id >>
-			[&]( const std::string& path )
-		{
-			//Try to find the path inside of the list in memory.
-			if ( std::find_if(
-					 record.m_previews.begin(),
-					 record.m_previews.end(),
-					 [&]( const std::filesystem::path& path_fs ) -> bool { return path_fs.string() == path; } )
-				 == record.m_previews.end() )
-			{
-				spdlog::debug( "Deleting image {} from record {}", path, record.m_id );
-
-				//Delete the item from the database if it's not found in the memory list.
-				transaction << "DELETE FROM images WHERE type = ? AND record_id = ? AND path = ?" << PREVIEW_PREVIEW
-							<< record.m_id << path;
-			}
-		};
-
-		//Add previews that are not in the db list
-		for ( const auto& path : record.m_previews )
-		{
-			bool found { false };
-			//Search for if it's in the database
-			transaction << "SELECT path FROM images WHERE type = ? AND record_id = ? AND path = ?" << PREVIEW_PREVIEW
-						<< record.m_id << path.string()
-				>> [&]( [[maybe_unused]] const std::string& str )
-			{
-				found = true;
-			};
-
-			//If it's not in the database then add it.
-			if ( !found )
-			{
-				spdlog::debug( "Adding image {} to record {}", path.string(), record.m_id );
-
-				transaction << "INSERT INTO images (record_id, type, path) VALUES (?, ?, ?)" << record.m_id
-							<< PREVIEW_PREVIEW << path.string();
-			}
-		}
-	}
-}
-catch ( std::exception& e )
-{
-	spdlog::critical( "Failed to update record properly: {}", e.what() );
-}
-
-void Record::erase( const RecordID id, Transaction& transaction )
-try
-{
-	ZoneScoped;
-
-	transaction << "DELETE FROM images WHERE record_id = ?" << id;
-	transaction << "DELETE FROM game_metadata WHERE record_id = ?" << id;
-	transaction << "DELETE FROM records WHERE record_id = ?" << id;
-
-	//TODO: Clean orphans/empty folders
-}
-catch ( std::exception& e )
-{
-	spdlog::error( "Failed to delete record due to {}", e.what() );
 }

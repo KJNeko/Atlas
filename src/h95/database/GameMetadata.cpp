@@ -2,62 +2,84 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include <string>
+#include "h95/database/GameMetadata.hpp"
 
-#include <tracy/Tracy.hpp>
+#include "Record.hpp"
+#include "h95/config.hpp"
+#include "h95/logging.hpp"
+#include "h95/utils/execute/executeProc.hpp"
 
-#include <h95/database/Database.hpp>
-#include <h95/logging.hpp>
-#include <h95/database/GameMetadata.hpp>
-
-std::vector< GameMetadata > GameMetadata::select( const RecordID id, Transaction& transaction )
+QString GameMetadata::getVersionName() const
 {
-	ZoneScoped;
-	std::vector< GameMetadata > metadata;
-
-	spdlog::debug( "Selecting metadata for id {}", id );
-
-	transaction << "SELECT game_path, exec_path, version FROM game_metadata WHERE record_id = ?" << id >>
-		[&metadata]( const std::string& game_path_in, const std::string& exec_path_in, const std::string& version_in )
-	{
-		metadata.emplace_back( QString::fromStdString( version_in ), game_path_in, exec_path_in );
-	};
-
-	return metadata;
+	return m_version;
 }
 
-GameMetadata GameMetadata::insert( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
+bool GameMetadata::isInPlace() const
 {
-	ZoneScoped;
-
-	bool found { false };
-
-	// Search for duplicates
-	transaction
-			<< "SELECT record_id FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
-			<< id << metadata.m_game_path.string() << metadata.m_exec_path.string() << metadata.m_version.toStdString()
-		>> [&]()
-	{
-		found = true;
-	};
-
-	if ( found )
-	{
-		transaction.abort();
-		throw MetadataAlreadyExists( id, metadata );
-	}
-
-	transaction << "INSERT INTO game_metadata (record_id, game_path, exec_path, version) VALUES (?, ?, ?, ?)" << id
-				<< metadata.m_game_path.string() << metadata.m_exec_path.string() << metadata.m_version.toStdString();
-
-	return metadata;
+	return m_in_place;
 }
 
-void GameMetadata::erase( const RecordID id, const GameMetadata& metadata, Transaction& transaction )
+std::uint32_t GameMetadata::getPlaytime() const
 {
-	ZoneScoped;
+	return m_total_playtime;
+}
 
-	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND game_path = ? AND exec_path = ? AND version = ?"
-				<< id << metadata.m_game_path.string() << metadata.m_exec_path.string()
-				<< metadata.m_version.toStdString();
+std::uint64_t GameMetadata::getLastPlayed() const
+{
+	return m_last_played;
+}
+
+std::filesystem::path GameMetadata::getPath() const
+{
+	return config::paths::games::getPath() / m_game_path;
+}
+
+std::filesystem::path GameMetadata::getRelativeExecPath() const
+{
+	return m_exec_path;
+}
+
+std::filesystem::path GameMetadata::getExecPath() const
+{
+	return getPath() / getRelativeExecPath();
+}
+
+void runGame( RecordData& record, const QString version_str )
+{
+	auto& version { record.getVersion( version_str ) };
+
+	const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
+
+	executeProc( version.getExecPath().string() );
+
+	const auto duration {
+		std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )
+	};
+
+	version.addPlaytime( static_cast< uint32_t >( duration.count() ) );
+	version.setLastPlayed( static_cast<
+						   uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( now.time_since_epoch() )
+	                                       .count() ) );
+}
+
+void GameMetadata::playGame()
+{
+	if ( !std::filesystem::exists( getExecPath() ) )
+		throw MetadataException( "Executable does not exist" );
+	else
+		runGame( m_parent, m_version );
+}
+
+void GameMetadata::addPlaytime( const std::uint32_t playtime )
+{
+	m_total_playtime += playtime;
+
+	m_parent.addPlaytime( playtime );
+}
+
+void GameMetadata::setLastPlayed( const std::uint64_t last_played )
+{
+	m_last_played = last_played;
+
+	m_parent.setLastPlayed( last_played );
 }

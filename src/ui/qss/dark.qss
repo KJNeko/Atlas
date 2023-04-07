@@ -1,0 +1,54 @@
+QFrame{
+background-color: rgb(38,39,42);
+border:1px solid;
+border-color:rgb(33, 34, 43);}
+
+QLabel{
+color: rgb(243, 244, 245);
+border:none;}
+
+QPushButton{
+background-color: rgb(43,45,49);
+color:rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+QPushButton:hover:!pressed
+{
+background-color: rgb(54, 55, 61);
+}
+
+QTextEdit{
+background-color:rgb(43,45,49);
+color: rgb(243, 244, 245);
+border:none;}
+
+QPlainTextEdit{
+color: rgb(130,133,143);
+border:none;}
+
+QListWidget{
+background-color:rgb(43,45,49);
+color: rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+
+QTableWidget{
+background-color:rgb(54, 55, 61);
+color: rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+
+QToolButton{
+background-color: rgb(43,45,49);
+color:rgb(243, 244, 245);
+border:1px solid;
+border-color:rgb(64,66,73);}
+QToolButton:hover:!pressed
+{
+background-color: rgb(54, 55, 61);
+}
+
+QCheckBox{
+background-color:none;
+color: rgb(243, 244, 245);
+border:none;}
