@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>760</height>
+    <width>1300</width>
+    <height>780</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -381,13 +381,13 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>16</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>19</pointsize>
           </font>
          </property>
          <property name="styleSheet">
           <string notr="true">border-radius:none;
-background-color: rgb(255, 255, 255);
-margin-right: 2px;
+background-color: transparent;
 margin-left: 2px;</string>
          </property>
          <property name="text">
