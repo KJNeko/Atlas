@@ -26,6 +26,7 @@ class Search : public QObject
   public slots:
 	//! Submits a text to get autocompleted.
 	void searchTextChanged( QString text );
+	void triggerEmptySearch();
 };
 
 #endif //HYDRUS95_SEARCH_HPP

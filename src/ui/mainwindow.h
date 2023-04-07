@@ -38,6 +38,9 @@ class MainWindow : public QMainWindow
 	void addTreeChild( QTreeWidgetItem *parent, QString name, QString record_id );
 	void openBatchImportDialog();
 
+  signals:
+	void triggerEmptySearch();
+
   private slots:
 	void on_actionImport_triggered();
 	void on_actionOptions_triggered();
