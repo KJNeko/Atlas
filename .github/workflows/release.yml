@@ -74,8 +74,8 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite' -DH95VERSION='${{env.version_short}}'
-          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite' -DH95VERSION='${{env.version_short}}'
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite' -DATLASVERSION='${{env.version_short}}'
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -G"MinGW Makefiles" -DSQL_PATH='${{github.workspace}}\sqlite' -DATLASVERSION='${{env.version_short}}'
 
       - name: Build
         run: | 
@@ -88,19 +88,19 @@ jobs:
       - name: Package
         run: |
           cd ${{github.workspace}}
-          mkdir Hydrus95-Release
-          mkdir Hydrus95-Debug
-          move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Hydrus95-Release\
-          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Hydrus95-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows.zip ${{github.workspace}}\Hydrus95-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Hydrus95-Windows-Debug.zip ${{github.workspace}}\Hydrus95-Debug
+          mkdir Atlas-Release
+          mkdir Atlas-Debug
+          move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Atlas-GameManager-Release\
+          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Debug\
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Windows.zip ${{github.workspace}}\Atlas-GameManager-Release
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Windows-Debug.zip ${{github.workspace}}\Atlas-GameManager-Debug
           
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
-          path: ${{github.workspace}}\Hydrus95-Windows.zip
+          path: ${{github.workspace}}\Atlas-GameManager-Windows.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -108,7 +108,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract-Debug
-          path: ${{github.workspace}}\Hydrus95-Windows-Debug.zip
+          path: ${{github.workspace}}\Atlas-GameManager-Windows-Debug.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -132,15 +132,15 @@ jobs:
       - name: Rename
         run: |
           mkdir windows
-          mv Windows-Extract/Hydrus95-Windows.zip Hydrus95-${{ env.version_short }}-windows.zip
-          mv Windows-Extract-Debug/Hydrus95-Windows-Debug.zip Hydrus95-${{ env.version_short }}-Debug-windows.zip
+          mv Windows-Extract/Atlas-GameManager-Windows.zip Atlas-GameManager-${{ env.version_short }}-windows.zip
+          mv Windows-Extract-Debug/Atlas-GameManager-Windows-Debug.zip Atlas-GameManager-${{ env.version_short }}-Debug-windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            Hydrus95-${{env.version_short}}-windows.zip
-            Hydrus95-${{env.version_short}}-Debug-windows.zip
+            Atlas-GameManager-${{env.version_short}}-windows.zip
+            Atlas-GameManager-${{env.version_short}}-Debug-windows.zip
           
 
