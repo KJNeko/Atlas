@@ -35,13 +35,13 @@ endif ()
 find_package(SQLite3 REQUIRED)
 
 #Spdlog
-if (WIN32 OR DEFINED ATLAS_USE_PACKAGED_SPDLOG)
+if (WIN32 OR ATLAS_USE_PACKAGED_SPDLOG)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/spdlog)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
 
-if (WIN32 OR DEFINED ATLAS_USE_PACKAGED_FMT)
+if (WIN32 OR ATLAS_USE_PACKAGED_FMT)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/fmt)
 else ()
     find_package(fmt REQUIRED)
