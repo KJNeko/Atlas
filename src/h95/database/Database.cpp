@@ -17,7 +17,7 @@ namespace internal
 	static std::mutex db_mtx;
 #endif
 
-	static std::atomic< std::thread::id > last_locked { std::thread::id( 0 ) };
+	static std::atomic< std::thread::id > last_locked {};
 
 	//static std::mutex db_mtx {};
 } // namespace internal
@@ -111,7 +111,7 @@ TransactionData::TransactionData() : guard( getLock() )
 
 TransactionData::~TransactionData()
 {
-	internal::last_locked = std::thread::id( 0 );
+	internal::last_locked = std::thread::id();
 }
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
