@@ -15,6 +15,10 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(Tracy CONFIG REQUIRED)
 find_package(SQLite3 REQUIRED)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 if(DEFINED ATLAS_ENABLE_PROFILER)
     #Tracy (Profiler)
     option(TRACY_ENABLE "" ON)
@@ -41,10 +45,6 @@ target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 #Build exe
 add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
-
-if (${CMAKE_COMPILER_IS_GNUCXX})
-    set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-endif ()
 
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
