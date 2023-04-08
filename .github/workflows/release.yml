@@ -33,6 +33,7 @@ jobs:
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
       - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: '${{github.workspace}}/vcpkg'
           runVcpkgInstall: true
