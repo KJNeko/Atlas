@@ -282,7 +282,8 @@ bool isEngine< TyanoBuilder >(
 	[[maybe_unused]] const std::filesystem::path& path, [[maybe_unused]] const std::filesystem::path& executable_path )
 {
 	ZoneScoped;
-	return false;
+
+	return std::filesystem::exists(path / "resources" / "app" / "tyrano" );
 }
 
 template <>
