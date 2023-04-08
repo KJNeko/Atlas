@@ -9,6 +9,12 @@ SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} ")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Test CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
+find_package(Tracy CONFIG REQUIRED)
+find_package(SQLite3 REQUIRED)
+
 if(DEFINED ATLAS_ENABLE_PROFILER)
     #Tracy (Profiler)
     option(TRACY_ENABLE "" ON)
