@@ -45,19 +45,21 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 	const auto diff { options.rect.bottomRight() - stripe_top_left };
 	const QSize stripe_size { diff.x(), diff.y() };
 
-	const QRect strip_rect { stripe_top_left + QPoint( 2, 2 ), stripe_size };
+	const QRect strip_rect { stripe_top_left + QPoint( 0, 0 ), stripe_size };
 
 	painter->fillRect( strip_rect, QColor( 0, 0, 0, 200 ) );
 
-	//painter->drawText(); //engine
+	//To manipulate text from going to far right or far left, we need to add padding before passing to drawText
+	std::string engine_str = "  " + record->getEngine().toStdString();
 	painter ->setPen(qRgb(210,210,210));
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
-	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, record->getCreator() ); //Creator
+	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, QString::fromStdString(engine_str) ); //Engine
 
 	if ( record->getVersions().size() > 0 )
 	{
-		auto &latest { record->getLatestVersion() };
-		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, latest.getVersionName() ); //latest version
+		auto &latest { record->getLatestVersion() };		
+		std::string version_str = latest.getVersionName().toStdString() + "  ";
+		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, QString::fromStdString(version_str) ); //latest version
 	}
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );
