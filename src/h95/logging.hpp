@@ -7,20 +7,10 @@
 
 #include <filesystem>
 
-#pragma GCC diagnostic push
-
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wswitch-default"
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wstrict-overflow"
-#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#include <QString>
 
 #include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
-
-#pragma GCC diagnostic pop
-
-#include <QString>
 
 #include "Types.hpp"
 

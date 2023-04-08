@@ -5,6 +5,7 @@
 #include <QString>
 
 #include <gtest/gtest.h>
+
 #include "h95/utils/regex/regex.hpp"
 
 TEST( Regex, regexify )
@@ -27,7 +28,7 @@ TEST( Regex, WindowsPath )
 	GTEST_ASSERT_EQ( version.toStdString(), "Hydrus95" );
 }
 
-TEST(Regex, TitleVersion)
+TEST( Regex, TitleVersion )
 {
 	const QString text { R"(C:\Users\vboxuser\Projects\Hydrus95)" };
 	const QString pattern { R"(C:\Users\vboxuser\{title}\{version})" };

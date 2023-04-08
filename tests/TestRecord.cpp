@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+
 #include "h95/database/Database.hpp"
 #include "h95/database/Record.hpp"
 #include "h95/logging.hpp"
@@ -78,27 +79,27 @@ TEST_F( TestRecord, selectNonExisting )
 }
 
 #define PREPARE_RECORD_TEST                                                                                            \
-  Record record { []() -> Record                                                                                       \
-		          {                                                                                                    \
-				  QString title { "my title" };                                                                        \
-				  QString creator { "Some Person" };                                                                   \
-				  QString engine { "Some Engine" };                                                                    \
+	Record record { []() -> Record                                                                                     \
+		            {                                                                                                  \
+						QString title { "my title" };                                                                  \
+						QString creator { "Some Person" };                                                             \
+						QString engine { "Some Engine" };                                                              \
                                                                                                                        \
-				  return Record( title, creator, engine );                                                             \
-				  }() };
+						return Record( title, creator, engine );                                                       \
+					}() };
 
 #define TEST_RECORD_EQ                                                                                                 \
-  {                                                                                                                    \
-	const Record record_comp { record->getID() };                                                                      \
-	GTEST_ASSERT_EQ( record->getID(), record_comp->getID() );                                                          \
-	GTEST_ASSERT_EQ( record->getVersions(), record_comp->getVersions() );                                              \
-	GTEST_ASSERT_EQ( record->getEngine(), record_comp->getEngine() );                                                  \
-	GTEST_ASSERT_EQ( record->getTitle(), record_comp->getTitle() );                                                    \
-	GTEST_ASSERT_EQ( record->getCreator(), record_comp->getCreator() );                                                \
-	GTEST_ASSERT_EQ( record->getPreviewPaths(), record_comp->getPreviewPaths() );                                      \
-	GTEST_ASSERT_EQ( record->getBannerPath(), record_comp->getBannerPath() );                                          \
-	GTEST_ASSERT_EQ( record, record_comp );                                                                            \
-  }
+	{                                                                                                                  \
+		const Record record_comp { record->getID() };                                                                  \
+		GTEST_ASSERT_EQ( record->getID(), record_comp->getID() );                                                      \
+		GTEST_ASSERT_EQ( record->getVersions(), record_comp->getVersions() );                                          \
+		GTEST_ASSERT_EQ( record->getEngine(), record_comp->getEngine() );                                              \
+		GTEST_ASSERT_EQ( record->getTitle(), record_comp->getTitle() );                                                \
+		GTEST_ASSERT_EQ( record->getCreator(), record_comp->getCreator() );                                            \
+		GTEST_ASSERT_EQ( record->getPreviewPaths(), record_comp->getPreviewPaths() );                                  \
+		GTEST_ASSERT_EQ( record->getBannerPath(), record_comp->getBannerPath() );                                      \
+		GTEST_ASSERT_EQ( record, record_comp );                                                                        \
+	}
 
 TEST_F( TestRecord, setTitle )
 {
@@ -195,7 +196,7 @@ TEST_F( TestRecord, sync )
 {
 	PREPARE_RECORD_TEST
 
-	Transaction trans {Transaction::Autocommit};
+	Transaction trans { Transaction::Autocommit };
 
 	record->setTitle( "Some new title", trans );
 
@@ -217,7 +218,7 @@ TEST_F( TestRecord, Example1 )
 
 TEST_F( TestRecord, Example2 )
 {
-	Transaction transaction {Transaction::Autocommit};
+	Transaction transaction { Transaction::Autocommit };
 
 	QString title { "my title 2" };
 	QString creator { "Some Person 2" };

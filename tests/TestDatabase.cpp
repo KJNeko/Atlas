@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+
 #include "h95/database/Database.hpp"
 
 TEST( TestDatabase, testTransactionUnloaded )
