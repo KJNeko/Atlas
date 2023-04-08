@@ -29,6 +29,7 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
+    needs: precache-vcpkg
     steps:
 
       - name: Checkout
