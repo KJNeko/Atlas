@@ -38,7 +38,7 @@ set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt Tracy::TracyClient)
 
-#Lib for EXE and Python
+#Build obj in order to reduce total compile time when compiling the tests too
 add_library(AtlasObj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
 target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
