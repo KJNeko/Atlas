@@ -35,13 +35,13 @@ endif ()
 find_package(SQLite3 REQUIRED)
 
 #Spdlog
-if (WIN32)
+if ((WIN32 AND NOT ATLAS_USE_PACKAGED_SPDLOG) OR ATLAS_USE_PACKAGED_SPDLOG)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/spdlog)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
 
-if (WIN32)
+if ((WIN32 AND NOT ATLAS_US_PACKAGED_FMT) OR ATLAS_USE_PACKAGED_FMT)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/fmt)
 else ()
     find_package(fmt REQUIRED)
@@ -60,6 +60,7 @@ if (WIN32)
     if (CMAKE_BUILD_TYPE STREQUAL " Debug")
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     else ()
+        #For some reason the debug variant of windeployqt just eats shit.
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
@@ -137,7 +138,7 @@ target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 #Post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
             $<TARGET_FILE:Atlas>
             COMMENT "Running windeployqt")
 
@@ -150,7 +151,7 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
 endif ()
 
-add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Compiling qss files")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
@@ -176,7 +177,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
     #Test post setup (Windows only)
     if (WIN32)
         add_custom_command(TARGET AtlasTESTS POST_BUILD
-                COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
+                COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
                 $<TARGET_FILE:AtlasTESTS>
                 COMMENT "Running windeployqt")
 

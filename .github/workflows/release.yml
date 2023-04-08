@@ -21,11 +21,6 @@ jobs:
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
-      - name: Setup mingw
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64
-
       - name: Cache sqlite
         id: cache-sqlite
         uses: actions/cache@v3
@@ -79,11 +74,8 @@ jobs:
 
       - name: Build
         run: | 
-          cd ${{github.workspace}}\builds\build-r
-          mingw32-make -j2
-          cd ${{github.workspace}}\builds\build-d
-          mingw32-make -j2
-          cd ${{github.workspace}}
+          cmake --build ${github.workspace}}\builds\build-r -j4
+          cmake --build ${github.workspace}}\builds\build-d -j4
 
       - name: Package
         run: |
