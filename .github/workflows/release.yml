@@ -15,7 +15,7 @@ jobs:
           submodules: true
 
       - name: Get appdata path
-        run: echo ("APPDATA_DIR=" + $env:APPDATA) >> $env:GITHUB_ENV
+        run: echo ("APPDATA_DIR=" + $env:LOCALAPPDATA) >> $env:GITHUB_ENV
 
       - name: Cache vcpkg
         id: cache-vcpkg
@@ -47,7 +47,7 @@ jobs:
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
       - name: Get appdata path
-        run: echo ("APPDATA_DIR=" + $env:APPDATA) >> $env:GITHUB_ENV
+        run: echo ("APPDATA_DIR=" + $env:LOCALAPPDATA) >> $env:GITHUB_ENV
 
       - name: Cache vcpkg
         id: cache-vcpkg
