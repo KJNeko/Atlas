@@ -21,11 +21,6 @@ jobs:
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
-      - name: Setup mingw
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64
-
       - name: Cache sqlite
         id: cache-sqlite
         uses: actions/cache@v3
