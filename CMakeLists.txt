@@ -23,19 +23,17 @@ if (WIN32)
     endif ()
 endif ()
 
-message("Deploy tool = ${TOOL_WINDEPLOYQT}")
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if(DEFINED ATLAS_ENABLE_PROFILER)
+if (DEFINED ATLAS_ENABLE_PROFILER)
     #Tracy (Profiler)
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
-else()
+else ()
     option(TRACY_ENABLE "" OFF)
-endif()
+endif ()
 
 file(GLOB_RECURSE SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/h95/*.cpp")
@@ -83,42 +81,44 @@ endif ()
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TEST} EQUALS 1)
+if (DEFINED ATLAS_BUILD_TEST)
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TEST} EQUAL 1)
 
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-    )
-    # For Windows: Prevent overriding the parent project's compiler/linker settings
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        include(FetchContent)
+        FetchContent_Declare(
+                googletest
+                URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+        )
+        # For Windows: Prevent overriding the parent project's compiler/linker settings
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-    FetchContent_MakeAvailable(googletest)
+        FetchContent_MakeAvailable(googletest)
 
-    file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+        file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-    add_executable(AtlasTESTS ${TESTS})
+        add_executable(AtlasTESTS ${TESTS})
 
-    target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_link_libraries(AtlasTESTS PUBLIC ${REQUIRED_LIBS} Qt::Test GTest::gtest_main AtlasObj)
+        target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+        target_link_libraries(AtlasTESTS PUBLIC ${REQUIRED_LIBS} Qt::Test GTest::gtest_main AtlasObj)
 
-    #Test post setup (Windows only)
-    if (WIN32)
-        add_custom_command(TARGET AtlasTESTS POST_BUILD
-                COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
-                $<TARGET_FILE:AtlasTESTS>
-                COMMENT "Running windeployqt")
+        #Test post setup (Windows only)
+        if (WIN32)
+            add_custom_command(TARGET AtlasTESTS POST_BUILD
+                    COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
+                    $<TARGET_FILE:AtlasTESTS>
+                    COMMENT "Running windeployqt")
 
-        add_custom_command(TARGET AtlasTESTS POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
-                COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
+            add_custom_command(TARGET AtlasTESTS POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
+                    COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
 
-        add_custom_command(TARGET AtlasTESTS POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
+            add_custom_command(TARGET AtlasTESTS POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
+        endif ()
+
+        include(GoogleTest)
+        gtest_discover_tests(AtlasTESTS)
+
     endif ()
-
-    include(GoogleTest)
-    gtest_discover_tests(AtlasTESTS)
-
 endif ()
