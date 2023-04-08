@@ -27,13 +27,17 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if (DEFINED ATLAS_ENABLE_PROFILER)
+if(DEFINED ATLAS_ENABLE_PROFILER)
+if (${ATLAS_ENABLE_PROFILER} EQUAL 1)
     #Tracy (Profiler)
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
 else ()
     option(TRACY_ENABLE "" OFF)
 endif ()
+else()
+    option(TRACY_ENABLE "" OFF)
+endif()
 
 file(GLOB_RECURSE SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/h95/*.cpp")
