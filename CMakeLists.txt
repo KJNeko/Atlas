@@ -60,6 +60,7 @@ if (WIN32)
     if (CMAKE_BUILD_TYPE STREQUAL " Debug")
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     else ()
+        #For some reason the debug variant of windeployqt just eats shit.
         find_program(TOOL_WINDEPLOYQT NAMES windeployqt)
     endif ()
 endif ()
