@@ -43,11 +43,14 @@ jobs:
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
+      - name: Get appdata path
+        run: echo ("APPDATA_DIR=" + $env:APPDATA) >> $env:GITHUB_ENV
+
       - name: Cache vcpkg
         id: cache-vcpkg
         uses: actions/cache@v3
         with:
-          path: ${env:APPDATA}\vcpkg\archives
+          path: ${{env.APPDATA_DIR}}\vcpkg\archives
           key: ${{runner.os}}-${{ hashFiles('vcpkg.json') }}-vcpkg
 
       - name: Prepare vcpkg
