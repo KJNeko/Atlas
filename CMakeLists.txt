@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
 project(AtlasGameManager LANGUAGES CXX)
 
-enable_testing()
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (NOT DEFINED CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILT_TYPE Release ... FORCE)
-endif ()
 
 #Sql
 if (WIN32)
