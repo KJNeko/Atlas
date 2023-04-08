@@ -4,7 +4,7 @@
 
 #include <assert.h>
 
-#include "GTestBox.hpp"
+#include <gtest/gtest.h>
 #include "h95/search/QueryBuilder.hpp"
 
 // system:filesize > 2G & creator:my name & !( engine:unity | engine:ren'py )

@@ -4,7 +4,7 @@
 
 #include <QString>
 
-#include "GTestBox.hpp"
+#include <gtest/gtest.h>
 #include "h95/utils/regex/regex.hpp"
 
 TEST( Regex, regexify )

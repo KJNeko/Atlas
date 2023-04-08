@@ -2,7 +2,7 @@
 // Created by kj16609 on 3/2/23.
 //
 
-#include "GTestBox.hpp"
+#include <gtest/gtest.h>
 #include "h95/database/Database.hpp"
 #include "h95/database/Record.hpp"
 #include "h95/logging.hpp"
