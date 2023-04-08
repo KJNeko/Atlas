@@ -15,6 +15,16 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(Tracy CONFIG REQUIRED)
 find_package(SQLite3 REQUIRED)
 
+if (WIN32)
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+        find_program(TOOL_WINDEPLOYQT windeployqt.debug.bat REQUIRED NO_CACHE)
+    else ()
+        find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
+    endif ()
+endif ()
+
+message("Deploy tool = ${TOOL_WINDEPLOYQT}")
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -73,7 +83,7 @@ endif ()
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TEST} EQUALS 1)
 
     include(FetchContent)
     FetchContent_Declare(
