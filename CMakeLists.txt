@@ -6,13 +6,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} ")
+message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Test CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-find_package(Tracy CONFIG REQUIRED)
 find_package(SQLite3 REQUIRED)
 
 if (WIN32)
@@ -27,24 +26,26 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if(DEFINED ATLAS_ENABLE_PROFILER)
-if (${ATLAS_ENABLE_PROFILER} EQUAL 1)
-    #Tracy (Profiler)
-    option(TRACY_ENABLE "" ON)
-    option(TRACY_ON_DEMAND "" OFF)
+#Manually define tracy since vcpkg has an ancient version
+
+if (NOT DEFINED ATLAS_PROFILING)
+    option(TRACY_ENABLE "" OFF)
 else ()
-    option(TRACY_ENABLE "" OFF)
+    if (${ATLAS_PROFILING} EQUALS 1)
+        option(TRACY_ENABLE "" ON)
+        option(TRACY_ON_DEMAND "" OFF)
+    else ()
+        option(TRACY_ENABLE "" OFF)
+    endif ()
 endif ()
-else()
-    option(TRACY_ENABLE "" OFF)
-endif()
+
+add_subdirectory(dependency/tracy)
 
 file(GLOB_RECURSE SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/h95/*.cpp")
 
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
-
 
 set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
