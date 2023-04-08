@@ -2,6 +2,21 @@
     "name": "atlas-gamemanager",
     "dependencies":
     [
+	{
+		"name":"qtbase",
+		"default-features": false,
+		"features":
+		[
+			"concurrent",
+			"gui",
+			"thread",
+			"widgets",
+			"jpeg",
+			"png",
+			"network",
+			"testlib"
+		]
+	},
 	"spdlog",
 	"fmt",
 	"sqlite3",
