@@ -137,7 +137,7 @@ target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 #Post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
             $<TARGET_FILE:Atlas>
             COMMENT "Running windeployqt")
 
@@ -150,7 +150,7 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
 endif ()
 
-add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Compiling qss files")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
@@ -176,7 +176,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED NO_BUILD_TESTS)
     #Test post setup (Windows only)
     if (WIN32)
         add_custom_command(TARGET AtlasTESTS POST_BUILD
-                COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime
+                COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
                 $<TARGET_FILE:AtlasTESTS>
                 COMMENT "Running windeployqt")
 
