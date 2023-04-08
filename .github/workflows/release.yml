@@ -21,56 +21,23 @@ jobs:
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
-      - name: Cache sqlite
-        id: cache-sqlite
+      - name: Cache vcpkg
+        id: cache-vcpkg
         uses: actions/cache@v3
         with:
-          path: '${{github.workspace}}\sqlite'
-          key: ${{runner.os}}-sqlite-3400100
+          path: ${{github.workspace}}\vcpkg_installed
+          key: ${{runner.os}}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Download SQLITE-Amalgamation
-        if: steps.cache-sqlite.outputs.cache-hit != 'true'
-        uses: carlosperate/download-file-action@v2.0.0
-        id: download_amalgamation
-        with:
-          file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3400100.zip
-          file-name: sqlite-amalg.zip
-          location: '${{github.workspace}}\sqlite'
-
-      - name: Download SQLITE-dll
-        if: steps.cache-sqlite.outputs.cache-hit != 'true'
-        uses: carlosperate/download-file-action@v2.0.0
-        id: download_dll
-        with:
-          file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3400100.zip
-          file-name: sqlite-dll.zip
-          location: '${{github.workspace}}\sqlite'
-
-      - name: Prepare SQLITE
-        if: steps.cache-sqlite.outputs.cache-hit != 'true'
+      - name: Prepare vcpkg
+        id: prepare-vcpkg
         run: |
-          cd sqlite
-          7z x sqlite-amalg.zip -o"./include"
-          cd include/sqlite-amalgamation-3400100
-          move * ..
-          cd ../..
-          7z x sqlite-dll.zip -o"./lib"
-          cd ..
-
-      - name: Install Qt
-        if: steps.cache-qt.outputs.cache-hit != 'true'
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: 6.4.*
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win64_mingw'
-          cache: true
+          ${{github.workspace}}\vcpkg\bootstrap-vcpkg.bat
+          ${{github.workspace}}\vcpkg\vcpkg install --triplet x64-windows
 
       - name: CMake
         run: |
-          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DSQL_PATH='${{github.workspace}}\sqlite' -DATLASVERSION='${{env.version_short}}'
-          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DSQL_PATH='${{github.workspace}}\sqlite' -DATLASVERSION='${{env.version_short}}'
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
 
       - name: Build
         run: | 

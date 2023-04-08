@@ -12,6 +12,7 @@
 /cmake-build-relwithdebinfo/
 /cmake-build-release/
 /cmake-build-debug-mingw/
+/vcpkg_installed/
 
 #Build helpers
 build.bat

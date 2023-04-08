@@ -81,8 +81,8 @@ endif ()
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
-if (DEFINED ATLAS_BUILD_TEST)
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TEST} EQUAL 1)
+if (DEFINED ATLAS_BUILD_TESTS)
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TESTS} EQUAL 1)
 
         include(FetchContent)
         FetchContent_Declare(
