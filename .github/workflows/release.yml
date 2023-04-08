@@ -32,18 +32,10 @@ jobs:
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
-      - name: Cache vcpkg
-        id: cache-vcpkg
-        uses: actions/cache@v3
+      - name: Setup vcpkg
         with:
-          path: ${{github.workspace}}\vcpkg_installed
-          key: ${{runner.os}}-${{ hashFiles('vcpkg.json') }}
-
-      - name: Prepare vcpkg
-        id: prepare-vcpkg
-        run: |
-          ${{github.workspace}}\vcpkg\bootstrap-vcpkg.bat
-          ${{github.workspace}}\vcpkg\vcpkg install --triplet x64-windows
+          vcpkgDirectory: '${{github.workspace}}/vcpkg'
+          runVcpkgInstall: true
 
       - name: CMake
         run: |
