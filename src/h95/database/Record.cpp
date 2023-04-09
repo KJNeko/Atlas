@@ -133,7 +133,7 @@ GameMetadata& RecordData::getVersion( const QString version_name )
 		[ &version_name ]( const GameMetadata& version ) { return version.getVersionName() == version_name; } ) };
 
 	if ( idx == m_versions.end() )
-		throw std::runtime_error( fmt::format("getVersion: Version {} not found", version_name) );
+		throw std::runtime_error( fmt::format( "getVersion: Version {} not found", version_name ) );
 	else
 		return *idx;
 }
@@ -440,7 +440,8 @@ bool recordExists( const QString& title, const QString& creator, const QString& 
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 {
 	if ( recordExists( title, creator, engine, transaction ) )
-		return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction };
+		throw RecordAlreadyExists( Record(
+			recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction ) );
 
 	try
 	{
