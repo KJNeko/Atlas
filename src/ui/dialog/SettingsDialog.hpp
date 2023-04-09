@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/24/23.
 //
 
-#ifndef HYDRUS95_SETTINGSDIALOG_HPP
-#define HYDRUS95_SETTINGSDIALOG_HPP
+#ifndef ATLAS_SETTINGSDIALOG_HPP
+#define ATLAS_SETTINGSDIALOG_HPP
 
 #include <QDialog>
 
@@ -48,4 +48,4 @@ class SettingsDialog : public QDialog
 	void saveBannerViewerSettings();
 };
 
-#endif //HYDRUS95_SETTINGSDIALOG_HPP
+#endif //ATLAS_SETTINGSDIALOG_HPP

@@ -2,8 +2,8 @@
 // Created by kj16609 on 1/13/23.
 //
 
-#ifndef HYDRUS95_RECORD_HPP
-#define HYDRUS95_RECORD_HPP
+#ifndef ATLAS_RECORD_HPP
+#define ATLAS_RECORD_HPP
 
 #include <QPixmap>
 
@@ -206,4 +206,4 @@ struct InvalidRecordID : public RecordException
 	{}
 };
 
-#endif //HYDRUS95_RECORD_HPP
+#endif //ATLAS_RECORD_HPP

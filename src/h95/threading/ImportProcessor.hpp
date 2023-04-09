@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/28/23.
 //
 
-#ifndef HYDRUS95_IMPORTPROCESSOR_HPP
-#define HYDRUS95_IMPORTPROCESSOR_HPP
+#ifndef ATLAS_IMPORTPROCESSOR_HPP
+#define ATLAS_IMPORTPROCESSOR_HPP
 
 #include <QtCore>
 
@@ -47,4 +47,4 @@ class ImportProcessor : public QObject
 	void importFailure( const QString top_msg, const QString body );
 };
 
-#endif //HYDRUS95_IMPORTPROCESSOR_HPP
+#endif //ATLAS_IMPORTPROCESSOR_HPP

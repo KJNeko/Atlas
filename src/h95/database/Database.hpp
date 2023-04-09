@@ -2,8 +2,8 @@
 // Created by kj16609 on 1/12/23.
 //
 
-#ifndef HYDRUS95_DATABASE_HPP
-#define HYDRUS95_DATABASE_HPP
+#ifndef ATLAS_DATABASE_HPP
+#define ATLAS_DATABASE_HPP
 
 #include <filesystem>
 #include <sqlite_modern_cpp.h>
@@ -159,4 +159,4 @@ struct NonTransaction
 	~NonTransaction();
 };
 
-#endif //HYDRUS95_DATABASE_HPP
+#endif //ATLAS_DATABASE_HPP

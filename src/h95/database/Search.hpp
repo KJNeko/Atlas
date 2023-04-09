@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/10/23.
 //
 
-#ifndef HYDRUS95_SEARCH_HPP
-#define HYDRUS95_SEARCH_HPP
+#ifndef ATLAS_SEARCH_HPP
+#define ATLAS_SEARCH_HPP
 
 #include <vector>
 
@@ -29,4 +29,4 @@ class Search : public QObject
 	void triggerEmptySearch();
 };
 
-#endif //HYDRUS95_SEARCH_HPP
+#endif //ATLAS_SEARCH_HPP

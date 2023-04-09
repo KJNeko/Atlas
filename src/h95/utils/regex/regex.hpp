@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/26/23.
 //
 
-#ifndef HYDRUS95_REGEX_HPP
-#define HYDRUS95_REGEX_HPP
+#ifndef ATLAS_REGEX_HPP
+#define ATLAS_REGEX_HPP
 
 #include <QString>
 
@@ -67,4 +67,4 @@ struct GroupsOutput
 //! Extracts all groups from a given string with a given pattern.
 GroupsOutput extractGroups( QString pattern, QString text );
 
-#endif //HYDRUS95_REGEX_HPP
+#endif //ATLAS_REGEX_HPP

@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/28/23.
 //
 
-#ifndef HYDRUS95_IMPORTPREPROCESSOR_HPP
-#define HYDRUS95_IMPORTPREPROCESSOR_HPP
+#ifndef ATLAS_IMPORTPREPROCESSOR_HPP
+#define ATLAS_IMPORTPREPROCESSOR_HPP
 
 #include <filesystem>
 
@@ -54,4 +54,4 @@ class ImportPreProcessor : public QObject
 	void finishedDirectory( const std::vector< GameImportData > info );
 };
 
-#endif //HYDRUS95_IMPORTPREPROCESSOR_HPP
+#endif //ATLAS_IMPORTPREPROCESSOR_HPP

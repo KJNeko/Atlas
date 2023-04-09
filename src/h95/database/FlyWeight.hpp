@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/12/23.
 //
 
-#ifndef HYDRUS95_FLYWEIGHT_HPP
-#define HYDRUS95_FLYWEIGHT_HPP
+#ifndef ATLAS_FLYWEIGHT_HPP
+#define ATLAS_FLYWEIGHT_HPP
 
 #include <concepts>
 #include <memory>
@@ -126,4 +126,4 @@ class FlyWeight : public std::shared_ptr< T >
 	inline static std::size_t flyweightSize() { return map.size(); }
 };
 
-#endif //HYDRUS95_FLYWEIGHT_HPP
+#endif //ATLAS_FLYWEIGHT_HPP

@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/25/23.
 //
 
-#ifndef HYDRUS95_PROGRESSBARDIALOG_HPP
-#define HYDRUS95_PROGRESSBARDIALOG_HPP
+#ifndef ATLAS_PROGRESSBARDIALOG_HPP
+#define ATLAS_PROGRESSBARDIALOG_HPP
 
 #include <QDialog>
 
@@ -41,4 +41,4 @@ class ProgressBarDialog : public QDialog
 	Ui::ProgressBarDialog *ui;
 };
 
-#endif //HYDRUS95_PROGRESSBARDIALOG_HPP
+#endif //ATLAS_PROGRESSBARDIALOG_HPP

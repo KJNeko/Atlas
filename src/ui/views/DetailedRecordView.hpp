@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/29/23.
 //
 
-#ifndef HYDRUS95_DETAILEDRECORDVIEW_HPP
-#define HYDRUS95_DETAILEDRECORDVIEW_HPP
+#ifndef ATLAS_DETAILEDRECORDVIEW_HPP
+#define ATLAS_DETAILEDRECORDVIEW_HPP
 
 #include <QWidget>
 
@@ -50,4 +50,4 @@ class DetailedRecordView final : public QWidget
 	Ui::DetailedRecordView *ui;
 };
 
-#endif //HYDRUS95_DETAILEDRECORDVIEW_HPP
+#endif //ATLAS_DETAILEDRECORDVIEW_HPP

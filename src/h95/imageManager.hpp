@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/2/23.
 //
 
-#ifndef HYDRUS95_IMAGEMANAGER_HPP
-#define HYDRUS95_IMAGEMANAGER_HPP
+#ifndef ATLAS_IMAGEMANAGER_HPP
+#define ATLAS_IMAGEMANAGER_HPP
 
 #include <filesystem>
 
@@ -18,4 +18,4 @@ namespace imageManager
 	std::filesystem::path importImage( const std::filesystem::path& path );
 } // namespace imageManager
 
-#endif //HYDRUS95_IMAGEMANAGER_HPP
+#endif //ATLAS_IMAGEMANAGER_HPP

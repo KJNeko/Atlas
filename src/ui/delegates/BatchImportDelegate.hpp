@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/27/23.
 //
 
-#ifndef HYDRUS95_BATCHIMPORTDELEGATE_HPP
-#define HYDRUS95_BATCHIMPORTDELEGATE_HPP
+#ifndef ATLAS_BATCHIMPORTDELEGATE_HPP
+#define ATLAS_BATCHIMPORTDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
 
@@ -17,4 +17,4 @@ class BatchImportDelegate final : public QAbstractItemDelegate
 	void setEditorData( QWidget* editor, const QModelIndex& index ) const override;
 };
 
-#endif //HYDRUS95_BATCHIMPORTDELEGATE_HPP
+#endif //ATLAS_BATCHIMPORTDELEGATE_HPP

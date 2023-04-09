@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/29/23.
 //
 
-#ifndef HYDRUS95_RECORDVIEW_HPP
-#define HYDRUS95_RECORDVIEW_HPP
+#ifndef ATLAS_RECORDVIEW_HPP
+#define ATLAS_RECORDVIEW_HPP
 
 #include <QListView>
 
@@ -40,4 +40,4 @@ class RecordView : public QListView
 	void on_customContextMenuRequested( const QPoint& pos );
 };
 
-#endif //HYDRUS95_RECORDVIEW_HPP
+#endif //ATLAS_RECORDVIEW_HPP

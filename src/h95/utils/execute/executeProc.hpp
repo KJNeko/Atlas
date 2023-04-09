@@ -2,8 +2,8 @@
 // Created by kj16609 on 2/20/23.
 //
 
-#ifndef HYDRUS95_EXECUTEPROC_HPP
-#define HYDRUS95_EXECUTEPROC_HPP
+#ifndef ATLAS_EXECUTEPROC_HPP
+#define ATLAS_EXECUTEPROC_HPP
 
 #include <string>
 
@@ -13,4 +13,4 @@
  */
 void executeProc( const std::string& path );
 
-#endif //HYDRUS95_EXECUTEPROC_HPP
+#endif //ATLAS_EXECUTEPROC_HPP

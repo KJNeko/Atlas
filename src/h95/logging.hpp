@@ -2,8 +2,8 @@
 // Created by kj16609 on 1/27/23.
 //
 
-#ifndef HYDRUS95_LOGGING_HPP
-#define HYDRUS95_LOGGING_HPP
+#ifndef ATLAS_LOGGING_HPP
+#define ATLAS_LOGGING_HPP
 
 #include <filesystem>
 
@@ -95,4 +95,4 @@ struct fmt::formatter< std::filesystem::path >
 	}
 };
 
-#endif //HYDRUS95_LOGGING_HPP
+#endif //ATLAS_LOGGING_HPP

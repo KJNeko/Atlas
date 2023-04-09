@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/26/23.
 //
 
-#ifndef HYDRUS95_BATCHIMPORTMODEL_HPP
-#define HYDRUS95_BATCHIMPORTMODEL_HPP
+#ifndef ATLAS_BATCHIMPORTMODEL_HPP
+#define ATLAS_BATCHIMPORTMODEL_HPP
 
 #include <filesystem>
 
@@ -46,4 +46,4 @@ class BatchImportModel final : public QAbstractTableModel
 	friend class BatchImportDelegate;
 };
 
-#endif //HYDRUS95_BATCHIMPORTMODEL_HPP
+#endif //ATLAS_BATCHIMPORTMODEL_HPP

@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/15/23.
 //
 
-#ifndef HYDRUS95_RECORDLISTMODEL_HPP
-#define HYDRUS95_RECORDLISTMODEL_HPP
+#ifndef ATLAS_RECORDLISTMODEL_HPP
+#define ATLAS_RECORDLISTMODEL_HPP
 
 #include <QAbstractListModel>
 
@@ -37,4 +37,4 @@ class RecordListModel : public QAbstractListModel
 	void recordsChanged( std::vector< Record > records );
 };
 
-#endif //HYDRUS95_RECORDLISTMODEL_HPP
+#endif //ATLAS_RECORDLISTMODEL_HPP

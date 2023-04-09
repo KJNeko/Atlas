@@ -2,8 +2,8 @@
 // Created by kj16609 on 4/5/23.
 //
 
-#ifndef HYDRUS95_QUERYBUILDER_HPP
-#define HYDRUS95_QUERYBUILDER_HPP
+#ifndef ATLAS_QUERYBUILDER_HPP
+#define ATLAS_QUERYBUILDER_HPP
 
 #include <array>
 #include <exception>
@@ -63,4 +63,4 @@ std::string escape( std::string_view str );
 
 std::string_view extractUntilNext( std::string_view& str );
 
-#endif //HYDRUS95_QUERYBUILDER_HPP
+#endif //ATLAS_QUERYBUILDER_HPP

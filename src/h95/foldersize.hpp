@@ -2,8 +2,8 @@
 // Created by kj16609 on 3/27/23.
 //
 
-#ifndef HYDRUS95_FOLDERSIZE_HPP
-#define HYDRUS95_FOLDERSIZE_HPP
+#ifndef ATLAS_FOLDERSIZE_HPP
+#define ATLAS_FOLDERSIZE_HPP
 
 #include <filesystem>
 
@@ -27,4 +27,4 @@ inline std::size_t folderSize( const std::filesystem::path& folder )
 	return counter;
 }
 
-#endif //HYDRUS95_FOLDERSIZE_HPP
+#endif //ATLAS_FOLDERSIZE_HPP

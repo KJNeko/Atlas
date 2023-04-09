@@ -2,8 +2,8 @@
 // Created by kj16609 on 4/4/23.
 //
 
-#ifndef HYDRUS95_SYSTEM_HPP
-#define HYDRUS95_SYSTEM_HPP
+#ifndef ATLAS_SYSTEM_HPP
+#define ATLAS_SYSTEM_HPP
 
 namespace sys
 {
@@ -22,4 +22,4 @@ namespace sys
 
 } // namespace sys
 
-#endif //HYDRUS95_SYSTEM_HPP
+#endif //ATLAS_SYSTEM_HPP

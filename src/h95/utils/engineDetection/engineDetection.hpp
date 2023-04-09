@@ -2,8 +2,8 @@
 // Created by kj16609 on 4/1/23.
 //
 
-#ifndef HYDRUS95_ENGINEDETECTION_HPP
-#define HYDRUS95_ENGINEDETECTION_HPP
+#ifndef ATLAS_ENGINEDETECTION_HPP
+#define ATLAS_ENGINEDETECTION_HPP
 
 #include <filesystem>
 #include <vector>
@@ -53,4 +53,4 @@ std::vector< std::filesystem::path > detectExecutables( const std::filesystem::p
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, const Engine engine = UNKNOWN );
 
-#endif //HYDRUS95_ENGINEDETECTION_HPP
+#endif //ATLAS_ENGINEDETECTION_HPP

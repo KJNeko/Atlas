@@ -2,8 +2,8 @@
 // Created by kj16609 on 1/12/23.
 //
 
-#ifndef HYDRUS95_CONFIG_HPP
-#define HYDRUS95_CONFIG_HPP
+#ifndef ATLAS_CONFIG_HPP
+#define ATLAS_CONFIG_HPP
 
 #include <filesystem>
 
@@ -140,4 +140,4 @@ SETTINGS_D( ui, use_system_theme, bool, true )
 SETTINGS_D( ui, stretch_banner_images, bool, false );
 SETTINGS_D( ui, use_simple_layout, bool, true );
 
-#endif //HYDRUS95_CONFIG_HPP
+#endif //ATLAS_CONFIG_HPP

@@ -2,8 +2,8 @@
 // Created by kj16609 on 4/4/23.
 //
 
-#ifndef HYDRUS95_RECORDEDITOR_HPP
-#define HYDRUS95_RECORDEDITOR_HPP
+#ifndef ATLAS_RECORDEDITOR_HPP
+#define ATLAS_RECORDEDITOR_HPP
 
 #include <QDialog>
 
@@ -31,4 +31,4 @@ class RecordEditor : public QDialog
 	Ui::RecordEditor *ui;
 };
 
-#endif //HYDRUS95_RECORDEDITOR_HPP
+#endif //ATLAS_RECORDEDITOR_HPP
