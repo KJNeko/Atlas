@@ -244,13 +244,15 @@ template <>
 bool isEngineT< HTML >( const std::filesystem::path& path )
 {
 	ZoneScoped;
+	bool html_found { false };
 	for(const auto& file : std::filesystem::directory_iterator(path))
 	{
+		spdlog::info("Scanning: {}", file.path());
 		if ( file.path().extension() == ".exe" ) return false;
-		if ( file.path().extension() == ".html" ) return true;
+		if ( file.path().extension() == ".html" ) html_found = true;
 	}
 
-	return false;
+	return html_found;
 }
 
 template <>
