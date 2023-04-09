@@ -16,8 +16,8 @@
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}
 
-void ImportPreProcessor::processDirectory(
-	const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize )
+void ImportPreProcessor::
+	processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize )
 {
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
@@ -26,7 +26,11 @@ void ImportPreProcessor::processDirectory(
 	      itter != std::filesystem::recursive_directory_iterator();
 	      ++itter )
 	{
-		if ( abort_task ) return;
+		if ( abort_task )
+		{
+			abort_task = false;
+			return;
+		}
 
 		const std::filesystem::path& folder { *itter };
 		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
@@ -73,6 +77,6 @@ void ImportPreProcessor::processDirectory(
 
 void ImportPreProcessor::abort()
 {
-	spdlog::debug("Aborting task in PreProcessor");
+	spdlog::debug( "Aborting task in PreProcessor" );
 	abort_task = true;
 }

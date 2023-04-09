@@ -18,6 +18,7 @@ class ImportProcessor : public QObject
 	std::vector< RecordID > completed_records {};
 
 	std::atomic< bool > abort_task { false };
+	std::atomic< bool > pause_task { false };
 
   public:
 
@@ -28,10 +29,10 @@ class ImportProcessor : public QObject
 	std::vector< RecordID > getCompleted() { return completed_records; }
 
   public slots:
-
 	void importGames(
 		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );
 	void abort();
+	void unpause();
 
   signals:
 	void importComplete();
@@ -43,6 +44,7 @@ class ImportProcessor : public QObject
 	void updateSubValue( const int value );
 	void updateValue( const int value );
 	void closeProgressBar();
+	void importFailure( const QString top_msg, const QString body );
 };
 
 #endif //HYDRUS95_IMPORTPROCESSOR_HPP

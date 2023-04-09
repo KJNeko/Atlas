@@ -27,10 +27,10 @@ class ImportPreProcessor : public QObject
 {
 	Q_OBJECT
 
-	std::chrono::time_point<std::chrono::steady_clock> last_update {std::chrono::steady_clock::now()};
-	std::vector<GameImportData> buffer {};
+	std::chrono::time_point< std::chrono::steady_clock > last_update { std::chrono::steady_clock::now() };
+	std::vector< GameImportData > buffer {};
 
-	std::atomic<bool> abort_task { false };
+	std::atomic< bool > abort_task { false };
 
   public:
 
@@ -43,17 +43,15 @@ class ImportPreProcessor : public QObject
 	 *
 	 * @param regex Regex to scan with
 	 * @param base Base filepath to scan
-	 * @param move_imported Default move state for all records when processed. (Can be set individually after)
 	 * @param skip_filesize Causes the filesize calculation to be skipped. Increasing processing speed by a large amount.
 	 */
-	void processDirectory(
-		const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize );
+	void processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize );
 
 	void abort();
 
   signals:
 	void finishedProcessing();
-	void finishedDirectory( const std::vector<GameImportData> info );
+	void finishedDirectory( const std::vector< GameImportData > info );
 };
 
 #endif //HYDRUS95_IMPORTPREPROCESSOR_HPP

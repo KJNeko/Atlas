@@ -13,7 +13,8 @@
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {}
 
-void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
+void ImportProcessor::importGames(
+	const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
 {
 	ZoneScoped;
 	emit startProgressBar();
@@ -24,10 +25,14 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 	//God I love decomposition
 	for ( auto [ path, title, creator, engine, version, size, executables, executable ] : data )
 	{
-		ZoneScopedN("Import game");
+		ZoneScopedN( "Import game" );
 
-		if( abort_task )
+		if ( pause_task ) pause_task.wait( pause_task );
+		if ( abort_task )
+		{
+			abort_task = false;
 			return;
+		}
 
 		emit updateText( QString( "Processing %1" ).arg( title ) );
 
@@ -39,7 +44,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			if ( move_after_import )
 			{
-				ZoneScopedN("Copy game");
+				ZoneScopedN( "Copy game" );
 				//Gather all files to copy
 				std::vector< std::filesystem::path > files;
 				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
@@ -65,8 +70,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 					emit updateSubText( QString( "Copying: %1" )
 					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
 
-					if(scan_size)
-						size += std::filesystem::file_size( source_path );
+					if ( scan_size ) size += std::filesystem::file_size( source_path );
 
 					emit updateSubValue( static_cast< int >( i ) );
 				}
@@ -77,8 +81,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 			{
 				emit updateSubText( "Scanning folder size... This could take awhile" );
 				path = source_folder;
-				if(scan_size)
-					size = folderSize( path );
+				if ( scan_size ) size = folderSize( path );
 			}
 
 			Transaction transaction { Transaction::NoAutocommit };
@@ -108,7 +111,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			completed_records.emplace_back( record->getID() );
 
-			std::filesystem::remove( source_folder );
+			if ( move_after_import ) std::filesystem::remove_all( source_folder );
 
 			//No crash! Yay. Continue to import
 			spdlog::info( "Import succeeded with id {}", record->getID() );
@@ -116,16 +119,32 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 		}
 		catch ( RecordException& e )
 		{
+			pause_task = true;
+			emit importFailure(
+				"Something went wrong",
+				QString( "Something went wrong during the import!\nGame name: %1\nError: RecordException: \"%2\"" )
+					.arg( title )
+					.arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
 			emit updateValue( ++counter );
 		}
 		catch ( std::exception& e )
 		{
+			pause_task = true;
+			emit importFailure(
+				"Something went wrong",
+				QString( "Something went wrong during the import!\nGame name: %1\nError: \"%2\"" )
+					.arg( title )
+					.arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
 			emit updateValue( ++counter );
 		}
 		catch ( ... )
 		{
+			pause_task = true;
+			emit importFailure(
+				"Something went SERIOUSLY wrong",
+				QString( "Something went VERY wrong during the import!\nGame name: %1\nError: Fuck" ).arg( title ) );
 			spdlog::error( "Something went seriously wrong in the import thread!" );
 			emit updateValue( ++counter );
 		}
@@ -137,6 +156,14 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 void ImportProcessor::abort()
 {
-	spdlog::debug("Aborting task in Processor");
 	abort_task = true;
+	unpause();
+	spdlog::debug( "Aborting task in Processor" );
+}
+
+void ImportProcessor::unpause()
+{
+	pause_task = false;
+	pause_task.notify_all();
+	spdlog::debug( "Unblocking ImportProcessor" );
 }

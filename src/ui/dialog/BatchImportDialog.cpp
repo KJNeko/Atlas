@@ -33,7 +33,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	connect( this, &BatchImportDialog::startProcessingDirectory, &preprocessor, &ImportPreProcessor::processDirectory );
 	connect(
 		&preprocessor, &ImportPreProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
-	connect( &preprocessor, &ImportPreProcessor::finishedProcessing, this, &BatchImportDialog::finishedProcessing );
+	connect( &preprocessor, &ImportPreProcessor::finishedProcessing, this, &BatchImportDialog::finishedPreProcessing );
 
 	connect(
 		this,
@@ -41,8 +41,23 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGames );
 
-	connect( this, &BatchImportDialog::startImportingGames, &processor, &ImportProcessor::importGames );
-	connect( &processor, &ImportProcessor::importComplete, this, &BatchImportDialog::finishedImporting );
+	connect(
+		this,
+		&BatchImportDialog::startImportingGames,
+		&processor,
+		&ImportProcessor::importGames,
+		Qt::QueuedConnection );
+	connect(
+		&processor,
+		&ImportProcessor::importComplete,
+		this,
+		&BatchImportDialog::finishedImporting,
+		Qt::QueuedConnection );
+	connect(
+		&processor, &ImportProcessor::importFailure, this, &BatchImportDialog::importFailure, Qt::QueuedConnection );
+
+	//Must be issued on the dialog's thread or else it'll never run.
+	connect( this, &BatchImportDialog::unpauseImport, &processor, &ImportProcessor::unpause, Qt::DirectConnection );
 
 	//Connecting progress bar
 	connect( &processor, &ImportProcessor::updateText, &progress, &ProgressBarDialog::setText );
@@ -138,8 +153,7 @@ void BatchImportDialog::processFiles()
 
 	spdlog::info( "Scanning {} for games", base );
 
-	emit startProcessingDirectory(
-		cleaned_regex, base, ui->cbMoveImported->isChecked(), ui->cbSkipFilesize->isChecked() );
+	emit startProcessingDirectory( cleaned_regex, base, ui->cbSkipFilesize->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }
@@ -222,7 +236,7 @@ void BatchImportDialog::processFinishedDirectory( const std::vector< GameImportD
 	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
 }
 
-void BatchImportDialog::finishedProcessing()
+void BatchImportDialog::finishedPreProcessing()
 {
 	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
 	                              .arg( ui->twGames->model()->rowCount() ) );
@@ -249,11 +263,32 @@ void BatchImportDialog::on_btnCancel_pressed()
 void BatchImportDialog::reject()
 {
 	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
-		 == QMessageBox::Yes )
+	     == QMessageBox::Yes )
 	{
 		this->processor.abort();
 		this->preprocessor.abort();
 	}
 
 	QDialog::reject();
+}
+
+void BatchImportDialog::importFailure( const QString top, const QString bottom )
+{
+	spdlog::warn( "An import failure signal was detected" );
+	if ( QMessageBox::warning(
+			 this,
+			 top,
+			 QString( "Something went wrong during the import process. Do you want to continue?\nMsg: %1" )
+				 .arg( bottom ),
+			 QMessageBox::Yes | QMessageBox::No,
+			 QMessageBox::No )
+	     == QMessageBox::No )
+	{
+		processor.abort();
+		preprocessor.abort();
+		this->setEnabled( true );
+		progress.hide();
+	}
+	else
+		emit unpauseImport();
 }
