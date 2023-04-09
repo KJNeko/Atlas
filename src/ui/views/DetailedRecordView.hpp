@@ -7,7 +7,7 @@
 
 #include <QWidget>
 
-#include "h95/database/Record.hpp"
+#include "atlas/database/Record.hpp"
 
 QT_BEGIN_NAMESPACE
 

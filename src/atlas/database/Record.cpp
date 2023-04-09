@@ -10,9 +10,9 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/config.hpp"
-#include "h95/database/Database.hpp"
-#include "h95/imageManager.hpp"
+#include "atlas/config.hpp"
+#include "atlas/database/Database.hpp"
+#include "atlas/imageManager.hpp"
 
 enum PreviewType
 {

@@ -6,7 +6,7 @@
 #include <QThread>
 #include <QTreeWidget>
 
-#include "h95/database/Search.hpp"
+#include "atlas/database/Search.hpp"
 
 QT_BEGIN_NAMESPACE
 

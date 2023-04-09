@@ -2,7 +2,7 @@
 // Created by kj16609 on 1/27/23.
 //
 
-#include "h95/logging.hpp"
+#include "atlas/logging.hpp"
 
 #include <fmt/ranges.h>
 #include <spdlog/logger.h>
@@ -10,8 +10,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <tracy/Tracy.hpp>
 
-#include "h95/config.hpp"
-#include "h95/database/Record.hpp"
+#include "atlas/config.hpp"
+#include "atlas/database/Record.hpp"
 
 void initLogging()
 {

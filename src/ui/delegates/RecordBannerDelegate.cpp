@@ -9,8 +9,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/config.hpp"
-#include "h95/database/Record.hpp"
+#include "atlas/config.hpp"
+#include "atlas/database/Record.hpp"
 
 void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index )
 	const

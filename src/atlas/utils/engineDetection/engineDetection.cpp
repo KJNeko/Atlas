@@ -11,7 +11,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "../../system.hpp"
-#include "h95/logging.hpp"
+#include "atlas/logging.hpp"
 
 template <>
 bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] const std::filesystem::path& path )

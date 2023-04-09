@@ -10,7 +10,7 @@
 #include <QSettings>
 #include <QVariant>
 
-#include "h95/logging.hpp"
+#include "atlas/logging.hpp"
 
 /**
  *

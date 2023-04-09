@@ -9,8 +9,8 @@
 #include <QFile>
 #include <QPixmapCache>
 
-#include "h95/config.hpp"
-#include "h95/database/Database.hpp"
+#include "atlas/config.hpp"
+#include "atlas/database/Database.hpp"
 #include "ui/mainwindow.h"
 
 int main( int argc, char** argv )

@@ -3,8 +3,8 @@
 
 #include <QDialog>
 
-#include "h95/threading/ImportPreProcessor.hpp"
-#include "h95/threading/ImportProcessor.hpp"
+#include "atlas/threading/ImportPreProcessor.hpp"
+#include "atlas/threading/ImportProcessor.hpp"
 
 namespace Ui
 {

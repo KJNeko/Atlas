@@ -42,7 +42,7 @@ endif ()
 add_subdirectory(dependency/tracy)
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/h95/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/atlas/*.cpp")
 
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")

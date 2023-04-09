@@ -13,7 +13,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/foldersize.hpp"
+#include "atlas/foldersize.hpp"
 #include "ui_DetailedRecordView.h"
 
 DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::DetailedRecordView )

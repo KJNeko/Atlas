@@ -4,7 +4,7 @@
 
 #include "Search.hpp"
 
-#include "h95/search/QueryBuilder.hpp"
+#include "atlas/search/QueryBuilder.hpp"
 
 void Search::searchTextChanged( [[maybe_unused]] QString text )
 {

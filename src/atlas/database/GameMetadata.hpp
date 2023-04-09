@@ -9,8 +9,8 @@
 
 #include <QString>
 
-#include "h95/Types.hpp"
-#include "h95/database/Database.hpp"
+#include "atlas/Types.hpp"
+#include "atlas/database/Database.hpp"
 
 struct RecordData;
 

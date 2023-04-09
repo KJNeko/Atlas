@@ -12,9 +12,9 @@
 #include <tracy/Tracy.hpp>
 
 #include "ProgressBarDialog.hpp"
-#include "h95/config.hpp"
-#include "h95/foldersize.hpp"
-#include "h95/logging.hpp"
+#include "atlas/config.hpp"
+#include "atlas/foldersize.hpp"
+#include "atlas/logging.hpp"
 #include "ui_SettingsDialog.h"
 
 SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )

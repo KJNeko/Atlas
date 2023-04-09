@@ -12,8 +12,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "atlas/database/Database.hpp"
 #include "config.hpp"
-#include "h95/database/Database.hpp"
 #include "system.hpp"
 
 namespace imageManager
@@ -52,7 +52,7 @@ namespace imageManager
 			}
 
 			//Save the image to a temp file depending on os
-			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "h95" / "temp.webp" };
+			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "atlas" / "temp.webp" };
 			spdlog::info( "Temp Output Path:{}", temp_path.string() );
 
 			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );

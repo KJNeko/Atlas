@@ -8,10 +8,10 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/foldersize.hpp"
-#include "h95/logging.hpp"
-#include "h95/utils/engineDetection/engineDetection.hpp"
-#include "h95/utils/regex/regex.hpp"
+#include "atlas/foldersize.hpp"
+#include "atlas/logging.hpp"
+#include "atlas/utils/engineDetection/engineDetection.hpp"
+#include "atlas/utils/regex/regex.hpp"
 
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}

@@ -256,7 +256,7 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>Move to Hydrus95 Game folder (Will delete after!)</string>
+                <string>Move to game folder (Will delete after!)</string>
                </property>
               </widget>
              </item>

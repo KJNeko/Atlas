@@ -6,9 +6,9 @@
 
 #include <QApplication>
 
-#include "h95/config.hpp"
-#include "h95/database/Record.hpp"
-#include "h95/foldersize.hpp"
+#include "atlas/config.hpp"
+#include "atlas/database/Record.hpp"
+#include "atlas/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {}
@@ -122,9 +122,7 @@ void ImportProcessor::importGames(
 			pause_task = true;
 			emit importFailure(
 				"Something went wrong",
-				QString( "Game name: %1\nError: RecordException: \"%2\"" )
-					.arg( title )
-					.arg( e.what() ) );
+				QString( "Game name: %1\nError: RecordException: \"%2\"" ).arg( title ).arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
 			emit updateValue( ++counter );
 		}
@@ -132,10 +130,7 @@ void ImportProcessor::importGames(
 		{
 			pause_task = true;
 			emit importFailure(
-				"Something went wrong",
-				QString( "Game name: %1\nError: \"%2\"" )
-					.arg( title )
-					.arg( e.what() ) );
+				"Something went wrong", QString( "Game name: %1\nError: \"%2\"" ).arg( title ).arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
 			emit updateValue( ++counter );
 		}

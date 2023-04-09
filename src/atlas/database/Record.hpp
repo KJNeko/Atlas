@@ -10,8 +10,8 @@
 #include <tracy/Tracy.hpp>
 
 #include "FlyWeight.hpp"
-#include "h95/Types.hpp"
-#include "h95/database/GameMetadata.hpp"
+#include "atlas/Types.hpp"
+#include "atlas/database/GameMetadata.hpp"
 
 enum IMAGE_TYPE
 {

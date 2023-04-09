@@ -6,7 +6,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/config.hpp"
+#include "atlas/config.hpp"
 
 namespace internal
 {

@@ -9,7 +9,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "h95/logging.hpp"
+#include "atlas/logging.hpp"
 
 //! Returns the byte size of a folder
 inline std::size_t folderSize( const std::filesystem::path& folder )

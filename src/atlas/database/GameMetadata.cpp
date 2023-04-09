@@ -2,12 +2,12 @@
 // Created by kj16609 on 1/15/23.
 //
 
-#include "h95/database/GameMetadata.hpp"
+#include "atlas/database/GameMetadata.hpp"
 
 #include "Record.hpp"
-#include "h95/config.hpp"
-#include "h95/logging.hpp"
-#include "h95/utils/execute/executeProc.hpp"
+#include "atlas/config.hpp"
+#include "atlas/logging.hpp"
+#include "atlas/utils/execute/executeProc.hpp"
 
 QString GameMetadata::getVersionName() const
 {

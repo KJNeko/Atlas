@@ -9,9 +9,9 @@
 #include <tracy/Tracy.hpp>
 
 #include "ProgressBarDialog.hpp"
-#include "h95/config.hpp"
-#include "h95/foldersize.hpp"
-#include "h95/utils/regex/regex.hpp"
+#include "atlas/config.hpp"
+#include "atlas/foldersize.hpp"
+#include "atlas/utils/regex/regex.hpp"
 #include "ui/delegates/BatchImportDelegate.hpp"
 #include "ui/models/BatchImportModel.hpp"
 #include "ui_BatchImportDialog.h"
