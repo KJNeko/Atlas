@@ -2,12 +2,7 @@
 // Created by kj16609 on 1/27/23.
 //
 
-#pragma GCC diagnostic push
-
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wswitch-default"
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#include "h95/logging.hpp"
 
 #include <fmt/ranges.h>
 #include <spdlog/logger.h>
@@ -16,11 +11,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "h95/config.hpp"
-
-#pragma GCC diagnostic pop
-
 #include "h95/database/Record.hpp"
-#include "h95/logging.hpp"
 
 void initLogging()
 {

@@ -1,15 +1,23 @@
+#docs
 /docs/html/
 /docs/latex/
 
+#clion IDE stuff
 /.idea/
-
 /venv/
 
+#Build dirs
 /build/
 /cmake-build-debug/
 /cmake-build-relwithdebinfo/
 /cmake-build-release/
 /cmake-build-debug-mingw/
+/vcpkg_installed/
+
+#Build helpers
+build.bat
+
+#Visual studio stuff
 /.vs
 /out/build/x64-Debug
 /CMakeFiles

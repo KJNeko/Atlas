@@ -8,6 +8,7 @@
 #include <concepts>
 #include <memory>
 #include <unordered_map>
+#include <mutex>
 
 //! Requires `FlyWeightID<T_Key> key() const` to be defined
 template < typename T, typename T_Key >

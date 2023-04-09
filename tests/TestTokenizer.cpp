@@ -4,7 +4,8 @@
 
 #include <assert.h>
 
-#include "GTestBox.hpp"
+#include <gtest/gtest.h>
+
 #include "h95/search/QueryBuilder.hpp"
 
 // system:filesize > 2G & creator:my name & !( engine:unity | engine:ren'py )
@@ -33,13 +34,14 @@ TEST( Search, QueryGen )
 	const std::string str { "system:size > 2G & creator:my name & !( engine:unity | engine:ren'py )" };
 	const std::string generated_str { generateQuery( str ) };
 
-	GTEST_ASSERT_EQ( "SELECT record_id FROM records WHERE record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > 2000000000) AND creator LIKE 'my name' AND NOT ( engine LIKE 'unity' OR engine LIKE 'ren'py' )"
-	                 , generated_str );
+	GTEST_ASSERT_EQ(
+		"SELECT record_id FROM records WHERE record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > 2000000000) AND creator LIKE 'my name' AND NOT ( engine LIKE 'unity' OR engine LIKE 'ren'py' )",
+		generated_str );
 }
 
-TEST(Search, QueryGen2)
+TEST( Search, QueryGen2 )
 {
-	const std::string str {"tag:3d & tag:animated & engine:renpy & system:size < 5G"};
+	const std::string str { "tag:3d & tag:animated & engine:renpy & system:size < 5G" };
 	const std::string generated_str { generateQuery( str ) };
 
 	GTEST_ASSERT_EQ( "", generated_str );
@@ -52,7 +54,7 @@ TEST( Search, parseBytestring )
 	GTEST_ASSERT_EQ( "245000000000", parseBytesize( str ) );
 }
 
-TEST(Search, parseBytesize2)
+TEST( Search, parseBytesize2 )
 {
 	constexpr std::string_view str { " 2G" };
 
@@ -78,54 +80,54 @@ TEST( Search, extractUntilNext2 )
 }
 
 // Testing behaviour that we should extract anything appending the string
-TEST(Search, extractUntilNext3)
+TEST( Search, extractUntilNext3 )
 {
-	std::string_view str {" system:rating > 2"};
+	std::string_view str { " system:rating > 2" };
 
 	GTEST_ASSERT_EQ( "", extractUntilNext( str ) );
 	GTEST_ASSERT_EQ( str, "system:rating > 2" );
 }
 
 // Testing normal extraction behaviour
-TEST(Search, extractUntilNext4)
+TEST( Search, extractUntilNext4 )
 {
-	std::string_view str {"system:rating > 2"};
+	std::string_view str { "system:rating > 2" };
 
 	GTEST_ASSERT_EQ( "system:rating > 2", extractUntilNext( str ) );
 	GTEST_ASSERT_EQ( str, "" );
 }
 
-TEST(Search, extractUntilNextFull)
+TEST( Search, extractUntilNextFull )
 {
 	std::string_view str { "system:filesize > 2G & creator:my name & !( engine:unity | engine:ren'py )" };
 
-	GTEST_ASSERT_EQ("system:filesize > 2G", extractUntilNext(str));
-	GTEST_ASSERT_EQ("&", extractUntilNext(str));
-	GTEST_ASSERT_EQ("creator:my name", extractUntilNext(str));
-	GTEST_ASSERT_EQ("&", extractUntilNext(str));
-	GTEST_ASSERT_EQ("!", extractUntilNext(str));
-	GTEST_ASSERT_EQ("( engine:unity | engine:ren'py )", extractUntilNext(str));
+	GTEST_ASSERT_EQ( "system:filesize > 2G", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "&", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "creator:my name", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "&", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "!", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "( engine:unity | engine:ren'py )", extractUntilNext( str ) );
 }
 
-TEST(Search, extractUntilNextFullEscaped)
+TEST( Search, extractUntilNextFullEscaped )
 {
 	std::string_view str { "system:filesize > 2G & creator:my name & !\\( engine:unity | engine:ren'py \\)" };
 
-	GTEST_ASSERT_EQ("system:filesize > 2G", extractUntilNext(str));
-	GTEST_ASSERT_EQ("&", extractUntilNext(str));
-	GTEST_ASSERT_EQ("creator:my name", extractUntilNext(str));
-	GTEST_ASSERT_EQ("&", extractUntilNext(str));
-	GTEST_ASSERT_EQ("!\\(", extractUntilNext(str));
-	GTEST_ASSERT_EQ("engine:unity", extractUntilNext(str));
-	GTEST_ASSERT_EQ("|", extractUntilNext(str));
-	GTEST_ASSERT_EQ("engine:ren'py \\)", extractUntilNext(str));
+	GTEST_ASSERT_EQ( "system:filesize > 2G", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "&", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "creator:my name", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "&", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "!\\(", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "engine:unity", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "|", extractUntilNext( str ) );
+	GTEST_ASSERT_EQ( "engine:ren'py \\)", extractUntilNext( str ) );
 }
 
-TEST(Search, splitNamespace)
+TEST( Search, splitNamespace )
 {
-	const std::string_view str {"mynamespace:mytext"};
+	const std::string_view str { "mynamespace:mytext" };
 
-	const auto [namespace_text, sub] = seperateNamespace(str);
-	GTEST_ASSERT_EQ(namespace_text, "mynamespace");
-	GTEST_ASSERT_EQ(sub, "mytext");
+	const auto [ namespace_text, sub ] = seperateNamespace( str );
+	GTEST_ASSERT_EQ( namespace_text, "mynamespace" );
+	GTEST_ASSERT_EQ( sub, "mytext" );
 }

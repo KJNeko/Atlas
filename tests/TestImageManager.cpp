@@ -5,7 +5,8 @@
 #include <QApplication>
 #include <QPixmap>
 
-#include "GTestBox.hpp"
+#include <gtest/gtest.h>
+
 #include "h95/database/Database.hpp"
 #include "h95/imageManager.hpp"
 #include "h95/logging.hpp"

@@ -1,15 +1,9 @@
 [submodule "docs/doxygen-awesome-css"]
 	path = docs/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
-[submodule "dependencies/sqlite_modern_cpp"]
-	path = dependencies/sqlite_modern_cpp
-	url = https://github.com/SqliteModernCpp/sqlite_modern_cpp.git
-[submodule "dependencies/spdlog"]
-	path = dependencies/spdlog
-	url = https://github.com/gabime/spdlog.git
-[submodule "dependencies/fmt"]
-	path = dependencies/fmt
-	url = https://github.com/fmtlib/fmt.git
-[submodule "dependencies/tracy"]
-	path = dependencies/tracy
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg
+[submodule "dependency/tracy"]
+	path = dependency/tracy
 	url = https://github.com/wolfpld/tracy.git
