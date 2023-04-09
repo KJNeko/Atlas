@@ -256,7 +256,7 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>Move to Hydrus95 Game folder (Can be set individually in next page)</string>
+                <string>Move to Hydrus95 Game folder (Will delete after!)</string>
                </property>
               </widget>
              </item>
@@ -392,19 +392,6 @@ Hover over the column headers for help text</string>
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btnNext">
-        <property name="minimumSize">
-         <size>
-          <width>75</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Next</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnBack">
         <property name="enabled">
          <bool>false</bool>
@@ -417,6 +404,19 @@ Hover over the column headers for help text</string>
         </property>
         <property name="text">
          <string>Back</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnNext">
+        <property name="minimumSize">
+         <size>
+          <width>75</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Next</string>
         </property>
        </widget>
       </item>
