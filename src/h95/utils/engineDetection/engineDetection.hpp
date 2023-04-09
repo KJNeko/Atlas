@@ -34,7 +34,7 @@ enum Engine : int
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
-bool isEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path );
+bool isEngineT( const std::filesystem::path& path );
 
 //! String name of the engine.
 template < Engine engine >
@@ -43,7 +43,7 @@ QString engineNameT();
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
 //! Returns an engine type of ENGINES_END if no engine is determined
-Engine determineEngine( const std::filesystem::path& path, const std::filesystem::path& executable_path );
+Engine determineEngine( const std::filesystem::path& path );
 
 //! Returns a string name of the engine
 QString engineName( const Engine engine );

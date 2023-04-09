@@ -43,7 +43,7 @@ void ImportPreProcessor::processDirectory(
 					std::filesystem::relative( folder, base ),
 					title,
 					creator,
-					engine.isEmpty() ? engineName( determineEngine( folder, potential_executables.at( 0 ) ) ) : engine,
+					engine.isEmpty() ? engineName( determineEngine( folder ) ) : engine,
 					version,
 					skip_filesize ? 0 : folderSize( folder ),
 					potential_executables,
