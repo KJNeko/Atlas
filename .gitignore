@@ -16,3 +16,4 @@
 /CMakeCache.txt
 *.user
 .vscode
+*.autosave

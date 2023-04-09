@@ -79,59 +79,36 @@
      </widget>
      <widget class="QWidget" name="settingsBannerViewer">
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_9">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="3" column="1" colspan="3">
+        <widget class="QListView" name="banner_preview">
+         <property name="minimumSize">
+          <size>
+           <width>398</width>
+           <height>196</height>
+          </size>
          </property>
-         <property name="text">
-          <string>x</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QSpinBox" name="sbBannerY">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximum">
-          <number>5000</number>
-         </property>
-         <property name="value">
-          <number>250</number>
+         <property name="maximumSize">
+          <size>
+           <width>398</width>
+           <height>196</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QSpinBox" name="sbBannerX">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="3" column="4">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-         <property name="maximum">
-          <number>5000</number>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
          </property>
-         <property name="value">
-          <number>600</number>
-         </property>
-        </widget>
+        </spacer>
        </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Banner size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
+       <item row="3" column="0">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -143,6 +120,277 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="0" colspan="8">
+        <widget class="QLabel" name="label_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>The default Grid Capsule dimensons is 600px x 280px. All setting  below will be used for each grid capsule layout</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>240</width>
+           <height>220</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>240</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Grid Capsule Layout</string>
+         </property>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>30</y>
+            <width>170</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Enable Top Overaly</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>50</y>
+            <width>170</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Enable Bottom Overlay</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_3">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>70</y>
+            <width>141</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Enable Border</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>160</y>
+            <width>101</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>Fill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Fit</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Stretch</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Fit + Blur</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_11">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>170</y>
+            <width>161</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Image Layout</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>130</y>
+            <width>71</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Banner size:</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="sbBannerX">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>130</y>
+            <width>51</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+          <property name="value">
+           <number>600</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>130</y>
+            <width>6</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>x</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="sbBannerY">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>130</y>
+            <width>51</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+          <property name="value">
+           <number>280</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_12">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>100</y>
+            <width>131</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Padding between Grids:</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="sbBannerX_2">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>100</y>
+            <width>51</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+          <property name="value">
+           <number>2</number>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item row="6" column="0" rowspan="2" colspan="3">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Top Overlay</string>
+         </property>
+         <widget class="QComboBox" name="comboBox_2">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>30</y>
+            <width>171</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>Top Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bottom Center</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_13">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Title Location</string>
+          </property>
+         </widget>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -372,6 +620,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>150</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <item>
       <property name="text">
        <string>General</string>
@@ -384,7 +638,17 @@
      </item>
      <item>
       <property name="text">
-       <string>Banner Viewer</string>
+       <string>Grid Layout</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Cover Layout</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Banner Layout</string>
       </property>
      </item>
      <item>
