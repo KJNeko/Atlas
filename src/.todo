@@ -11,4 +11,6 @@ TODO:
 - Closing import window while scanning will cause it to lock update
 - Back button disable while importing. <- tower messed this up
 - Add version to help/readme
+
+FINISHED:
 - Update html support. not all games use index.html

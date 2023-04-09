@@ -244,7 +244,13 @@ template <>
 bool isEngineT< HTML >( const std::filesystem::path& path )
 {
 	ZoneScoped;
-	return std::filesystem::exists( path / "index.html" );
+	for(const auto& file : std::filesystem::directory_iterator(path))
+	{
+		if ( file.path().extension() == ".exe" ) return false;
+		if ( file.path().extension() == ".html" ) return true;
+	}
+
+	return false;
 }
 
 template <>

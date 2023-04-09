@@ -18,7 +18,6 @@ enum Engine : int
 	Unreal,
 	RPGM, // #24
 	WolfRPG,
-	HTML,
 	VisualNovelMaker,
 	TyanoBuilder,
 	Java,
@@ -28,6 +27,7 @@ enum Engine : int
 	NScripter,
 	NVList,
 	Sukai2,
+	HTML,
 	ENGINES_END,
 	UNKNOWN
 };
