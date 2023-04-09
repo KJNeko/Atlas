@@ -26,6 +26,8 @@ void ImportPreProcessor::processDirectory(
 	      itter != std::filesystem::recursive_directory_iterator();
 	      ++itter )
 	{
+		if ( abort_task ) return;
+
 		const std::filesystem::path& folder { *itter };
 		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
 		{
@@ -47,8 +49,7 @@ void ImportPreProcessor::processDirectory(
 					version,
 					skip_filesize ? 0 : folderSize( folder ),
 					potential_executables,
-					potential_executables.at( 0 ),
-					move_imported );
+					potential_executables.at( 0 ) );
 
 				using namespace std::chrono_literals;
 				if ( buffer.size() > 8 || last_update + 500ms < std::chrono::steady_clock::now() )
@@ -68,4 +69,10 @@ void ImportPreProcessor::processDirectory(
 	if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
 
 	emit finishedProcessing();
+}
+
+void ImportPreProcessor::abort()
+{
+	spdlog::debug("Aborting task in PreProcessor");
+	abort_task = true;
 }

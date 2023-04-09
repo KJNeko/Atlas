@@ -21,7 +21,6 @@ struct GameImportData
 	std::size_t size {};
 	std::vector< std::filesystem::path > executables {};
 	std::filesystem::path executable {};
-	bool move_after_import { false };
 };
 
 class ImportPreProcessor : public QObject
@@ -30,6 +29,8 @@ class ImportPreProcessor : public QObject
 
 	std::chrono::time_point<std::chrono::steady_clock> last_update {std::chrono::steady_clock::now()};
 	std::vector<GameImportData> buffer {};
+
+	std::atomic<bool> abort_task { false };
 
   public:
 
@@ -47,6 +48,8 @@ class ImportPreProcessor : public QObject
 	 */
 	void processDirectory(
 		const QString regex, const std::filesystem::path base, const bool move_imported, const bool skip_filesize );
+
+	void abort();
 
   signals:
 	void finishedProcessing();

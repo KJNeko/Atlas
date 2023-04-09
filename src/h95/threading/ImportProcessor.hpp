@@ -17,6 +17,8 @@ class ImportProcessor : public QObject
 
 	std::vector< RecordID > completed_records {};
 
+	std::atomic< bool > abort_task { false };
+
   public:
 
 	ImportProcessor();
@@ -27,7 +29,9 @@ class ImportProcessor : public QObject
 
   public slots:
 
-	void importGames( const std::vector< GameImportData > data, const std::filesystem::path source );
+	void importGames(
+		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );
+	void abort();
 
   signals:
 	void importComplete();

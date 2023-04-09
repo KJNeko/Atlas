@@ -13,7 +13,7 @@
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {}
 
-void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source )
+void ImportProcessor::importGames( const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
 {
 	ZoneScoped;
 	emit startProgressBar();
@@ -22,10 +22,14 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 	int counter { 0 };
 
 	//God I love decomposition
-	for ( auto [ path, title, creator, engine, version, size, executables, executable, move_after_import ] : data )
+	for ( auto [ path, title, creator, engine, version, size, executables, executable ] : data )
 	{
 		ZoneScopedN("Import game");
-		emit updateText( QString( "Importing %1" ).arg( title ) );
+
+		if( abort_task )
+			return;
+
+		emit updateText( QString( "Processing %1" ).arg( title ) );
 
 		const auto source_folder { source / path };
 
@@ -104,7 +108,7 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 			completed_records.emplace_back( record->getID() );
 
-			//std::filesystem::remove( source_folder );
+			std::filesystem::remove( source_folder );
 
 			//No crash! Yay. Continue to import
 			spdlog::info( "Import succeeded with id {}", record->getID() );
@@ -129,4 +133,10 @@ void ImportProcessor::importGames( const std::vector< GameImportData > data, con
 
 	emit closeProgressBar();
 	emit importComplete();
+}
+
+void ImportProcessor::abort()
+{
+	spdlog::debug("Aborting task in Processor");
+	abort_task = true;
 }

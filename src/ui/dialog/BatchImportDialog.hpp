@@ -35,6 +35,9 @@ class BatchImportDialog : public QDialog
 	void importFiles();
 	void processFiles();
 
+  public slots:
+	void reject();
+
   private slots:
 	void on_btnSetFolder_pressed();
 	void on_btnNext_pressed();
@@ -50,7 +53,7 @@ class BatchImportDialog : public QDialog
 	void startProcessingDirectory(
 		const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize );
 	void addToModel( const std::vector<GameImportData> data );
-	void startImportingGames( const std::vector< GameImportData > data, const std::filesystem::path source );
+	void startImportingGames( const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );
 	void importComplete( std::vector< RecordID > records );
 };
 

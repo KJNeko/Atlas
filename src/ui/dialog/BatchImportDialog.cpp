@@ -148,9 +148,18 @@ void BatchImportDialog::importFiles()
 {
 	const auto& games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
 
-	emit startImportingGames( games, ui->tbPath->text().toStdString() );
+	if ( ui->cbMoveImported->isChecked() )
+		if (
+			QMessageBox::question(
+				this,
+				"Are you sure?",
+				"You have \"Move after import\" checked. This will DELETE the game from the source direction after we have copied it. Are you ABSOLUTELY SURE?" )
+			== QMessageBox::No )
+			return;
 
-	this->setDisabled(true);
+	emit startImportingGames( games, ui->tbPath->text().toStdString(), ui->cbMoveImported->isChecked() );
+
+	this->setDisabled( true );
 }
 
 void BatchImportDialog::on_btnNext_pressed()
@@ -183,7 +192,7 @@ void BatchImportDialog::on_btnNext_pressed()
 
 		ui->swImportGames->setCurrentIndex( 1 );
 		ui->btnBack->setEnabled( true );
-		ui->btnNext->setEnabled( false );
+		ui->btnNext->setDisabled( true );
 
 		processFiles();
 	}
@@ -193,7 +202,7 @@ void BatchImportDialog::on_btnBack_pressed()
 {
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
-	ui->btnNext->setText("Next");
+	ui->btnNext->setText( "Next" );
 	ui->swImportGames->setCurrentIndex( 0 );
 	ui->btnBack->setHidden( true );
 }
@@ -206,7 +215,7 @@ void BatchImportDialog::modelChanged(
 	ui->twGames->resizeColumnsToContents();
 }
 
-void BatchImportDialog::processFinishedDirectory( const std::vector<GameImportData> game_data )
+void BatchImportDialog::processFinishedDirectory( const std::vector< GameImportData > game_data )
 {
 	emit addToModel( game_data );
 	ui->twGames->resizeColumnsToContents();
@@ -230,5 +239,21 @@ void BatchImportDialog::on_btnCancel_pressed()
 {
 	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
 	     == QMessageBox::Yes )
+	{
+		this->processor.abort();
+		this->preprocessor.abort();
 		this->close();
+	}
+}
+
+void BatchImportDialog::reject()
+{
+	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
+		 == QMessageBox::Yes )
+	{
+		this->processor.abort();
+		this->preprocessor.abort();
+	}
+
+	QDialog::reject();
 }
