@@ -121,7 +121,7 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 	{
 		spdlog::error( "Transaction: Database was not ready!" );
 		data.reset();
-		throw TransactionInvalid(m_previous_statement);
+		throw TransactionInvalid( m_previous_statement );
 	}
 
 	*this << "BEGIN TRANSACTION";

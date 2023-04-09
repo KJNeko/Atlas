@@ -20,8 +20,6 @@ namespace sys
 	[[maybe_unused]] constexpr bool is_windows { false };
 #endif
 
-}
-
-
+} // namespace sys
 
 #endif //HYDRUS95_SYSTEM_HPP

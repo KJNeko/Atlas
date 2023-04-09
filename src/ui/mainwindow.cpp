@@ -17,15 +17,15 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::M
 	addTreeRoot( "Games", "0" );
 
 	connect( ui->SearchBox, &QLineEdit::textChanged, &record_search, &Search::searchTextChanged );
-	connect(this, &MainWindow::triggerEmptySearch, &record_search, &Search::triggerEmptySearch);
+	connect( this, &MainWindow::triggerEmptySearch, &record_search, &Search::triggerEmptySearch );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
-	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed);
+	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
 
 	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 
-	record_search.moveToThread(&search_thread);
+	record_search.moveToThread( &search_thread );
 	search_thread.start();
 
 	emit triggerEmptySearch();
@@ -89,7 +89,6 @@ void MainWindow::switchToDetailed( const Record record )
 	ui->detailedRecordView->setRecord( record );
 	ui->stackedWidget->setCurrentIndex( 1 );
 }
-
 
 void MainWindow::on_homeButton_pressed()
 {

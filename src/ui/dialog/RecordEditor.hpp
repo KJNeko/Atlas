@@ -19,7 +19,7 @@ QT_END_NAMESPACE
 class RecordEditor : public QDialog
 {
 	Q_OBJECT
-	Q_DISABLE_COPY_MOVE(RecordEditor)
+	Q_DISABLE_COPY_MOVE( RecordEditor )
 
   public:
 

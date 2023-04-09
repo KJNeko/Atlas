@@ -145,9 +145,10 @@ GameMetadata& DetailedRecordView::selectedVersion()
 {
 	if ( !m_record.has_value() ) throw std::runtime_error( "selectedVersion: Record invalid" );
 
-	if ( m_record.value()->getVersions().size() == 0 ) throw std::runtime_error( "selectedVersion: No versions available" );
+	if ( m_record.value()->getVersions().size() == 0 )
+		throw std::runtime_error( "selectedVersion: No versions available" );
 
-	return m_record.value()->getVersions()[selected_version_idx];
+	return m_record.value()->getVersions()[ selected_version_idx ];
 }
 
 void DetailedRecordView::on_btnPlay_pressed()

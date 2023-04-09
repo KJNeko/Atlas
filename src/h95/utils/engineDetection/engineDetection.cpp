@@ -33,7 +33,7 @@ bool isBlacklistT( const std::string& name, const std::string_view comp )
 	return name == comp;
 }
 
-bool isBlacklistT( const std::string& name, std::string_view comp, std::same_as<std::string_view> auto... comps )
+bool isBlacklistT( const std::string& name, std::string_view comp, std::same_as< std::string_view > auto... comps )
 {
 	return name == comp || isBlacklistT( name, comps... );
 }
@@ -245,7 +245,7 @@ bool isEngineT< HTML >( const std::filesystem::path& path )
 {
 	ZoneScoped;
 	bool html_found { false };
-	for(const auto& file : std::filesystem::directory_iterator(path))
+	for ( const auto& file : std::filesystem::directory_iterator( path ) )
 	{
 		if ( file.path().extension() == ".exe" ) return false;
 		if ( file.path().extension() == ".html" ) html_found = true;

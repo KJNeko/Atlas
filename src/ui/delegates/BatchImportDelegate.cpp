@@ -128,7 +128,7 @@ QWidget* BatchImportDelegate::
 		case ENGINE:
 			{
 				QLineEdit* edit { new QLineEdit( parent ) };
-				edit->setObjectName("QTableItemLineEdit");
+				edit->setObjectName( "QTableItemLineEdit" );
 				edit->move( options.rect.topLeft() );
 				edit->resize( options.rect.size() );
 				return edit;

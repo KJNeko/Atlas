@@ -51,15 +51,16 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 
 	//To manipulate text from going to far right or far left, we need to add padding before passing to drawText
 	std::string engine_str = "  " + record->getEngine().toStdString();
-	painter ->setPen(qRgb(210,210,210));
+	painter->setPen( qRgb( 210, 210, 210 ) );
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
-	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, QString::fromStdString(engine_str) ); //Engine
+	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, QString::fromStdString( engine_str ) ); //Engine
 
 	if ( record->getVersions().size() > 0 )
 	{
-		auto &latest { record->getLatestVersion() };		
+		auto &latest { record->getLatestVersion() };
 		std::string version_str = latest.getVersionName().toStdString() + "  ";
-		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, QString::fromStdString(version_str) ); //latest version
+		painter->drawText(
+			strip_rect, Qt::AlignVCenter | Qt::AlignRight, QString::fromStdString( version_str ) ); //latest version
 	}
 	else
 		painter->drawText( strip_rect, Qt::AlignVCenter | Qt::AlignRight, "None" );

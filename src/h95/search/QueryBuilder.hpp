@@ -49,8 +49,6 @@
  *
  */
 
-
-
 std::string_view trimSpaces( std::string_view str );
 
 std::string parseBytesize( std::string_view str );
