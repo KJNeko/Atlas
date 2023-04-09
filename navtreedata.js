@@ -79,8 +79,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AddGameDialog_8cpp.html",
-"classMainWindow.html#a0cf07357600379a356c56f377036f602",
-"index.html"
+"classImportProcessor.html#ab0784d7105c6a4d5bc83538fa18ae765",
+"globals_type.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -32,6 +32,5 @@ var searchData=
   ['metadataexception_29',['MetadataException',['../structMetadataException.html#aa1b88313083d49415dfa7e6911b0e7c1',1,'MetadataException::MetadataException()'],['../structMetadataException.html',1,'MetadataException']]],
   ['modelchanged_30',['modelChanged',['../classBatchImportDialog.html#a2dc09848c1b774d4e9943ffec538eb4c',1,'BatchImportDialog']]],
   ['mousedoubleclickevent_31',['mouseDoubleClickEvent',['../classRecordView.html#ac32f20561e8a00a393a5005b94c30051',1,'RecordView']]],
-  ['move_5fafter_5fimport_32',['move_after_import',['../structGameImportData.html#a18b6544f89868a5bec9249a93018f5b5',1,'GameImportData']]],
-  ['mtxtype_33',['MtxType',['../namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73',1,'internal']]]
+  ['mtxtype_32',['MtxType',['../namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73',1,'internal']]]
 ];

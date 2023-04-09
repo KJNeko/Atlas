@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: src/h95/search/QueryBuilder.hpp Source File</title>
+<title>Atlas Game Manager: src/atlas/search/QueryBuilder.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,8 +112,8 @@ $(document).ready(function(){initNavTree('QueryBuilder_8hpp_source.html',''); in
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 4/5/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef HYDRUS95_QUERYBUILDER_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define HYDRUS95_QUERYBUILDER_HPP</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_QUERYBUILDER_HPP</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_QUERYBUILDER_HPP</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;exception&gt;</span></div>
@@ -121,32 +121,31 @@ $(document).ready(function(){initNavTree('QueryBuilder_8hpp_source.html',''); in
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="logging_8hpp.html">h95/logging.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="system_8hpp.html">h95/system.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>std::string_view <a class="code hl_function" href="QueryBuilder_8hpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a>( std::string_view str );</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a>( std::string_view str );</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#afe249139296018db7d361baa8647bb25">generateQuery</a>( <span class="keyword">const</span> std::string str );</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>std::pair&lt; std::string_view, std::string_view &gt; <a class="code hl_function" href="QueryBuilder_8hpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a>( <span class="keyword">const</span> std::string_view str );</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a>( std::string_view str_view );</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a>( std::string_view str );</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>std::string_view <a class="code hl_function" href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a>( std::string_view&amp; str );</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif </span><span class="comment">//HYDRUS95_QUERYBUILDER_HPP</span></div>
-<div class="ttc" id="aQueryBuilder_8hpp_html_a065f3c3f0001421eb2cb9632bb821ce1"><div class="ttname"><a href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a></div><div class="ttdeci">std::string_view extractUntilNext(std::string_view &amp;str)</div><div class="ttdoc">Extracts characters until reaching a grouping operator or namespace or system tag.</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:258</div></div>
-<div class="ttc" id="aQueryBuilder_8hpp_html_a208192a42d7e5a7b6b7cb117a915eed5"><div class="ttname"><a href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a></div><div class="ttdeci">std::string processString(std::string_view str_view)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:298</div></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="logging_8hpp.html">atlas/logging.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="system_8hpp.html">atlas/system.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>std::string_view <a class="code hl_function" href="QueryBuilder_8hpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a>( std::string_view str );</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a>( std::string_view str );</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#afe249139296018db7d361baa8647bb25">generateQuery</a>( <span class="keyword">const</span> std::string str );</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>std::pair&lt; std::string_view, std::string_view &gt; <a class="code hl_function" href="QueryBuilder_8hpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a>( <span class="keyword">const</span> std::string_view str );</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a>( std::string_view str_view );</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>std::string <a class="code hl_function" href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a>( std::string_view str );</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>std::string_view <a class="code hl_function" href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a>( std::string_view&amp; str );</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_QUERYBUILDER_HPP</span></div>
+<div class="ttc" id="aQueryBuilder_8hpp_html_a065f3c3f0001421eb2cb9632bb821ce1"><div class="ttname"><a href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a></div><div class="ttdeci">std::string_view extractUntilNext(std::string_view &amp;str)</div><div class="ttdoc">Extracts characters until reaching a grouping operator or namespace or system tag.</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:261</div></div>
+<div class="ttc" id="aQueryBuilder_8hpp_html_a208192a42d7e5a7b6b7cb117a915eed5"><div class="ttname"><a href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a></div><div class="ttdeci">std::string processString(std::string_view str_view)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:301</div></div>
 <div class="ttc" id="aQueryBuilder_8hpp_html_a930902132bf2d664d7be518edbbe7174"><div class="ttname"><a href="QueryBuilder_8hpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a></div><div class="ttdeci">std::pair&lt; std::string_view, std::string_view &gt; seperateNamespace(const std::string_view str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:188</div></div>
-<div class="ttc" id="aQueryBuilder_8hpp_html_aaf44bbf40ed07f66de7aaf797f5c542e"><div class="ttname"><a href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a></div><div class="ttdeci">std::string escape(std::string_view str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:320</div></div>
+<div class="ttc" id="aQueryBuilder_8hpp_html_aaf44bbf40ed07f66de7aaf797f5c542e"><div class="ttname"><a href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a></div><div class="ttdeci">std::string escape(std::string_view str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:323</div></div>
 <div class="ttc" id="aQueryBuilder_8hpp_html_aeb730847f6f92181de392e9ef2fccee2"><div class="ttname"><a href="QueryBuilder_8hpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a></div><div class="ttdeci">std::string_view trimSpaces(std::string_view str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:50</div></div>
 <div class="ttc" id="aQueryBuilder_8hpp_html_af4e89e20b7520731a65a58d104451dd0"><div class="ttname"><a href="QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a></div><div class="ttdeci">std::string parseBytesize(std::string_view str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:65</div></div>
-<div class="ttc" id="aQueryBuilder_8hpp_html_afe249139296018db7d361baa8647bb25"><div class="ttname"><a href="QueryBuilder_8hpp.html#afe249139296018db7d361baa8647bb25">generateQuery</a></div><div class="ttdeci">std::string generateQuery(const std::string str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:340</div></div>
+<div class="ttc" id="aQueryBuilder_8hpp_html_afe249139296018db7d361baa8647bb25"><div class="ttname"><a href="QueryBuilder_8hpp.html#afe249139296018db7d361baa8647bb25">generateQuery</a></div><div class="ttdeci">std::string generateQuery(const std::string str)</div><div class="ttdef"><b>Definition:</b> QueryBuilder.cpp:343</div></div>
 <div class="ttc" id="alogging_8hpp_html"><div class="ttname"><a href="logging_8hpp.html">logging.hpp</a></div></div>
 <div class="ttc" id="asystem_8hpp_html"><div class="ttname"><a href="system_8hpp.html">system.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -154,7 +153,7 @@ $(document).ready(function(){initNavTree('QueryBuilder_8hpp_source.html',''); in
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_33f586cf01f7b35339e575ba246fbce1.html">h95</a></li><li class="navelem"><a class="el" href="dir_617b50dd0d0cebc509b67fba22fbe3d4.html">search</a></li><li class="navelem"><a class="el" href="QueryBuilder_8hpp.html">QueryBuilder.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_8c7b9bb48bf3be37a0e88d7d01157361.html">atlas</a></li><li class="navelem"><a class="el" href="dir_279440d1a8695bae55be8cf7b8913538.html">search</a></li><li class="navelem"><a class="el" href="QueryBuilder_8hpp.html">QueryBuilder.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

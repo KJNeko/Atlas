@@ -13,7 +13,7 @@ var searchData=
   ['preparethemesettings_10',['prepareThemeSettings',['../classSettingsDialog.html#a1c65c50a4f3b86c9d140f9ca056b5209',1,'SettingsDialog']]],
   ['previewpathchanged_11',['previewPathChanged',['../structRecordData.html#a1b5fa7feeb05487afd5cb203382e4738',1,'RecordData']]],
   ['previewschanged_12',['previewsChanged',['../structRecordData.html#a4810108eaf43cefb6bb7c3c648d1b428',1,'RecordData']]],
-  ['processdirectory_13',['processDirectory',['../classImportPreProcessor.html#abeb849a55aaf91ab4f97c4ee11e53dd9',1,'ImportPreProcessor']]],
+  ['processdirectory_13',['processDirectory',['../classImportPreProcessor.html#a1ff98bb15c4557234d43ea251517daf5',1,'ImportPreProcessor']]],
   ['processfiles_14',['processFiles',['../classBatchImportDialog.html#ae474177b92139b93013d2832c826781f',1,'BatchImportDialog']]],
   ['processfinisheddirectory_15',['processFinishedDirectory',['../classBatchImportDialog.html#abf9d14927d964526348bcb4ac533025b',1,'BatchImportDialog']]],
   ['processregexify_16',['processRegexify',['../regex_8cpp.html#a2013690282dcd93eac88a3900d75a1aa',1,'processRegexify(QString pattern):&#160;regex.cpp'],['../regex_8hpp.html#a2013690282dcd93eac88a3900d75a1aa',1,'processRegexify(QString pattern):&#160;regex.cpp']]],

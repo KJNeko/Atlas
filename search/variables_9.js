@@ -1,4 +1,26 @@
 var searchData=
 [
-  ['namespaces_0',['namespaces',['../QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c',1,'QueryBuilder.cpp']]]
+  ['m_5fautocommit_0',['m_autocommit',['../structTransaction.html#ae9e5ca2434f9fb6e39797e6b67724095',1,'Transaction']]],
+  ['m_5fbanner_1',['m_banner',['../structRecordData.html#a9fa78508080e84f28e8c024cbbabad9e',1,'RecordData']]],
+  ['m_5fcreator_2',['m_creator',['../structRecordData.html#a8ea1aaa01f2421fe7039391c941d83fe',1,'RecordData']]],
+  ['m_5fdata_3',['m_data',['../classBatchImportModel.html#a1524eb1e84888624750f29900b90dceb',1,'BatchImportModel']]],
+  ['m_5fengine_4',['m_engine',['../structRecordData.html#acf5d4be9edb36bc1e8a72bd25a709bc5',1,'RecordData']]],
+  ['m_5fexec_5fpath_5',['m_exec_path',['../structGameMetadata.html#ace552832959f9b2b2ddd2e1482072120',1,'GameMetadata']]],
+  ['m_5ffolder_5fsize_6',['m_folder_size',['../structGameMetadata.html#a306039386c64e01a6fe4b0586562210a',1,'GameMetadata']]],
+  ['m_5fgame_5fpath_7',['m_game_path',['../structGameMetadata.html#a91c33dc2dda86c4b171e1f104227bc88',1,'GameMetadata']]],
+  ['m_5fid_8',['m_id',['../structMetadataAlreadyExists.html#a1c7fe29feaf3482b489291ee3f024522',1,'MetadataAlreadyExists::m_id()'],['../structRecordData.html#af001b439099550372e4d0e4763a84bb2',1,'RecordData::m_id()']]],
+  ['m_5fin_5fplace_9',['m_in_place',['../structGameMetadata.html#a5f350dbac3d533807a07c63537768ec1',1,'GameMetadata']]],
+  ['m_5flast_5fplayed_10',['m_last_played',['../structGameMetadata.html#a8a88044df3d122d2e89acd7250ab3783',1,'GameMetadata::m_last_played()'],['../structRecordData.html#aebbc3fed1a2ff66190dc4355e9cf6be8',1,'RecordData::m_last_played()']]],
+  ['m_5fmetadata_11',['m_metadata',['../structMetadataAlreadyExists.html#a71d17ec23bf67b6cae13cc224d9c047d',1,'MetadataAlreadyExists']]],
+  ['m_5fparent_12',['m_parent',['../structTransaction.html#a4b834a47575a881066dc4e8406679ad5',1,'Transaction::m_parent()'],['../structGameMetadata.html#a3d45160adef7898311148766f0a24d33',1,'GameMetadata::m_parent()']]],
+  ['m_5fpreviews_13',['m_previews',['../structRecordData.html#ae35cfc32e3bf0fee1ec09c9284e17fec',1,'RecordData']]],
+  ['m_5fprevious_5fstatement_14',['m_previous_statement',['../structTransaction.html#afd1c6413bd425322150fb380d72f1683',1,'Transaction::m_previous_statement()'],['../structNonTransaction.html#a66fdc7ea1c3e04e4b99cddf1762c7e8a',1,'NonTransaction::m_previous_statement()']]],
+  ['m_5frecord_15',['m_record',['../classDetailedRecordView.html#ae12bf35dbed3449d31e2fbaa49b69250',1,'DetailedRecordView']]],
+  ['m_5frecords_16',['m_records',['../classRecordListModel.html#a4d568f236847cb86e8e07d62dbd3058a',1,'RecordListModel']]],
+  ['m_5ftitle_17',['m_title',['../structRecordData.html#a0b20b9e9b5085c41b1b184f0f701f2cb',1,'RecordData']]],
+  ['m_5ftotal_5fplaytime_18',['m_total_playtime',['../structGameMetadata.html#af44d3e870142ab47196005d9357a63af',1,'GameMetadata::m_total_playtime()'],['../structRecordData.html#ac7f8a4557956902e425387be1dfa6289',1,'RecordData::m_total_playtime()']]],
+  ['m_5fversion_19',['m_version',['../structGameMetadata.html#a9ca26d0ecb32d4390068c6542f0efd97',1,'GameMetadata']]],
+  ['m_5fversions_20',['m_versions',['../structRecordData.html#afac533780db776b3fd330f7142919443',1,'RecordData']]],
+  ['map_21',['map',['../classFlyWeight.html#ad49a8e126a572605f43b6c123f58b987',1,'FlyWeight']]],
+  ['map_5fmtx_22',['map_mtx',['../classFlyWeight.html#a25b337f79c1b6108f7afcdc647551bbe',1,'FlyWeight']]]
 ];

@@ -31,8 +31,8 @@ var searchData=
   ['setvalue_28',['setValue',['../classProgressBarDialog.html#a26511594c92c952a1215d8b90a03caa2',1,'ProgressBarDialog']]],
   ['showsubprogress_29',['showSubProgress',['../classProgressBarDialog.html#a711fec85599cf6ff52940113c6d18942',1,'ProgressBarDialog']]],
   ['sizehint_30',['sizeHint',['../classBatchImportDelegate.html#a02603b34e5a8c7a428e9f28e87b4f4fb',1,'BatchImportDelegate::sizeHint()'],['../classRecordBannerDelegate.html#a46ebbe3fa87b7cdb9e3434c847dfef4e',1,'RecordBannerDelegate::sizeHint()']]],
-  ['startimportinggames_31',['startImportingGames',['../classBatchImportDialog.html#a21d1854d3fa611f17d2477a79f395e39',1,'BatchImportDialog']]],
-  ['startprocessingdirectory_32',['startProcessingDirectory',['../classBatchImportDialog.html#a0574471bc5c01d203c8616ef11718079',1,'BatchImportDialog']]],
+  ['startimportinggames_31',['startImportingGames',['../classBatchImportDialog.html#ab640485d74053ec5be77f34d3f63e898',1,'BatchImportDialog']]],
+  ['startprocessingdirectory_32',['startProcessingDirectory',['../classBatchImportDialog.html#a5a9988655199de06e1e78566688e786e',1,'BatchImportDialog']]],
   ['startprogressbar_33',['startProgressBar',['../classImportProcessor.html#adedaafa4885d4649437769d91f70b60d',1,'ImportProcessor']]],
   ['switchtodetailed_34',['switchToDetailed',['../classMainWindow.html#a1ac78c1c988a6ba6c69b4b27c311f7a9',1,'MainWindow']]],
   ['sync_35',['sync',['../structRecordData.html#ae2989ed3618979363b80e33811762720',1,'RecordData']]]

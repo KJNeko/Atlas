@@ -11,7 +11,7 @@ var searchData=
   ['recordview_8',['RecordView',['../classRecordView.html#ab1b13442e609d980d1da4f3934935466',1,'RecordView']]],
   ['ref_9',['ref',['../classDatabase.html#a917b05136098f15260a6097ded41beb4',1,'Database']]],
   ['regexify_10',['regexify',['../regex_8hpp.html#a997b6ff0c67856b7dacd5e43961548c6',1,'regexify(QString pattern):&#160;regex.cpp'],['../regex_8cpp.html#a997b6ff0c67856b7dacd5e43961548c6',1,'regexify(QString pattern):&#160;regex.cpp']]],
-  ['reject_11',['reject',['../classSettingsDialog.html#ab34bd7e972e03fde0afafe613307bcef',1,'SettingsDialog']]],
+  ['reject_11',['reject',['../classBatchImportDialog.html#abc38cf6ae23415c868e36aa4d50ec678',1,'BatchImportDialog::reject()'],['../classSettingsDialog.html#ab34bd7e972e03fde0afafe613307bcef',1,'SettingsDialog::reject()']]],
   ['releasedata_12',['releaseData',['../structTransaction.html#abbef78a48988ef2da29a04109536a69d',1,'Transaction']]],
   ['reloadrecord_13',['reloadRecord',['../classDetailedRecordView.html#aa6468a5dea2d19ec3823e59c1aad00aa',1,'DetailedRecordView']]],
   ['reloadtheme_14',['reloadTheme',['../classSettingsDialog.html#a2bc9c1d00bdb6a9814bf2d09cc43e638',1,'SettingsDialog']]],

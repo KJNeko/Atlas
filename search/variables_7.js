@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['last_5flocked_0',['last_locked',['../namespaceinternal.html#ac254ba7935bf14770e627959152c7be2',1,'internal']]],
-  ['last_5fupdate_1',['last_update',['../classImportPreProcessor.html#ac314570beae6259973d3f2143db0bdfc',1,'ImportPreProcessor']]]
+  ['id_0',['id',['../structInvalidRecordID.html#acf01c40f2e25a8486ddd4f982cfdd8e3',1,'InvalidRecordID']]],
+  ['invalid_1',['invalid',['../classTransactionData.html#a7f5274d67bd90e6af7da7efef5c7e0e9',1,'TransactionData']]],
+  ['is_5funix_2',['is_unix',['../namespacesys.html#a913c0f445a42a4d43271b2605e268192',1,'sys']]],
+  ['is_5fwindows_3',['is_windows',['../namespacesys.html#a5797826512ac565d31d1a6111e75f19e',1,'sys']]]
 ];

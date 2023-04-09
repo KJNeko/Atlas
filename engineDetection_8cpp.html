@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: src/h95/utils/engineDetection/engineDetection.cpp File Reference</title>
+<title>Atlas Game Manager: src/atlas/utils/engineDetection/engineDetection.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -116,22 +116,20 @@ $(document).ready(function(){initNavTree('engineDetection_8cpp.html',''); initRe
 <code>#include &lt;QMimeDatabase&gt;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
 <code>#include &quot;<a class="el" href="system_8hpp_source.html">../../system.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">h95/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">atlas/logging.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad2ff7409bf0f3e1105cb5d2ea1a820a3"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:ad2ff7409bf0f3e1105cb5d2ea1a820a3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ad2ff7409bf0f3e1105cb5d2ea1a820a3">isEngine&lt; ENGINES_BEGIN &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:ad2ff7409bf0f3e1105cb5d2ea1a820a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94e56f57f5172002b7c065993d616487"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a94e56f57f5172002b7c065993d616487"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a94e56f57f5172002b7c065993d616487">isEngine&lt; ENGINES_END &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a94e56f57f5172002b7c065993d616487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec9a207ac61a0a93fd5a2813b2dafc35"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aec9a207ac61a0a93fd5a2813b2dafc35"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aec9a207ac61a0a93fd5a2813b2dafc35">isBlacklistT</a> (const std::string &amp;name, T comp)</td></tr>
-<tr class="separator:aec9a207ac61a0a93fd5a2813b2dafc35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e4642b554ffdfd88358ad86931c9faf"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Ts&gt; </td></tr>
-<tr class="memitem:a0e4642b554ffdfd88358ad86931c9faf"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a0e4642b554ffdfd88358ad86931c9faf">isBlacklistT</a> (const std::string &amp;name, T comp, Ts... comps)</td></tr>
-<tr class="separator:a0e4642b554ffdfd88358ad86931c9faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7461f139a2948ea95075e63f0c49f25"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ae7461f139a2948ea95075e63f0c49f25"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ae7461f139a2948ea95075e63f0c49f25">isEngineT&lt; ENGINES_BEGIN &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:ae7461f139a2948ea95075e63f0c49f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe3a65c88c04e7d6c9529f10a4e60091"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:afe3a65c88c04e7d6c9529f10a4e60091"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#afe3a65c88c04e7d6c9529f10a4e60091">isEngineT&lt; ENGINES_END &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:afe3a65c88c04e7d6c9529f10a4e60091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac07698fd987fed8b0ecbf21199d7d71a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ac07698fd987fed8b0ecbf21199d7d71a">isBlacklistT</a> (const std::string &amp;name, const std::string_view comp)</td></tr>
+<tr class="separator:ac07698fd987fed8b0ecbf21199d7d71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a267a2473192b73e09ed4e8f1c08aab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a8a267a2473192b73e09ed4e8f1c08aab">isBlacklistT</a> (const std::string &amp;name, std::string_view comp, std::same_as&lt; std::string_view &gt; auto... comps)</td></tr>
+<tr class="separator:a8a267a2473192b73e09ed4e8f1c08aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0009ae72eaf215bb96f7e7dced9aa5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ad0009ae72eaf215bb96f7e7dced9aa5c">isBlacklist</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:ad0009ae72eaf215bb96f7e7dced9aa5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bf3a3950f9a77458177e1aef3ca1eb1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a0bf3a3950f9a77458177e1aef3ca1eb1">detectExecutables</a> (const std::filesystem::path &amp;path)</td></tr>
@@ -141,113 +139,113 @@ Functions</h2></td></tr>
 <tr class="memitem:ad9960fe76617fd32e44a44ddc1e41a45"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:ad9960fe76617fd32e44a44ddc1e41a45"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ad9960fe76617fd32e44a44ddc1e41a45">engineNameT&lt; UNKNOWN &gt;</a> ()</td></tr>
 <tr class="separator:ad9960fe76617fd32e44a44ddc1e41a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3f39ba094b66349ae429764da1b678c"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
-<tr class="memitem:af3f39ba094b66349ae429764da1b678c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#af3f39ba094b66349ae429764da1b678c">findEngine</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:af3f39ba094b66349ae429764da1b678c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af50f38c051a24beb42b1028d0e1a5aeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#af50f38c051a24beb42b1028d0e1a5aeb">determineEngine</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="memdesc:af50f38c051a24beb42b1028d0e1a5aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an engine type of ENGINES_END if no engine is determined.  <br /></td></tr>
-<tr class="separator:af50f38c051a24beb42b1028d0e1a5aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6180c382372cf87f3aaf4c0e5e5d9685"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
+<tr class="memitem:a6180c382372cf87f3aaf4c0e5e5d9685"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a6180c382372cf87f3aaf4c0e5e5d9685">findEngine</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a6180c382372cf87f3aaf4c0e5e5d9685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7235d808dc321c6dffb09eaf0636bdaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a7235d808dc321c6dffb09eaf0636bdaa">determineEngine</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:a7235d808dc321c6dffb09eaf0636bdaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an engine type of ENGINES_END if no engine is determined.  <br /></td></tr>
+<tr class="separator:a7235d808dc321c6dffb09eaf0636bdaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1268ab2d0d267e0a5d99bd0aae73bc87"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine_t&gt; </td></tr>
 <tr class="memitem:a1268ab2d0d267e0a5d99bd0aae73bc87"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a1268ab2d0d267e0a5d99bd0aae73bc87">getEngineNameT</a> (const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine)</td></tr>
 <tr class="separator:a1268ab2d0d267e0a5d99bd0aae73bc87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28004db3f091ff409204e3e739461a25"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a28004db3f091ff409204e3e739461a25">engineName</a> (const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine)</td></tr>
 <tr class="memdesc:a28004db3f091ff409204e3e739461a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string name of the engine.  <br /></td></tr>
 <tr class="separator:a28004db3f091ff409204e3e739461a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3cb69274889ccebaf805459fc5639a8"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:aa3cb69274889ccebaf805459fc5639a8"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aa3cb69274889ccebaf805459fc5639a8">isEngine&lt; RenPy &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:aa3cb69274889ccebaf805459fc5639a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ceebe26bb922cd2a2b62b6ef04ba515"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a6ceebe26bb922cd2a2b62b6ef04ba515"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a6ceebe26bb922cd2a2b62b6ef04ba515">isEngineT&lt; RenPy &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a6ceebe26bb922cd2a2b62b6ef04ba515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01e953b55815888cf4fa92747f2e636"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:af01e953b55815888cf4fa92747f2e636"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#af01e953b55815888cf4fa92747f2e636">engineNameT&lt; RenPy &gt;</a> ()</td></tr>
 <tr class="separator:af01e953b55815888cf4fa92747f2e636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a0b5393cd615a06280611848ec397e"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:aa0a0b5393cd615a06280611848ec397e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aa0a0b5393cd615a06280611848ec397e">isEngine&lt; Unity &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:aa0a0b5393cd615a06280611848ec397e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e072e1275a669655d33c34e84269fa"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a25e072e1275a669655d33c34e84269fa"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a25e072e1275a669655d33c34e84269fa">isEngineT&lt; Unity &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a25e072e1275a669655d33c34e84269fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa80c1d76b97c58e16f10b548c6000c4f"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:aa80c1d76b97c58e16f10b548c6000c4f"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aa80c1d76b97c58e16f10b548c6000c4f">engineNameT&lt; Unity &gt;</a> ()</td></tr>
 <tr class="separator:aa80c1d76b97c58e16f10b548c6000c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e42656655201bc2daf5d4443be7ac9c"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a3e42656655201bc2daf5d4443be7ac9c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a3e42656655201bc2daf5d4443be7ac9c">isEngine&lt; Unreal &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a3e42656655201bc2daf5d4443be7ac9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67ce762ebb46640fd9c0488f811c777a"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a67ce762ebb46640fd9c0488f811c777a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a67ce762ebb46640fd9c0488f811c777a">isEngineT&lt; Unreal &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a67ce762ebb46640fd9c0488f811c777a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e6cde1947fc2ceea8ccb23f10e4b40c"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a4e6cde1947fc2ceea8ccb23f10e4b40c"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a4e6cde1947fc2ceea8ccb23f10e4b40c">engineNameT&lt; Unreal &gt;</a> ()</td></tr>
 <tr class="separator:a4e6cde1947fc2ceea8ccb23f10e4b40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14ce57d215e77e7e106430fd4e4b08a9"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a14ce57d215e77e7e106430fd4e4b08a9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a14ce57d215e77e7e106430fd4e4b08a9">isEngine&lt; RPGM &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a14ce57d215e77e7e106430fd4e4b08a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a407737d80e5bf84687586deb3fad73ef"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a407737d80e5bf84687586deb3fad73ef"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a407737d80e5bf84687586deb3fad73ef">isEngineT&lt; RPGM &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a407737d80e5bf84687586deb3fad73ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3c28a1071c79bec3238fa2b5bda8605"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:ae3c28a1071c79bec3238fa2b5bda8605"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ae3c28a1071c79bec3238fa2b5bda8605">engineNameT&lt; RPGM &gt;</a> ()</td></tr>
 <tr class="separator:ae3c28a1071c79bec3238fa2b5bda8605"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe94f637c8ba467d412b739f05a9cfb1"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:abe94f637c8ba467d412b739f05a9cfb1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#abe94f637c8ba467d412b739f05a9cfb1">isEngine&lt; WolfRPG &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:abe94f637c8ba467d412b739f05a9cfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae05fac3c13184b4af12a0dc3b1017059"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ae05fac3c13184b4af12a0dc3b1017059"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ae05fac3c13184b4af12a0dc3b1017059">isEngineT&lt; WolfRPG &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:ae05fac3c13184b4af12a0dc3b1017059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a910c4e4a1aa0a21e9cbf425cd85508ba"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a910c4e4a1aa0a21e9cbf425cd85508ba"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a910c4e4a1aa0a21e9cbf425cd85508ba">engineNameT&lt; WolfRPG &gt;</a> ()</td></tr>
 <tr class="separator:a910c4e4a1aa0a21e9cbf425cd85508ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a777caa5f94a69d921d382a715555e7c4"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a777caa5f94a69d921d382a715555e7c4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a777caa5f94a69d921d382a715555e7c4">isEngine&lt; HTML &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a777caa5f94a69d921d382a715555e7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31e58d33cbb7ed8a0db471dddb003aa1"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a31e58d33cbb7ed8a0db471dddb003aa1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a31e58d33cbb7ed8a0db471dddb003aa1">isEngineT&lt; HTML &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a31e58d33cbb7ed8a0db471dddb003aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d7d6b6f5b8e1580bf981f76d49be98d"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a3d7d6b6f5b8e1580bf981f76d49be98d"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a3d7d6b6f5b8e1580bf981f76d49be98d">engineNameT&lt; HTML &gt;</a> ()</td></tr>
 <tr class="separator:a3d7d6b6f5b8e1580bf981f76d49be98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a158fc4ff7e1c060019760e0c20c2595c"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a158fc4ff7e1c060019760e0c20c2595c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a158fc4ff7e1c060019760e0c20c2595c">isEngine&lt; VisualNovelMaker &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a158fc4ff7e1c060019760e0c20c2595c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d2dd4894c1f1c4c8f5745715e1c8fbf"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a9d2dd4894c1f1c4c8f5745715e1c8fbf"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a9d2dd4894c1f1c4c8f5745715e1c8fbf">isEngineT&lt; VisualNovelMaker &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a9d2dd4894c1f1c4c8f5745715e1c8fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00dccf6f54d1b14f75528e94d4cbc491"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a00dccf6f54d1b14f75528e94d4cbc491"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a00dccf6f54d1b14f75528e94d4cbc491">engineNameT&lt; VisualNovelMaker &gt;</a> ()</td></tr>
 <tr class="separator:a00dccf6f54d1b14f75528e94d4cbc491"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f672ab1ce46d6b0e21755c7fc789a6b"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a6f672ab1ce46d6b0e21755c7fc789a6b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a6f672ab1ce46d6b0e21755c7fc789a6b">isEngine&lt; TyanoBuilder &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a6f672ab1ce46d6b0e21755c7fc789a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105ad8b8f32eae0350456a1e63c021e6"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a105ad8b8f32eae0350456a1e63c021e6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a105ad8b8f32eae0350456a1e63c021e6">isEngineT&lt; TyanoBuilder &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a105ad8b8f32eae0350456a1e63c021e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3902741469f8443592779e3ebb2276b6"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a3902741469f8443592779e3ebb2276b6"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a3902741469f8443592779e3ebb2276b6">engineNameT&lt; TyanoBuilder &gt;</a> ()</td></tr>
 <tr class="separator:a3902741469f8443592779e3ebb2276b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adeb798dc1b30b1ea03ea3c2227dae593"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:adeb798dc1b30b1ea03ea3c2227dae593"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#adeb798dc1b30b1ea03ea3c2227dae593">isEngine&lt; Java &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:adeb798dc1b30b1ea03ea3c2227dae593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9616a6344affa0438c90af08cc69f2a2"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a9616a6344affa0438c90af08cc69f2a2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a9616a6344affa0438c90af08cc69f2a2">isEngineT&lt; Java &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a9616a6344affa0438c90af08cc69f2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed7e76d74232b616519fd0dfcb679e93"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:aed7e76d74232b616519fd0dfcb679e93"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aed7e76d74232b616519fd0dfcb679e93">engineNameT&lt; Java &gt;</a> ()</td></tr>
 <tr class="separator:aed7e76d74232b616519fd0dfcb679e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e2a83bf097c019a847ef1ab68409106"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a5e2a83bf097c019a847ef1ab68409106"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a5e2a83bf097c019a847ef1ab68409106">isEngine&lt; Flash &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a5e2a83bf097c019a847ef1ab68409106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11d20ff2e92b3f6a2ff72b35b66b8350"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a11d20ff2e92b3f6a2ff72b35b66b8350"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a11d20ff2e92b3f6a2ff72b35b66b8350">isEngineT&lt; Flash &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a11d20ff2e92b3f6a2ff72b35b66b8350"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac818cd8bf825daeb10727830d19f1666"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:ac818cd8bf825daeb10727830d19f1666"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ac818cd8bf825daeb10727830d19f1666">engineNameT&lt; Flash &gt;</a> ()</td></tr>
 <tr class="separator:ac818cd8bf825daeb10727830d19f1666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab502d167ff07ff38e863eb926991fef7"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:ab502d167ff07ff38e863eb926991fef7"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ab502d167ff07ff38e863eb926991fef7">isEngine&lt; RAGS &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:ab502d167ff07ff38e863eb926991fef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5681e01ecf15ff1c7fa2996a40de1b"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a9c5681e01ecf15ff1c7fa2996a40de1b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a9c5681e01ecf15ff1c7fa2996a40de1b">isEngineT&lt; RAGS &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a9c5681e01ecf15ff1c7fa2996a40de1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad17456545f70d52888fe96b3b9b7b0b8"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:ad17456545f70d52888fe96b3b9b7b0b8"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ad17456545f70d52888fe96b3b9b7b0b8">engineNameT&lt; RAGS &gt;</a> ()</td></tr>
 <tr class="separator:ad17456545f70d52888fe96b3b9b7b0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1b290c9869a2a6eb8ad482b0938ea6d"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:aa1b290c9869a2a6eb8ad482b0938ea6d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#aa1b290c9869a2a6eb8ad482b0938ea6d">isEngine&lt; KiriKiri &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:aa1b290c9869a2a6eb8ad482b0938ea6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae64589646dfb91003373c10a9a03f10c"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ae64589646dfb91003373c10a9a03f10c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ae64589646dfb91003373c10a9a03f10c">isEngineT&lt; KiriKiri &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:ae64589646dfb91003373c10a9a03f10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c9aae4bbc33381680b243fedf8cbd7e"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a1c9aae4bbc33381680b243fedf8cbd7e"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a1c9aae4bbc33381680b243fedf8cbd7e">engineNameT&lt; KiriKiri &gt;</a> ()</td></tr>
 <tr class="separator:a1c9aae4bbc33381680b243fedf8cbd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af816a4ad2be26edc456474489f23e16e"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:af816a4ad2be26edc456474489f23e16e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#af816a4ad2be26edc456474489f23e16e">isEngine&lt; NScripter &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:af816a4ad2be26edc456474489f23e16e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4431715c0c86d16927f25cbff2d97ff"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ad4431715c0c86d16927f25cbff2d97ff"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ad4431715c0c86d16927f25cbff2d97ff">isEngineT&lt; NScripter &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:ad4431715c0c86d16927f25cbff2d97ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7305c99809b8e0ef64b0dbcb14c0ccb"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:af7305c99809b8e0ef64b0dbcb14c0ccb"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#af7305c99809b8e0ef64b0dbcb14c0ccb">engineNameT&lt; NScripter &gt;</a> ()</td></tr>
 <tr class="separator:af7305c99809b8e0ef64b0dbcb14c0ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a177b0be8d3d04128cf400cc7bfeecea9"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a177b0be8d3d04128cf400cc7bfeecea9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a177b0be8d3d04128cf400cc7bfeecea9">isEngine&lt; NVList &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a177b0be8d3d04128cf400cc7bfeecea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca8bc1225fb0f296a29a6992d8862e5"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a2ca8bc1225fb0f296a29a6992d8862e5"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a2ca8bc1225fb0f296a29a6992d8862e5">isEngineT&lt; NVList &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a2ca8bc1225fb0f296a29a6992d8862e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a893f811b215a3371611ca7021ca6603a"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a893f811b215a3371611ca7021ca6603a"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a893f811b215a3371611ca7021ca6603a">engineNameT&lt; NVList &gt;</a> ()</td></tr>
 <tr class="separator:a893f811b215a3371611ca7021ca6603a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a928447482d1353ac47a702cde1c5b31c"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a928447482d1353ac47a702cde1c5b31c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a928447482d1353ac47a702cde1c5b31c">isEngine&lt; Sukai2 &gt;</a> (const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path)</td></tr>
-<tr class="separator:a928447482d1353ac47a702cde1c5b31c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfac05214802b0761ed0f13f03f39781"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:abfac05214802b0761ed0f13f03f39781"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#abfac05214802b0761ed0f13f03f39781">isEngineT&lt; Sukai2 &gt;</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:abfac05214802b0761ed0f13f03f39781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86ba9ea0618fde793807c6e9c0b0ad19"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a86ba9ea0618fde793807c6e9c0b0ad19"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a86ba9ea0618fde793807c6e9c0b0ad19">engineNameT&lt; Sukai2 &gt;</a> ()</td></tr>
 <tr class="separator:a86ba9ea0618fde793807c6e9c0b0ad19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ab628e1c1e0e606138c415915c49a2a55"><td class="memItemLeft" align="right" valign="top">constexpr std::tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#ab628e1c1e0e606138c415915c49a2a55">blacklist_execs</a> { &quot;UnityCrashHandler32.exe&quot;, &quot;UnityCrashHandler64.exe&quot; }</td></tr>
-<tr class="separator:ab628e1c1e0e606138c415915c49a2a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a110b0dfa865ac5613a753ce5c0bfd206"><td class="memItemLeft" align="right" valign="top">constexpr std::tuple&lt; std::string_view, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8cpp.html#a110b0dfa865ac5613a753ce5c0bfd206">blacklist_execs</a></td></tr>
+<tr class="separator:a110b0dfa865ac5613a753ce5c0bfd206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a0bf3a3950f9a77458177e1aef3ca1eb1" name="a0bf3a3950f9a77458177e1aef3ca1eb1"></a>
@@ -268,8 +266,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af50f38c051a24beb42b1028d0e1a5aeb" name="af50f38c051a24beb42b1028d0e1a5aeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af50f38c051a24beb42b1028d0e1a5aeb">&#9670;&#160;</a></span>determineEngine()</h2>
+<a id="a7235d808dc321c6dffb09eaf0636bdaa" name="a7235d808dc321c6dffb09eaf0636bdaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7235d808dc321c6dffb09eaf0636bdaa">&#9670;&#160;</a></span>determineEngine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,18 +276,8 @@ Variables</h2></td></tr>
           <td class="memname"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> determineEngine </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -622,8 +610,8 @@ template&lt;&gt; </div>
 
 </div>
 </div>
-<a id="af3f39ba094b66349ae429764da1b678c" name="af3f39ba094b66349ae429764da1b678c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3f39ba094b66349ae429764da1b678c">&#9670;&#160;</a></span>findEngine()</h2>
+<a id="a6180c382372cf87f3aaf4c0e5e5d9685" name="a6180c382372cf87f3aaf4c0e5e5d9685"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6180c382372cf87f3aaf4c0e5e5d9685">&#9670;&#160;</a></span>findEngine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -634,18 +622,8 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
           <td class="memname"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> findEngine </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -690,13 +668,11 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
 
 </div>
 </div>
-<a id="aec9a207ac61a0a93fd5a2813b2dafc35" name="aec9a207ac61a0a93fd5a2813b2dafc35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec9a207ac61a0a93fd5a2813b2dafc35">&#9670;&#160;</a></span>isBlacklistT() <span class="overload">[1/2]</span></h2>
+<a id="ac07698fd987fed8b0ecbf21199d7d71a" name="ac07698fd987fed8b0ecbf21199d7d71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac07698fd987fed8b0ecbf21199d7d71a">&#9670;&#160;</a></span>isBlacklistT() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool isBlacklistT </td>
@@ -707,7 +683,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">T&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>comp</em>&#160;</td>
         </tr>
         <tr>
@@ -720,13 +696,11 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a0e4642b554ffdfd88358ad86931c9faf" name="a0e4642b554ffdfd88358ad86931c9faf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e4642b554ffdfd88358ad86931c9faf">&#9670;&#160;</a></span>isBlacklistT() <span class="overload">[2/2]</span></h2>
+<a id="a8a267a2473192b73e09ed4e8f1c08aab" name="a8a267a2473192b73e09ed4e8f1c08aab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a267a2473192b73e09ed4e8f1c08aab">&#9670;&#160;</a></span>isBlacklistT() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename... Ts&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool isBlacklistT </td>
@@ -737,13 +711,13 @@ template&lt;typename T , typename... Ts&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">T&#160;</td>
+          <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>comp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Ts...&#160;</td>
+          <td class="paramtype">std::same_as&lt; std::string_view &gt; auto...&#160;</td>
           <td class="paramname"><em>comps</em>&#160;</td>
         </tr>
         <tr>
@@ -756,8 +730,8 @@ template&lt;typename T , typename... Ts&gt; </div>
 
 </div>
 </div>
-<a id="ad2ff7409bf0f3e1105cb5d2ea1a820a3" name="ad2ff7409bf0f3e1105cb5d2ea1a820a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2ff7409bf0f3e1105cb5d2ea1a820a3">&#9670;&#160;</a></span>isEngine&lt; ENGINES_BEGIN &gt;()</h2>
+<a id="ae7461f139a2948ea95075e63f0c49f25" name="ae7461f139a2948ea95075e63f0c49f25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7461f139a2948ea95075e63f0c49f25">&#9670;&#160;</a></span>isEngineT&lt; ENGINES_BEGIN &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -765,29 +739,19 @@ template&lt;typename T , typename... Ts&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a535d14f0b874a9122213cc909a31c72d">ENGINES_BEGIN</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a535d14f0b874a9122213cc909a31c72d">ENGINES_BEGIN</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a94e56f57f5172002b7c065993d616487" name="a94e56f57f5172002b7c065993d616487"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94e56f57f5172002b7c065993d616487">&#9670;&#160;</a></span>isEngine&lt; ENGINES_END &gt;()</h2>
+<a id="afe3a65c88c04e7d6c9529f10a4e60091" name="afe3a65c88c04e7d6c9529f10a4e60091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe3a65c88c04e7d6c9529f10a4e60091">&#9670;&#160;</a></span>isEngineT&lt; ENGINES_END &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -795,29 +759,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a850d9ef24f20dbef9b2794f03e802e3f">ENGINES_END</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a850d9ef24f20dbef9b2794f03e802e3f">ENGINES_END</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5e2a83bf097c019a847ef1ab68409106" name="a5e2a83bf097c019a847ef1ab68409106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e2a83bf097c019a847ef1ab68409106">&#9670;&#160;</a></span>isEngine&lt; Flash &gt;()</h2>
+<a id="a11d20ff2e92b3f6a2ff72b35b66b8350" name="a11d20ff2e92b3f6a2ff72b35b66b8350"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11d20ff2e92b3f6a2ff72b35b66b8350">&#9670;&#160;</a></span>isEngineT&lt; Flash &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -825,29 +779,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ab5fcae55946da2e578e45bef020fa9e2">Flash</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ab5fcae55946da2e578e45bef020fa9e2">Flash</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a777caa5f94a69d921d382a715555e7c4" name="a777caa5f94a69d921d382a715555e7c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a777caa5f94a69d921d382a715555e7c4">&#9670;&#160;</a></span>isEngine&lt; HTML &gt;()</h2>
+<a id="a31e58d33cbb7ed8a0db471dddb003aa1" name="a31e58d33cbb7ed8a0db471dddb003aa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31e58d33cbb7ed8a0db471dddb003aa1">&#9670;&#160;</a></span>isEngineT&lt; HTML &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -855,29 +799,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7acf2914f9bd6c3578d3de0b6b66c7d66b">HTML</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7acf2914f9bd6c3578d3de0b6b66c7d66b">HTML</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="adeb798dc1b30b1ea03ea3c2227dae593" name="adeb798dc1b30b1ea03ea3c2227dae593"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adeb798dc1b30b1ea03ea3c2227dae593">&#9670;&#160;</a></span>isEngine&lt; Java &gt;()</h2>
+<a id="a9616a6344affa0438c90af08cc69f2a2" name="a9616a6344affa0438c90af08cc69f2a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9616a6344affa0438c90af08cc69f2a2">&#9670;&#160;</a></span>isEngineT&lt; Java &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -885,29 +819,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a132ab0bcfc4f9548c165dccd247a2059">Java</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a132ab0bcfc4f9548c165dccd247a2059">Java</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa1b290c9869a2a6eb8ad482b0938ea6d" name="aa1b290c9869a2a6eb8ad482b0938ea6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1b290c9869a2a6eb8ad482b0938ea6d">&#9670;&#160;</a></span>isEngine&lt; KiriKiri &gt;()</h2>
+<a id="ae64589646dfb91003373c10a9a03f10c" name="ae64589646dfb91003373c10a9a03f10c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae64589646dfb91003373c10a9a03f10c">&#9670;&#160;</a></span>isEngineT&lt; KiriKiri &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -915,29 +839,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a57f8bd61306ba88448f96f5488722468">KiriKiri</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a57f8bd61306ba88448f96f5488722468">KiriKiri</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af816a4ad2be26edc456474489f23e16e" name="af816a4ad2be26edc456474489f23e16e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af816a4ad2be26edc456474489f23e16e">&#9670;&#160;</a></span>isEngine&lt; NScripter &gt;()</h2>
+<a id="ad4431715c0c86d16927f25cbff2d97ff" name="ad4431715c0c86d16927f25cbff2d97ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4431715c0c86d16927f25cbff2d97ff">&#9670;&#160;</a></span>isEngineT&lt; NScripter &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -945,29 +859,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a069a66c972704d69e704f2f3a7899c00">NScripter</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a069a66c972704d69e704f2f3a7899c00">NScripter</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a177b0be8d3d04128cf400cc7bfeecea9" name="a177b0be8d3d04128cf400cc7bfeecea9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a177b0be8d3d04128cf400cc7bfeecea9">&#9670;&#160;</a></span>isEngine&lt; NVList &gt;()</h2>
+<a id="a2ca8bc1225fb0f296a29a6992d8862e5" name="a2ca8bc1225fb0f296a29a6992d8862e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca8bc1225fb0f296a29a6992d8862e5">&#9670;&#160;</a></span>isEngineT&lt; NVList &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -975,29 +879,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ac82c045d33036f34003a8fc7d825eeb3">NVList</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ac82c045d33036f34003a8fc7d825eeb3">NVList</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab502d167ff07ff38e863eb926991fef7" name="ab502d167ff07ff38e863eb926991fef7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab502d167ff07ff38e863eb926991fef7">&#9670;&#160;</a></span>isEngine&lt; RAGS &gt;()</h2>
+<a id="a9c5681e01ecf15ff1c7fa2996a40de1b" name="a9c5681e01ecf15ff1c7fa2996a40de1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c5681e01ecf15ff1c7fa2996a40de1b">&#9670;&#160;</a></span>isEngineT&lt; RAGS &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1005,29 +899,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ab2807c829f359db0437ce45fb91029a8">RAGS</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ab2807c829f359db0437ce45fb91029a8">RAGS</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa3cb69274889ccebaf805459fc5639a8" name="aa3cb69274889ccebaf805459fc5639a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3cb69274889ccebaf805459fc5639a8">&#9670;&#160;</a></span>isEngine&lt; RenPy &gt;()</h2>
+<a id="a6ceebe26bb922cd2a2b62b6ef04ba515" name="a6ceebe26bb922cd2a2b62b6ef04ba515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ceebe26bb922cd2a2b62b6ef04ba515">&#9670;&#160;</a></span>isEngineT&lt; RenPy &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1035,29 +919,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a4c685edfcb36d8566d120e3750575306">RenPy</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a4c685edfcb36d8566d120e3750575306">RenPy</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a14ce57d215e77e7e106430fd4e4b08a9" name="a14ce57d215e77e7e106430fd4e4b08a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14ce57d215e77e7e106430fd4e4b08a9">&#9670;&#160;</a></span>isEngine&lt; RPGM &gt;()</h2>
+<a id="a407737d80e5bf84687586deb3fad73ef" name="a407737d80e5bf84687586deb3fad73ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a407737d80e5bf84687586deb3fad73ef">&#9670;&#160;</a></span>isEngineT&lt; RPGM &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1065,29 +939,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a1da12781697d4e909462ec50329dfb2a">RPGM</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a1da12781697d4e909462ec50329dfb2a">RPGM</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a928447482d1353ac47a702cde1c5b31c" name="a928447482d1353ac47a702cde1c5b31c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a928447482d1353ac47a702cde1c5b31c">&#9670;&#160;</a></span>isEngine&lt; Sukai2 &gt;()</h2>
+<a id="abfac05214802b0761ed0f13f03f39781" name="abfac05214802b0761ed0f13f03f39781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfac05214802b0761ed0f13f03f39781">&#9670;&#160;</a></span>isEngineT&lt; Sukai2 &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1095,29 +959,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a354b70959937665077068024cff78207">Sukai2</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a354b70959937665077068024cff78207">Sukai2</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a6f672ab1ce46d6b0e21755c7fc789a6b" name="a6f672ab1ce46d6b0e21755c7fc789a6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f672ab1ce46d6b0e21755c7fc789a6b">&#9670;&#160;</a></span>isEngine&lt; TyanoBuilder &gt;()</h2>
+<a id="a105ad8b8f32eae0350456a1e63c021e6" name="a105ad8b8f32eae0350456a1e63c021e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a105ad8b8f32eae0350456a1e63c021e6">&#9670;&#160;</a></span>isEngineT&lt; TyanoBuilder &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1125,29 +979,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7af65101ba274eafa8f7b179e5ced537c4">TyanoBuilder</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7af65101ba274eafa8f7b179e5ced537c4">TyanoBuilder</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa0a0b5393cd615a06280611848ec397e" name="aa0a0b5393cd615a06280611848ec397e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a0b5393cd615a06280611848ec397e">&#9670;&#160;</a></span>isEngine&lt; Unity &gt;()</h2>
+<a id="a25e072e1275a669655d33c34e84269fa" name="a25e072e1275a669655d33c34e84269fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e072e1275a669655d33c34e84269fa">&#9670;&#160;</a></span>isEngineT&lt; Unity &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1155,29 +999,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a39af23c2a8ea764e2b00b122cc2fa89b">Unity</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a39af23c2a8ea764e2b00b122cc2fa89b">Unity</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3e42656655201bc2daf5d4443be7ac9c" name="a3e42656655201bc2daf5d4443be7ac9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e42656655201bc2daf5d4443be7ac9c">&#9670;&#160;</a></span>isEngine&lt; Unreal &gt;()</h2>
+<a id="a67ce762ebb46640fd9c0488f811c777a" name="a67ce762ebb46640fd9c0488f811c777a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67ce762ebb46640fd9c0488f811c777a">&#9670;&#160;</a></span>isEngineT&lt; Unreal &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1185,29 +1019,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a46a296792b6aedb218969f8b25970b75">Unreal</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a46a296792b6aedb218969f8b25970b75">Unreal</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a158fc4ff7e1c060019760e0c20c2595c" name="a158fc4ff7e1c060019760e0c20c2595c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a158fc4ff7e1c060019760e0c20c2595c">&#9670;&#160;</a></span>isEngine&lt; VisualNovelMaker &gt;()</h2>
+<a id="a9d2dd4894c1f1c4c8f5745715e1c8fbf" name="a9d2dd4894c1f1c4c8f5745715e1c8fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d2dd4894c1f1c4c8f5745715e1c8fbf">&#9670;&#160;</a></span>isEngineT&lt; VisualNovelMaker &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1215,29 +1039,19 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ada556e305703060d315322065c209338">VisualNovelMaker</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7ada556e305703060d315322065c209338">VisualNovelMaker</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abe94f637c8ba467d412b739f05a9cfb1" name="abe94f637c8ba467d412b739f05a9cfb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe94f637c8ba467d412b739f05a9cfb1">&#9670;&#160;</a></span>isEngine&lt; WolfRPG &gt;()</h2>
+<a id="ae05fac3c13184b4af12a0dc3b1017059" name="ae05fac3c13184b4af12a0dc3b1017059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae05fac3c13184b4af12a0dc3b1017059">&#9670;&#160;</a></span>isEngineT&lt; WolfRPG &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1245,21 +1059,11 @@ template&lt;&gt; </div>
 template&lt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#ad9ec81a363ac810ab0b5bfd75820329c">isEngine</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7aa89c38564134ba9d1b289f57a2759d39">WolfRPG</a> &gt; </td>
+          <td class="memname">bool <a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a>&lt; <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7aa89c38564134ba9d1b289f57a2759d39">WolfRPG</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>executable_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1303,8 +1107,8 @@ template&lt;&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ab628e1c1e0e606138c415915c49a2a55" name="ab628e1c1e0e606138c415915c49a2a55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab628e1c1e0e606138c415915c49a2a55">&#9670;&#160;</a></span>blacklist_execs</h2>
+<a id="a110b0dfa865ac5613a753ce5c0bfd206" name="a110b0dfa865ac5613a753ce5c0bfd206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a110b0dfa865ac5613a753ce5c0bfd206">&#9670;&#160;</a></span>blacklist_execs</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1313,7 +1117,7 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr std::tuple blacklist_execs { &quot;UnityCrashHandler32.exe&quot;, &quot;UnityCrashHandler64.exe&quot; }</td>
+          <td class="memname">constexpr std::tuple&lt; std::string_view, std::string_view &gt; blacklist_execs</td>
         </tr>
       </table>
   </td>
@@ -1322,7 +1126,9 @@ template&lt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">{ <span class="stringliteral">&quot;UnityCrashHandler32.exe&quot;</span>,</div>
+<div class="line">                                                                             <span class="stringliteral">&quot;UnityCrashHandler64.exe&quot;</span> }</div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
@@ -1330,7 +1136,7 @@ template&lt;&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_33f586cf01f7b35339e575ba246fbce1.html">h95</a></li><li class="navelem"><a class="el" href="dir_413c913120a4eab9789c138aa6668fd6.html">utils</a></li><li class="navelem"><a class="el" href="dir_86d87e9131a19898dc336a1fc7b7286a.html">engineDetection</a></li><li class="navelem"><a class="el" href="engineDetection_8cpp.html">engineDetection.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_8c7b9bb48bf3be37a0e88d7d01157361.html">atlas</a></li><li class="navelem"><a class="el" href="dir_199332925953ea78556f90507db388e1.html">utils</a></li><li class="navelem"><a class="el" href="dir_245a516cd6e4421874c37e9d5f977975.html">engineDetection</a></li><li class="navelem"><a class="el" href="engineDetection_8cpp.html">engineDetection.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

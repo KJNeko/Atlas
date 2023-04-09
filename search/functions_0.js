@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['abort_0',['abort',['../structTransaction.html#a11db8852227f0bf3bf103483032711f5',1,'Transaction::abort()'],['../structNonTransaction.html#a21dc594271f705805d14a80ef407070f',1,'NonTransaction::abort()']]],
+  ['abort_0',['abort',['../structTransaction.html#a11db8852227f0bf3bf103483032711f5',1,'Transaction::abort()'],['../structNonTransaction.html#a21dc594271f705805d14a80ef407070f',1,'NonTransaction::abort()'],['../classImportPreProcessor.html#abb0ab0ffeb1b46d8a3a4c07b2c24f779',1,'ImportPreProcessor::abort()'],['../classImportProcessor.html#a915e80f3af74cdc040dc6cb060179953',1,'ImportProcessor::abort()']]],
   ['addgame_1',['addGame',['../classBatchImportModel.html#ab903b5c678db548ec69f523011f58382',1,'BatchImportModel']]],
   ['addgamedialog_2',['AddGameDialog',['../classAddGameDialog.html#aa5894400a1812662b212bf5aab8ea2ef',1,'AddGameDialog']]],
   ['addgames_3',['addGames',['../classBatchImportModel.html#a2ebaec6a43e687eb69bf3deb3ef787f9',1,'BatchImportModel']]],

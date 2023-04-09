@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: src/h95/database/Record.hpp Source File</title>
+<title>Atlas Game Manager: src/atlas/database/Record.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,16 +112,16 @@ $(document).ready(function(){initNavTree('Record_8hpp_source.html',''); initResi
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 1/13/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef HYDRUS95_RECORD_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define HYDRUS95_RECORD_HPP</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_RECORD_HPP</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_RECORD_HPP</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QPixmap&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;tracy/Tracy.hpp&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="FlyWeight_8hpp.html">FlyWeight.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">h95/Types.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="GameMetadata_8hpp.html">h95/database/GameMetadata.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">atlas/Types.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="GameMetadata_8hpp.html">atlas/database/GameMetadata.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8">   16</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="Record_8hpp.html#aef8b88d56fdf9a25f990a68d80c014d8">IMAGE_TYPE</a></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
@@ -282,7 +282,7 @@ $(document).ready(function(){initNavTree('Record_8hpp_source.html',''); initResi
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    {}</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>};</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">#endif </span><span class="comment">//HYDRUS95_RECORD_HPP</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_RECORD_HPP</span></div>
 <div class="ttc" id="aFlyWeight_8hpp_html"><div class="ttname"><a href="FlyWeight_8hpp.html">FlyWeight.hpp</a></div></div>
 <div class="ttc" id="aGameMetadata_8hpp_html"><div class="ttname"><a href="GameMetadata_8hpp.html">GameMetadata.hpp</a></div></div>
 <div class="ttc" id="aRecord_8hpp_html_a4bb552b58cc2e652c52e791fc8a2594d"><div class="ttname"><a href="Record_8hpp.html#a4bb552b58cc2e652c52e791fc8a2594d">recordID</a></div><div class="ttdeci">RecordID recordID(const QString &amp;title, const QString &amp;creator, const QString &amp;engine, Transaction transaction)</div><div class="ttdoc">Returns 0 if there is not record with this data.</div><div class="ttdef"><b>Definition:</b> Record.cpp:423</div></div>
@@ -353,13 +353,13 @@ $(document).ready(function(){initNavTree('Record_8hpp_source.html',''); initResi
 <div class="ttc" id="astructRecordData_html_aff8c1fca88901edd0c236c0439d55ea3"><div class="ttname"><a href="structRecordData.html#aff8c1fca88901edd0c236c0439d55ea3">RecordData::getBanner</a></div><div class="ttdeci">QPixmap getBanner() const</div><div class="ttdef"><b>Definition:</b> Record.cpp:156</div></div>
 <div class="ttc" id="astructRecordException_html"><div class="ttname"><a href="structRecordException.html">RecordException</a></div><div class="ttdef"><b>Definition:</b> Record.hpp:185</div></div>
 <div class="ttc" id="astructRecordException_html_a8d9445956d94d871b9c9f2f3e6153add"><div class="ttname"><a href="structRecordException.html#a8d9445956d94d871b9c9f2f3e6153add">RecordException::RecordException</a></div><div class="ttdeci">RecordException(const char *const msg)</div><div class="ttdef"><b>Definition:</b> Record.hpp:186</div></div>
-<div class="ttc" id="astructTransaction_html"><div class="ttname"><a href="structTransaction.html">Transaction</a></div><div class="ttdoc">Transaction unit to the database.</div><div class="ttdef"><b>Definition:</b> Database.hpp:106</div></div>
+<div class="ttc" id="astructTransaction_html"><div class="ttname"><a href="structTransaction.html">Transaction</a></div><div class="ttdoc">Transaction unit to the database.</div><div class="ttdef"><b>Definition:</b> Database.hpp:90</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_33f586cf01f7b35339e575ba246fbce1.html">h95</a></li><li class="navelem"><a class="el" href="dir_5ac0ab1236048c2b5067200ef525dc11.html">database</a></li><li class="navelem"><a class="el" href="Record_8hpp.html">Record.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_8c7b9bb48bf3be37a0e88d7d01157361.html">atlas</a></li><li class="navelem"><a class="el" href="dir_a80d26ad38e8d5dce88887f73f4c5887.html">database</a></li><li class="navelem"><a class="el" href="Record_8hpp.html">Record.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

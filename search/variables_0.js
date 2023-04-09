@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['blacklist_5fexecs_0',['blacklist_execs',['../engineDetection_8cpp.html#ab628e1c1e0e606138c415915c49a2a55',1,'engineDetection.cpp']]],
-  ['buffer_1',['buffer',['../classImportPreProcessor.html#a13154883f693d2aa2fe6a2cfb7736d8d',1,'ImportPreProcessor']]]
+  ['abort_5ftask_0',['abort_task',['../classImportPreProcessor.html#a6546cd63deefe525e71c87eb91756afa',1,'ImportPreProcessor::abort_task()'],['../classImportProcessor.html#a1b4999047f50d51041af7a75f8a3f755',1,'ImportProcessor::abort_task()']]]
 ];

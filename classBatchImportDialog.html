@@ -106,6 +106,7 @@ $(document).ready(function(){initNavTree('classBatchImportDialog.html',''); init
 
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-slots">Private Slots</a> &#124;
@@ -124,16 +125,23 @@ Inheritance diagram for BatchImportDialog:</div>
   <img src="classBatchImportDialog.png" alt=""/>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-slots" name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:abc38cf6ae23415c868e36aa4d50ec678"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#abc38cf6ae23415c868e36aa4d50ec678">reject</a> ()</td></tr>
+<tr class="separator:abc38cf6ae23415c868e36aa4d50ec678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a0574471bc5c01d203c8616ef11718079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a0574471bc5c01d203c8616ef11718079">startProcessingDirectory</a> (const QString regex, const std::filesystem::path path, const bool move_imported, const bool skip_filesize)</td></tr>
-<tr class="separator:a0574471bc5c01d203c8616ef11718079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a9988655199de06e1e78566688e786e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a5a9988655199de06e1e78566688e786e">startProcessingDirectory</a> (const QString regex, const std::filesystem::path path, const bool skip_filesize)</td></tr>
+<tr class="separator:a5a9988655199de06e1e78566688e786e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a054129fb96f49faefed190c200f00de8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a054129fb96f49faefed190c200f00de8">addToModel</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data)</td></tr>
 <tr class="separator:a054129fb96f49faefed190c200f00de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d1854d3fa611f17d2477a79f395e39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a21d1854d3fa611f17d2477a79f395e39">startImportingGames</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data, const std::filesystem::path source)</td></tr>
-<tr class="separator:a21d1854d3fa611f17d2477a79f395e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab640485d74053ec5be77f34d3f63e898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#ab640485d74053ec5be77f34d3f63e898">startImportingGames</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data, const std::filesystem::path source, const bool move_after_import)</td></tr>
+<tr class="separator:ab640485d74053ec5be77f34d3f63e898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04b7af1c07bb900476b9d9b1e410aaa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a04b7af1c07bb900476b9d9b1e410aaa3">importComplete</a> (std::vector&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt; records)</td></tr>
 <tr class="separator:a04b7af1c07bb900476b9d9b1e410aaa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab073ae8814965fe300f0be5553e5742"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#aab073ae8814965fe300f0be5553e5742">unpauseImport</a> ()</td></tr>
+<tr class="separator:aab073ae8814965fe300f0be5553e5742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -156,10 +164,12 @@ Private Slots</h2></td></tr>
 <tr class="separator:a2dc09848c1b774d4e9943ffec538eb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf9d14927d964526348bcb4ac533025b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#abf9d14927d964526348bcb4ac533025b">processFinishedDirectory</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data)</td></tr>
 <tr class="separator:abf9d14927d964526348bcb4ac533025b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac46f0e065c1760fd29677bbe32ccb34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#aac46f0e065c1760fd29677bbe32ccb34">finishedProcessing</a> ()</td></tr>
-<tr class="separator:aac46f0e065c1760fd29677bbe32ccb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47944fe7422971e58238f0abd1102f17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a47944fe7422971e58238f0abd1102f17">finishedPreProcessing</a> ()</td></tr>
+<tr class="separator:a47944fe7422971e58238f0abd1102f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d99062e7d9f6c0c0dfa30b66ef78977"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a3d99062e7d9f6c0c0dfa30b66ef78977">finishedImporting</a> ()</td></tr>
 <tr class="separator:a3d99062e7d9f6c0c0dfa30b66ef78977"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a845f361b1917d64a551bd76c41e338aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBatchImportDialog.html#a845f361b1917d64a551bd76c41e338aa">importFailure</a> (const QString top, const QString bottom)</td></tr>
+<tr class="separator:a845f361b1917d64a551bd76c41e338aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -281,8 +291,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aac46f0e065c1760fd29677bbe32ccb34" name="aac46f0e065c1760fd29677bbe32ccb34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac46f0e065c1760fd29677bbe32ccb34">&#9670;&#160;</a></span>finishedProcessing</h2>
+<a id="a47944fe7422971e58238f0abd1102f17" name="a47944fe7422971e58238f0abd1102f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47944fe7422971e58238f0abd1102f17">&#9670;&#160;</a></span>finishedPreProcessing</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,7 +301,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void BatchImportDialog::finishedProcessing </td>
+          <td class="memname">void BatchImportDialog::finishedPreProcessing </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -326,6 +336,42 @@ Private Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a845f361b1917d64a551bd76c41e338aa" name="a845f361b1917d64a551bd76c41e338aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a845f361b1917d64a551bd76c41e338aa">&#9670;&#160;</a></span>importFailure</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BatchImportDialog::importFailure </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>top</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>bottom</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -575,6 +621,31 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="abc38cf6ae23415c868e36aa4d50ec678" name="abc38cf6ae23415c868e36aa4d50ec678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc38cf6ae23415c868e36aa4d50ec678">&#9670;&#160;</a></span>reject</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BatchImportDialog::reject </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae8bf9ea28f59f136a0268ac155d6eb30" name="ae8bf9ea28f59f136a0268ac155d6eb30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae8bf9ea28f59f136a0268ac155d6eb30">&#9670;&#160;</a></span>saveConfig()</h2>
 
@@ -600,8 +671,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a21d1854d3fa611f17d2477a79f395e39" name="a21d1854d3fa611f17d2477a79f395e39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21d1854d3fa611f17d2477a79f395e39">&#9670;&#160;</a></span>startImportingGames</h2>
+<a id="ab640485d74053ec5be77f34d3f63e898" name="ab640485d74053ec5be77f34d3f63e898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab640485d74053ec5be77f34d3f63e898">&#9670;&#160;</a></span>startImportingGames</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -619,7 +690,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::filesystem::path&#160;</td>
-          <td class="paramname"><em>source</em>&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>move_after_import</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -636,8 +713,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0574471bc5c01d203c8616ef11718079" name="a0574471bc5c01d203c8616ef11718079"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0574471bc5c01d203c8616ef11718079">&#9670;&#160;</a></span>startProcessingDirectory</h2>
+<a id="a5a9988655199de06e1e78566688e786e" name="a5a9988655199de06e1e78566688e786e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a9988655199de06e1e78566688e786e">&#9670;&#160;</a></span>startProcessingDirectory</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -661,18 +738,37 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const bool&#160;</td>
-          <td class="paramname"><em>move_imported</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>skip_filesize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab073ae8814965fe300f0be5553e5742" name="aab073ae8814965fe300f0be5553e5742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab073ae8814965fe300f0be5553e5742">&#9670;&#160;</a></span>unpauseImport</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BatchImportDialog::unpauseImport </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>

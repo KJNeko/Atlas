@@ -125,8 +125,12 @@ Inheritance diagram for ImportProcessor:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-slots" name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr class="memitem:a2ea96a9690ce987f5c2ff1107b240f1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#a2ea96a9690ce987f5c2ff1107b240f1d">importGames</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data, const std::filesystem::path source)</td></tr>
-<tr class="separator:a2ea96a9690ce987f5c2ff1107b240f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a0baa4364e13fcf678cb1b49c62ac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#ab7a0baa4364e13fcf678cb1b49c62ac8">importGames</a> (const std::vector&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; data, const std::filesystem::path source, const bool move_after_import)</td></tr>
+<tr class="separator:ab7a0baa4364e13fcf678cb1b49c62ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915e80f3af74cdc040dc6cb060179953"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#a915e80f3af74cdc040dc6cb060179953">abort</a> ()</td></tr>
+<tr class="separator:a915e80f3af74cdc040dc6cb060179953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe88150d2606a8331a5b38c8c29c2c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#a4fe88150d2606a8331a5b38c8c29c2c6">unpause</a> ()</td></tr>
+<tr class="separator:a4fe88150d2606a8331a5b38c8c29c2c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
@@ -148,6 +152,8 @@ Signals</h2></td></tr>
 <tr class="separator:ab4480b2b7da900764d18cb7b121c44f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab684e45bcd074abb9232b4ea0e9eaebc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#ab684e45bcd074abb9232b4ea0e9eaebc">closeProgressBar</a> ()</td></tr>
 <tr class="separator:ab684e45bcd074abb9232b4ea0e9eaebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4380cac43e1eaa791f3323b4a7285bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#ad4380cac43e1eaa791f3323b4a7285bc">importFailure</a> (const QString top_msg, const QString body)</td></tr>
+<tr class="separator:ad4380cac43e1eaa791f3323b4a7285bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -162,6 +168,10 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a874e925cdb8c9fbbed54cd9ba4eb801e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#a874e925cdb8c9fbbed54cd9ba4eb801e">completed_records</a> {}</td></tr>
 <tr class="separator:a874e925cdb8c9fbbed54cd9ba4eb801e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b4999047f50d51041af7a75f8a3f755"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#a1b4999047f50d51041af7a75f8a3f755">abort_task</a> { false }</td></tr>
+<tr class="separator:a1b4999047f50d51041af7a75f8a3f755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf11e1fe1ebed9c0aa7cfff04f1b8c80"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImportProcessor.html#abf11e1fe1ebed9c0aa7cfff04f1b8c80">pause_task</a> { false }</td></tr>
+<tr class="separator:abf11e1fe1ebed9c0aa7cfff04f1b8c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4b4328689f3061aa2c5e8796e8614912" name="a4b4328689f3061aa2c5e8796e8614912"></a>
@@ -207,6 +217,31 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a915e80f3af74cdc040dc6cb060179953" name="a915e80f3af74cdc040dc6cb060179953"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915e80f3af74cdc040dc6cb060179953">&#9670;&#160;</a></span>abort</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImportProcessor::abort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ab684e45bcd074abb9232b4ea0e9eaebc" name="ab684e45bcd074abb9232b4ea0e9eaebc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab684e45bcd074abb9232b4ea0e9eaebc">&#9670;&#160;</a></span>closeProgressBar</h2>
 
@@ -282,8 +317,44 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ea96a9690ce987f5c2ff1107b240f1d" name="a2ea96a9690ce987f5c2ff1107b240f1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ea96a9690ce987f5c2ff1107b240f1d">&#9670;&#160;</a></span>importGames</h2>
+<a id="ad4380cac43e1eaa791f3323b4a7285bc" name="ad4380cac43e1eaa791f3323b4a7285bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4380cac43e1eaa791f3323b4a7285bc">&#9670;&#160;</a></span>importFailure</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImportProcessor::importFailure </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>top_msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>body</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab7a0baa4364e13fcf678cb1b49c62ac8" name="ab7a0baa4364e13fcf678cb1b49c62ac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7a0baa4364e13fcf678cb1b49c62ac8">&#9670;&#160;</a></span>importGames</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,7 +372,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::filesystem::path&#160;</td>
-          <td class="paramname"><em>source</em>&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>move_after_import</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -337,6 +414,31 @@ Private Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fe88150d2606a8331a5b38c8c29c2c6" name="a4fe88150d2606a8331a5b38c8c29c2c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe88150d2606a8331a5b38c8c29c2c6">&#9670;&#160;</a></span>unpause</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImportProcessor::unpause </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -500,6 +602,28 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a1b4999047f50d51041af7a75f8a3f755" name="a1b4999047f50d51041af7a75f8a3f755"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b4999047f50d51041af7a75f8a3f755">&#9670;&#160;</a></span>abort_task</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; bool &gt; ImportProcessor::abort_task { false }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a874e925cdb8c9fbbed54cd9ba4eb801e" name="a874e925cdb8c9fbbed54cd9ba4eb801e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a874e925cdb8c9fbbed54cd9ba4eb801e">&#9670;&#160;</a></span>completed_records</h2>
 
@@ -522,9 +646,31 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="abf11e1fe1ebed9c0aa7cfff04f1b8c80" name="abf11e1fe1ebed9c0aa7cfff04f1b8c80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf11e1fe1ebed9c0aa7cfff04f1b8c80">&#9670;&#160;</a></span>pause_task</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; bool &gt; ImportProcessor::pause_task { false }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/h95/threading/<a class="el" href="ImportProcessor_8hpp_source.html">ImportProcessor.hpp</a></li>
-<li>src/h95/threading/<a class="el" href="ImportProcessor_8cpp.html">ImportProcessor.cpp</a></li>
+<li>src/atlas/threading/<a class="el" href="ImportProcessor_8hpp_source.html">ImportProcessor.hpp</a></li>
+<li>src/atlas/threading/<a class="el" href="ImportProcessor_8cpp.html">ImportProcessor.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

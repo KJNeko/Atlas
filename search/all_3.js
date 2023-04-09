@@ -13,6 +13,6 @@ var searchData=
   ['detailedrecordview_2ecpp_10',['DetailedRecordView.cpp',['../DetailedRecordView_8cpp.html',1,'']]],
   ['detailedrecordview_2ehpp_11',['DetailedRecordView.hpp',['../DetailedRecordView_8hpp.html',1,'']]],
   ['detectexecutables_12',['detectExecutables',['../engineDetection_8cpp.html#a0bf3a3950f9a77458177e1aef3ca1eb1',1,'detectExecutables(const std::filesystem::path &amp;path):&#160;engineDetection.cpp'],['../engineDetection_8hpp.html#a0bf3a3950f9a77458177e1aef3ca1eb1',1,'detectExecutables(const std::filesystem::path &amp;path):&#160;engineDetection.cpp']]],
-  ['determineengine_13',['determineEngine',['../engineDetection_8cpp.html#af50f38c051a24beb42b1028d0e1a5aeb',1,'determineEngine(const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path):&#160;engineDetection.cpp'],['../engineDetection_8hpp.html#af50f38c051a24beb42b1028d0e1a5aeb',1,'determineEngine(const std::filesystem::path &amp;path, const std::filesystem::path &amp;executable_path):&#160;engineDetection.cpp']]],
+  ['determineengine_13',['determineEngine',['../engineDetection_8cpp.html#a7235d808dc321c6dffb09eaf0636bdaa',1,'determineEngine(const std::filesystem::path &amp;path):&#160;engineDetection.cpp'],['../engineDetection_8hpp.html#a7235d808dc321c6dffb09eaf0636bdaa',1,'determineEngine(const std::filesystem::path &amp;path):&#160;engineDetection.cpp']]],
   ['determineptr_14',['determinePtr',['../classFlyWeight.html#ab771579b6fa802aa365ea16d6aa7e565',1,'FlyWeight']]]
 ];

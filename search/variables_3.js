@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['engine_0',['engine',['../structGameImportData.html#a912e1dc0a63e82d31ebac45b802c9f59',1,'GameImportData::engine()'],['../structGroupsOutput.html#ac6d2fd3b18616d6b9e462c676806f379',1,'GroupsOutput::engine()']]],
-  ['executable_1',['executable',['../structGameImportData.html#a27f96b6148ace4b04acfc4c4541a11ee',1,'GameImportData']]],
-  ['executables_2',['executables',['../structGameImportData.html#af8dbc54c873736f2dfd44fbbec803418',1,'GameImportData']]]
+  ['data_0',['data',['../structTransaction.html#a2428ba3c64d11bae7f5cc0989a8cb765',1,'Transaction']]],
+  ['db_1',['db',['../namespaceinternal.html#a0aa672c01f384b6b178a2a310df74a7d',1,'internal']]],
+  ['db_5fmtx_2',['db_mtx',['../namespaceinternal.html#a4660841261a4134fdc50bf8d7481d6a5',1,'internal']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operators_0',['operators',['../QueryBuilder_8cpp.html#ac6100d53a5a6e62d3f66811850e06e44',1,'QueryBuilder.cpp']]]
+  ['namespaces_0',['namespaces',['../QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c',1,'QueryBuilder.cpp']]]
 ];
