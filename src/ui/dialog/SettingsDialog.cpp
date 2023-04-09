@@ -103,7 +103,7 @@ void SettingsDialog::preparePathsSettings()
 		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::getPath() ) ) ) );
 
 	ui->databaseSizeLabel->setText( locale.formattedDataSize(
-		static_cast< qint64 >( std::filesystem::file_size( config::paths::database::getPath() / "hydrus95.db" ) ) ) );
+		static_cast< qint64 >( std::filesystem::file_size( config::paths::database::getPath() / "atlas.db" ) ) ) );
 }
 
 void SettingsDialog::savePathsSettings()
