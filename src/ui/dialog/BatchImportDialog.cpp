@@ -232,7 +232,7 @@ void BatchImportDialog::finishedProcessing()
 void BatchImportDialog::finishedImporting()
 {
 	emit importComplete( this->processor.getCompleted() );
-	this->close();
+	accept();
 }
 
 void BatchImportDialog::on_btnCancel_pressed()
