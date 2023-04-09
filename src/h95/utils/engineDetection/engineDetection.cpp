@@ -247,7 +247,6 @@ bool isEngineT< HTML >( const std::filesystem::path& path )
 	bool html_found { false };
 	for(const auto& file : std::filesystem::directory_iterator(path))
 	{
-		spdlog::info("Scanning: {}", file.path());
 		if ( file.path().extension() == ".exe" ) return false;
 		if ( file.path().extension() == ".html" ) html_found = true;
 	}
