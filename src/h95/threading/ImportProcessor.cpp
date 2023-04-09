@@ -122,7 +122,7 @@ void ImportProcessor::importGames(
 			pause_task = true;
 			emit importFailure(
 				"Something went wrong",
-				QString( "Something went wrong during the import!\nGame name: %1\nError: RecordException: \"%2\"" )
+				QString( "Game name: %1\nError: RecordException: \"%2\"" )
 					.arg( title )
 					.arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
@@ -133,7 +133,7 @@ void ImportProcessor::importGames(
 			pause_task = true;
 			emit importFailure(
 				"Something went wrong",
-				QString( "Something went wrong during the import!\nGame name: %1\nError: \"%2\"" )
+				QString( "Game name: %1\nError: \"%2\"" )
 					.arg( title )
 					.arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: {}", e.what() );
