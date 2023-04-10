@@ -19,6 +19,7 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 void ImportPreProcessor::
 	processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize )
 {
+	ZoneScoped;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
@@ -26,6 +27,7 @@ void ImportPreProcessor::
 	      itter != std::filesystem::recursive_directory_iterator();
 	      ++itter )
 	{
+		ZoneScopedN("Process Directory");
 		if ( abort_task )
 		{
 			abort_task = false;
@@ -35,9 +37,10 @@ void ImportPreProcessor::
 		const std::filesystem::path& folder { *itter };
 		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
 		{
-			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 			ZoneScopedN( "Test folder for executables" );
-			std::vector< std::filesystem::path > potential_executables { detectExecutables( folder ) };
+			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
+			FileScanner scanner { folder };
+			std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
 			if ( potential_executables.size() > 0 )
 			{
@@ -49,9 +52,9 @@ void ImportPreProcessor::
 					std::filesystem::relative( folder, base ),
 					title,
 					creator,
-					engine.isEmpty() ? engineName( determineEngine( folder ) ) : engine,
+					engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
 					version,
-					skip_filesize ? 0 : folderSize( folder ),
+					skip_filesize ? 0 : folderSize( scanner ),
 					potential_executables,
 					potential_executables.at( 0 ) );
 

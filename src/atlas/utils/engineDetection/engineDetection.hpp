@@ -10,6 +10,8 @@
 
 #include <QString>
 
+#include "atlas/utils/FileScanner.hpp"
+
 enum Engine : int
 {
 	ENGINES_BEGIN = 0,
@@ -34,7 +36,7 @@ enum Engine : int
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
-bool isEngineT( const std::filesystem::path& path );
+bool isEngineT( FileScanner& scanner );
 
 //! String name of the engine.
 template < Engine engine >
@@ -43,12 +45,12 @@ QString engineNameT();
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
 //! Returns an engine type of ENGINES_END if no engine is determined
-Engine determineEngine( const std::filesystem::path& path );
+Engine determineEngine( FileScanner& scanner );
 
 //! Returns a string name of the engine
 QString engineName( const Engine engine );
 
-std::vector< std::filesystem::path > detectExecutables( const std::filesystem::path& path );
+std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner );
 
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, const Engine engine = UNKNOWN );

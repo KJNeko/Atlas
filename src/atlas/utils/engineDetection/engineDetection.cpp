@@ -14,13 +14,13 @@
 #include "atlas/logging.hpp"
 
 template <>
-bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] FileScanner& scanner )
 {
 	return false;
 }
 
 template <>
-bool isEngineT< ENGINES_END >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< ENGINES_END >( [[maybe_unused]] FileScanner& scanner )
 {
 	return true;
 }
@@ -49,34 +49,35 @@ bool isBlacklist( const std::string& name )
 	return std::apply( func, blacklist_execs );
 }
 
-std::vector< std::filesystem::path > detectExecutables( const std::filesystem::path& path )
+std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
 
 	//Check for a valid game executable in the folder
-	for ( const auto& file : std::filesystem::directory_iterator( path ) )
+	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
-		if ( file.is_regular_file() )
-		{
-			const auto ext { file.path().extension() };
+		if ( depth > 1 ) break;
 
-			if ( isBlacklist( file.path().filename().string() ) ) continue;
+		if ( std::filesystem::is_regular_file( path ) )
+		{
+			ZoneScopedN("Is Regular");
+			if ( isBlacklist( filename ) ) continue;
 
 			QMimeDatabase mime_db;
 			const auto type {
-				mime_db.mimeTypeForFile( QString::fromStdString( file.path().string() ), QMimeDatabase::MatchContent )
+				mime_db.mimeTypeForFile( QString::fromStdString( path.string() ), QMimeDatabase::MatchContent )
 			};
 
 			//General executables
 			if ( type.inherits( "application/x-ms-dos-executable" ) && ext == ".exe" )
 			{
-				potential_executables.emplace_back( std::filesystem::relative( file, path ) );
+				potential_executables.emplace_back( relative );
 				continue;
 			}
-			else if ( type.inherits( "text/html" ) && file.path().filename() == "index.html" )
+			else if ( type.inherits( "text/html" ) && filename == "index.html" )
 			{
-				potential_executables.emplace_back( std::filesystem::relative( file, path ) );
+				potential_executables.emplace_back( relative );
 				continue;
 			}
 
@@ -84,7 +85,7 @@ std::vector< std::filesystem::path > detectExecutables( const std::filesystem::p
 			{
 				if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
 				{
-					potential_executables.emplace_back( std::filesystem::relative( file, path ) );
+					potential_executables.emplace_back( relative );
 					continue;
 				}
 			}
@@ -131,24 +132,24 @@ QString engineNameT< UNKNOWN >()
 }
 
 template < Engine engine >
-Engine findEngine( const std::filesystem::path& path )
+Engine findEngine( FileScanner& scanner )
 {
 	ZoneScoped;
 	if constexpr ( engine == ENGINES_END )
 		return UNKNOWN;
 	else
 	{
-		if ( isEngineT< engine >( path ) )
+		if ( isEngineT< engine >( scanner ) )
 			return engine;
 		else
-			return findEngine< static_cast< Engine >( engine + 1 ) >( path );
+			return findEngine< static_cast< Engine >( engine + 1 ) >( scanner );
 	}
 }
 
-Engine determineEngine( const std::filesystem::path& path )
+Engine determineEngine( FileScanner& scanner )
 {
 	ZoneScoped;
-	return findEngine< ENGINES_BEGIN >( path );
+	return findEngine< ENGINES_BEGIN >( scanner );
 }
 
 template < Engine engine_t >
@@ -176,10 +177,17 @@ QString engineName( const Engine engine )
 //Define all specializations of isEngine and engineNameT here
 
 template <>
-bool isEngineT< RenPy >( const std::filesystem::path& path )
+bool isEngineT< RenPy >( FileScanner& scanner )
 {
 	ZoneScoped;
-	return std::filesystem::exists( path / "renpy" );
+
+	for ( const auto& file : scanner )
+	{
+		if ( file.depth > 1 ) return false;
+
+		if ( file.filename == "renpy" && std::filesystem::is_directory( file.path ) ) return true;
+	}
+	return false;
 }
 
 template <>
@@ -189,10 +197,21 @@ QString engineNameT< RenPy >()
 }
 
 template <>
-bool isEngineT< Unity >( const std::filesystem::path& path )
+bool isEngineT< Unity >( FileScanner& scanner )
 {
 	ZoneScoped;
-	return std::filesystem::exists( path / "Data" / "Managed" / "Assembly-CSharp.dll" );
+	for ( const auto& file : scanner )
+	{
+		if ( file.depth > 1 ) return false;
+
+		if ( file.filename == "Data" && std::filesystem::is_directory( file.path ) )
+		{
+			//Check deeper
+			return std::filesystem::exists( scanner.path() / "Data" / "Managed" / "Assembly-CSharp.dll" );
+		}
+	}
+
+	return false;
 }
 
 template <>
@@ -202,7 +221,7 @@ QString engineNameT< Unity >()
 }
 
 template <>
-bool isEngineT< Unreal >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< Unreal >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -215,7 +234,7 @@ QString engineNameT< Unreal >()
 }
 
 template <>
-bool isEngineT< RPGM >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< RPGM >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -228,7 +247,7 @@ QString engineNameT< RPGM >()
 }
 
 template <>
-bool isEngineT< WolfRPG >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< WolfRPG >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -241,14 +260,18 @@ QString engineNameT< WolfRPG >()
 }
 
 template <>
-bool isEngineT< HTML >( const std::filesystem::path& path )
+bool isEngineT< HTML >( FileScanner& scanner )
 {
 	ZoneScoped;
+
 	bool html_found { false };
-	for ( const auto& file : std::filesystem::directory_iterator( path ) )
+
+	for ( const auto& file : scanner )
 	{
-		if ( file.path().extension() == ".exe" ) return false;
-		if ( file.path().extension() == ".html" ) html_found = true;
+		if ( file.depth > 1 ) return false;
+
+		if ( file.ext == ".exe" ) return false;
+		if ( file.ext == ".html" ) html_found = true;
 	}
 
 	return html_found;
@@ -261,7 +284,7 @@ QString engineNameT< HTML >()
 }
 
 template <>
-bool isEngineT< VisualNovelMaker >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< VisualNovelMaker >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -274,11 +297,22 @@ QString engineNameT< VisualNovelMaker >()
 }
 
 template <>
-bool isEngineT< TyanoBuilder >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< TyanoBuilder >( FileScanner& scanner )
 {
 	ZoneScoped;
 
-	return std::filesystem::exists( path / "resources" / "app" / "tyrano" );
+	for ( const auto& file : scanner )
+	{
+		if ( file.depth > 1 ) return false;
+
+		if ( file.filename == "resources" && std::filesystem::is_directory( file.path ) )
+		{
+			//Search deeper
+			return std::filesystem::exists( scanner.path() / "resources" / "app" / "tyrano" );
+		}
+	}
+
+	return false;
 }
 
 template <>
@@ -288,7 +322,7 @@ QString engineNameT< TyanoBuilder >()
 }
 
 template <>
-bool isEngineT< Java >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< Java >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -301,7 +335,7 @@ QString engineNameT< Java >()
 }
 
 template <>
-bool isEngineT< Flash >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< Flash >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -314,7 +348,7 @@ QString engineNameT< Flash >()
 }
 
 template <>
-bool isEngineT< RAGS >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< RAGS >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -327,7 +361,7 @@ QString engineNameT< RAGS >()
 }
 
 template <>
-bool isEngineT< KiriKiri >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< KiriKiri >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -340,7 +374,7 @@ QString engineNameT< KiriKiri >()
 }
 
 template <>
-bool isEngineT< NScripter >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< NScripter >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -353,7 +387,7 @@ QString engineNameT< NScripter >()
 }
 
 template <>
-bool isEngineT< NVList >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< NVList >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -366,7 +400,7 @@ QString engineNameT< NVList >()
 }
 
 template <>
-bool isEngineT< Sukai2 >( [[maybe_unused]] const std::filesystem::path& path )
+bool isEngineT< Sukai2 >( FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;

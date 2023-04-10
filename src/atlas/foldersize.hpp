@@ -10,21 +10,28 @@
 #include <tracy/Tracy.hpp>
 
 #include "atlas/logging.hpp"
+#include "atlas/utils/FileScanner.hpp"
 
 //! Returns the byte size of a folder
-inline std::size_t folderSize( const std::filesystem::path& folder )
+inline std::size_t folderSize( FileScanner& folder )
 {
 	ZoneScoped;
 	std::size_t counter { 0 };
 
-	spdlog::debug( "Calculating filesize of folder {}", folder );
+	spdlog::debug( "Calculating filesize of folder {}", folder.path() );
 
-	if ( !std::filesystem::exists( folder ) ) return 0;
+	for ( const auto& file : folder ) counter += file.size;
 
-	for ( const auto& file : std::filesystem::recursive_directory_iterator( folder ) )
-		if ( file.is_regular_file() ) counter += std::filesystem::file_size( file );
+	spdlog::debug( "Completed scanning files with a total size of {} bytes", counter );
 
 	return counter;
+}
+
+inline std::size_t folderSize( const std::filesystem::path& path )
+{
+	ZoneScopedN( "Folder size bad" );
+	FileScanner scanner { path };
+	return folderSize( scanner );
 }
 
 #endif //ATLAS_FOLDERSIZE_HPP
