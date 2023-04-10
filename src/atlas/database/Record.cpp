@@ -395,7 +395,7 @@ RecordData::RecordData( QString title, QString creator, QString engine, Transact
 		if ( record_id != 0 )
 		{
 			transaction.abort();
-			throw RecordAlreadyExists( Record( record_id, transaction ) );
+			throw RecordAlreadyExists( Record( record_id ) );
 		}
 
 		transaction
