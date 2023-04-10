@@ -44,7 +44,9 @@ TEST( Search, QueryGen2 )
 	const std::string str { "tag:3d & tag:animated & engine:renpy & system:size < 5G" };
 	const std::string generated_str { generateQuery( str ) };
 
-	GTEST_ASSERT_EQ( "", generated_str );
+	GTEST_ASSERT_EQ(
+		"SELECT record_id FROM records WHERE record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'3d\') AND record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'animated\') AND engine LIKE 'renpy' AND record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > 5000000000)",
+		generated_str );
 }
 
 TEST( Search, parseBytestring )

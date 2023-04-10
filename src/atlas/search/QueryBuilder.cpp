@@ -219,7 +219,7 @@ std::string parseNamespace( const std::string_view str )
 						return fmt::format( " title LIKE \'{}\'", escape( sub ) );
 					case TAG:
 						return fmt::format(
-							" record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'{}\') ",
+							" record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'{}\')",
 							escape( sub ) );
 						//TODO: Do the tag system
 						return "";
