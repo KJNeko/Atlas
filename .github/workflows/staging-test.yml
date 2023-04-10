@@ -1,0 +1,76 @@
+name: Test Staging
+on:
+  push:
+    branch:
+      staging
+
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Get appdata path
+        run: echo ("APPDATA_DIR=" + $env:LOCALAPPDATA) >> $env:GITHUB_ENV
+
+      - name: Cache vcpkg
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: ${{env.APPDATA_DIR}}\vcpkg\archives
+          key: ${{runner.os}}-${{ hashFiles('vcpkg.json') }}-vcpkg
+
+      - name: Prepare vcpkg
+        id: prepare-vcpkg
+        run: |
+          ${{github.workspace}}\vcpkg\bootstrap-vcpkg.bat
+          ${{github.workspace}}\vcpkg\vcpkg install --triplet x64-windows --clean-after-build
+
+      - name: CMake
+        run: |
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
+
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}\builds\build-r -j8
+          cmake --build ${{github.workspace}}\builds\build-d -j8
+
+      - name: Test
+        run: |
+          ${{github.workspace}}\build\build-r\bin\AtlasTESTS
+          ${{github.workspace}}\build\build-d\bin\AtlasTESTS
+
+  build-unix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Prepare dependencies
+        id: prepare-depends
+        run: |
+          sudo apt install libsqlite3-dev libfmt-dev libspdlog-dev qt6-base-dev
+
+      - name: Cmake
+        run: |
+          cmake -S . -B ${{github.workspace}}/build/build-r -DCMAKE_BUILD_TYPE=Release -DATLAS_BUILD_TESTS=1
+          cmake -S . -B ${{github.workspace}}/build/build-d -DCMAKE_BUILD_TYPE=Debug -DATLAS_BUILD_TESTS=1
+
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}/build/build-r -j4
+          cmake --build ${{github.workspace}}/build/build-d -j4
+
+      - name: Test
+        run: |
+          ${{github.workspace}}/build/build-r/bin/AtlasTESTS
+          ${{github.workspace}}/build/build-d/bin/AtlasTESTS
+

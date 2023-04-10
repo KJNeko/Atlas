@@ -65,12 +65,12 @@ jobs:
       - name: CMake
         run: |
           cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
-          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DCMAKE_TOOLCHAIN_FILE='vcpkg/scripts/buildsystems/vcpkg.cmake'
 
       - name: Build
         run: | 
-          cmake --build ${{github.workspace}}\builds\build-r -j4
-          cmake --build ${{github.workspace}}\builds\build-d -j4
+          cmake --build ${{github.workspace}}\builds\build-r -j8
+          cmake --build ${{github.workspace}}\builds\build-d -j8
 
       - name: Package
         run: |

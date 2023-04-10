@@ -87,7 +87,7 @@ add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_dire
 
 #Test builds
 if (DEFINED ATLAS_BUILD_TESTS)
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND ${ATLAS_BUILD_TESTS} EQUAL 1)
+    if (${ATLAS_BUILD_TESTS} EQUAL 1)
 
         include(FetchContent)
         FetchContent_Declare(
