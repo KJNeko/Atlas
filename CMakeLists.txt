@@ -39,7 +39,7 @@ else ()
     endif ()
 endif ()
 
-add_subdirectory(dependency/tracy)
+add_subdirectory(dependencies/tracy)
 
 file(GLOB_RECURSE SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/atlas/*.cpp")
