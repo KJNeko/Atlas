@@ -175,6 +175,8 @@ void Transaction::abort()
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
 	ZoneScoped;
+	if ( data == nullptr ) throw TransactionInvalid( sql );
+
 	data->ran_once = true;
 	spdlog::debug( "Executing \"{}\"", sql );
 	if ( data.use_count() == 0 ) throw TransactionInvalid( sql );
