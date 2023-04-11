@@ -78,7 +78,7 @@ if (${CMAKE_COMPILER_IS_GNUCXX})
     set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
     #TODO Further the flags
-    set(FGL_WARNINGS "/W3 /Wall")
+    set(FGL_WARNINGS "/W3 /Wall /Zc:__cplusplus")
 
     set(FGL_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
     set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
