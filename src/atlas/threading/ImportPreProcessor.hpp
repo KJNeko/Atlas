@@ -5,11 +5,16 @@
 #ifndef ATLAS_IMPORTPREPROCESSOR_HPP
 #define ATLAS_IMPORTPREPROCESSOR_HPP
 
-#include <filesystem>
+//clang-format: off
 
 #include <QObject>
 #include <QString>
 #include <QThread>
+
+//WHAT IN GODS NAME
+#include <filesystem>
+
+//clang-format: on
 
 struct GameImportData
 {
