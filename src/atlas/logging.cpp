@@ -4,6 +4,7 @@
 
 
 #include "atlas/logging.hpp"
+#include "config.hpp"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
