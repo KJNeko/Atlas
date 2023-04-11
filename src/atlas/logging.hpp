@@ -44,17 +44,6 @@ struct fmt::formatter< QString >
 };
 
 template <>
-struct fmt::formatter< RecordID >
-{
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
-
-	auto format( const RecordID id, format_context& ctx ) const -> decltype( ctx.out() )
-	{
-		return format_to( ctx.out(), "{}", static_cast< uint64_t >( id ) );
-	}
-};
-
-template <>
 struct fmt::formatter< std::filesystem::path >
 {
 	bool print_canonical { false };
