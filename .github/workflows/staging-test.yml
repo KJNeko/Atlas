@@ -57,7 +57,7 @@ jobs:
       - name: Prepare dependencies
         id: prepare-depends
         run: |
-          sudo apt install libsqlite3-dev libfmt-dev libspdlog-dev qt6-base-dev
+          sudo apt install libsqlite3-dev libfmt-dev libspdlog-dev qt6-base-dev build-essential libgl1-mesa-dev
 
       - name: Cmake
         run: |
