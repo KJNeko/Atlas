@@ -9,15 +9,35 @@ SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Test CONFIG REQUIRED)
-find_package(fmt CONFIG REQUIRED)
-find_package(spdlog CONFIG REQUIRED)
+if (WIN32)
+    if(DEFINED SQL_PATH)
+        set(SQLite3_INCLUDE_DIR "${SQL_PATH}\\include")
+        set(SQLite3_LIBRARY "${SQL_PATH}\\lib\\sqlite3.lib")
+        set(SQLite3_FOUND true)
+    elseif(DEFINED ENV${SQLITE3_PATH})
+        set(SQLite3_INCLUDE_DIR "$ENV{SQLITE3_PATH}\\include")
+        set(SQLite3_LIBRARY "$ENV{SQLITE3_PATH}\\lib\\sqlite3.lib")
+        set(SQLite3_FOUND true)
+    else()
+        message("Must define SQL_PATH with -DSQL_PATH=?? or add to path as SQLITE3_PATH")
+    endif()
+    add_subdirectory(dependencies/sqlite_modern_cpp)
+    add_subdirectory(dependencies/fmt)
+    add_subdirectory(dependencies/spdlog)
+else ()
+    find_package(fmt REQUIRED)
+    find_package(spdlog REQUIRED)
+endif ()
+
+if(DEFINED QT_PATH)
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+endif()
+
 find_package(SQLite3 REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test REQUIRED)
 
 if (WIN32)
     if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-        find_program(TOOL_WINDEPLOYQT windeployqt.debug.bat REQUIRED NO_CACHE)
-    else ()
         find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
     endif ()
 endif ()
@@ -41,6 +61,33 @@ endif ()
 
 add_subdirectory(dependencies/tracy)
 
+if (${CMAKE_COMPILER_IS_GNUCXX})
+    #sqlite_modern is stupid so we have to disable -Wundef
+
+    set(FGL_WARNINGS " -Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wmismatched-tags -Wredundant-tags -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
+
+    set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
+    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always")# -rdynamic")
+    #Generates system specific stuff (IE requires AVX)
+    set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
+    #Generates safe optimization flags
+    set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -flto=auto -s")
+    set(FGL_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
+    set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+    set(FGL_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE}")
+    set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+    set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
+    #TODO Further the flags
+    set(FGL_WARNINGS "/W3 /Wall")
+
+    set(FGL_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
+    set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
+    set(FGL_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
+    set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
+    set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
+endif()
+
 file(GLOB_RECURSE SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/atlas/*.cpp")
 
@@ -55,9 +102,11 @@ set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 
 add_library(AtlasObj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
 target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 #Build exe
 add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
