@@ -28,18 +28,61 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 	{
 		const auto [ dir, depth ] { std::move( dirs.at( dirs.size() - 1 ) ) };
 		dirs.pop_back();
+		spdlog::info( "{} directory left", dirs.size() );
+		spdlog::info( "Pulled dir: {} at depth {}", dir, depth );
 
-		for ( auto itter = std::filesystem::directory_iterator( dir ); itter != std::filesystem::directory_iterator(); )
+		auto itter { std::filesystem::directory_iterator( dir ) };
+
+		std::vector< std::filesystem::path > scanback;
+
+		while ( itter != std::filesystem::directory_iterator() )
 		{
-			FileInfo info { itter->path(), path, itter->is_regular_file() ? itter->file_size() : 0, std::uint8_t(depth + 1) };
+			spdlog::info( "\tProcessing: {}", itter->path().filename().string() );
 
-			if ( itter->is_directory() ) dirs.emplace_back( *itter, depth + 1 );
+			if ( itter->is_directory() )
+			{
+				spdlog::info( "\t\tFound nested dir!");
+				scanback.emplace_back( *itter );
+				++itter;
+				continue;
+			}
+
+			FileInfo info {
+				itter->path(), path, itter->is_regular_file() ? itter->file_size() : 0, std::uint8_t( depth + 1 )
+			};
 
 			++itter;
-			if ( itter == std::filesystem::directory_iterator() && dirs.size() == 0 )
+
+			//If we are at the last file and there are no more directories to scan then return.
+			if ( itter == std::filesystem::directory_iterator() && dirs.size() == 0 && scanback.size() == 0 )
 				co_return std::move( info );
 			else
 				co_yield std::move( info );
+		}
+
+		//The 'scanback' section is to ensure that we don't accidently over-read when we reach a directory with no files.
+		for ( const auto &scan : scanback )
+		{
+			if ( std::filesystem::directory_iterator( scan ) != std::filesystem::directory_iterator() )
+				dirs.emplace_back( scan, depth + 1 );
+		}
+
+		if ( dirs.size() == 0 )
+		{
+			if ( scanback.size() > 1 )
+			{
+				for ( std::size_t i = 0; i < scanback.size() - 1; ++i )
+				{
+					FileInfo info { scanback.at( i ), path, 0, std::uint8_t( depth + 1 ) };
+					co_yield std::move( info );
+				}
+			}
+			co_return FileInfo { scanback.at( scanback.size() - 1 ), path, 0, std::uint8_t( depth + 1 ) };
+		}
+		else
+		{
+			for(const auto& dir_path : scanback)
+				co_yield FileInfo { dir_path, path, 0, std::uint8_t( depth + 1 ) };
 		}
 	}
 }
@@ -52,11 +95,18 @@ FileInfo &FileScanner::at( std::size_t index )
 	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
-		ZoneScopedN("Fetch file info");
+		ZoneScopedN( "Fetch file info" );
 		files.emplace_back( file_scanner() );
 
 		return files.at( files.size() - 1 );
 	}
 	else
 		return files.at( index );
+}
+
+bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator &end ) const
+{
+	ZoneScoped;
+
+	return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
 }

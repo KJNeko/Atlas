@@ -10,27 +10,41 @@
 
 TEST( EngineDetection, test )
 {
-	FileScanner scanner { "/home/kj16609/Desktop/BLACK★ACADEMY.v0.1.161/" };
+	FileScanner scanner { "./tests" };
 
-	std::size_t counter { 0 };
+	std::filesystem::create_directories( "./tests/dummydir/first/second" );
+	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+
+	const std::vector< std::string > str { "dummydir", "first", "third", "fourth", "sixth", "second" };
+
+	std::vector< std::string > found {};
+
+	for ( const auto& file : scanner ) found.emplace_back( file.filename );
+
+	GTEST_ASSERT_EQ( str, found );
+}
+
+TEST( EngineDetection, testBreak )
+{
+	FileScanner scanner { "./tests" };
+
+	std::filesystem::create_directories( "./tests/dummydir/first/second" );
+	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+
+	const std::vector< std::string > str { "dummydir", "first",  "third", "dummydir", "first",
+		                                   "third",    "fourth", "sixth", "second" };
+
+	std::vector< std::string > found {};
+
 	for ( const auto& file : scanner )
 	{
-		std::cout << "First: " << file.path.string() << ", depth: " << (int)file.depth << std::endl;
-		++counter;
-		if ( counter > 8 ) break;
+		if ( found.size() > 2 ) break;
+		found.emplace_back( file.filename );
 	}
 
-	for ( const auto& file : scanner )
-	{
-		std::cout << "Filename second: " << file.path.string() << ", depth: " << (int)file.depth << std::endl;
-		++counter;
-	}
+	for ( const auto& file : scanner ) found.emplace_back( file.filename );
 
-	for ( const auto& file : scanner )
-	{
-		std::cout << "Filename third: " << file.path.string() << ", depth: " << (int)file.depth << std::endl;
-		++counter;
-	}
-
-	std::cout << "Finished" << std::endl;
+	GTEST_ASSERT_EQ( str, found );
 }

@@ -12,6 +12,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "atlas/logging.hpp"
+
 struct FileInfo
 {
 	std::string filename {};
@@ -55,11 +57,16 @@ struct FileScannerGenerator
 
 		void unhandled_exception() { std::terminate(); }
 
-		void return_value( FileInfo&& from ) { value = std::move( from ); }
+		void return_value( FileInfo&& from )
+		{
+			assert( from.filename != "" );
+			value = std::move( from );
+		}
 
 		std::suspend_always yield_value( FileInfo from )
 		{
 			ZoneScoped;
+			assert( from.filename != "" );
 			value = std::move( from );
 			return {};
 		}
@@ -103,11 +110,20 @@ struct FileScanner
 
 		// Operator != required to check for end I assume. Where if the this returns true then we are good to continue
 		// So instead we can just return the state of the scanner. And if the scanner is complete then we'll return false here.
-		bool operator==( [[maybe_unused]] const iterator& end ) const
-		{
+		//bool operator !=
+		bool operator==( [[maybe_unused]] const iterator& end ) const;
+
+		/*{
 			ZoneScoped;
-			return m_scanner.file_scanner.m_h.done() && ( m_idx >= m_scanner.files.size() );
-		}
+			spdlog::info( "m_scanner.file_scanner.m_h.done() == {}", m_scanner.file_scanner.m_h.done() );
+			spdlog::info(
+				"m_idx:{} == m_scanner.files.size():{} == {}",
+				m_idx,
+				m_scanner.files.size(),
+				m_idx == m_scanner.files.size() );
+
+			return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
+		}*/
 
 		// Required for the for loop
 		const FileInfo& operator*() { return m_scanner.at( m_idx ); }
