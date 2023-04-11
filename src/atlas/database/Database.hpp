@@ -6,13 +6,30 @@
 #define ATLAS_DATABASE_HPP
 
 #include <filesystem>
-#include <sqlite_modern_cpp.h>
 
 #include <QObject>
 
+#include "atlas/logging.hpp"
+
+#pragma GCC diagnostic push
+
+#pragma GCC diagnostic ignored "-Wshadow"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wundef"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#pragma GCC diagnostic ignored "-Wpragmas"
+
+#include <sqlite_modern_cpp.h>
+
 #include <client/TracyLock.hpp>
 
-#include "atlas/logging.hpp"
+#pragma GCC diagnostic pop
 
 namespace internal
 {

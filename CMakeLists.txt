@@ -29,6 +29,7 @@ else ()
     find_package(spdlog REQUIRED)
 endif ()
 
+
 if(DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif()
@@ -63,7 +64,6 @@ add_subdirectory(dependencies/tracy)
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
-
     set(FGL_WARNINGS " -Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wmismatched-tags -Wredundant-tags -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
 
     set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
@@ -98,10 +98,12 @@ set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt::fmt-header-only Tracy::TracyClient)
 
+
 #Build obj in order to reduce total compile time when compiling the tests too
 add_library(AtlasObj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
 target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(AtlasObj PUBLIC ${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 #Build exe
@@ -110,9 +112,6 @@ set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if (WIN32)
-    include_directories(${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-endif ()
 
 target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 

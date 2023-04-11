@@ -2,7 +2,16 @@
 // Created by kj16609 on 1/27/23.
 //
 
+
 #include "atlas/logging.hpp"
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 
 #include <fmt/ranges.h>
 #include <spdlog/logger.h>
@@ -10,8 +19,17 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <tracy/Tracy.hpp>
 
-#include "atlas/config.hpp"
-#include "atlas/database/Record.hpp"
+#pragma GCC diagnostic pop
+
+#else
+
+#include <fmt/ranges.h>
+#include <spdlog/logger.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <tracy/Tracy.hpp>
+
+#endif
 
 void initLogging()
 {
