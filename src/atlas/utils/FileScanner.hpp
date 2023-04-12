@@ -21,7 +21,7 @@ struct FileInfo
 	std::filesystem::path path {};
 	std::size_t size { 0 };
 	std::uint8_t depth { 0 };
-	std::filesystem::path relative;
+	std::filesystem::path relative {};
 
 	FileInfo() = default;
 
@@ -31,7 +31,7 @@ struct FileInfo
 		const std::size_t filesize,
 		const std::uint8_t file_depth ) :
 	  filename( path_in.filename().string() ),
-	  ext( path_in.extension() ),
+	  ext( path_in.extension().string() ),
 	  path( std::move( path_in ) ),
 	  size( filesize ),
 	  depth( file_depth ),
@@ -46,8 +46,8 @@ struct FileScannerGenerator
 
 	struct promise_type
 	{
-		FileInfo value;
-		std::exception_ptr exception;
+		FileInfo value {};
+		std::exception_ptr exception { nullptr};
 
 		FileScannerGenerator get_return_object() { return FileScannerGenerator( handle_type::from_promise( *this ) ); }
 
@@ -101,7 +101,7 @@ struct FileScanner
 
 		iterator( const std::size_t idx, FileScanner& scanner ) : m_idx( idx ), m_scanner( scanner ) {}
 
-		iterator operator++()
+		FileScanner::iterator& operator++()
 		{
 			ZoneScoped;
 			++m_idx;

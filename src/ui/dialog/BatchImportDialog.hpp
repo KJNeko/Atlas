@@ -36,7 +36,7 @@ class BatchImportDialog : public QDialog
 	void processFiles();
 
   public slots:
-	void reject();
+	void reject() override;
 
   private slots:
 	void on_btnSetFolder_pressed();

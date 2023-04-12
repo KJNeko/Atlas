@@ -16,6 +16,10 @@ FileInfo FileScannerGenerator::operator()()
 	return std::move( m_h.promise().value );
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
 	ZoneScoped;
@@ -76,7 +80,11 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 			for ( const auto &dir_path : scanback ) co_yield FileInfo { dir_path, path, 0, std::uint8_t( depth + 1 ) };
 		}
 	}
+
+	throw std::runtime_error("Managed to escape loop in coroutine scan_files");
 }
+
+#pragma GCC diagnostic pop
 
 FileScanner::FileScanner( const std::filesystem::path &path ) : m_path( path ), file_scanner( scan_files( path ) )
 {}
