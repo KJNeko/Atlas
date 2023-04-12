@@ -49,7 +49,6 @@ jobs:
           move * ..
           cd ../..
           7z x sqlite-dll.zip -o"./lib"
-          tree /f
           cd ..
 
       - name: Install Qt
