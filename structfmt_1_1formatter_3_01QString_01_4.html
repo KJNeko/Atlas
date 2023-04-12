@@ -119,16 +119,16 @@ $(document).ready(function(){initNavTree('structfmt_1_1formatter_3_01QString_01_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0a51b8f0b49cfafb8bf46c32c5e7ea3d"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a0a51b8f0b49cfafb8bf46c32c5e7ea3d">parse</a> (format_parse_context &amp;ctx) -&gt; decltype(ctx.begin())</td></tr>
-<tr class="separator:a0a51b8f0b49cfafb8bf46c32c5e7ea3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b0db35a32ece461dcea59407ecb5300"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a6b0db35a32ece461dcea59407ecb5300">format</a> (const QString &amp;my, format_context &amp;ctx) const -&gt; decltype(ctx.out())</td></tr>
-<tr class="separator:a6b0db35a32ece461dcea59407ecb5300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3bdc450506cfeb896e849ec796ee420"><td class="memItemLeft" align="right" valign="top">constexpr format_parse_context::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#ad3bdc450506cfeb896e849ec796ee420">parse</a> (format_parse_context &amp;ctx)</td></tr>
+<tr class="separator:ad3bdc450506cfeb896e849ec796ee420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73b74c66e788bd8cb9ea6d564d9646b4"><td class="memItemLeft" align="right" valign="top">format_context::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html#a73b74c66e788bd8cb9ea6d564d9646b4">format</a> (const QString &amp;my, format_context &amp;ctx) const</td></tr>
+<tr class="separator:a73b74c66e788bd8cb9ea6d564d9646b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Formatter for QString in fmt::format. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6b0db35a32ece461dcea59407ecb5300" name="a6b0db35a32ece461dcea59407ecb5300"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b0db35a32ece461dcea59407ecb5300">&#9670;&#160;</a></span>format()</h2>
+<a id="a73b74c66e788bd8cb9ea6d564d9646b4" name="a73b74c66e788bd8cb9ea6d564d9646b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73b74c66e788bd8cb9ea6d564d9646b4">&#9670;&#160;</a></span>format()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,7 +137,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto fmt::formatter&lt; QString &gt;::format </td>
+          <td class="memname">format_context::iterator fmt::formatter&lt; QString &gt;::format </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>my</em>, </td>
@@ -151,8 +151,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const -&gt; decltype( ctx.out() )
-	</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -164,8 +163,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a51b8f0b49cfafb8bf46c32c5e7ea3d" name="a0a51b8f0b49cfafb8bf46c32c5e7ea3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a51b8f0b49cfafb8bf46c32c5e7ea3d">&#9670;&#160;</a></span>parse()</h2>
+<a id="ad3bdc450506cfeb896e849ec796ee420" name="ad3bdc450506cfeb896e849ec796ee420"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3bdc450506cfeb896e849ec796ee420">&#9670;&#160;</a></span>parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,11 +173,11 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto fmt::formatter&lt; QString &gt;::parse </td>
+          <td class="memname">constexpr format_parse_context::iterator fmt::formatter&lt; QString &gt;::parse </td>
           <td>(</td>
           <td class="paramtype">format_parse_context &amp;&#160;</td>
           <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td> -&gt; decltype( ctx.begin() ) </td>
+          <td></td>
         </tr>
       </table>
   </td>

@@ -114,6 +114,7 @@ $(document).ready(function(){initNavTree('engineDetection_8hpp.html',''); initRe
 <div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;QString&gt;</code><br />
+<code>#include &quot;<a class="el" href="FileScanner_8hpp_source.html">atlas/utils/FileScanner.hpp</a>&quot;</code><br />
 </div>
 <p><a href="engineDetection_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -148,22 +149,22 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a75757b8bb01e2c76fb82eb9c766796fd"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
-<tr class="memitem:a75757b8bb01e2c76fb82eb9c766796fd"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd">isEngineT</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="memdesc:a75757b8bb01e2c76fb82eb9c766796fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to be specialized for each Engine to return true if the engine is valid.  <br /></td></tr>
-<tr class="separator:a75757b8bb01e2c76fb82eb9c766796fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af606334ba85fe9fa45dfff9cb882a297"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
+<tr class="memitem:af606334ba85fe9fa45dfff9cb882a297"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#af606334ba85fe9fa45dfff9cb882a297">isEngineT</a> (<a class="el" href="structFileScanner.html">FileScanner</a> &amp;scanner)</td></tr>
+<tr class="memdesc:af606334ba85fe9fa45dfff9cb882a297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to be specialized for each Engine to return true if the engine is valid.  <br /></td></tr>
+<tr class="separator:af606334ba85fe9fa45dfff9cb882a297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
 <tr class="memitem:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a69afb545d71b8d3717fa91f9bd5a05de">engineNameT</a> ()</td></tr>
 <tr class="memdesc:a69afb545d71b8d3717fa91f9bd5a05de"><td class="mdescLeft">&#160;</td><td class="mdescRight">String name of the engine.  <br /></td></tr>
 <tr class="separator:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7235d808dc321c6dffb09eaf0636bdaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a7235d808dc321c6dffb09eaf0636bdaa">determineEngine</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="memdesc:a7235d808dc321c6dffb09eaf0636bdaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an engine type of ENGINES_END if no engine is determined.  <br /></td></tr>
-<tr class="separator:a7235d808dc321c6dffb09eaf0636bdaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7627db8d02edb4e09ccb3328d6032c34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a7627db8d02edb4e09ccb3328d6032c34">determineEngine</a> (<a class="el" href="structFileScanner.html">FileScanner</a> &amp;scanner)</td></tr>
+<tr class="memdesc:a7627db8d02edb4e09ccb3328d6032c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an engine type of ENGINES_END if no engine is determined.  <br /></td></tr>
+<tr class="separator:a7627db8d02edb4e09ccb3328d6032c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28004db3f091ff409204e3e739461a25"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a28004db3f091ff409204e3e739461a25">engineName</a> (const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine)</td></tr>
 <tr class="memdesc:a28004db3f091ff409204e3e739461a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string name of the engine.  <br /></td></tr>
 <tr class="separator:a28004db3f091ff409204e3e739461a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bf3a3950f9a77458177e1aef3ca1eb1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a0bf3a3950f9a77458177e1aef3ca1eb1">detectExecutables</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="separator:a0bf3a3950f9a77458177e1aef3ca1eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4ded8c1094f09943c6b36038e16bfbc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#ad4ded8c1094f09943c6b36038e16bfbc">detectExecutables</a> (<a class="el" href="structFileScanner.html">FileScanner</a> &amp;scanner)</td></tr>
+<tr class="separator:ad4ded8c1094f09943c6b36038e16bfbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2674fd47a277a212f401991e65116276"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a2674fd47a277a212f401991e65116276">scoreExecutables</a> (std::vector&lt; std::filesystem::path &gt; paths, const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine=<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a6ce26a62afab55d7606ad4e92428b30c">UNKNOWN</a>)</td></tr>
 <tr class="separator:a2674fd47a277a212f401991e65116276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -203,8 +204,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0bf3a3950f9a77458177e1aef3ca1eb1" name="a0bf3a3950f9a77458177e1aef3ca1eb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bf3a3950f9a77458177e1aef3ca1eb1">&#9670;&#160;</a></span>detectExecutables()</h2>
+<a id="ad4ded8c1094f09943c6b36038e16bfbc" name="ad4ded8c1094f09943c6b36038e16bfbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ded8c1094f09943c6b36038e16bfbc">&#9670;&#160;</a></span>detectExecutables()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,8 +213,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::vector&lt; std::filesystem::path &gt; detectExecutables </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structFileScanner.html">FileScanner</a> &amp;&#160;</td>
+          <td class="paramname"><em>scanner</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -221,8 +222,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7235d808dc321c6dffb09eaf0636bdaa" name="a7235d808dc321c6dffb09eaf0636bdaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7235d808dc321c6dffb09eaf0636bdaa">&#9670;&#160;</a></span>determineEngine()</h2>
+<a id="a7627db8d02edb4e09ccb3328d6032c34" name="a7627db8d02edb4e09ccb3328d6032c34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7627db8d02edb4e09ccb3328d6032c34">&#9670;&#160;</a></span>determineEngine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -230,8 +231,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> determineEngine </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structFileScanner.html">FileScanner</a> &amp;&#160;</td>
+          <td class="paramname"><em>scanner</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -282,8 +283,8 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
 
 </div>
 </div>
-<a id="a75757b8bb01e2c76fb82eb9c766796fd" name="a75757b8bb01e2c76fb82eb9c766796fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75757b8bb01e2c76fb82eb9c766796fd">&#9670;&#160;</a></span>isEngineT()</h2>
+<a id="af606334ba85fe9fa45dfff9cb882a297" name="af606334ba85fe9fa45dfff9cb882a297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af606334ba85fe9fa45dfff9cb882a297">&#9670;&#160;</a></span>isEngineT()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -293,8 +294,8 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
         <tr>
           <td class="memname">bool isEngineT </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structFileScanner.html">FileScanner</a> &amp;&#160;</td>
+          <td class="paramname"><em>scanner</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

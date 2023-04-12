@@ -113,18 +113,21 @@ $(document).ready(function(){initNavTree('foldersize_8hpp.html',''); initResizab
 <div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
 <code>#include &quot;<a class="el" href="logging_8hpp_source.html">atlas/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="FileScanner_8hpp_source.html">atlas/utils/FileScanner.hpp</a>&quot;</code><br />
 </div>
 <p><a href="foldersize_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acebd22f2ebc152ef581923190f70c3b3"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="foldersize_8hpp.html#acebd22f2ebc152ef581923190f70c3b3">folderSize</a> (const std::filesystem::path &amp;folder)</td></tr>
-<tr class="memdesc:acebd22f2ebc152ef581923190f70c3b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the byte size of a folder.  <br /></td></tr>
-<tr class="separator:acebd22f2ebc152ef581923190f70c3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f6d2ad012c2095532030d504795ecf0"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">folderSize</a> (<a class="el" href="structFileScanner.html">FileScanner</a> &amp;folder)</td></tr>
+<tr class="memdesc:a9f6d2ad012c2095532030d504795ecf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the byte size of a folder.  <br /></td></tr>
+<tr class="separator:a9f6d2ad012c2095532030d504795ecf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5be094d56e8827762044d6307cb4ab8"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="foldersize_8hpp.html#ac5be094d56e8827762044d6307cb4ab8">folderSize</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:ac5be094d56e8827762044d6307cb4ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="acebd22f2ebc152ef581923190f70c3b3" name="acebd22f2ebc152ef581923190f70c3b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acebd22f2ebc152ef581923190f70c3b3">&#9670;&#160;</a></span>folderSize()</h2>
+<a id="ac5be094d56e8827762044d6307cb4ab8" name="ac5be094d56e8827762044d6307cb4ab8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5be094d56e8827762044d6307cb4ab8">&#9670;&#160;</a></span>folderSize() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,6 +139,32 @@ Functions</h2></td></tr>
           <td class="memname">std::size_t folderSize </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f6d2ad012c2095532030d504795ecf0" name="a9f6d2ad012c2095532030d504795ecf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f6d2ad012c2095532030d504795ecf0">&#9670;&#160;</a></span>folderSize() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t folderSize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFileScanner.html">FileScanner</a> &amp;&#160;</td>
           <td class="paramname"><em>folder</em></td><td>)</td>
           <td></td>
         </tr>

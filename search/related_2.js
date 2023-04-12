@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['recordalreadyexists_0',['RecordAlreadyExists',['../structRecordData.html#ad334f8cd34a80f82062c2946f75c9c67',1,'RecordData']]]
+  ['nontransaction_0',['NonTransaction',['../classDatabase.html#a554d5d7f40317657f67a36f0ed43ea18',1,'Database::NonTransaction()'],['../classTransactionData.html#a554d5d7f40317657f67a36f0ed43ea18',1,'TransactionData::NonTransaction()']]]
 ];

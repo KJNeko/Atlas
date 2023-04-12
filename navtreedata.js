@@ -33,11 +33,13 @@ var NAVTREE =
     [ "AdvRegexGuide", "AdvRegexGuide.html", [
       [ "Advanced Parsing", "AdvRegexGuide.html#AdvRegexGuideParsing", null ]
     ] ],
-    [ "Atlas", "md_README.html", [
-      [ "Features:", "md_README.html#autotoc_md1", [
-        [ "F95Zone integration https://github.com/KJNeko/Atlas/issues/2", "md_README.html#autotoc_md2", null ],
-        [ "DLSite integration https://github.com/KJNeko/Atlas/issues/3", "md_README.html#autotoc_md3", null ],
-        [ "Steam/SteamCMD integration https://github.com/KJNeko/Atlas/issues/4", "md_README.html#autotoc_md4", null ]
+    [ "README", "md_README.html", [
+      [ "Atlas", "md_README.html#autotoc_md0", [
+        [ "Features:", "md_README.html#autotoc_md1", [
+          [ "F95Zone integration https://github.com/KJNeko/Atlas/issues/2", "md_README.html#autotoc_md2", null ],
+          [ "DLSite integration https://github.com/KJNeko/Atlas/issues/3", "md_README.html#autotoc_md3", null ],
+          [ "Steam/SteamCMD integration https://github.com/KJNeko/Atlas/issues/4", "md_README.html#autotoc_md4", null ]
+        ] ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -58,6 +60,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -79,8 +82,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AddGameDialog_8cpp.html",
-"classImportProcessor.html#ab0784d7105c6a4d5bc83538fa18ae765",
-"globals_type.html"
+"classImportProcessor.html",
+"functions_r.html",
+"system_8hpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -120,25 +120,35 @@ $(document).ready(function(){initNavTree('foldersize_8hpp_source.html',''); init
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;tracy/Tracy.hpp&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="logging_8hpp.html">atlas/logging.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="foldersize_8hpp.html#acebd22f2ebc152ef581923190f70c3b3">   15</a></span><span class="keyword">inline</span> std::size_t <a class="code hl_function" href="foldersize_8hpp.html#acebd22f2ebc152ef581923190f70c3b3">folderSize</a>( <span class="keyword">const</span> std::filesystem::path&amp; folder )</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    ZoneScoped;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    std::size_t counter { 0 };</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    spdlog::debug( <span class="stringliteral">&quot;Calculating filesize of folder {}&quot;</span>, folder );</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">if</span> ( !std::filesystem::exists( folder ) ) <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : std::filesystem::recursive_directory_iterator( folder ) )</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordflow">if</span> ( file.is_regular_file() ) counter += std::filesystem::file_size( file );</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="FileScanner_8hpp.html">atlas/utils/FileScanner.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">   16</a></span><span class="keyword">inline</span> std::size_t <a class="code hl_function" href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">folderSize</a>( <a class="code hl_struct" href="structFileScanner.html">FileScanner</a>&amp; folder )</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    ZoneScoped;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    std::size_t counter { 0 };</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    spdlog::debug( <span class="stringliteral">&quot;Calculating filesize of folder {}&quot;</span>, folder.<a class="code hl_function" href="structFileScanner.html#a2df0124181a26e0035c3f6c66c0371ee">path</a>() );</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">for</span> ( <span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : folder ) counter += file.size;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    spdlog::debug( <span class="stringliteral">&quot;Completed scanning files with a total size of {} bytes&quot;</span>, counter );</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> counter;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_FOLDERSIZE_HPP</span></div>
-<div class="ttc" id="afoldersize_8hpp_html_acebd22f2ebc152ef581923190f70c3b3"><div class="ttname"><a href="foldersize_8hpp.html#acebd22f2ebc152ef581923190f70c3b3">folderSize</a></div><div class="ttdeci">std::size_t folderSize(const std::filesystem::path &amp;folder)</div><div class="ttdoc">Returns the byte size of a folder.</div><div class="ttdef"><b>Definition:</b> foldersize.hpp:15</div></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="foldersize_8hpp.html#ac5be094d56e8827762044d6307cb4ab8">   30</a></span><span class="keyword">inline</span> std::size_t <a class="code hl_function" href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">folderSize</a>( <span class="keyword">const</span> std::filesystem::path&amp; path )</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    ZoneScopedN( <span class="stringliteral">&quot;Folder size bad&quot;</span> );</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_struct" href="structFileScanner.html">FileScanner</a> scanner { path };</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">folderSize</a>( scanner );</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_FOLDERSIZE_HPP</span></div>
+<div class="ttc" id="aFileScanner_8hpp_html"><div class="ttname"><a href="FileScanner_8hpp.html">FileScanner.hpp</a></div></div>
+<div class="ttc" id="afoldersize_8hpp_html_a9f6d2ad012c2095532030d504795ecf0"><div class="ttname"><a href="foldersize_8hpp.html#a9f6d2ad012c2095532030d504795ecf0">folderSize</a></div><div class="ttdeci">std::size_t folderSize(FileScanner &amp;folder)</div><div class="ttdoc">Returns the byte size of a folder.</div><div class="ttdef"><b>Definition:</b> foldersize.hpp:16</div></div>
 <div class="ttc" id="alogging_8hpp_html"><div class="ttname"><a href="logging_8hpp.html">logging.hpp</a></div></div>
+<div class="ttc" id="astructFileScanner_html"><div class="ttname"><a href="structFileScanner.html">FileScanner</a></div><div class="ttdef"><b>Definition:</b> FileScanner.hpp:85</div></div>
+<div class="ttc" id="astructFileScanner_html_a2df0124181a26e0035c3f6c66c0371ee"><div class="ttname"><a href="structFileScanner.html#a2df0124181a26e0035c3f6c66c0371ee">FileScanner::path</a></div><div class="ttdeci">std::filesystem::path path() const</div><div class="ttdef"><b>Definition:</b> FileScanner.hpp:147</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

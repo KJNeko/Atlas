@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mtxtype_0',['MtxType',['../namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73',1,'internal']]]
+  ['lockguardtype_0',['LockGuardType',['../namespaceinternal.html#a9986a9e137877a9e729fac766d5c47b2',1,'internal']]]
 ];

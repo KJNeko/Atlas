@@ -12,7 +12,8 @@ var searchData=
   ['batchimportmodel_9',['BatchImportModel',['../classBatchImportModel.html',1,'']]],
   ['batchimportmodel_2ecpp_10',['BatchImportModel.cpp',['../BatchImportModel_8cpp.html',1,'']]],
   ['batchimportmodel_2ehpp_11',['BatchImportModel.hpp',['../BatchImportModel_8hpp.html',1,'']]],
-  ['begin_5fgroup_12',['BEGIN_GROUP',['../QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f',1,'QueryBuilder.cpp']]],
-  ['blacklist_5fexecs_13',['blacklist_execs',['../engineDetection_8cpp.html#a110b0dfa865ac5613a753ce5c0bfd206',1,'engineDetection.cpp']]],
-  ['buffer_14',['buffer',['../classImportPreProcessor.html#a7b361048fb8e6a008090caea1cecf24e',1,'ImportPreProcessor']]]
+  ['begin_12',['begin',['../structFileScanner.html#a977e1f20745b64dfa48547d7cb049340',1,'FileScanner']]],
+  ['begin_5fgroup_13',['BEGIN_GROUP',['../QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f',1,'QueryBuilder.cpp']]],
+  ['blacklist_5fexecs_14',['blacklist_execs',['../engineDetection_8cpp.html#a110b0dfa865ac5613a753ce5c0bfd206',1,'engineDetection.cpp']]],
+  ['buffer_15',['buffer',['../classImportPreProcessor.html#a7b361048fb8e6a008090caea1cecf24e',1,'ImportPreProcessor']]]
 ];

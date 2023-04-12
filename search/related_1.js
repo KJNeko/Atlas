@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nontransaction_0',['NonTransaction',['../classDatabase.html#a554d5d7f40317657f67a36f0ed43ea18',1,'Database::NonTransaction()'],['../classTransactionData.html#a554d5d7f40317657f67a36f0ed43ea18',1,'TransactionData::NonTransaction()']]]
+  ['iterator_0',['iterator',['../structFileScanner.html#a67171474c4da6cc8efe0c7fafefd2b2d',1,'FileScanner']]]
 ];

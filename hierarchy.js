@@ -13,13 +13,17 @@ var hierarchy =
         [ "TransactionInvalid", "structTransactionInvalid.html", null ]
       ] ]
     ] ],
+    [ "FileInfo", "structFileInfo.html", null ],
+    [ "FileScanner", "structFileScanner.html", null ],
+    [ "FileScannerGenerator", "structFileScannerGenerator.html", null ],
     [ "fmt::formatter< QString >", "structfmt_1_1formatter_3_01QString_01_4.html", null ],
-    [ "fmt::formatter< RecordID >", "structfmt_1_1formatter_3_01RecordID_01_4.html", null ],
     [ "fmt::formatter< std::filesystem::path >", "structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html", null ],
     [ "GameImportData", "structGameImportData.html", null ],
     [ "GameMetadata", "structGameMetadata.html", null ],
     [ "GroupsOutput", "structGroupsOutput.html", null ],
+    [ "FileScanner::iterator", "classFileScanner_1_1iterator.html", null ],
     [ "NonTransaction", "structNonTransaction.html", null ],
+    [ "FileScannerGenerator::promise_type", "structFileScannerGenerator_1_1promise__type.html", null ],
     [ "QAbstractItemDelegate", null, [
       [ "BatchImportDelegate", "classBatchImportDelegate.html", null ],
       [ "RecordBannerDelegate", "classRecordBannerDelegate.html", null ]

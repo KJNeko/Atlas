@@ -2,7 +2,6 @@ var annotated_dup =
 [
     [ "fmt", null, [
       [ "formatter< QString >", "structfmt_1_1formatter_3_01QString_01_4.html", "structfmt_1_1formatter_3_01QString_01_4" ],
-      [ "formatter< RecordID >", "structfmt_1_1formatter_3_01RecordID_01_4.html", "structfmt_1_1formatter_3_01RecordID_01_4" ],
       [ "formatter< std::filesystem::path >", "structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html", "structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4" ]
     ] ],
     [ "AddGameDialog", "classAddGameDialog.html", "classAddGameDialog" ],
@@ -11,6 +10,9 @@ var annotated_dup =
     [ "BatchImportModel", "classBatchImportModel.html", "classBatchImportModel" ],
     [ "Database", "classDatabase.html", "classDatabase" ],
     [ "DetailedRecordView", "classDetailedRecordView.html", "classDetailedRecordView" ],
+    [ "FileInfo", "structFileInfo.html", "structFileInfo" ],
+    [ "FileScanner", "structFileScanner.html", "structFileScanner" ],
+    [ "FileScannerGenerator", "structFileScannerGenerator.html", "structFileScannerGenerator" ],
     [ "FlyWeight", "classFlyWeight.html", "classFlyWeight" ],
     [ "GameImportData", "structGameImportData.html", "structGameImportData" ],
     [ "GameMetadata", "structGameMetadata.html", "structGameMetadata" ],

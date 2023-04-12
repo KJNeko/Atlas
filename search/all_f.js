@@ -2,12 +2,12 @@ var searchData=
 [
   ['paint_0',['paint',['../classBatchImportDelegate.html#a57c3683f13e00cef8b430fdcb6f67dea',1,'BatchImportDelegate::paint()'],['../classRecordBannerDelegate.html#a0573be4e9a18abae62ddb6e254d3d60d',1,'RecordBannerDelegate::paint()']]],
   ['paintevent_1',['paintEvent',['../classDetailedRecordView.html#a1f1115a952dc851ccab3bc7ca3a144fd',1,'DetailedRecordView']]],
-  ['parse_2',['parse',['../QueryBuilder_8cpp.html#afc0e970faa68d82e5d6e1c3eaa65dcb8',1,'parse():&#160;QueryBuilder.cpp'],['../structfmt_1_1formatter_3_01QString_01_4.html#a0a51b8f0b49cfafb8bf46c32c5e7ea3d',1,'fmt::formatter&lt; QString &gt;::parse()'],['../structfmt_1_1formatter_3_01RecordID_01_4.html#a13ee52f6dbea3d8dfce4e606c16eecf6',1,'fmt::formatter&lt; RecordID &gt;::parse()'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a7efbb7163bc9d16c87c13f039e9f3c20',1,'fmt::formatter&lt; std::filesystem::path &gt;::parse()']]],
-  ['parsebytesize_3',['parseBytesize',['../QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0',1,'parseBytesize(std::string_view str):&#160;QueryBuilder.cpp'],['../QueryBuilder_8cpp.html#af4e89e20b7520731a65a58d104451dd0',1,'parseBytesize(std::string_view str):&#160;QueryBuilder.cpp']]],
+  ['parse_2',['parse',['../QueryBuilder_8cpp.html#afc0e970faa68d82e5d6e1c3eaa65dcb8',1,'parse():&#160;QueryBuilder.cpp'],['../structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html#a9bc05aabe922e3b8a8740966e76c4d0a',1,'fmt::formatter&lt; std::filesystem::path &gt;::parse()'],['../structfmt_1_1formatter_3_01QString_01_4.html#ad3bdc450506cfeb896e849ec796ee420',1,'fmt::formatter&lt; QString &gt;::parse()']]],
+  ['parsebytesize_3',['parseBytesize',['../QueryBuilder_8cpp.html#af4e89e20b7520731a65a58d104451dd0',1,'parseBytesize(std::string_view str):&#160;QueryBuilder.cpp'],['../QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0',1,'parseBytesize(std::string_view str):&#160;QueryBuilder.cpp']]],
   ['parsenamespace_4',['parseNamespace',['../QueryBuilder_8cpp.html#a03ee80db4fcb0bfd78f7efba3a00f49d',1,'QueryBuilder.cpp']]],
   ['parseoperator_5',['parseOperator',['../QueryBuilder_8cpp.html#aa21e7036e8be5b4a72153b21b8abb3ad',1,'QueryBuilder.cpp']]],
   ['parsesystem_6',['parseSystem',['../QueryBuilder_8cpp.html#a1f8cd3ac138c66139e192cfbcc9da4b9',1,'QueryBuilder.cpp']]],
-  ['path_7',['path',['../structGameImportData.html#a00a7e425ad227e89eb701434c319cd04',1,'GameImportData']]],
+  ['path_7',['path',['../structGameImportData.html#a00a7e425ad227e89eb701434c319cd04',1,'GameImportData::path()'],['../structFileInfo.html#ab853a5e80dd6923d0255efc71c69d547',1,'FileInfo::path()'],['../structFileScanner.html#a2df0124181a26e0035c3f6c66c0371ee',1,'FileScanner::path()']]],
   ['pause_5ftask_8',['pause_task',['../classImportProcessor.html#abf11e1fe1ebed9c0aa7cfff04f1b8c80',1,'ImportProcessor']]],
   ['playgame_9',['playGame',['../structGameMetadata.html#a70e15372cc07aa5eb449a58692975af7',1,'GameMetadata']]],
   ['preparebannerviewersettings_10',['prepareBannerViewerSettings',['../classSettingsDialog.html#a5211610c226d276b7e0b07c807081617',1,'SettingsDialog']]],
@@ -32,5 +32,6 @@ var searchData=
   ['progress_29',['progress',['../classBatchImportDialog.html#aa789b9a74416a92abbe0d82e50167d96',1,'BatchImportDialog']]],
   ['progressbardialog_30',['ProgressBarDialog',['../classProgressBarDialog.html#a1cac6f44b21023022199d203d9485973',1,'ProgressBarDialog::ProgressBarDialog()'],['../classProgressBarDialog.html',1,'ProgressBarDialog']]],
   ['progressbardialog_2ecpp_31',['ProgressBarDialog.cpp',['../ProgressBarDialog_8cpp.html',1,'']]],
-  ['progressbardialog_2ehpp_32',['ProgressBarDialog.hpp',['../ProgressBarDialog_8hpp.html',1,'']]]
+  ['progressbardialog_2ehpp_32',['ProgressBarDialog.hpp',['../ProgressBarDialog_8hpp.html',1,'']]],
+  ['promise_5ftype_33',['promise_type',['../structFileScannerGenerator_1_1promise__type.html',1,'FileScannerGenerator']]]
 ];

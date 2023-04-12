@@ -16,7 +16,7 @@ var classBatchImportDialog =
     [ "on_btnSetFolder_pressed", "classBatchImportDialog.html#a008e8acdf284847dbd45e33de417d2e4", null ],
     [ "processFiles", "classBatchImportDialog.html#ae474177b92139b93013d2832c826781f", null ],
     [ "processFinishedDirectory", "classBatchImportDialog.html#abf9d14927d964526348bcb4ac533025b", null ],
-    [ "reject", "classBatchImportDialog.html#abc38cf6ae23415c868e36aa4d50ec678", null ],
+    [ "reject", "classBatchImportDialog.html#a04657a16ea9274b48604d77ffbf1d26f", null ],
     [ "saveConfig", "classBatchImportDialog.html#ae8bf9ea28f59f136a0268ac155d6eb30", null ],
     [ "startImportingGames", "classBatchImportDialog.html#ab640485d74053ec5be77f34d3f63e898", null ],
     [ "startProcessingDirectory", "classBatchImportDialog.html#a5a9988655199de06e1e78566688e786e", null ],

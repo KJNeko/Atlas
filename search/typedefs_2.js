@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['record_0',['Record',['../Record_8hpp.html#aa83905a0e2c4ac0759c747aab085627c',1,'Record.hpp']]],
-  ['recordid_1',['RecordID',['../Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068',1,'Types.hpp']]]
+  ['mtxtype_0',['MtxType',['../namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73',1,'internal']]]
 ];

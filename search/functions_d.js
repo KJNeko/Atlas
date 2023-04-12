@@ -17,7 +17,10 @@ var searchData=
   ['on_5fthemebox_5fcurrenttextchanged_14',['on_themeBox_currentTextChanged',['../classSettingsDialog.html#a64b6e4329326ff64fc95f82a9ce7db44',1,'SettingsDialog']]],
   ['openbatchimportdialog_15',['openBatchImportDialog',['../classMainWindow.html#aa177e89ab737b11633bc582de207f44d',1,'MainWindow']]],
   ['opendetailedview_16',['openDetailedView',['../classRecordView.html#a5adb6dba8701074e3bd31b78bb23cc3b',1,'RecordView']]],
-  ['operator_3c_3c_17',['operator&lt;&lt;',['../structTransaction.html#a2959780e22d5c12861ad0260c476ff31',1,'Transaction::operator&lt;&lt;()'],['../structNonTransaction.html#afbe006917a9298502576303516b4af79',1,'NonTransaction::operator&lt;&lt;()']]],
-  ['operator_3d_18',['operator=',['../structTransaction.html#a3a52a1094bf2da763c82458fd3e82de1',1,'Transaction::operator=()'],['../classFlyWeight.html#a9146209603b47d0a102d18506cef0bc6',1,'FlyWeight::operator=()'],['../structGameMetadata.html#a5059f012f1e167ff5f2c84d7f664508b',1,'GameMetadata::operator=(const GameMetadata &amp;other)']]],
-  ['operator_3d_3d_19',['operator==',['../structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa',1,'GameMetadata']]]
+  ['operator_28_29_17',['operator()',['../structFileScannerGenerator.html#a8891aa39fd63f3257f04412349af5f74',1,'FileScannerGenerator']]],
+  ['operator_2a_18',['operator*',['../classFileScanner_1_1iterator.html#ad088c6d43c9410794f3bc74b6e521d04',1,'FileScanner::iterator']]],
+  ['operator_2b_2b_19',['operator++',['../classFileScanner_1_1iterator.html#aa1ecb7ff088ee1533f5425ae30f296be',1,'FileScanner::iterator']]],
+  ['operator_3c_3c_20',['operator&lt;&lt;',['../structTransaction.html#a2959780e22d5c12861ad0260c476ff31',1,'Transaction::operator&lt;&lt;()'],['../structNonTransaction.html#afbe006917a9298502576303516b4af79',1,'NonTransaction::operator&lt;&lt;()']]],
+  ['operator_3d_21',['operator=',['../structTransaction.html#a3a52a1094bf2da763c82458fd3e82de1',1,'Transaction::operator=()'],['../classFlyWeight.html#a9146209603b47d0a102d18506cef0bc6',1,'FlyWeight::operator=()'],['../structGameMetadata.html#a5059f012f1e167ff5f2c84d7f664508b',1,'GameMetadata::operator=(const GameMetadata &amp;other)']]],
+  ['operator_3d_3d_22',['operator==',['../structGameMetadata.html#a57bc27b39976ceb2f59e0d0f75f45daa',1,'GameMetadata::operator==()'],['../classFileScanner_1_1iterator.html#a80cdf7a5f3352c27ea28d78c0ce8989f',1,'FileScanner::iterator::operator==()']]]
 ];

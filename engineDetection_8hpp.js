@@ -20,10 +20,10 @@ var engineDetection_8hpp =
       [ "ENGINES_END", "engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a850d9ef24f20dbef9b2794f03e802e3f", null ],
       [ "UNKNOWN", "engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a6ce26a62afab55d7606ad4e92428b30c", null ]
     ] ],
-    [ "detectExecutables", "engineDetection_8hpp.html#a0bf3a3950f9a77458177e1aef3ca1eb1", null ],
-    [ "determineEngine", "engineDetection_8hpp.html#a7235d808dc321c6dffb09eaf0636bdaa", null ],
+    [ "detectExecutables", "engineDetection_8hpp.html#ad4ded8c1094f09943c6b36038e16bfbc", null ],
+    [ "determineEngine", "engineDetection_8hpp.html#a7627db8d02edb4e09ccb3328d6032c34", null ],
     [ "engineName", "engineDetection_8hpp.html#a28004db3f091ff409204e3e739461a25", null ],
     [ "engineNameT", "engineDetection_8hpp.html#a69afb545d71b8d3717fa91f9bd5a05de", null ],
-    [ "isEngineT", "engineDetection_8hpp.html#a75757b8bb01e2c76fb82eb9c766796fd", null ],
+    [ "isEngineT", "engineDetection_8hpp.html#af606334ba85fe9fa45dfff9cb882a297", null ],
     [ "scoreExecutables", "engineDetection_8hpp.html#a2674fd47a277a212f401991e65116276", null ]
 ];
