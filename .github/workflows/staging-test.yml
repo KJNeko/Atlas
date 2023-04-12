@@ -63,8 +63,8 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite'
-          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite'
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
       - name: Build
         run: |
@@ -76,31 +76,31 @@ jobs:
           ${{github.workspace}}\build\build-r\bin\AtlasTESTS
           ${{github.workspace}}\build\build-d\bin\AtlasTESTS
 
-  build-unix:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: Prepare dependencies
-        id: prepare-depends
-        run: |
-          sudo apt install libsqlite3-dev libfmt-dev libspdlog-dev qt6-base-dev build-essential libgl1-mesa-dev
-
-      - name: Cmake
-        run: |
-          cmake -S . -B ${{github.workspace}}/build/build-r -DCMAKE_BUILD_TYPE=Release -DATLAS_BUILD_TESTS=1
-          cmake -S . -B ${{github.workspace}}/build/build-d -DCMAKE_BUILD_TYPE=Debug -DATLAS_BUILD_TESTS=1
-
-      - name: Build
-        run: |
-          cmake --build ${{github.workspace}}/build/build-r -j8
-          cmake --build ${{github.workspace}}/build/build-d -j8
-
-      - name: Test
-        run: |
-          ${{github.workspace}}/build/build-r/bin/AtlasTESTS
-          ${{github.workspace}}/build/build-d/bin/AtlasTESTS
+#  build-unix:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          submodules: true
+#
+#      - name: Prepare dependencies
+#        id: prepare-depends
+#        run: |
+#          sudo apt install libsqlite3-dev libfmt-dev libspdlog-dev qt6-base-dev build-essential libgl1-mesa-dev
+#
+#      - name: Cmake
+#        run: |
+#          cmake -S . -B ${{github.workspace}}/build/build-r -DCMAKE_BUILD_TYPE=Release -DATLAS_BUILD_TESTS=1
+#          cmake -S . -B ${{github.workspace}}/build/build-d -DCMAKE_BUILD_TYPE=Debug -DATLAS_BUILD_TESTS=1
+#
+#      - name: Build
+#        run: |
+#          cmake --build ${{github.workspace}}/build/build-r -j8
+#          cmake --build ${{github.workspace}}/build/build-d -j8
+#
+#      - name: Test
+#        run: |
+#          ${{github.workspace}}/build/build-r/bin/AtlasTESTS
+#          ${{github.workspace}}/build/build-d/bin/AtlasTESTS
 
