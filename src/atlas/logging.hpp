@@ -18,12 +18,10 @@
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 
-#include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
 
 #pragma GCC diagnostic pop
 #else
-#include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
 #endif
 
@@ -35,9 +33,9 @@ void initLogging();
 template <>
 struct fmt::formatter< QString >
 {
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
 
-	auto format( const QString& my, format_context& ctx ) const -> decltype( ctx.out() )
+	format_context::iterator format( const QString& my, format_context& ctx ) const
 	{
 		return format_to( ctx.out(), "{}", my.toStdString() );
 	}
@@ -49,7 +47,7 @@ struct fmt::formatter< std::filesystem::path >
 	bool print_canonical { false };
 	bool print_exists { false };
 
-	constexpr auto parse( format_parse_context& ctx ) -> decltype( ctx.begin() )
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx )
 	{
 		//Check if ctx has 'c' 'ce' or 'e' and return the itterator after it
 		auto idx { ctx.begin() };
@@ -70,33 +68,7 @@ struct fmt::formatter< std::filesystem::path >
 		return idx;
 	}
 
-	auto format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() )
-	{
-		if ( print_canonical && std::filesystem::exists( path ) )
-		{
-			if ( print_exists )
-				return format_to(
-					ctx.out(),
-					"[\"{}\", (Canonical: \"{}\") Exists: \"{}\"]",
-					path.string(),
-					std::filesystem::canonical( path ).string(),
-					std::filesystem::exists( path ) ? "True" : "False" );
-			else
-				return format_to(
-					ctx.out(),
-					"[\"{}\" (Canonical: \"{}\")]",
-					path.string(),
-					std::filesystem::canonical( path ).string() );
-		}
-		else
-		{
-			if ( print_exists )
-				return format_to(
-					ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
-			else
-				return format_to( ctx.out(), "[\"{}\"]", path.string() );
-		}
-	}
+	format_context::iterator format( const std::filesystem::path& path, format_context& ctx ) const;
 };
 
 #endif //ATLAS_LOGGING_HPP
