@@ -49,8 +49,8 @@ jobs:
           move * ..
           cd ../..
           7z x sqlite-dll.zip -o"./lib"
+          tree /f
           cd ..
-          tree
 
       - name: Install Qt
         if: steps.cache-qt.outputs.cache-hit != 'true'
