@@ -101,7 +101,7 @@ file(GLOB_RECURSE UI_SOURCES
 
 set(HYDRUS_SOURCES ${SOURCES})
 set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
-set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt::fmt-header-only Tracy::TracyClient)
+set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt::fmt Tracy::TracyClient)
 
 
 #Build obj in order to reduce total compile time when compiling the tests too
