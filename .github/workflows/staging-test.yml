@@ -68,8 +68,8 @@ jobs:
 
       - name: Build
         run: |
-          cmake --build ${{github.workspace}}\builds\build-r
-          cmake --build ${{github.workspace}}\builds\build-d
+          cmake --build ${{github.workspace}}\builds\build-r --target AtlasTESTS
+          cmake --build ${{github.workspace}}\builds\build-d --target AtlasTESTS
 
       - name: Test
         run: |
