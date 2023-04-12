@@ -127,7 +127,7 @@ target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 #Post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
             $<TARGET_FILE:Atlas>
             COMMENT "Running windeployqt")
 
@@ -166,7 +166,7 @@ if (DEFINED ATLAS_BUILD_TESTS)
         #Test post setup (Windows only)
         if (WIN32)
             add_custom_command(TARGET AtlasTESTS POST_BUILD
-                    COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-opengl-sw
+                    COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
                     $<TARGET_FILE:AtlasTESTS>
                     COMMENT "Running windeployqt")
 
