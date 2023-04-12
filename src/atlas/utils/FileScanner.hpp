@@ -55,7 +55,9 @@ struct FileScannerGenerator
 
 		std::suspend_always final_suspend() noexcept { return {}; }
 
-		void unhandled_exception() { std::terminate(); }
+		void unhandled_exception() {
+			spdlog::critical("An exception was thrown in the file scanner coroutine.");
+			std::terminate(); }
 
 		void return_value( FileInfo&& from )
 		{

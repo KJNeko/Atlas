@@ -4,6 +4,8 @@
 
 #include "FileScanner.hpp"
 
+#include <assert.h>
+
 #include <tracy/Tracy.hpp>
 
 #include "atlas/logging.hpp"
@@ -72,8 +74,12 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 					FileInfo info { scanback.at( i ), path, 0, std::uint8_t( depth + 1 ) };
 					co_yield std::move( info );
 				}
+				co_return FileInfo { scanback.at( scanback.size() - 1 ), path, 0, std::uint8_t( depth + 1 ) };
 			}
-			co_return FileInfo { scanback.at( scanback.size() - 1 ), path, 0, std::uint8_t( depth + 1 ) };
+			else
+			{
+				co_return FileInfo { path, path, 0, 0 };
+			}
 		}
 		else
 		{
@@ -81,7 +87,8 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 		}
 	}
 
-	throw std::runtime_error("Managed to escape loop in coroutine scan_files");
+	spdlog::error( "Managed to escape loop in coroutine scan_files" );
+	throw std::runtime_error( "Managed to escape loop in coroutine scan_files" );
 }
 
 #pragma GCC diagnostic pop
@@ -91,11 +98,20 @@ FileScanner::FileScanner( const std::filesystem::path &path ) : m_path( path ), 
 
 FileInfo &FileScanner::at( std::size_t index )
 {
+	spdlog::info( "FileScanner::at( {} )", index );
+
 	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
+		const auto size { files.size() };
+
 		ZoneScopedN( "Fetch file info" );
 		files.emplace_back( file_scanner() );
+
+		assert( files.size() > 0 );
+		assert( files.size() == size + 1 );
+
+		spdlog::info( "Returning value" );
 
 		return files.at( files.size() - 1 );
 	}
