@@ -38,9 +38,7 @@ find_package(SQLite3 REQUIRED)
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test REQUIRED)
 
 if (WIN32)
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-        find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
-    endif ()
+    find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
 endif ()
 
 set(CMAKE_AUTOMOC ON)
