@@ -62,6 +62,8 @@ endif ()
 
 add_subdirectory(dependencies/tracy)
 
+
+
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
     #These two flags added with older gcc versons and Qt causes a compiler segfault -Wmismatched-tags -Wredundant-tags
@@ -108,6 +110,10 @@ target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(AtlasObj PUBLIC ${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+
+if(DEFINED ATLAS_VERSION)
+    target_compile_definitions(AtlasOBJ PUBLIC ATLAS_VERSION="${ATLAS_VERSION}")
+endif()
 
 #Build exe
 add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
@@ -175,6 +181,10 @@ if (DEFINED ATLAS_BUILD_TESTS)
 
         include(GoogleTest)
         gtest_discover_tests(AtlasTESTS)
+
+        if(DEFINED ATLAS_TEST_UI)
+            target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
+        endif()
 
     endif ()
 endif ()

@@ -11,6 +11,7 @@
 #include "atlas/imageManager.hpp"
 #include "atlas/logging.hpp"
 
+#ifdef ATLAS_TEST_UI
 class TestImageManager : public ::testing::Test
 {
 	int argc { 0 };
@@ -61,3 +62,4 @@ TEST_F( TestImageManager, clearOrhpans )
 	GTEST_ASSERT_FALSE( std::filesystem::exists(
 		"./images/data/271948cc9461f20a5e77218948b22a790afdd6a9fce6f2dc295decfe4aa96536.webp" ) );
 }
+#endif
