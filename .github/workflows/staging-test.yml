@@ -82,11 +82,13 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 6.4.*
+          aqtversion: '==3.1.*'
+          py7zrversion: '>=0.20.2'
+          version: '6.4.3'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw'
-          cache: true
+          modules: 'qtimageformats qtmultimedia qtwebsockets qtwebview debug_info'
 
       - name: CMake
         run: |
