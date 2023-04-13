@@ -71,37 +71,23 @@ jobs:
       - name: CMake
         run: |
           cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
-          cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
 
       - name: Build
         run: | 
-          cmake --build ${{github.workspace}}\builds\build-r -j8
-          cmake --build ${{github.workspace}}\builds\build-d -j8
+          cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
 
       - name: Package
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          mkdir Atlas-Debug
           move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Atlas-GameManager-Release\
-          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Debug\
           7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Windows.zip ${{github.workspace}}\Atlas-GameManager-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Windows-Debug.zip ${{github.workspace}}\Atlas-GameManager-Debug
-          
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
           path: ${{github.workspace}}\Atlas-GameManager-Windows.zip
-          if-no-files-found: error
-          retention-days: 2
-
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Windows-Extract-Debug
-          path: ${{github.workspace}}\Atlas-GameManager-Windows-Debug.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -126,7 +112,6 @@ jobs:
         run: |
           mkdir windows
           mv Windows-Extract/Atlas-GameManager-Windows.zip Atlas-GameManager-${{ env.version_short }}-windows.zip
-          mv Windows-Extract-Debug/Atlas-GameManager-Windows-Debug.zip Atlas-GameManager-${{ env.version_short }}-Debug-windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
@@ -134,6 +119,5 @@ jobs:
         with:
           files: |
             Atlas-GameManager-${{env.version_short}}-windows.zip
-            Atlas-GameManager-${{env.version_short}}-Debug-windows.zip
           
 
