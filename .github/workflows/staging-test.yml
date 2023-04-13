@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: '${{github.workspace}}\qt'
-          key: ${{runner.os}}-qt-5.15.2
+          key: ${{runner.os}}-qt-6.4.3
 
       - name: Get qt
         if: steps.cache-qt.outputs.cache-hit != 'true'
