@@ -68,8 +68,8 @@ jobs:
 
       - name: Build
         run: |
-          cmake --build ${{github.workspace}}\builds\build-r --target AtlasTESTS
-          cmake --build ${{github.workspace}}\builds\build-d --target AtlasTESTS
+          cmake --build ${{github.workspace}}\builds\build-r --target AtlasTESTS -j4
+          cmake --build ${{github.workspace}}\builds\build-d --target AtlasTESTS -j4
 
       - name: Upload release
         uses: actions/upload-artifact@v2
