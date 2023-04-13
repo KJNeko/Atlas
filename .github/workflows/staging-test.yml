@@ -91,7 +91,7 @@ jobs:
 
       - name: CMake
         run: |
-          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles" -DQT_PATH='${{github.workspace}}\Qt\6.4.3\mingw_64'
 #         cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
       - name: Build
