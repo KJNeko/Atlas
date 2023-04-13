@@ -76,12 +76,14 @@ jobs:
         with:
           name: Atlas-release-test
           path: ${{github.workspace}}\builds\build-r\bin
+          retention-days: 1
 
       - name: Upload debug
         uses: actions/upload-artifact@v2
         with:
           name: Atlas-debug-tests
           path: ${{github.workspace}}\builds\build-d\bin
+          retention-days: 1
 
   test:
     runs-on: windows-latest
