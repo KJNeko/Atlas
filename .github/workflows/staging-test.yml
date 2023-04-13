@@ -37,7 +37,9 @@ jobs:
           cd mingw32
           7z x winlibs-gcc.7z
           cd ..
-          echo "${{github.workspace}}\mingw32\mingw32\bin" >> $GITHUB_PATH
+
+      - name: Add GCC to PATH
+        run: echo "${{github.workspace}}\mingw32\mingw32\bin" >> $GITHUB_PATH
 
       - name: Cache sqlite
         id: cache-sqlite
