@@ -4,7 +4,6 @@ on:
     branch:
       staging
 
-
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -93,12 +92,12 @@ jobs:
       - name: CMake
         run: |
           cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
-#         cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+      #         cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
       - name: Build
         run: |
           cmake --build ${{github.workspace}}\builds\build-r --target AtlasTESTS -j4
-#          cmake --build ${{github.workspace}}\builds\build-d --target AtlasTESTS -j4
+      #          cmake --build ${{github.workspace}}\builds\build-d --target AtlasTESTS -j4
 
       - name: Upload release
         uses: actions/upload-artifact@v2
@@ -107,12 +106,12 @@ jobs:
           path: ${{github.workspace}}\builds\build-r\bin
           retention-days: 1
 
-#      - name: Upload debug
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Atlas-debug-tests
-#          path: ${{github.workspace}}\builds\build-d\bin
-#          retention-days: 1
+  #      - name: Upload debug
+  #        uses: actions/upload-artifact@v2
+  #        with:
+  #          name: Atlas-debug-tests
+  #          path: ${{github.workspace}}\builds\build-d\bin
+  #          retention-days: 1
 
   test:
     runs-on: windows-latest
@@ -128,11 +127,11 @@ jobs:
           name: Atlas-release-tests
           path: ${{github.workspace}}\builds\build-r\bin
 
-#      - name: Download debug
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: Atlas-debug-tests
-#          path: ${{github.workspace}}\builds\build-d\bin
+      #      - name: Download debug
+      #        uses: actions/download-artifact@v2
+      #        with:
+      #          name: Atlas-debug-tests
+      #          path: ${{github.workspace}}\builds\build-d\bin
 
       - name: Test-Release
         run: ${{github.workspace}}\builds\build-r\bin\AtlasTESTS.exe
