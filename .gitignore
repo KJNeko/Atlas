@@ -8,10 +8,7 @@
 
 #Build dirs
 /build/
-/cmake-build-debug/
-/cmake-build-relwithdebinfo/
-/cmake-build-release/
-/cmake-build-debug-mingw/
+/cmake-build-*/
 /vcpkg_installed/
 
 #Build helpers
