@@ -204,6 +204,12 @@ void BatchImportDialog::on_btnNext_pressed()
 			return;
 		}
 
+		if(!ui->tbFormat->text().contains("{version}"))
+		{
+			ui->statusLabel->setText("Autofill missing \"{version}\" which is required");
+			return;
+		}
+
 		ui->swImportGames->setCurrentIndex( 1 );
 		ui->btnBack->setEnabled( true );
 		ui->btnNext->setDisabled( true );
