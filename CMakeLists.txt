@@ -107,7 +107,7 @@ set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 
 
 
 #Build obj in order to reduce total compile time when compiling the tests too
-add_library(AtlasObj OBJECT ${HYDRUS_SOURCES} ${HYDRUS_UI})
+add_library(AtlasObj OBJECT ${HYDRUS_SOURCES})
 target_link_libraries(AtlasObj ${REQUIRED_LIBS})
 target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(AtlasObj PUBLIC ${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
@@ -118,11 +118,10 @@ if(DEFINED ATLAS_VERSION)
 endif()
 
 #Build exe
-add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${HYDRUS_UI})
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 
 target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
 
