@@ -15,21 +15,19 @@ TEST( TestDatabase, testInit )
 {
 	if ( std::filesystem::exists( "./data/" ) ) std::filesystem::remove_all( "./data/" );
 
-	Database::initalize( "./data/testing.db" );
+	Database::initalize( ":memory:" );
 	Database::deinit();
-	std::filesystem::remove_all( "./data/" );
 
 	SUCCEED();
 }
 
 TEST( TestDatabase, testTransaction )
 {
-	Database::initalize( "./data/testing.db" );
+	Database::initalize( ":memory:" );
 	{
 		Transaction transaction { Transaction::Autocommit };
 	}
 	Database::deinit();
-	std::filesystem::remove_all( "./data" );
 }
 
 TEST( TestDatabase, testUpdate )
@@ -39,7 +37,7 @@ TEST( TestDatabase, testUpdate )
 
 TEST( TestDatabase, testDeadlock )
 {
-	Database::initalize( "./data/testing.db" );
+	Database::initalize( ":memory:" );
 
 	EXPECT_THROW(
 		[]()
