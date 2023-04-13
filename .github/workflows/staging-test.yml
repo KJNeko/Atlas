@@ -106,7 +106,7 @@ jobs:
 #          path: ${{github.workspace}}\builds\build-d\bin
 
       - name: Test-Release
-        run: ${{github.workspace}}\build\build-r\bin\AtlasTESTS.exe
+        run: ${{github.workspace}}\builds\build-r\bin\AtlasTESTS.exe
 
 #      - name: Test-Debug
-#        run: ${{github.workspace}}\build\build-d\bin\AtlasTESTS.exe
+#        run: ${{github.workspace}}\builds\build-d\bin\AtlasTESTS.exe
