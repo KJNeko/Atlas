@@ -74,7 +74,7 @@ jobs:
       - name: Upload release
         uses: actions/upload-artifact@v2
         with:
-          name: Atlas-release-test
+          name: Atlas-release-tests
           path: ${{github.workspace}}\builds\build-r\bin
           retention-days: 1
 
