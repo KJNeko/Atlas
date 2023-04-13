@@ -164,7 +164,7 @@ if (DEFINED ATLAS_BUILD_TESTS)
         add_executable(AtlasTESTS ${TESTS})
 
         target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-        target_link_libraries(AtlasTESTS PUBLIC ${REQUIRED_LIBS} Qt::Test GTest::gtest_main AtlasObj)
+        target_link_libraries(AtlasTESTS PUBLIC ${REQUIRED_LIBS} GTest::gtest_main AtlasObj)
 
         #Test post setup (Windows only)
         if (WIN32)
