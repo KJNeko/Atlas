@@ -8,7 +8,7 @@
 
 #include "atlas/utils/FileScanner.hpp"
 
-TEST( EngineDetection, test )
+TEST( FileScannerTest, test )
 {
 	FileScanner scanner { "./tests" };
 
@@ -16,7 +16,7 @@ TEST( EngineDetection, test )
 	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
 	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
 
-	const std::vector< std::string > str { "dummydir", "first", "third", "fourth", "sixth", "second" };
+	const std::vector< std::string > str { "dummydir", "first", "third", "second", "fourth", "sixth" };
 
 	std::vector< std::string > found {};
 
@@ -25,7 +25,7 @@ TEST( EngineDetection, test )
 	GTEST_ASSERT_EQ( str, found );
 }
 
-TEST( EngineDetection, testBreak )
+TEST( FileScannerTest, testBreak )
 {
 	FileScanner scanner { "./tests" };
 
@@ -34,7 +34,7 @@ TEST( EngineDetection, testBreak )
 	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
 
 	const std::vector< std::string > str { "dummydir", "first",  "third", "dummydir", "first",
-		                                   "third",    "fourth", "sixth", "second" };
+		                                   "third",    "second", "fourth", "sixth" };
 
 	std::vector< std::string > found {};
 
@@ -47,4 +47,15 @@ TEST( EngineDetection, testBreak )
 	for ( const auto& file : scanner ) found.emplace_back( file.filename );
 
 	GTEST_ASSERT_EQ( str, found );
+}
+
+TEST( FileScannerTest, testEmpty )
+{
+	FileScanner scanner { "./tests/dummydir/first/second" };
+
+	std::vector< std::string > found {};
+
+	for ( const auto& file : scanner ) found.emplace_back( file.filename );
+
+	GTEST_ASSERT_EQ( found.size(), 1 );
 }

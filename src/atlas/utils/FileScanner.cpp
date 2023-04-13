@@ -5,6 +5,7 @@
 #include "FileScanner.hpp"
 
 #include <assert.h>
+#include <queue>
 
 #include <tracy/Tracy.hpp>
 
@@ -25,65 +26,68 @@ FileInfo FileScannerGenerator::operator()()
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
 	ZoneScoped;
-	spdlog::debug( "Scanning path {}", path );
-	std::vector< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
+	if ( !std::filesystem::exists( path ) )
+	{
+		spdlog::error( "scan_files: Path {} does not exist.", path.string() );
+		throw std::runtime_error( "Path does not exist." );
+	}
 
-	dirs.emplace_back( path, 0 );
+	spdlog::debug( "Scanning path {}", path );
+	std::queue< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
+
+	dirs.push( { path, 0 } );
+
+	auto dir_empty = []( const std::filesystem::path &dir_path ) -> bool
+	{ return std::filesystem::directory_iterator( dir_path ) == std::filesystem::directory_iterator(); };
+
+	if ( dir_empty( path ) ) co_return FileInfo { path, path, 0, 0 };
 
 	while ( dirs.size() > 0 )
 	{
-		const auto [ dir, depth ] { std::move( dirs.at( dirs.size() - 1 ) ) };
-		dirs.pop_back();
-		std::vector< std::filesystem::path > scanback;
+		const auto [ dir, depth ] { std::move( dirs.front() ) };
+		dirs.pop();
+		std::vector< std::filesystem::path > nested_dirs;
 
+		//Recurse through the directory.
 		for ( auto itter = std::filesystem::directory_iterator( dir ); itter != std::filesystem::directory_iterator(); )
 		{
 			if ( itter->is_directory() )
 			{
-				scanback.emplace_back( *itter );
+				//Add it to the scanlist
+				nested_dirs.emplace_back( *itter );
 				++itter;
 				continue;
 			}
 
 			FileInfo info {
-				itter->path(), path, itter->is_regular_file() ? itter->file_size() : 0, std::uint8_t( depth + 1 )
+				*itter, path, itter->is_regular_file() ? itter->file_size() : 0, std::uint8_t( depth + 1 )
 			};
 
 			++itter;
 
 			//If we are at the last file and there are no more directories to scan then return.
-			if ( itter == std::filesystem::directory_iterator() && dirs.size() == 0 && scanback.size() == 0 )
+			if ( itter == std::filesystem::directory_iterator() && dirs.size() == 0 && nested_dirs.size() == 0 )
 				co_return std::move( info );
 			else
 				co_yield std::move( info );
 		}
 
-		//The 'scanback' section is to ensure that we don't accidently over-read when we reach a directory with no files.
-		for ( const auto &scan : scanback )
+		//Add the nested dirs to the scanlist and yield them
+		for ( std::size_t i = 0; i < nested_dirs.size(); ++i )
 		{
-			if ( std::filesystem::directory_iterator( scan ) != std::filesystem::directory_iterator() )
-				dirs.emplace_back( scan, depth + 1 );
-		}
-
-		if ( dirs.size() == 0 )
-		{
-			if ( scanback.size() > 1 )
+			// Check if the directory is empty and if it's not then add it to the scan queue.
+			if ( !dir_empty( nested_dirs.at( i ) ) )
 			{
-				for ( std::size_t i = 0; i < scanback.size() - 1; ++i )
-				{
-					FileInfo info { scanback.at( i ), path, 0, std::uint8_t( depth + 1 ) };
-					co_yield std::move( info );
-				}
-				co_return FileInfo { scanback.at( scanback.size() - 1 ), path, 0, std::uint8_t( depth + 1 ) };
+				dirs.push( { nested_dirs.at( i ), depth + 1 } );
+				co_yield FileInfo { nested_dirs.at( i ), path, 0, std::uint8_t( depth + 1 ) };
 			}
 			else
 			{
-				co_return FileInfo { path, path, 0, 0 };
+				if ( i == nested_dirs.size() - 1 && dirs.size() == 0 )
+					co_return FileInfo { nested_dirs.at( i ), path, 0, std::uint8_t( depth + 1 ) };
+				else
+					co_yield FileInfo { nested_dirs.at( i ), path, 0, std::uint8_t( depth + 1 ) };
 			}
-		}
-		else
-		{
-			for ( const auto &dir_path : scanback ) co_yield FileInfo { dir_path, path, 0, std::uint8_t( depth + 1 ) };
 		}
 	}
 
@@ -94,7 +98,10 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 #pragma GCC diagnostic pop
 
 FileScanner::FileScanner( const std::filesystem::path &path ) : m_path( path ), file_scanner( scan_files( path ) )
-{}
+{
+	ZoneScoped;
+	files.emplace_back( file_scanner() );
+}
 
 FileInfo &FileScanner::at( std::size_t index )
 {
