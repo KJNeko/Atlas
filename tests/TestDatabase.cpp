@@ -13,8 +13,6 @@ TEST( TestDatabase, testTransactionUnloaded )
 
 TEST( TestDatabase, testInit )
 {
-	if ( std::filesystem::exists( "./data/" ) ) std::filesystem::remove_all( "./data/" );
-
 	Database::initalize( ":memory:" );
 	Database::deinit();
 
