@@ -15,6 +15,21 @@ jobs:
         with:
           submodules: true
 
+      - name: Cache qt
+        id: cache-qt
+        uses: actions/cache@v3
+        with:
+          path: '${{github.workspace}}\qt'
+          key: ${{runner.os}}-qt-5.15.2
+
+      - name: Get qt
+        if: steps.cache-qt.outputs.cache-hit != 'true'
+        run: |
+          pip install aqtinstall
+          aqt install 6.4.3 windows desktop win64_mingw -m qtimageformats debug_info -O '${{github.workspace}}\qt'
+          echo "${{github.workspace}}\qt\6.4.3\mingw_64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "${{github.workspace}}\qt\6.4.3\mingw_64" | Out-File -FilePath $env:QT -Encoding utf8
+
       - name: Cache winlibs GCC 12.2
         id: cache-gcc
         uses: actions/cache@v3
