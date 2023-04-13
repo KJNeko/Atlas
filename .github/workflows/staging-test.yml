@@ -15,22 +15,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Cache qt
-        id: cache-qt
-        uses: actions/cache@v3
-        with:
-          path: '${{github.workspace}}\qt'
-          key: ${{runner.os}}-qt-6.4.3
-
-      - name: Get qt
-        if: steps.cache-qt.outputs.cache-hit != 'true'
-        run: |
-          pip install aqtinstall
-          aqt install 6.4.3 windows desktop win64_mingw -m qtimageformats debug_info -O '${{github.workspace}}\qt'
-          echo "${{github.workspace}}\qt\6.4.3\mingw_64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          $env:QT = "${{github.workspace}}\qt\6.4.3\mingw_64\bin\qmake.exe"
-          $env:Qt6_DIR = "${{github.workspace}}\qt\6.4.3\mingw_64\bin\qmake.exe"
-
       - name: Cache winlibs GCC 12.2
         id: cache-gcc
         uses: actions/cache@v3
@@ -95,9 +79,18 @@ jobs:
           7z x sqlite-dll.zip -o"./lib"
           cd ..
 
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 6.4.*
+          host: 'windows'
+          target: 'desktop'
+          arch: win64_mingw
+          cache: true
+
       - name: CMake
         run: |
-          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles" -DQT_PATH='${{github.workspace}}\Qt\6.4.3\mingw_64'
+          cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 #         cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DATLAS_BUILD_TESTS=1 -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
       - name: Build
