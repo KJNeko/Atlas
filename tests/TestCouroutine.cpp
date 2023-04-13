@@ -10,11 +10,11 @@
 
 TEST( FileScannerTest, test )
 {
-	FileScanner scanner { "./tests" };
-
 	std::filesystem::create_directories( "./tests/dummydir/first/second" );
 	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
 	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+
+	FileScanner scanner { "./tests" };
 
 	const std::vector< std::string > str { "dummydir", "first", "third", "second", "fourth", "sixth" };
 
@@ -27,11 +27,12 @@ TEST( FileScannerTest, test )
 
 TEST( FileScannerTest, testBreak )
 {
-	FileScanner scanner { "./tests" };
 
 	std::filesystem::create_directories( "./tests/dummydir/first/second" );
 	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
 	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+
+	FileScanner scanner { "./tests" };
 
 	const std::vector< std::string > str { "dummydir", "first",  "third", "dummydir", "first",
 		                                   "third",    "second", "fourth", "sixth" };
@@ -51,6 +52,10 @@ TEST( FileScannerTest, testBreak )
 
 TEST( FileScannerTest, testEmpty )
 {
+	std::filesystem::create_directories( "./tests/dummydir/first/second" );
+	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+
 	FileScanner scanner { "./tests/dummydir/first/second" };
 
 	std::vector< std::string > found {};
