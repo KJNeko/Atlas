@@ -10,11 +10,11 @@
 
 TEST( FileScannerTest, test )
 {
-	std::filesystem::create_directories( "./tests/dummydir/first/second" );
-	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
-	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+	std::filesystem::create_directories( "./tmp/dummydir/first/second" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/fourth" );
 
-	FileScanner scanner { "./tests" };
+	FileScanner scanner { "./tmp" };
 
 	const std::vector< std::string > str { "dummydir", "first", "third", "second", "fourth", "sixth" };
 
@@ -28,11 +28,11 @@ TEST( FileScannerTest, test )
 TEST( FileScannerTest, testBreak )
 {
 
-	std::filesystem::create_directories( "./tests/dummydir/first/second" );
-	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
-	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+	std::filesystem::create_directories( "./tmp/dummydir/first/second" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/fourth" );
 
-	FileScanner scanner { "./tests" };
+	FileScanner scanner { "./tmp" };
 
 	const std::vector< std::string > str { "dummydir", "first",  "third", "dummydir", "first",
 		                                   "third",    "second", "fourth", "sixth" };
@@ -52,11 +52,11 @@ TEST( FileScannerTest, testBreak )
 
 TEST( FileScannerTest, testEmpty )
 {
-	std::filesystem::create_directories( "./tests/dummydir/first/second" );
-	std::filesystem::create_directories( "./tests/dummydir/third/sixth" );
-	std::filesystem::create_directories( "./tests/dummydir/third/fourth" );
+	std::filesystem::create_directories( "./tmp/dummydir/first/second" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/sixth" );
+	std::filesystem::create_directories( "./tmp/dummydir/third/fourth" );
 
-	FileScanner scanner { "./tests/dummydir/first/second" };
+	FileScanner scanner { "./tmp/dummydir/first/second" };
 
 	std::vector< std::string > found {};
 
