@@ -9,7 +9,6 @@ SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
-
 if (WIN32)
     if (DEFINED SQL_PATH)
         set(SQLite3_INCLUDE_DIR ${SQL_PATH}\\include)
@@ -33,6 +32,9 @@ else ()
     find_package(spdlog REQUIRED)
 endif ()
 
+if(DEFINED ENV{QT_PATH})
+    set(QT_PATH $ENV{QT})
+endif()
 
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
