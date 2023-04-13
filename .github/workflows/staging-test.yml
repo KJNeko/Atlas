@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: '${{github.workspace}}\mingw64'
-          key: ${{runner.os}}-gcc-12.2
+          key: ${{runner.os}}-mingw64-gcc-12.2.0
 
       - name: Download winlibs GCC 12.2
         if: steps.cache-gcc.outputs.cache-hit != 'true'
