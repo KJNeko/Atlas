@@ -41,7 +41,7 @@ if (DEFINED QT_PATH)
 endif ()
 
 find_package(SQLite3 REQUIRED)
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent REQUIRED)
 
 if (WIN32)
     find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
