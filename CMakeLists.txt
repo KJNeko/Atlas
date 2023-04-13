@@ -32,10 +32,6 @@ else ()
     find_package(spdlog REQUIRED)
 endif ()
 
-if(DEFINED ENV{QT_PATH})
-    set(QT_PATH $ENV{QT})
-endif()
-
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
