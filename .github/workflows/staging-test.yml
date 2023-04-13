@@ -73,8 +73,8 @@ jobs:
 
       - name: Test
         run: |
-          ${{github.workspace}}\build\build-r\bin\AtlasTESTS
-          ${{github.workspace}}\build\build-d\bin\AtlasTESTS
+          ${{github.workspace}}\build\build-r\bin\AtlasTESTS.exe
+          ${{github.workspace}}\build\build-d\bin\AtlasTESTS.exe
 
 #  build-unix:
 #    runs-on: ubuntu-latest
