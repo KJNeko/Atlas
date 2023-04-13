@@ -151,7 +151,7 @@ void BatchImportDialog::processFiles()
 
 	const QString cleaned_regex { regexify( escapeStr( QString::fromStdString( ( base / search ).string() ) ) ) };
 
-	spdlog::info( "Scanning {} for games", base );
+	spdlog::debug( "Scanning {} for games", base );
 
 	emit startProcessingDirectory( cleaned_regex, base, ui->cbSkipFilesize->isChecked() );
 

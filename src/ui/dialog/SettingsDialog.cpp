@@ -238,7 +238,7 @@ void SettingsDialog::reject()
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
 	ZoneScoped;
-	spdlog::info( "Theme changed to {}", text );
+	spdlog::debug( "Theme changed to {}", text );
 
 	reloadTheme();
 

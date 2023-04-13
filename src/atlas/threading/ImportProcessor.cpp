@@ -114,7 +114,7 @@ void ImportProcessor::importGames(
 			if ( move_after_import ) std::filesystem::remove_all( source_folder );
 
 			//No crash! Yay. Continue to import
-			spdlog::info( "Import succeeded with id {}", record->getID() );
+			spdlog::debug( "Import succeeded with id {}", record->getID() );
 			emit updateValue( ++counter );
 		}
 		catch ( RecordException& e )

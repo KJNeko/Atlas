@@ -48,7 +48,7 @@ void initLogging()
 
 	auto logger { std::make_shared< spdlog::logger >( "", sinks.begin(), sinks.end() ) };
 
-	logger->info( "Logger setup" );
+	logger->debug( "Logger setup" );
 
 	logger->set_level( spdlog::level::debug );
 	logger->flush_on( spdlog::level::debug );
@@ -71,19 +71,19 @@ void initLogging()
 			break;
 		case 2:
 			logger->set_level( spdlog::level::info );
-			spdlog::info( "Logging level set to \'info\'" );
+			spdlog::debug( "Logging level set to \'info\'" );
 			break;
 		case 3:
 			logger->set_level( spdlog::level::warn );
-			spdlog::info( "Logging level set to \'warn\'" );
+			spdlog::debug( "Logging level set to \'warn\'" );
 			break;
 		case 4:
 			logger->set_level( spdlog::level::err );
-			spdlog::info( "Logging level set to \'error\'" );
+			spdlog::debug( "Logging level set to \'error\'" );
 			break;
 		case 5:
 			logger->set_level( spdlog::level::critical );
-			spdlog::info( "Logging level set to \'critical\'" );
+			spdlog::debug( "Logging level set to \'critical\'" );
 			break;
 		case 6:
 			logger->set_level( spdlog::level::off );
@@ -93,7 +93,7 @@ void initLogging()
 			break;
 	}
 
-	spdlog::info( "Default logger set" );
+	spdlog::debug( "Default logger set" );
 }
 
 //fmt stuff

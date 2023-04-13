@@ -105,8 +105,6 @@ FileScanner::FileScanner( const std::filesystem::path &path ) : m_path( path ), 
 
 FileInfo &FileScanner::at( std::size_t index )
 {
-	spdlog::info( "FileScanner::at( {} )", index );
-
 	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
@@ -117,8 +115,6 @@ FileInfo &FileScanner::at( std::size_t index )
 
 		assert( files.size() > 0 );
 		assert( files.size() == size + 1 );
-
-		spdlog::info( "Returning value" );
 
 		return files.at( files.size() - 1 );
 	}

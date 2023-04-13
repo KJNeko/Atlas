@@ -21,7 +21,7 @@ namespace imageManager
 	void cleanOrphans()
 	{
 		ZoneScoped;
-		spdlog::info( "Clearing orphan previews/banners" );
+		spdlog::debug( "Clearing orphan previews/banners" );
 		//Grab all images from the database
 		Transaction transaction { Transaction::Autocommit };
 
@@ -40,7 +40,6 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
-		spdlog::info( "Attemping To Load Image" );
 		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
@@ -48,12 +47,11 @@ namespace imageManager
 			QImage temp_image;
 			if ( temp_image.load( qstr ) == true )
 			{
-				spdlog::info( "Image Loaded Sucessfully" );
+				spdlog::debug( "Image Loaded Sucessfully" );
 			}
 
 			//Save the image to a temp file depending on os
 			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "atlas" / "temp.webp" };
-			spdlog::info( "Temp Output Path:{}", temp_path.string() );
 
 			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );
 

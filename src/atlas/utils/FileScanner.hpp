@@ -115,18 +115,6 @@ struct FileScanner
 		//bool operator !=
 		bool operator==( [[maybe_unused]] const iterator& end ) const;
 
-		/*{
-			ZoneScoped;
-			spdlog::info( "m_scanner.file_scanner.m_h.done() == {}", m_scanner.file_scanner.m_h.done() );
-			spdlog::info(
-				"m_idx:{} == m_scanner.files.size():{} == {}",
-				m_idx,
-				m_scanner.files.size(),
-				m_idx == m_scanner.files.size() );
-
-			return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
-		}*/
-
 		// Required for the for loop
 		const FileInfo& operator*() { return m_scanner.at( m_idx ); }
 	};

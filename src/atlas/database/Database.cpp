@@ -41,7 +41,7 @@ try
 	initLogging();
 
 	ZoneScoped;
-	spdlog::info( "Initalizing database with path {}", init_path );
+	spdlog::debug( "Initalizing database with path {}", init_path );
 	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
 		std::filesystem::create_directories( init_path.parent_path() );
 

@@ -283,7 +283,7 @@ void RecordData::addVersion(
 try
 {
 	ZoneScoped;
-	spdlog::info( "Adding version {} to record {}:{}", version.toStdString(), m_id, m_title.toStdString() );
+	spdlog::debug( "Adding version {} to record {}:{}", version.toStdString(), m_id, m_title.toStdString() );
 	//Check if version is already added
 	auto itter { std::find_if(
 		m_versions.begin(),
@@ -330,7 +330,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
 {
 	ZoneScoped;
-	spdlog::info( "Setting baner to {}", path );
+	spdlog::debug( "Setting banner to {} for record_id {}", path, m_id );
 
 	//Move banner to image folder
 	m_banner = imageManager::importImage( path );

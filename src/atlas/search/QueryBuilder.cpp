@@ -302,7 +302,7 @@ std::string processString( std::string_view str_view )
 {
 	ZoneScoped;
 	str_view = trimSpaces( str_view );
-	spdlog::info( "Processing \"{}\"", str_view );
+	spdlog::debug( "Processing search query: \"{}\"", str_view );
 	std::string query;
 
 	//Prevents infinite loops if we somehow reach one.
