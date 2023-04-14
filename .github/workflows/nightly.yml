@@ -1,7 +1,5 @@
 name: Release Nightly
 on:
-  branch:
-    - staging
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
@@ -14,6 +12,8 @@ jobs:
       should-run: ${{ steps.check_date.outputs.should-run }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: staging
       - id: should_run
         continue-on-error: true
         name: Check latest commits
@@ -28,6 +28,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
+          ref: staging
       - uses: ./.github/actions/build
         with:
           build-release: false
