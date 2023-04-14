@@ -221,7 +221,7 @@ QString engineNameT< Unity >()
 }
 
 template <>
-bool isEngineT< Unreal >( FileScanner& scanner )
+bool isEngineT< Unreal >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -234,7 +234,7 @@ QString engineNameT< Unreal >()
 }
 
 template <>
-bool isEngineT< RPGM >( FileScanner& scanner )
+bool isEngineT< RPGM >([[maybe_unused]]  FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -247,7 +247,7 @@ QString engineNameT< RPGM >()
 }
 
 template <>
-bool isEngineT< WolfRPG >( FileScanner& scanner )
+bool isEngineT< WolfRPG >([[maybe_unused]]  FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -260,7 +260,7 @@ QString engineNameT< WolfRPG >()
 }
 
 template <>
-bool isEngineT< HTML >( FileScanner& scanner )
+bool isEngineT< HTML >([[maybe_unused]]  FileScanner& scanner )
 {
 	ZoneScoped;
 
@@ -284,7 +284,7 @@ QString engineNameT< HTML >()
 }
 
 template <>
-bool isEngineT< VisualNovelMaker >( FileScanner& scanner )
+bool isEngineT< VisualNovelMaker >([[maybe_unused]]  FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -297,7 +297,7 @@ QString engineNameT< VisualNovelMaker >()
 }
 
 template <>
-bool isEngineT< TyanoBuilder >( FileScanner& scanner )
+bool isEngineT< TyanoBuilder >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 
@@ -322,7 +322,7 @@ QString engineNameT< TyanoBuilder >()
 }
 
 template <>
-bool isEngineT< Java >( FileScanner& scanner )
+bool isEngineT< Java >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -335,7 +335,7 @@ QString engineNameT< Java >()
 }
 
 template <>
-bool isEngineT< Flash >( FileScanner& scanner )
+bool isEngineT< Flash >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -348,7 +348,7 @@ QString engineNameT< Flash >()
 }
 
 template <>
-bool isEngineT< RAGS >( FileScanner& scanner )
+bool isEngineT< RAGS >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -361,7 +361,7 @@ QString engineNameT< RAGS >()
 }
 
 template <>
-bool isEngineT< KiriKiri >( FileScanner& scanner )
+bool isEngineT< KiriKiri >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -374,7 +374,7 @@ QString engineNameT< KiriKiri >()
 }
 
 template <>
-bool isEngineT< NScripter >( FileScanner& scanner )
+bool isEngineT< NScripter >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -387,7 +387,7 @@ QString engineNameT< NScripter >()
 }
 
 template <>
-bool isEngineT< NVList >( FileScanner& scanner )
+bool isEngineT< NVList >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -400,7 +400,7 @@ QString engineNameT< NVList >()
 }
 
 template <>
-bool isEngineT< Sukai2 >( FileScanner& scanner )
+bool isEngineT< Sukai2 >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
