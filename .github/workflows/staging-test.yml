@@ -4,9 +4,26 @@ on:
     branch:
       staging
 
+
+
 jobs:
+  path-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.filter.outputs.build }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            build:
+              - 'Atlas/src/**'
+              - 'Atlas/tests/**'
+
   build-windows:
     runs-on: windows-latest
+    needs: path-filter
+    if: ${{ needs.path-filter.outputs.build == 'true' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -14,7 +31,7 @@ jobs:
       - uses: ./.github/actions/build
         with:
           build-release: true
-          build-debug: true
+          build-debug: false
           build-atlas: false
           build-tests: true
 
@@ -24,13 +41,6 @@ jobs:
           name: Atlas-release-tests
           path: ${{github.workspace}}\builds\build-r\bin
           retention-days: 1
-
-  #      - name: Upload debug
-  #        uses: actions/upload-artifact@v2
-  #        with:
-  #          name: Atlas-debug-tests
-  #          path: ${{github.workspace}}\builds\build-d\bin
-  #          retention-days: 1
 
   test:
     runs-on: windows-latest
@@ -46,14 +56,6 @@ jobs:
           name: Atlas-release-tests
           path: ${{github.workspace}}\builds\build-r\bin
 
-      #      - name: Download debug
-      #        uses: actions/download-artifact@v2
-      #        with:
-      #          name: Atlas-debug-tests
-      #          path: ${{github.workspace}}\builds\build-d\bin
-
       - name: Test-Release
         run: ${{github.workspace}}\builds\build-r\bin\AtlasTESTS.exe
 
-#      - name: Test-Debug
-#        run: ${{github.workspace}}\builds\build-d\bin\AtlasTESTS.exe
