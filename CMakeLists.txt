@@ -85,6 +85,7 @@ message("FGL_FLAGS: ${FGL_FLAGS}")
 
 add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
