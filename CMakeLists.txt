@@ -49,20 +49,14 @@ set(CMAKE_AUTOUIC ON)
 
 #Manually define tracy since vcpkg has an ancient version
 
-if (NOT DEFINED ATLAS_PROFILING)
-    option(TRACY_ENABLE "" OFF)
+if ( ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo" )
+    option(TRACY_ENABLE "" ON)
+    option(TRACY_ON_DEMAND "" OFF)
 else ()
-    if (${ATLAS_PROFILING} EQUAL 1)
-        option(TRACY_ENABLE "" ON)
-        option(TRACY_ON_DEMAND "" OFF)
-    else ()
-        option(TRACY_ENABLE "" OFF)
-    endif ()
+    option(TRACY_ENABLE "" OFF)
 endif ()
 
 add_subdirectory(dependencies/tracy)
-
-
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
