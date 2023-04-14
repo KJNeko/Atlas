@@ -31,7 +31,7 @@ jobs:
           cd ${{github.workspace}}
           mkdir Atlas-Release
           move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug 
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug 
 
       - name: Create release
         uses: softprops/action-gh-release@v1
@@ -40,7 +40,8 @@ jobs:
           prerelease: true
           tag_name: ${{ env.ATLAS_VERSION_STR }}
           name: ${{ env.ATLAS_VERSION_STR }}
-          body: Nightly build of Atlas-GameManager
+          body: Nightly build of ${{ env.ATLAS_VERSION_STR }}
           fail_on_unmatched_files: true
           generate_release_notes: true
-          files: ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip
+          files: |
+            Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip
