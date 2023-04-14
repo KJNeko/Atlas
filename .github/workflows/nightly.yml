@@ -4,28 +4,10 @@ on:
     branches:
       - staging
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
-  checkdate:
-    runs-on: ubuntu-latest
-    name: Check latest commit
-    outputs:
-      should-run: ${{ steps.check_date.outputs.should-run }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: staging
-      - id: should_run
-        continue-on-error: true
-        name: Check latest commits
-        run: test -z $(git rev-list --after="24 hours" ${{github.sha}} && echo "::set-output name=should_run::false")
-
   release:
     runs-on: windows-latest
-    needs: checkdate
-    if: ${{(needs.checkdate.outputs.should-run == 'true') || (github.event_name == 'workflow_dispatch')}}
     steps:
       - uses: actions/checkout@v3
         with:
