@@ -47,8 +47,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-#Manually define tracy since vcpkg has an ancient version
-
 if (${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
@@ -73,7 +71,7 @@ if (${CMAKE_COMPILER_IS_GNUCXX})
     set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
     set(FGL_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE}")
     set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
-    set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
+    set(FGL_FLAGS "${FGL_FLAGS_${UPPER_BUILD_TYPE}}")
 elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
     #TODO Further the flags
     set(FGL_WARNINGS "/W3 /Wall /Zc:__cplusplus")
@@ -93,29 +91,13 @@ file(GLOB_RECURSE SOURCES
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
 
-set(HYDRUS_SOURCES ${SOURCES})
-set(HYDRUS_UI ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
-set(REQUIRED_LIBS PUBLIC Qt6::Widgets Qt6::Core Qt6::Concurrent SQLite::SQLite3 spdlog::spdlog fmt::fmt Tracy::TracyClient)
-
-
-#Build obj in order to reduce total compile time when compiling the tests too
-add_library(AtlasObj OBJECT ${HYDRUS_SOURCES})
-target_link_libraries(AtlasObj ${REQUIRED_LIBS})
-target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_include_directories(AtlasObj PUBLIC ${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-
-if (DEFINED ATLAS_VERSION)
-    target_compile_definitions(AtlasOBJ PUBLIC ATLAS_VERSION="${ATLAS_VERSION}")
-endif ()
-
 #Build exe
-add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${HYDRUS_UI})
+add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${UI_SOURCES} ${SOURCES})
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-target_link_libraries(Atlas ${REQUIRED_LIBS} AtlasObj)
+target_link_libraries(Atlas Qt6::Core Qt6::Widgets Qt6::Concurrent Tracy::TracyClient fmt::fmt spdlog::spdlog SQLite::SQLite3)
 
 #Post setup (Windows only)
 if (WIN32)
@@ -151,10 +133,10 @@ if (DEFINED ATLAS_BUILD_TESTS)
 
         file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-        add_executable(AtlasTESTS ${TESTS})
+        add_executable(AtlasTESTS ${TESTS} ${SOURCES})
 
         target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-        target_link_libraries(AtlasTESTS PUBLIC ${REQUIRED_LIBS} GTest::gtest_main AtlasObj)
+        target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 
         #Test post setup (Windows only)
         if (WIN32)
