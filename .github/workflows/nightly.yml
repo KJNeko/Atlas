@@ -19,34 +19,34 @@ jobs:
         run: test -z $(git rev-list --after="24 hours" ${{github.sha}} && echo "::set-output name=should_run::false")
 
   release:
-  runs-on: windows-latest
-  needs: checkdate
-  if: ${{(needs.checkdate.outputs.should-run == 'true') || (github.event_name == 'workflow_dispatch')}}
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: 'true'
-    - uses: ./.github/actions/build
-      with:
-        build-release: false
-        build-debug: true
-        build-atlas: true
+    runs-on: windows-latest
+    needs: checkdate
+    if: ${{(needs.checkdate.outputs.should-run == 'true') || (github.event_name == 'workflow_dispatch')}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - uses: ./.github/actions/build
+        with:
+          build-release: false
+          build-debug: true
+          build-atlas: true
 
-    - name: Package
-      run: |
-        cd ${{github.workspace}}
-        mkdir Atlas-Release
-        move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
-        7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug
+      - name: Package
+        run: |
+          cd ${{github.workspace}}
+          mkdir Atlas-Release
+          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug
 
-    - name: Create release
-      uses: softprops/action-gh-release@v1
-      with:
-        draft: true
-        prerelease: true
-        tag_name: nightly
-        name: Nightly
-        body: Nightly build of Atlas-GameManager
-        fail_on_unmatched_files: true
-        generate_release_notes: true
-        files: ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          prerelease: true
+          tag_name: nightly
+          name: Nightly
+          body: Nightly build of Atlas-GameManager
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          files: ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip
