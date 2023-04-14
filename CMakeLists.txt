@@ -52,6 +52,7 @@ endif ()
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
@@ -85,12 +86,11 @@ file(GLOB_RECURSE TESTS
 #Build exe
 message("FGL_FLAGS: ${FGL_FLAGS}")
 
-add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${TESTS})
+add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${TESTS} ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog GTest::gtest)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-qt_add_resources(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 
 #Post setup (Windows only)
 if (WIN32)
