@@ -49,7 +49,7 @@ set(CMAKE_AUTOUIC ON)
 
 #Manually define tracy since vcpkg has an ancient version
 
-if ( ${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo" )
+if (${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
 else ()
@@ -61,10 +61,10 @@ add_subdirectory(dependencies/tracy)
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
     #These two flags added with older gcc versons and Qt causes a compiler segfault -Wmismatched-tags -Wredundant-tags
-    set(FGL_WARNINGS " -Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
+    set(FGL_WARNINGS "-Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
 
     set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
-    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always")# -rdynamic")
+    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always -rdynamic")# -rdynamic")
     #Generates system specific stuff (IE requires AVX)
     set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
     #Generates safe optimization flags
@@ -105,9 +105,9 @@ target_include_directories(AtlasObj PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(AtlasObj PUBLIC ${CMAKE_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 set_target_properties(AtlasObj PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
-if(DEFINED ATLAS_VERSION)
+if (DEFINED ATLAS_VERSION)
     target_compile_definitions(AtlasOBJ PUBLIC ATLAS_VERSION="${ATLAS_VERSION}")
-endif()
+endif ()
 
 #Build exe
 add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${HYDRUS_UI})
@@ -175,9 +175,9 @@ if (DEFINED ATLAS_BUILD_TESTS)
         include(GoogleTest)
         gtest_discover_tests(AtlasTESTS)
 
-        if(DEFINED ATLAS_TEST_UI)
+        if (DEFINED ATLAS_TEST_UI)
             target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
-        endif()
+        endif ()
 
     endif ()
 endif ()
