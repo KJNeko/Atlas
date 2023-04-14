@@ -1,5 +1,8 @@
 name: Release Nightly
 on:
+  push:
+    branches:
+      - staging
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
