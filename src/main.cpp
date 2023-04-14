@@ -43,6 +43,9 @@ int main( int argc, char** argv )
 	std::filesystem::create_directory( config::paths::games::getPath() );
 	std::filesystem::create_directory( config::paths::images::getPath() );
 
+	//Fix for windeployqt not adding the bin directory to itself for some reason
+	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
+
 	std::filesystem::path db_path = config::paths::database::getPath() / "atlas.db";
 	Database::initalize( db_path );
 
