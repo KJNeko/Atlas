@@ -230,6 +230,11 @@ void BatchImportDialog::on_btnBack_pressed()
 	ZoneScoped;
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
+
+	//Abort the processing thread
+	this->processor.abort();
+	this->preprocessor.abort();
+
 	ui->btnNext->setText( "Next" );
 	ui->swImportGames->setCurrentIndex( 0 );
 	ui->btnBack->setHidden( true );
