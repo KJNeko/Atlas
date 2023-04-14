@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Check latest commit
     outputs:
-      should_run: ${{ steps.check_date.outputs.should_run }}
+      should-run: ${{ steps.check_date.outputs.should-run }}
     steps:
       - uses: actions/checkout@v3
       - id: should_run
@@ -19,7 +19,7 @@ jobs:
         run: test -z $(git rev-list --after="24 hours" ${{github.sha}} && echo "::set-output name=should_run::false")
 
   release:
-  if: ${{(needs.checkdate.outputs.should_run == 'true') || (github.event_name == 'workflow_dispatch')}}
+  if: ${{(needs.checkdate.outputs.should-run == 'true') || (github.event_name == 'workflow_dispatch')}}
   runs-on: windows-latest
   needs: checkdate
   steps:
