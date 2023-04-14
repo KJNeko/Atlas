@@ -83,11 +83,12 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 6.4.2
+          version: 6.4.3
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw'
           cache: true
+          modules: 'qtimageformats'
 
       - name: CMake
         run: |
