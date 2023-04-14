@@ -3,25 +3,21 @@ description: "Build Atlas"
 
 inputs:
   build-release:
-    type: bool
     description: "Builds release"
     required: false
-    default: true
+    default: 'true'
   build-debug:
-    type: bool
     description: "Build debug"
     required: false
-    default: false
+    default: 'false'
   build-tests:
-    type: bool
     description: "Build tests"
     required: false
-    default: false
+    default: 'false'
   build-atlas:
-    type: bool
     description: "Build atlas"
     required: false
-    default: true
+    default: 'true'
 
 runs:
   using: "composite"
