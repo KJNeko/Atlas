@@ -83,20 +83,20 @@ runs:
 
     - name: Build Target Atlas Release
       shell: powershell
-      if: ${{inputs.build-release == 'true'}}
+      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'false'}}
       run: cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
 
     - name: Build Target Atlas Debug
       shell: powershell
-      if: ${{inputs.build-debug == 'true'}}
+      if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
       run: cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
 
     - name: Build Target AtlasTESTS Release
       shell: powershell
-      if: ${{inputs.build-release == 'true'}}
+      if: ${{inputs.build-release == 'true' && inputs.build-tests == 'true'}}
       run: cmake --build ${{github.workspace}}\builds\build-r -j8 --target AtlasTESTS
 
     - name: Build Target AtlasTESTS Debug
       shell: powershell
-      if: ${{inputs.build-debug == 'true'}}
+      if: ${{inputs.build-debug == 'true' && inputs.build-tests == 'true'}}
       run: cmake --build ${{github.workspace}}\builds\build-d -j8 --target AtlasTESTS
