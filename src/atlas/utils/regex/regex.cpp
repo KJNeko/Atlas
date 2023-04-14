@@ -13,6 +13,7 @@
 
 QString groupify( const QString group_name )
 {
+	ZoneScoped;
 	return R"((?P<)" + group_name.mid( 1, group_name.size() - 2 ) + R"(>[^\\\/]+))";
 }
 

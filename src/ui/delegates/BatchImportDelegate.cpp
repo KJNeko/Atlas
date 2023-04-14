@@ -11,11 +11,14 @@
 #include <QPainter>
 #include <QString>
 
+#include <tracy/Tracy.hpp>
+
 #include "ui/models/BatchImportModel.hpp"
 
 void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
+	ZoneScoped;
 	painter->save();
 
 	switch ( index.column() )
@@ -66,6 +69,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 QSize BatchImportDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
+	ZoneScoped;
 	const auto info { item.fontMetrics };
 
 	switch ( index.column() )
@@ -95,6 +99,7 @@ QSize BatchImportDelegate::
 QWidget* BatchImportDelegate::
 	createEditor( QWidget* parent, const QStyleOptionViewItem& options, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	switch ( index.column() )
 	{
 		case EXECUTABLES:
@@ -142,6 +147,7 @@ QWidget* BatchImportDelegate::
 
 void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	switch ( index.column() )
 	{
 		case EXECUTABLES:
@@ -171,6 +177,7 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 
 void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	switch ( index.column() )
 	{
 		case EXECUTABLES:
