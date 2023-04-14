@@ -3,11 +3,23 @@ project(AtlasGameManager LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-SET(CMAKE_CXX_STANDARD 20)
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
+
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    option(TRACY_ENABLE "" ON)
+    option(TRACY_ON_DEMAND "" OFF)
+else ()
+    option(TRACY_ENABLE "" OFF)
+endif ()
+
+add_subdirectory(dependencies/tracy)
+add_subdirectory(dependencies/gtest)
+add_subdirectory(dependencies/spdlog)
+add_subdirectory(dependencies/fmt)
 
 if (WIN32)
     if (DEFINED SQL_PATH)
@@ -25,11 +37,6 @@ if (WIN32)
     endif ()
     message("SQlite3_INCLUDE_DIR = ${SQLite3_INCLUDE_DIR}")
     message("SQlite3_LIBRARY = ${SQLite3_LIBRARY}")
-    add_subdirectory(dependencies/fmt)
-    add_subdirectory(dependencies/spdlog)
-else ()
-    find_package(fmt REQUIRED)
-    find_package(spdlog REQUIRED)
 endif ()
 
 if (DEFINED QT_PATH)
@@ -43,44 +50,25 @@ if (WIN32)
     find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
 endif ()
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-
-if (${CMAKE_BUILD_TYPE} STREQUAL "RelWithDebInfo")
-    option(TRACY_ENABLE "" ON)
-    option(TRACY_ON_DEMAND "" OFF)
-else ()
-    option(TRACY_ENABLE "" OFF)
-endif ()
-
-add_subdirectory(dependencies/tracy)
+set(CMAKE_AUTOMOC ON)
 
 if (${CMAKE_COMPILER_IS_GNUCXX})
     #sqlite_modern is stupid so we have to disable -Wundef
     #These two flags added with older gcc versons and Qt causes a compiler segfault -Wmismatched-tags -Wredundant-tags
     set(FGL_WARNINGS "-Wall -Wextra -Wnull-dereference -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
 
-    set(FGL_CONFIG "-std=c++23 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
-    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always -rdynamic")# -rdynamic")
+    set(FGL_CONFIG "-std=c++20 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
+    set(FGL_DEBUG "-Og -fverbose-asm -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm -femit-class-debug-always")
     #Generates system specific stuff (IE requires AVX)
     set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
     #Generates safe optimization flags
     set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s")
-    set(FGL_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
-    set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
-    set(FGL_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE}")
-    set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+    set(FGL_FLAGS_DEBUG "${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
+    set(FGL_FLAGS_SYSTEM "${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+    set(FGL_FLAGS_RELEASE "${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE}")
+    set(FGL_FLAGS_RELWITHDEBINFO "${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
     set(FGL_FLAGS "${FGL_FLAGS_${UPPER_BUILD_TYPE}}")
-elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
-    #TODO Further the flags
-    set(FGL_WARNINGS "/W3 /Wall /Zc:__cplusplus")
-
-    set(FGL_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
-    set(FGL_FLAGS_SYSTEM "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
-    set(FGL_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
-    set(FGL_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${FGL_WARNINGS}")
-    set(FGL_FLAGS ${FGL_FLAGS_${UPPER_BUILD_TYPE}})
 else ()
     set(FGL_FLAGS ${CMAKE_CXX_FLAGS})
 endif ()
@@ -91,13 +79,18 @@ file(GLOB_RECURSE SOURCES
 file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/*.cpp")
 
+file(GLOB_RECURSE TESTS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/*.cpp")
+
 #Build exe
-add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${UI_SOURCES} ${SOURCES})
-set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+message("FGL_FLAGS: ${FGL_FLAGS}")
 
+add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${TESTS})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-target_link_libraries(Atlas Qt6::Core Qt6::Widgets Qt6::Concurrent Tracy::TracyClient fmt::fmt spdlog::spdlog SQLite::SQLite3)
+target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog GTest::gtest)
+set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+qt_add_resources(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 
 #Post setup (Windows only)
 if (WIN32)
@@ -118,48 +111,32 @@ endif ()
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
-if (DEFINED ATLAS_BUILD_TESTS)
-    if (${ATLAS_BUILD_TESTS} EQUAL 1)
+file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-        include(FetchContent)
-        FetchContent_Declare(
-                googletest
-                URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-        )
-        # For Windows: Prevent overriding the parent project's compiler/linker settings
-        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+add_executable(AtlasTESTS ${TESTS} ${SOURCES})
 
-        FetchContent_MakeAvailable(googletest)
+target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 
-        file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+#Test post setup (Windows only)
+if (WIN32)
+    add_custom_command(TARGET AtlasTESTS POST_BUILD
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
+            $<TARGET_FILE:AtlasTESTS>
+            COMMENT "Running windeployqt")
 
-        add_executable(AtlasTESTS ${TESTS} ${SOURCES})
+    add_custom_command(TARGET AtlasTESTS POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
+            COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
 
-        target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-        target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets SQLite::SQLite3 fmt::fmt spdlog::spdlog)
+    add_custom_command(TARGET AtlasTESTS POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
+endif ()
 
-        #Test post setup (Windows only)
-        if (WIN32)
-            add_custom_command(TARGET AtlasTESTS POST_BUILD
-                    COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
-                    $<TARGET_FILE:AtlasTESTS>
-                    COMMENT "Running windeployqt")
+include(GoogleTest)
+gtest_discover_tests(AtlasTESTS)
 
-            add_custom_command(TARGET AtlasTESTS POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
-                    COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
-
-            add_custom_command(TARGET AtlasTESTS POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
-        endif ()
-
-        include(GoogleTest)
-        gtest_discover_tests(AtlasTESTS)
-
-        if (DEFINED ATLAS_TEST_UI)
-            target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
-        endif ()
-
-    endif ()
+if (DEFINED ATLAS_TEST_UI)
+    target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
 endif ()
