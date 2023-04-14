@@ -59,7 +59,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          fail_on_unmatched_files: true
+          generate_release_notes: true
           files: |
             Atlas-GameManager-${{env.version_short}}-windows.zip
-          
-
