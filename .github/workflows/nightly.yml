@@ -19,20 +19,25 @@ jobs:
           build-debug: true
           build-atlas: true
 
+      - name: Prepare version string
+        run: |
+          # String should be Nightly-YYYY-MM-DD
+               echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
       - name: Package
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
           move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug -DATLASVERSION=${{ env.ATLAS_VERSION_STR }}
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
           prerelease: true
-          tag_name: nightly
-          name: Nightly
+          tag_name: ${{ env.ATLAS_VERSION_STR }}
+          name: ${{ env.ATLAS_VERSION_STR }}
           body: Nightly build of Atlas-GameManager
           fail_on_unmatched_files: true
           generate_release_notes: true
