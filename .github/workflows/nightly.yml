@@ -13,23 +13,25 @@ jobs:
         with:
           submodules: 'true'
           ref: staging
-      - uses: ./.github/actions/build
-        with:
-          build-release: false
-          build-debug: true
-          build-atlas: true
 
       - name: Prepare version string
         run: |
           # String should be Nightly-YYYY-MM-DD
                echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
+      - uses: ./.github/actions/build
+        with:
+          build-release: false
+          build-debug: true
+          build-atlas: true
+          version-string: ${{ env.ATLAS_VERSION_STR }}
+
       - name: Package
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
           move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug -DATLASVERSION=${{ env.ATLAS_VERSION_STR }}
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-Nightly-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug 
 
       - name: Create release
         uses: softprops/action-gh-release@v1

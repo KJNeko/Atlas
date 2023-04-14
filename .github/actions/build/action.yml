@@ -18,6 +18,10 @@ inputs:
     description: "Build atlas"
     required: false
     default: 'true'
+  version-string:
+    description: "Version string"
+    required: false
+    default: '0.0.0'
 
 runs:
   using: "composite"
@@ -74,7 +78,7 @@ runs:
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{env.version_short}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
+      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
 
     - name: CMake Debug
       shell: powershell

@@ -12,11 +12,21 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
+
+
+      - name: Extract version
+        id: meta
+        run: |
+          echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
+
+
       - uses: ./.github/actions/build
         with:
           build-release: true
           build-debug: true
           build-atlas: true
+          version-string: ${{ env.version }}
 
       - name: Package
         run: |
@@ -44,11 +54,6 @@ jobs:
       - name: Get artifacts
         uses: actions/download-artifact@v3
 
-      - name: Extract version
-        id: meta
-        run: |
-          echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
 
       - name: Rename
         run: |

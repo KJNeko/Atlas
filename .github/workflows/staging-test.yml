@@ -4,8 +4,6 @@ on:
     branch:
       staging
 
-
-
 jobs:
   path-filter:
     runs-on: ubuntu-latest
@@ -35,6 +33,7 @@ jobs:
           build-debug: false
           build-atlas: false
           build-tests: true
+          version-string: 'staging'
 
       - name: Upload release
         uses: actions/upload-artifact@v2
