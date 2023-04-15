@@ -27,19 +27,19 @@ class DetailedRecordView final : public QWidget
 
 	std::size_t selected_version_idx { 0 };
 
-	GameMetadata &selectedVersion();
+	GameMetadata& selectedVersion();
 
 	void reloadRecord();
 
   public:
 
-	explicit DetailedRecordView( QWidget *parent = nullptr );
+	explicit DetailedRecordView( QWidget* parent = nullptr );
 	~DetailedRecordView() override;
 
   public slots:
 	void setRecord( const Record record );
 	void clearRecord();
-	void paintEvent( QPaintEvent *event ) override;
+	void paintEvent( QPaintEvent* event ) override;
 
 	//Button handling
 	void on_btnPlay_pressed();
@@ -47,7 +47,7 @@ class DetailedRecordView final : public QWidget
 
   private:
 
-	Ui::DetailedRecordView *ui;
+	Ui::DetailedRecordView* ui;
 };
 
 #endif //ATLAS_DETAILEDRECORDVIEW_HPP

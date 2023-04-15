@@ -37,7 +37,7 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 
 	dirs.push( { path, 0 } );
 
-	auto dir_empty = []( const std::filesystem::path &dir_path ) -> bool
+	auto dir_empty = []( const std::filesystem::path& dir_path ) -> bool
 	{ return std::filesystem::directory_iterator( dir_path ) == std::filesystem::directory_iterator(); };
 
 	if ( dir_empty( path ) ) co_return FileInfo { path, path, 0, 0 };
@@ -97,13 +97,13 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 
 #pragma GCC diagnostic pop
 
-FileScanner::FileScanner( const std::filesystem::path &path ) : m_path( path ), file_scanner( scan_files( path ) )
+FileScanner::FileScanner( const std::filesystem::path& path ) : m_path( path ), file_scanner( scan_files( path ) )
 {
 	ZoneScoped;
 	files.emplace_back( file_scanner() );
 }
 
-FileInfo &FileScanner::at( std::size_t index )
+FileInfo& FileScanner::at( std::size_t index )
 {
 	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
@@ -122,7 +122,7 @@ FileInfo &FileScanner::at( std::size_t index )
 		return files.at( index );
 }
 
-bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator &end ) const
+bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator& end ) const
 {
 	ZoneScoped;
 

@@ -2,8 +2,8 @@
 // Created by kj16609 on 1/27/23.
 //
 
-
 #include "atlas/logging.hpp"
+
 #include "config.hpp"
 
 #ifdef __GNUC__
@@ -98,7 +98,8 @@ void initLogging()
 
 //fmt stuff
 
-auto fmt::formatter<std::filesystem::path>::format( const std::filesystem::path& path, format_context& ctx ) const -> decltype( ctx.out() )
+auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::path& path, format_context& ctx ) const
+	-> decltype( ctx.out() )
 {
 	if ( print_canonical && std::filesystem::exists( path ) )
 	{
@@ -111,10 +112,7 @@ auto fmt::formatter<std::filesystem::path>::format( const std::filesystem::path&
 				std::filesystem::exists( path ) ? "True" : "False" );
 		else
 			return format_to(
-				ctx.out(),
-				"[\"{}\" (Canonical: \"{}\")]",
-				path.string(),
-				std::filesystem::canonical( path ).string() );
+				ctx.out(), "[\"{}\" (Canonical: \"{}\")]", path.string(), std::filesystem::canonical( path ).string() );
 	}
 	else
 	{
@@ -125,7 +123,6 @@ auto fmt::formatter<std::filesystem::path>::format( const std::filesystem::path&
 			return format_to( ctx.out(), "[\"{}\"]", path.string() );
 	}
 }
-
 
 /*
 auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )

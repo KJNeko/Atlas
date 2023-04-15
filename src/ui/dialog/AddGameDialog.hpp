@@ -15,12 +15,12 @@ class AddGameDialog : public QDialog
 
   public:
 
-	explicit AddGameDialog( QWidget *parent = nullptr );
+	explicit AddGameDialog( QWidget* parent = nullptr );
 	~AddGameDialog();
 
   private:
 
-	Ui::AddGameDialog *ui;
+	Ui::AddGameDialog* ui;
 };
 
 #endif // ADDGAMEDIALOG_H

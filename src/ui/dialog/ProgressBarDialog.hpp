@@ -23,7 +23,7 @@ class ProgressBarDialog : public QDialog
 
   public:
 
-	explicit ProgressBarDialog( QWidget *parent = nullptr );
+	explicit ProgressBarDialog( QWidget* parent = nullptr );
 	~ProgressBarDialog() override;
 
 	void showSubProgress( const bool show );
@@ -38,7 +38,7 @@ class ProgressBarDialog : public QDialog
 
   private:
 
-	Ui::ProgressBarDialog *ui;
+	Ui::ProgressBarDialog* ui;
 };
 
 #endif //ATLAS_PROGRESSBARDIALOG_HPP

@@ -61,7 +61,7 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 
 		if ( std::filesystem::is_regular_file( path ) )
 		{
-			ZoneScopedN("Is Regular");
+			ZoneScopedN( "Is Regular" );
 			if ( isBlacklist( filename ) ) continue;
 
 			QMimeDatabase mime_db;
@@ -234,7 +234,7 @@ QString engineNameT< Unreal >()
 }
 
 template <>
-bool isEngineT< RPGM >([[maybe_unused]]  FileScanner& scanner )
+bool isEngineT< RPGM >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -247,7 +247,7 @@ QString engineNameT< RPGM >()
 }
 
 template <>
-bool isEngineT< WolfRPG >([[maybe_unused]]  FileScanner& scanner )
+bool isEngineT< WolfRPG >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;
@@ -260,7 +260,7 @@ QString engineNameT< WolfRPG >()
 }
 
 template <>
-bool isEngineT< HTML >([[maybe_unused]]  FileScanner& scanner )
+bool isEngineT< HTML >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 
@@ -284,7 +284,7 @@ QString engineNameT< HTML >()
 }
 
 template <>
-bool isEngineT< VisualNovelMaker >([[maybe_unused]]  FileScanner& scanner )
+bool isEngineT< VisualNovelMaker >( [[maybe_unused]] FileScanner& scanner )
 {
 	ZoneScoped;
 	return false;

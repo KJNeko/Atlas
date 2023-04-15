@@ -8,7 +8,7 @@
 
 #include "ui_RecordEditor.h"
 
-RecordEditor::RecordEditor( QWidget *parent ) : QDialog( parent ), ui( new Ui::RecordEditor )
+RecordEditor::RecordEditor( QWidget* parent ) : QDialog( parent ), ui( new Ui::RecordEditor )
 {
 	ui->setupUi( this );
 }

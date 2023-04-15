@@ -13,7 +13,7 @@
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/models/RecordListModel.hpp"
 
-RecordView::RecordView( QWidget *parent ) : QListView( parent )
+RecordView::RecordView( QWidget* parent ) : QListView( parent )
 {
 	ZoneScoped;
 	QListView::setModel( new RecordListModel() );
@@ -51,20 +51,20 @@ void RecordView::setRenderMode( const DelegateType type )
 void RecordView::addRecords( const std::vector< RecordID > records )
 {
 	ZoneScoped;
-	auto model { dynamic_cast< RecordListModel * >( QListView::model() ) };
+	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
 
-	for ( const auto &record : records ) model->addRecord( Record( record ) );
+	for ( const auto& record : records ) model->addRecord( Record( record ) );
 }
 
 void RecordView::setRecords( const std::vector< Record > records )
 {
 	ZoneScoped;
-	auto model { dynamic_cast< RecordListModel * >( QListView::model() ) };
+	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
 
 	model->setRecords( records );
 }
 
-void RecordView::on_customContextMenuRequested( const QPoint &pos )
+void RecordView::on_customContextMenuRequested( const QPoint& pos )
 {
 	ZoneScoped;
 	QMenu menu { this };
@@ -83,7 +83,7 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 		Qt::SingleShotConnection ) };
 
 	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( record->getVersions().size() ) ) };
-	for ( const auto &version : record->getVersions() )
+	for ( const auto& version : record->getVersions() )
 	{
 		auto version_submenu { version_menu->addMenu( version.getVersionName() ) };
 		version_submenu->addAction( "Launch" );
@@ -134,7 +134,7 @@ void RecordView::on_customContextMenuRequested( const QPoint &pos )
 	disconnect( connection );
 }
 
-void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent *event )
+void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 {
 	ZoneScoped;
 	if ( selectionModel()->hasSelection() )

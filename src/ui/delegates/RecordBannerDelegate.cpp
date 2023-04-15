@@ -12,7 +12,7 @@
 #include "atlas/config.hpp"
 #include "atlas/database/Record.hpp"
 
-void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index )
+void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
 	ZoneScoped;
@@ -57,7 +57,7 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 
 	if ( record->getVersions().size() > 0 )
 	{
-		auto &latest { record->getLatestVersion() };
+		auto& latest { record->getLatestVersion() };
 		std::string version_str = latest.getVersionName().toStdString() + "  ";
 		painter->drawText(
 			strip_rect, Qt::AlignVCenter | Qt::AlignRight, QString::fromStdString( version_str ) ); //latest version
@@ -70,7 +70,7 @@ void RecordBannerDelegate::paint( QPainter *painter, const QStyleOptionViewItem 
 }
 
 QSize RecordBannerDelegate::
-	sizeHint( [[maybe_unused]] const QStyleOptionViewItem &item, [[maybe_unused]] const QModelIndex &index ) const
+	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
 	ZoneScoped;
 	return { config::delegate::banner_x::get(), config::delegate::banner_y::get() };

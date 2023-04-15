@@ -23,12 +23,12 @@ class RecordEditor : public QDialog
 
   public:
 
-	explicit RecordEditor( QWidget *parent = nullptr );
+	explicit RecordEditor( QWidget* parent = nullptr );
 	~RecordEditor() override;
 
   private:
 
-	Ui::RecordEditor *ui;
+	Ui::RecordEditor* ui;
 };
 
 #endif //ATLAS_RECORDEDITOR_HPP

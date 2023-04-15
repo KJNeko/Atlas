@@ -23,12 +23,12 @@ class SettingsDialog : public QDialog
 
   public:
 
-	explicit SettingsDialog( QWidget *parent = nullptr );
+	explicit SettingsDialog( QWidget* parent = nullptr );
 	~SettingsDialog() override;
 
   private:
 
-	Ui::SettingsDialog *ui;
+	Ui::SettingsDialog* ui;
 
 	void prepareThemeSettings();
 	void saveThemeSettings();
@@ -41,7 +41,7 @@ class SettingsDialog : public QDialog
 	void on_applySettings_pressed();
 	void on_cancelSettings_pressed();
 	void reject() override;
-	void on_themeBox_currentTextChanged( const QString &text );
+	void on_themeBox_currentTextChanged( const QString& text );
 	void reloadTheme();
 	void on_cbUseSystemTheme_stateChanged( int arg1 );
 	void prepareBannerViewerSettings();

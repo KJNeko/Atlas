@@ -27,15 +27,15 @@ class MainWindow : public QMainWindow
 
   public:
 
-	MainWindow( QWidget *parent = nullptr );
+	MainWindow( QWidget* parent = nullptr );
 	~MainWindow();
 
   private:
 
-	Ui::MainWindow *ui;
+	Ui::MainWindow* ui;
 
 	void addTreeRoot( QString name, QString record_id );
-	void addTreeChild( QTreeWidgetItem *parent, QString name, QString record_id );
+	void addTreeChild( QTreeWidgetItem* parent, QString name, QString record_id );
 	void openBatchImportDialog();
 
   signals:

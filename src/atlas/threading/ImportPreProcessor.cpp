@@ -27,7 +27,7 @@ void ImportPreProcessor::
 	      itter != std::filesystem::recursive_directory_iterator();
 	      ++itter )
 	{
-		ZoneScopedN("Process Directory");
+		ZoneScopedN( "Process Directory" );
 		if ( abort_task )
 		{
 			abort_task = false;

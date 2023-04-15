@@ -8,7 +8,7 @@
 
 #include "ui_ProgressBarDialog.h"
 
-ProgressBarDialog::ProgressBarDialog( QWidget *parent ) : QDialog( parent ), ui( new Ui::ProgressBarDialog )
+ProgressBarDialog::ProgressBarDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::ProgressBarDialog )
 {
 	ui->setupUi( this );
 

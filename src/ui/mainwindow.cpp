@@ -5,7 +5,7 @@
 #include "./ui_mainwindow.h"
 #include "atlas/config.hpp"
 
-MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
+MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
 	//connect(ui->actionImport, SIGNAL(triggered()),this,SLOT(openBatchImportDialog()));
@@ -54,17 +54,17 @@ void MainWindow::on_actionImport_triggered()
 void MainWindow::addTreeRoot( QString name, QString record_id )
 {
 	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidget *treeWidget = this->ui->gamesTree;
-	QTreeWidgetItem *treeItem = new QTreeWidgetItem( treeWidget );
+	QTreeWidget* treeWidget = this->ui->gamesTree;
+	QTreeWidgetItem* treeItem = new QTreeWidgetItem( treeWidget );
 
 	treeItem->setText( 0, name );
 	addTreeChild( treeItem, "Test Game", record_id );
 }
 
-void MainWindow::addTreeChild( QTreeWidgetItem *parent, QString name, QString description )
+void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )
 {
 	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+	QTreeWidgetItem* treeItem = new QTreeWidgetItem();
 
 	// QTreeWidgetItem::setText(int column, const QString & text)
 	treeItem->setText( 0, name );
@@ -76,7 +76,7 @@ void MainWindow::addTreeChild( QTreeWidgetItem *parent, QString name, QString de
 
 void MainWindow::on_actionOptions_triggered()
 {
-	SettingsDialog *settingsDialog { new SettingsDialog( this ) };
+	SettingsDialog* settingsDialog { new SettingsDialog( this ) };
 
 	settingsDialog->exec();
 	settingsDialog->deleteLater();
