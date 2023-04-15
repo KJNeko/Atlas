@@ -187,6 +187,7 @@ void BatchImportDialog::on_btnNext_pressed()
 	ZoneScoped;
 	if ( ui->btnNext->text() == "Import" )
 	{
+		ui->btnBack->setDisabled( true );
 		importFiles();
 	}
 	else
