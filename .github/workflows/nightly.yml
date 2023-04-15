@@ -44,5 +44,6 @@ jobs:
           body: Nightly build of ${{ env.ATLAS_VERSION_STR }}
           fail_on_unmatched_files: true
           generate_release_notes: true
+          target_commitish: staging
           files: |
             Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip
