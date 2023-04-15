@@ -16,8 +16,8 @@ jobs:
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" >> $GITHUB_ENV
-          echo $ATLAS_VERSION_STR
+          echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          env
 
       - uses: ./.github/actions/build
         with:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Package
         run: |
-          echo $ATLAS_VERSION_STR
+          env
           cd ${{github.workspace}}
           mkdir Atlas-Release
           move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
