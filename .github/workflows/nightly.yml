@@ -17,7 +17,7 @@ jobs:
       - name: Prepare version string
         run: |
           # String should be Nightly-YYYY-MM-DD
-               echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" >> $GITHUB_ENV
+           echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
       - uses: ./.github/actions/build
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          draft: true
+          draft: false
           prerelease: true
           tag_name: ${{ env.ATLAS_VERSION_STR }}
           name: ${{ env.ATLAS_VERSION_STR }}
