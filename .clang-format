@@ -65,6 +65,7 @@ EmptyLineAfterAccessModifier: Always
 EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: true
 IncludeBlocks: Regroup
+DerivePointerAlignment: false
 IncludeCategories:
   - Regex: '^<Q.*>'
     Priority: 3
