@@ -53,7 +53,7 @@ runs:
         cd ${{github.workspace}}\dependencies\tracy\capture\build\win32
         msbuild capture.vcxproj /p:configuration=release /p:platform=x64
         mkdir ${{github.workspace}}\builds\build-d
-        xcopy /y /v ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy
+        xcopy ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy /s /i /y
         cd ${{github.workspace}}
 
     - name: Cache sqlite
