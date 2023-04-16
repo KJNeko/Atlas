@@ -92,7 +92,6 @@ target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-qt_import_plugins(Atlas INCLUDE Qt6::QWebpPlugin)
 
 #Post setup (Windows only)
 if (WIN32)
