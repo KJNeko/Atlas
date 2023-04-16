@@ -108,7 +108,7 @@ runs:
       shell: powershell
       run: |
         cd ${{github.workspace}}\dependencies\qtimageformats
-        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
         cmake --build build -j8
 
     - name: CMake Release
