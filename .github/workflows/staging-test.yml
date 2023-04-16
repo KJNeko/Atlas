@@ -1,8 +1,8 @@
 name: Test Staging
 on:
   push:
-    branch:
-      staging
+    branches:
+      - staging
 
 jobs:
   build-windows:
