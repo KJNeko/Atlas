@@ -78,7 +78,7 @@ namespace imageManager
 			//Check if our image type is supported
 			if ( std::find( supported_types.begin(), supported_types.end(), image_type ) == supported_types.end() )
 			{
-				spdlog::warn( "Image type {} is not supported, using webp instead", image_type );
+				spdlog::warn( "Image type {} is not supported, using png instead", image_type );
 				image_type = "png";
 				config::images::image_type::set( "png" );
 				QMessageBox::warning(
