@@ -93,7 +93,7 @@ runs:
       if: ${{inputs.build-debug == 'true'}}
       run: |
         cd ${{github.workspace}}\dependencies\tracy\
-        vcpkg install
+        vcpkg install --triplet x64-windows-static
         cd ${{github.workspace}}\dependencies\tracy\capture\build\win32
         msbuild capture.vcxproj /p:configuration=release /p:platform=x64
         mkdir ${{github.workspace}}\builds\build-d\tracy
