@@ -85,6 +85,9 @@ runs:
       if: ${{inputs.build-debug == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version_short}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
 
+    - name: Prepare msbuild for tracy
+      uses: microsoft/setup-msbuild@v1
+
     - name: Prepare tracy
       shell: powershell
       if: ${{inputs.build-debug == 'true'}}
