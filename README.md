@@ -12,6 +12,8 @@ It's meant to replace [Game-List](www.game-list.org) ([Github](https://github.co
 
 Atlas is for the user that wants ease of use, quality of life and have the software do the heavy lifting for you.
 
+We have a [Discord Server](https://discord.gg/XpTHvYbYyz) aswell!
+
 ## Features:
 - Fast and Snappy UI.
 - Easy to understand UI written in Qt6.
