@@ -142,3 +142,9 @@ gtest_discover_tests(AtlasTESTS)
 if (DEFINED ATLAS_TEST_UI)
     target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
 endif ()
+
+
+#Compile qtimageformats ourselves because it's dumb
+if (WIN32)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/qtimageformats/src/plugins/imageformats/webp/CMakeLists.txt)
+endif ()
