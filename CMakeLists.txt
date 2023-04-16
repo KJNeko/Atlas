@@ -120,6 +120,10 @@ target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 
+if (DEFINED ATLAS_TEST_UI)
+    target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
+endif ()
+
 #Test post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET AtlasTESTS POST_BUILD
@@ -142,7 +146,5 @@ if (NOT DEFINED FORCE_DISCOVER_TESTS AND ENABLE_TRACY EQUAL OFF)
 endif ()
 
 
-if (DEFINED ATLAS_TEST_UI)
-    target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
-endif ()
+
 
