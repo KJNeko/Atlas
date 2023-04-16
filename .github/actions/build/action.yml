@@ -99,7 +99,7 @@ runs:
 
     - name: Prepare vcpkg for tracy
       shell: powershell
-      if: ${{inputs.build-debug == 'true' && cache-tracy-vcpkg.outputs.cache-hit != 'false'}}
+      if: ${{inputs.build-debug == 'true' && steps.cache-tracy-vcpkg.outputs.cache-hit != 'false'}}
       run: |
         cd ${{github.workspace}}\dependencies\tracy\
         vcpkg install --triplet x64-windows-static
