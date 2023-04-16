@@ -16,3 +16,6 @@
 [submodule "dependencies/gtest"]
 	path = dependencies/gtest
 	url = https://github.com/google/googletest.git
+[submodule "dependencies/qtimageformats"]
+	path = dependencies/qtimageformats
+	url = https://github.com/qt/qtimageformats.git
