@@ -136,7 +136,7 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
 endif ()
 
-if (NOT DEFINED FORCE_DISCOVER_TESTS AND NOT ENABLE_TRACY)
+if (NOT DEFINED FORCE_DISCOVER_TESTS AND ENABLE_TRACY EQUAL OFF)
     include(GoogleTest)
     gtest_discover_tests(AtlasTESTS)
 endif ()
