@@ -111,7 +111,7 @@ runs:
         cd ${{github.workspace}}\dependencies\tracy\capture\build\win32
         msbuild capture.vcxproj /p:configuration=release /p:platform=x64
         mkdir ${{github.workspace}}\builds\build-d
-        copy /Y /V ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy
+        xcopy /y /v ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy
         cd ${{github.workspace}}
 
     - name: Build Target Atlas Release
