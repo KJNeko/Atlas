@@ -177,6 +177,7 @@ void BatchImportDialog::importFiles()
 			== QMessageBox::No )
 			return;
 
+	ui->btnBack->setDisabled( true );
 	emit startImportingGames( games, ui->tbPath->text().toStdString(), ui->cbMoveImported->isChecked() );
 
 	this->setDisabled( true );
@@ -187,7 +188,6 @@ void BatchImportDialog::on_btnNext_pressed()
 	ZoneScoped;
 	if ( ui->btnNext->text() == "Import" )
 	{
-		ui->btnBack->setDisabled( true );
 		importFiles();
 	}
 	else
