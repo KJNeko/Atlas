@@ -84,7 +84,6 @@ void BatchImportDialog::loadConfig()
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
 	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
-	ui->cbSkipFilesize->setChecked( config::importer::skipFilesize::get() );
 	ui->cbDownloadBanners->setChecked( config::importer::downloadBanner::get() );
 	ui->cbDownloadVNDB->setChecked( config::importer::downloadVNDB::get() );
 	ui->cbMoveImported->setChecked( config::importer::moveImported::get() );
@@ -96,7 +95,6 @@ void BatchImportDialog::saveConfig()
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
 	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
-	config::importer::skipFilesize::set( ui->cbSkipFilesize->isChecked() );
 	config::importer::downloadBanner::set( ui->cbDownloadBanners->isChecked() );
 	config::importer::downloadVNDB::set( ui->cbDownloadVNDB->isChecked() );
 	config::importer::moveImported::set( ui->cbMoveImported->isChecked() );
@@ -158,7 +156,7 @@ void BatchImportDialog::processFiles()
 
 	spdlog::debug( "Scanning {} for games", base );
 
-	emit startProcessingDirectory( cleaned_regex, base, ui->cbSkipFilesize->isChecked() );
+	emit startProcessingDirectory( cleaned_regex, base );
 
 	ui->twGames->resizeColumnsToContents();
 }

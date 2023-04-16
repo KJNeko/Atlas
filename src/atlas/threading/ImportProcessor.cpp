@@ -43,8 +43,6 @@ void ImportProcessor::importGames(
 
 		try
 		{
-			const bool scan_size { size == 0 };
-
 			if ( move_after_import )
 			{
 				ZoneScopedN( "Copy game" );
@@ -73,8 +71,6 @@ void ImportProcessor::importGames(
 					emit updateSubText( QString( "Copying: %1" )
 					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
 
-					if ( scan_size ) size += std::filesystem::file_size( source_path );
-
 					emit updateSubValue( static_cast< int >( i ) );
 				}
 
@@ -82,24 +78,7 @@ void ImportProcessor::importGames(
 			}
 			else
 			{
-				ZoneScopedN( "Calculate size" );
-				emit updateText( QString( "Calculating folder size of %1 = 0B" ).arg( title ) );
 				path = source_folder;
-
-				if ( scan_size )
-				{
-					FileScanner scanner { path };
-
-					for ( const auto& file : scanner )
-					{
-						size += file.size;
-						QLocale locale;
-
-						emit updateText( QString( "Calculating folder size of %1 = %2" )
-						                     .arg( title )
-						                     .arg( locale.formattedDataSize( static_cast< qint64 >( size ) ) ) );
-					}
-				}
 			}
 
 			Transaction transaction { Transaction::NoAutocommit };

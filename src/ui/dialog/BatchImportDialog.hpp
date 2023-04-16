@@ -51,7 +51,7 @@ class BatchImportDialog : public QDialog
 	void importFailure( const QString top, const QString bottom );
 
   signals:
-	void startProcessingDirectory( const QString regex, const std::filesystem::path path, const bool skip_filesize );
+	void startProcessingDirectory( const QString regex, const std::filesystem::path path );
 	void addToModel( const GameImportData data );
 	void startImportingGames(
 		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );

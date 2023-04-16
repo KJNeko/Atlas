@@ -218,16 +218,6 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="cbSkipFilesize">
-               <property name="text">
-                <string>Skip filesize calculation until import (Will make the pre-scan much faster)</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QCheckBox" name="cbDownloadBanners">
                <property name="enabled">
                 <bool>true</bool>
