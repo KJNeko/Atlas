@@ -104,6 +104,13 @@ runs:
         cache: true
         modules: 'qtimageformats'
 
+    - name: Build qtimageformats
+      shell: powershell
+      run: |
+        cd ${{github.workspace}}\dependencies\qtimageformats
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build -j8
+
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
@@ -117,19 +124,27 @@ runs:
     - name: Build Target Atlas Release
       shell: powershell
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'false'}}
-      run: cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
+      run: |
+        cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
+        copy ${{github.workspace}}\dependencies\qtimageformats\build\plugins\imageformats\qwebp.dll ${{github.workspace}}\builds\build-d\plugins\imageformats\qwebp.dll /y
 
     - name: Build Target Atlas Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
-      run: cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
+      run: |
+        cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
+        copy ${{github.workspace}}\dependencies\qtimageformats\build\plugins\imageformats\qwebp.dll ${{github.workspace}}\builds\build-d\plugins\imageformats\qwebp.dll /y
 
     - name: Build Target AtlasTESTS Release
       shell: powershell
       if: ${{inputs.build-release == 'true' && inputs.build-tests == 'true'}}
-      run: cmake --build ${{github.workspace}}\builds\build-r -j8 --target AtlasTESTS
+      run: |
+        cmake --build ${{github.workspace}}\builds\build-r -j8 --target AtlasTESTS
+        copy ${{github.workspace}}\dependencies\qtimageformats\build\plugins\imageformats\qwebp.dll ${{github.workspace}}\builds\build-r\plugins\imageformats\qwebp.dll /y
 
     - name: Build Target AtlasTESTS Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true' && inputs.build-tests == 'true'}}
-      run: cmake --build ${{github.workspace}}\builds\build-d -j8 --target AtlasTESTS
+      run: |
+        cmake --build ${{github.workspace}}\builds\build-d -j8 --target AtlasTESTS
+        copy ${{github.workspace}}\dependencies\qtimageformats\build\plugins\imageformats\qwebp.dll ${{github.workspace}}\builds\build-r\plugins\imageformats\qwebp.dll /y
