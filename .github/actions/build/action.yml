@@ -74,6 +74,7 @@ runs:
         target: 'desktop'
         arch: 'win64_mingw'
         cache: true
+        modules: 'qtimageformats'
 
     - name: CMake Release
       shell: powershell
