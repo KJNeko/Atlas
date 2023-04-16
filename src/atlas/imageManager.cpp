@@ -8,6 +8,9 @@
 
 #include <QCryptographicHash>
 #include <QFile>
+#include <QImageReader>
+#include <QImageWriter>
+#include <QMessageBox>
 #include <QPixmap>
 
 #include <tracy/Tracy.hpp>
@@ -55,10 +58,36 @@ namespace imageManager
 
 			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );
 
-			if constexpr ( sys::is_windows )
-				temp_image.save( QString::fromStdString( temp_path.string() ), "png", 100 );
-			else
-				temp_image.save( QString::fromStdString( temp_path.string() ), "webp", 100 );
+			std::string image_type { config::images::image_type::get().toStdString() };
+
+			const auto supported_write_types = QImageWriter::supportedImageFormats();
+			const auto supported_read_types = QImageReader::supportedImageFormats();
+
+			//Populate list with entires that are in both lists
+			std::vector< std::string > supported_types;
+
+			for ( const auto& type : supported_write_types )
+			{
+				if ( std::find( supported_read_types.begin(), supported_read_types.end(), type )
+				     != supported_read_types.end() )
+				{
+					supported_types.push_back( type.toStdString() );
+				}
+			}
+
+			//Check if our image type is supported
+			if ( std::find( supported_types.begin(), supported_types.end(), image_type ) == supported_types.end() )
+			{
+				spdlog::warn( "Image type {} is not supported, using webp instead", image_type );
+				image_type = "png";
+				config::images::image_type::set( "png" );
+				QMessageBox::warning(
+					nullptr,
+					"Image Type Not Supported",
+					"The image type you have selected is not supported by your system, Image type has been set to png" );
+			}
+
+			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 95 );
 
 			if ( std::ifstream ifs( temp_path ); ifs )
 			{

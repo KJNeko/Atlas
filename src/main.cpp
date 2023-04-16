@@ -9,29 +9,11 @@
 #include <QFile>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QMessageBox>
 #include <QPixmapCache>
 
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
 #include "ui/mainwindow.h"
-
-void checkWebp()
-{
-	const auto writer_formats { QImageWriter::supportedImageFormats() };
-	const auto reader_formats { QImageReader::supportedImageFormats() };
-
-	if ( !writer_formats.contains( "webp" ) || !reader_formats.contains( "webp" ) )
-	{
-		QMessageBox::critical( nullptr, "Missing dependency", "Atlas requires libwebp support but did not find it!" );
-		std::terminate();
-	}
-}
-
-void checkSupport()
-{
-	checkWebp();
-}
 
 int main( int argc, char** argv )
 {
@@ -43,9 +25,6 @@ int main( int argc, char** argv )
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
 
 	qDebug() << QApplication::libraryPaths();
-
-	// Check for everything we need/use
-	checkSupport();
 
 	if ( !config::ui::use_system_theme::get() )
 	{

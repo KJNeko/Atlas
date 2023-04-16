@@ -154,4 +154,6 @@ SETTINGS_D( ui, use_system_theme, bool, true )
 SETTINGS_D( ui, stretch_banner_images, bool, false );
 SETTINGS_D( ui, use_simple_layout, bool, true );
 
+SETTINGS_D( images, image_type, QString, "webp" )
+
 #endif //ATLAS_CONFIG_HPP
