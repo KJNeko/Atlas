@@ -237,6 +237,7 @@ void BatchImportDialog::on_btnBack_pressed()
 	this->preprocessor.abort();
 
 	ui->btnNext->setText( "Next" );
+	ui->btnNext->setEnabled( true );
 	ui->swImportGames->setCurrentIndex( 0 );
 	ui->btnBack->setHidden( true );
 }
