@@ -273,13 +273,7 @@ void BatchImportDialog::finishedImporting()
 
 void BatchImportDialog::on_btnCancel_pressed()
 {
-	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
-	     == QMessageBox::Yes )
-	{
-		this->processor.abort();
-		this->preprocessor.abort();
-		this->close();
-	}
+	reject();
 }
 
 void BatchImportDialog::reject()
