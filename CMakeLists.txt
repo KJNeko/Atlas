@@ -117,6 +117,7 @@ file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 add_executable(AtlasTESTS ${TESTS} ${SOURCES})
 
 target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 
 #Test post setup (Windows only)
