@@ -33,7 +33,6 @@ class ImportPreProcessor : public QObject
 	Q_OBJECT
 
 	std::chrono::time_point< std::chrono::steady_clock > last_update { std::chrono::steady_clock::now() };
-	std::vector< GameImportData > buffer {};
 
 	std::atomic< bool > abort_task { false };
 	std::atomic< bool > running { false };
@@ -51,13 +50,13 @@ class ImportPreProcessor : public QObject
 	 * @param base Base filepath to scan
 	 * @param skip_filesize Causes the filesize calculation to be skipped. Increasing processing speed by a large amount.
 	 */
-	void processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize );
+	void processDirectory( const QString regex, const std::filesystem::path base );
 
 	void abort();
 
   signals:
 	void finishedProcessing();
-	void finishedDirectory( const std::vector< GameImportData > info );
+	void finishedDirectory( const GameImportData info );
 };
 
 #endif //ATLAS_IMPORTPREPROCESSOR_HPP

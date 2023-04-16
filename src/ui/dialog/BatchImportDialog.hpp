@@ -45,14 +45,14 @@ class BatchImportDialog : public QDialog
 	void on_btnCancel_pressed();
 	void modelChanged(
 		const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList< int >& roles = QList< int >() );
-	void processFinishedDirectory( const std::vector< GameImportData > data );
+	void processFinishedDirectory( const GameImportData data );
 	void finishedPreProcessing();
 	void finishedImporting();
 	void importFailure( const QString top, const QString bottom );
 
   signals:
 	void startProcessingDirectory( const QString regex, const std::filesystem::path path, const bool skip_filesize );
-	void addToModel( const std::vector< GameImportData > data );
+	void addToModel( const GameImportData data );
 	void startImportingGames(
 		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );
 	void importComplete( std::vector< RecordID > records );

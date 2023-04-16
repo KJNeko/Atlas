@@ -40,7 +40,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		this,
 		&BatchImportDialog::addToModel,
 		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
-		&BatchImportModel::addGames );
+		&BatchImportModel::addGame );
 
 	connect(
 		this,
@@ -178,6 +178,9 @@ void BatchImportDialog::importFiles()
 			return;
 
 	ui->btnBack->setDisabled( true );
+
+	progress.showSubProgress( ui->cbMoveImported->isChecked() );
+
 	emit startImportingGames( games, ui->tbPath->text().toStdString(), ui->cbMoveImported->isChecked() );
 
 	this->setDisabled( true );
@@ -253,7 +256,7 @@ void BatchImportDialog::modelChanged(
 	ui->twGames->resizeColumnsToContents();
 }
 
-void BatchImportDialog::processFinishedDirectory( const std::vector< GameImportData > game_data )
+void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
 {
 	emit addToModel( game_data );
 	ui->twGames->resizeColumnsToContents();

@@ -5,6 +5,8 @@
 #include "ImportPreProcessor.hpp"
 
 #include <QMimeDatabase>
+#include <QRunnable>
+#include <QtConcurrent>
 
 #include <tracy/Tracy.hpp>
 
@@ -16,12 +18,40 @@
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}
 
-void ImportPreProcessor::
-	processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize )
+GameImportData runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
+{
+	ZoneScoped;
+	FileScanner scanner { folder };
+	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
+
+	if ( potential_executables.size() > 0 )
+	{
+		const auto [ title, creator, version, engine ] =
+			extractGroups( regex, QString::fromStdString( folder.string() ) );
+
+		return { std::filesystem::relative( folder, base ),
+			     title,
+			     creator,
+			     engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
+			     version,
+			     folderSize( scanner ),
+			     potential_executables,
+			     potential_executables.at( 0 ) };
+	}
+	else
+		spdlog::warn( "No executables found for path {}", folder );
+
+	throw std::runtime_error( "Failed to determine executable" );
+}
+
+void ImportPreProcessor::processDirectory( const QString regex, const std::filesystem::path base )
 {
 	ZoneScoped;
 	running = true;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
+
+	std::vector< QFuture< GameImportData > > futures;
+
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
 	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
@@ -41,41 +71,34 @@ void ImportPreProcessor::
 		{
 			ZoneScopedN( "Test folder for executables" );
 			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
-			FileScanner scanner { folder };
-			std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
-			if ( potential_executables.size() > 0 )
-			{
-				ZoneScopedN( "Add to list" );
-				const auto [ title, creator, version, engine ] =
-					extractGroups( regex, QString::fromStdString( folder.string() ) );
-
-				buffer.emplace_back(
-					std::filesystem::relative( folder, base ),
-					title,
-					creator,
-					engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
-					version,
-					skip_filesize ? 0 : folderSize( scanner ),
-					potential_executables,
-					potential_executables.at( 0 ) );
-
-				using namespace std::chrono_literals;
-				if ( buffer.size() > 8 || last_update + 500ms < std::chrono::steady_clock::now() )
-				{
-					emit finishedDirectory( std::move( buffer ) );
-					last_update = std::chrono::steady_clock::now();
-				}
-			}
-			else
-				spdlog::warn( "No executables found for path {}", folder );
+			futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );
 
 			itter.pop();
 			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
 		}
 	}
 
-	if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
+	for ( auto& future : futures )
+	{
+		if ( abort_task )
+		{
+			abort_task = false;
+			running = false;
+			return;
+		}
+
+		future
+			.then(
+				[ this ]( const GameImportData& item )
+				{
+					emit finishedDirectory( item );
+					return;
+				} )
+			.waitForFinished();
+	}
+
+	//if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
 
 	running = false;
 	emit finishedProcessing();
@@ -84,5 +107,9 @@ void ImportPreProcessor::
 void ImportPreProcessor::abort()
 {
 	spdlog::debug( "Aborting task in PreProcessor" );
-	if ( running ) abort_task = true;
+	if ( running )
+	{
+		abort_task = true;
+		if ( running ) running.wait( true );
+	}
 }

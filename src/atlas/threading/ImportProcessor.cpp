@@ -82,9 +82,24 @@ void ImportProcessor::importGames(
 			}
 			else
 			{
-				emit updateSubText( "Scanning folder size... This could take awhile" );
+				ZoneScopedN( "Calculate size" );
+				emit updateText( QString( "Calculating folder size of %1 = 0B" ).arg( title ) );
 				path = source_folder;
-				if ( scan_size ) size = folderSize( path );
+
+				if ( scan_size )
+				{
+					FileScanner scanner { path };
+
+					for ( const auto& file : scanner )
+					{
+						size += file.size;
+						QLocale locale;
+
+						emit updateText( QString( "Calculating folder size of %1 = %2" )
+						                     .arg( title )
+						                     .arg( locale.formattedDataSize( static_cast< qint64 >( size ) ) ) );
+					}
+				}
 			}
 
 			Transaction transaction { Transaction::NoAutocommit };
