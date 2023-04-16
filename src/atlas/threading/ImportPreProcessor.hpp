@@ -36,6 +36,7 @@ class ImportPreProcessor : public QObject
 	std::vector< GameImportData > buffer {};
 
 	std::atomic< bool > abort_task { false };
+	std::atomic< bool > running { false };
 
   public:
 

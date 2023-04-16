@@ -185,6 +185,7 @@ void BatchImportDialog::importFiles()
 
 void BatchImportDialog::on_btnNext_pressed()
 {
+	spdlog::debug( "next pressed" );
 	ZoneScoped;
 	if ( ui->btnNext->text() == "Import" )
 	{
@@ -229,6 +230,7 @@ void BatchImportDialog::on_btnNext_pressed()
 void BatchImportDialog::on_btnBack_pressed()
 {
 	ZoneScoped;
+	spdlog::debug( "Back pressed" );
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 

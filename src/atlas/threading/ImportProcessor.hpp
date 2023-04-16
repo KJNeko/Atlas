@@ -19,6 +19,7 @@ class ImportProcessor : public QObject
 
 	std::atomic< bool > abort_task { false };
 	std::atomic< bool > pause_task { false };
+	std::atomic< bool > running { false };
 
   public:
 

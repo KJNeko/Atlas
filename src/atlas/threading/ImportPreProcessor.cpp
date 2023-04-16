@@ -20,6 +20,7 @@ void ImportPreProcessor::
 	processDirectory( const QString regex, const std::filesystem::path base, const bool skip_filesize )
 {
 	ZoneScoped;
+	running = true;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
@@ -31,6 +32,7 @@ void ImportPreProcessor::
 		if ( abort_task )
 		{
 			abort_task = false;
+			running = false;
 			return;
 		}
 
@@ -75,11 +77,12 @@ void ImportPreProcessor::
 
 	if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
 
+	running = false;
 	emit finishedProcessing();
 }
 
 void ImportPreProcessor::abort()
 {
 	spdlog::debug( "Aborting task in PreProcessor" );
-	abort_task = true;
+	if ( running ) abort_task = true;
 }

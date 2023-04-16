@@ -20,6 +20,8 @@ void ImportProcessor::importGames(
 	emit startProgressBar();
 	emit updateMax( static_cast< int >( data.size() ) );
 
+	running = true;
+
 	int counter { 0 };
 
 	//God I love decomposition
@@ -31,6 +33,7 @@ void ImportProcessor::importGames(
 		if ( abort_task )
 		{
 			abort_task = false;
+			running = false;
 			return;
 		}
 
@@ -145,20 +148,27 @@ void ImportProcessor::importGames(
 		}
 	}
 
+	running = false;
 	emit closeProgressBar();
 	emit importComplete();
 }
 
 void ImportProcessor::abort()
 {
-	abort_task = true;
-	unpause();
-	spdlog::debug( "Aborting task in Processor" );
+	if ( running )
+	{
+		abort_task = true;
+		unpause();
+		spdlog::debug( "Aborting task in Processor" );
+	}
 }
 
 void ImportProcessor::unpause()
 {
-	pause_task = false;
-	pause_task.notify_all();
-	spdlog::debug( "Unblocking ImportProcessor" );
+	if ( running )
+	{
+		pause_task = false;
+		pause_task.notify_all();
+		spdlog::debug( "Unblocking ImportProcessor" );
+	}
 }
