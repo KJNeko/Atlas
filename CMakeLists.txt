@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED ATLAS_PROFILE_ENABLE)
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
     option(TRACY_NO_BROADCAST "" ON)
@@ -136,8 +136,11 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
 endif ()
 
-include(GoogleTest)
-gtest_discover_tests(AtlasTESTS)
+if (NOT DEFINED FORCE_DISCOVER_TESTS AND NOT ENABLE_TRACY)
+    include(GoogleTest)
+    gtest_discover_tests(AtlasTESTS)
+endif ()
+
 
 if (DEFINED ATLAS_TEST_UI)
     target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
