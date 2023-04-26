@@ -4,10 +4,10 @@
 
 #include <gtest/gtest.h>
 
-#include "atlas/config.hpp"
-#include "atlas/database/Database.hpp"
-#include "atlas/database/GameMetadata.hpp"
-#include "atlas/database/Record.hpp"
+#include "core/config.hpp"
+#include "core/database/Database.hpp"
+#include "core/database/GameMetadata.hpp"
+#include "core/database/Record.hpp"
 
 class TestGameMetadata : public ::testing::Test
 {

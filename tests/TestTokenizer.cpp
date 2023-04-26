@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "atlas/search/QueryBuilder.hpp"
+#include "core/search/QueryBuilder.hpp"
 
 // system:filesize > 2G & creator:my name & !( engine:unity | engine:ren'py )
 
