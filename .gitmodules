@@ -16,3 +16,6 @@
 [submodule "atlas/dependencies/gtest"]
 	path = atlas/dependencies/gtest
 	url = https://github.com/google/googletest.git
+[submodule "atlas/dependencies/tracy"]
+	path = atlas/dependencies/tracy
+	url = https://github.com/wolfpld/tracy.git
