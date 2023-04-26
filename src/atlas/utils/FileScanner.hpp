@@ -47,7 +47,7 @@ struct FileScannerGenerator
 	struct promise_type
 	{
 		FileInfo value {};
-		std::exception_ptr exception { nullptr};
+		std::exception_ptr exception { nullptr };
 
 		FileScannerGenerator get_return_object() { return FileScannerGenerator( handle_type::from_promise( *this ) ); }
 
@@ -55,9 +55,11 @@ struct FileScannerGenerator
 
 		std::suspend_always final_suspend() noexcept { return {}; }
 
-		void unhandled_exception() {
-			spdlog::critical("An exception was thrown in the file scanner coroutine.");
-			std::terminate(); }
+		void unhandled_exception()
+		{
+			spdlog::critical( "An exception was thrown in the file scanner coroutine." );
+			std::terminate();
+		}
 
 		void return_value( FileInfo&& from )
 		{

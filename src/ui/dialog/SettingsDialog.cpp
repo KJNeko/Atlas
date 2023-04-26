@@ -8,6 +8,7 @@
 
 #include <QFile>
 #include <QMessageBox>
+#include <QStandardItemModel>
 
 #include <tracy/Tracy.hpp>
 
@@ -17,13 +18,39 @@
 #include "atlas/logging.hpp"
 #include "ui_SettingsDialog.h"
 
-SettingsDialog::SettingsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::SettingsDialog )
+class DummyRecordModel : public QAbstractListModel
+{
+  public:
+
+	DummyRecordModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) {}
+
+	int rowCount( [[maybe_unused]] const QModelIndex& parent ) const override { return 1; }
+
+	QVariant data( [[maybe_unused]] const QModelIndex& index, [[maybe_unused]] int role ) const override
+	{
+		if ( role == Qt::DisplayRole ) return QVariant::fromStdVariant( std::variant< Record >( Record( 1 ) ) );
+		return {};
+	}
+};
+
+SettingsDialog::SettingsDialog( QWidget* parent ) :
+  QDialog( parent ),
+  ui( new Ui::SettingsDialog ),
+  gridPreviewModel( new DummyRecordModel() ),
+  gridPreviewDelegate( new RecordBannerDelegate() )
 {
 	ui->setupUi( this );
+	qlv = ui->grid_preview;
+
+	qlv->setItemDelegate( gridPreviewDelegate );
+	qlv->setModel( gridPreviewModel );
+
+	//Add full list of fonts to comboBox.
+	ui->cbFont->addItems( QFontDatabase::families() );
 
 	prepareThemeSettings();
-	prepareBannerViewerSettings();
 	preparePathsSettings();
+	prepareGridViewerSettings();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -67,18 +94,85 @@ void SettingsDialog::saveThemeSettings()
 	reloadTheme();
 }
 
-void SettingsDialog::prepareBannerViewerSettings()
+void SettingsDialog::prepareGridViewerSettings()
 {
 	ZoneScoped;
-	ui->sbBannerX->setValue( config::delegate::banner_x::get() );
-	ui->sbBannerY->setValue( config::delegate::banner_y::get() );
+	//Init Grid previewSettings
+	//Grid Capsule Settings
+
+	//Set after delegate
+	ui->cbImageLayout->setCurrentIndex( config::grid_ui::imageLayout::get() );
+	ui->cbBlurType->setCurrentIndex( config::grid_ui::blurType::get() );
+	ui->sbBlurRadius->setValue( config::grid_ui::blurRadius::get() );
+	ui->sbFeatherRadius->setValue( config::grid_ui::featherRadius::get() );
+	ui->sbBannerX->setValue( config::grid_ui::gridSizeX::get() );
+	ui->sbBannerY->setValue( config::grid_ui::gridSizeY::get() );
+	ui->sbCapsuleSpace->setValue( config::grid_ui::gridSpacing::get() );
+	ui->leSelectedColor->setText( config::grid_ui::selectedColor::get() );
+	ui->sbSelectedOpacity->setValue( config::grid_ui::selectedOpacity::get() );
+	ui->cbCapsuleBorder->setChecked( config::grid_ui::enableCapsuleBorder::get() );
+	ui->leBorderColor->setText( config::grid_ui::borderColor::get() );
+
+	ui->cbTopOverlay->setChecked( config::grid_ui::enableTopOverlay::get() );
+	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
+	ui->sbOverlayHeight->setValue( config::grid_ui::overlayHeight::get() );
+	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
+	ui->leOverlayColor->setText( config::grid_ui::overlayColor::get() );
+	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
+	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
+
+	//Text & Icon Locations
+	ui->cbTitle->setCurrentIndex( config::grid_ui::titleLocation::get() );
+	ui->cbEngine->setCurrentIndex( config::grid_ui::engineLocation::get() );
+	ui->cbVersion->setCurrentIndex( config::grid_ui::versionLocation::get() );
+	ui->cbCreator->setCurrentIndex( config::grid_ui::creatorLocation::get() );
+
+	//Disable ui elements for future implementations
+	//ui->sbCapsuleSpace->setEnabled( false ); //Feature Not Enabled
+	ui->leSelectedColor->setEnabled( false );
+	ui->sbSelectedOpacity->setEnabled( false );
+	ui->leBorderColor->setEnabled( false );
+	ui->leOverlayColor->setEnabled( false );
+	ui->cbRatingIcon->setEnabled( false );
+	ui->cbGameIcon->setEnabled( false );
+	ui->cbFavIcon->setEnabled( false );
+	ui->cbEngineIcon->setEnabled( false );
+	ui->cbDownloadIcon->setEnabled( false );
+	ui->cbLockY->setEnabled( false );
+	ui->cbCenterItems->setEnabled( false );
+	//ui->leFont->setEnabled( false );
 }
 
 void SettingsDialog::saveBannerViewerSettings()
 {
 	ZoneScoped;
-	config::delegate::banner_x::set( ui->sbBannerX->value() );
-	config::delegate::banner_y::set( ui->sbBannerY->value() );
+
+	config::grid_ui::imageLayout::set( static_cast< SCALE_TYPE >( ui->cbImageLayout->currentIndex() ) );
+	config::grid_ui::blurType::set( static_cast< BLUR_TYPE >( ui->cbBlurType->currentIndex() ) );
+	config::grid_ui::blurRadius::set( ui->sbBlurRadius->value() );
+	config::grid_ui::featherRadius::set( ui->sbFeatherRadius->value() );
+	config::grid_ui::gridSizeX::set( ui->sbBannerX->value() );
+	config::grid_ui::gridSizeY::set( ui->sbBannerY->value() );
+	config::grid_ui::gridSpacing::set( ui->sbCapsuleSpace->value() );
+	config::grid_ui::selectedColor::set( ui->leSelectedColor->text() );
+	config::grid_ui::selectedOpacity::set( ui->sbSelectedOpacity->value() );
+	config::grid_ui::enableCapsuleBorder::set( ui->cbCapsuleBorder->checkState() );
+	config::grid_ui::borderColor::set( ui->leBorderColor->text() );
+
+	config::grid_ui::enableTopOverlay::set( ui->cbTopOverlay->checkState() );
+	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
+	config::grid_ui::overlayHeight::set( ui->sbOverlayHeight->value() );
+	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
+	config::grid_ui::overlayColor::set( ui->leOverlayColor->text() );
+	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
+	config::grid_ui::font::set( ui->cbFont->currentText() );
+
+	config::grid_ui::titleLocation::set( static_cast< LOCATION >( ui->cbTitle->currentIndex() ) );
+	config::grid_ui::engineLocation::set( static_cast< LOCATION >( ui->cbEngine->currentIndex() ) );
+	config::grid_ui::versionLocation::set( static_cast< LOCATION >( ui->cbVersion->currentIndex() ) );
+	config::grid_ui::creatorLocation::set( static_cast< LOCATION >( ui->cbCreator->currentIndex() ) );
+
+	config::notify();
 }
 
 void SettingsDialog::preparePathsSettings()
@@ -303,4 +397,142 @@ void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1
 {
 	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
 	on_themeBox_currentTextChanged( ui->themeBox->currentText() );
+}
+
+//Grid Layout UI
+void SettingsDialog::on_cbTopOverlay_stateChanged( [[maybe_unused]] int state )
+{
+	ui->cbTopOverlay->setChecked( static_cast< bool >( state ) );
+	gridPreviewDelegate->m_enable_top_overlay = static_cast< bool >( state );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbBottomOverlay_stateChanged( [[maybe_unused]] int state )
+{
+	ui->cbBottomOverlay->setChecked( static_cast< bool >( state ) );
+	gridPreviewDelegate->m_enable_bottom_overlay = static_cast< bool >( state );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
+{
+	//only show these options when SCALE_TYPE is set to Blur
+	ui->cbBlurType->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+
+	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
+	///config::grid_ui::gridImageLayout::set(idx);
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbBlurRadius_valueChanged( int num )
+{
+	//config::grid_ui::gridBlurRadius::set(num);
+	gridPreviewDelegate->m_blur_radius = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbBlurType_currentIndexChanged( int idx )
+{
+	//config::grid_ui::gridBlurType::set(idx);
+	gridPreviewDelegate->m_blur_type = static_cast< BLUR_TYPE >( idx );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbFeatherRadius_valueChanged( int num )
+{
+	//config::grid_ui::gridFeatherRadius::set(num);
+	gridPreviewDelegate->m_feather_radius = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbBannerX_valueChanged( int num )
+{
+	//const int pixels = { num * ui->sbBannerY->value() };
+	//const double h_ratio { static_cast< double >( ( num + 1 ) ) / static_cast< double >( ui->sbBannerY->value() ) };
+	//const double w_scaled { static_cast< double >( num ) / h_ratio };
+	//printf( "num:%d ratio:%f scaled:%f\n", num, h_ratio, w_scaled );
+	//TODO: Will be implented in V2
+	if ( ui->cbLockY->checkState() )
+	{
+		//gridPreviewDelegate->m_grid_size.setHeight( static_cast< int >( w_scaled ) );
+		//ui->sbBannerY->setValue( static_cast< int >( w_scaled ) );
+	}
+	gridPreviewDelegate->m_grid_size.setWidth( num );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbBannerY_valueChanged( int num )
+{
+	//config::grid_ui::banner_y::set(num);
+	gridPreviewDelegate->m_grid_size.setHeight( num );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbCapsuleBorder_stateChanged( int state )
+{
+	//config::grid_ui::gridEnableBorder::set(state);
+	gridPreviewDelegate->m_enable_capsule_border = static_cast< bool >( state );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbOverlayHeight_valueChanged( int num )
+{
+	gridPreviewDelegate->m_strip_height = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbOverlayOpacity_valueChanged( int num )
+{
+	gridPreviewDelegate->m_overlay_opacity = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbFont_currentTextChanged( const QString& text )
+{
+	gridPreviewDelegate->m_font_family = text;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbFontSize_valueChanged( int num )
+{
+	gridPreviewDelegate->m_font_size = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbTitle_currentIndexChanged( int idx )
+{
+	gridPreviewDelegate->m_title_location = static_cast< LOCATION >( idx );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbEngine_currentIndexChanged( int idx )
+{
+	gridPreviewDelegate->m_engine_location = static_cast< LOCATION >( idx );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbVersion_currentIndexChanged( int idx )
+{
+	gridPreviewDelegate->m_version_location = static_cast< LOCATION >( idx );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbCreator_currentIndexChanged( int idx )
+{
+	gridPreviewDelegate->m_creator_location = static_cast< LOCATION >( idx );
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sbCapsuleSpace_valueChanged( int num )
+{
+	gridPreviewDelegate->m_grid_spacing = num;
+	//qlv->setSpacing( num );
+	//qlv->repaint();
+}
+
+void SettingsDialog::on_cbLockY_stateChanged( int state )
+{
+	ui->sbBannerY->setEnabled( !state );
 }

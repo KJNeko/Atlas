@@ -31,6 +31,8 @@ class RecordView : public QListView
 
 	void mouseDoubleClickEvent( QMouseEvent* event ) override;
 
+	void reloadConfig();
+
   signals:
 	void openDetailedView( const Record record );
 

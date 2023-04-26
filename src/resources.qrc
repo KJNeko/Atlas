@@ -9,5 +9,12 @@
         <file>assets/treeview_rightarrow_N.svg</file>
         <file>assets/treeview_rightarrow_S.svg</file>
         <file>assets/Grid_Capsule_Default.webp</file>
+        <file>assets/engine/unity_icon.svg</file>
+        <file>assets/rating_icon_blank.svg</file>
+        <file>assets/fav_icon_red.svg</file>
+        <file>assets/download_icon.svg</file>
+        <file>assets/fav_icon.svg</file>
+        <file>assets/game_icon.svg</file>
+        <file>assets/rating_icon.svg</file>
     </qresource>
 </RCC>

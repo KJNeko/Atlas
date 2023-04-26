@@ -29,5 +29,5 @@ QSize ImageDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
 	ZoneScoped;
-	return { config::delegate::banner_x::get(), config::delegate::banner_y::get() };
+	return { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() };
 }

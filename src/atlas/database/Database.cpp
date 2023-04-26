@@ -85,6 +85,39 @@ try
 	transaction.commit();
 
 	config::db::first_start::set( false );
+
+	try
+	{
+		Transaction transaction_record { Transaction::Autocommit };
+
+		transaction_record
+			<< "INSERT INTO records (record_id, title, creator, engine, last_played_r, total_playtime) VALUES ($1, $2, $3, $4, 0, 0)"
+			<< static_cast< std::uint64_t >( 1 ) << "Galaxy Crossing: First Conquest"
+			<< "Atlas Games"
+			<< "Unity";
+	}
+	catch ( sqlite::sqlite_exception& e )
+	{
+		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
+	}
+
+	try
+	{
+		Transaction transaction_record { Transaction::Autocommit };
+		transaction_record
+			<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size, date_added) VALUES ($1, $2, $3, $4, $5, 0, 0, 0, 0)"
+			<< static_cast< std::uint64_t >( 1 ) << "Chapter: 1"
+			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest"
+			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe"
+			<< true;
+
+		transaction_record << "INSERT INTO banners (record_id, path) VALUES ($1, $2)"
+						   << static_cast< std::uint64_t >( 1 ) << ":/images/assets/Grid_Capsule_Default.webp";
+	}
+	catch ( ... )
+	{
+		spdlog::info( "Failed to insert dummy record metadata" );
+	}
 }
 catch ( sqlite::sqlite_exception& e )
 {
@@ -187,7 +220,6 @@ sqlite::database_binder Transaction::operator<<( const std::string& sql )
 	if ( data == nullptr ) throw TransactionInvalid( sql );
 
 	data->ran_once = true;
-	spdlog::debug( "Executing \"{}\"", sql );
 	if ( data.use_count() == 0 ) throw TransactionInvalid( sql );
 	m_previous_statement = sql;
 	return Database::ref() << sql;
@@ -197,7 +229,9 @@ Transaction::Transaction( Transaction& other ) :
   m_parent( &other ),
   data( other.data ),
   m_autocommit( other.m_autocommit )
-{}
+{
+	if ( data == nullptr ) throw TransactionInvalid( other.m_previous_statement );
+}
 
 NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {

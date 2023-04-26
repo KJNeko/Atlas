@@ -28,6 +28,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	record_search.moveToThread( &search_thread );
 	search_thread.start();
 
+	config::notify();
+
 	emit triggerEmptySearch();
 }
 
@@ -76,10 +78,11 @@ void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString de
 
 void MainWindow::on_actionOptions_triggered()
 {
-	SettingsDialog* settingsDialog { new SettingsDialog( this ) };
+	SettingsDialog settingsDialog { this };
+	settingsDialog.setModal( true );
+	settingsDialog.exec();
 
-	settingsDialog->exec();
-	settingsDialog->deleteLater();
+	ui->recordView->reloadConfig();
 
 	QWidget::repaint();
 }

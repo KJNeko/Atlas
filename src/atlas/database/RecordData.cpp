@@ -20,8 +20,11 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 {
 	ZoneScoped;
 
+	if ( id == 0 ) throw std::runtime_error( "Invalid record id" );
+
 	bool exists;
-	transaction << "SELECT record_id FROM records WHERE record_id = ?" << m_id >> exists;
+	transaction << "SELECT record_id FROM records WHERE record_id = ?" << m_id >>
+		[ & ]( [[maybe_unused]] const RecordID ) { exists = true; };
 
 	if ( !exists ) throw std::runtime_error( "Record does not exist" );
 }
@@ -124,19 +127,32 @@ catch ( ... )
 }
 
 QPixmap RecordData::getBanner( Transaction transaction ) const
+try
 {
 	ZoneScoped;
-	if ( !std::filesystem::exists( getBannerPath( transaction ) ) )
+	const auto path { getBannerPath( transaction ) };
+
+	if ( path.empty() )
 		return {};
 	else
 		return QPixmap { QString::fromStdString( getBannerPath( transaction ).string() ) };
 }
+catch ( ... )
+{
+	spdlog::
+		warn( "Failed to get path for banner in record: {}, title: {}", m_id, getTitle( transaction ).toStdString() );
+	return {};
+}
 
-QPixmap RecordData::getBanner( const int width, const int height, const bool expanding, Transaction transaction ) const
+QPixmap RecordData::
+	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
 {
 	ZoneScoped;
 	const auto key { QString::fromStdString( getBannerPath( transaction ).filename().string() )
-		             + QString::number( width ) + "x" + QString::number( height ) };
+		             + QString::number( width ) + "x" + QString::number( height )
+		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
+
+	//spdlog::info( key );
 
 	QPixmap banner;
 	if ( QPixmapCache::find( key, &banner ) )
@@ -145,17 +161,30 @@ QPixmap RecordData::getBanner( const int width, const int height, const bool exp
 	{
 		banner = getBanner( transaction );
 		if ( banner.isNull() )
+		{
+			spdlog::warn(
+				"Failed to get image for banner in record: {}, title: {}",
+				m_id,
+				getTitle( transaction ).toStdString() );
 			return {};
+		}
 		else
 		{
-			banner = banner.scaled(
-				width,
-				height,
-				expanding ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
-				Qt::SmoothTransformation );
-			if ( !QPixmapCache::insert( key, banner ) )
+			auto banner_scaled {
+				banner.scaled( width, height, Qt::AspectRatioMode( aspect_ratio_mode ), Qt::SmoothTransformation )
+
+			};
+			if ( aspect_ratio_mode == KEEP_ASPECT_RATIO_BY_EXPANDING )
+			{
+				//Rmove image outside of boundry and center image
+				const int new_x { width == banner_scaled.width() ? 0 : ( banner_scaled.width() - width ) / 2 };
+				const int new_y { height == banner_scaled.height() ? 0 : ( banner_scaled.height() - height ) / 2 };
+				banner_scaled = banner_scaled.copy( new_x, new_y, width, height );
+			}
+
+			if ( !QPixmapCache::insert( key, banner_scaled ) )
 				spdlog::warn( "failed to insert banner into cache with key: {}", key );
-			return banner;
+			return banner_scaled;
 		}
 	}
 }
@@ -326,37 +355,45 @@ void RecordData::sync( Transaction transaction )
 }
 
 RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction )
+try
 {
 	ZoneScoped;
-	try
-	{
-		RecordID record_id { 0 };
-		transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
-					<< title.toStdString() << creator.toStdString() << engine.toStdString()
-			>> [ & ]( const RecordID id ) { record_id = id; };
+	RecordID record_id { 0 };
+	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
+				<< creator.toStdString() << engine.toStdString()
+		>> [ & ]( const RecordID id ) { record_id = id; };
 
-		if ( record_id != 0 )
-		{
-			transaction.abort();
-			throw RecordAlreadyExists( Record( record_id ) );
-		}
-
-		transaction
-				<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
-				<< title.toStdString() << creator.toStdString() << engine.toStdString()
-			>> [ & ]( const RecordID id ) { m_id = id; };
-	}
-	catch ( sqlite::sqlite_exception& e )
+	if ( record_id != 0 )
 	{
-		spdlog::error( "{}", e.get_sql() );
-		std::rethrow_exception( std::current_exception() );
+		transaction.abort();
+		throw RecordAlreadyExists( Record( record_id ) );
 	}
+
+	transaction
+			<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
+			<< title.toStdString() << creator.toStdString() << engine.toStdString()
+		>> [ & ]( const RecordID id ) { m_id = id; };
+}
+catch ( sqlite::sqlite_exception& e )
+{
+	spdlog::error( "RecordData: Failed to import record: SQLException:{}, {}, {}", e.what(), e.errstr(), e.get_sql() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( std::exception& e )
+{
+	spdlog::error( "RecordData:: Failed to import record: {}", e.what() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( ... )
+{
+	spdlog::error( "RecordData:: Failed to import record: Unknown error" );
+	std::rethrow_exception( std::current_exception() );
 }
 
-QPixmap RecordData::getBanner( const QSize size, const bool expanding, Transaction transaction ) const
+QPixmap RecordData::getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
 {
 	ZoneScoped;
-	return getBanner( size.width(), size.height(), expanding, transaction );
+	return getBanner( size.width(), size.height(), aspect_ratio_mode, transaction );
 }
 
 QString RecordData::getDesc( Transaction transaction ) const

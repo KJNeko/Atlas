@@ -18,7 +18,6 @@
 int main( int argc, char** argv )
 {
 	//initLogging();
-
 	QApplication app { argc, argv };
 
 	//Fix for windeployqt not adding the bin directory to itself for some reason
@@ -49,7 +48,6 @@ int main( int argc, char** argv )
 	std::filesystem::create_directory( config::paths::database::getPath().parent_path() );
 	std::filesystem::create_directory( config::paths::games::getPath() );
 	std::filesystem::create_directory( config::paths::images::getPath() );
-
 
 	std::filesystem::path db_path = config::paths::database::getPath() / "atlas.db";
 	Database::initalize( db_path );

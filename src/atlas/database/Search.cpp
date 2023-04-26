@@ -18,7 +18,10 @@ void Search::searchTextChanged( [[maybe_unused]] QString text )
 
 		std::vector< Record > records;
 
-		transaction << query >> [ & ]( const RecordID id ) { records.emplace_back( id, transaction ); };
+		transaction << query >> [ & ]( const RecordID id )
+		{
+			if ( id > 1 ) records.emplace_back( id, transaction );
+		};
 
 		transaction.commit();
 
@@ -37,7 +40,9 @@ void Search::triggerEmptySearch()
 	std::vector< Record > records;
 
 	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
-	{ records.emplace_back( id, transaction ); };
+	{
+		if ( id > 1 ) records.emplace_back( id, transaction );
+	};
 
 	transaction.commit();
 

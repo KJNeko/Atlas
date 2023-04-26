@@ -10,6 +10,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "atlas/Types.hpp"
+#include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
 
 struct GameMetadata;
@@ -56,10 +57,12 @@ struct RecordData
 	QPixmap getBanner(
 		const int width,
 		const int height,
-		const bool expanding,
+		const SCALE_TYPE aspect_ratio_mode,
 		Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner( const QSize size, const bool expanding, Transaction transaction = Transaction( Autocommit ) )
-		const;
+	QPixmap getBanner(
+		const QSize size,
+		const SCALE_TYPE aspect_ratio_mode,
+		Transaction transaction = Transaction( Autocommit ) ) const;
 	const std::vector< std::filesystem::path > getPreviewPaths( Transaction transaction = Transaction( Autocommit ) )
 		const;
 	std::vector< QPixmap > getPreviews( Transaction transaction = Transaction( Autocommit ) ) const;

@@ -13,13 +13,7 @@ class Record : public std::shared_ptr< RecordData >
 
 	Record() = default;
 	Record( const RecordID id, Transaction transaction = Transaction( Transaction::Autocommit ) );
-	Record( const RecordData& data, Transaction transaction = Transaction( Transaction::Autocommit ) );
 	Record( RecordData&& data );
-	Record(
-		const QString title,
-		const QString creator,
-		const QString engine,
-		Transaction transaction = Transaction( Transaction::Autocommit ) );
 };
 
 Q_DECLARE_METATYPE( Record )

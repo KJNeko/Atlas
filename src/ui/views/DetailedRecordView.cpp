@@ -137,7 +137,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const Record& record { *m_record };
 		//Paint the banner
 		const QSize size { ui->bannerFrame->size() };
-		const QPixmap banner { record->getBanner( size.width(), size.height(), false ) };
+		const QPixmap banner { record->getBanner( size.width(), size.height(), SCALE_TYPE::KEEP_ASPECT_RATIO ) };
 		const QRect pixmap_rect {
 			ui->bannerFrame->frameRect().center() - QPoint( banner.width() / 2, banner.height() / 2 ), banner.size()
 		};

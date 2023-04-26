@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
+    <width>1520</width>
     <height>780</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>ATLAS</string>
@@ -210,6 +216,12 @@
            </property>
            <item row="0" column="0">
             <widget class="RecordView" name="recordView">
+             <property name="minimumSize">
+              <size>
+               <width>1210</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="verticalScrollMode">
               <enum>QAbstractItemView::ScrollPerPixel</enum>
              </property>
@@ -226,7 +238,7 @@
               <enum>QListView::Adjust</enum>
              </property>
              <property name="spacing">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="uniformItemSizes">
               <bool>true</bool>
@@ -262,6 +274,12 @@
        <size>
         <width>250</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="frameShape">
@@ -405,8 +423,8 @@ margin-left: 2px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
-     <height>22</height>
+     <width>1520</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">

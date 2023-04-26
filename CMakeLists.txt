@@ -96,7 +96,7 @@ set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 #Post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw
             $<TARGET_FILE:Atlas>
             COMMENT "Running windeployqt")
 

@@ -14,11 +14,11 @@ colorC - rgb(210,210,210): Default text color
 colorD - rgb(255, 255, 255): Selected text color
 */
 
-/* BASE FONT */
+/* BASE FONT
 * {
   font-family: Goldman;
   font-weight: Normal;
-}
+} */
 
 /* BASE WIDGETS */
 QStackedWidget>QWidget>QFrame{

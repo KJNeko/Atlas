@@ -72,7 +72,10 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 			//General executables
 			if ( type.inherits( "application/x-ms-dos-executable" ) && ext == ".exe" )
 			{
-				potential_executables.emplace_back( relative );
+				//prioritize AMD64
+				path.string().std::string::find( "32" ) ?
+					potential_executables.insert( potential_executables.begin(), relative ) :
+					potential_executables.insert( potential_executables.end(), relative );
 				continue;
 			}
 			else if ( type.inherits( "text/html" ) && filename == "index.html" )

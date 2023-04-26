@@ -41,7 +41,8 @@ void RecordEditor::loadRecordInfo()
 void RecordEditor::loadBanners()
 {
 	ZoneScoped;
-	ui->bannerPreview->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), false ) );
+	ui->bannerPreview
+		->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO ) );
 }
 
 void RecordEditor::loadPreviews()

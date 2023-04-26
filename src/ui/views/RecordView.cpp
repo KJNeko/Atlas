@@ -21,16 +21,11 @@ RecordView::RecordView( QWidget* parent ) : QListView( parent )
 	QListView::setModel( new RecordListModel() );
 	setRenderMode( BANNER_VIEW );
 
-	/*
-	QListView::setFlow( QListView::LeftToRight );
-	QListView::setWrapping( true );
-	QListView::setSpacing( 5 );
-	QListView::setResizeMode( QListView::Adjust );
-	QListView::setMovement( QListView::Free );*/
-
 	setContextMenuPolicy( Qt::CustomContextMenu );
 
 	connect( this, &RecordView::customContextMenuRequested, this, &RecordView::on_customContextMenuRequested );
+
+	CONFIG_ATTACH_THIS;
 }
 
 void RecordView::setRenderMode( const DelegateType type )
@@ -43,11 +38,17 @@ void RecordView::setRenderMode( const DelegateType type )
 		case BANNER_VIEW:
 			{
 				QListView::setItemDelegate( new RecordBannerDelegate() );
+				current_render_mode = BANNER_VIEW;
+				QWidget::repaint();
 				break;
 			}
+		case NO_MODE:
+			[[fallthrough]];
 		default:
-			break;
+			return;
 	}
+
+	reloadConfig();
 }
 
 void RecordView::addRecords( const std::vector< RecordID > records )
@@ -165,5 +166,28 @@ void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 	else
 	{
 		event->ignore();
+	}
+}
+
+void RecordView::reloadConfig()
+{
+	spdlog::info( "Current render mode: {}", static_cast< int >( current_render_mode ) );
+	switch ( current_render_mode )
+	{
+		case NO_MODE:
+			return;
+		case BANNER_VIEW:
+			{
+				auto delegate { dynamic_cast< RecordBannerDelegate* >( QListView::itemDelegate() ) };
+				delegate->reloadConfig();
+				//Set spacing between each item
+				QListView::setSpacing( delegate->m_grid_spacing );
+				delegate->sizeHintChanged( selectionModel()->currentIndex() );
+				QWidget::repaint();
+				spdlog::info( "Repainting UI\n" );
+				return;
+			}
+		default:
+			return;
 	}
 }
