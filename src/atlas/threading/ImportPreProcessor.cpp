@@ -18,7 +18,8 @@
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}
 
-GameImportData runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
+std::optional< GameImportData >
+	runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
 {
 	ZoneScoped;
 	FileScanner scanner { folder };
@@ -29,19 +30,19 @@ GameImportData runner( const QString regex, const std::filesystem::path folder, 
 		const auto [ title, creator, version, engine ] =
 			extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-		return { std::filesystem::relative( folder, base ),
-			     title,
-			     creator,
-			     engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
-			     version,
-			     folderSize( scanner ),
-			     potential_executables,
-			     potential_executables.at( 0 ) };
+		return { GameImportData { std::filesystem::relative( folder, base ),
+			                      title,
+			                      creator,
+			                      engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
+			                      version,
+			                      folderSize( scanner ),
+			                      potential_executables,
+			                      potential_executables.at( 0 ) } };
 	}
 	else
 		spdlog::warn( "No executables found for path {}", folder );
 
-	throw std::runtime_error( "Failed to determine executable" );
+	return { std::nullopt };
 }
 
 void ImportPreProcessor::processDirectory( const QString regex, const std::filesystem::path base )
@@ -50,7 +51,7 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 	running = true;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 
-	std::vector< QFuture< GameImportData > > futures;
+	std::vector< QFuture< std::optional< GameImportData > > > futures;
 
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
 	for ( auto itter = std::filesystem::
@@ -90,9 +91,9 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 
 		future
 			.then(
-				[ this ]( const GameImportData& item )
+				[ this ]( const std::optional< GameImportData >& item )
 				{
-					emit finishedDirectory( item );
+					if ( item.has_value() ) emit finishedDirectory( *item );
 					return;
 				} )
 			.waitForFinished();

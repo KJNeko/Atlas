@@ -26,6 +26,25 @@ struct GameImportData
 	std::size_t size {};
 	std::vector< std::filesystem::path > executables {};
 	std::filesystem::path executable {};
+
+	GameImportData(
+		const std::filesystem::path& path_in,
+		const QString& title_in,
+		const QString& creator_in,
+		const QString& engine_in,
+		const QString& version_in,
+		const std::size_t& size_in,
+		const std::vector< std::filesystem::path >& executables_in,
+		const std::filesystem::path& executable_in ) :
+	  path( path_in ),
+	  title( title_in ),
+	  creator( creator_in ),
+	  engine( engine_in ),
+	  version( version_in ),
+	  size( size_in ),
+	  executables( executables_in ),
+	  executable( executable_in )
+	{}
 };
 
 class ImportPreProcessor : public QObject

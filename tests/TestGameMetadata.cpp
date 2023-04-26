@@ -7,7 +7,7 @@
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
 #include "atlas/database/GameMetadata.hpp"
-#include "atlas/database/Record.hpp"
+#include "atlas/database/RecordData.hpp"
 
 class TestGameMetadata : public ::testing::Test
 {

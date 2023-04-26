@@ -10,7 +10,9 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "atlas/database/GameMetadata.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
+#include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 RecordView::RecordView( QWidget* parent ) : QListView( parent )
@@ -75,24 +77,29 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );
 	//menu.addAction( QString( "Creator: %1" ).arg( record->getCreator() ) );
 
-	const auto connection { connect(
-		record.get(),
-		&RecordData::dataChanged,
-		this,
-		[ this, pos ]() { this->dataChanged( this->indexAt( pos ), this->indexAt( pos ) ); },
-		Qt::SingleShotConnection ) };
+	auto versions { record->getVersions() };
 
-	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( record->getVersions().size() ) ) };
-	for ( const auto& version : record->getVersions() )
+	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( versions.size() ) ) };
+
+	for ( auto& version : versions )
 	{
 		auto version_submenu { version_menu->addMenu( version.getVersionName() ) };
-		version_submenu->addAction( "Launch" );
+		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
 		version_submenu->addSeparator();
 		version_submenu->addAction( "Delete version" );
 	}
+
 	version_menu->addSeparator();
 	version_menu->addAction( "Add version" );
-	version_menu->addAction( "Manage versions" );
+	version_menu->addAction(
+		"Manage versions",
+		[ record, this ]()
+		{
+			RecordEditor dialog { record->getID(), this };
+			dialog.show();
+			dialog.switchTabs( 2 );
+			dialog.exec();
+		} );
 
 	//Image stuff
 	auto image_menu { menu.addMenu( "Banner/Previews" ) };
@@ -125,13 +132,26 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 			};
 			if ( !path.isEmpty() ) record->addPreview( path.toStdString() );
 		} );
-	image_menu->addAction( "Manage images" );
+	image_menu->addAction(
+		"Manage images",
+		[ record, this ]()
+		{
+			RecordEditor dialog { record->getID(), this };
+			dialog.show();
+			dialog.switchTabs( 1 );
+			dialog.exec();
+		} );
 
-	menu.addAction( "Manage record" );
+	menu.addAction(
+		"Manage record",
+		[ record, this ]()
+		{
+			RecordEditor dialog { record->getID(), this };
+			dialog.show();
+			dialog.exec();
+		} );
 
 	menu.exec();
-
-	disconnect( connection );
 }
 
 void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )

@@ -8,6 +8,7 @@
 
 #include "atlas/config.hpp"
 #include "atlas/database/Record.hpp"
+#include "atlas/database/RecordData.hpp"
 #include "atlas/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
@@ -91,11 +92,9 @@ void ImportProcessor::importGames(
 				std::move( version ),
 				std::move( path ),
 				std::move( executable ),
-				!move_after_import,
 				size,
+				!move_after_import,
 				transaction );
-
-			transaction.commit();
 
 			if ( std::filesystem::exists( source_folder / "banner.jpg" )
 			     || std::filesystem::exists( source_folder / "banner.png" ) )
@@ -103,15 +102,34 @@ void ImportProcessor::importGames(
 				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
 					                         source_folder / "banner.jpg" :
 					                         source_folder / "banner.png" };
-				record->setBanner( banner_path );
+				emit updateSubText( QString( "Adding banner: %1" )
+				                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
+				record->setBanner( banner_path, transaction );
+			}
+
+			if ( std::filesystem::exists( source_folder / "previews" ) )
+			{
+				for ( const auto& file : std::filesystem::directory_iterator( source_folder / "previews" ) )
+				{
+					emit updateSubText( QString( "Adding preview: %1" )
+					                        .arg( QString::fromStdString( file.path().filename().string() ) ) );
+					if ( file.is_regular_file() ) record->addPreview( file, transaction );
+				}
 			}
 
 			completed_records.emplace_back( record->getID() );
 
-			if ( move_after_import ) std::filesystem::remove_all( source_folder );
+			transaction.commit();
+
+			spdlog::debug( "Import succeeded with id {}", record->getID() );
+
+			if ( move_after_import )
+			{
+				emit updateSubText( "Deleting source folder..." );
+				std::filesystem::remove_all( source_folder );
+			}
 
 			//No crash! Yay. Continue to import
-			spdlog::debug( "Import succeeded with id {}", record->getID() );
 			emit updateValue( ++counter );
 		}
 		catch ( RecordException& e )

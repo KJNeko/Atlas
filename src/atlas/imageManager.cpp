@@ -48,9 +48,11 @@ namespace imageManager
 		{
 			const QString qstr { QString::fromStdString( path.string() ) };
 			QImage temp_image;
-			if ( temp_image.load( qstr ) == true )
+
+			if ( !temp_image.load( qstr ) )
 			{
-				spdlog::debug( "Image Loaded Sucessfully" );
+				spdlog::error( "Failed to load image {}", path.string() );
+				return {};
 			}
 
 			//Save the image to a temp file depending on os
@@ -87,42 +89,54 @@ namespace imageManager
 					"The image type you have selected is not supported by your system, Image type has been set to png" );
 			}
 
-			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 95 );
+			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 100 );
 
-			if ( std::ifstream ifs( temp_path ); ifs )
+			const auto hash_file = []( const std::filesystem::path& hash_path ) -> QByteArray
 			{
-				std::vector< char > data;
-				data.resize( std::filesystem::file_size( temp_path ) );
-				ifs.read( data.data(), static_cast< long >( data.size() ) );
-
-				QCryptographicHash hash { QCryptographicHash::Sha256 };
-				hash.addData( { reinterpret_cast< const char* >( data.data() ),
-				                static_cast< qsizetype >( data.size() ) } );
-
-				const std::filesystem::path dest {
-					( config::paths::images::getPath() / hash.result().toHex().toStdString() ).string() + ".webp"
-				};
-
-				if ( !std::filesystem::exists( dest.parent_path() )
-				     && !std::filesystem::create_directories( dest.parent_path() ) )
+				if ( std::ifstream ifs( hash_path ); ifs )
 				{
-					throw std::runtime_error(
-						fmt::format( "importImage: Failed to create directory {}", dest.parent_path() ) );
+					std::vector< char > buffer;
+					buffer.resize( std::filesystem::file_size( hash_path ) );
+					ifs.read( buffer.data(), static_cast< long >( buffer.size() ) );
+
+					QCryptographicHash hash { QCryptographicHash::Sha256 };
+					hash.addData( { reinterpret_cast< const char* >( buffer.data() ),
+					                static_cast< qsizetype >( buffer.size() ) } );
+
+					return hash.result();
 				}
-
-				//Copy the temp_file to the destination
-				if ( !std::filesystem::exists( dest ) )
-					std::filesystem::copy( temp_path, dest );
 				else
-					return dest;
+					return {};
+			};
 
-				if ( !std::filesystem::exists( dest ) )
-					throw std::runtime_error( fmt::format( "importImage: Failed to save file to {}", dest ) );
+			if ( std::filesystem::file_size( temp_path ) > std::filesystem::file_size( path ) )
+			{
+				//File is worse. So we keep the smaller one.
+				std::filesystem::remove( temp_path );
 
-				return dest;
+				const auto image_hash { hash_file( path ) };
+
+				const auto dest_path { config::paths::images::getPath()
+					                   / ( image_hash.toHex().toStdString() + path.extension().string() ) };
+
+				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( path, dest_path );
+
+				return dest_path;
 			}
 			else
-				spdlog::warn( "Failed to open converted webp: Temp:{:e}, Input:{:e}", temp_path, path );
+			{
+				//Keep the temp file
+				const auto image_hash { hash_file( temp_path ) };
+
+				const auto dest_path { config::paths::images::getPath()
+					                   / ( image_hash.toHex().toStdString() + "webp" ) };
+
+				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
+
+				std::filesystem::remove( temp_path );
+
+				return dest_path;
+			}
 		}
 		else
 			spdlog::warn( "Failed to set open path for new banner at {:ce}", path );

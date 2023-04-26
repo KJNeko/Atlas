@@ -9,6 +9,7 @@
 
 #include "atlas/Types.hpp"
 #include "atlas/database/Record.hpp"
+#include "atlas/database/RecordData.hpp"
 
 enum DelegateType
 {

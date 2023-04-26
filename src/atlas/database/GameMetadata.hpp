@@ -9,6 +9,7 @@
 
 #include <QString>
 
+#include "Record.hpp"
 #include "atlas/Types.hpp"
 #include "atlas/database/Database.hpp"
 
@@ -19,88 +20,51 @@ struct GameMetadata
 {
   private:
 
-	RecordData& m_parent;
+	Record m_parent;
 
 	QString m_version {};
-
-	std::filesystem::path m_game_path {};
-
-	std::filesystem::path m_exec_path {};
-
-	//! Indicates that we don't control where the game was placed.
-	bool m_in_place { false };
-
-	std::uint32_t m_total_playtime { 0 };
-	std::uint64_t m_last_played { 0 };
-
-	std::uint64_t m_folder_size { 0 };
 
   public:
 
 	//Setters
 	//! Adds playtime to this and it's parent record
-	void addPlaytime( const std::uint32_t playtime );
+	void addPlaytime( const std::uint32_t playtime, Transaction transaction = Transaction( Autocommit ) );
 	//! Sets the last played timestamp for this and it's parent record
-	void setLastPlayed( const std::uint64_t last_played );
+	void setLastPlayed( const std::uint64_t last_played, Transaction transaction = Transaction( Autocommit ) );
 	//! Executes the game for this record.
-	void playGame();
+	void playGame( Transaction transaction = Transaction( Autocommit ) );
 
 	//Getters
 	QString getVersionName() const;
 	//! If return true then the game is not located in config::paths::games::get()
-	bool isInPlace() const;
-	std::uint32_t getPlaytime() const;
-	std::uint64_t getLastPlayed() const;
-	std::filesystem::path getPath() const;
-	std::filesystem::path getRelativeExecPath() const;
-	std::filesystem::path getExecPath() const;
+	bool isInPlace( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::uint32_t getPlaytime( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::uint64_t getLastPlayed( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::filesystem::path getPath( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::filesystem::path getRelativeExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::filesystem::path getExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::uint64_t getFolderSize( Transaction transaction = Transaction( Autocommit ) ) const;
 
   public:
 
 	GameMetadata() = delete;
 
 	GameMetadata(
-		RecordData& parent,
-		const QString& version_in,
-		const std::filesystem::path& game_path_in,
-		const std::filesystem::path& exec_path_in,
-		const bool in_place,
-		const std::uint64_t last_played,
-		const std::uint32_t total_playtime,
-		const std::uint64_t folder_size ) :
-	  m_parent( parent ),
-	  m_version( version_in ),
-	  m_game_path( game_path_in ),
-	  m_exec_path( exec_path_in ),
-	  m_in_place( in_place ),
-	  m_total_playtime( total_playtime ),
-	  m_last_played( last_played ),
-	  m_folder_size( folder_size )
+		const RecordID m_id, const QString& version_in, Transaction transaction = Transaction( Autocommit ) ) :
+	  m_parent( m_id, transaction ),
+	  m_version( version_in )
 	{}
 
 	bool operator==( const GameMetadata& other ) const
 	{
-		return m_version == other.m_version && m_game_path == other.m_game_path && m_exec_path == other.m_exec_path;
+		return m_version == other.m_version && m_parent == other.m_parent;
 	}
 
-	GameMetadata( const GameMetadata& other ) :
-	  m_parent( other.m_parent ),
-	  m_version( other.m_version ),
-	  m_game_path( other.m_game_path ),
-	  m_exec_path( other.m_exec_path ),
-	  m_in_place( other.m_in_place ),
-	  m_total_playtime( other.m_total_playtime ),
-	  m_last_played( other.m_last_played )
-	{}
+	GameMetadata( const GameMetadata& other ) noexcept : m_parent( other.m_parent ), m_version( other.m_version ) {}
 
-	GameMetadata( GameMetadata&& other ) :
+	GameMetadata( GameMetadata&& other ) noexcept :
 	  m_parent( other.m_parent ),
-	  m_version( std::move( other.m_version ) ),
-	  m_game_path( std::move( other.m_game_path ) ),
-	  m_exec_path( std::move( other.m_exec_path ) ),
-	  m_in_place( other.m_in_place ),
-	  m_total_playtime( other.m_total_playtime ),
-	  m_last_played( other.m_last_played )
+	  m_version( std::move( other.m_version ) )
 	{}
 
 	//! Required to make std::vector happy

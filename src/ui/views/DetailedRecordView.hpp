@@ -8,6 +8,7 @@
 #include <QWidget>
 
 #include "atlas/database/Record.hpp"
+#include "atlas/database/RecordData.hpp"
 
 QT_BEGIN_NAMESPACE
 
@@ -27,7 +28,7 @@ class DetailedRecordView final : public QWidget
 
 	std::size_t selected_version_idx { 0 };
 
-	GameMetadata& selectedVersion();
+	GameMetadata selectedVersion();
 
 	void reloadRecord();
 
@@ -44,6 +45,7 @@ class DetailedRecordView final : public QWidget
 	//Button handling
 	void on_btnPlay_pressed();
 	void on_tbSelectVersion_pressed();
+	void on_btnManageRecord_pressed();
 
   private:
 

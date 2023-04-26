@@ -90,7 +90,7 @@ add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/ma
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 #Post setup (Windows only)
@@ -118,7 +118,7 @@ add_executable(AtlasTESTS ${TESTS} ${SOURCES})
 
 target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Tracy::TracyClient Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
+target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Qt6::Network Tracy::TracyClient Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 
 if (DEFINED ATLAS_TEST_UI)
     target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")

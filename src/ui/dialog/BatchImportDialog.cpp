@@ -177,7 +177,7 @@ void BatchImportDialog::importFiles()
 
 	ui->btnBack->setDisabled( true );
 
-	progress.showSubProgress( ui->cbMoveImported->isChecked() );
+	//progress.showSubProgress( ui->cbMoveImported->isChecked() );
 
 	emit startImportingGames( games, ui->tbPath->text().toStdString(), ui->cbMoveImported->isChecked() );
 

@@ -26,7 +26,94 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="0" colspan="8">
+   <item row="1" column="5">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0" colspan="7">
+    <widget class="QListView" name="previewList">
+     <property name="movement">
+      <enum>QListView::Free</enum>
+     </property>
+     <property name="flow">
+      <enum>QListView::LeftToRight</enum>
+     </property>
+     <property name="isWrapping" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QPushButton" name="btnManageRecord">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Manage Record</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="tbSelectVersion">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources.qrc">
+       <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLabel" name="lbStorageUsed">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Storage used:
+0B</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="lbLastPlayed">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Last played
+Jan 27 2023</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="7">
     <widget class="QFrame" name="bannerFrame">
      <property name="minimumSize">
       <size>
@@ -37,7 +124,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>300</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -135,40 +222,6 @@ border-color: rgba(0, 0, 0, 0);</string>
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="btnPlay">
-     <property name="minimumSize">
-      <size>
-       <width>80</width>
-       <height>30</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Play</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="lbLastPlayed">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Last played
-Jan 27 2023</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="8">
-    <widget class="QTextEdit" name="gameNotes">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="3">
     <widget class="QLabel" name="lbTotalPlaytime">
      <property name="minimumSize">
@@ -183,65 +236,37 @@ Jan 27 2023</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="8">
-    <widget class="QListView" name="previewList"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QToolButton" name="tbSelectVersion">
+   <item row="1" column="0">
+    <widget class="QPushButton" name="btnPlay">
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>80</width>
        <height>30</height>
       </size>
      </property>
      <property name="text">
-      <string>...</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../resources.qrc">
-       <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
+      <string>Play</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="7">
-    <widget class="QPushButton" name="btnManageRecord">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>30</height>
-      </size>
+   <item row="2" column="0" colspan="7">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
      </property>
-     <property name="text">
-      <string>Manage Record</string>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="gameNotes">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="QLabel" name="lbStorageUsed">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Storage used:
-0B</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

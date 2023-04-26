@@ -33,7 +33,7 @@ enum Namespaces
 };
 
 inline static constexpr std::array< std::pair< std::string_view, Namespaces >, NAMESPACE_END > namespaces {
-	{ { "system:", SYSTEM }, { "creator:", CREATOR }, { "engine:", ENGINE }, { "title:", TITLE }, { "tag", TAG } }
+	{ { "system:", SYSTEM }, { "creator:", CREATOR }, { "engine:", ENGINE }, { "title:", TITLE }, { "tag:", TAG } }
 };
 
 enum SystemTokens

@@ -10,6 +10,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "atlas/config.hpp"
+#include "atlas/database/GameMetadata.hpp"
 #include "atlas/database/Record.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
@@ -21,7 +22,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//Draw banner if present
 	const Record record { index.data().value< Record >() };
 
-	const auto pixmap { record->getBanner( config::delegate::banner_x::get(), config::delegate::banner_y::get() ) };
+	const auto pixmap {
+		record->getBanner( config::delegate::banner_x::get(), config::delegate::banner_y::get(), false )
+	};
 
 	if ( !pixmap.isNull() )
 	{
@@ -55,10 +58,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->drawText( strip_rect, Qt::AlignCenter, record->getTitle() ); //Game name
 	painter->drawText( strip_rect, Qt::AlignLeft | Qt::AlignVCenter, QString::fromStdString( engine_str ) ); //Engine
 
-	if ( record->getVersions().size() > 0 )
+	if ( const auto latest = record->getLatestVersion(); latest.has_value() )
 	{
-		auto& latest { record->getLatestVersion() };
-		std::string version_str = latest.getVersionName().toStdString() + "  ";
+		std::string version_str = latest.value().getVersionName().toStdString() + "  ";
 		painter->drawText(
 			strip_rect, Qt::AlignVCenter | Qt::AlignRight, QString::fromStdString( version_str ) ); //latest version
 	}
