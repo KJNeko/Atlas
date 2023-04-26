@@ -112,10 +112,10 @@ if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
     
-    add_custom_command(TARGET Atlas POST_BUILD 
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/plugins/imageformats/qwebp.dll
-            $<TARGET_FILE_DIR:Atlas>/imageformats
-            COMMENT "Copying qwebp.dll")
+    #add_custom_command(TARGET Atlas POST_BUILD 
+    #        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/plugins/imageformats/qwebp.dll
+    #        $<TARGET_FILE_DIR:Atlas>/imageformats
+    #        COMMENT "Copying qwebp.dll")
 
 endif ()
 

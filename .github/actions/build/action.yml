@@ -93,17 +93,6 @@ runs:
         7z x sqlite-dll.zip -o"./lib"
         cd ..
 
-    - name: Install Qt
-      if: steps.cache-qt.outputs.cache-hit != 'true'
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: 6.4.*
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_mingw'
-        cache: true
-        modules: 'qtimageformats'
-
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
