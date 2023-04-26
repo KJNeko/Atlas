@@ -111,6 +111,10 @@ class FlyWeight : public std::shared_ptr< T >
 	FlyWeight( T_Args&&... args ) : std::shared_ptr< T >( determinePtr( std::forward< T_Args >( args )... ) )
 	{}
 
+	FlyWeight( T other ) : std::shared_ptr< T >( std::move( other ) ) {}
+
+	FlyWeight( T&& other ) : std::shared_ptr< T >( std::forward< T >( other ) ) {}
+
 	FlyWeight( const FlyWeight& other ) = default;
 	FlyWeight( FlyWeight&& other ) = default;
 	FlyWeight& operator=( const FlyWeight& other ) = default;

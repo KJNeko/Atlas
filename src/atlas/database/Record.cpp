@@ -13,6 +13,7 @@
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
 #include "atlas/imageManager.hpp"
+#include "atlas/utils/QImageBlur.hpp"
 
 enum PreviewType
 {
@@ -156,17 +157,23 @@ const std::filesystem::path& RecordData::getBannerPath() const
 QPixmap RecordData::getBanner() const
 {
 	ZoneScoped;
-	if ( !std::filesystem::exists( m_banner ) )
-		return {};
+	if ( std::filesystem::exists( m_banner ) || m_banner.string().starts_with( ":/" ) )
+	{
+		QPixmap banner { QString::fromStdString( m_banner.string() ) };
+		return banner;
+	}
 	else
-		return QPixmap { QString::fromStdString( m_banner.string() ) };
+		return {};
 }
 
-QPixmap RecordData::getBanner( int width, int height, bool expanding ) const
+QPixmap RecordData::getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode ) const
 {
 	ZoneScoped;
 	const auto key { QString::fromStdString( m_banner.filename().string() ) + QString::number( width ) + "x"
-		             + QString::number( height ) };
+		             + QString::number( height )
+		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
+
+	//spdlog::info( key );
 
 	QPixmap banner;
 	if ( QPixmapCache::find( key, &banner ) )
@@ -175,20 +182,29 @@ QPixmap RecordData::getBanner( int width, int height, bool expanding ) const
 	{
 		banner = getBanner();
 		if ( banner.isNull() )
+		{
+			spdlog::warn( "Failed to get image for banner in record: {}, title: {}", m_id, m_title.toStdString() );
 			return {};
+		}
 		else
 		{
-			banner = banner.scaled(
-				width,
-				height,
-				expanding ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
-				Qt::SmoothTransformation );
-			if ( !QPixmapCache::insert( key, banner ) )
+			auto banner_scaled {
+				banner.scaled( width, height, Qt::AspectRatioMode( aspect_ratio_mode ), Qt::SmoothTransformation )
+
+			};
+			if ( aspect_ratio_mode == KEEP_ASPECT_RATIO_BY_EXPANDING )
+			{
+				//Rmove image outside of boundry and center image
+				const int new_x { width == banner_scaled.width() ? 0 : ( banner_scaled.width() - width ) / 2 };
+				const int new_y { height == banner_scaled.height() ? 0 : ( banner_scaled.height() - height ) / 2 };
+				banner_scaled = banner_scaled.copy( new_x, new_y, width, height );
+			}
+
+			if ( !QPixmapCache::insert( key, banner_scaled ) )
 				spdlog::warn( "failed to insert banner into cache with key: {}", key );
-			return banner;
+			return banner_scaled;
 		}
 	}
-	return {};
 }
 
 const std::vector< std::filesystem::path >& RecordData::getPreviewPaths() const

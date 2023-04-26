@@ -11,6 +11,7 @@
 
 #include "FlyWeight.hpp"
 #include "atlas/Types.hpp"
+#include "atlas/config.hpp"
 #include "atlas/database/GameMetadata.hpp"
 
 enum IMAGE_TYPE
@@ -59,7 +60,8 @@ struct RecordData : public QObject
 	std::vector< GameMetadata >& getVersions();
 	const std::filesystem::path& getBannerPath() const;
 	QPixmap getBanner() const;
-	QPixmap getBanner( int width, int height, bool expanding = false ) const;
+	QPixmap getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode = KEEP_ASPECT_RATIO )
+		const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
 
@@ -154,6 +156,7 @@ struct RecordData : public QObject
 	RecordID key() const { return m_id; }
 
 	friend struct RecordAlreadyExists;
+	friend class DummyRecordModel;
 };
 
 using Record = FlyWeight< RecordData, RecordID >;
