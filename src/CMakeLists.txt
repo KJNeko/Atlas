@@ -111,6 +111,9 @@ if (WIN32)
 
     add_custom_command(TARGET Atlas POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
+    
+    add_custom_command(TARGET Atlas POST_BUILD COMMAND file(COPY ${CMAKE_BINARY_DIR}/plugins/imageformats/qwebp.dll
+            DESTINATION ${CMAKE_BINARY_DIR}/bin/imageformats))
 
 endif ()
 
@@ -149,7 +152,3 @@ if (NOT DEFINED FORCE_DISCOVER_TESTS AND ENABLE_TRACY EQUAL OFF)
     include(GoogleTest)
     gtest_discover_tests(AtlasTESTS)
 endif ()
-
-
-
-
