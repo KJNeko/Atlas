@@ -84,9 +84,13 @@ void ImportProcessor::importGames(
 
 			Transaction transaction { Transaction::NoAutocommit };
 
-			Record record {
-				importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction )
-			};
+			auto record = [ & ]() -> Record
+			{
+				if ( !recordExists( title, creator, engine, transaction ) )
+					return importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction );
+				else
+					return { recordID( title, creator, engine, transaction ) };
+			}();
 
 			record->addVersion(
 				std::move( version ),
