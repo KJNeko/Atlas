@@ -17,7 +17,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 
 	if ( !std::filesystem::exists( path ) ) return;
 
-	QPixmap pixmap { path.c_str() };
+	QPixmap pixmap { QString::fromStdString( path.string() ) };
 
 	pixmap = pixmap.scaled( item.rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
