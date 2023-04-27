@@ -111,40 +111,5 @@ endif ()
 
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
-#Test builds
-file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
-
-add_executable(AtlasTESTS ${TESTS} ${SOURCES})
-
-target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_include_directories(AtlasTESTS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-target_link_libraries(AtlasTESTS PUBLIC GTest::gtest_main Qt6::Core Qt6::Network Tracy::TracyClient Qt6::Widgets Qt6::Concurrent SQLite::SQLite3 fmt::fmt spdlog::spdlog)
-
-if (DEFINED ATLAS_TEST_UI)
-    target_compile_definitions(AtlasTESTS PUBLIC ATLAS_TEST_UI="${ATLAS_TEST_UI}")
-endif ()
-
-#Test post setup (Windows only)
-if (WIN32)
-    add_custom_command(TARGET AtlasTESTS POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
-            $<TARGET_FILE:AtlasTESTS>
-            COMMENT "Running windeployqt")
-
-    add_custom_command(TARGET AtlasTESTS POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_RUNTIME_DLLS:AtlasTESTS> $<TARGET_FILE_DIR:AtlasTESTS>
-            COMMAND_EXPAND_LISTS COMMENT "Copying runtime DLLS")
-
-    add_custom_command(TARGET AtlasTESTS POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:AtlasTESTS> COMMENT "Copying sqlite lib files")
-endif ()
-
-if (NOT DEFINED FORCE_DISCOVER_TESTS AND ENABLE_TRACY EQUAL OFF)
-    include(GoogleTest)
-    gtest_discover_tests(AtlasTESTS)
-endif ()
-
-
 
 
