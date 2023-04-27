@@ -44,8 +44,6 @@ if (WIN32)
     message("SQlite3_LIBRARY = ${SQLite3_LIBRARY}")
 endif ()
 
-set(QT_PATH "C:/Qt/6.4.3/mingw_64")
-
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
