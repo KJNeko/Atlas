@@ -89,14 +89,17 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 			return;
 		}
 
-		future
-			.then(
-				[ this ]( const std::optional< GameImportData >& item )
-				{
-					if ( item.has_value() ) emit finishedDirectory( *item );
-					return;
-				} )
-			.waitForFinished();
+		future.then(
+			[ this ]( const std::optional< GameImportData >& item )
+			{
+				if ( item.has_value() ) emit finishedDirectory( *item );
+				return;
+			} );
+	}
+
+	for ( auto& future : futures )
+	{
+		future.waitForFinished();
 	}
 
 	//if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );
