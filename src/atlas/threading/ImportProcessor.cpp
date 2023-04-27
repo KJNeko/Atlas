@@ -89,7 +89,7 @@ void ImportProcessor::importGames(
 				if ( !recordExists( title, creator, engine, transaction ) )
 					return importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction );
 				else
-					return { recordID( title, creator, engine, transaction ) };
+					return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ) };
 			}();
 
 			record->addVersion(
