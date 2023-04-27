@@ -1,10 +1,8 @@
 #include "BatchImportDialog.hpp"
 
 #include <QFileDialog>
-#include <QFutureWatcher>
 #include <QMessageBox>
 #include <QMimeDatabase>
-#include <QtConcurrentRun>
 
 #include <tracy/Tracy.hpp>
 

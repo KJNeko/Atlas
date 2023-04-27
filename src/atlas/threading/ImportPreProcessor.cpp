@@ -63,7 +63,6 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 
 		for ( const auto& file : std::filesystem::directory_iterator( paths.at( i ) ) )
 		{
-			spdlog::info( "{}", file.path() );
 			ZoneScopedN( "Process Directory" );
 			if ( abort_task )
 			{
