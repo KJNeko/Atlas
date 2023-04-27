@@ -54,30 +54,41 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 	std::vector< QFuture< std::optional< GameImportData > > > futures;
 
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
-	for ( auto itter = std::filesystem::
-	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
-	      itter != std::filesystem::recursive_directory_iterator();
-	      ++itter )
+	std::vector< std::filesystem::path > paths;
+	paths.emplace_back( base );
+	for ( size_t i = 0; i < paths.size(); ++i )
 	{
-		ZoneScopedN( "Process Directory" );
-		if ( abort_task )
+		std::vector< std::filesystem::path > found_paths;
+		bool found_valid_dir { false };
+
+		for ( const auto& file : std::filesystem::directory_iterator( paths.at( i ) ) )
 		{
-			abort_task = false;
-			running = false;
-			return;
+			spdlog::info( "{}", file.path() );
+			ZoneScopedN( "Process Directory" );
+			if ( abort_task )
+			{
+				abort_task = false;
+				running = false;
+				return;
+			}
+
+			const std::filesystem::path& folder { file.path() };
+			if ( std::filesystem::is_directory( folder ) )
+			{
+				if ( valid( regex, QString::fromStdString( folder.string() ) ) )
+				{
+					ZoneScopedN( "Test folder for executables" );
+					spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
+
+					futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );
+					found_valid_dir = true;
+				}
+				else
+					found_paths.emplace_back( folder );
+			}
 		}
 
-		const std::filesystem::path& folder { *itter };
-		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
-		{
-			ZoneScopedN( "Test folder for executables" );
-			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
-
-			futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );
-
-			itter.pop();
-			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
-		}
+		if ( !found_valid_dir ) paths.insert( paths.end(), found_paths.begin(), found_paths.end() );
 	}
 
 	for ( auto& future : futures )
