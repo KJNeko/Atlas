@@ -42,6 +42,11 @@ if (WIN32)
     endif ()
     message("SQlite3_INCLUDE_DIR = ${SQLite3_INCLUDE_DIR}")
     message("SQlite3_LIBRARY = ${SQLite3_LIBRARY}")
+
+    if(DEFINED ENV{QT_PATH})
+        set(QT_PATH $ENV{QT_PATH})
+        message("Setting QT path from ENV")
+    endif()
 endif ()
 
 #set(QT_PATH "C:/Qt/6.4.3/mingw_64")
