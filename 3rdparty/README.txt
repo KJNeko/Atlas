@@ -1,0 +1,2 @@
+- qtimageformats is compiled against Qt 6.4.3
+- If the version is changed you will need to recompile locally and add the qwebp.dll in this folder.

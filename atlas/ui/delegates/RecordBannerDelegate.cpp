@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QPixmapCache>
+#include <QGraphicsView>
 
 #include <tracy/Tracy.hpp>
 
@@ -60,7 +61,17 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//Click & Selectec event
 	//TODO: add ability to change selected color.
-	if ( options.state & QStyle::State_MouseOver ) painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
+	if ( options.state & QStyle::State_MouseOver ) 
+	{
+		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
+		// figure out where banner is and show pop up
+		//const int popup_x {banner_size.width()};
+		//const int popup_y {options_rect.y() + banner_size.height()/2};
+		//const QRect popup_rect {0, 0, 100, 200 };		
+		//painter->fillRect(popup_rect, QColor(0,0,255,255));
+	
+	}
+
 
 	//Reset the current brush
 	painter->setBrush( Qt::NoBrush );
@@ -209,4 +220,9 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
   m_grid_spacing { config::grid_ui::gridSpacing::get() }
 {
 	CONFIG_ATTACH_THIS;
+}
+
+void RecordBannerDelegate::calculateWidth()
+{
+	
 }

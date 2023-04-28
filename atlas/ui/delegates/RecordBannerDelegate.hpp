@@ -43,6 +43,7 @@ class RecordBannerDelegate : public QAbstractItemDelegate
   private:
 
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
+	void calculateWidth();
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	void drawText(
 		QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str ) const;

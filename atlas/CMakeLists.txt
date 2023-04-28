@@ -118,9 +118,9 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${SQLite3_LIBRARY} $<TARGET_FILE_DIR:Atlas>)
     
     add_custom_command(TARGET Atlas POST_BUILD 
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/plugins/imageformats/qwebp.dll
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qwebp.dll
             ${CMAKE_BINARY_DIR}/bin/imageformats
-            COMMENT "Copying qwebp.dll")
+            COMMENT "Copying pre-cmopiled qwebp.dll for Qt 6.4.3")
 
 endif ()
 
