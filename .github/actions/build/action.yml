@@ -28,6 +28,11 @@ runs:
   steps:
     - uses: ./.github/actions/setupgcc
 
+    - name: remove libwebp
+    - uses: actions/delete-package-version@v4
+      with:
+        package-name: libwebp
+
     - name: Prepare msbuild for tracy
       uses: microsoft/setup-msbuild@v1
 
