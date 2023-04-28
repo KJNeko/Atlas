@@ -3,3 +3,4 @@ cmake_minimum_required(VERSION 3.21)
 
 add_subdirectory(atlas)
 add_subdirectory(3rdparty/qtimageformats)
+set(WrapWebP_FOUND FALSE)
