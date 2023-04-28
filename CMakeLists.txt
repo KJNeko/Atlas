@@ -3,4 +3,4 @@ project(Atlas)
 
 add_subdirectory(3rdparty/qtimageformats)
 
-add_subdirectory(atlas)
+#add_subdirectory(atlas)
