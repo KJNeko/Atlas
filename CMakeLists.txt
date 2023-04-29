@@ -95,7 +95,7 @@ file(GLOB_RECURSE UI_SOURCES
 #Build exe
 message("FGL_FLAGS: ${FGL_FLAGS}")
 
-add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
+add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
