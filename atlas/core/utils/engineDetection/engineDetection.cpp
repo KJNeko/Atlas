@@ -11,7 +11,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "../../system.hpp"
-#include "core/logging.hpp"
+#include "atlas/core/logging.hpp"
 
 template <>
 bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] FileScanner& scanner )

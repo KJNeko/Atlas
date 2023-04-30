@@ -10,7 +10,7 @@
 
 #include <QString>
 
-#include "core/utils/FileScanner.hpp"
+#include "atlas/core/utils/FileScanner.hpp"
 
 enum Engine : int
 {

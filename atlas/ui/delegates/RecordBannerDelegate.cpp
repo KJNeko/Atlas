@@ -11,9 +11,9 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/config.hpp"
-#include "core/database/Record.hpp"
-#include "core/utils/QImageBlur.hpp"
+#include "atlas/core/config.hpp"
+#include "atlas/core/database/Record.hpp"
+#include "atlas/core/utils/QImageBlur.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const

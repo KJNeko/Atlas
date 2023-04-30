@@ -10,10 +10,10 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/config.hpp"
-#include "core/database/Database.hpp"
-#include "core/imageManager.hpp"
-#include "core/utils/QImageBlur.hpp"
+#include "atlas/core/config.hpp"
+#include "atlas/core/database/Database.hpp"
+#include "atlas/core/imageManager.hpp"
+#include "atlas/core/utils/QImageBlur.hpp"
 
 enum PreviewType
 {

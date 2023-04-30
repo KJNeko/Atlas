@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "core/logging.hpp"
-#include "core/system.hpp"
+#include "atlas/core/logging.hpp"
+#include "atlas/core/system.hpp"
 
 /**
  * @page SearchParsing Searching

@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/utils/FileScanner.hpp"
+#include "atlas/core/utils/FileScanner.hpp"
 
 TEST( FileScannerTest, test )
 {

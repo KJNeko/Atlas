@@ -8,8 +8,8 @@
 #include <QtCore>
 
 #include "ImportPreProcessor.hpp"
-#include "core/Types.hpp"
-#include "ui/dialog/ProgressBarDialog.hpp"
+#include "atlas/core/Types.hpp"
+#include "atlas/ui/dialog/ProgressBarDialog.hpp"
 
 class ImportProcessor : public QObject
 {

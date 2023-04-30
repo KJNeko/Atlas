@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/database/Database.hpp"
+#include "atlas/core/database/Database.hpp"
 
 TEST( TestDatabase, testTransactionUnloaded )
 {

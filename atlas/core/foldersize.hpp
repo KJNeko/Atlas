@@ -9,8 +9,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/logging.hpp"
-#include "core/utils/FileScanner.hpp"
+#include "atlas/core/logging.hpp"
+#include "atlas/core/utils/FileScanner.hpp"
 
 //! Returns the byte size of a folder
 inline std::size_t folderSize( FileScanner& folder )

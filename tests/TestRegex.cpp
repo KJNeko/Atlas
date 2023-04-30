@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/utils/regex/regex.hpp"
+#include "atlas/core/utils/regex/regex.hpp"
 
 TEST( Regex, regexify )
 {

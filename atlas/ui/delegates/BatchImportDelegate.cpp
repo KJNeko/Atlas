@@ -13,7 +13,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "ui/models/BatchImportModel.hpp"
+#include "atlas/ui/models/BatchImportModel.hpp"
 
 void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const

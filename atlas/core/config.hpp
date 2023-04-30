@@ -14,7 +14,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "ConfigNotification.hpp"
-#include "core/logging.hpp"
+#include "logging.hpp"
 
 /**
  *

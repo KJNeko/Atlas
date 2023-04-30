@@ -9,7 +9,7 @@
 
 #include <QAbstractTableModel>
 
-#include "core/threading/ImportPreProcessor.hpp"
+#include "atlas/core/threading/ImportPreProcessor.hpp"
 
 enum ImportColumns
 {

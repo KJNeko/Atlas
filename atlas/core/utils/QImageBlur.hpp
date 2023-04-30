@@ -8,7 +8,7 @@
 #include <QImage>
 #include <QPixmap>
 
-#include "core/config.hpp"
+#include "atlas/core/config.hpp"
 
 QPixmap blurToSize(
 	const QPixmap& pixmap,

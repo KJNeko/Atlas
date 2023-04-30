@@ -7,9 +7,9 @@
 
 #include <gtest/gtest.h>
 
-#include "core/database/Database.hpp"
-#include "core/imageManager.hpp"
-#include "core/logging.hpp"
+#include "atlas/core/database/Database.hpp"
+#include "atlas/core/imageManager.hpp"
+#include "atlas/core/logging.hpp"
 
 #ifdef ATLAS_TEST_UI
 class TestImageManager : public ::testing::Test

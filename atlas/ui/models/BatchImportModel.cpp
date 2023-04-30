@@ -9,8 +9,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/database/Record.hpp"
-#include "core/logging.hpp"
+#include "atlas/core/database/Record.hpp"
+#include "atlas/core/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {

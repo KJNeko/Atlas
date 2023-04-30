@@ -529,12 +529,12 @@ margin-left: 2px;</string>
   <customwidget>
    <class>RecordView</class>
    <extends>QListView</extends>
-   <header>ui/views/RecordView.hpp</header>
+   <header>atlas/ui/views/RecordView.hpp</header>
   </customwidget>
   <customwidget>
    <class>DetailedRecordView</class>
    <extends>QWidget</extends>
-   <header>ui/views/DetailedRecordView.hpp</header>
+   <header>atlas/ui/views/DetailedRecordView.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

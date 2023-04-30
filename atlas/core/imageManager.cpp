@@ -15,7 +15,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/database/Database.hpp"
+#include "atlas/core/database/Database.hpp"
 #include "config.hpp"
 #include "system.hpp"
 

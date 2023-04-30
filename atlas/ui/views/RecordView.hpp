@@ -7,8 +7,8 @@
 
 #include <QListView>
 
-#include "core/Types.hpp"
-#include "core/database/Record.hpp"
+#include "atlas/core/Types.hpp"
+#include "atlas/core/database/Record.hpp"
 
 enum DelegateType
 {

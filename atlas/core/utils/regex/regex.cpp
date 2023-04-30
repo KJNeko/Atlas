@@ -9,7 +9,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/logging.hpp"
+#include "atlas/core/logging.hpp"
 
 QString groupify( const QString group_name )
 {

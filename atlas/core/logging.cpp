@@ -2,7 +2,7 @@
 // Created by kj16609 on 1/27/23.
 //
 
-#include "core/logging.hpp"
+#include "atlas/core/logging.hpp"
 
 #include "config.hpp"
 

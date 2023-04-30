@@ -6,9 +6,9 @@
 
 #include <QApplication>
 
-#include "core/config.hpp"
-#include "core/database/Record.hpp"
-#include "core/foldersize.hpp"
+#include "atlas/core/config.hpp"
+#include "atlas/core/database/Record.hpp"
+#include "atlas/core/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
 {}

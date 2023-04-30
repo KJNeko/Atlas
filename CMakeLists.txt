@@ -87,10 +87,10 @@ else ()
 endif ()
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/core/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/atlas/core/*.cpp")
 
 file(GLOB_RECURSE UI_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/ui/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/*.cpp")
 
 #Build exe
 message("FGL_FLAGS: ${FGL_FLAGS}")
@@ -124,7 +124,7 @@ if (WIN32)
 
 endif ()
 
-add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
 #Test builds
 file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")

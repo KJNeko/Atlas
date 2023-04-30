@@ -3,7 +3,7 @@
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./ui_mainwindow.h"
-#include "core/config.hpp"
+#include "atlas/core/config.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {

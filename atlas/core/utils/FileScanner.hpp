@@ -12,7 +12,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/logging.hpp"
+#include "atlas/core/logging.hpp"
 
 struct FileInfo
 {

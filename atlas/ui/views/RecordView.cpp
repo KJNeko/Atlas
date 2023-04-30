@@ -10,8 +10,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "ui/delegates/RecordBannerDelegate.hpp"
-#include "ui/models/RecordListModel.hpp"
+#include "atlas/ui/delegates/RecordBannerDelegate.hpp"
+#include "atlas/ui/models/RecordListModel.hpp"
 
 RecordView::RecordView( QWidget* parent ) : QListView( parent )
 {

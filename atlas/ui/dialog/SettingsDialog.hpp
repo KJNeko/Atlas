@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QtWidgets>
 
-#include "ui/delegates/RecordBannerDelegate.hpp"
+#include "atlas/ui/delegates/RecordBannerDelegate.hpp"
 
 QT_BEGIN_NAMESPACE
 
