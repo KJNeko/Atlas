@@ -142,7 +142,7 @@ endif ()
 #Test post setup (Windows only)
 if (WIN32)
     add_custom_command(TARGET AtlasTESTS POST_BUILD
-            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations
+            COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations  --no-system-d3d-compiler --no-opengl-sw
             $<TARGET_FILE:AtlasTESTS>
             COMMENT "Running windeployqt")
 
