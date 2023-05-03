@@ -3,7 +3,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-qt.svg)](https://forthebadge.com)
 
 ![Release](https://github.com/KJNeko/Atlas/actions/workflows/release.yml/badge.svg)
-![Staging](https://github.com/KJNeko/Atlas/actions/workflows/staging.yml/badge.svg)
+![Staging](https://github.com/KJNeko/Atlas/actions/workflows/staging.yml/badge.svg?branch=staging)
 # Atlas
 Atlas is a lewd game manager first but does support other mediums relevant to [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/)
 
