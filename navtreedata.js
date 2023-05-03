@@ -25,55 +25,13 @@
 var NAVTREE =
 [
   [ "Atlas Game Manager", "index.html", [
-    [ "Settings list", "H95Settings.html", null ],
-    [ "Searching", "SearchParsing.html", null ],
-    [ "RegexGuide", "RegexGuide.html", [
-      [ "Getting Started", "RegexGuide.html#RegexGuideGettingStarted", null ]
-    ] ],
-    [ "AdvRegexGuide", "AdvRegexGuide.html", [
-      [ "Advanced Parsing", "AdvRegexGuide.html#AdvRegexGuideParsing", null ]
-    ] ],
     [ "README", "md_README.html", [
       [ "Atlas", "md_README.html#autotoc_md0", [
         [ "Features:", "md_README.html#autotoc_md1", [
-          [ "F95Zone integration https://github.com/KJNeko/Atlas/issues/2", "md_README.html#autotoc_md2", null ],
-          [ "DLSite integration https://github.com/KJNeko/Atlas/issues/3", "md_README.html#autotoc_md3", null ],
-          [ "Steam/SteamCMD integration https://github.com/KJNeko/Atlas/issues/4", "md_README.html#autotoc_md4", null ]
+          [ "F95Zone integration <a href=\"https://github.com/KJNeko/Atlas/issues/2\" >Issue $2</a>", "md_README.html#autotoc_md2", null ],
+          [ "DLSite integration <a href=\"https://github.com/KJNeko/Atlas/issues/3\" >Issue #3</a>", "md_README.html#autotoc_md3", null ],
+          [ "Steam/SteamCMD integration <a href=\"https://github.com/KJNeko/Atlas/issues/4\" >Issue #4</a>", "md_README.html#autotoc_md4", null ]
         ] ]
-      ] ]
-    ] ],
-    [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
-        [ "Typedefs", "namespacemembers_type.html", null ]
-      ] ]
-    ] ],
-    [ "Concepts", "concepts.html", "concepts" ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ],
-        [ "Related Functions", "functions_rela.html", null ]
-      ] ]
-    ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -81,10 +39,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"AddGameDialog_8cpp.html",
-"classImportProcessor.html",
-"functions_r.html",
-"system_8hpp.html"
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
