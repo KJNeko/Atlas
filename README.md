@@ -2,8 +2,8 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-qt.svg)](https://forthebadge.com)
 
-[![Release](https://github.com/KJNeko/Atlas/actions/workflows/release.yml/badge.svg)](https://github.com/KJNeko/Atlas/actions/workflows/release.yml)
-[![Test Staging](https://github.com/KJNeko/Atlas/actions/workflows/staging-test.yml/badge.svg?branch=staging)](https://github.com/KJNeko/Atlas/actions/workflows/staging-test.yml)
+![Release](https://github.com/KJNeko/Atlas/actions/workflows/release.yml/badge.svg)
+![Staging](https://github.com/KJNeko/Atlas/actions/workflows/staging.yml/badge.svg?branch=staging)
 # Atlas
 Atlas is a game manager for Windows and Linux, (Possibly mac eventually but probably not). 
 We support adding games from [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/) and plan on adding more in the future (LINK ISSUE HERE).
