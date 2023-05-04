@@ -12,7 +12,6 @@
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
-	ZoneScoped;
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< std::filesystem::path >() };
 
 	if ( !std::filesystem::exists( path ) ) return;
@@ -28,6 +27,5 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 QSize ImageDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
-	ZoneScoped;
 	return { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() };
 }

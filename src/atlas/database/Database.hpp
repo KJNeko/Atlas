@@ -27,8 +27,6 @@
 
 #include <sqlite_modern_cpp.h>
 
-#include <client/TracyLock.hpp>
-
 #pragma GCC diagnostic pop
 
 namespace internal

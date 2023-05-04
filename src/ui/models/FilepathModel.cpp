@@ -4,11 +4,8 @@
 
 #include "FilepathModel.hpp"
 
-#include <tracy/Tracy.hpp>
-
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
 {
-	ZoneScoped;
 	beginResetModel();
 	this->m_paths = filepaths;
 	endResetModel();

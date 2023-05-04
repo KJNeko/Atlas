@@ -13,8 +13,6 @@
 #include <QMessageBox>
 #include <QPixmap>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/database/Database.hpp"
 #include "config.hpp"
 #include "system.hpp"
@@ -23,7 +21,6 @@ namespace imageManager
 {
 	void cleanOrphans()
 	{
-		ZoneScoped;
 		spdlog::debug( "Clearing orphan previews/banners" );
 		//Grab all images from the database
 		Transaction transaction { Transaction::Autocommit };
@@ -43,7 +40,6 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
-		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
 			const QString qstr { QString::fromStdString( path.string() ) };

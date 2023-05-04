@@ -17,7 +17,6 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 void ImportProcessor::importGames(
 	const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
 {
-	ZoneScoped;
 	emit startProgressBar();
 	emit updateMax( static_cast< int >( data.size() ) );
 
@@ -28,17 +27,12 @@ void ImportProcessor::importGames(
 	//God I love decomposition
 	for ( auto [ path, title, creator, engine, version, size, executables, executable ] : data )
 	{
-		ZoneScopedN( "Import game" );
-
 		if ( pause_task )
 		{
-			TracyMessageL( "Import paused" );
 			pause_task.wait( pause_task );
-			TracyMessageL( "Import resumed" );
 		}
 		if ( abort_task )
 		{
-			TracyMessageL( "Abort import" );
 			abort_task = false;
 			running = false;
 			return;
@@ -52,7 +46,6 @@ void ImportProcessor::importGames(
 		{
 			if ( move_after_import )
 			{
-				ZoneScopedN( "Copy game" );
 				//Gather all files to copy
 				std::vector< std::filesystem::path > files;
 				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
@@ -92,7 +85,6 @@ void ImportProcessor::importGames(
 
 			auto record = [ & ]() -> Record
 			{
-				ZoneScopedN( "Get record" );
 				if ( !recordExists( title, creator, engine, transaction ) )
 					return importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction );
 				else
@@ -110,7 +102,6 @@ void ImportProcessor::importGames(
 			if ( std::filesystem::exists( source_folder / "banner.jpg" )
 			     || std::filesystem::exists( source_folder / "banner.png" ) )
 			{
-				ZoneScopedN( "Handle banner" );
 				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
 					                         source_folder / "banner.jpg" :
 					                         source_folder / "banner.png" };
@@ -121,7 +112,6 @@ void ImportProcessor::importGames(
 
 			if ( std::filesystem::exists( source_folder / "previews" ) )
 			{
-				ZoneScopedN( "Handle preview" );
 				for ( const auto& file : std::filesystem::directory_iterator( source_folder / "previews" ) )
 				{
 					emit updateSubText( QString( "Adding preview: %1" )
@@ -138,7 +128,6 @@ void ImportProcessor::importGames(
 
 			if ( move_after_import )
 			{
-				ZoneScopedN( "Delete old" );
 				emit updateSubText( "Deleting source folder..." );
 				std::filesystem::remove_all( source_folder );
 			}

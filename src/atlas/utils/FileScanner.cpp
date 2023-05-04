@@ -7,13 +7,10 @@
 #include <assert.h>
 #include <queue>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/logging.hpp"
 
 FileInfo FileScannerGenerator::operator()()
 {
-	ZoneScoped;
 	m_h();
 	if ( m_h.promise().exception ) std::rethrow_exception( m_h.promise().exception );
 	return std::move( m_h.promise().value );
@@ -25,7 +22,6 @@ FileInfo FileScannerGenerator::operator()()
 
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
-	ZoneScoped;
 	if ( !std::filesystem::exists( path ) )
 	{
 		spdlog::error( "scan_files: Path {} does not exist.", path.string() );
@@ -99,18 +95,15 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 
 FileScanner::FileScanner( const std::filesystem::path& path ) : m_path( path ), file_scanner( scan_files( path ) )
 {
-	ZoneScoped;
 	files.emplace_back( file_scanner() );
 }
 
 FileInfo& FileScanner::at( std::size_t index )
 {
-	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
 		const auto size { files.size() };
 
-		ZoneScopedN( "Fetch file info" );
 		files.emplace_back( file_scanner() );
 
 		assert( files.size() > 0 );
@@ -124,7 +117,5 @@ FileInfo& FileScanner::at( std::size_t index )
 
 bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator& end ) const
 {
-	ZoneScoped;
-
 	return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
 }

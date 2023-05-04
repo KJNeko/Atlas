@@ -11,8 +11,6 @@
 #include <QSettings>
 #include <QVariant>
 
-#include <tracy/Tracy.hpp>
-
 #include "ConfigNotification.hpp"
 #include "atlas/logging.hpp"
 
@@ -47,26 +45,21 @@ inline QSettings getSettingsObject()
 
 #define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
 
-#define TRACY_ZONESCOPEDSETTINGS( group, name, func ) ZoneScopedN( #group "::" #name "::" #func "()" );
-
 #define SETTINGS_D( group, name, type, default_value )                                                                 \
 	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
 		inline void set( const type& val )                                                                             \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, set )                                                               \
 			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
 		}                                                                                                              \
                                                                                                                        \
 		inline void setDefault()                                                                                       \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, setDefault )                                                        \
 			set( default_value );                                                                                      \
 		}                                                                                                              \
                                                                                                                        \
 		inline type get()                                                                                              \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, get )                                                               \
 			if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                             \
                                                                                                                        \
 			if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                      \
@@ -84,7 +77,6 @@ inline QSettings getSettingsObject()
 	{                                                                                                                  \
 		inline std::filesystem::path getPath()                                                                         \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, getPath )                                                           \
 			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
 			std::filesystem::create_directories( filepath );                                                           \
 			return std::filesystem::canonical( filepath );                                                             \
@@ -92,7 +84,6 @@ inline QSettings getSettingsObject()
                                                                                                                        \
 		inline void setPath( const std::filesystem::path path )                                                        \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, setPath )                                                           \
 			group::name::set( QString::fromStdString( path.string() ) );                                               \
 		}                                                                                                              \
 	}
@@ -103,7 +94,6 @@ inline QSettings getSettingsObject()
 	{                                                                                                                  \
 		inline std::filesystem::path getPath()                                                                         \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, getPath )                                                           \
 			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
 			std::filesystem::create_directories( filepath.parent_path() );                                             \
 			return std::filesystem::canonical( filepath );                                                             \
@@ -111,7 +101,6 @@ inline QSettings getSettingsObject()
                                                                                                                        \
 		inline void setPath( const std::filesystem::path path )                                                        \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, setPath )                                                           \
 			group::name::set( QString::fromStdString( path.string() ) );                                               \
 		}                                                                                                              \
 	}
@@ -121,19 +110,16 @@ inline QSettings getSettingsObject()
 	{                                                                                                                  \
 		inline bool hasValue()                                                                                         \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, hasValue )                                                          \
 			return getSettingsObject().contains( KEY_VALUE( group, name ) );                                           \
 		}                                                                                                              \
                                                                                                                        \
 		inline type get()                                                                                              \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, get )                                                               \
 			return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                          \
 		}                                                                                                              \
                                                                                                                        \
 		inline void set( const type val )                                                                              \
 		{                                                                                                              \
-			TRACY_ZONESCOPEDSETTINGS( group, name, set )                                                               \
 			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
 		}                                                                                                              \
 	}
@@ -145,19 +131,16 @@ inline QSettings getSettingsObject()
 		{                                                                                                              \
 			inline void set( const int& val )                                                                          \
 			{                                                                                                          \
-				TRACY_ZONESCOPEDSETTINGS( group, name, set )                                                           \
 				getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                         \
 			}                                                                                                          \
                                                                                                                        \
 			inline void setDefault()                                                                                   \
 			{                                                                                                          \
-				TRACY_ZONESCOPEDSETTINGS( group, name, setDefault )                                                    \
 				set( static_cast< int >( default_value ) );                                                            \
 			}                                                                                                          \
                                                                                                                        \
 			inline int get()                                                                                           \
 			{                                                                                                          \
-				TRACY_ZONESCOPEDSETTINGS( group, name, get )                                                           \
 				if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                         \
                                                                                                                        \
 				if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                  \

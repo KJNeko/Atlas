@@ -8,8 +8,6 @@
 #include <QMenu>
 #include <QMouseEvent>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/database/GameMetadata.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
@@ -17,7 +15,6 @@
 
 RecordView::RecordView( QWidget* parent ) : QListView( parent )
 {
-	ZoneScoped;
 	QListView::setModel( new RecordListModel() );
 	setRenderMode( BANNER_VIEW );
 
@@ -30,7 +27,6 @@ RecordView::RecordView( QWidget* parent ) : QListView( parent )
 
 void RecordView::setRenderMode( const DelegateType type )
 {
-	ZoneScoped;
 	if ( type == current_render_mode ) return;
 
 	switch ( type )
@@ -53,7 +49,6 @@ void RecordView::setRenderMode( const DelegateType type )
 
 void RecordView::addRecords( const std::vector< RecordID > records )
 {
-	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
 
 	for ( const auto& record : records ) model->addRecord( Record( record ) );
@@ -61,7 +56,6 @@ void RecordView::addRecords( const std::vector< RecordID > records )
 
 void RecordView::setRecords( const std::vector< Record > records )
 {
-	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
 
 	model->setRecords( records );
@@ -69,7 +63,6 @@ void RecordView::setRecords( const std::vector< Record > records )
 
 void RecordView::on_customContextMenuRequested( const QPoint& pos )
 {
-	ZoneScoped;
 	QMenu menu { this };
 	menu.move( mapToGlobal( pos ) );
 
@@ -157,7 +150,6 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 
 void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 {
-	ZoneScoped;
 	if ( selectionModel()->hasSelection() )
 	{
 		emit openDetailedView( selectionModel()->currentIndex().data().value< Record >() );

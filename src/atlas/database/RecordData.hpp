@@ -7,8 +7,6 @@
 
 #include <QPixmap>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/Types.hpp"
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"

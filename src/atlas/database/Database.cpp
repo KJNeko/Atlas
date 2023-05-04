@@ -4,8 +4,6 @@
 
 #include "Database.hpp"
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/config.hpp"
 
 namespace internal
@@ -40,7 +38,6 @@ try
 {
 	initLogging();
 
-	ZoneScoped;
 	spdlog::debug( "Initalizing database with path {}", init_path );
 	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
 		std::filesystem::create_directories( init_path.parent_path() );
@@ -127,7 +124,6 @@ catch ( sqlite::sqlite_exception& e )
 
 void Database::deinit()
 {
-	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
 	delete internal::db;
 	internal::db = nullptr;
@@ -135,7 +131,6 @@ void Database::deinit()
 
 internal::LockGuardType TransactionData::getLock()
 {
-	ZoneScoped;
 	//Check if we are already locked
 	if ( internal::last_locked == std::this_thread::get_id() )
 	{
@@ -158,7 +153,6 @@ TransactionData::~TransactionData()
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
 {
-	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		spdlog::error( "Transaction: Database was not ready!" );
@@ -172,7 +166,6 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 
 Transaction::~Transaction()
 {
-	ZoneScoped;
 	if ( data.use_count() == 1 && !data->invalid )
 	{
 		if ( m_autocommit )
@@ -187,7 +180,6 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
-	ZoneScoped;
 	if ( !data->ran_once )
 	{
 		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
@@ -201,7 +193,6 @@ void Transaction::commit()
 
 void Transaction::abort()
 {
-	ZoneScoped;
 	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
 	if ( !data->ran_once )
 	{
@@ -216,7 +207,6 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
-	ZoneScoped;
 	if ( data == nullptr ) throw TransactionInvalid( sql );
 
 	data->ran_once = true;
@@ -235,7 +225,6 @@ Transaction::Transaction( Transaction& other ) :
 
 NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {
-	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		guard.reset();
@@ -245,13 +234,11 @@ NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database:
 
 NonTransaction::~NonTransaction()
 {
-	ZoneScoped;
 	if ( !finished ) abort();
 }
 
 void NonTransaction::commit()
 {
-	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -259,7 +246,6 @@ void NonTransaction::commit()
 
 void NonTransaction::abort()
 {
-	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -268,7 +254,6 @@ void NonTransaction::abort()
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
-	ZoneScoped;
 	m_previous_statement = sql;
 	spdlog::debug( "Executing {} without transaction", sql );
 	if ( finished ) throw TransactionInvalid( m_previous_statement );

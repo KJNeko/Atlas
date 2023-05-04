@@ -11,8 +11,6 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/database/GameMetadata.hpp"
 #include "atlas/foldersize.hpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -35,7 +33,6 @@ DetailedRecordView::~DetailedRecordView()
 
 void DetailedRecordView::setRecord( const Record record_in )
 {
-	ZoneScoped;
 	m_record = record_in;
 
 	reloadRecord();

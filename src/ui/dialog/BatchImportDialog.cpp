@@ -4,8 +4,6 @@
 #include <QMessageBox>
 #include <QMimeDatabase>
 
-#include <tracy/Tracy.hpp>
-
 #include "ProgressBarDialog.hpp"
 #include "atlas/config.hpp"
 #include "atlas/foldersize.hpp"
@@ -16,7 +14,6 @@
 
 BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::BatchImportDialog )
 {
-	ZoneScoped;
 	ui->setupUi( this );
 	ui->progressBar->hide();
 	ui->btnBack->setHidden( true );
@@ -78,7 +75,6 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 void BatchImportDialog::loadConfig()
 {
-	ZoneScoped;
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
 	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
@@ -89,7 +85,6 @@ void BatchImportDialog::loadConfig()
 
 void BatchImportDialog::saveConfig()
 {
-	ZoneScoped;
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
 	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
@@ -100,7 +95,6 @@ void BatchImportDialog::saveConfig()
 
 BatchImportDialog::~BatchImportDialog()
 {
-	ZoneScoped;
 	saveConfig();
 	config::geometry::batch_import_dialog::set( saveGeometry() );
 
@@ -112,7 +106,6 @@ BatchImportDialog::~BatchImportDialog()
 
 void BatchImportDialog::on_btnSetFolder_pressed()
 {
-	ZoneScoped;
 	auto directory { QFileDialog::getExistingDirectory( this, "Select folder to add" ) };
 
 	if ( directory.isEmpty() || !QFile::exists( directory ) )
@@ -123,7 +116,6 @@ void BatchImportDialog::on_btnSetFolder_pressed()
 
 void BatchImportDialog::processFiles()
 {
-	ZoneScoped;
 	ui->btnNext->setEnabled( false );
 	ui->btnNext->setText( "Import" );
 	ui->btnBack->setHidden( false );
@@ -135,7 +127,6 @@ void BatchImportDialog::processFiles()
 
 	auto stripEndSlash = []( const std::filesystem::path path ) -> std::filesystem::path
 	{
-		ZoneScoped;
 		if ( const auto str = path.string(); str.ends_with( '/' ) || str.ends_with( '\\' ) )
 			return { str.substr( 0, str.size() - 1 ) };
 		else
@@ -161,7 +152,6 @@ void BatchImportDialog::processFiles()
 
 void BatchImportDialog::importFiles()
 {
-	ZoneScoped;
 	const auto& games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
 
 	if ( ui->cbMoveImported->isChecked() )
@@ -185,7 +175,7 @@ void BatchImportDialog::importFiles()
 void BatchImportDialog::on_btnNext_pressed()
 {
 	spdlog::debug( "next pressed" );
-	ZoneScoped;
+
 	if ( ui->btnNext->text() == "Import" )
 	{
 		importFiles();
@@ -222,7 +212,6 @@ void BatchImportDialog::on_btnNext_pressed()
 
 void BatchImportDialog::on_btnBack_pressed()
 {
-	ZoneScoped;
 	spdlog::debug( "Back pressed" );
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
@@ -242,7 +231,6 @@ void BatchImportDialog::modelChanged(
 	[[maybe_unused]] const QModelIndex& bottomRight,
 	[[maybe_unused]] const QList< int >& roles )
 {
-	ZoneScoped;
 	ui->twGames->resizeColumnsToContents();
 }
 

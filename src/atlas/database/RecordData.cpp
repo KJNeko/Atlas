@@ -8,8 +8,6 @@
 
 #include <QPixmapCache>
 
-#include <tracy/Tracy.hpp>
-
 #include "Record.hpp"
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
@@ -18,8 +16,6 @@
 
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
-	ZoneScoped;
-
 	if ( id == 0 ) throw std::runtime_error( "Invalid record id" );
 
 	bool exists;
@@ -31,13 +27,11 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 
 RecordID RecordData::getID() const
 {
-	ZoneScoped;
 	return m_id;
 }
 
 const QString RecordData::getTitle( Transaction transaction ) const
 {
-	ZoneScoped;
 	std::string title;
 	transaction << "SELECT title FROM records WHERE record_id = ?" << m_id >> title;
 	return QString::fromStdString( title );
@@ -45,7 +39,6 @@ const QString RecordData::getTitle( Transaction transaction ) const
 
 const QString RecordData::getCreator( Transaction transaction ) const
 {
-	ZoneScoped;
 	std::string creator;
 	transaction << "SELECT creator FROM records WHERE record_id = ?" << m_id >> creator;
 	return QString::fromStdString( creator );
@@ -53,7 +46,6 @@ const QString RecordData::getCreator( Transaction transaction ) const
 
 const QString RecordData::getEngine( Transaction transaction ) const
 {
-	ZoneScoped;
 	std::string engine;
 	transaction << "SELECT engine FROM records WHERE record_id = ?" << m_id >> engine;
 	return QString::fromStdString( engine );
@@ -61,7 +53,6 @@ const QString RecordData::getEngine( Transaction transaction ) const
 
 uint64_t RecordData::getLastPlayed( Transaction transaction ) const
 {
-	ZoneScoped;
 	uint64_t last_played;
 	transaction << "SELECT last_played_r FROM records WHERE record_id = ?" << m_id >> last_played;
 	return last_played;
@@ -69,7 +60,6 @@ uint64_t RecordData::getLastPlayed( Transaction transaction ) const
 
 uint32_t RecordData::getTotalPlaytime( Transaction transaction ) const
 {
-	ZoneScoped;
 	uint32_t total_playtime;
 	transaction << "SELECT total_playtime FROM records WHERE record_id = ?" << m_id >> total_playtime;
 	return total_playtime;
@@ -77,8 +67,6 @@ uint32_t RecordData::getTotalPlaytime( Transaction transaction ) const
 
 std::optional< GameMetadata > RecordData::getVersion( const QString version_name, Transaction transaction )
 {
-	ZoneScoped;
-
 	const auto versions { getVersions( transaction ) };
 
 	const auto idx { std::find_if(
@@ -94,7 +82,6 @@ std::optional< GameMetadata > RecordData::getVersion( const QString version_name
 
 std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transaction )
 {
-	ZoneScoped;
 	const auto versions { getVersions( transaction ) };
 	if ( versions.empty() )
 		return std::nullopt;
@@ -104,7 +91,6 @@ std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transact
 
 std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
 {
-	ZoneScoped;
 	std::vector< GameMetadata > metadata;
 	transaction << "SELECT version FROM game_metadata WHERE record_id = ? ORDER BY date_added DESC" << m_id >>
 		[ this, &metadata, &transaction ]( std::string version )
@@ -116,7 +102,6 @@ std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
 const std::filesystem::path RecordData::getBannerPath( Transaction transaction ) const
 try
 {
-	ZoneScoped;
 	std::string banner_path;
 	transaction << "SELECT path FROM banners WHERE record_id = ?" << m_id >> banner_path;
 	return { banner_path };
@@ -129,7 +114,6 @@ catch ( ... )
 QPixmap RecordData::getBanner( Transaction transaction ) const
 try
 {
-	ZoneScoped;
 	const auto path { getBannerPath( transaction ) };
 
 	if ( path.empty() )
@@ -147,7 +131,6 @@ catch ( ... )
 QPixmap RecordData::
 	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
 {
-	ZoneScoped;
 	const auto key { QString::fromStdString( getBannerPath( transaction ).filename().string() )
 		             + QString::number( width ) + "x" + QString::number( height )
 		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
@@ -192,7 +175,6 @@ QPixmap RecordData::
 const std::vector< std::filesystem::path > RecordData::getPreviewPaths( Transaction transaction ) const
 try
 {
-	ZoneScoped;
 	std::vector< std::string > preview_strs;
 	transaction << "SELECT path FROM previews WHERE record_id = ?" << m_id >> [ & ]( const std::string str )
 	{ preview_strs.emplace_back( str ); };
@@ -210,7 +192,6 @@ catch ( ... )
 
 std::vector< QPixmap > RecordData::getPreviews( Transaction transaction ) const
 {
-	ZoneScoped;
 	std::vector< QPixmap > images;
 
 	for ( const auto& link : getPreviewPaths( transaction ) )
@@ -223,38 +204,32 @@ std::vector< QPixmap > RecordData::getPreviews( Transaction transaction ) const
 
 void RecordData::setTitle( QString new_title, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET title = ? WHERE record_id = ? " << new_title.toStdString() << m_id;
 }
 
 void RecordData::setCreator( QString new_creator, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET creator = ? WHERE record_id = ?" << new_creator.toStdString() << m_id;
 }
 
 void RecordData::setEngine( QString new_engine, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET engine = ? WHERE record_id = ?" << new_engine.toStdString() << m_id;
 }
 
 void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET last_played_r = ? WHERE record_id = ?" << time << m_id;
 }
 
 void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time + getTotalPlaytime( transaction )
 				<< m_id;
 }
 
 void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction )
 {
-	ZoneScoped;
 	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time << m_id;
 }
 
@@ -267,7 +242,6 @@ void RecordData::addVersion(
 	Transaction transaction )
 try
 {
-	ZoneScoped;
 	spdlog::debug(
 		"Adding version {} to record {}:{}", version.toStdString(), m_id, getTitle( transaction ).toStdString() );
 	//Check if version is already added
@@ -298,7 +272,6 @@ catch ( ... )
 
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
 {
-	ZoneScoped;
 	const auto active_versions { getVersions( transaction ) };
 
 	auto itter { std::find( active_versions.begin(), active_versions.end(), version ) };
@@ -311,7 +284,6 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 
 void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
 {
-	ZoneScoped;
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_id );
 
 	//Move banner to image folder
@@ -330,7 +302,6 @@ void RecordData::setBanner( const std::filesystem::path& path, Transaction trans
 
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
 {
-	ZoneScoped;
 	//Move preview to image folder
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
@@ -350,14 +321,12 @@ void RecordData::addPreview( const std::filesystem::path& path, Transaction tran
 
 void RecordData::sync( Transaction transaction )
 {
-	ZoneScoped;
 	new ( this ) RecordData( m_id, transaction );
 }
 
 RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction )
 try
 {
-	ZoneScoped;
 	RecordID record_id { 0 };
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
 				<< creator.toStdString() << engine.toStdString()
@@ -392,7 +361,6 @@ catch ( ... )
 
 QPixmap RecordData::getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
 {
-	ZoneScoped;
 	return getBanner( size.width(), size.height(), aspect_ratio_mode, transaction );
 }
 
@@ -487,7 +455,6 @@ void RecordData::removeUserTag( const QString str, Transaction transaction )
 
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
-	ZoneScoped;
 	RecordID record_id { 0 };
 
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
@@ -499,6 +466,5 @@ RecordID recordID( const QString& title, const QString& creator, const QString& 
 
 bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
-	ZoneScoped;
 	return recordID( title, creator, engine, transaction );
 }

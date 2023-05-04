@@ -8,8 +8,6 @@
 #include <QPainter>
 #include <QPixmapCache>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/config.hpp"
 #include "atlas/database/GameMetadata.hpp"
 #include "atlas/database/Record.hpp"
@@ -18,7 +16,6 @@
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
-	ZoneScoped;
 	painter->save();
 
 	//Draw banner if present
@@ -113,7 +110,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 QSize RecordBannerDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
-	ZoneScoped;
 	return m_grid_size;
 }
 
@@ -121,7 +117,6 @@ void RecordBannerDelegate::
 	drawText( QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str )
 		const
 {
-	ZoneScoped;
 	if ( location != NONE )
 	{
 		const QSize size { rect.width(), strip_size };
@@ -172,7 +167,6 @@ void RecordBannerDelegate::
 
 void RecordBannerDelegate::reloadConfig()
 {
-	ZoneScoped;
 	m_grid_size = { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() };
 	m_scale_type = config::grid_ui::imageLayout::get();
 	m_strip_height = config::grid_ui::overlayHeight::get();

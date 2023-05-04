@@ -8,7 +8,6 @@
 
 void Search::searchTextChanged( [[maybe_unused]] QString text )
 {
-	ZoneScoped;
 	if ( text.isEmpty() ) return triggerEmptySearch();
 
 	try

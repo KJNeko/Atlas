@@ -10,8 +10,6 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 
-#include <tracy/Tracy.hpp>
-
 #include "ProgressBarDialog.hpp"
 #include "atlas/config.hpp"
 #include "atlas/foldersize.hpp"
@@ -60,8 +58,6 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::prepareThemeSettings()
 {
-	ZoneScoped;
-
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
 	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
@@ -96,7 +92,6 @@ void SettingsDialog::saveThemeSettings()
 
 void SettingsDialog::prepareGridViewerSettings()
 {
-	ZoneScoped;
 	//Init Grid previewSettings
 	//Grid Capsule Settings
 
@@ -145,8 +140,6 @@ void SettingsDialog::prepareGridViewerSettings()
 
 void SettingsDialog::saveBannerViewerSettings()
 {
-	ZoneScoped;
-
 	config::grid_ui::imageLayout::set( static_cast< SCALE_TYPE >( ui->cbImageLayout->currentIndex() ) );
 	config::grid_ui::blurType::set( static_cast< BLUR_TYPE >( ui->cbBlurType->currentIndex() ) );
 	config::grid_ui::blurRadius::set( ui->sbBlurRadius->value() );
@@ -177,7 +170,6 @@ void SettingsDialog::saveBannerViewerSettings()
 
 void SettingsDialog::preparePathsSettings()
 {
-	ZoneScoped;
 	//Set 'root' canomical path
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
@@ -202,7 +194,6 @@ void SettingsDialog::preparePathsSettings()
 
 void SettingsDialog::savePathsSettings()
 {
-	ZoneScoped;
 	//Handle pathSettings
 	if ( ui->gamePath->text() != config::paths::games::get() )
 	{
@@ -306,7 +297,6 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 
 void SettingsDialog::on_applySettings_pressed()
 {
-	ZoneScoped;
 	savePathsSettings();
 	saveBannerViewerSettings();
 	saveThemeSettings();
@@ -331,7 +321,6 @@ void SettingsDialog::reject()
 
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
-	ZoneScoped;
 	spdlog::debug( "Theme changed to {}", text );
 
 	reloadTheme();
@@ -357,7 +346,6 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 
 void SettingsDialog::reloadTheme()
 {
-	ZoneScoped;
 	if ( config::ui::use_system_theme::get() )
 	{
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );

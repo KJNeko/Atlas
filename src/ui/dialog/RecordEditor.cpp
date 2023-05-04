@@ -25,13 +25,11 @@ RecordEditor::RecordEditor( const RecordID record, QWidget* parent, Transaction 
   m_versions( m_record->getVersions( transaction ) ),
   ui( new Ui::RecordEditor )
 {
-	ZoneScoped;
 	ui->setupUi( this );
 }
 
 void RecordEditor::loadRecordInfo()
 {
-	ZoneScoped;
 	ui->titleLineEdit->setText( m_record->getTitle() );
 	ui->creatorLineEdit->setText( m_record->getCreator() );
 	ui->engineLineEdit->setText( m_record->getEngine() );
@@ -40,21 +38,17 @@ void RecordEditor::loadRecordInfo()
 
 void RecordEditor::loadBanners()
 {
-	ZoneScoped;
 	ui->bannerPreview
 		->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO ) );
 }
 
 void RecordEditor::loadPreviews()
 {
-	ZoneScoped;
 	ui->previewList->setPaths( m_record->getPreviewPaths() );
 }
 
 void RecordEditor::loadTags()
 {
-	ZoneScoped;
-
 	const auto user_tags { m_record->getUserTags() };
 	QStringList user_tags_list;
 	for ( const auto& tag : user_tags ) user_tags_list.emplace_back( tag );
@@ -77,8 +71,6 @@ RecordEditor::~RecordEditor()
 
 void RecordEditor::resizeEvent( QResizeEvent* event )
 {
-	ZoneScoped;
-
 	loadBanners();
 
 	QDialog::resizeEvent( event );
@@ -133,7 +125,7 @@ void RecordEditor::on_btnRemovePreviews_pressed()
 void RecordEditor::dragEnterEvent( QDragEnterEvent* event )
 {
 	spdlog::info( "dragEnterEvent" );
-	ZoneScoped;
+
 	if ( event->mimeData()->hasUrls() )
 	{
 		event->acceptProposedAction();
@@ -150,7 +142,6 @@ void RecordEditor::dragEnterEvent( QDragEnterEvent* event )
 
 void RecordEditor::dropEvent( QDropEvent* event )
 {
-	ZoneScoped;
 	if ( event->mimeData()->hasUrls() )
 	{
 		const auto mouse_pos { mapToGlobal( event->position().toPoint() ) };
@@ -184,7 +175,6 @@ void RecordEditor::dropEvent( QDropEvent* event )
 
 void RecordEditor::on_btnDeleteVersion_pressed()
 {
-	ZoneScoped;
 	if ( ui->versionList->count() == 0 ) return;
 
 	const auto selected_list { ui->versionList->selectedItems() };
@@ -234,9 +224,7 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 }
 
 void RecordEditor::on_btnAddVersion_pressed()
-{
-	ZoneScoped;
-}
+{}
 
 void RecordEditor::switchTabs( const int index )
 {

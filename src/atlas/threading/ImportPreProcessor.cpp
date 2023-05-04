@@ -8,8 +8,6 @@
 #include <QRunnable>
 #include <QtConcurrent>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/foldersize.hpp"
 #include "atlas/logging.hpp"
 #include "atlas/utils/engineDetection/engineDetection.hpp"
@@ -21,7 +19,6 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 std::optional< GameImportData >
 	runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
 {
-	ZoneScoped;
 	FileScanner scanner { folder };
 	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
@@ -47,7 +44,6 @@ std::optional< GameImportData >
 
 void ImportPreProcessor::processDirectory( const QString regex, const std::filesystem::path base )
 {
-	ZoneScoped;
 	running = true;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 
@@ -63,7 +59,6 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 
 		for ( const auto& file : std::filesystem::directory_iterator( paths.at( i ) ) )
 		{
-			ZoneScopedN( "Process Directory" );
 			if ( abort_task )
 			{
 				abort_task = false;
@@ -76,7 +71,6 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 			{
 				if ( valid( regex, QString::fromStdString( folder.string() ) ) )
 				{
-					ZoneScopedN( "Test folder for executables" );
 					spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 
 					futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );

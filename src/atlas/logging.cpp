@@ -18,7 +18,6 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <tracy/Tracy.hpp>
 
 #pragma GCC diagnostic pop
 
@@ -28,13 +27,11 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <tracy/Tracy.hpp>
 
 #endif
 
 void initLogging()
 {
-	ZoneScoped;
 	spdlog::enable_backtrace( 32 );
 
 	auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };
