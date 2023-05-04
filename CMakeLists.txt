@@ -9,6 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
+if (WIN32)
+    string(APPEND ${CMAKE_FIND_LIBRARY_SUFFIXES} ";.dll")
+endif ()
+
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED ATLAS_PROFILE_ENABLE)
     option(TRACY_ENABLE "" ON)
     option(TRACY_ON_DEMAND "" OFF)
@@ -82,7 +86,7 @@ add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/src/ma
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(Atlas PRIVATE Tracy::TracyClient)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network SQLite3::SQLite3 fmt::fmt spdlog::spdlog)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 #Post setup (Windows only)
