@@ -243,7 +243,10 @@ void RecordData::addVersion(
 try
 {
 	spdlog::debug(
-		"Adding version {} to record {}:{}", version.toStdString(), m_id, getTitle( transaction ).toStdString() );
+		"RecordData::addVersion() - Adding version {} to record {}:{}",
+		version.toStdString(),
+		m_id,
+		getTitle( transaction ).toStdString() );
 	//Check if version is already added
 	const auto active_versions { getVersions( transaction ) };
 

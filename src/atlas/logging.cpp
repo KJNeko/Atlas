@@ -101,23 +101,23 @@ auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::pat
 	if ( print_canonical && std::filesystem::exists( path ) )
 	{
 		if ( print_exists )
-			return format_to(
+			return fmt::format_to(
 				ctx.out(),
 				"[\"{}\", (Canonical: \"{}\") Exists: \"{}\"]",
 				path.string(),
 				std::filesystem::canonical( path ).string(),
 				std::filesystem::exists( path ) ? "True" : "False" );
 		else
-			return format_to(
+			return fmt::format_to(
 				ctx.out(), "[\"{}\" (Canonical: \"{}\")]", path.string(), std::filesystem::canonical( path ).string() );
 	}
 	else
 	{
 		if ( print_exists )
-			return format_to(
-				ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
+			return fmt::
+				format_to( ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
 		else
-			return format_to( ctx.out(), "[\"{}\"]", path.string() );
+			return fmt::format_to( ctx.out(), "[\"{}\"]", path.string() );
 	}
 }
 

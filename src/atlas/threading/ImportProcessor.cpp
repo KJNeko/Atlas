@@ -17,6 +17,11 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 void ImportProcessor::importGames(
 	const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
 {
+	spdlog::debug(
+		"ImportProcessor::importGames() - Starting import, source: {:ce}, move_after_import: {}",
+		source,
+		move_after_import );
+
 	emit startProgressBar();
 	emit updateMax( static_cast< int >( data.size() ) );
 
@@ -29,10 +34,13 @@ void ImportProcessor::importGames(
 	{
 		if ( pause_task )
 		{
+			spdlog::debug( "ImportProcessor::importGames() - Pausing task" );
 			pause_task.wait( pause_task );
+			spdlog::debug( "ImportProcessor::importGames() - Resuming task" );
 		}
 		if ( abort_task )
 		{
+			spdlog::debug( "ImportProcessor::importGames() - Aborting task" );
 			abort_task = false;
 			running = false;
 			return;
@@ -46,6 +54,7 @@ void ImportProcessor::importGames(
 		{
 			if ( move_after_import )
 			{
+				spdlog::debug( "ImportProcessor::importGames() - Copying game" );
 				//Gather all files to copy
 				std::vector< std::filesystem::path > files;
 				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
@@ -61,17 +70,26 @@ void ImportProcessor::importGames(
 				//Scan through and copy every file.
 				for ( std::size_t i = 0; i < files.size(); ++i )
 				{
-					const auto source_path { source_folder / files.at( i ) };
-					const auto dest_path { dest_folder / std::filesystem::relative( files.at( i ), source_folder ) };
+					try
+					{
+						const auto source_path { source_folder / files.at( i ) };
+						const auto dest_path { dest_folder
+							                   / std::filesystem::relative( files.at( i ), source_folder ) };
 
-					if ( !std::filesystem::exists( dest_path.parent_path() ) )
-						std::filesystem::create_directories( dest_path.parent_path() );
+						if ( !std::filesystem::exists( dest_path.parent_path() ) )
+							std::filesystem::create_directories( dest_path.parent_path() );
 
-					std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
-					emit updateSubText( QString( "Copying: %1" )
-					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
+						std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
 
-					emit updateSubValue( static_cast< int >( i ) );
+						emit updateSubText( QString( "Copying: %1" )
+						                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
+
+						emit updateSubValue( static_cast< int >( i ) );
+					}
+					catch ( std::filesystem::filesystem_error& e )
+					{
+						spdlog::error( "ImportProcessor::importGames() - Failed to copy file: {}", e.what() );
+					}
 				}
 
 				path = std::filesystem::relative( dest_folder, dest_root );

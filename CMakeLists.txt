@@ -23,14 +23,11 @@ else ()
     option(TRACY_ENABLE "" OFF)
 endif ()
 
+option(SPDLOG_FMT_EXTERNAL "" ON)
+
 add_subdirectory(dependencies/gtest)
-if (WIN32)
-    add_subdirectory(dependencies/spdlog)
-    add_subdirectory(dependencies/fmt)
-else ()
-    find_package(spdlog REQUIRED)
-    find_package(fmt REQUIRED)
-endif ()
+add_subdirectory(dependencies/spdlog)
+add_subdirectory(dependencies/fmt)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
