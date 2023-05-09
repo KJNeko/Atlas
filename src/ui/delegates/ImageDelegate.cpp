@@ -20,6 +20,11 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 
 	pixmap = pixmap.scaled( item.rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
+	if ( item.state & QStyle::State_Selected )
+	{
+		painter->fillRect( item.rect, item.palette.highlight() );
+	}
+
 	painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	painter->drawRect( item.rect );
 }
