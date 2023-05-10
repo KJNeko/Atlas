@@ -13,50 +13,13 @@
 
 #include "atlas/config.hpp"
 #include "atlas/database/Database.hpp"
+#include "atlas/version.hpp"
 #include "ui/mainwindow.h"
-
-#ifdef TRACY_ENABLE
-void* operator new( std::size_t count )
-{
-	auto ptr = malloc( count );
-	TracySecureAlloc( ptr, count );
-	return ptr;
-}
-
-void* operator new[]( std::size_t count )
-{
-	auto ptr = malloc( count );
-	TracySecureAlloc( ptr, count );
-	return ptr;
-}
-
-void operator delete( void* ptr ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete[]( void* ptr ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete( void* ptr, std::size_t ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-
-void operator delete[]( void* ptr, std::size_t ) noexcept
-{
-	TracySecureFree( ptr );
-	free( ptr );
-}
-#endif
 
 int main( int argc, char** argv )
 {
+	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
+
 	//initLogging();
 	QApplication app { argc, argv };
 
