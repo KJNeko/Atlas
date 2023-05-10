@@ -6,6 +6,7 @@
 #define ATLASGAMEMANAGER_IMAGEVIEW_HPP
 
 #include <QListView>
+#include <QMouseEvent>
 
 #include "atlas/database/RecordData.hpp"
 

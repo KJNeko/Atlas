@@ -122,57 +122,6 @@ void RecordEditor::on_btnRemovePreviews_pressed()
 	//TODO
 }
 
-void RecordEditor::dragEnterEvent( QDragEnterEvent* event )
-{
-	spdlog::info( "dragEnterEvent" );
-
-	if ( event->mimeData()->hasUrls() )
-	{
-		event->acceptProposedAction();
-		return;
-	}
-	else if ( event->mimeData()->hasImage() )
-	{
-		event->acceptProposedAction();
-		return;
-	}
-	else
-		QDialog::dragEnterEvent( event );
-}
-
-void RecordEditor::dropEvent( QDropEvent* event )
-{
-	if ( event->mimeData()->hasUrls() )
-	{
-		const auto mouse_pos { mapToGlobal( event->position().toPoint() ) };
-
-		const QRect banner_rect { ui->bannerPreview->mapToGlobal( ui->bannerPreview->pos() ),
-			                      ui->bannerPreview->size() };
-		const QRect preview_rect { ui->previewList->mapToGlobal( ui->previewList->pos() ), ui->previewList->size() };
-
-		if ( banner_rect.contains( mouse_pos ) )
-		{
-			for ( const auto& url : event->mimeData()->urls() )
-				if ( url.isLocalFile() ) m_record->setBanner( { url.toLocalFile().toStdString() } );
-
-			loadBanners();
-			return;
-		}
-		else if ( preview_rect.contains( mouse_pos ) )
-		{
-			for ( const auto& url : event->mimeData()->urls() )
-			{
-				if ( url.isLocalFile() ) m_record->addPreview( { url.toLocalFile().toStdString() } );
-			}
-
-			loadPreviews();
-			return;
-		}
-	}
-
-	QDialog::dropEvent( event );
-}
-
 void RecordEditor::on_btnDeleteVersion_pressed()
 {
 	if ( ui->versionList->count() == 0 ) return;

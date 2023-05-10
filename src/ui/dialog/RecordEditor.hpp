@@ -41,10 +41,6 @@ class RecordEditor : public QDialog
 		const RecordID record, QWidget* parent = nullptr, Transaction transaction = Transaction( Autocommit ) );
 	~RecordEditor() override;
 
-	//Drag and drop
-	void dragEnterEvent( QDragEnterEvent* event ) override;
-	void dropEvent( QDropEvent* event ) override;
-
 	void switchTabs( const int index );
 
   private:
