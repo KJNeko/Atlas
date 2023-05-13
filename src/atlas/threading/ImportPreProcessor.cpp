@@ -31,7 +31,7 @@ std::optional< GameImportData >
 			                      title,
 			                      creator,
 			                      engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
-			                      version,
+			                      version.isEmpty() ? "0.0" : version,
 			                      folderSize( scanner ),
 			                      potential_executables,
 			                      potential_executables.at( 0 ) } };
