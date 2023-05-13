@@ -11,6 +11,11 @@ string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 if (WIN32)
     string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+    
+    if(DEFINED ENV{QT_PATH})
+        set(QT_PATH $ENV{QT_PATH})
+        message("Setting QT path from ENV")
+    endif()
 endif ()
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED ATLAS_PROFILE_ENABLE)
@@ -24,10 +29,10 @@ else ()
 endif ()
 
 option(SPDLOG_FMT_EXTERNAL "" ON)
-
+add_subdirectory(dependencies/fmt)
 add_subdirectory(dependencies/gtest)
 add_subdirectory(dependencies/spdlog)
-add_subdirectory(dependencies/fmt)
+
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
