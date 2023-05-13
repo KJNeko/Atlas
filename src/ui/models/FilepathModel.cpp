@@ -53,7 +53,6 @@ Qt::DropActions FilepathModel::supportedDropActions() const
 
 bool FilepathModel::removeRows( int row, int count, const QModelIndex& parent )
 {
-	spdlog::info( "removeRows" );
 	if ( row < 0 || static_cast< std::size_t >( row + count ) > m_paths.size() ) return false;
 
 	beginRemoveRows( parent, row, row + count - 1 );
@@ -75,8 +74,6 @@ Qt::ItemFlags FilepathModel::flags( const QModelIndex& index ) const
 
 bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 {
-	spdlog::debug( "FilepathModel::insertRows({}, {}, ())", row, col );
-
 	if ( row < 0 ) return false;
 	if ( row > rowCount( {} ) ) return false;
 
@@ -128,7 +125,6 @@ bool FilepathModel::moveRows(
 	[[maybe_unused]] const QModelIndex& destinationParent,
 	int destinationChild )
 {
-	spdlog::info( "moveRows((), {}, {}, {}, ())", sourceRow, count, destinationChild );
 	const auto s_beg = m_paths.begin() + sourceRow;
 	const auto s_end = s_beg + count;
 
