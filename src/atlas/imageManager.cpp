@@ -105,6 +105,8 @@ namespace imageManager
 					return {};
 			};
 
+			const auto dest_root { config::paths::images::getPath() };
+
 			if ( std::filesystem::file_size( temp_path ) > std::filesystem::file_size( path ) )
 			{
 				//File is worse. So we keep the smaller one.
@@ -112,26 +114,24 @@ namespace imageManager
 
 				const auto image_hash { hash_file( path ) };
 
-				const auto dest_path { config::paths::images::getPath()
-					                   / ( image_hash.toHex().toStdString() + path.extension().string() ) };
+				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + path.extension().string() ) };
 
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( path, dest_path );
 
-				return dest_path;
+				return std::filesystem::relative( dest_path, dest_root );
 			}
 			else
 			{
 				//Keep the temp file
 				const auto image_hash { hash_file( temp_path ) };
 
-				const auto dest_path { config::paths::images::getPath()
-					                   / ( image_hash.toHex().toStdString() + "webp" ) };
+				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + "webp" ) };
 
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
 
 				std::filesystem::remove( temp_path );
 
-				return dest_path;
+				return std::filesystem::relative( dest_path, dest_root );
 			}
 		}
 		else
