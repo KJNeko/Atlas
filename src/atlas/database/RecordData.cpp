@@ -280,9 +280,8 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 	auto itter { std::find( active_versions.begin(), active_versions.end(), version ) };
 	if ( itter == active_versions.end() ) return;
 
-	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ? AND game_path = ? AND exec_path = ?"
-				<< m_id << version.getVersionName().toStdString() << version.getPath( transaction ).string()
-				<< version.getExecPath( transaction ).string();
+	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ?" << m_id
+				<< version.getVersionName().toStdString();
 }
 
 void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
