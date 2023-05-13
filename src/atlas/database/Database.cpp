@@ -57,10 +57,12 @@ try
 		"CREATE TABLE IF NOT EXISTS f95zone_data (f95_id INTEGER PRIMARY KEY);",
 		"CREATE TABLE IF NOT EXISTS dlsite_data (dlsite_id TEXT PRIMARY KEY);",
 		"CREATE TABLE IF NOT EXISTS gl_data (glid INTGEGER PRIMARY KEY);",
+		"CREATE TABLE IF NOT EXISTS atlas_data (atlas_id INTEGER PRIMARY KEY, id_name TEXT, short_name TEXT, title TEXT, original_name TEXT, category TEXT, engine TEXT, status TEXT, version TEXT, developer TEXT, creator TEXT, overview TEXT, censored TEXT, language TEXT, translations TEXT, genre TEXT, voice TEXT, os TEXT, release_date DATE, length TEXT, banner TEXT, banner_wide TEXT, cover TEXT, logo TEXT, last_update DATE)",
 
 		"CREATE TABLE IF NOT EXISTS f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
 		"CREATE TABLE IF NOT EXISTS dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));",
 		"CREATE TABLE IF NOT EXISTS gl_mapping (record_id REFERENCES records(record_id), glid REFERENCES gl_data(glid), UNIQUE(record_id, glid))",
+		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(atlas_id), UNIQUE(record_id, atlas_id))",
 
 		//Tags
 		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
