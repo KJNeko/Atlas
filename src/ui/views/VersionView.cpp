@@ -17,7 +17,7 @@ VersionView::VersionView( QWidget* parent ) : QWidget( parent ), ui( new Ui::Ver
 {
 	ui->setupUi( this );
 
-	ui->btnChanceExec->setEnabled( false );
+	ui->btnChangeExec->setEnabled( false );
 	ui->btnChangeVersion->setEnabled( false );
 }
 
@@ -30,7 +30,7 @@ void VersionView::setVersion( const std::optional< GameMetadata > metadata )
 {
 	m_metadata = metadata;
 
-	ui->btnChanceExec->setEnabled( m_metadata.has_value() );
+	ui->btnChangeExec->setEnabled( m_metadata.has_value() );
 	ui->btnChangeVersion->setEnabled( m_metadata.has_value() );
 
 	reloadData();
