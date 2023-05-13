@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QMimeData>
 
+#include "atlas/threading/ImportProcessor.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui/views/VersionView.hpp"
@@ -174,7 +175,103 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 }
 
 void RecordEditor::on_btnAddVersion_pressed()
-{}
+{
+	const auto path { QFileDialog::getExistingDirectory( this, "Select Version Directory" ) };
+
+	if ( path.isEmpty() ) return;
+
+	const auto version_name { QInputDialog::getText( this, "Version Name", "Version Name" ) };
+
+	if ( version_name.isEmpty() ) return;
+
+	if ( m_record->getVersion( version_name ).has_value() )
+	{
+		QMessageBox::critical( this, "Invalid Version Name", "A version with that name already exists!" );
+		return;
+	}
+
+	const QString executable { QFileDialog::getOpenFileName( this, "Select Executable" ) };
+
+	if ( executable.isEmpty() ) return;
+
+	if ( !executable.startsWith( path ) )
+	{
+		QMessageBox::critical( this, "Invalid Executable", "The executable must be in the version directory!" );
+		return;
+	}
+
+	const std::filesystem::path source { path.toStdString() };
+
+	const std::filesystem::path relative { std::filesystem::relative( executable.toStdString(), source ) };
+
+	const bool should_move {
+		QMessageBox::question( this, "Move Files?", "Would you like to move the files to the atlas import location?" )
+		== QMessageBox::Yes
+	};
+
+	const auto title { m_record->getTitle() };
+	const auto creator { m_record->getCreator() };
+
+	//Calculate filesize
+	std::size_t size { 0 };
+
+	ProgressBarDialog* dialog { new ProgressBarDialog( this ) };
+	dialog->show();
+	dialog->showSubProgress( true );
+	dialog->setText( "Importing game" );
+	dialog->setMax( 3 );
+
+	dialog->setSubMax( 0 );
+	dialog->setSubText( "Scanning files..." );
+	std::vector< std::filesystem::path > files;
+	for ( auto file : std::filesystem::recursive_directory_iterator( source ) )
+		if ( file.is_regular_file() ) files.push_back( std::filesystem::relative( file, source ) );
+
+	dialog->setValue( 1 );
+	dialog->setSubMax( static_cast< int >( files.size() ) );
+
+	int counter { 0 };
+
+	if ( should_move )
+	{
+		dialog->setSubText( "Copying files..." );
+		const std::filesystem::path dest_root { config::paths::games::getPath() };
+		const std::filesystem::path dest_path { dest_root / creator.toStdString() / title.toStdString()
+			                                    / version_name.toStdString() };
+
+		for ( auto file : files )
+		{
+			const auto source_path { source / file };
+			const auto dest { dest_path / file };
+
+			size += std::filesystem::file_size( source_path );
+
+			if ( !std::filesystem::exists( dest.parent_path() ) )
+				std::filesystem::create_directories( dest.parent_path() );
+
+			std::filesystem::copy_file( source_path, dest );
+
+			dialog->setValue( ++counter );
+		}
+
+		m_record->addVersion( version_name, dest_path, relative, size, false );
+	}
+	else
+	{
+		dialog->setSubText( "Calculating size..." );
+		for ( auto file : files )
+		{
+			size += std::filesystem::file_size( source / file );
+			dialog->setValue( ++counter );
+		}
+
+		m_record->addVersion( version_name, source, relative, size, true );
+	}
+
+	delete dialog;
+
+	QMessageBox::information( this, "Import complete", "Import complete!" );
+}
 
 void RecordEditor::switchTabs( const int index )
 {
