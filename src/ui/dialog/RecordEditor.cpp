@@ -14,6 +14,7 @@
 #include <QMimeData>
 
 #include "ui/dialog/ProgressBarDialog.hpp"
+#include "ui/models/FilepathModel.hpp"
 #include "ui/views/VersionView.hpp"
 #include "ui_RecordEditor.h"
 
@@ -217,7 +218,10 @@ void RecordEditor::on_btnChangeCreator_pressed()
 
 		if ( count != 0 )
 		{
-			QMessageBox::warning( this, "Duplicate!", "The creator already has a game with this name and engine!" );
+			QMessageBox::warning(
+				this,
+				"Duplicate!",
+				"The creator already has a game with this name and engine! Merging is not implemented yet" );
 			return;
 		}
 
@@ -297,4 +301,9 @@ void RecordEditor::loadVersions()
 	for ( const auto& version : m_record->getVersions() ) list.emplace_back( version.getVersionName() );
 
 	ui->versionList->addItems( std::move( list ) );
+}
+
+void RecordEditor::on_previewList_reordered()
+{
+	m_record->reorderPreviews( ui->previewList->model()->getFilepaths() );
 }

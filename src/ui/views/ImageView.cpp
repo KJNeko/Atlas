@@ -17,4 +17,21 @@ ImageView::ImageView( QWidget* parent ) : QListView( parent )
 {
 	QListView::setModel( new FilepathModel() );
 	QListView::setItemDelegate( new ImageDelegate() );
+
+	connect( model(), &FilepathModel::reordered, this, &ImageView::modelReordered );
+}
+
+FilepathModel* ImageView::model()
+{
+	return dynamic_cast< FilepathModel* >( QListView::model() );
+}
+
+ImageDelegate* ImageView::delegate()
+{
+	return dynamic_cast< ImageDelegate* >( QListView::itemDelegate() );
+}
+
+void ImageView::modelReordered()
+{
+	emit reordered( model()->getFilepaths() );
 }

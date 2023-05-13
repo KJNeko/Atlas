@@ -176,8 +176,8 @@ const std::vector< std::filesystem::path > RecordData::getPreviewPaths( Transact
 try
 {
 	std::vector< std::string > preview_strs;
-	transaction << "SELECT path FROM previews WHERE record_id = ?" << m_id >> [ & ]( const std::string str )
-	{ preview_strs.emplace_back( str ); };
+	transaction << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_id >>
+		[ & ]( const std::string str ) { preview_strs.emplace_back( str ); };
 
 	std::vector< std::filesystem::path > previews;
 
@@ -318,7 +318,36 @@ void RecordData::addPreview( const std::filesystem::path& path, Transaction tran
 	}
 	else
 	{
-		transaction << "INSERT INTO previews (record_id, path) VALUES (?, ?)" << m_id << new_path.string();
+		transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?)" << m_id << new_path.string()
+					<< 256;
+	}
+}
+
+void RecordData::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
+{
+	const auto active_previews { getPreviewPaths( transaction ) };
+
+	//Set all previews to max order
+	constexpr std::size_t max_order { 256 };
+	// max_order is just used to prevent strange previews that somehow were not in this list from being set to 0
+	transaction << "UPDATE previews SET position = ? WHERE record_id = ?" << max_order << m_id;
+
+	//Update all previews
+	for ( std::size_t i = 0; i < paths.size(); ++i )
+	{
+		const auto& path { paths[ i ] };
+		if ( std::find( active_previews.begin(), active_previews.end(), path ) != active_previews.end() )
+		{
+			//Update it
+			transaction << "UPDATE previews SET position = ? WHERE record_id = ? AND path = ?" << i << m_id
+						<< path.string();
+		}
+		else
+		{
+			//Path is not something that has been added?
+			spdlog::warn( "Invalid path found in preview reorder list. Ignoring. Path was {:ce}", path );
+			continue;
+		}
 	}
 }
 

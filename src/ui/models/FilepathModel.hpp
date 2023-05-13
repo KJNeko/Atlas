@@ -39,8 +39,13 @@ class FilepathModel final : public QAbstractListModel
 
 	Qt::ItemFlags flags( const QModelIndex& index ) const override;
 
+	std::vector< std::filesystem::path > getFilepaths() const;
+
   public slots:
 	void setFilepaths( const std::vector< std::filesystem::path >& filepaths );
+
+  signals:
+	void reordered();
 };
 
 #endif //ATLASGAMEMANAGER_FILEPATHMODEL_HPP

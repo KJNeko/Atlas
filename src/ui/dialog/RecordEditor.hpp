@@ -61,6 +61,7 @@ class RecordEditor : public QDialog
 	//Previews
 	void on_btnAddPreviews_pressed();
 	void on_btnRemovePreviews_pressed();
+	void on_previewList_reordered();
 
 	//Versions
 	void on_btnDeleteVersion_pressed();

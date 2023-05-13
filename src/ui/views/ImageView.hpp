@@ -10,6 +10,9 @@
 
 #include "atlas/database/RecordData.hpp"
 
+class FilepathModel;
+class ImageDelegate;
+
 class ImageView : public QListView
 {
 	Q_OBJECT
@@ -18,8 +21,17 @@ class ImageView : public QListView
 
 	ImageView( QWidget* parent = nullptr );
 
+	FilepathModel* model();
+	ImageDelegate* delegate();
+
+  private slots:
+	void modelReordered();
+
   public slots:
 	void setPaths( const std::vector< std::filesystem::path >& paths );
+
+  signals:
+	void reordered( std::vector< std::filesystem::path > paths );
 };
 
 #endif //ATLASGAMEMANAGER_IMAGEVIEW_HPP

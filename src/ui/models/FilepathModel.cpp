@@ -143,5 +143,12 @@ bool FilepathModel::moveRows(
 
 	endMoveRows();
 
+	emit reordered();
+
 	return true;
+}
+
+std::vector< std::filesystem::path > FilepathModel::getFilepaths() const
+{
+	return m_paths;
 }
