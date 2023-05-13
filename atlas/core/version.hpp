@@ -15,7 +15,7 @@
 #endif
 
 #ifndef ATLAS_PATCH
-#define ATLAS_PATCH 0
+#define ATLAS_PATCH 1
 #endif
 
 #define ATLAS_VERSION ATLAS_MAJOR * 10000 + ATLAS_MINOR * 100 + ATLAS_PATCH

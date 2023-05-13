@@ -178,7 +178,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+          <pixmap>:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -269,7 +269,7 @@ margin-left: 2px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
          </property>
          <property name="toolButtonStyle">
@@ -426,7 +426,26 @@ margin-left: 2px;</string>
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="DetailedRecordView" name="detailedRecordView" native="true"/>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1264</width>
+             <height>694</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="DetailedRecordView" name="detailedRecordView" native="true"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -440,7 +459,7 @@ margin-left: 2px;</string>
      <x>0</x>
      <y>0</y>
      <width>1520</width>
-     <height>34</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -575,9 +594,7 @@ margin-left: 2px;</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

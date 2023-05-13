@@ -17,7 +17,7 @@
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 #pragma GCC diagnostic ignored "-Wuseless-cast"
-#pragma GCC diagnostic ignored "-Wdangling-reference"
+//#pragma GCC diagnostic ignored "-Wdangling-reference"
 
 #include <spdlog/spdlog.h>
 
