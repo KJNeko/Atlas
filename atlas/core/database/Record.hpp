@@ -44,6 +44,8 @@ struct RecordData : public QObject
 	std::vector< GameMetadata > m_versions {};
 
 	std::filesystem::path m_banner {};
+	std::filesystem::path m_banner_wide {};
+	std::filesystem::path m_cover {};
 	std::vector< std::filesystem::path > m_previews {};
 
   public:
@@ -60,8 +62,12 @@ struct RecordData : public QObject
 	std::vector< GameMetadata >& getVersions();
 	const std::filesystem::path& getBannerPath() const;
 	QPixmap getBanner() const;
-	QPixmap getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode = KEEP_ASPECT_RATIO )
-		const;
+	QPixmap getBanner( [[maybe_unused]] std::filesystem::path image_path ) const;
+	QPixmap getBanner(
+		const int width,
+		const int height,
+		const SCALE_TYPE aspect_ratio_mode = KEEP_ASPECT_RATIO,
+		const PreviewType preview_type = PREVIEW_BANNER ) const;
 	const std::vector< std::filesystem::path >& getPreviewPaths() const;
 	std::vector< QPixmap > getPreviews() const;
 
@@ -80,7 +86,7 @@ struct RecordData : public QObject
 		bool in_place,
 		Transaction transaction = Transaction( true ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( true ) );
-	void setBanner( const std::filesystem::path&, Transaction = Transaction( true ) );
+	void setBanner( const std::filesystem::path&, PreviewType, Transaction = Transaction( true ) );
 	void addPreview( const std::filesystem::path&, Transaction = Transaction( true ) );
 
 	//! Syncs the data from the database

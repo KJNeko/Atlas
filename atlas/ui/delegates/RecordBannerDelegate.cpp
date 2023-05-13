@@ -4,10 +4,11 @@
 
 #include "RecordBannerDelegate.hpp"
 
+#include <QGraphicsDropShadowEffect>
+#include <QGraphicsView>
 #include <QMenu>
 #include <QPainter>
 #include <QPixmapCache>
-#include <QGraphicsView>
 
 #include <tracy/Tracy.hpp>
 
@@ -21,28 +22,30 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	ZoneScoped;
 	painter->save();
 
+	//draw test rect
+	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
+	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
+	//painter->drawRect( test_rect );
+
 	//Draw banner if present
 	const Record record { index.data().value< Record >() };
 
-	const auto banner_size { m_grid_size };
+	const auto banner_size { m_banner_size };
 
 	const SCALE_TYPE aspect_ratio { m_scale_type };
 	const int stripe_height { m_strip_height };
 	const int overlay_opacity { m_overlay_opacity };
 	const bool enable_top_overlay { m_enable_top_overlay };
 	const bool enable_bottom_overlay { m_enable_bottom_overlay };
-	//const int w_width { painter->window().width() };
-	//const int item_count { w_width / banner_size.width() };
 
-	//const int x_offset { ( w_width - ( ( item_count + 1 ) * m_grid_spacing ) ) / item_count };
-	//printf( "Item Count:%d offset:%d\n", item_count, x_center );
+	//For centering Items
+	const int x_offset { options.rect.x() + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
+	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
+	QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
 
-	QRect options_rect { options.rect.x(), options.rect.y(), banner_size.width(), banner_size.height() };
-	//options_rect = options_rect.adjusted( 5, 5, 5, 5 );
+	QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
 	QPixmap pixmap = record->getBanner( banner_size.width(), banner_size.height(), aspect_ratio );
-
-	//TODO: Modify Options rect so items are centered
 
 	//Check if we need to add blur background. Draw behind original image
 	if ( aspect_ratio == FIT_BLUR_EXPANDING )
@@ -56,22 +59,23 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
 	const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
 
+	//Draw Shadow
+	//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
+	//painter->drawRect( shadow_rect );
 	//Draw Image
 	painter->drawPixmap( pixmap_rect, pixmap );
 
 	//Click & Selectec event
 	//TODO: add ability to change selected color.
-	if ( options.state & QStyle::State_MouseOver ) 
+	if ( options.state & QStyle::State_MouseOver )
 	{
 		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
 		// figure out where banner is and show pop up
 		//const int popup_x {banner_size.width()};
 		//const int popup_y {options_rect.y() + banner_size.height()/2};
-		//const QRect popup_rect {0, 0, 100, 200 };		
+		//const QRect popup_rect {0, 0, 100, 200 };
 		//painter->fillRect(popup_rect, QColor(0,0,255,255));
-	
 	}
-
 
 	//Reset the current brush
 	painter->setBrush( Qt::NoBrush );
@@ -180,7 +184,11 @@ void RecordBannerDelegate::
 void RecordBannerDelegate::reloadConfig()
 {
 	ZoneScoped;
-	m_grid_size = { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() };
+	m_grid_size = calculateSize(
+		config::grid_ui::itemViewWidth::get(),
+		config::grid_ui::bannerSizeX::get(),
+		config::grid_ui::bannerSizeY::get(),
+		config::grid_ui::bannerSpacing::get() );
 	m_scale_type = config::grid_ui::imageLayout::get();
 	m_strip_height = config::grid_ui::overlayHeight::get();
 	m_overlay_opacity = config::grid_ui::overlayOpacity::get();
@@ -196,12 +204,20 @@ void RecordBannerDelegate::reloadConfig()
 	m_engine_location = config::grid_ui::engineLocation::get();
 	m_version_location = config::grid_ui::versionLocation::get();
 	m_creator_location = config::grid_ui::creatorLocation::get();
-	m_grid_spacing = config::grid_ui::gridSpacing::get();
+	m_grid_spacing = config::grid_ui::bannerSpacing::get();
+	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+	m_window_height = config::grid_ui::windowHeight::get();
+	m_window_width = config::grid_ui::windowWidth::get();
+	m_center_widgets = config::grid_ui::centerWidgets::get();
 }
 
 RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
   QAbstractItemDelegate( parent ),
-  m_grid_size { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() },
+  m_grid_size { calculateSize(
+	  config::grid_ui::itemViewWidth::get(),
+	  config::grid_ui::bannerSizeX::get(),
+	  config::grid_ui::bannerSizeY::get(),
+	  config::grid_ui::bannerSpacing::get() ) },
   m_scale_type { config::grid_ui::imageLayout::get() },
   m_strip_height { config::grid_ui::overlayHeight::get() },
   m_overlay_opacity { config::grid_ui::overlayOpacity::get() },
@@ -217,12 +233,40 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
   m_engine_location { config::grid_ui::engineLocation::get() },
   m_version_location { config::grid_ui::versionLocation::get() },
   m_creator_location { config::grid_ui::creatorLocation::get() },
-  m_grid_spacing { config::grid_ui::gridSpacing::get() }
+  m_grid_spacing { config::grid_ui::bannerSpacing::get() },
+  m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
+  m_window_height { config::grid_ui::windowHeight::get() },
+  m_window_width { config::grid_ui::windowWidth::get() },
+  m_center_widgets { config::grid_ui::centerWidgets::get() }
+
 {
 	CONFIG_ATTACH_THIS;
 }
 
-void RecordBannerDelegate::calculateWidth()
+QSize RecordBannerDelegate::calculateSize( const int w_width, const int b_width, const int b_height, const int spacing )
 {
-	
+	const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
+	int viewport = w_width - scroll_bar - spacing;
+
+	int item_count { static_cast< int >( viewport / static_cast< double >( b_width + spacing ) ) };
+	//int item_count { ( viewport - b_count ) / ( b_width + spacing ) };
+	int tiw { ( item_count ) * ( b_width + spacing ) };
+
+	double offset { ( viewport - tiw ) / static_cast< double >( item_count ) };
+	offset = offset >= 5 ? offset - 2 : offset;
+	//item_count = w_width >= offset ? item_count : item_count - 1;
+	//const int x_offset { ( w_width - scroll_bar - ( ( item_count + 1 ) * spacing ) - ( item_count * b_width ) )
+	//	                 / item_count };
+	spdlog::debug(
+		"bwidth:{} w_width:{} t_width:{} item_count:{} offset:{}",
+		b_width,
+		w_width - scroll_bar,
+		tiw,
+		item_count,
+		offset );
+	//Return offset with widget if center widgets is used.
+	//QSize qsize { offset >= 0 ? offset + b_width : b_width, b_height };
+	QSize qsize { m_center_widgets ? b_width + static_cast< int >( offset ) : b_width, b_height };
+
+	return qsize;
 }

@@ -2,17 +2,15 @@
 
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
+#include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "atlas/core/config.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
-	//connect(ui->actionImport, SIGNAL(triggered()),this,SLOT(openBatchImportDialog()));
-	//ui->actionImport->triggered()
 
 	//Check db first, if nothing is there add default
-
 	//default
 	addTreeRoot( "Games", "0" );
 
@@ -23,7 +21,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
 
-	if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
+	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
+	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
 
 	record_search.moveToThread( &search_thread );
 	search_thread.start();
@@ -97,4 +96,41 @@ void MainWindow::on_homeButton_pressed()
 {
 	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
+}
+
+void MainWindow::resizeEvent( [[maybe_unused]] QResizeEvent* event )
+{
+	//Store window height and width
+	spdlog::debug( "Window width:{} Window Height:{}", MainWindow::width(), MainWindow::height() );
+	config::grid_ui::windowHeight::
+		set( config::grid_ui::windowHeight::get() != MainWindow::height() ? MainWindow::height() :
+	                                                                        config::grid_ui::windowHeight::get() );
+	config::grid_ui::windowWidth::
+		set( config::grid_ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
+	                                                                      config::grid_ui::windowWidth::get() );
+
+	config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
+	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
+
+	ui->recordView->reloadConfig();
+}
+
+void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
+{
+	//Store Banner View Dims
+	config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
+	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
+	ui->recordView->reloadConfig();
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+	QApplication::quit();
+}
+
+void MainWindow::on_actionAboutQt_triggered()
+{
+	AboutQtDialog aboutQtDialog { this };
+	aboutQtDialog.setModal( true );
+	aboutQtDialog.exec();
 }

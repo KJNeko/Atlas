@@ -301,3 +301,14 @@ QMessageBox > QLabel {
 	selection-background-color: rgb(81, 83, 90);
 	background-color: rgb(81, 83, 90);
 }
+
+/*Detail Record View*/
+#bannerDetailFrame{
+    background-color: rgb(49, 51, 56);
+}
+#bannerFrame{
+    background-color: rgb(49, 51, 56);
+}
+#DetailedRecordView{
+    background-color: rgb(49, 51, 56);
+}

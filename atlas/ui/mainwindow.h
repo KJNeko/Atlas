@@ -37,6 +37,8 @@ class MainWindow : public QMainWindow
 	void addTreeRoot( QString name, QString record_id );
 	void addTreeChild( QTreeWidgetItem* parent, QString name, QString record_id );
 	void openBatchImportDialog();
+	void resizeEvent( QResizeEvent* event ) override;
+	void showEvent( QShowEvent* event ) override;
 
   signals:
 	void triggerEmptySearch();
@@ -44,6 +46,13 @@ class MainWindow : public QMainWindow
   private slots:
 	void on_actionImport_triggered();
 	void on_actionOptions_triggered();
+	void on_actionExit_triggered();
+	//void on_actionDownload_triggered();
+	//void on_actionManage_triggered();
+	//void on_actionArrangeBy_triggered();
+	//void on_actionAboutUs_triggered();
+	//void on_actionGithub_triggered();
+	void on_actionAboutQt_triggered();
 	void switchToDetailed( const Record record );
 	void on_homeButton_pressed();
 };

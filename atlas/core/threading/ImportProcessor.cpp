@@ -97,13 +97,30 @@ void ImportProcessor::importGames(
 
 			transaction.commit();
 
-			if ( std::filesystem::exists( source_folder / "banner.jpg" )
-			     || std::filesystem::exists( source_folder / "banner.png" ) )
+			//Get a list of all files in base dir and iterate through them to get images
+			const std::vector< std::string > image_ext { ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif" };
+			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
 			{
-				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
-					                         source_folder / "banner.jpg" :
-					                         source_folder / "banner.png" };
-				record->setBanner( banner_path );
+				const auto filename { file.path().stem().string() };
+				const auto ext { file.path().extension().string() };
+				const bool is_image { std::find( image_ext.begin(), image_ext.end(), ext ) != image_ext.end() };
+
+				if ( filename == "banner" && is_image )
+				{
+					record->setBanner( file.path(), PREVIEW_BANNER );
+				}
+				else if ( filename == "banner_w" && is_image )
+				{
+					record->setBanner( file.path(), PREVIEW_BANNER_WIDE );
+				}
+				else if ( filename == "cover" && is_image )
+				{
+					record->setBanner( file.path(), PREVIEW_COVER );
+				}
+				else if ( filename == "logo" && is_image )
+				{
+					record->setBanner( file.path(), PREVIEW_LOGO );
+				}
 			}
 
 			completed_records.emplace_back( record->getID() );

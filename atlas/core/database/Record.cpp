@@ -15,13 +15,6 @@
 #include "atlas/core/imageManager.hpp"
 #include "atlas/core/utils/QImageBlur.hpp"
 
-enum PreviewType
-{
-	PREVIEW_UNKNOWN = 0,
-	PREVIEW_BANNER,
-	PREVIEW_PREVIEW
-};
-
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
 	ZoneScoped;
@@ -84,6 +77,16 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 			case PREVIEW_BANNER:
 				{
 					m_banner = image_path / path;
+					break;
+				}
+			case PREVIEW_BANNER_WIDE:
+				{
+					m_banner_wide = image_path / path;
+					break;
+				}
+			case PREVIEW_COVER:
+				{
+					m_cover = image_path / path;
 					break;
 				}
 			case PREVIEW_UNKNOWN:
@@ -157,6 +160,7 @@ const std::filesystem::path& RecordData::getBannerPath() const
 QPixmap RecordData::getBanner() const
 {
 	ZoneScoped;
+
 	if ( std::filesystem::exists( m_banner ) || m_banner.string().starts_with( ":/" ) )
 	{
 		QPixmap banner { QString::fromStdString( m_banner.string() ) };
@@ -166,21 +170,53 @@ QPixmap RecordData::getBanner() const
 		return {};
 }
 
-QPixmap RecordData::getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode ) const
+QPixmap RecordData::getBanner( [[maybe_unused]] std::filesystem::path image_path ) const
 {
 	ZoneScoped;
-	const auto key { QString::fromStdString( m_banner.filename().string() ) + QString::number( width ) + "x"
+	image_path = image_path.string().empty() ? m_banner : image_path;
+	if ( std::filesystem::exists( image_path ) || image_path.string().starts_with( ":/" ) )
+	{
+		QPixmap banner { QString::fromStdString( image_path.string() ) };
+		return banner;
+	}
+	else
+		return {};
+}
+
+QPixmap RecordData::
+	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, const PreviewType preview_type )
+		const
+{
+	ZoneScoped;
+
+	std::filesystem::path image_path {};
+
+	switch ( preview_type )
+	{
+		case PREVIEW_BANNER:
+			image_path = m_banner;
+			break;
+		case PREVIEW_BANNER_WIDE:
+			image_path = m_banner_wide;
+			break;
+		case PREVIEW_COVER:
+			image_path = m_cover;
+		default:
+			break;
+	}
+
+	const auto key { QString::fromStdString( image_path.filename().string() ) + QString::number( width ) + "x"
 		             + QString::number( height )
 		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
 
-	//spdlog::info( key );
+	spdlog::info( "{} {}", static_cast< int >( preview_type ), m_banner_wide.string() );
 
 	QPixmap banner;
 	if ( QPixmapCache::find( key, &banner ) )
 		return banner;
 	else
 	{
-		banner = getBanner();
+		banner = getBanner( image_path );
 		if ( banner.isNull() )
 		{
 			spdlog::warn( "Failed to get image for banner in record: {}, title: {}", m_id, m_title.toStdString() );
@@ -343,7 +379,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 	emit versionsChanged( m_versions );
 }
 
-void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
+void RecordData::setBanner( const std::filesystem::path& path, PreviewType type, Transaction transaction )
 {
 	ZoneScoped;
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_id );
@@ -353,15 +389,15 @@ void RecordData::setBanner( const std::filesystem::path& path, Transaction trans
 
 	//Check if it exists
 	bool found { false };
-	transaction << "SELECT path FROM images WHERE record_id = ? AND type = ?" << m_id << PREVIEW_BANNER >> [ &found ]()
+	transaction << "SELECT path FROM images WHERE record_id = ? AND type = ?" << m_id << type >> [ &found ]()
 	{ found = true; };
 
 	if ( found )
 		transaction << "UPDATE images SET path = ? WHERE record_id = ? AND type = ?" << m_banner.string() << m_id
-					<< PREVIEW_BANNER;
+					<< type;
 	else
 		transaction << "INSERT INTO images (record_id, path, type) VALUES (?, ?, ?)" << m_id << m_banner.string()
-					<< PREVIEW_BANNER;
+					<< type;
 
 	emit dataChanged();
 	emit bannerChanged( getBanner() );

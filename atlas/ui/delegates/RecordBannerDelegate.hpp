@@ -34,6 +34,10 @@ class RecordBannerDelegate : public QAbstractItemDelegate
 	LOCATION m_version_location;
 	LOCATION m_creator_location;
 	int m_grid_spacing;
+	QSize m_banner_size;
+	int m_window_height;
+	int m_window_width;
+	bool m_center_widgets;
 
 	RecordBannerDelegate( QWidget* parent = nullptr );
 
@@ -43,7 +47,7 @@ class RecordBannerDelegate : public QAbstractItemDelegate
   private:
 
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
-	void calculateWidth();
+	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	void drawText(
 		QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str ) const;

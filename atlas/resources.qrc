@@ -16,5 +16,11 @@
         <file>assets/fav_icon.svg</file>
         <file>assets/game_icon.svg</file>
         <file>assets/rating_icon.svg</file>
+        <file>assets/down_arrow_wide.svg</file>
+        <file>assets/play_normal.svg</file>
+        <file>assets/play_selected.svg</file>
+        <file>assets/Qt_logo.svg</file>
+        <file>assets/info.svg</file>
+        <file>assets/settings.svg</file>
     </qresource>
 </RCC>

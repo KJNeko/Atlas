@@ -14,6 +14,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "atlas/core/foldersize.hpp"
+#include "atlas/core/utils/QImageBlur.hpp"
 #include "ui_DetailedRecordView.h"
 
 DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::DetailedRecordView )
@@ -39,6 +40,12 @@ void DetailedRecordView::reloadRecord()
 	if ( m_record == nullptr ) return;
 	const auto& record { *m_record };
 	ui->lbGameName->setText( record->getTitle() );
+
+	//Set cover Image
+	QPixmap cover {
+		record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, PREVIEW_COVER )
+	};
+	ui->coverImage->setPixmap( cover );
 
 	if ( record->getLastPlayed() == 0 )
 	{
@@ -121,14 +128,49 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		painter.save();
 
 		const Record& record { *m_record };
+		const int image_height = 320;
+		const int image_feather = 45;
+		const int image_blur = 45;
 		//Paint the banner
-		const QSize size { ui->bannerFrame->size() };
-		const QPixmap banner { record->getBanner( size.width(), size.height() ) };
-		const QRect pixmap_rect {
-			ui->bannerFrame->frameRect().center() - QPoint( banner.width() / 2, banner.height() / 2 ), banner.size()
+		const QSize banner_size { ui->bannerFrame->size() };
+		QPixmap banner {
+			record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING, PREVIEW_BANNER_WIDE )
 		};
-		painter.drawPixmap( pixmap_rect, banner );
+		//QPixmap cover {
+		//	record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, PREVIEW_COVER )
+		//};
 
+		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
+
+		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
+		//const QRect cover_rect { 24, 343, cover.width(), cover.height() };
+
+		/*const QRect cover_rect = { ui->coverImage->parentWidget()->parentWidget()->x()
+			                           + ui->coverImage->parentWidget()->x() + ui->coverImage->x(),
+			                       ui->coverImage->parentWidget()->parentWidget()->y()
+			                           + ui->coverImage->parentWidget()->y() + ui->coverImage->y(),
+			                       ui->coverImage->width(),
+			                       ui->coverImage->height() };*/
+		//cover_rect.moveTopLeft( ui->coverImage->parentWidget()->mapToGlobal( cover_rect.topLeft() ) );
+		spdlog::info(
+			"x:{} y:{}",
+			ui->coverImage->parentWidget()->parentWidget()->x() + ui->coverImage->parentWidget()->x()
+				+ ui->coverImage->x(),
+			ui->coverImage->parentWidget()->parentWidget()->y() + ui->coverImage->parentWidget()->y()
+				+ ui->coverImage->y() );
+
+		//const QRect blur_rect { 0, banner.height(), banner_size.width(), banner_size.height() };
+		/*const QRect pixmap_rect {
+			ui->bannerFrame->frameRect().center() - QPoint( banner.width() / 2, banner.height() / 2 ), banner.size()
+		};*/
+		painter.drawPixmap( pixmap_rect, banner );
+		//painter.drawPixmap( cover_rect, cover );
+		//painter.fillRect( blur_rect, QColor( 64, 66, 73, 255 ) );
+		//painter.drawRect( blur_rect );
+
+		//ui->coverImage->setPixmap( cover );
+		//ui->coverImage->setPixmap(
+		//	record->getBanner( ui->coverImage->width(), ui->coverImage->height(), KEEP_ASPECT_RATIO, PREVIEW_COVER ) );
 		//Draw blurred version
 		/*
 		const auto blur_original { record->getBanner( size.width(), size.height(), true ) };
@@ -138,7 +180,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		painter.restore();
 	}
-	QWidget::paintEvent( event );
+	//QWidget::paintEvent( event );
 }
 
 GameMetadata& DetailedRecordView::selectedVersion()

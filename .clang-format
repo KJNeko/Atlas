@@ -49,7 +49,6 @@ BraceWrapping:
   SplitEmptyFunction: false
   SplitEmptyNamespace: true
   SplitEmptyRecord: false
-BreakArrays: false
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeConceptDeclarations: Allowed
 BreakBeforeTernaryOperators: false

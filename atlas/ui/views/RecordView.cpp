@@ -61,7 +61,6 @@ void RecordView::setRecords( const std::vector< Record > records )
 {
 	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
-	
 
 	model->setRecords( records );
 }
@@ -115,7 +114,7 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 				QFileDialog::
 					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record->setBanner( path.toStdString() );
+			if ( !path.isEmpty() ) record->setBanner( path.toStdString(), PREVIEW_BANNER );
 		} );
 	image_menu->addAction(
 		"Add preview",
@@ -164,6 +163,7 @@ void RecordView::reloadConfig()
 				//Set spacing between each item
 				QListView::setSpacing( delegate->m_grid_spacing );
 				delegate->sizeHintChanged( selectionModel()->currentIndex() );
+
 				QWidget::repaint();
 				spdlog::info( "Repainting UI\n" );
 				return;
