@@ -119,10 +119,10 @@ bool FilepathModel::setData( const QModelIndex& index, const QVariant& value, in
 }
 
 bool FilepathModel::moveRows(
-	[[maybe_unused]] const QModelIndex& sourceParent,
+	const QModelIndex& sourceParent,
 	int sourceRow,
 	int count,
-	[[maybe_unused]] const QModelIndex& destinationParent,
+	const QModelIndex& destinationParent,
 	int destinationChild )
 {
 	const auto s_beg = m_paths.begin() + sourceRow;
