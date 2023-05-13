@@ -140,12 +140,10 @@ bool FilepathModel::moveRows(
 
 	m_paths.erase( s_beg, s_end );
 
-	m_paths.insert(
-		m_paths.begin()
-			+ ( static_cast< long >(
-				std::clamp( static_cast< std::size_t >( destinationChild ), std::size_t( 0 ), m_paths.size() - 1 ) ) ),
-		data.begin(),
-		data.end() );
+	if ( destinationChild > static_cast< int >( m_paths.size() ) )
+		destinationChild = static_cast< int >( m_paths.size() );
+
+	m_paths.insert( m_paths.begin() + destinationChild, data.begin(), data.end() );
 
 	endMoveRows();
 
