@@ -11,7 +11,7 @@
 #include <QPixmapCache>
 #include <QWidget>
 
-#include "atlas/core/config.hpp"
+#include "core/config.hpp"
 
 QPixmap blurPixmap( const QPixmap& pixmap, qreal radius, bool quality )
 {

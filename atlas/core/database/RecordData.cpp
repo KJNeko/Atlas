@@ -9,10 +9,10 @@
 #include <QPixmapCache>
 
 #include "Record.hpp"
-#include "atlas/config.hpp"
-#include "atlas/database/Database.hpp"
-#include "atlas/database/GameMetadata.hpp"
-#include "atlas/imageManager.hpp"
+#include "core/config.hpp"
+#include "core/database/Database.hpp"
+#include "core/database/GameMetadata.hpp"
+#include "core/imageManager.hpp"
 
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {

@@ -7,9 +7,9 @@
 
 #include <QWidget>
 
-#include "atlas/database/GameMetadata.hpp"
-#include "atlas/database/Record.hpp"
-#include "atlas/database/RecordData.hpp"
+#include "core/database/GameMetadata.hpp"
+#include "core/database/Record.hpp"
+#include "core/database/RecordData.hpp"
 
 QT_BEGIN_NAMESPACE
 

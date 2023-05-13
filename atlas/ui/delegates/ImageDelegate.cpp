@@ -8,7 +8,7 @@
 
 #include <QPainter>
 
-#include "atlas/config.hpp"
+#include "core/config.hpp"
 #include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
@@ -39,5 +39,5 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 QSize ImageDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
-	return { config::grid_ui::gridSizeX::get(), config::grid_ui::gridSizeY::get() };
+	return { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 }

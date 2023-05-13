@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <queue>
 
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 FileInfo FileScannerGenerator::operator()()
 {

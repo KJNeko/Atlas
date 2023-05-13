@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 struct FileInfo
 {

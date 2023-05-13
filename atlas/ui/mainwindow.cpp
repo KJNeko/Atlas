@@ -4,7 +4,7 @@
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
-#include "atlas/core/config.hpp"
+#include "core/config.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {

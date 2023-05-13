@@ -7,7 +7,7 @@
 #include <QRegularExpression>
 #include <QString>
 
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 QString groupify( const QString group_name )
 {

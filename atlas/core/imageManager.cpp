@@ -13,8 +13,8 @@
 #include <QMessageBox>
 #include <QPixmap>
 
-#include "atlas/core/database/Database.hpp"
 #include "config.hpp"
+#include "core/database/Database.hpp"
 #include "system.hpp"
 
 namespace imageManager

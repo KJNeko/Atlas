@@ -10,11 +10,10 @@
 #include <QPainter>
 #include <QPixmapCache>
 
-#include <tracy/Tracy.hpp>
-
-#include "atlas/core/config.hpp"
-#include "atlas/core/database/Record.hpp"
-#include "atlas/core/utils/QImageBlur.hpp"
+#include "core/config.hpp"
+#include "core/database/GameMetadata.hpp"
+#include "core/database/Record.hpp"
+#include "core/utils/QImageBlur.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
@@ -183,7 +182,6 @@ void RecordBannerDelegate::
 
 void RecordBannerDelegate::reloadConfig()
 {
-	ZoneScoped;
 	m_grid_size = calculateSize(
 		config::grid_ui::itemViewWidth::get(),
 		config::grid_ui::bannerSizeX::get(),

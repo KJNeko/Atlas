@@ -9,7 +9,7 @@
 #include <QMimeDatabase>
 
 #include "../../system.hpp"
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 template <>
 bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] FileScanner& scanner )

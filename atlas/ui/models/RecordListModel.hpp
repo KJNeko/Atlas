@@ -7,7 +7,7 @@
 
 #include <QAbstractListModel>
 
-#include "atlas/core/database/Record.hpp"
+#include "core/database/Record.hpp"
 
 class RecordListModel : public QAbstractListModel
 {

@@ -5,11 +5,11 @@
 #include <QMimeDatabase>
 
 #include "ProgressBarDialog.hpp"
-#include "atlas/core/config.hpp"
-#include "atlas/core/foldersize.hpp"
-#include "atlas/core/utils/regex/regex.hpp"
-#include "atlas/ui/delegates/BatchImportDelegate.hpp"
-#include "atlas/ui/models/BatchImportModel.hpp"
+#include "core/config.hpp"
+#include "core/foldersize.hpp"
+#include "core/utils/regex/regex.hpp"
+#include "ui/delegates/BatchImportDelegate.hpp"
+#include "ui/models/BatchImportModel.hpp"
 #include "ui_BatchImportDialog.h"
 
 BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::BatchImportDialog )

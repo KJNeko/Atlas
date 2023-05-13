@@ -4,9 +4,7 @@
 
 #include "Database.hpp"
 
-#include <tracy/Tracy.hpp>
-
-#include "atlas/core/config.hpp"
+#include "core/config.hpp"
 
 namespace internal
 {

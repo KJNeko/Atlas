@@ -9,7 +9,7 @@
 
 #include <QString>
 
-#include "atlas/core/database/Record.hpp"
+#include "core/database/Record.hpp"
 
 class Search : public QObject
 {

@@ -7,7 +7,7 @@
 #include <QIODevice>
 #include <QMimeData>
 
-#include "atlas/logging.hpp"
+#include "core/logging.hpp"
 
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
 {

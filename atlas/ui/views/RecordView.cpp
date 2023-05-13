@@ -8,10 +8,10 @@
 #include <QMenu>
 #include <QMouseEvent>
 
-#include "atlas/database/GameMetadata.hpp"
-#include "atlas/ui/delegates/RecordBannerDelegate.hpp"
+#include "core/database/GameMetadata.hpp"
+#include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
-#include "atlas/ui/models/RecordListModel.hpp"
+#include "ui/models/RecordListModel.hpp"
 
 RecordView::RecordView( QWidget* parent ) : QListView( parent )
 {

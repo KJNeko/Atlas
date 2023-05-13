@@ -13,7 +13,7 @@
 #include <QMessageBox>
 #include <QMimeData>
 
-#include "atlas/threading/ImportProcessor.hpp"
+#include "core/threading/ImportProcessor.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui/views/VersionView.hpp"

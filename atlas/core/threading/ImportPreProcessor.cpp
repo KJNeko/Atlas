@@ -8,10 +8,10 @@
 #include <QRunnable>
 #include <QtConcurrent>
 
-#include "atlas/core/foldersize.hpp"
-#include "atlas/core/logging.hpp"
-#include "atlas/core/utils/engineDetection/engineDetection.hpp"
-#include "atlas/core/utils/regex/regex.hpp"
+#include "core/foldersize.hpp"
+#include "core/logging.hpp"
+#include "core/utils/engineDetection/engineDetection.hpp"
+#include "core/utils/regex/regex.hpp"
 
 ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 {}

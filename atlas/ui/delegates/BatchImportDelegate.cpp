@@ -11,7 +11,7 @@
 #include <QPainter>
 #include <QString>
 
-#include "atlas/ui/models/BatchImportModel.hpp"
+#include "ui/models/BatchImportModel.hpp"
 
 void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const

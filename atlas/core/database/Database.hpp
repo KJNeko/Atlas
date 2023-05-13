@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 #pragma GCC diagnostic push
 

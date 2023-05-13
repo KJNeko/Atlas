@@ -8,7 +8,7 @@
 #include <QListView>
 #include <QMouseEvent>
 
-#include "atlas/database/RecordData.hpp"
+#include "core/database/RecordData.hpp"
 
 class FilepathModel;
 class ImageDelegate;

@@ -1,7 +1,7 @@
 
 #include "executeProc.hpp"
 
-#include "atlas/core/logging.hpp"
+#include "core/logging.hpp"
 
 #ifdef __linux__
 

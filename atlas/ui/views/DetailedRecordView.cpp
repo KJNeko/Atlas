@@ -11,11 +11,9 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-#include "atlas/core/foldersize.hpp"
-#include "atlas/core/utils/QImageBlur.hpp"
-#include "atlas/database/GameMetadata.hpp"
-#include "atlas/foldersize.hpp"
-
+#include "core/database/GameMetadata.hpp"
+#include "core/foldersize.hpp"
+#include "core/utils/QImageBlur.hpp"
 #include "ui/delegates/ImageDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/FilepathModel.hpp"
@@ -25,8 +23,8 @@ DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), u
 {
 	ui->setupUi( this );
 
-	ui->previewList->setItemDelegate( new ImageDelegate() );
-	ui->previewList->setModel( new FilepathModel() );
+	//ui->previewList->setItemDelegate( new ImageDelegate() );
+	//ui->previewList->setModel( new FilepathModel() );
 }
 
 DetailedRecordView::~DetailedRecordView()
@@ -124,9 +122,9 @@ void DetailedRecordView::reloadRecord()
 	                  .toUTC()
 	                  .toString( "hh:mm:ss" ) ) );
 
-	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
+	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
 
-	ui->gameNotes->setText( m_record.value()->getDesc() );
+	//ui->gameNotes->setText( m_record.value()->getDesc() );
 }
 
 void DetailedRecordView::clearRecord()
@@ -149,7 +147,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
 		QPixmap banner {
-			record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING, PREVIEW_BANNER_WIDE )
+			record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING ) //, PREVIEW_BANNER_WIDE )
 		};
 		//QPixmap cover {
 		//	record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, PREVIEW_COVER )

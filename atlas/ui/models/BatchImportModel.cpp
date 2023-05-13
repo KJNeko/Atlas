@@ -7,8 +7,8 @@
 #include <QLineEdit>
 #include <QLocale>
 
-#include "atlas/core/database/RecordData.hpp"
-#include "atlas/core/logging.hpp"
+#include "core/database/RecordData.hpp"
+#include "core/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {

@@ -11,9 +11,9 @@
 #include <QStandardItemModel>
 
 #include "ProgressBarDialog.hpp"
-#include "atlas/core/config.hpp"
-#include "atlas/core/foldersize.hpp"
-#include "atlas/core/logging.hpp"
+#include "core/config.hpp"
+#include "core/foldersize.hpp"
+#include "core/logging.hpp"
 #include "ui_SettingsDialog.h"
 
 class DummyRecordModel : public QAbstractListModel

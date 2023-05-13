@@ -7,9 +7,9 @@
 
 #include <QPixmap>
 
-#include "atlas/Types.hpp"
-#include "atlas/config.hpp"
-#include "atlas/database/Database.hpp"
+#include "core/Types.hpp"
+#include "core/config.hpp"
+#include "core/database/Database.hpp"
 
 struct GameMetadata;
 
