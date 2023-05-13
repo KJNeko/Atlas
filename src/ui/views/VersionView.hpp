@@ -36,6 +36,10 @@ class VersionView : public QWidget
 
 	void setVersion( const std::optional< GameMetadata > metadata );
 
+  public slots:
+	void on_btnChangeVersion_pressed();
+	void on_btnChangeExec_pressed();
+
   private:
 
 	Ui::VersionView* ui;

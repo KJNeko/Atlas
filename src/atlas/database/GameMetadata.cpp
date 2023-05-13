@@ -119,3 +119,21 @@ std::uint64_t GameMetadata::getFolderSize( Transaction transaction ) const
 		>> folder_size;
 	return folder_size;
 }
+
+RecordID GameMetadata::getParentID() const
+{
+	return m_parent->getID();
+}
+
+void GameMetadata::setVersionName( const QString str, Transaction transaction )
+{
+	transaction << "UPDATE game_metadata SET version = ? WHERE record_id = ? AND version = ?" << str.toStdString()
+				<< m_parent->getID() << m_version.toStdString();
+	m_version = str;
+}
+
+void GameMetadata::setRelativeExecPath( const std::filesystem::path& path, Transaction transaction )
+{
+	transaction << "UPDATE game_metadata SET exec_path = ? WHERE record_id = ? AND version = ?" << path.string()
+				<< m_parent->getID() << m_version.toStdString();
+}

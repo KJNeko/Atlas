@@ -7,12 +7,18 @@
 #include "VersionView.hpp"
 
 #include <QDateTime>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QMessageBox>
 
 #include "ui_VersionView.h"
 
 VersionView::VersionView( QWidget* parent ) : QWidget( parent ), ui( new Ui::VersionView )
 {
 	ui->setupUi( this );
+
+	ui->btnChanceExec->setEnabled( false );
+	ui->btnChangeVersion->setEnabled( false );
 }
 
 VersionView::~VersionView()
@@ -23,6 +29,9 @@ VersionView::~VersionView()
 void VersionView::setVersion( const std::optional< GameMetadata > metadata )
 {
 	m_metadata = metadata;
+
+	ui->btnChanceExec->setEnabled( m_metadata.has_value() );
+	ui->btnChangeVersion->setEnabled( m_metadata.has_value() );
 
 	reloadData();
 }
@@ -54,4 +63,44 @@ void VersionView::reloadData()
 	ui->folderSizeLabel
 		->setText( QString( "Folder Size: %1" )
 	                   .arg( this->locale().formattedDataSize( static_cast< qint64 >( mdata.getFolderSize() ) ) ) );
+}
+
+void VersionView::on_btnChangeVersion_pressed()
+{
+	if ( const auto output =
+	         QInputDialog::getText( this, "Change Version", "New Version", QLineEdit::Normal, ui->versionEdit->text() );
+	     !output.isEmpty() && output != ui->versionEdit->text() )
+	{
+		Transaction trans { Autocommit };
+		std::size_t count { 0 };
+		trans << "SELECT COUNT(*) FROM game_metadata WHERE version = ? AND record_id = ?" << output.toStdString()
+			  << m_metadata->getParentID()
+			>> count;
+
+		if ( count > 0 )
+		{
+			QMessageBox::warning( this, "Duplicate version!", "A version with this name already exists!" );
+			return;
+		}
+
+		this->m_metadata->setVersionName( output, trans );
+	}
+
+	reloadData();
+}
+
+void VersionView::on_btnChangeExec_pressed()
+{
+	if ( const auto file = QFileDialog::getOpenFileName(
+			 this,
+			 "Select executable",
+			 QString::fromStdString( this->m_metadata->getPath().string() ),
+			 "Executables (*.exe *.sh *.bat)" );
+	     !file.isEmpty() )
+	{
+		const std::filesystem::path path { file.toStdString() };
+		const auto rel_path { std::filesystem::relative( path, this->m_metadata->getPath() ) };
+
+		this->m_metadata->setRelativeExecPath( rel_path );
+	}
 }

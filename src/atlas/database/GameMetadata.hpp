@@ -34,6 +34,9 @@ struct GameMetadata
 	//! Executes the game for this record.
 	void playGame( Transaction transaction = Transaction( Autocommit ) );
 
+	void setVersionName( const QString str, Transaction transaction = Transaction( Autocommit ) );
+	void setRelativeExecPath( const std::filesystem::path& path, Transaction transaction = Transaction( Autocommit ) );
+
 	//Getters
 	QString getVersionName() const;
 	//! If return true then the game is not located in config::paths::games::get()
@@ -44,6 +47,7 @@ struct GameMetadata
 	std::filesystem::path getRelativeExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
 	std::filesystem::path getExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
 	std::uint64_t getFolderSize( Transaction transaction = Transaction( Autocommit ) ) const;
+	RecordID getParentID() const;
 
   public:
 
