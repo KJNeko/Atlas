@@ -121,7 +121,15 @@ void RecordEditor::on_btnAddPreviews_pressed()
 
 void RecordEditor::on_btnRemovePreviews_pressed()
 {
-	//TODO
+	if ( QMessageBox::question(
+			 this, "Are you sure?", "Are you sure you want to remove the selected previews? This can't be reverted" )
+	     == QMessageBox::Yes )
+	{
+		//Remove selected
+		for ( const auto& preview : ui->previewList->selectedItems() ) m_record->removePreview( preview );
+	}
+	else
+		return;
 }
 
 void RecordEditor::on_btnDeleteVersion_pressed()

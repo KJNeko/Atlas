@@ -485,6 +485,11 @@ void RecordData::removeUserTag( const QString str, Transaction transaction )
 	}
 }
 
+void RecordData::removePreview( const std::filesystem::path& preview, Transaction trans )
+{
+	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_id << preview.string();
+}
+
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 {
 	RecordID record_id { 0 };

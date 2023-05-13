@@ -277,7 +277,7 @@ Select and hit 'delete' (keyboard or physical button) to remove</string>
               <enum>Qt::MoveAction</enum>
              </property>
              <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
+              <enum>QAbstractItemView::ExtendedSelection</enum>
              </property>
              <property name="flow">
               <enum>QListView::LeftToRight</enum>
@@ -292,7 +292,7 @@ Select and hit 'delete' (keyboard or physical button) to remove</string>
               <bool>true</bool>
              </property>
              <property name="selectionRectVisible">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
             </widget>
            </item>

@@ -86,6 +86,7 @@ struct RecordData
 	void setBanner( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
 	//void setBannerOverride( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
 	void addPreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
+	void removePreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
 	void reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction = Transaction( Autocommit ) );
 	void setDesc( const QString& str, Transaction transaction = Transaction( Autocommit ) );
 	void addUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );

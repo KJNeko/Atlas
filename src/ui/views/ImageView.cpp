@@ -35,3 +35,18 @@ void ImageView::modelReordered()
 {
 	emit reordered( model()->getFilepaths() );
 }
+
+std::vector< std::filesystem::path > ImageView::selectedItems() const
+{
+	auto model { dynamic_cast< FilepathModel* >( QListView::model() ) };
+
+	std::vector< std::filesystem::path > paths;
+
+	for ( const auto& index : selectionModel()->selectedIndexes() )
+	{
+		const auto& path { model->data( index ).value< std::filesystem::path >() };
+		paths.push_back( path );
+	}
+
+	return paths;
+}

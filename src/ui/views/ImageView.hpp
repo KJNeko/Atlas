@@ -23,6 +23,7 @@ class ImageView : public QListView
 
 	FilepathModel* model();
 	ImageDelegate* delegate();
+	std::vector< std::filesystem::path > selectedItems() const;
 
   private slots:
 	void modelReordered();
