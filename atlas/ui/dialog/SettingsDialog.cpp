@@ -10,8 +10,6 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 
-#include <tracy/Tracy.hpp>
-
 #include "ProgressBarDialog.hpp"
 #include "atlas/core/config.hpp"
 #include "atlas/core/foldersize.hpp"
@@ -28,24 +26,7 @@ class DummyRecordModel : public QAbstractListModel
 
 	QVariant data( [[maybe_unused]] const QModelIndex& index, [[maybe_unused]] int role ) const override
 	{
-		if ( role == Qt::DisplayRole )
-		{
-			Record r_data { RecordID( 0 ),
-				            "Galaxy Crossing: First Conquest",
-				            "Atlas Games",
-				            "Unity",
-				            std::uint64_t( 0 ),
-				            std::uint32_t( 0 ),
-				            std::vector< GameMetadata > {},
-				            ":/images/assets/Grid_Capsule_Default.webp",
-				            std::vector< std::filesystem::path > {} };
-
-			r_data->m_versions.emplace_back( *r_data.get(), "Chapter: 1", "", "", false, 0, 0, 0 );
-
-			if ( r_data == nullptr ) throw std::runtime_error( "Fuck" );
-
-			return QVariant::fromStdVariant( std::variant< Record >( r_data ) );
-		}
+		if ( role == Qt::DisplayRole ) return QVariant::fromStdVariant( std::variant< Record >( Record( 1 ) ) );
 		return {};
 	}
 };
@@ -77,8 +58,6 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::prepareThemeSettings()
 {
-	ZoneScoped;
-
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
 	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
@@ -113,7 +92,6 @@ void SettingsDialog::saveThemeSettings()
 
 void SettingsDialog::prepareGridViewerSettings()
 {
-	ZoneScoped;
 	//Init Grid previewSettings
 	//Grid Capsule Settings
 
@@ -167,8 +145,6 @@ void SettingsDialog::prepareGridViewerSettings()
 
 void SettingsDialog::saveBannerViewerSettings()
 {
-	ZoneScoped;
-
 	config::grid_ui::imageLayout::set( static_cast< SCALE_TYPE >( ui->cbImageLayout->currentIndex() ) );
 	config::grid_ui::blurType::set( static_cast< BLUR_TYPE >( ui->cbBlurType->currentIndex() ) );
 	config::grid_ui::blurRadius::set( ui->sbBlurRadius->value() );
@@ -200,7 +176,6 @@ void SettingsDialog::saveBannerViewerSettings()
 
 void SettingsDialog::preparePathsSettings()
 {
-	ZoneScoped;
 	//Set 'root' canomical path
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
@@ -225,7 +200,6 @@ void SettingsDialog::preparePathsSettings()
 
 void SettingsDialog::savePathsSettings()
 {
-	ZoneScoped;
 	//Handle pathSettings
 	if ( ui->gamePath->text() != config::paths::games::get() )
 	{
@@ -329,7 +303,6 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 
 void SettingsDialog::on_applySettings_pressed()
 {
-	ZoneScoped;
 	savePathsSettings();
 	saveBannerViewerSettings();
 	saveThemeSettings();
@@ -354,7 +327,6 @@ void SettingsDialog::reject()
 
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
-	ZoneScoped;
 	spdlog::debug( "Theme changed to {}", text );
 
 	reloadTheme();
@@ -380,7 +352,6 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 
 void SettingsDialog::reloadTheme()
 {
-	ZoneScoped;
 	if ( config::ui::use_system_theme::get() )
 	{
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );

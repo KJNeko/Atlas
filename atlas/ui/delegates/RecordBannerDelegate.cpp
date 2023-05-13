@@ -19,7 +19,6 @@
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
-	ZoneScoped;
 	painter->save();
 
 	//draw test rect
@@ -114,7 +113,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->getEngine() );
 	//Draw Version
 	const auto& latest { record->getLatestVersion() };
-	this->drawText( painter, options_rect, stripe_height, m_version_location, latest.getVersionName() );
+	if ( latest.has_value() )
+		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->getVersionName() );
+	else
+		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
 	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->getCreator() );
 
@@ -124,7 +126,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 QSize RecordBannerDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
-	ZoneScoped;
 	return m_grid_size;
 }
 
@@ -132,7 +133,6 @@ void RecordBannerDelegate::
 	drawText( QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str )
 		const
 {
-	ZoneScoped;
 	if ( location != NONE )
 	{
 		const QSize size { rect.width(), strip_size };

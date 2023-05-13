@@ -8,8 +8,6 @@
 #include <QRunnable>
 #include <QtConcurrent>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/core/foldersize.hpp"
 #include "atlas/core/logging.hpp"
 #include "atlas/core/utils/engineDetection/engineDetection.hpp"
@@ -21,7 +19,6 @@ ImportPreProcessor::ImportPreProcessor() : QObject( nullptr )
 std::optional< GameImportData >
 	runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
 {
-	ZoneScoped;
 	FileScanner scanner { folder };
 	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
@@ -30,55 +27,61 @@ std::optional< GameImportData >
 		const auto [ title, creator, version, engine ] =
 			extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-		return GameImportData(
-			std::filesystem::relative( folder, base ),
-			title,
-			creator,
-			engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
-			version,
-			folderSize( scanner ),
-			potential_executables,
-			potential_executables.at( 0 ) );
+		return { GameImportData { std::filesystem::relative( folder, base ),
+			                      title,
+			                      creator,
+			                      engine.isEmpty() ? engineName( determineEngine( scanner ) ) : engine,
+			                      version.isEmpty() ? "0.0" : version,
+			                      folderSize( scanner ),
+			                      potential_executables,
+			                      potential_executables.at( 0 ) } };
 	}
 	else
 		spdlog::warn( "No executables found for path {}", folder );
 
-	return std::nullopt;
+	return { std::nullopt };
 }
 
 void ImportPreProcessor::processDirectory( const QString regex, const std::filesystem::path base )
 {
-	ZoneScoped;
 	running = true;
 	spdlog::debug( "Processing base directory {:ce} with regex {}", base, regex );
 
 	std::vector< QFuture< std::optional< GameImportData > > > futures;
 
 	//Can't use a normal for loop since we need `pop()` to lower the number of itterations this has to go through.
-	for ( auto itter = std::filesystem::
-	          recursive_directory_iterator( base, std::filesystem::directory_options::skip_permission_denied );
-	      itter != std::filesystem::recursive_directory_iterator();
-	      ++itter )
+	std::vector< std::filesystem::path > paths;
+	paths.emplace_back( base );
+	for ( size_t i = 0; i < paths.size(); ++i )
 	{
-		ZoneScopedN( "Process Directory" );
-		if ( abort_task )
+		std::vector< std::filesystem::path > found_paths;
+		bool found_valid_dir { false };
+
+		for ( const auto& file : std::filesystem::directory_iterator( paths.at( i ) ) )
 		{
-			abort_task = false;
-			running = false;
-			return;
+			if ( abort_task )
+			{
+				abort_task = false;
+				running = false;
+				return;
+			}
+
+			const std::filesystem::path& folder { file.path() };
+			if ( std::filesystem::is_directory( folder ) )
+			{
+				if ( valid( regex, QString::fromStdString( folder.string() ) ) )
+				{
+					spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
+
+					futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );
+					found_valid_dir = true;
+				}
+				else
+					found_paths.emplace_back( folder );
+			}
 		}
 
-		const std::filesystem::path& folder { *itter };
-		if ( std::filesystem::is_directory( folder ) && valid( regex, QString::fromStdString( folder.string() ) ) )
-		{
-			ZoneScopedN( "Test folder for executables" );
-			spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
-
-			futures.emplace_back( QtConcurrent::run( runner, regex, folder, base ) );
-
-			itter.pop();
-			if ( itter == std::filesystem::recursive_directory_iterator() ) break;
-		}
+		if ( !found_valid_dir ) paths.insert( paths.end(), found_paths.begin(), found_paths.end() );
 	}
 
 	for ( auto& future : futures )
@@ -90,14 +93,17 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 			return;
 		}
 
-		future
-			.then(
-				[ this ]( const std::optional< GameImportData >& item )
-				{
-					if ( item.has_value() ) emit finishedDirectory( item.value() );
-					return;
-				} )
-			.waitForFinished();
+		future.then(
+			[ this ]( const std::optional< GameImportData >& item )
+			{
+				if ( item.has_value() ) emit finishedDirectory( *item );
+				return;
+			} );
+	}
+
+	for ( auto& future : futures )
+	{
+		future.waitForFinished();
 	}
 
 	//if ( buffer.size() > 0 ) emit finishedDirectory( std::move( buffer ) );

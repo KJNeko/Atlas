@@ -27,8 +27,6 @@
 
 #include <sqlite_modern_cpp.h>
 
-#include <client/TracyLock.hpp>
-
 #pragma GCC diagnostic pop
 
 namespace internal
@@ -129,7 +127,7 @@ struct Transaction
 	/**
 	 * @param autocommit if commit() should be called on dtor, Otherwise abort() is called if not called previously
 	 */
-	Transaction( const bool autocommit = false );
+	explicit Transaction( const bool autocommit = false );
 	Transaction( Transaction& other );
 	Transaction( const Transaction& other ) = delete;
 	Transaction( Transaction&& other ) = delete;

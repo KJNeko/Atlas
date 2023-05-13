@@ -7,9 +7,7 @@
 #include <QLineEdit>
 #include <QLocale>
 
-#include <tracy/Tracy.hpp>
-
-#include "atlas/core/database/Record.hpp"
+#include "atlas/core/database/RecordData.hpp"
 #include "atlas/core/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -24,7 +22,6 @@ int BatchImportModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) con
 
 QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 {
-	ZoneScoped;
 	const auto& item { m_data.at( static_cast< std::size_t >( index.row() ) ) };
 
 	switch ( role )
@@ -76,7 +73,6 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 
 void BatchImportModel::addGame( GameImportData data )
 {
-	ZoneScoped;
 	beginInsertRows( {}, static_cast< int >( m_data.size() ), static_cast< int >( m_data.size() ) );
 	m_data.push_back( std::move( data ) );
 	endInsertRows();
@@ -84,7 +80,6 @@ void BatchImportModel::addGame( GameImportData data )
 
 void BatchImportModel::addGames( std::vector< GameImportData > data )
 {
-	ZoneScoped;
 	beginInsertRows( {}, static_cast< int >( m_data.size() ), static_cast< int >( m_data.size() + data.size() - 1 ) );
 	for ( auto& item : data ) m_data.emplace_back( std::move( item ) );
 	endInsertRows();
@@ -92,7 +87,6 @@ void BatchImportModel::addGames( std::vector< GameImportData > data )
 
 QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
-	ZoneScoped;
 	if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
 	{
 		switch ( section )
@@ -121,7 +115,6 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 
 Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 {
-	ZoneScoped;
 	switch ( index.column() )
 	{
 		case TITLE:
@@ -146,7 +139,6 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 
 bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value, int role )
 {
-	ZoneScoped;
 	switch ( index.column() )
 	{
 		case EXECUTABLES:

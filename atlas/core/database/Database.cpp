@@ -40,7 +40,6 @@ try
 {
 	initLogging();
 
-	ZoneScoped;
 	spdlog::debug( "Initalizing database with path {}", init_path );
 	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
 		std::filesystem::create_directories( init_path.parent_path() );
@@ -51,24 +50,35 @@ try
 
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
-		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, UNIQUE(record_id, version));",
-		"CREATE TABLE IF NOT EXISTS images (record_id INTEGER REFERENCES records(record_id), type INTEGER, path TEXT, UNIQUE(record_id, type, path));",
-		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
-		"CREATE TABLE IF NOT EXISTS tag_mappings (record_id INTEGER REFERENCES records(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
+		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, date_added INTEGER, UNIQUE(record_id, version));",
+
+		//Extra data for records
+		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
 
 		//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
 		"CREATE TABLE IF NOT EXISTS f95zone_data (f95_id INTEGER PRIMARY KEY);",
 		"CREATE TABLE IF NOT EXISTS dlsite_data (dlsite_id TEXT PRIMARY KEY);",
+		"CREATE TABLE IF NOT EXISTS gl_data (glid INTGEGER PRIMARY KEY);",
+		"CREATE TABLE IF NOT EXISTS atlas_data (atlas_id INTEGER PRIMARY KEY, id_name TEXT, short_name TEXT, title TEXT, original_name TEXT, category TEXT, engine TEXT, status TEXT, version TEXT, developer TEXT, creator TEXT, overview TEXT, censored TEXT, language TEXT, translations TEXT, genre TEXT, voice TEXT, os TEXT, release_date DATE, length TEXT, banner TEXT, banner_wide TEXT, cover TEXT, logo TEXT, last_update DATE)",
 
 		"CREATE TABLE IF NOT EXISTS f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
-		"CREATE TABLE IF NOT EXISTS dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));"
+		"CREATE TABLE IF NOT EXISTS dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));",
+		"CREATE TABLE IF NOT EXISTS gl_mapping (record_id REFERENCES records(record_id), glid REFERENCES gl_data(glid), UNIQUE(record_id, glid))",
+		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(atlas_id), UNIQUE(record_id, atlas_id))",
 
-		//Old tables
-		/*
-		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT)",
-		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, UNIQUE(record_id, version, game_path, exec_path))",
-		"CREATE TABLE IF NOT EXISTS images (record_id INTEGER REFERENCES records(record_id), type TEXT, path TEXT)",
-		"CREATE TABLE IF NOT EXISTS flags (record_id INTEGER REFERENCES records(record_id) PRIMARY KEY, installed INTEGER, played INTEGER, wanted INTEGER)"*/
+		//Tags
+		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
+		"CREATE TABLE IF NOT EXISTS tag_mappings (record_id INTEGER REFERENCES records(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
+
+		//Tag views
+		"CREATE VIEW IF NOT EXISTS title_tags (tag, record_id) AS SELECT 'title:' || title, record_id FROM records;",
+		"CREATE VIEW IF NOT EXISTS creator_tags (tag, record_id) AS SELECT 'creator:' || creator, record_id FROM records;",
+		"CREATE VIEW IF NOT EXISTS engine_tags (tag, record_id) AS SELECT 'engine:' || engine, record_id FROM records;",
+		"CREATE VIEW IF NOT EXISTS full_tags (tag, record_id) AS SELECT tag, record_id FROM tags NATURAL JOIN tag_mappings NATURAL JOIN records UNION SELECT tag, record_id FROM title_tags UNION SELECT tag, record_id FROM creator_tags UNION SELECT tag, record_id FROM engine_tags;",
+
+		//Image tables
+		"CREATE TABLE IF NOT EXISTS previews (record_id REFERENCES records(record_id), path TEXT UNIQUE, position INTEGER DEFAULT 256, UNIQUE(record_id, path))",
+		"CREATE TABLE IF NOT EXISTS banners (record_id REFERENCES records(record_id), path TEXT UNIQUE, UNIQUE(record_id, path))",
 	};
 
 	for ( const auto& query_str : table_queries ) transaction << query_str;
@@ -76,6 +86,39 @@ try
 	transaction.commit();
 
 	config::db::first_start::set( false );
+
+	try
+	{
+		Transaction transaction_record { Transaction::Autocommit };
+
+		transaction_record
+			<< "INSERT INTO records (record_id, title, creator, engine, last_played_r, total_playtime) VALUES ($1, $2, $3, $4, 0, 0)"
+			<< static_cast< std::uint64_t >( 1 ) << "Galaxy Crossing: First Conquest"
+			<< "Atlas Games"
+			<< "Unity";
+	}
+	catch ( sqlite::sqlite_exception& e )
+	{
+		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
+	}
+
+	try
+	{
+		Transaction transaction_record { Transaction::Autocommit };
+		transaction_record
+			<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size, date_added) VALUES ($1, $2, $3, $4, $5, 0, 0, 0, 0)"
+			<< static_cast< std::uint64_t >( 1 ) << "Chapter: 1"
+			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest"
+			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe"
+			<< true;
+
+		transaction_record << "INSERT INTO banners (record_id, path) VALUES ($1, $2)"
+						   << static_cast< std::uint64_t >( 1 ) << ":/images/assets/Grid_Capsule_Default.webp";
+	}
+	catch ( ... )
+	{
+		spdlog::info( "Failed to insert dummy record metadata" );
+	}
 }
 catch ( sqlite::sqlite_exception& e )
 {
@@ -85,7 +128,6 @@ catch ( sqlite::sqlite_exception& e )
 
 void Database::deinit()
 {
-	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
 	delete internal::db;
 	internal::db = nullptr;
@@ -93,7 +135,6 @@ void Database::deinit()
 
 internal::LockGuardType TransactionData::getLock()
 {
-	ZoneScoped;
 	//Check if we are already locked
 	if ( internal::last_locked == std::this_thread::get_id() )
 	{
@@ -116,7 +157,6 @@ TransactionData::~TransactionData()
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
 {
-	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		spdlog::error( "Transaction: Database was not ready!" );
@@ -130,7 +170,6 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 
 Transaction::~Transaction()
 {
-	ZoneScoped;
 	if ( data.use_count() == 1 && !data->invalid )
 	{
 		if ( m_autocommit )
@@ -145,7 +184,6 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
-	ZoneScoped;
 	if ( !data->ran_once )
 	{
 		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
@@ -159,7 +197,6 @@ void Transaction::commit()
 
 void Transaction::abort()
 {
-	ZoneScoped;
 	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
 	if ( !data->ran_once )
 	{
@@ -174,11 +211,9 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
-	ZoneScoped;
 	if ( data == nullptr ) throw TransactionInvalid( sql );
 
 	data->ran_once = true;
-	spdlog::debug( "Executing \"{}\"", sql );
 	if ( data.use_count() == 0 ) throw TransactionInvalid( sql );
 	m_previous_statement = sql;
 	return Database::ref() << sql;
@@ -188,11 +223,12 @@ Transaction::Transaction( Transaction& other ) :
   m_parent( &other ),
   data( other.data ),
   m_autocommit( other.m_autocommit )
-{}
+{
+	if ( data == nullptr ) throw TransactionInvalid( other.m_previous_statement );
+}
 
 NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {
-	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		guard.reset();
@@ -202,13 +238,11 @@ NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database:
 
 NonTransaction::~NonTransaction()
 {
-	ZoneScoped;
 	if ( !finished ) abort();
 }
 
 void NonTransaction::commit()
 {
-	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -216,7 +250,6 @@ void NonTransaction::commit()
 
 void NonTransaction::abort()
 {
-	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -225,7 +258,6 @@ void NonTransaction::abort()
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
-	ZoneScoped;
 	m_previous_statement = sql;
 	spdlog::debug( "Executing {} without transaction", sql );
 	if ( finished ) throw TransactionInvalid( m_previous_statement );

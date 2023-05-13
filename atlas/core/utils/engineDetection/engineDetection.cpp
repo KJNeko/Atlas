@@ -8,8 +8,6 @@
 
 #include <QMimeDatabase>
 
-#include <tracy/Tracy.hpp>
-
 #include "../../system.hpp"
 #include "atlas/core/logging.hpp"
 
@@ -40,7 +38,6 @@ bool isBlacklistT( const std::string& name, std::string_view comp, std::same_as<
 
 bool isBlacklist( const std::string& name )
 {
-	ZoneScoped;
 	// In order to 'inject' name into the arguments we have to create a function
 	// to unpack the parameter pack and slam it straight back into the function.
 	auto func = [ &name ]( auto&&... args ) noexcept
@@ -51,7 +48,6 @@ bool isBlacklist( const std::string& name )
 
 std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 {
-	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
 
 	//Check for a valid game executable in the folder
@@ -61,7 +57,6 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 
 		if ( std::filesystem::is_regular_file( path ) )
 		{
-			ZoneScopedN( "Is Regular" );
 			if ( isBlacklist( filename ) ) continue;
 
 			QMimeDatabase mime_db;
@@ -106,7 +101,6 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, [[maybe_unused]] const Engine engine_type )
 {
-	ZoneScoped;
 	std::vector< std::pair< std::filesystem::path, int > > execs;
 
 	for ( auto& path : paths )
@@ -137,7 +131,6 @@ QString engineNameT< UNKNOWN >()
 template < Engine engine >
 Engine findEngine( FileScanner& scanner )
 {
-	ZoneScoped;
 	if constexpr ( engine == ENGINES_END )
 		return UNKNOWN;
 	else
@@ -151,14 +144,12 @@ Engine findEngine( FileScanner& scanner )
 
 Engine determineEngine( FileScanner& scanner )
 {
-	ZoneScoped;
 	return findEngine< ENGINES_BEGIN >( scanner );
 }
 
 template < Engine engine_t >
 QString getEngineNameT( const Engine engine )
 {
-	ZoneScoped;
 	if constexpr ( engine_t == ENGINES_END )
 		return engineNameT< UNKNOWN >();
 	else if constexpr ( engine_t == ENGINES_BEGIN )
@@ -182,8 +173,6 @@ QString engineName( const Engine engine )
 template <>
 bool isEngineT< RenPy >( FileScanner& scanner )
 {
-	ZoneScoped;
-
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
@@ -202,7 +191,6 @@ QString engineNameT< RenPy >()
 template <>
 bool isEngineT< Unity >( FileScanner& scanner )
 {
-	ZoneScoped;
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
@@ -226,7 +214,6 @@ QString engineNameT< Unity >()
 template <>
 bool isEngineT< Unreal >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -239,7 +226,6 @@ QString engineNameT< Unreal >()
 template <>
 bool isEngineT< RPGM >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -252,7 +238,6 @@ QString engineNameT< RPGM >()
 template <>
 bool isEngineT< WolfRPG >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -265,8 +250,6 @@ QString engineNameT< WolfRPG >()
 template <>
 bool isEngineT< HTML >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
-
 	bool html_found { false };
 
 	for ( const auto& file : scanner )
@@ -289,7 +272,6 @@ QString engineNameT< HTML >()
 template <>
 bool isEngineT< VisualNovelMaker >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -302,8 +284,6 @@ QString engineNameT< VisualNovelMaker >()
 template <>
 bool isEngineT< TyanoBuilder >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
-
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
@@ -327,7 +307,6 @@ QString engineNameT< TyanoBuilder >()
 template <>
 bool isEngineT< Java >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -340,7 +319,6 @@ QString engineNameT< Java >()
 template <>
 bool isEngineT< Flash >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -353,7 +331,6 @@ QString engineNameT< Flash >()
 template <>
 bool isEngineT< RAGS >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -366,7 +343,6 @@ QString engineNameT< RAGS >()
 template <>
 bool isEngineT< KiriKiri >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -379,7 +355,6 @@ QString engineNameT< KiriKiri >()
 template <>
 bool isEngineT< NScripter >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -392,7 +367,6 @@ QString engineNameT< NScripter >()
 template <>
 bool isEngineT< NVList >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 
@@ -405,7 +379,6 @@ QString engineNameT< NVList >()
 template <>
 bool isEngineT< Sukai2 >( [[maybe_unused]] FileScanner& scanner )
 {
-	ZoneScoped;
 	return false;
 }
 

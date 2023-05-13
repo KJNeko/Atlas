@@ -18,7 +18,6 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <tracy/Tracy.hpp>
 
 #pragma GCC diagnostic pop
 
@@ -28,13 +27,11 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <tracy/Tracy.hpp>
 
 #endif
 
 void initLogging()
 {
-	ZoneScoped;
 	spdlog::enable_backtrace( 32 );
 
 	auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };
@@ -104,23 +101,23 @@ auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::pat
 	if ( print_canonical && std::filesystem::exists( path ) )
 	{
 		if ( print_exists )
-			return format_to(
+			return fmt::format_to(
 				ctx.out(),
 				"[\"{}\", (Canonical: \"{}\") Exists: \"{}\"]",
 				path.string(),
 				std::filesystem::canonical( path ).string(),
 				std::filesystem::exists( path ) ? "True" : "False" );
 		else
-			return format_to(
+			return fmt::format_to(
 				ctx.out(), "[\"{}\" (Canonical: \"{}\")]", path.string(), std::filesystem::canonical( path ).string() );
 	}
 	else
 	{
 		if ( print_exists )
-			return format_to(
-				ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
+			return fmt::
+				format_to( ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
 		else
-			return format_to( ctx.out(), "[\"{}\"]", path.string() );
+			return fmt::format_to( ctx.out(), "[\"{}\"]", path.string() );
 	}
 }
 

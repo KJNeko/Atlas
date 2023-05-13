@@ -8,6 +8,7 @@
 
 #include "atlas/core/config.hpp"
 #include "atlas/core/database/Record.hpp"
+#include "atlas/database/RecordData.hpp"
 #include "atlas/core/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
@@ -16,7 +17,11 @@ ImportProcessor::ImportProcessor() : QObject( nullptr )
 void ImportProcessor::importGames(
 	const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import )
 {
-	ZoneScoped;
+	spdlog::debug(
+		"ImportProcessor::importGames() - Starting import, source: {:ce}, move_after_import: {}",
+		source,
+		move_after_import );
+
 	emit startProgressBar();
 	emit updateMax( static_cast< int >( data.size() ) );
 
@@ -27,11 +32,15 @@ void ImportProcessor::importGames(
 	//God I love decomposition
 	for ( auto [ path, title, creator, engine, version, size, executables, executable ] : data )
 	{
-		ZoneScopedN( "Import game" );
-
-		if ( pause_task ) pause_task.wait( pause_task );
+		if ( pause_task )
+		{
+			spdlog::debug( "ImportProcessor::importGames() - Pausing task" );
+			pause_task.wait( pause_task );
+			spdlog::debug( "ImportProcessor::importGames() - Resuming task" );
+		}
 		if ( abort_task )
 		{
+			spdlog::debug( "ImportProcessor::importGames() - Aborting task" );
 			abort_task = false;
 			running = false;
 			return;
@@ -45,7 +54,7 @@ void ImportProcessor::importGames(
 		{
 			if ( move_after_import )
 			{
-				ZoneScopedN( "Copy game" );
+				spdlog::debug( "ImportProcessor::importGames() - Copying game" );
 				//Gather all files to copy
 				std::vector< std::filesystem::path > files;
 				for ( auto file : std::filesystem::recursive_directory_iterator( source_folder ) )
@@ -61,17 +70,26 @@ void ImportProcessor::importGames(
 				//Scan through and copy every file.
 				for ( std::size_t i = 0; i < files.size(); ++i )
 				{
-					const auto source_path { source_folder / files.at( i ) };
-					const auto dest_path { dest_folder / std::filesystem::relative( files.at( i ), source_folder ) };
+					try
+					{
+						const auto source_path { source_folder / files.at( i ) };
+						const auto dest_path { dest_folder
+							                   / std::filesystem::relative( files.at( i ), source_folder ) };
 
-					if ( !std::filesystem::exists( dest_path.parent_path() ) )
-						std::filesystem::create_directories( dest_path.parent_path() );
+						if ( !std::filesystem::exists( dest_path.parent_path() ) )
+							std::filesystem::create_directories( dest_path.parent_path() );
 
-					std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
-					emit updateSubText( QString( "Copying: %1" )
-					                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
+						std::filesystem::copy( source_path, dest_path, std::filesystem::copy_options::update_existing );
 
-					emit updateSubValue( static_cast< int >( i ) );
+						emit updateSubText( QString( "Copying: %1" )
+						                        .arg( QString::fromStdString( source_path.filename().string() ) ) );
+
+						emit updateSubValue( static_cast< int >( i ) );
+					}
+					catch ( std::filesystem::filesystem_error& e )
+					{
+						spdlog::error( "ImportProcessor::importGames() - Failed to copy file: {}", e.what() );
+					}
 				}
 
 				path = std::filesystem::relative( dest_folder, dest_root );
@@ -83,20 +101,30 @@ void ImportProcessor::importGames(
 
 			Transaction transaction { Transaction::NoAutocommit };
 
-			Record record {
-				importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction )
-			};
+			auto record = [ & ]() -> Record
+			{
+				if ( !recordExists( title, creator, engine, transaction ) )
+					return importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction );
+				else
+					return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ) };
+			}();
 
 			record->addVersion(
 				std::move( version ),
 				std::move( path ),
 				std::move( executable ),
-				!move_after_import,
 				size,
+				!move_after_import,
 				transaction );
 
+			if ( std::filesystem::exists( source_folder / "banner.jpg" )
+			     || std::filesystem::exists( source_folder / "banner.png" ) )
 			transaction.commit();
 
+			//Get a list of all files in base dir and iterate through them to get images
+
+
+			/*
 			//Get a list of all files in base dir and iterate through them to get images
 			const std::vector< std::string > image_ext { ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif" };
 			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
@@ -122,13 +150,41 @@ void ImportProcessor::importGames(
 					record->setBanner( file.path(), PREVIEW_LOGO );
 				}
 			}
+			 */
+			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
+			{
+				//TODO Add back 'logo', 'banner and 'banner_w' options
+				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
+					                         source_folder / "banner.jpg" :
+					                         source_folder / "banner.png" };
+				emit updateSubText( QString( "Adding banner: %1" )
+				                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
+				record->setBanner( banner_path, transaction );
+			}
+
+			if ( std::filesystem::exists( source_folder / "previews" ) )
+			{
+				for ( const auto& file : std::filesystem::directory_iterator( source_folder / "previews" ) )
+				{
+					emit updateSubText( QString( "Adding preview: %1" )
+					                        .arg( QString::fromStdString( file.path().filename().string() ) ) );
+					if ( file.is_regular_file() ) record->addPreview( file, transaction );
+				}
+			}
 
 			completed_records.emplace_back( record->getID() );
 
-			if ( move_after_import ) std::filesystem::remove_all( source_folder );
+			transaction.commit();
+
+			spdlog::debug( "Import succeeded with id {}", record->getID() );
+
+			if ( move_after_import )
+			{
+				emit updateSubText( "Deleting source folder..." );
+				std::filesystem::remove_all( source_folder );
+			}
 
 			//No crash! Yay. Continue to import
-			spdlog::debug( "Import succeeded with id {}", record->getID() );
 			emit updateValue( ++counter );
 		}
 		catch ( RecordException& e )

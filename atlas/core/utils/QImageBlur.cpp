@@ -11,13 +11,10 @@
 #include <QPixmapCache>
 #include <QWidget>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/core/config.hpp"
 
 QPixmap blurPixmap( const QPixmap& pixmap, qreal radius, bool quality )
 {
-	ZoneScoped;
 	QGraphicsScene scene;
 	QGraphicsPixmapItem item;
 	item.setPixmap( pixmap );
@@ -41,7 +38,6 @@ QPixmap blurToSize(
 	const int image_blur_radius,
 	const BLUR_TYPE image_blur_type )
 {
-	ZoneScoped;
 	if ( pixmap.isNull() ) return QPixmap();
 	auto resized { pixmap.toImage().scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation ) };
 	//const auto blurred_image { blurPixmap( pixmap, 25, false, false ) };
@@ -64,7 +60,6 @@ QPixmap blurToSize(
 
 	const QImage alpha_mask = [ & ]() -> QImage
 	{
-		ZoneScoped;
 		//Create an alpha mask on the left and right sides of the image
 		QImage gradient_img { dest.size(), QImage::Format_Alpha8 };
 
@@ -73,7 +68,6 @@ QPixmap blurToSize(
 
 		if ( resized.width() <= width - 2 )
 		{
-			ZoneScopedN( "Horizontal" );
 			QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().topRight() };
 			grad.setColorAt( 0.00, Qt::transparent );
 			grad.setColorAt( feather_radius, Qt::black );
@@ -83,7 +77,6 @@ QPixmap blurToSize(
 		}
 		else if ( resized.height() <= height - 2 )
 		{
-			ZoneScopedN( "Vertical" );
 			//Now alpha mask for top/bottom
 			QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().bottomLeft() };
 			grad.setColorAt( 0.00, Qt::transparent );
@@ -100,7 +93,6 @@ QPixmap blurToSize(
 	}();
 
 	{
-		ZoneScoped;
 		QPainter painter { &dest };
 
 		if ( !alpha_mask.isNull() )

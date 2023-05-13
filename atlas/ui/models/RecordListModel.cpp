@@ -4,11 +4,8 @@
 
 #include "RecordListModel.hpp"
 
-#include <tracy/Tracy.hpp>
-
 void RecordListModel::setRecords( std::vector< Record > records )
 {
-	ZoneScoped;
 	beginResetModel();
 	m_records = std::move( records );
 	endResetModel();
@@ -17,7 +14,6 @@ void RecordListModel::setRecords( std::vector< Record > records )
 
 void RecordListModel::addRecord( Record record, const std::size_t place_at )
 {
-	ZoneScoped;
 	const int pos { static_cast< int >( std::min( place_at, m_records.size() ) ) };
 	beginInsertRows( {}, pos, pos );
 	m_records.insert( m_records.begin() + static_cast< int >( pos ), record );
@@ -27,7 +23,6 @@ void RecordListModel::addRecord( Record record, const std::size_t place_at )
 
 void RecordListModel::removeRecord( QPersistentModelIndex index )
 {
-	ZoneScoped;
 	if ( !index.isValid() )
 		throw std::runtime_error( "RecordListModel::removeRecord(QPersistentModelIndex): index is not valid" );
 

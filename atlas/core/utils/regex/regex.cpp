@@ -7,20 +7,16 @@
 #include <QRegularExpression>
 #include <QString>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/core/logging.hpp"
 
 QString groupify( const QString group_name )
 {
-	ZoneScoped;
 	return R"((?P<)" + group_name.mid( 1, group_name.size() - 2 ) + R"(>[^\\\/]+))";
 }
 
 //! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
 QString escapeStr( QString pattern )
 {
-	ZoneScoped;
 	const QRegularExpression regex { R"((?<!\\)[\(\)]|(?<!\\)[\\](?![\/\\\(\)\?$]))" };
 
 	while ( pattern.contains( regex ) )
@@ -35,7 +31,6 @@ QString escapeStr( QString pattern )
 
 QString processRegexify( QString pattern )
 {
-	ZoneScoped;
 	if ( pattern.contains( QRegularExpression( "{.*?}" ) ) )
 	{
 		//We found a complete set.
@@ -44,7 +39,6 @@ QString processRegexify( QString pattern )
 
 		const auto extract { pattern.mid( start, ( end - start ) + 1 ) };
 		pattern.replace( extract, groupify( extract ) );
-		TracyMessageL( "Recurse" );
 		return processRegexify( std::move( pattern ) );
 	}
 	else
@@ -53,13 +47,11 @@ QString processRegexify( QString pattern )
 
 QString regexify( QString pattern )
 {
-	ZoneScoped;
 	return processRegexify( escapeStr( std::move( pattern ) ) );
 }
 
 bool valid( QString pattern, QString text )
 {
-	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };
@@ -69,7 +61,6 @@ bool valid( QString pattern, QString text )
 //std::tuple< QString, QString, QString, QString >
 GroupsOutput extractGroups( QString pattern, QString text )
 {
-	ZoneScoped;
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regexify( std::move( pattern ) );
 	const QRegularExpression regex { pattern };
 	const auto match { regex.match( text ) };

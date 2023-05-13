@@ -10,8 +10,6 @@
 #include <string>
 #include <vector>
 
-#include <tracy/Tracy.hpp>
-
 #include "atlas/core/logging.hpp"
 
 struct FileInfo
@@ -69,7 +67,6 @@ struct FileScannerGenerator
 
 		std::suspend_always yield_value( FileInfo from )
 		{
-			ZoneScoped;
 			assert( from.filename != "" );
 			value = std::move( from );
 			return {};
@@ -107,7 +104,6 @@ struct FileScanner
 
 		FileScanner::iterator& operator++()
 		{
-			ZoneScoped;
 			++m_idx;
 			return *this;
 		}

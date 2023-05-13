@@ -9,7 +9,6 @@
 
 #include <QString>
 
-#ifdef __GNUC__
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Weffc++"
@@ -18,13 +17,11 @@
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 #pragma GCC diagnostic ignored "-Wuseless-cast"
+#pragma GCC diagnostic ignored "-Wdangling-reference"
 
 #include <spdlog/spdlog.h>
 
 #pragma GCC diagnostic pop
-#else
-#include <spdlog/spdlog.h>
-#endif
 
 #include "Types.hpp"
 
@@ -34,11 +31,12 @@ void initLogging();
 template <>
 struct fmt::formatter< QString >
 {
-	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+	constexpr auto parse( fmt::format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
-	format_context::iterator format( const QString& my, format_context& ctx ) const
+	template < typename FormatContext >
+	auto format( const QString& my, FormatContext& ctx ) const -> decltype( ctx.out() )
 	{
-		return format_to( ctx.out(), "{}", my.toStdString() );
+		return fmt::format_to( ctx.out(), "{}", my.toStdString() );
 	}
 };
 

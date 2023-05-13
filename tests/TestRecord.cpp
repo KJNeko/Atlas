@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "atlas/core/database/Database.hpp"
-#include "atlas/core/database/Record.hpp"
+#include "atlas/core/database/RecordData.hpp"
 #include "atlas/core/logging.hpp"
 
 class TestRecord : public ::testing::Test

@@ -13,10 +13,13 @@
 
 #include "atlas/core/config.hpp"
 #include "atlas/core/database/Database.hpp"
+#include "atlas/version.hpp"
 #include "ui/mainwindow.h"
 
 int main( int argc, char** argv )
 {
+	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
+
 	//initLogging();
 	QApplication app { argc, argv };
 
