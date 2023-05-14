@@ -316,24 +316,18 @@ void RecordData::setBanner( const std::filesystem::path& path, const BannerType 
 }
 
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
+try
 {
 	spdlog::debug( "RecordData::addPreview({:ce})", path );
 	//Move preview to image folder
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
-	const auto active_previews { getPreviewPaths( transaction ) };
-
-	//Check if it exists
-	if ( std::find( active_previews.begin(), active_previews.end(), new_path ) != active_previews.end() )
-	{
-		spdlog::debug( "Preview already exists, not adding" );
-		return;
-	}
-	else
-	{
-		transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id << new_path.string()
-					<< 256;
-	}
+	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id << new_path.string()
+				<< 256;
+}
+catch ( sqlite::errors::constraint_unique& e )
+{
+	return;
 }
 
 void RecordData::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
