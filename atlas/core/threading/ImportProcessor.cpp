@@ -196,6 +196,19 @@ void ImportProcessor::importGames(
 			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
 			emit updateValue( ++counter );
 		}
+		catch ( sqlite::sqlite_exception& e )
+		{
+			pause_task = true;
+			emit importFailure(
+				"Something went wrong",
+				QString( "Game name: %1\nError: sqlite::sqlite_exception: \"%2\"\nQuery:\"%3\"\nErrorStr: \"%4\"" )
+					.arg( title )
+					.arg( e.what() )
+					.arg( QString::fromStdString( e.get_sql() ) )
+					.arg( e.errstr() ) );
+			spdlog::warn( "Something went wrong in the import thread: sqlite::sqlite_exception:{}", e.what() );
+			emit updateValue( ++counter );
+		}
 		catch ( std::exception& e )
 		{
 			pause_task = true;
