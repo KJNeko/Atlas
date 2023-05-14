@@ -39,11 +39,11 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//For centering Items
 	const int x_offset { options.rect.x() + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
 	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
-	QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
+	const QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
 
-	QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
+	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
-	QPixmap pixmap = record->getBanner( banner_size.width(), banner_size.height(), aspect_ratio );
+	QPixmap pixmap { record->getBanner( banner_size.width(), banner_size.height(), aspect_ratio, Normal ) };
 
 	//Check if we need to add blur background. Draw behind original image
 	if ( aspect_ratio == FIT_BLUR_EXPANDING )

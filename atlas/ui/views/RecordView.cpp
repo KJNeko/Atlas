@@ -98,7 +98,7 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 	//Image stuff
 	auto image_menu { menu.addMenu( "Banner/Previews" ) };
 
-	const auto banner { record->getBanner() };
+	const auto banner { record->getBanner( Normal ) };
 	if ( banner.isNull() )
 		image_menu->addAction( "Banner not set" );
 	else
@@ -114,7 +114,7 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 				QFileDialog::
 					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record->setBanner( path.toStdString() );
+			if ( !path.isEmpty() ) record->setBanner( path.toStdString(), Normal );
 		} );
 	image_menu->addAction(
 		"Add preview",

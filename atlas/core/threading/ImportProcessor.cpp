@@ -123,7 +123,6 @@ void ImportProcessor::importGames(
 
 			//Get a list of all files in base dir and iterate through them to get images
 
-			/*
 			//Get a list of all files in base dir and iterate through them to get images
 			const std::vector< std::string > image_ext { ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif" };
 			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
@@ -134,29 +133,21 @@ void ImportProcessor::importGames(
 
 				if ( filename == "banner" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_BANNER );
+					record->setBanner( file.path(), Normal );
 				}
 				else if ( filename == "banner_w" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_BANNER_WIDE );
+					record->setBanner( file.path(), Wide );
 				}
 				else if ( filename == "cover" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_COVER );
+					record->setBanner( file.path(), Cover );
 				}
 				else if ( filename == "logo" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_LOGO );
+					record->setBanner( file.path(), Logo );
 				}
 			}
-			 */
-			//TODO Add back 'logo', 'banner and 'banner_w' options
-			const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
-				                         source_folder / "banner.jpg" :
-				                         source_folder / "banner.png" };
-			emit updateSubText( QString( "Adding banner: %1" )
-			                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
-			record->setBanner( banner_path, transaction );
 
 			if ( std::filesystem::exists( source_folder / "previews" ) )
 			{
