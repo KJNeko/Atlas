@@ -119,10 +119,9 @@ void ImportProcessor::importGames(
 
 			if ( std::filesystem::exists( source_folder / "banner.jpg" )
 			     || std::filesystem::exists( source_folder / "banner.png" ) )
-			transaction.commit();
+				transaction.commit();
 
 			//Get a list of all files in base dir and iterate through them to get images
-
 
 			/*
 			//Get a list of all files in base dir and iterate through them to get images
