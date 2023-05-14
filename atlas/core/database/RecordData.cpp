@@ -294,7 +294,7 @@ void RecordData::setBanner( const std::filesystem::path& path, Transaction trans
 	//Check if it exists
 	if ( new_path == getBannerPath( transaction ) )
 	{
-		transaction << "UPDATE banner SET path = ? WHERE record_id = ?" << new_path.string() << m_id;
+		transaction << "UPDATE banners SET path = ? WHERE record_id = ?" << new_path.string() << m_id;
 	}
 	else
 	{
