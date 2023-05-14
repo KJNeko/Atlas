@@ -421,6 +421,21 @@ border-bottom-left-radius:5px;</string>
          </property>
         </widget>
        </item>
+       <item row="4" column="0" colspan="5">
+        <widget class="QTreeWidget" name="gamesTree">
+         <property name="columnCount">
+          <number>1</number>
+         </property>
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
        <item row="2" column="0">
         <widget class="QToolButton" name="homeButton">
          <property name="sizePolicy">
@@ -464,19 +479,38 @@ margin-left: 2px;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="5">
-        <widget class="QTreeWidget" name="gamesTree">
-         <property name="columnCount">
-          <number>1</number>
+       <item row="3" column="0">
+        <widget class="QLabel" name="searchIconSmall">
+         <property name="minimumSize">
+          <size>
+           <width>36</width>
+           <height>36</height>
+          </size>
          </property>
-         <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0, 0, 0,40);
+border:none;
+margin-left:4px;
+border-radius:5px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+         <property name="margin">
+          <number>6</number>
+         </property>
         </widget>
        </item>
       </layout>
