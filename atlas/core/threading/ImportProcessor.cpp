@@ -150,16 +150,13 @@ void ImportProcessor::importGames(
 				}
 			}
 			 */
-			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
-			{
-				//TODO Add back 'logo', 'banner and 'banner_w' options
-				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
-					                         source_folder / "banner.jpg" :
-					                         source_folder / "banner.png" };
-				emit updateSubText( QString( "Adding banner: %1" )
-				                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
-				record->setBanner( banner_path, transaction );
-			}
+			//TODO Add back 'logo', 'banner and 'banner_w' options
+			const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
+				                         source_folder / "banner.jpg" :
+				                         source_folder / "banner.png" };
+			emit updateSubText( QString( "Adding banner: %1" )
+			                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
+			record->setBanner( banner_path, transaction );
 
 			if ( std::filesystem::exists( source_folder / "previews" ) )
 			{
