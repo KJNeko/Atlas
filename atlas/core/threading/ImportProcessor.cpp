@@ -119,12 +119,10 @@ void ImportProcessor::importGames(
 
 			if ( std::filesystem::exists( source_folder / "banner.jpg" )
 			     || std::filesystem::exists( source_folder / "banner.png" ) )
-			transaction.commit();
+				transaction.commit();
 
 			//Get a list of all files in base dir and iterate through them to get images
 
-
-			/*
 			//Get a list of all files in base dir and iterate through them to get images
 			const std::vector< std::string > image_ext { ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif" };
 			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
@@ -135,31 +133,20 @@ void ImportProcessor::importGames(
 
 				if ( filename == "banner" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_BANNER );
+					record->setBanner( file.path(), Normal );
 				}
 				else if ( filename == "banner_w" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_BANNER_WIDE );
+					record->setBanner( file.path(), Wide );
 				}
 				else if ( filename == "cover" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_COVER );
+					record->setBanner( file.path(), Cover );
 				}
 				else if ( filename == "logo" && is_image )
 				{
-					record->setBanner( file.path(), PREVIEW_LOGO );
+					record->setBanner( file.path(), Logo );
 				}
-			}
-			 */
-			for ( const auto& file : std::filesystem::directory_iterator( source_folder ) )
-			{
-				//TODO Add back 'logo', 'banner and 'banner_w' options
-				const auto banner_path { std::filesystem::exists( source_folder / "banner.jpg" ) ?
-					                         source_folder / "banner.jpg" :
-					                         source_folder / "banner.png" };
-				emit updateSubText( QString( "Adding banner: %1" )
-				                        .arg( QString::fromStdString( banner_path.filename().string() ) ) );
-				record->setBanner( banner_path, transaction );
 			}
 
 			if ( std::filesystem::exists( source_folder / "previews" ) )
@@ -194,6 +181,19 @@ void ImportProcessor::importGames(
 				"Something went wrong",
 				QString( "Game name: %1\nError: RecordException: \"%2\"" ).arg( title ).arg( e.what() ) );
 			spdlog::warn( "Something went wrong in the import thread: RecordException:{}", e.what() );
+			emit updateValue( ++counter );
+		}
+		catch ( sqlite::sqlite_exception& e )
+		{
+			pause_task = true;
+			emit importFailure(
+				"Something went wrong",
+				QString( "Game name: %1\nError: sqlite::sqlite_exception: \"%2\"\nQuery:\"%3\"\nErrorStr: \"%4\"" )
+					.arg( title )
+					.arg( e.what() )
+					.arg( QString::fromStdString( e.get_sql() ) )
+					.arg( e.errstr() ) );
+			spdlog::warn( "Something went wrong in the import thread: sqlite::sqlite_exception:{}", e.what() );
 			emit updateValue( ++counter );
 		}
 		catch ( std::exception& e )

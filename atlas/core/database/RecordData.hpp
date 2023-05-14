@@ -13,6 +13,15 @@
 
 struct GameMetadata;
 
+enum BannerType
+{
+	Error = 0,
+	Normal = 1,
+	Wide = 2,
+	Cover = 3,
+	Logo = 4,
+};
+
 struct RecordData
 {
 	RecordData() = delete;
@@ -50,16 +59,19 @@ struct RecordData
 	std::optional< GameMetadata > getVersion( const QString, Transaction transaction = Transaction( Autocommit ) );
 	std::optional< GameMetadata > getLatestVersion( Transaction transaction = Transaction( Autocommit ) );
 	std::vector< GameMetadata > getVersions( Transaction transaction = Transaction( Autocommit ) );
-	const std::filesystem::path getBannerPath( Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner( Transaction transaction = Transaction( Autocommit ) ) const;
+	const std::filesystem::path
+		getBannerPath( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
+	QPixmap getBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner(
 		const int width,
 		const int height,
 		const SCALE_TYPE aspect_ratio_mode,
+		const BannerType type,
 		Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner(
 		const QSize size,
 		const SCALE_TYPE aspect_ratio_mode,
+		const BannerType type,
 		Transaction transaction = Transaction( Autocommit ) ) const;
 	const std::vector< std::filesystem::path > getPreviewPaths( Transaction transaction = Transaction( Autocommit ) )
 		const;
@@ -83,7 +95,7 @@ struct RecordData
 		bool in_place,
 		Transaction transaction = Transaction( Autocommit ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( Autocommit ) );
-	void setBanner( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
+	void setBanner( const std::filesystem::path&, const BannerType, Transaction = Transaction( Autocommit ) );
 	//void setBannerOverride( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
 	void addPreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
 	void removePreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );

@@ -22,7 +22,7 @@
 RecordEditor::RecordEditor( const RecordID record, QWidget* parent, Transaction transaction ) :
   QDialog( parent ),
   m_record( record, transaction ),
-  m_banner_path( m_record->getBannerPath( transaction ) ),
+  m_banner_path( m_record->getBannerPath( Normal, transaction ) ),
   m_preview_paths( m_record->getPreviewPaths( transaction ) ),
   m_versions( m_record->getVersions( transaction ) ),
   ui( new Ui::RecordEditor )
@@ -41,7 +41,7 @@ void RecordEditor::loadRecordInfo()
 void RecordEditor::loadBanners()
 {
 	ui->bannerPreview
-		->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO ) );
+		->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO, Normal ) );
 }
 
 void RecordEditor::loadPreviews()
@@ -102,7 +102,7 @@ void RecordEditor::on_btnSetBanner_pressed()
 	file_dialog.setViewMode( QFileDialog::Detail );
 
 	if ( file_dialog.exec() )
-		m_record->setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ) );
+		m_record->setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
 }
 
 void RecordEditor::on_btnAddPreviews_pressed()

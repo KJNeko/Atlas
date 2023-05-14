@@ -146,12 +146,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_blur = 45;
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
-		QPixmap banner {
-			record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING ) //, PREVIEW_BANNER_WIDE )
-		};
-		//QPixmap cover {
-		//	record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, PREVIEW_COVER )
-		//};
+		QPixmap banner { record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING, BannerType::Wide ) };
 
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 

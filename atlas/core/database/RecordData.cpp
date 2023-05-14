@@ -99,27 +99,34 @@ std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
 	return metadata;
 }
 
-const std::filesystem::path RecordData::getBannerPath( Transaction transaction ) const
+const std::filesystem::path RecordData::getBannerPath( const BannerType type, Transaction transaction ) const
 try
 {
 	std::string banner_path;
-	transaction << "SELECT path FROM banners WHERE record_id = ?" << m_id >> banner_path;
+	transaction << "SELECT path FROM banners WHERE record_id = ? AND type = ? limit 1" << m_id
+				<< static_cast< int >( type )
+		>> banner_path;
+
 	return { banner_path };
 }
 catch ( ... )
 {
-	return {};
+	//Hacky as fuck but it should work for 'solving' banners when one doesn't exist.
+	if ( type > Error )
+		return getBannerPath( static_cast< BannerType >( type - 1 ), transaction );
+	else
+		return {};
 }
 
-QPixmap RecordData::getBanner( Transaction transaction ) const
+QPixmap RecordData::getBanner( const BannerType type, Transaction transaction ) const
 try
 {
-	const auto path { getBannerPath( transaction ) };
+	const auto path { getBannerPath( type, transaction ) };
 
 	if ( path.empty() )
 		return {};
 	else
-		return QPixmap { QString::fromStdString( getBannerPath( transaction ).string() ) };
+		return QPixmap { QString::fromStdString( path.string() ) };
 }
 catch ( ... )
 {
@@ -128,10 +135,14 @@ catch ( ... )
 	return {};
 }
 
-QPixmap RecordData::
-	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
+QPixmap RecordData::getBanner(
+	const int width,
+	const int height,
+	const SCALE_TYPE aspect_ratio_mode,
+	const BannerType type,
+	Transaction transaction ) const
 {
-	const auto key { QString::fromStdString( getBannerPath( transaction ).filename().string() )
+	const auto key { QString::fromStdString( getBannerPath( type, transaction ).filename().string() )
 		             + QString::number( width ) + "x" + QString::number( height )
 		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
 
@@ -142,7 +153,7 @@ QPixmap RecordData::
 		return banner;
 	else
 	{
-		banner = getBanner( transaction );
+		banner = getBanner( type, transaction );
 		if ( banner.isNull() )
 		{
 			spdlog::warn(
@@ -284,7 +295,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 				<< version.getVersionName().toStdString();
 }
 
-void RecordData::setBanner( const std::filesystem::path& path, Transaction transaction )
+void RecordData::setBanner( const std::filesystem::path& path, const BannerType type, Transaction transaction )
 {
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_id );
 
@@ -292,13 +303,15 @@ void RecordData::setBanner( const std::filesystem::path& path, Transaction trans
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
 	//Check if it exists
-	if ( new_path == getBannerPath( transaction ) )
+	if ( new_path == getBannerPath( type, transaction ) )
 	{
-		transaction << "UPDATE banner SET path = ? WHERE record_id = ?" << new_path.string() << m_id;
+		transaction << "UPDATE banners SET path = ? WHERE record_id = ? AND type = ?" << new_path.string() << m_id
+					<< type;
 	}
 	else
 	{
-		transaction << "INSERT INTO banners (record_id, path) VALUES (?, ?)" << m_id << new_path.string();
+		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_id << new_path.string()
+					<< type;
 	}
 }
 
@@ -390,9 +403,11 @@ catch ( ... )
 	std::rethrow_exception( std::current_exception() );
 }
 
-QPixmap RecordData::getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, Transaction transaction ) const
+QPixmap RecordData::
+	getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, const BannerType type, Transaction transaction )
+		const
 {
-	return getBanner( size.width(), size.height(), aspect_ratio_mode, transaction );
+	return getBanner( size.width(), size.height(), aspect_ratio_mode, type, transaction );
 }
 
 QString RecordData::getDesc( Transaction transaction ) const
