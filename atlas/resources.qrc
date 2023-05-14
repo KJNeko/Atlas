@@ -22,5 +22,7 @@
         <file>assets/Qt_logo.svg</file>
         <file>assets/info.svg</file>
         <file>assets/settings.svg</file>
+        <file>assets/Atlas_logo_v2.svg</file>
+        <file>assets/Atlas_logo_v1.svg</file>
     </qresource>
 </RCC>
