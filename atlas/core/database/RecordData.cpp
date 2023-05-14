@@ -296,6 +296,7 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 }
 
 void RecordData::setBanner( const std::filesystem::path& path, const BannerType type, Transaction transaction )
+try
 {
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_id );
 
@@ -313,6 +314,10 @@ void RecordData::setBanner( const std::filesystem::path& path, const BannerType 
 		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_id << new_path.string()
 					<< static_cast< int >( type );
 	}
+}
+catch ( sqlite::errors::constraint_unique& e )
+{
+	return;
 }
 
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
