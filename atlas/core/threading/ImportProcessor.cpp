@@ -106,7 +106,8 @@ void ImportProcessor::importGames(
 				if ( !recordExists( title, creator, engine, transaction ) )
 					return importRecord( std::move( title ), std::move( creator ), std::move( engine ), transaction );
 				else
-					return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ) };
+					return { recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ),
+						     transaction };
 			}();
 
 			record->addVersion(
@@ -116,10 +117,6 @@ void ImportProcessor::importGames(
 				size,
 				!move_after_import,
 				transaction );
-
-			if ( std::filesystem::exists( source_folder / "banner.jpg" )
-			     || std::filesystem::exists( source_folder / "banner.png" ) )
-				transaction.commit();
 
 			//Get a list of all files in base dir and iterate through them to get images
 
@@ -133,22 +130,23 @@ void ImportProcessor::importGames(
 
 				if ( filename == "banner" && is_image )
 				{
-					record->setBanner( file.path(), Normal );
+					record->setBanner( file.path(), Normal, transaction );
 				}
 				else if ( filename == "banner_w" && is_image )
 				{
-					record->setBanner( file.path(), Wide );
+					record->setBanner( file.path(), Wide, transaction );
 				}
 				else if ( filename == "cover" && is_image )
 				{
-					record->setBanner( file.path(), Cover );
+					record->setBanner( file.path(), Cover, transaction );
 				}
 				else if ( filename == "logo" && is_image )
 				{
-					record->setBanner( file.path(), Logo );
+					record->setBanner( file.path(), Logo, transaction );
 				}
 			}
 
+			spdlog::debug( "Adding previews" );
 			if ( std::filesystem::exists( source_folder / "previews" ) )
 			{
 				for ( const auto& file : std::filesystem::directory_iterator( source_folder / "previews" ) )
@@ -159,6 +157,7 @@ void ImportProcessor::importGames(
 				}
 			}
 
+			spdlog::debug( "Adding to completed records" );
 			completed_records.emplace_back( record->getID() );
 
 			transaction.commit();
@@ -186,14 +185,20 @@ void ImportProcessor::importGames(
 		catch ( sqlite::sqlite_exception& e )
 		{
 			pause_task = true;
-			emit importFailure(
-				"Something went wrong",
-				QString( "Game name: %1\nError: sqlite::sqlite_exception: \"%2\"\nQuery:\"%3\"\nErrorStr: \"%4\"" )
+
+			const auto error_str {
+				QString(
+					"Game name: %1\nError: sqlite::sqlite_exception: \"%2\"\nQuery:\"%3\"\nErrorStr: \"%4\"\nExtended code: \"%5\"" )
 					.arg( title )
 					.arg( e.what() )
 					.arg( QString::fromStdString( e.get_sql() ) )
-					.arg( e.errstr() ) );
-			spdlog::warn( "Something went wrong in the import thread: sqlite::sqlite_exception:{}", e.what() );
+					.arg( e.errstr() )
+					.arg( e.get_extended_code() )
+			};
+
+			emit importFailure( "Something went wrong", error_str );
+
+			spdlog::warn( "Something went wrong in the import thread: {}", error_str );
 			emit updateValue( ++counter );
 		}
 		catch ( std::exception& e )

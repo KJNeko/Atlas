@@ -305,18 +305,19 @@ void RecordData::setBanner( const std::filesystem::path& path, const BannerType 
 	//Check if it exists
 	if ( new_path == getBannerPath( type, transaction ) )
 	{
-		transaction << "UPDATE banners SET path = ? WHERE record_id = ? AND type = ?" << new_path.string() << m_id
-					<< type;
+		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_id << new_path.string()
+					<< static_cast< int >( type );
 	}
 	else
 	{
 		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_id << new_path.string()
-					<< type;
+					<< static_cast< int >( type );
 	}
 }
 
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
 {
+	spdlog::debug( "RecordData::addPreview({:ce})", path );
 	//Move preview to image folder
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
@@ -330,7 +331,7 @@ void RecordData::addPreview( const std::filesystem::path& path, Transaction tran
 	}
 	else
 	{
-		transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?)" << m_id << new_path.string()
+		transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id << new_path.string()
 					<< 256;
 	}
 }
