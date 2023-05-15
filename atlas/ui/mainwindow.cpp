@@ -27,6 +27,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	record_search.moveToThread( &search_thread );
 	search_thread.start();
 
+	//hide search icon
+	ui->searchIconSmall->hide();
+
 	config::notify();
 
 	emit triggerEmptySearch();

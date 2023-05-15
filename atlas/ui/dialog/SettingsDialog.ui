@@ -10,8 +10,17 @@
     <height>700</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Settings</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -31,9 +40,6 @@
    </property>
    <item row="3" column="2">
     <widget class="QStackedWidget" name="stackedWidget">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
       <number>2</number>
      </property>
@@ -1513,7 +1519,7 @@ padding:10x;</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgba(0, 0, 0, 100);</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1557,15 +1563,10 @@ padding:10x;</string>
           <height>16777215</height>
          </size>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
         <property name="styleSheet">
          <string notr="true">background:none;
 background-color:transparent;
-</string>
+border-top:none;</string>
         </property>
         <property name="flow">
          <enum>QListView::TopToBottom</enum>
@@ -1625,7 +1626,8 @@ background-color:transparent;
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:none;</string>
+         <string notr="true">background:none;
+border-bottom:none;</string>
         </property>
         <property name="text">
          <string>ATLAS SETTINGS</string>

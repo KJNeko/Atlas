@@ -36,7 +36,9 @@ add_subdirectory(dependencies/spdlog)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 REQUIRED)
+find_package(SQLite3 3.41.2 REQUIRED)
+message("include = ${SQLite3_INCLUDE_DIR}")
+message("lib = ${SQLite3_LIBRARY}")
 
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
