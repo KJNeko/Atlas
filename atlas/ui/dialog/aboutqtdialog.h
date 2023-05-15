@@ -3,20 +3,24 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 	class AboutQtDialog;
 }
 
 class AboutQtDialog : public QDialog
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE( AboutQtDialog )
 
   public:
-	explicit AboutQtDialog(QWidget *parent = nullptr);
+
+	explicit AboutQtDialog( QWidget* parent = nullptr );
 	~AboutQtDialog();
 
   private:
-	Ui::AboutQtDialog *ui;
+
+	Ui::AboutQtDialog* ui;
 };
 
 #endif // ABOUTQTDIALOG_H
