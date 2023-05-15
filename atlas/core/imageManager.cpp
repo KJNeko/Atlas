@@ -98,7 +98,7 @@ namespace imageManager
 				//Keep the temp file
 				const auto image_hash { hash_file( temp_path ) };
 
-				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + "webp" ) };
+				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + ".webp" ) };
 
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
 

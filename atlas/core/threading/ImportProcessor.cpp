@@ -151,9 +151,16 @@ void ImportProcessor::importGames(
 			{
 				for ( const auto& file : std::filesystem::directory_iterator( source_folder / "previews" ) )
 				{
+					const auto filename { file.path().stem().string() };
+					const auto ext { file.path().extension().string() };
+					const bool is_image { std::find( image_ext.begin(), image_ext.end(), ext ) != image_ext.end() };
+					if ( is_image )
+					{
+						record->addPreview( file, transaction );
+					}
 					//emit updateSubText( QString( "Adding preview: %1" )
 					//                       .arg( QString::fromStdString( file.path().filename().string() ) ) );
-					if ( file.is_regular_file() ) record->addPreview( file, transaction );
+					//if ( file.is_regular_file() ) record->addPreview( file, transaction );
 				}
 			}
 
