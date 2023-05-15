@@ -158,8 +158,8 @@ void ImportProcessor::importGames(
 					{
 						record->addPreview( file, transaction );
 					}
-					//emit updateSubText( QString( "Adding preview: %1" )
-					//                       .arg( QString::fromStdString( file.path().filename().string() ) ) );
+					emit updateSubText( QString( "Adding preview: %1" )
+					                        .arg( QString::fromStdString( file.path().filename().string() ) ) );
 					//if ( file.is_regular_file() ) record->addPreview( file, transaction );
 				}
 			}
