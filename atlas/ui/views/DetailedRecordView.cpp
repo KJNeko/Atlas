@@ -45,13 +45,11 @@ void DetailedRecordView::reloadRecord()
 	const auto& record { *m_record };
 	ui->lbGameName->setText( record->getTitle() );
 
-	/*
 	//Set cover Image
 	QPixmap cover {
-		record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, PREVIEW_COVER )
+		record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, BannerType::Cover )
 	};
 	ui->coverImage->setPixmap( cover );
-	*/
 
 	if ( record->getLastPlayed() == 0 )
 	{
@@ -141,16 +139,24 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		painter.save();
 
 		const Record& record { *m_record };
-		const int image_height = 320;
+		const int image_height = 360;
 		const int image_feather = 45;
 		const int image_blur = 45;
+		const int logo_size = static_cast< int >( ui->bannerWidget->width() * .25 );
 		//Paint the banner
-		const QSize banner_size { ui->bannerFrame->size() };
-		QPixmap banner { record->getBanner( banner_size.width(), image_height, FIT_BLUR_EXPANDING, BannerType::Wide ) };
+		const QSize banner_size { ui->bannerWidget->size() };
+		QPixmap banner {
+			record->getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
+		};
+		QPixmap logo { record->getBanner( logo_size, logo_size, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
 
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
+		const QRect pixmap_logo { static_cast< int >( ui->bannerWidget->width() * .1 ),
+			                      ( image_height / 2 ) - ( logo.height() / 2 ),
+			                      logo.width(),
+			                      logo.height() };
 		//const QRect cover_rect { 24, 343, cover.width(), cover.height() };
 
 		/*const QRect cover_rect = { ui->coverImage->parentWidget()->parentWidget()->x()
@@ -175,6 +181,8 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			ui->bannerFrame->frameRect().center() - QPoint( banner.width() / 2, banner.height() / 2 ), banner.size()
 		};*/
 		painter.drawPixmap( pixmap_rect, banner );
+
+		painter.drawPixmap( pixmap_logo, logo );
 		//painter.drawPixmap( cover_rect, cover );
 		//painter.fillRect( blur_rect, QColor( 64, 66, 73, 255 ) );
 		//painter.drawRect( blur_rect );
