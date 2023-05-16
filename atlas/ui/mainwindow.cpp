@@ -29,6 +29,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//hide search icon
 	ui->searchIconSmall->hide();
+	ui->NavTop->hide();
 
 	config::notify();
 
