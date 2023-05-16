@@ -218,6 +218,15 @@ enum PreviewType
 	PREVIEW_LOGO = 5
 };
 
+enum BannerType
+{
+	Error = 0,
+	Normal = 1,
+	Wide = 2,
+	Cover = 3,
+	Logo = 4,
+};
+
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
 SETTINGS_DE( grid_ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
 SETTINGS_D( grid_ui, blurRadius, int, 30 )

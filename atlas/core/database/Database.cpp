@@ -111,7 +111,8 @@ try
 			<< true;
 
 		transaction_record << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)"
-						   << static_cast< std::uint64_t >( 1 ) << ":/images/assets/Grid_Capsule_Default.webp" << 1;
+						   << static_cast< std::uint64_t >( BannerType::Normal )
+						   << ":/images/assets/Grid_Capsule_Default.webp" << 1;
 	}
 	catch ( ... )
 	{

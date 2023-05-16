@@ -13,15 +13,6 @@
 
 struct GameMetadata;
 
-enum BannerType
-{
-	Error = 0,
-	Normal = 1,
-	Wide = 2,
-	Cover = 3,
-	Logo = 4,
-};
-
 struct RecordData
 {
 	RecordData() = delete;
