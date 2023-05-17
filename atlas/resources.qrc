@@ -25,4 +25,7 @@
         <file>assets/Atlas_logo_v2.svg</file>
         <file>assets/Atlas_logo_v1.svg</file>
     </qresource>
+    <qresource prefix="/Layouts">
+        <file>assets/layouts/nav_default.svg</file>
+    </qresource>
 </RCC>

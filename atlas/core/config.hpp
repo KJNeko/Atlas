@@ -244,7 +244,7 @@ SETTINGS_D( grid_ui, enableBottomOverlay, bool, true )
 SETTINGS_D( grid_ui, overlayHeight, int, 26 )
 SETTINGS_D( grid_ui, overlayOpacity, int, 200 )
 SETTINGS_D( grid_ui, overlayColor, QString, "0,0,0" )
-SETTINGS_D( grid_ui, font, QString, "Arial" )
+SETTINGS_D( grid_ui, font, QString, "Segoe UI" )
 SETTINGS_D( grid_ui, fontSize, int, 14 )
 SETTINGS_D( grid_ui, windowHeight, int, 780 )
 SETTINGS_D( grid_ui, windowWidth, int, 1520 )
@@ -280,9 +280,12 @@ SETTINGS_D( grid_ui, showDownloadIcon, bool, false )
 SETTINGS_D( grid_ui, showEngineIcon, bool, false )
 SETTINGS_D( grid_ui, centerWidgets, bool, false )
 
-SETTINGS_D( ui, stretch_banner_images, bool, false );
-SETTINGS_D( ui, use_simple_layout, bool, true );
+SETTINGS_D( ui, stretch_banner_images, bool, false )
+SETTINGS_D( ui, use_simple_layout, bool, true )
 SETTINGS_D( images, image_type, QString, "webp" )
+
+SETTINGS_D( application, font, QString, "Segoe UI" )
+SETTINGS_D( application, fontSize, int, 9 )
 
 #pragma GCC diagnostic pop
 

@@ -31,6 +31,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->searchIconSmall->hide();
 	ui->NavTop->hide();
 
+	//Set Font
+	QFont font { config::application::font::get(), config::application::fontSize::get() };
+	QApplication::setFont( font );
+
 	config::notify();
 
 	emit triggerEmptySearch();
