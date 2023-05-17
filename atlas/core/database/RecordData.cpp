@@ -31,41 +31,117 @@ RecordID RecordData::getID() const
 }
 
 const QString RecordData::getTitle( Transaction transaction ) const
+try
 {
 	std::string title;
 	transaction << "SELECT title FROM records WHERE record_id = ?" << m_id >> title;
 	return QString::fromStdString( title );
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getTitle(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getTitle(): {}", m_id, e.what() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getTitle(): unknown exception", m_id );
+	return QString( "ATLAS_ERROR" );
+}
 
 const QString RecordData::getCreator( Transaction transaction ) const
+try
 {
 	std::string creator;
 	transaction << "SELECT creator FROM records WHERE record_id = ?" << m_id >> creator;
 	return QString::fromStdString( creator );
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getCreator(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getCreator(): {}", m_id, e.what() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getCreator(): unknown exception", m_id );
+	return QString( "ATLAS_ERROR" );
+}
 
 const QString RecordData::getEngine( Transaction transaction ) const
+try
 {
 	std::string engine;
 	transaction << "SELECT engine FROM records WHERE record_id = ?" << m_id >> engine;
 	return QString::fromStdString( engine );
 }
+catch ( sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getEngine(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getEngine(): {}", m_id, e.what() );
+	return QString( "ATLAS_ERROR" );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getEngine(): unknown exception", m_id );
+	return QString( "ATLAS_ERROR" );
+}
 
 uint64_t RecordData::getLastPlayed( Transaction transaction ) const
+try
 {
 	uint64_t last_played;
 	transaction << "SELECT last_played_r FROM records WHERE record_id = ?" << m_id >> last_played;
 	return last_played;
 }
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getLastPlayed(): {}", m_id, e.what() );
+	return 0;
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getLastPlayed(): unknown exception", m_id );
+	return 0;
+}
 
 uint32_t RecordData::getTotalPlaytime( Transaction transaction ) const
+try
 {
 	uint32_t total_playtime;
 	transaction << "SELECT total_playtime FROM records WHERE record_id = ?" << m_id >> total_playtime;
 	return total_playtime;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getTotalPlaytime(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return 0;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getTotalPlaytime(): {}", m_id, e.what() );
+	return 0;
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getTotalPlaytime(): unknown exception", m_id );
+	return 0;
+}
 
 std::optional< GameMetadata > RecordData::getVersion( const QString version_name, Transaction transaction )
+try
 {
 	const auto versions { getVersions( transaction ) };
 
@@ -79,8 +155,24 @@ std::optional< GameMetadata > RecordData::getVersion( const QString version_name
 	else
 		return *idx;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getVersion(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return std::nullopt;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getVersion(): {}", m_id, e.what() );
+	return std::nullopt;
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getVersion(): unknown exception", m_id );
+	return std::nullopt;
+}
 
 std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transaction )
+try
 {
 	const auto versions { getVersions( transaction ) };
 	if ( versions.empty() )
@@ -88,8 +180,24 @@ std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transact
 	else
 		return versions.at( 0 );
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getLatestVersion(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return std::nullopt;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getLatestVersion(): {}", m_id, e.what() );
+	return std::nullopt;
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getLatestVersion(): unknown exception", m_id );
+	return std::nullopt;
+}
 
 std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
+try
 {
 	std::vector< GameMetadata > metadata;
 	transaction << "SELECT version FROM game_metadata WHERE record_id = ? ORDER BY date_added DESC" << m_id >>
@@ -97,6 +205,21 @@ std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
 	{ metadata.emplace_back( m_id, QString::fromStdString( std::move( version ) ), transaction ); };
 
 	return metadata;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getVersions(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getVersions(): {}", m_id, e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getVersions(): unknown exception", m_id );
+	return {};
 }
 
 const std::filesystem::path RecordData::getBannerPath( const BannerType type, Transaction transaction ) const
@@ -108,6 +231,22 @@ try
 		>> banner_path;
 
 	return { banner_path };
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::getBannerPath({}): {} [{},{}]",
+		m_id,
+		static_cast< int >( type ),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getBannerPath({}): {}", m_id, static_cast< int >( type ), e.what() );
+	return {};
 }
 catch ( ... )
 {
@@ -128,10 +267,25 @@ try
 	else
 		return QPixmap { QString::fromStdString( path.string() ) };
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::getBanner({}): {} [{},{}]",
+		m_id,
+		static_cast< int >( type ),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getBanner({}): {}", m_id, static_cast< int >( type ), e.what() );
+	return {};
+}
 catch ( ... )
 {
-	spdlog::
-		warn( "Failed to get path for banner in record: {}, title: {}", m_id, getTitle( transaction ).toStdString() );
+	spdlog::error( "{}->RecordData::getBanner({}): unknown exception", m_id, static_cast< int >( type ) );
 	return {};
 }
 
@@ -141,6 +295,7 @@ QPixmap RecordData::getBanner(
 	const SCALE_TYPE aspect_ratio_mode,
 	const BannerType type,
 	Transaction transaction ) const
+try
 {
 	const auto key { QString::fromStdString( getBannerPath( type, transaction ).filename().string() )
 		             + QString::number( width ) + "x" + QString::number( height )
@@ -182,6 +337,27 @@ QPixmap RecordData::getBanner(
 		}
 	}
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::getBanner({}): {} [{},{}]",
+		m_id,
+		static_cast< int >( type ),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getBanner({}): {}", m_id, static_cast< int >( type ), e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getBanner({}): unknown exception", m_id, static_cast< int >( type ) );
+	return {};
+}
 
 const std::vector< std::filesystem::path > RecordData::getPreviewPaths( Transaction transaction ) const
 try
@@ -196,12 +372,24 @@ try
 
 	return previews;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getPreviewPaths(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getPreviewPaths(): {}", m_id, e.what() );
+	return {};
+}
 catch ( ... )
 {
+	spdlog::error( "{}->RecordData::getPreviewPaths(): unknown exception", m_id );
 	return {};
 }
 
 std::vector< QPixmap > RecordData::getPreviews( Transaction transaction ) const
+try
 {
 	std::vector< QPixmap > images;
 
@@ -212,36 +400,106 @@ std::vector< QPixmap > RecordData::getPreviews( Transaction transaction ) const
 
 	return images;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getPreviews(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getPreviews(): {}", m_id, e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getPreviews(): unknown exception", m_id );
+	return {};
+}
 
 void RecordData::setTitle( QString new_title, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET title = ? WHERE record_id = ? " << new_title.toStdString() << m_id;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::setTitle({}): {} [{},{}]",
+		m_id,
+		new_title.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setTitle({}): unknown exception", m_id, new_title.toStdString() );
+}
 
 void RecordData::setCreator( QString new_creator, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET creator = ? WHERE record_id = ?" << new_creator.toStdString() << m_id;
 }
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setCreator({}): unknown exception", m_id, new_creator.toStdString() );
+}
 
 void RecordData::setEngine( QString new_engine, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET engine = ? WHERE record_id = ?" << new_engine.toStdString() << m_id;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::setEngine({}): {} [{},{}]",
+		m_id,
+		new_engine.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setEngine({}): unknown exception", m_id, new_engine.toStdString() );
+}
 
 void RecordData::setLastPlayed( const uint64_t time, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET last_played_r = ? WHERE record_id = ?" << time << m_id;
 }
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setLastPlayed({}): unknown exception", m_id, time );
+}
 
 void RecordData::addPlaytime( const std::uint32_t time, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time + getTotalPlaytime( transaction )
 				<< m_id;
 }
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::addPlaytime({}): unknown exception", m_id, time );
+}
 
 void RecordData::setTotalPlaytime( const uint32_t time, Transaction transaction )
+try
 {
 	transaction << "UPDATE records SET total_playtime = ? WHERE record_id = ?" << time << m_id;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::
+		error( "{}->RecordData::setTotalPlaytime({}): {} [{},{}]", m_id, time, e.what(), e.get_code(), e.get_sql() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setTotalPlaytime({}): unknown exception", m_id, time );
 }
 
 void RecordData::addVersion(
@@ -273,18 +531,27 @@ try
 		<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() )
 			   .count();
 }
-catch ( std::exception& e )
+catch ( const sqlite::sqlite_exception& e )
 {
-	spdlog::error( "An exception was throw in addVersion: {}", e.what() );
-	std::rethrow_exception( std::current_exception() );
+	spdlog::error(
+		"{}->RecordData::addVersion({}): {} [{},{}]",
+		m_id,
+		version.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::addVersion({}): {}", m_id, version.toStdString(), e.what() );
 }
 catch ( ... )
 {
-	spdlog::error( "An unknown exception was thrown in addVersion!" );
-	std::rethrow_exception( std::current_exception() );
+	spdlog::error( "{}->RecordData::addVersion({}): unknown exception", m_id, version.toStdString() );
 }
 
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
+try
 {
 	const auto active_versions { getVersions( transaction ) };
 
@@ -293,6 +560,25 @@ void RecordData::removeVersion( const GameMetadata& version, Transaction transac
 
 	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ?" << m_id
 				<< version.getVersionName().toStdString();
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::removeVersion({}): {} [{},{}]",
+		m_id,
+		version.getVersionName().toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::removeVersion({}): {}", m_id, version.getVersionName().toStdString(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::
+		error( "{}->RecordData::removeVersion({}): unknown exception", m_id, version.getVersionName().toStdString() );
 }
 
 void RecordData::setBanner( const std::filesystem::path& path, const BannerType type, Transaction transaction )
@@ -317,7 +603,21 @@ try
 }
 catch ( sqlite::errors::constraint_unique& e )
 {
+	//In this case we want to just eat the unique constraint. Since it just means the banner was set to the same thing as before.
 	return;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::
+		error( "{}->RecordData::setBanner({}): {} [{},{}]", m_id, path.string(), e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::setBanner({}): {}", m_id, path.string(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setBanner({}): unknown exception", m_id, path.string() );
 }
 
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
@@ -332,10 +632,25 @@ try
 }
 catch ( sqlite::errors::constraint_unique& e )
 {
+	//Eat unique constraint since it just means the preview was already added
 	return;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::
+		error( "{}->RecordData::addPreview({}): {} [{},{}]", m_id, path.string(), e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::addPreview({}): {}", m_id, path.string(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::addPreview({}): unknown exception", m_id, path.string() );
 }
 
 void RecordData::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
+try
 {
 	const auto active_previews { getPreviewPaths( transaction ) };
 
@@ -362,10 +677,35 @@ void RecordData::reorderPreviews( const std::vector< std::filesystem::path >& pa
 		}
 	}
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::reorderPreviews(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::reorderPreviews(): {}", m_id, e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::reorderPreviews(): unknown exception", m_id );
+}
 
 void RecordData::sync( Transaction transaction )
+try
 {
 	new ( this ) RecordData( m_id, transaction );
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::sync(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::sync(): {}", m_id, e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::sync(): unknown exception", m_id );
 }
 
 RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction )
@@ -387,20 +727,33 @@ try
 			<< title.toStdString() << creator.toStdString() << engine.toStdString()
 		>> [ & ]( const RecordID id ) { m_id = id; };
 }
-catch ( sqlite::sqlite_exception& e )
+catch ( const sqlite::sqlite_exception& e )
 {
-	spdlog::error( "RecordData: Failed to import record: SQLException:{}, {}, {}", e.what(), e.errstr(), e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
+	spdlog::error(
+		"RecordData::RecordData({}, {}, {}): {} [{},{}]",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
 }
-catch ( std::exception& e )
+catch ( const std::exception& e )
 {
-	spdlog::error( "RecordData:: Failed to import record: {}", e.what() );
-	std::rethrow_exception( std::current_exception() );
+	spdlog::error(
+		"RecordData::RecordData({}, {}, {}): {}",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString(),
+		e.what() );
 }
 catch ( ... )
 {
-	spdlog::error( "RecordData:: Failed to import record: Unknown error" );
-	std::rethrow_exception( std::current_exception() );
+	spdlog::error(
+		"RecordData::RecordData({}, {}, {}): unknown exception",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString() );
 }
 
 QPixmap RecordData::
@@ -411,6 +764,7 @@ QPixmap RecordData::
 }
 
 QString RecordData::getDesc( Transaction transaction ) const
+try
 {
 	try
 	{
@@ -423,8 +777,24 @@ QString RecordData::getDesc( Transaction transaction ) const
 		return {};
 	}
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getDesc(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getDesc(): {}", m_id, e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getDesc(): unknown exception", m_id );
+	return {};
+}
 
 void RecordData::setDesc( const QString& str, Transaction transaction )
+try
 {
 	bool found { false };
 	transaction << "SELECT count(*) FROM game_notes WHERE record_id = ?" << m_id >> found;
@@ -434,22 +804,67 @@ void RecordData::setDesc( const QString& str, Transaction transaction )
 	else
 		transaction << "INSERT INTO game_notes (record_id, notes) VALUES (?, ?)" << m_id << str.toStdString();
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::setDesc({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::setDesc({}): {}", m_id, str.toStdString(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::setDesc({}): unknown exception", m_id, str.toStdString() );
+}
 
 std::vector< QString > RecordData::getAllTags( Transaction transaction ) const
+try
 {
 	std::vector< QString > tags;
 	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> [ &tags ]( const std::string& str )
 	{ tags.emplace_back( QString::fromStdString( str ) ); };
 	return tags;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getAllTags(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getAllTags(): {}", m_id, e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getAllTags(): unknown exception", m_id );
+	return {};
+}
 
 std::vector< QString > RecordData::getUserTags( Transaction transaction ) const
+try
 {
 	std::vector< QString > tags;
 	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >>
 		[ & ]( const std::string str ) { tags.emplace_back( QString::fromStdString( str ) ); };
 
 	return tags;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::getUserTags(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
+	return {};
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::getUserTags(): {}", m_id, e.what() );
+	return {};
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::getUserTags(): unknown exception", m_id );
+	return {};
 }
 
 std::size_t strToTagID( const QString str, Transaction transaction = Transaction( Autocommit ) )
@@ -461,6 +876,21 @@ try
 }
 catch ( [[maybe_unused]] sqlite::exceptions::no_rows& e )
 {
+	return 0;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "strToTagID({}): {} [{},{}]", str.toStdString(), e.what(), e.get_code(), e.get_sql() );
+	return 0;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "strToTagID({}): {}", str.toStdString(), e.what() );
+	return 0;
+}
+catch ( ... )
+{
+	spdlog::error( "strToTagID({}): unknown exception", str.toStdString() );
 	return 0;
 }
 
@@ -478,33 +908,66 @@ try
 		transaction << "INSERT INTO tag_mappings (record_id, tag_id) VALUES (?, ?)" << m_id << tag_id;
 	}
 }
-catch ( sqlite::exceptions::constraint_unique& e )
+catch ( const sqlite::sqlite_exception& e )
 {
-	spdlog::warn( "addTag: Violated unique constraint: \"{}\"", e.get_sql() );
+	spdlog::error(
+		"{}->RecordData::addUserTag({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
 }
-catch ( sqlite::sqlite_exception& e )
+catch ( const std::exception& e )
 {
-	spdlog::warn( "addTag: Failed to add tag to {}: {}", m_id, e.errstr() );
+	spdlog::error( "{}->RecordData::addUserTag({}): {}", m_id, str.toStdString(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::addUserTag({}): unknown exception", m_id, str.toStdString() );
 }
 
 void RecordData::removeUserTag( const QString str, Transaction transaction )
+try
 {
 	const auto tag_id { strToTagID( str, transaction ) };
 	if ( tag_id == 0 )
 		return;
 	else
 	{
-		spdlog::warn( "Removing user tag {} from {} with id {}", str, m_id, tag_id );
 		transaction << "DELETE FROM tag_mappings WHERE record_id = ? AND tag_id = ?;" << m_id << tag_id;
 	}
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::removeUserTag({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::removeUserTag({}): {}", m_id, str.toStdString(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::removeUserTag({}): unknown exception", m_id, str.toStdString() );
+}
 
 void RecordData::removePreview( const std::filesystem::path& preview, Transaction trans )
+try
 {
 	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_id << preview.string();
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"{}->RecordData::removePreview({}): {} [{},{}]", m_id, preview.string(), e.what(), e.get_code(), e.get_sql() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::removePreview({}): {}", m_id, preview.string(), e.what() );
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::removePreview({}): unknown exception", m_id, preview.string() );
+}
 
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
+try
 {
 	RecordID record_id { 0 };
 
@@ -514,8 +977,64 @@ RecordID recordID( const QString& title, const QString& creator, const QString& 
 
 	return record_id;
 }
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"recordID({}, {}, {}): {} [{},{}]",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+	return 0;
+}
+catch ( const std::exception& e )
+{
+	spdlog::
+		error( "recordID({}, {}, {}): {}", title.toStdString(), creator.toStdString(), engine.toStdString(), e.what() );
+	return 0;
+}
+catch ( ... )
+{
+	spdlog::error(
+		"recordID({}, {}, {}): unknown exception", title.toStdString(), creator.toStdString(), engine.toStdString() );
+	return 0;
+}
 
 bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
+try
 {
 	return recordID( title, creator, engine, transaction );
+}
+catch ( [[maybe_unused]] sqlite::exceptions::no_rows& e )
+{
+	return false;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"recordExists({}, {}, {}): {} [{},{}]",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString(),
+		e.what(),
+		e.get_code(),
+		e.get_sql() );
+	return false;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error(
+		"recordExists({}, {}, {}): {}", title.toStdString(), creator.toStdString(), engine.toStdString(), e.what() );
+	return false;
+}
+catch ( ... )
+{
+	spdlog::error(
+		"recordExists({}, {}, {}): unknown exception",
+		title.toStdString(),
+		creator.toStdString(),
+		engine.toStdString() );
+	return false;
 }
