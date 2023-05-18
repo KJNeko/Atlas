@@ -69,6 +69,7 @@ runs:
       shell: powershell
       run: |
         $env:PATH = "${{github.workspace}}\sqlite;$env:PATH"
+        refreshenv
         get-childitem env:path | Format-List *
 
     - name: Install Qt
