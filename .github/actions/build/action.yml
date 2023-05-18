@@ -68,7 +68,7 @@ runs:
     - name: Set SQLITE into path
       shell: powershell
       run: |
-        $env:PATH += ";${{github.workspace}}\sqlite"
+        $env:PATH = ";${{github.workspace}}\sqlite;$env:PATH"
         get-childitem env:path | Format-List *
 
     - name: Install Qt
