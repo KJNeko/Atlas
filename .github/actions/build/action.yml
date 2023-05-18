@@ -59,7 +59,7 @@ runs:
       run: |
         cd sqlite
         7z x sqlite-amalg.zip -o"./include"
-        cd include/sqlite-amalgamation-3400100
+        cd include/sqlite-amalgamation-3410200
         move * ..
         cd ../..
         7z x sqlite-dll.zip -o"./lib"
