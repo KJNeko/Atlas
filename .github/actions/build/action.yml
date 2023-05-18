@@ -69,6 +69,7 @@ runs:
       shell: powershell
       run: |
         $env:PATH += ";${{github.workspace}}\sqlite"
+        get-childitem env:path | Format-List *
 
     - name: Install Qt
       if: steps.cache-qt.outputs.cache-hit != 'true'
@@ -83,12 +84,12 @@ runs:
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles" --debug-find
+      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
 
     - name: CMake Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles" --debug-find
+      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G"MinGW Makefiles"
 
     - name: Build Target Atlas Release
       shell: powershell
