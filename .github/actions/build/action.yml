@@ -33,14 +33,14 @@ runs:
       uses: actions/cache@v3
       with:
         path: '${{github.workspace}}\sqlite'
-        key: ${{runner.os}}-sqlite-3400100
+        key: ${{runner.os}}-sqlite-3410200
 
     - name: Download SQLITE-Amalgamation
       if: steps.cache-sqlite.outputs.cache-hit != 'true'
       uses: carlosperate/download-file-action@v2.0.0
       id: download_amalgamation
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3400100.zip
+        file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3410200.zip
         file-name: sqlite-amalg.zip
         location: '${{github.workspace}}\sqlite'
 
@@ -49,7 +49,7 @@ runs:
       uses: carlosperate/download-file-action@v2.0.0
       id: download_dll
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3400100.zip
+        file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3410200.zip
         file-name: sqlite-dll.zip
         location: '${{github.workspace}}\sqlite'
 
