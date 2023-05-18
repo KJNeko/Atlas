@@ -28,34 +28,6 @@ runs:
   steps:
     - uses: ./.github/actions/setupgcc
 
-    - name: Prepare msbuild for tracy
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Cache tracy vcpkg
-      uses: actions/cache@v3
-      id: cache-tracy-vcpkg
-      with:
-        # path is in AppData\Local
-        path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-        key: ${{runner.os}}-tracy-vcpkg
-
-    - name: Prepare vcpkg for tracy
-      shell: powershell
-      if: ${{inputs.build-debug == 'true' && steps.cache-tracy-vcpkg.outputs.cache-hit != 'false'}}
-      run: |
-        cd ${{github.workspace}}\dependencies\tracy\
-        vcpkg install --triplet x64-windows-static
-
-    - name: Prepare tracy
-      shell: powershell
-      if: ${{inputs.build-debug == 'true'}}
-      run: |
-        cd ${{github.workspace}}\dependencies\tracy\capture\build\win32
-        msbuild capture.vcxproj /p:configuration=release /p:platform=x64
-        mkdir ${{github.workspace}}\builds\build-d
-        xcopy ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy /s /i /y
-        cd ${{github.workspace}}
-
     - name: Cache sqlite
       id: cache-sqlite
       uses: actions/cache@v3
