@@ -65,6 +65,11 @@ runs:
         7z x sqlite-dll.zip -o"./lib"
         cd ..
 
+    - name: Set SQLITE into path
+      shell: powershell
+      run: |
+        $env:PATH += ";${{github.workspace}}\sqlite"
+
     - name: Install Qt
       if: steps.cache-qt.outputs.cache-hit != 'true'
       uses: jurplel/install-qt-action@v3
