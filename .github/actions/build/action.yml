@@ -64,6 +64,7 @@ runs:
         cd ../..
         7z x sqlite-dll.zip -o"./lib"
         cd ..
+        tree sqlite
 
     - name: Set SQLITE into path
       shell: powershell
