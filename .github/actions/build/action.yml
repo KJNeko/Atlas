@@ -40,7 +40,7 @@ runs:
       uses: carlosperate/download-file-action@v2.0.0
       id: download_amalgamation
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3410200.zip
+        file-url: https://www.sqlite.org/2023/sqlite-amalgamation-3410200.zip
         file-name: sqlite-amalg.zip
         location: '${{github.workspace}}\sqlite'
 
@@ -49,7 +49,7 @@ runs:
       uses: carlosperate/download-file-action@v2.0.0
       id: download_dll
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3410200.zip
+        file-url: https://www.sqlite.org/2023/sqlite-dll-win64-x64-3410200.zip
         file-name: sqlite-dll.zip
         location: '${{github.workspace}}\sqlite'
 
