@@ -62,9 +62,12 @@ runs:
         cd include/sqlite-amalgamation-3410200
         move * ..
         cd ../..
+        dir
         7z x sqlite-dll.zip -o"./lib"
+        cd lib
+        dir
         cd ..
-        tree sqlite
+        cd ..
 
     - name: Set SQLITE into path
       shell: powershell
