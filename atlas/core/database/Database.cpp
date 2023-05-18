@@ -4,16 +4,13 @@
 
 #include "Database.hpp"
 
+#include "Record.hpp"
 #include "core/config.hpp"
 
 namespace internal
 {
 	static sqlite::database* db { nullptr };
-#ifdef TRACY_ENABLE
-	static TracyLockable( std::mutex, db_mtx );
-#else
 	static std::mutex db_mtx;
-#endif
 
 	static std::atomic< std::thread::id > last_locked {};
 
@@ -38,12 +35,17 @@ try
 {
 	initLogging();
 
-	spdlog::debug( "Initalizing database with path {}", init_path );
-	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
-		std::filesystem::create_directories( init_path.parent_path() );
+	if ( init_path == ":memory:" )
+	{
+		internal::db = new sqlite::database( ":memory:" );
+	}
+	else
+	{
+		if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
+			std::filesystem::create_directories( init_path.parent_path() );
 
-	internal::db = new sqlite::database( init_path.string() );
-
+		internal::db = new sqlite::database( init_path.string() );
+	}
 	NonTransaction transaction;
 
 	const std::vector< std::string > table_queries {
@@ -87,36 +89,18 @@ try
 
 	try
 	{
-		Transaction transaction_record { Transaction::Autocommit };
+		const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
 
-		transaction_record
-			<< "INSERT INTO records (record_id, title, creator, engine, last_played_r, total_playtime) VALUES ($1, $2, $3, $4, 0, 0)"
-			<< static_cast< std::uint64_t >( 1 ) << "Galaxy Crossing: First Conquest"
-			<< "Atlas Games"
-			<< "Unity";
+		record->addVersion(
+			"Chapter: 1",
+			"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest",
+			"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+			0,
+			true );
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
 		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
-	}
-
-	try
-	{
-		Transaction transaction_record { Transaction::Autocommit };
-		transaction_record
-			<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size, date_added) VALUES ($1, $2, $3, $4, $5, 0, 0, 0, 0)"
-			<< static_cast< std::uint64_t >( 1 ) << "Chapter: 1"
-			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest"
-			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe"
-			<< true;
-
-		transaction_record << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)"
-						   << static_cast< std::uint64_t >( BannerType::Normal )
-						   << ":/images/assets/Grid_Capsule_Default.webp" << 1;
-	}
-	catch ( ... )
-	{
-		spdlog::info( "Failed to insert dummy record metadata" );
 	}
 }
 catch ( sqlite::sqlite_exception& e )
@@ -258,7 +242,6 @@ void NonTransaction::abort()
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
 	m_previous_statement = sql;
-	spdlog::debug( "Executing {} without transaction", sql );
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	return Database::ref() << sql;
 }

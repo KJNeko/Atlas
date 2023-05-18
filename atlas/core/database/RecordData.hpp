@@ -95,9 +95,6 @@ struct RecordData
 	void addUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );
 	void removeUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );
 
-	//! Syncs the data from the database
-	void sync( Transaction transaction = Transaction( Autocommit ) );
-
 	//! Fetches the RecordData for the given ID
 	/**
 	 * @param id

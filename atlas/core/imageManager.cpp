@@ -91,6 +91,12 @@ namespace imageManager
 
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( path, dest_path );
 
+				if ( !std::filesystem::exists( dest_path ) )
+				{
+					spdlog::error( "Failed to copy {} to {}", path.string(), dest_path.string() );
+					return {};
+				}
+
 				return std::filesystem::relative( dest_path, std::filesystem::current_path() );
 			}
 			else
@@ -103,6 +109,12 @@ namespace imageManager
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
 
 				std::filesystem::remove( temp_path );
+
+				if ( !std::filesystem::exists( dest_path ) )
+				{
+					spdlog::error( "Failed to copy {} to {}", temp_path.string(), dest_path.string() );
+					return {};
+				}
 
 				return std::filesystem::relative( dest_path, std::filesystem::current_path() );
 			}

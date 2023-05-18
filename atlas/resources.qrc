@@ -25,4 +25,8 @@
         <file>assets/Atlas_logo_v2.svg</file>
         <file>assets/Atlas_logo_v1.svg</file>
     </qresource>
+    <qresource prefix="/test">
+        <file>assets/testfiles/test1.png</file>
+        <file>assets/testfiles/test2.png</file>
+    </qresource>
 </RCC>

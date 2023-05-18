@@ -230,7 +230,7 @@ try
 				<< static_cast< int >( type )
 		>> banner_path;
 
-	return { banner_path };
+	return { config::paths::images::getPath() / banner_path };
 }
 catch ( const sqlite::sqlite_exception& e )
 {
@@ -250,11 +250,8 @@ catch ( const std::exception& e )
 }
 catch ( ... )
 {
-	//Hacky as fuck but it should work for 'solving' banners when one doesn't exist.
-	if ( type > Error )
-		return getBannerPath( static_cast< BannerType >( type - 1 ), transaction );
-	else
-		return {};
+	spdlog::error( "{}->RecordData::getBannerPath({}): unknown exception", m_id, static_cast< int >( type ) );
+	return {};
 }
 
 QPixmap RecordData::getBanner( const BannerType type, Transaction transaction ) const
@@ -362,13 +359,10 @@ catch ( ... )
 const std::vector< std::filesystem::path > RecordData::getPreviewPaths( Transaction transaction ) const
 try
 {
-	std::vector< std::string > preview_strs;
-	transaction << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_id >>
-		[ & ]( const std::string str ) { preview_strs.emplace_back( str ); };
-
 	std::vector< std::filesystem::path > previews;
-
-	for ( const auto& preview : preview_strs ) previews.emplace_back( preview );
+	const auto root_images { config::paths::images::getPath() };
+	transaction << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_id >>
+		[ & ]( const std::string str ) { previews.emplace_back( root_images / str ); };
 
 	return previews;
 }
@@ -395,7 +389,17 @@ try
 
 	for ( const auto& link : getPreviewPaths( transaction ) )
 	{
-		images.emplace_back( QString::fromStdString( link.string() ) );
+		if ( link.empty() || !std::filesystem::exists( link ) )
+		{
+			spdlog::warn( "Preview image does not exist: {}", link );
+			continue;
+		}
+
+		QPixmap image;
+		if ( image.load( QString::fromStdString( link.string() ) ) && !image.isNull() )
+			images.push_back( image );
+		else
+			spdlog::warn( "Failed to load preview image: {:ce}", link );
 	}
 
 	return images;
@@ -588,17 +592,18 @@ try
 
 	//Move banner to image folder
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
+	const auto image_root { config::paths::images::getPath() };
 
 	//Check if it exists
-	if ( new_path == getBannerPath( type, transaction ) )
+	if ( getBannerPath( type, transaction ) != "" )
 	{
-		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_id << new_path.string()
-					<< static_cast< int >( type );
+		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_id
+					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
 	}
 	else
 	{
-		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_id << new_path.string()
-					<< static_cast< int >( type );
+		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_id
+					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
 	}
 }
 catch ( sqlite::errors::constraint_unique& e )
@@ -623,12 +628,14 @@ catch ( ... )
 void RecordData::addPreview( const std::filesystem::path& path, Transaction transaction )
 try
 {
-	spdlog::debug( "RecordData::addPreview({:ce})", path );
 	//Move preview to image folder
+	const auto root_images { config::paths::images::getPath() };
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
-	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id << new_path.string()
-				<< 256;
+	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id
+				<< std::filesystem::relative( new_path, root_images ).string() << 256;
+
+	assert( std::filesystem::exists( new_path ) );
 }
 catch ( sqlite::errors::constraint_unique& e )
 {
@@ -688,24 +695,6 @@ catch ( const std::exception& e )
 catch ( ... )
 {
 	spdlog::error( "{}->RecordData::reorderPreviews(): unknown exception", m_id );
-}
-
-void RecordData::sync( Transaction transaction )
-try
-{
-	new ( this ) RecordData( m_id, transaction );
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::sync(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::sync(): {}", m_id, e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::sync(): unknown exception", m_id );
 }
 
 RecordData::RecordData( QString title, QString creator, QString engine, Transaction transaction )
@@ -950,7 +939,9 @@ catch ( ... )
 void RecordData::removePreview( const std::filesystem::path& preview, Transaction trans )
 try
 {
-	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_id << preview.string();
+	const auto image_root { config::paths::images::getPath() };
+	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_id
+		  << std::filesystem::relative( preview, image_root ).string();
 }
 catch ( const sqlite::sqlite_exception& e )
 {
