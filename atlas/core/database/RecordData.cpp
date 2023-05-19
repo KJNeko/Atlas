@@ -534,6 +534,12 @@ try
 		<< m_id << version.toStdString() << game_path.string() << exec_path.string() << in_place << folder_size
 		<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() )
 			   .count();
+
+	transaction
+		<< "INSERT INTO data_change (timestamp, delta) VALUES (?, ?)"
+		<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() )
+			   .count()
+		<< folder_size;
 }
 catch ( const sqlite::sqlite_exception& e )
 {
@@ -564,6 +570,12 @@ try
 
 	transaction << "DELETE FROM game_metadata WHERE record_id = ? AND version = ?" << m_id
 				<< version.getVersionName().toStdString();
+
+	transaction
+		<< "INSERT INTO data_change (timestamp, delta) VALUES (?, ?)"
+		<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() )
+			   .count()
+		<< ( 0 - static_cast< std::int64_t >( version.getFolderSize() ) );
 }
 catch ( const sqlite::sqlite_exception& e )
 {

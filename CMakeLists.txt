@@ -44,7 +44,7 @@ if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
 
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
 if (WIN32)
     find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
@@ -86,7 +86,7 @@ message("FGL_FLAGS: ${FGL_FLAGS}")
 add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network SQLite::SQLite3 fmt::fmt spdlog::spdlog)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
 #Post setup (Windows only)

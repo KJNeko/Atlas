@@ -2,6 +2,7 @@
 
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
+#include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
@@ -136,4 +137,10 @@ void MainWindow::on_actionAboutQt_triggered()
 	AboutQtDialog aboutQtDialog { this };
 	aboutQtDialog.setModal( true );
 	aboutQtDialog.exec();
+}
+
+void MainWindow::on_actionViewFileHistory_triggered()
+{
+	StatsDialog dialog;
+	dialog.exec();
 }

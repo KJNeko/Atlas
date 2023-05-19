@@ -55,6 +55,7 @@ class MainWindow : public QMainWindow
 	void on_actionAboutQt_triggered();
 	void switchToDetailed( const Record record );
 	void on_homeButton_pressed();
+	void on_actionViewFileHistory_triggered();
 };
 
 #endif // MAINWINDOW_H

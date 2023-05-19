@@ -405,3 +405,35 @@ catch ( ... )
 		path.string() );
 	std::rethrow_exception( std::current_exception() );
 }
+
+std::uint64_t GameMetadata::getImportTime( Transaction trans ) const
+try
+{
+	std::uint64_t import_time { 0 };
+	trans << "SELECT date_added FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
+		  << m_version.toStdString()
+		>> import_time;
+
+	return import_time;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error(
+		"({},{})->GameMetadata::getImportTime: {} [{}, {}]",
+		m_parent->getID(),
+		this->m_version,
+		e.what(),
+		e.errstr(),
+		e.get_sql() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "({},{})->GameMetadata::getImportTime: {}", m_parent->getID(), this->m_version, e.what() );
+	std::rethrow_exception( std::current_exception() );
+}
+catch ( ... )
+{
+	spdlog::error( "({},{})->GameMetadata::getImportTime: Unknown exception", m_parent->getID(), this->m_version );
+	std::rethrow_exception( std::current_exception() );
+}

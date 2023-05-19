@@ -283,8 +283,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1264</width>
-             <height>689</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
@@ -558,7 +558,7 @@ border-radius:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1520</width>
-     <height>21</height>
+     <height>34</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -605,6 +605,7 @@ border-radius:5px;</string>
     <addaction name="separator"/>
     <addaction name="actionAboutAtlas"/>
     <addaction name="actionAboutQt"/>
+    <addaction name="actionViewFileHistory"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -677,6 +678,11 @@ border-radius:5px;</string>
   <action name="actionAboutQt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionViewFileHistory">
+   <property name="text">
+    <string>View file history</string>
    </property>
   </action>
  </widget>
