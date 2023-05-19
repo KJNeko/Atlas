@@ -13,7 +13,7 @@ void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder o
 		if ( !text.isEmpty() )
 			query = generateQuery( text.toStdString(), order, asc );
 		else
-			query = "SELECT DISTINCT record_id FROM records ORDER BY " + orderToStr( order )
+			query = "SELECT DISTINCT record_id FROM records NATURAL JOIN last_import ORDER BY " + orderToStr( order )
 			      + std::string( asc ? " ASC" : " DESC" );
 		Transaction transaction { Transaction::NoAutocommit };
 
