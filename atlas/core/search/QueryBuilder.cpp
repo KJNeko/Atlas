@@ -326,10 +326,27 @@ std::string escape( std::string_view view )
 	return str;
 }
 
-std::string generateQuery( const std::string str )
+std::string orderToStr( const SortOrder order )
 {
-	std::string query { "SELECT record_id FROM records WHERE" };
-	std::string_view str_view { str };
+	switch ( order )
+	{
+		default:
+			[[fallthrough]];
+		case Name:
+			return "title";
+		case Creator:
+			return "creator";
+		case Engine:
+			return "engine";
+		case Time:
+			return "last_import";
+	}
+}
 
-	return query + processString( str_view );
+std::string generateQuery( const std::string str, const SortOrder order, const bool asc )
+{
+	const std::string query { "SELECT DISTINCT record_id FROM records NATURAL JOIN game_metadata WHERE" };
+	const std::string_view str_view { str };
+
+	return query + processString( str_view ) + " ORDER BY " + orderToStr( order ) + " " + ( asc ? "ASC" : "DESC" );
 }

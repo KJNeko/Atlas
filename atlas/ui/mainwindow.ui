@@ -531,6 +531,49 @@ border-radius:5px;</string>
          </property>
         </widget>
        </item>
+       <item row="3" column="1" colspan="3">
+        <widget class="QComboBox" name="sortSelection">
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Creator</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Engine</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Import Time</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QPushButton" name="sortOrderButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>42</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>ASC</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

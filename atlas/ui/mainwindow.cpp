@@ -15,8 +15,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	addTreeRoot( "Games", "0" );
 
-	connect( ui->SearchBox, &QLineEdit::textChanged, &record_search, &Search::searchTextChanged );
-	connect( this, &MainWindow::triggerEmptySearch, &record_search, &Search::triggerEmptySearch );
+	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
+	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
@@ -33,7 +33,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	config::notify();
 
-	emit triggerEmptySearch();
+	emit triggerSearch( "", SortOrder::Name, true );
 }
 
 MainWindow::~MainWindow()
@@ -143,4 +143,41 @@ void MainWindow::on_actionViewFileHistory_triggered()
 {
 	StatsDialog dialog;
 	dialog.exec();
+}
+
+void MainWindow::searchTextChanged( const QString str )
+{
+	const auto search_type = [ & ]()
+	{
+		switch ( ui->sortSelection->currentIndex() )
+		{
+			default:
+				[[fallthrough]];
+			case 0:
+				return SortOrder::Name;
+			case 1:
+				return SortOrder::Creator;
+			case 2:
+				return SortOrder::Engine;
+			case 3:
+				return SortOrder::Time;
+		}
+	}();
+
+	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+}
+
+void MainWindow::on_sortOrderButton_clicked()
+{
+	if ( ui->sortOrderButton->text() == "ASC" )
+		ui->sortOrderButton->setText( "DESC" );
+	else
+		ui->sortOrderButton->setText( "ASC" );
+
+	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
+{
+	searchTextChanged( ui->SearchBox->text() );
 }

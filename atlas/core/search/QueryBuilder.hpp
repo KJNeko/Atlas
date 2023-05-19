@@ -48,17 +48,27 @@
  *
  */
 
+enum SortOrder
+{
+	Name,
+	Creator,
+	Engine,
+	Time
+};
+
 std::string_view trimSpaces( std::string_view str );
 
 std::string parseBytesize( std::string_view str );
 
-std::string generateQuery( const std::string str );
+std::string generateQuery( const std::string str, const SortOrder order, const bool asc );
 
 std::pair< std::string_view, std::string_view > seperateNamespace( const std::string_view str );
 
 std::string processString( std::string_view str_view );
 
 std::string escape( std::string_view str );
+
+std::string orderToStr( const SortOrder order );
 
 std::string_view extractUntilNext( std::string_view& str );
 

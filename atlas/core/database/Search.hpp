@@ -10,6 +10,7 @@
 #include <QString>
 
 #include "core/database/Record.hpp"
+#include "core/search/QueryBuilder.hpp"
 
 class Search : public QObject
 {
@@ -25,8 +26,7 @@ class Search : public QObject
 
   public slots:
 	//! Submits a text to get autocompleted.
-	void searchTextChanged( QString text );
-	void triggerEmptySearch();
+	void searchTextChanged( QString text, const SortOrder order, const bool asc );
 };
 
 #endif //ATLAS_SEARCH_HPP

@@ -41,7 +41,7 @@ class MainWindow : public QMainWindow
 	void showEvent( QShowEvent* event ) override;
 
   signals:
-	void triggerEmptySearch();
+	void triggerSearch( QString text, const SortOrder order, const bool asc );
 
   private slots:
 	void on_actionImport_triggered();
@@ -56,6 +56,9 @@ class MainWindow : public QMainWindow
 	void switchToDetailed( const Record record );
 	void on_homeButton_pressed();
 	void on_actionViewFileHistory_triggered();
+	void searchTextChanged( const QString str );
+	void on_sortOrderButton_clicked();
+	void on_sortSelection_currentIndexChanged( int index );
 };
 
 #endif // MAINWINDOW_H
