@@ -92,18 +92,25 @@ try
 
 	try
 	{
-		const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
+		if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
+		{
+			const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
 
-		record->addVersion(
-			"Chapter: 1",
-			"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest",
-			"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
-			0,
-			true );
+			record->addVersion(
+				"Chapter: 1",
+				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest",
+				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+				0,
+				true );
+		}
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
 		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
+	}
+	catch ( const RecordAlreadyExists& e )
+	{
+		//do nothing
 	}
 }
 catch ( sqlite::sqlite_exception& e )
