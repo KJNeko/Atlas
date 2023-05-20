@@ -282,7 +282,7 @@ margin-left: 2px;</string>
          </property>
          <property name="icon">
           <iconset resource="../resources.qrc">
-           <normaloff>:/images/assets/Atlas_logo_v1.svg</normaloff>:/images/assets/Atlas_logo_v1.svg</iconset>
+           <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -651,7 +651,7 @@ margin-left: 2px;</string>
          </property>
          <property name="icon">
           <iconset resource="../resources.qrc">
-           <normaloff>:/images/assets/Atlas_logo_v1.svg</normaloff>:/images/assets/Atlas_logo_v1.svg</iconset>
+           <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
           <size>

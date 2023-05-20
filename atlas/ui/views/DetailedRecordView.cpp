@@ -23,6 +23,8 @@ DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), u
 {
 	ui->setupUi( this );
 
+	//ui->bannerDetailWidget->setStyleSheet( "QPushButton#btnInfo:hover {background: rgba( 255, 255, 255, 75)}" );
+
 	//ui->previewList->setItemDelegate( new ImageDelegate() );
 	//ui->previewList->setModel( new FilepathModel() );
 }

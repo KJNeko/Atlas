@@ -547,7 +547,7 @@ border-radius:none;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background: rgba( 255, 255, 255, 50 );
+            <string notr="true">background: rgba( 255, 255, 255, 55);
 border-radius:3px;</string>
            </property>
            <property name="text">
@@ -790,7 +790,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="0" column="11">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="btnInfo">
            <property name="minimumSize">
             <size>
              <width>30</width>
