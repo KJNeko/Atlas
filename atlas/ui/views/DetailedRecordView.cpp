@@ -43,7 +43,7 @@ void DetailedRecordView::reloadRecord()
 {
 	if ( m_record == nullptr ) return;
 	const auto& record { *m_record };
-	ui->lbGameName->setText( record->getTitle() );
+	//ui->lbGameName->setText( record->getTitle() );
 
 	//Set cover Image
 	QPixmap cover {
@@ -53,7 +53,7 @@ void DetailedRecordView::reloadRecord()
 
 	if ( record->getLastPlayed() == 0 )
 	{
-		ui->lbLastPlayed->setText( "Last Played:\nNever" );
+		ui->lbLastPlayed->setText( "Never" );
 	}
 	else
 	{
@@ -61,7 +61,7 @@ void DetailedRecordView::reloadRecord()
 		const QDateTime date {
 			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getLastPlayed() ), Qt::LocalTime )
 		};
-		ui->lbLastPlayed->setText( QString( "Last Played:\n%1" ).arg( date.toString() ) );
+		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
 
 	//Sum up all the file sizes in the game's folder across multiple versions
@@ -81,10 +81,10 @@ void DetailedRecordView::reloadRecord()
 	const auto& locale { this->locale() };
 
 	if ( latest_size == total_size )
-		ui->lbStorageUsed->setText( QString( "Storage Used:\n%1" )
-		                                .arg( locale.formattedDataSize( static_cast< qint64 >( total_size ) ) ) );
+		ui->lbStorageUsed
+			->setText( QString( "%1" ).arg( locale.formattedDataSize( static_cast< qint64 >( total_size ) ) ) );
 	else
-		ui->lbStorageUsed->setText( QString( "Storage Used:\n%1 (%2 total)" )
+		ui->lbStorageUsed->setText( QString( "%1 (%2 total)" )
 		                                .arg(
 											locale.formattedDataSize( static_cast< qint64 >( latest_size ) ),
 											locale.formattedDataSize( static_cast< qint64 >( total_size ) ) ) );
@@ -103,7 +103,7 @@ void DetailedRecordView::reloadRecord()
 
 	if ( latest_playtime == 0 )
 	{
-		ui->lbLastPlayed->setText( "Last Played:\nNever" );
+		ui->lbLastPlayed->setText( "Never" );
 	}
 	else
 	{
@@ -111,14 +111,13 @@ void DetailedRecordView::reloadRecord()
 		const QDateTime date {
 			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( latest_playtime ), Qt::LocalTime )
 		};
-		ui->lbLastPlayed->setText( QString( "Last Played:\n%1" ).arg( date.toString() ) );
+		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
 
-	ui->lbTotalPlaytime->setText(
-		QString( "Total Playtime:\n%1" )
-			.arg( QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getTotalPlaytime() ), Qt::LocalTime )
-	                  .toUTC()
-	                  .toString( "hh:mm:ss" ) ) );
+	ui->lbTotalPlaytime->setText( QString( "%1" ).arg(
+		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getTotalPlaytime() ), Qt::LocalTime )
+			.toUTC()
+			.toString( "hh:mm:ss" ) ) );
 
 	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
 

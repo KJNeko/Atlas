@@ -136,22 +136,12 @@ border:none;</string>
         </item>
         <item>
          <property name="text">
-          <string>Appearance</string>
+          <string>Interface</string>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Grid Layout</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Cover Layout</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Banner Layout</string>
          </property>
         </item>
         <item>
@@ -723,27 +713,7 @@ border-right:none;
        </item>
        <item row="5" column="0">
         <widget class="QWidget" name="MENU_LAYOUT" native="true">
-         <layout class="QGridLayout" name="gridLayout_11">
-          <item row="0" column="0">
-           <widget class="QLabel" name="layout">
-            <property name="maximumSize">
-             <size>
-              <width>608</width>
-              <height>342</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="../../resources.qrc">:/Layouts/assets/layouts/nav_default.svg</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="gridLayout_11"/>
         </widget>
        </item>
        <item row="3" column="0">
@@ -2218,9 +2188,7 @@ padding:10x;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

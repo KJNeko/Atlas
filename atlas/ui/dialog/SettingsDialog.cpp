@@ -550,10 +550,12 @@ void SettingsDialog::on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx 
 {
 	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
+	SettingsDialog::setFont( font );
 }
 
 void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 {
 	QFont font { ui->cbAppFont->currentText(), num };
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
+	SettingsDialog::setFont( font );
 }
