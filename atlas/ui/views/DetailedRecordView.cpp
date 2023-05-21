@@ -25,8 +25,8 @@ DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), u
 
 	//ui->bannerDetailWidget->setStyleSheet( "QPushButton#btnInfo:hover {background: rgba( 255, 255, 255, 75)}" );
 
-	//ui->previewList->setItemDelegate( new ImageDelegate() );
-	//ui->previewList->setModel( new FilepathModel() );
+	ui->previewList->setItemDelegate( new ImageDelegate() );
+	ui->previewList->setModel( new FilepathModel() );
 }
 
 DetailedRecordView::~DetailedRecordView()
@@ -128,7 +128,7 @@ void DetailedRecordView::reloadRecord()
 			.toUTC()
 			.toString( "hh:mm:ss" ) ) );
 
-	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
+	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
 
 	//ui->gameNotes->setText( m_record.value()->getDesc() );
 }
