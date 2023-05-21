@@ -43,9 +43,16 @@ void DetailedRecordView::setRecord( const Record record_in )
 
 void DetailedRecordView::reloadRecord()
 {
+	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
+	QString description =
+		"Galaxy Crossing is an immersive and thrilling video game that invites players to embark on an extraordinary cosmic adventure alongside three courageous young heroines. Set in a distant future, where space exploration has become a reality, the game follows the captivating journey of these three skilled space explorers as they strive to save the universe from the clutches of an insidious empire known as the Hrinn.";
+	description +=
+		"\nPlayers assume the roles of the three remarkable girls: Aria, the brilliant scientist with unmatched technical expertise; Lila, the agile and resourceful pilot with exceptional piloting skills; and Maya, the fierce and strategic warrior with extraordinary combat abilities. Each character possesses unique strengths and abilities that players can strategically utilize throughout the game.";
+
+	//END PLACEHOLDERS
+
 	if ( m_record == nullptr ) return;
 	const auto& record { *m_record };
-	//ui->lbGameName->setText( record->getTitle() );
 
 	//Set cover Image
 	QPixmap cover {
@@ -57,6 +64,7 @@ void DetailedRecordView::reloadRecord()
 	}
 	else
 	{
+		ui->coverImage->show();
 		ui->coverImage->setPixmap( cover );
 	}
 
@@ -130,6 +138,20 @@ void DetailedRecordView::reloadRecord()
 
 	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
 
+	//Set height of PreviewList
+	if ( ui->previewList->model()->rowCount() > 0 )
+	{
+		ui->previewList->show();
+		//need to fix. row count is not updating
+		ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
+	}
+	else
+	{
+		ui->previewList->hide();
+	}
+
+	//Set Description
+	ui->teDescription->setPlainText( description );
 	//ui->gameNotes->setText( m_record.value()->getDesc() );
 }
 
@@ -152,6 +174,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_blur = 45;
 		const int font_size = image_height * .1;
 		const int logo_size = static_cast< int >( ui->bannerWidget->width() * .25 );
+
 		//Paint the banner
 		const QSize banner_size { ui->bannerWidget->size() };
 		QPixmap banner {
@@ -160,6 +183,7 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		if ( banner.isNull() ) //return normal banner
 		{
+			spdlog::info( "banner is null" );
 			banner = record->getBanner(
 				banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Normal );
 		}
@@ -176,9 +200,10 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		int font_width = fm.horizontalAdvance( str );
 		int font_height = fm.height();
 
+		spdlog::debug( "current width: {} current height: {}", banner.width(), banner.height() );
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
 		const QRect pixmap_logo { static_cast< int >( ui->bannerWidget->width() * .1 ),
-			                      ( image_height / 2 ) - ( logo.height() / 2 ),
+			                      ( image_height / 2 ) - ( logo.height() / 2 ) - 40,
 			                      logo.width(),
 			                      logo.height() };
 
@@ -229,4 +254,14 @@ void DetailedRecordView::on_btnManageRecord_pressed()
 
 	RecordEditor editor { m_record.value()->getID(), this };
 	editor.exec();
+}
+
+void DetailedRecordView::resizeEvent( [[maybe_unused]] QResizeEvent* event )
+{
+	if ( ui->previewList->model()->rowCount() > 0 )
+	{
+		//ui->previewList->setFixedHeight(
+		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
+		//		* ui->previewList->sizeHintForRow( 1 ) );
+	}
 }

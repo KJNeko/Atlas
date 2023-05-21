@@ -5,6 +5,7 @@
 #ifndef ATLAS_DETAILEDRECORDVIEW_HPP
 #define ATLAS_DETAILEDRECORDVIEW_HPP
 
+#include <QScrollArea>
 #include <QWidget>
 
 #include "core/database/Record.hpp"
@@ -50,6 +51,7 @@ class DetailedRecordView final : public QWidget
   private:
 
 	Ui::DetailedRecordView* ui;
+	void resizeEvent( QResizeEvent* event ) override;
 };
 
 #endif //ATLAS_DETAILEDRECORDVIEW_HPP
