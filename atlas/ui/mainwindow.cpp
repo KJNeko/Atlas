@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 
+#include <QtConcurrent>
+
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "ui/tasks/NotificationMessage.hpp"
+#include "ui/tasks/ProgressMessage.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -34,6 +38,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	config::notify();
 
 	emit triggerSearch( "", SortOrder::Name, true );
+
+	initTaskPopup( this );
+	getTaskPopup()->hide();
+	connect( getTaskPopup(), &::TaskPopup::popupResized, this, &MainWindow::movePopup );
 }
 
 MainWindow::~MainWindow()
@@ -102,10 +110,11 @@ void MainWindow::on_homeButton_pressed()
 	ui->stackedWidget->setCurrentIndex( 0 );
 }
 
-void MainWindow::resizeEvent( [[maybe_unused]] QResizeEvent* event )
+void MainWindow::resizeEvent( QResizeEvent* event )
 {
+	QMainWindow::resizeEvent( event );
+
 	//Store window height and width
-	spdlog::debug( "Window width:{} Window Height:{}", MainWindow::width(), MainWindow::height() );
 	config::grid_ui::windowHeight::
 		set( config::grid_ui::windowHeight::get() != MainWindow::height() ? MainWindow::height() :
 	                                                                        config::grid_ui::windowHeight::get() );
@@ -117,6 +126,8 @@ void MainWindow::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
 	ui->recordView->reloadConfig();
+
+	movePopup();
 }
 
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
@@ -180,4 +191,44 @@ void MainWindow::on_sortOrderButton_clicked()
 void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
 {
 	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::showMessagePopup()
+{
+	auto& task_popup { *getTaskPopup() };
+
+	if ( task_popup.isVisible() )
+		task_popup.hide();
+	else
+	{
+		task_popup.show();
+		movePopup();
+	}
+}
+
+void MainWindow::on_btnShowMessageLog_clicked()
+{
+	showMessagePopup();
+}
+
+void MainWindow::moveEvent( QMoveEvent* event )
+{
+	QMainWindow::moveEvent( event );
+	movePopup();
+}
+
+void MainWindow::movePopup()
+{
+	auto& task_popup { *getTaskPopup() };
+	const auto [ x, y ] = task_popup.size();
+
+	const auto point {
+		ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() - QPoint { x, y } - QPoint( 5, 5 ) )
+	};
+	task_popup.move( point );
+}
+
+void MainWindow::taskPopupResized()
+{
+	movePopup();
 }

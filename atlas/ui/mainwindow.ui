@@ -171,6 +171,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="btnShowMessageLog">
+         <property name="text">
+          <string>Show/Hide Message Log</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

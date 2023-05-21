@@ -7,6 +7,7 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+#include "ui/tasks/TaskPopup.hpp"
 
 QT_BEGIN_NAMESPACE
 
@@ -39,6 +40,7 @@ class MainWindow : public QMainWindow
 	void openBatchImportDialog();
 	void resizeEvent( QResizeEvent* event ) override;
 	void showEvent( QShowEvent* event ) override;
+	void moveEvent( QMoveEvent* event ) override;
 
   signals:
 	void triggerSearch( QString text, const SortOrder order, const bool asc );
@@ -59,6 +61,10 @@ class MainWindow : public QMainWindow
 	void searchTextChanged( const QString str );
 	void on_sortOrderButton_clicked();
 	void on_sortSelection_currentIndexChanged( int index );
+	void showMessagePopup();
+	void on_btnShowMessageLog_clicked();
+	void movePopup();
+	void taskPopupResized();
 };
 
 #endif // MAINWINDOW_H
