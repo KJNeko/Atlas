@@ -111,11 +111,8 @@ try
 }
 catch ( ... )
 {
-	//Hacky as fuck but it should work for 'solving' banners when one doesn't exist.
-	if ( type > Error )
-		return getBannerPath( static_cast< BannerType >( type - 1 ), transaction );
-	else
-		return {};
+	//we do not need to return anything if there is nothing available.
+	return {};
 }
 
 QPixmap RecordData::getBanner( const BannerType type, Transaction transaction ) const

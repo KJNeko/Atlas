@@ -51,7 +51,14 @@ void DetailedRecordView::reloadRecord()
 	QPixmap cover {
 		record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, BannerType::Cover )
 	};
-	ui->coverImage->setPixmap( cover );
+	if ( cover.isNull() )
+	{
+		ui->coverImage->hide();
+	}
+	else
+	{
+		ui->coverImage->setPixmap( cover );
+	}
 
 	if ( record->getLastPlayed() == 0 )
 	{
@@ -143,30 +150,44 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_height = 360;
 		const int image_feather = 45;
 		const int image_blur = 45;
+		const int font_size = image_height * .1;
 		const int logo_size = static_cast< int >( ui->bannerWidget->width() * .25 );
 		//Paint the banner
 		const QSize banner_size { ui->bannerWidget->size() };
 		QPixmap banner {
 			record->getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
 		};
-		QPixmap logo { record->getBanner( logo_size, logo_size, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
 
+		if ( banner.isNull() ) //return normal banner
+		{
+			banner = record->getBanner(
+				banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Normal );
+		}
+		//blur banner
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
+
+		//Get Logo
+		QPixmap logo { record->getBanner( logo_size, logo_size, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
+		//Used if logo does not work
+		QFont font { painter.font().toString(), font_size };
+		QString str( record->getTitle() );
+		QFontMetrics fm( font );
+		painter.setFont( font );
+		int font_width = fm.horizontalAdvance( str );
+		int font_height = fm.height();
 
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
 		const QRect pixmap_logo { static_cast< int >( ui->bannerWidget->width() * .1 ),
 			                      ( image_height / 2 ) - ( logo.height() / 2 ),
 			                      logo.width(),
 			                      logo.height() };
-		//const QRect cover_rect { 24, 343, cover.width(), cover.height() };
 
-		/*const QRect cover_rect = { ui->coverImage->parentWidget()->parentWidget()->x()
-			                           + ui->coverImage->parentWidget()->x() + ui->coverImage->x(),
-			                       ui->coverImage->parentWidget()->parentWidget()->y()
-			                           + ui->coverImage->parentWidget()->y() + ui->coverImage->y(),
-			                       ui->coverImage->width(),
-			                       ui->coverImage->height() };*/
-		//cover_rect.moveTopLeft( ui->coverImage->parentWidget()->mapToGlobal( cover_rect.topLeft() ) );
+		QRect boundingRect;
+		const QRect font_rectangle = QRect(
+			static_cast< int >( ui->bannerWidget->width() * .1 ),
+			( image_height / 2 ) - ( font_height / 2 ),
+			font_width,
+			font_height );
 		spdlog::info(
 			"x:{} y:{}",
 			ui->coverImage->parentWidget()->parentWidget()->x() + ui->coverImage->parentWidget()->x()
@@ -174,33 +195,14 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			ui->coverImage->parentWidget()->parentWidget()->y() + ui->coverImage->parentWidget()->y()
 				+ ui->coverImage->y() );
 
-		//const QRect blur_rect { 0, banner.height(), banner_size.width(), banner_size.height() };
-		/*const QRect pixmap_rect {
-		const QSize size { ui->bannerFrame->size() };
-		const QPixmap banner { record->getBanner( size.width(), size.height(), SCALE_TYPE::KEEP_ASPECT_RATIO ) };
-		const QRect pixmap_rect {
-			ui->bannerFrame->frameRect().center() - QPoint( banner.width() / 2, banner.height() / 2 ), banner.size()
-		};*/
 		painter.drawPixmap( pixmap_rect, banner );
 
-		painter.drawPixmap( pixmap_logo, logo );
-		//painter.drawPixmap( cover_rect, cover );
-		//painter.fillRect( blur_rect, QColor( 64, 66, 73, 255 ) );
-		//painter.drawRect( blur_rect );
+		//check if logo is null, if it is then draw text instead
 
-		//ui->coverImage->setPixmap( cover );
-		//ui->coverImage->setPixmap(
-		//	record->getBanner( ui->coverImage->width(), ui->coverImage->height(), KEEP_ASPECT_RATIO, PREVIEW_COVER ) );
-		//Draw blurred version
-		/*
-		const auto blur_original { record->getBanner( size.width(), size.height(), true ) };
-		const QRect blur_rect { ui->bannerFrame->rect().center() - QPoint( blur.width() / 2, blur.height() / 2 ),
-			                    blur.size() };
-		*/
-
+		logo.isNull() ? painter.drawText( font_rectangle, 0, record->getTitle(), &boundingRect ) :
+						painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}
-	//QWidget::paintEvent( event );
 }
 
 GameMetadata DetailedRecordView::selectedVersion()
