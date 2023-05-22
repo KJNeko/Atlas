@@ -7,6 +7,8 @@
 
 #include <QWidget>
 
+#include "NotificationPopup.hpp"
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -16,27 +18,27 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class NotificationMessage : public QWidget
+class NotificationMessage final : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( NotificationMessage )
+
+	using Signaler = void;
 
   public:
 
 	explicit NotificationMessage( const QString msg, QWidget* parent = nullptr );
 	~NotificationMessage() override;
 
+	Signaler getSignaler() { return; }
+
   private:
 
 	Ui::NotificationMessage* ui;
+	friend class NotificationPopup;
 
   private slots:
 	void on_btnDismiss_clicked();
 };
-
-namespace atlas::notifications
-{
-	void createNotification( const QString text, const bool reveal );
-}
 
 #endif //ATLASGAMEMANAGER_NOTIFICATIONMESSAGE_HPP

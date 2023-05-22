@@ -7,6 +7,8 @@
 
 #include <QWidget>
 
+#include "NotificationPopup.hpp"
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -16,7 +18,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class ProgressMessageSignaler : public QObject
+class ProgressMessageSignaler final : public QObject
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressMessageSignaler )
@@ -39,15 +41,15 @@ class ProgressMessageSignaler : public QObject
 	void selfClose();
 };
 
-class ProgressMessage : public QWidget
+class ProgressMessage final : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressMessage )
 
-  public:
-
 	explicit ProgressMessage( const QString name, QWidget* parent = nullptr );
 	~ProgressMessage() override;
+
+	using Signaler = ProgressMessageSignaler;
 
 	std::unique_ptr< ProgressMessageSignaler > getSignaler();
 
@@ -60,6 +62,8 @@ class ProgressMessage : public QWidget
 	void changeProgress( int progress );
 	void changeMessage( QString message );
 	void closeSelf();
+
+	friend class NotificationPopup;
 };
 
 namespace atlas::notifications

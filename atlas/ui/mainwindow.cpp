@@ -8,8 +8,9 @@
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
-#include "ui/tasks/NotificationMessage.hpp"
-#include "ui/tasks/ProgressMessage.hpp"
+#include "ui/notifications/NotificationMessage.hpp"
+#include "ui/notifications/NotificationPopup.hpp"
+#include "ui/notifications/ProgressMessage.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -39,9 +40,15 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
-	initTaskPopup( this );
-	getTaskPopup()->hide();
-	connect( getTaskPopup(), &::TaskPopup::popupResized, this, &MainWindow::movePopup );
+	initNotificationPopup( this );
+	getNotificationPopup()->hide();
+	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
+
+	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
+
+	std::unique_ptr< ProgressMessageSignaler > signaler {
+		getNotificationPopup()->createNotification< ProgressMessage >( QString( "Test!" ), true )
+	};
 }
 
 MainWindow::~MainWindow()
@@ -195,7 +202,7 @@ void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int inde
 
 void MainWindow::showMessagePopup()
 {
-	auto& task_popup { *getTaskPopup() };
+	auto& task_popup { *getNotificationPopup() };
 
 	if ( task_popup.isVisible() )
 		task_popup.hide();
@@ -219,7 +226,7 @@ void MainWindow::moveEvent( QMoveEvent* event )
 
 void MainWindow::movePopup()
 {
-	auto& task_popup { *getTaskPopup() };
+	auto& task_popup { *getNotificationPopup() };
 	const auto [ x, y ] = task_popup.size();
 
 	const auto point {

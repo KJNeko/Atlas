@@ -6,7 +6,7 @@
 
 #include "NotificationMessage.hpp"
 
-#include "TaskPopup.hpp"
+#include "NotificationPopup.hpp"
 #include "core/logging.hpp"
 #include "ui_NotificationMessage.h"
 
@@ -25,15 +25,14 @@ NotificationMessage::~NotificationMessage()
 
 void NotificationMessage::on_btnDismiss_clicked()
 {
-	spdlog::info( "AAAAAAAAAAA" );
-	getTaskPopup()->removeMessage( this );
+	getNotificationPopup()->removeMessage( this );
 }
 
 namespace atlas::notifications
 {
 	void createNotification( const QString text, const bool reveal )
 	{
-		auto& task_popup = *getTaskPopup();
+		auto& task_popup = *getNotificationPopup();
 		auto* notification = new NotificationMessage( text );
 		task_popup.addMessage( notification );
 

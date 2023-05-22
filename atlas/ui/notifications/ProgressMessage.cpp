@@ -6,7 +6,7 @@
 
 #include "ProgressMessage.hpp"
 
-#include "TaskPopup.hpp"
+#include "NotificationPopup.hpp"
 #include "ui_ProgressMessage.h"
 
 ProgressMessage::ProgressMessage( const QString name, QWidget* parent ) :
@@ -52,30 +52,8 @@ void ProgressMessage::changeMessage( QString message )
 
 void ProgressMessage::closeSelf()
 {
-	getTaskPopup()->removeMessage( this );
+	getNotificationPopup()->removeMessage( this );
 }
-
-namespace atlas::notifications
-{
-	std::unique_ptr< ProgressMessageSignaler > createProgressNotification( QString name, const bool reveal )
-	{
-		const auto& task_list { getTaskPopup() };
-
-		auto* message { new ProgressMessage( name ) };
-
-		auto signaler { message->getSignaler() };
-
-		task_list->addMessage( message );
-
-		if ( reveal )
-		{
-			task_list->show();
-			task_list->expand();
-		}
-
-		return signaler;
-	}
-} // namespace atlas::notifications
 
 void ProgressMessageSignaler::setMax( int max )
 {

@@ -7,8 +7,6 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
-#include "ui/tasks/TaskPopup.hpp"
-
 QT_BEGIN_NAMESPACE
 
 namespace Ui
