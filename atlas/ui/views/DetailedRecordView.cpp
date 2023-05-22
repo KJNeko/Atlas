@@ -60,11 +60,11 @@ void DetailedRecordView::reloadRecord()
 	};
 	if ( cover.isNull() )
 	{
-		ui->coverImage->hide();
+		ui->coverWidget->hide();
 	}
 	else
 	{
-		ui->coverImage->show();
+		ui->coverWidget->show();
 		ui->coverImage->setPixmap( cover );
 	}
 
@@ -153,6 +153,8 @@ void DetailedRecordView::reloadRecord()
 	//Set Description
 	ui->teDescription->setPlainText( description );
 	//ui->gameNotes->setText( m_record.value()->getDesc() );
+
+	//ui->bannerFrame->repaint();
 }
 
 void DetailedRecordView::clearRecord()
@@ -162,7 +164,10 @@ void DetailedRecordView::clearRecord()
 
 void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
-	if ( m_record != nullptr )
+	spdlog::info( "Painting Detail UI" );
+
+	//spdlog::info( record->getTitle() );
+	if ( *m_record != nullptr )
 	{
 		QPainter painter { this };
 
@@ -173,10 +178,10 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_feather = 45;
 		const int image_blur = 45;
 		const int font_size = image_height * .1;
-		const int logo_size = static_cast< int >( ui->bannerWidget->width() * .25 );
+		const int logo_size = static_cast< int >( ui->bannerFrame->width() * .25 );
 
 		//Paint the banner
-		const QSize banner_size { ui->bannerWidget->size() };
+		const QSize banner_size { ui->bannerFrame->size() };
 		QPixmap banner {
 			record->getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
 		};
@@ -200,25 +205,19 @@ void DetailedRecordView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		int font_width = fm.horizontalAdvance( str );
 		int font_height = fm.height();
 
-		spdlog::debug( "current width: {} current height: {}", banner.width(), banner.height() );
+		spdlog::info( "current width: {} current height: {}", banner_size.width(), banner_size.height() );
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
-		const QRect pixmap_logo { static_cast< int >( ui->bannerWidget->width() * .1 ),
+		const QRect pixmap_logo { static_cast< int >( ui->bannerFrame->width() * .1 ),
 			                      ( image_height / 2 ) - ( logo.height() / 2 ) - 40,
 			                      logo.width(),
 			                      logo.height() };
 
 		QRect boundingRect;
 		const QRect font_rectangle = QRect(
-			static_cast< int >( ui->bannerWidget->width() * .1 ),
+			static_cast< int >( ui->bannerFrame->width() * .1 ),
 			( image_height / 2 ) - ( font_height / 2 ),
 			font_width,
 			font_height );
-		spdlog::info(
-			"x:{} y:{}",
-			ui->coverImage->parentWidget()->parentWidget()->x() + ui->coverImage->parentWidget()->x()
-				+ ui->coverImage->x(),
-			ui->coverImage->parentWidget()->parentWidget()->y() + ui->coverImage->parentWidget()->y()
-				+ ui->coverImage->y() );
 
 		painter.drawPixmap( pixmap_rect, banner );
 
