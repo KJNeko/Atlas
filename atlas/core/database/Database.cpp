@@ -51,6 +51,7 @@ try
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
 		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, date_added INTEGER, UNIQUE(record_id, version));",
+		"CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS SELECT DISTINCT record_id, game_metadata.date_added FROM records NATURAL JOIN game_metadata ORDER BY game_metadata.date_added DESC;",
 
 		//Extra data for records
 		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",

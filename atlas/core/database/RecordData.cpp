@@ -232,6 +232,21 @@ try
 
 	return { config::paths::images::getPath() / banner_path };
 }
+catch ( const sqlite::exceptions::no_rows& e )
+{
+	//We didn't get a path. Try an alternative
+	std::string banner_path { ":/invalid_banner.png" };
+	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_id >>
+		[ & ]( const std::string str ) { banner_path = str; };
+
+	if ( banner_path == ":/invalid_banner.png" )
+	{
+		spdlog::warn( "{}->RecordData::getBannerPath({}): No banner found", m_id, static_cast< int >( type ) );
+		return banner_path;
+	}
+	else
+		return config::paths::images::getPath() / banner_path;
+}
 catch ( const sqlite::sqlite_exception& e )
 {
 	spdlog::error(
