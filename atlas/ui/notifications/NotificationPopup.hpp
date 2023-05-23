@@ -75,6 +75,7 @@ class NotificationPopup final : public QDialog
 
 		if ( this->thread() == QThread::currentThread() )
 		{
+			if ( reveal ) expand();
 			T* notif { new T( name ) };
 			connect( this, &NotificationPopup::clearHistory, notif, &T::closeSelf );
 			Signaler signaler { notif->getSignaler() };
