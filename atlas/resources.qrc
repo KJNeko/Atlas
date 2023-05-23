@@ -31,4 +31,12 @@
         <file>assets/testfiles/test1.png</file>
         <file>assets/testfiles/test2.png</file>
     </qresource>
+    <qresource prefix="/notifications">
+        <file>assets/pause_n.svg</file>
+        <file>assets/pause_s.svg</file>
+        <file>assets/play_n.svg</file>
+        <file>assets/play_s.svg</file>
+        <file>assets/stop_n.svg</file>
+        <file>assets/stop_s.svg</file>
+    </qresource>
 </RCC>
