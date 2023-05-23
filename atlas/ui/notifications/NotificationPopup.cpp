@@ -6,6 +6,8 @@
 
 #include "NotificationPopup.hpp"
 
+#include <QScrollBar>
+
 #include "core/logging.hpp"
 #include "ui_NotificationPopup.h"
 
@@ -14,6 +16,8 @@ NotificationPopup::NotificationPopup( QWidget* parent ) :
   ui( new Ui::NotificationPopup )
 {
 	ui->setupUi( this );
+
+	this->layout()->setSizeConstraint( QLayout::SetFixedSize );
 }
 
 NotificationPopup::~NotificationPopup()
@@ -23,16 +27,12 @@ NotificationPopup::~NotificationPopup()
 
 void NotificationPopup::on_btnHideShow_clicked()
 {
-	if ( ui->btnHideShow->isChecked() )
-	{
-		ui->listFrame->show();
-		this->resize( QSize( 200, 600 ) );
-	}
-	else
-	{
-		ui->listFrame->hide();
-		this->window()->resize( QSize( 0, 0 ) );
-	}
+	ui->scrollArea->setVisible( ui->btnHideShow->isChecked() );
+	//ui->listFrame->setVisible( ui->btnHideShow->isChecked());
+
+	this->updateGeometry();
+	this->update();
+	this->window()->resize( this->minimumSize() );
 }
 
 void NotificationPopup::resizeEvent( QResizeEvent* event )
@@ -43,7 +43,8 @@ void NotificationPopup::resizeEvent( QResizeEvent* event )
 
 void NotificationPopup::addMessage( QWidget* message )
 {
-	ui->listFrame->layout()->addWidget( message );
+	ui->scrollAreaWidgetContents->layout()->addWidget( message );
+	ui->scrollArea->scroll( 0, ui->scrollArea->verticalScrollBar()->maximum() );
 }
 
 void NotificationPopup::removeMessage( QWidget* message )

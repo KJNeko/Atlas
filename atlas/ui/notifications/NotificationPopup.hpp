@@ -9,6 +9,8 @@
 #include <memory>
 
 #include <QDialog>
+#include <QThread>
+#include <QTimer>
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -57,28 +59,77 @@ class NotificationPopup final : public QDialog
 		requires( is_notification< T > && !has_void_signaler< T > )
 	std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
 	{
-		if ( reveal ) expand();
+		//All of this should run on the main thread
 
-		//All of this should run on a separate thread
-		auto* notif { new T( name ) };
-		auto signaler { notif->getSignaler() };
-		addMessage( notif );
+		using Signaler = std::unique_ptr< typename T::Signaler >;
 
-		std::promise< std::unique_ptr< typename T::Signaler > > promise;
-		std::future< std::unique_ptr< typename T::Signaler > > future { promise.get_future() };
-		promise.set_value( std::move( signaler ) );
+		if ( this->thread() == QThread::currentThread() )
+		{
+			T* notif { new T( name ) };
+			Signaler signaler { notif->getSignaler() };
+			addMessage( notif );
+			return signaler;
+		}
+		else
+		{
+			//This is the hackiest solution i've ever fucking found. But apparently it works
+			QTimer* timer { new QTimer() };
+			timer->moveToThread( this->thread() );
+			timer->setSingleShot( true );
 
-		return future.get();
+			std::promise< Signaler > promise;
+			std::future< Signaler > notif_future { promise.get_future() };
+
+			QObject::connect(
+				timer,
+				&QTimer::timeout,
+				[ name, &promise, timer, this, reveal ]()
+				{
+					if ( reveal ) expand();
+					T* notif { new T( name ) };
+					addMessage( notif );
+					promise.set_value( notif->getSignaler() );
+
+					timer->deleteLater();
+				} );
+
+			QMetaObject::invokeMethod( timer, "start", Qt::QueuedConnection, Q_ARG( int, 0 ) );
+
+			return notif_future.get();
+		}
 	}
 
 	template < typename T >
 		requires has_void_signaler< T >
 	void createNotification( const QString name, const bool reveal = false )
 	{
-		if ( reveal ) expand();
+		if ( this->thread() == QThread::currentThread() )
+		{
+			if ( reveal ) expand();
 
-		addMessage( new T( name ) );
-		return;
+			addMessage( new T( name ) );
+			return;
+		}
+		else
+		{
+			QTimer* timer { new QTimer() };
+			timer->moveToThread( this->thread() );
+			timer->setSingleShot( true );
+
+			QObject::connect(
+				timer,
+				&QTimer::timeout,
+				[ name, timer, this, reveal ]()
+				{
+					if ( reveal ) expand();
+					T* notif { new T( name ) };
+					addMessage( notif );
+
+					timer->deleteLater();
+				} );
+
+			QMetaObject::invokeMethod( timer, "start", Qt::QueuedConnection, Q_ARG( int, 0 ) );
+		}
 	}
 
   signals:

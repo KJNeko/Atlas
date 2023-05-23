@@ -46,9 +46,29 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
 
-	std::unique_ptr< ProgressMessageSignaler > signaler {
-		getNotificationPopup()->createNotification< ProgressMessage >( QString( "Test!" ), true )
-	};
+	(void)QtConcurrent::run(
+		[]()
+		{
+			std::unique_ptr< ProgressMessageSignaler > signaler {
+				getNotificationPopup()->createNotification< ProgressMessage >( QString( "Test!" ), true )
+			};
+
+			signaler->setMax( 100 );
+			signaler->setProgress( 0 );
+			signaler->setMessage( QString( "Test!" ) );
+			for ( int i = 0; i < 100; ++i )
+			{
+				signaler->setProgress( i );
+				std::this_thread::sleep_for( std::chrono::milliseconds( 500 ) );
+			}
+		} );
+
+	(void)getNotificationPopup()->createNotification< ProgressMessage >( QString( "Test 2!" ), true );
+
+	for ( int i = 0; i < 10; ++i )
+	{
+		getNotificationPopup()->createNotification< NotificationMessage >( QString::number( i ) );
+	}
 }
 
 MainWindow::~MainWindow()
