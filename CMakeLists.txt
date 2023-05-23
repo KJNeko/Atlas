@@ -108,7 +108,7 @@ if (WIN32)
     add_custom_command(TARGET Atlas POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qwebp.dll
             ${CMAKE_BINARY_DIR}/bin/imageformats
-            COMMENT "Copying pre-cmopiled qwebp.dll for Qt 6.4.3")
+            COMMENT "Copying pre-compiled qwebp.dll for Qt 6.4.3")
 
 endif ()
 

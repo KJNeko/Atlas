@@ -25,14 +25,6 @@ class DetailedRecordView final : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( DetailedRecordView )
 
-	std::optional< Record > m_record { std::nullopt };
-
-	std::size_t selected_version_idx { 0 };
-
-	GameMetadata selectedVersion();
-
-	void reloadRecord();
-
   public:
 
 	explicit DetailedRecordView( QWidget* parent = nullptr );
@@ -40,18 +32,10 @@ class DetailedRecordView final : public QWidget
 
   public slots:
 	void setRecord( const Record record );
-	void clearRecord();
-	void paintEvent( QPaintEvent* event ) override;
-
-	//Button handling
-	void on_btnPlay_pressed();
-	void on_tbSelectVersion_pressed();
-	void on_btnManageRecord_pressed();
 
   private:
 
 	Ui::DetailedRecordView* ui;
-	void resizeEvent( QResizeEvent* event ) override;
 };
 
 #endif //ATLAS_DETAILEDRECORDVIEW_HPP
