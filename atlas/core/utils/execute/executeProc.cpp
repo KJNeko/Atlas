@@ -2,16 +2,18 @@
 #include "executeProc.hpp"
 
 #include "core/logging.hpp"
+#include "core/string/wstring.hpp"
 
 #ifdef __linux__
 
 #include <string>
 
-void executeProc( const std::string& path )
+void executeProc( const std::string& path_str_short )
 {
-	spdlog::debug( "Executing game {}", path );
+	const auto path_str { widen( path_str_short ) };
+	spdlog::debug( "Executing game {}", path_str );
 
-	std::system( ( '\"' + path + '\"' ).c_str() );
+	std::system( ( '\"' + path_str + '\"' ).c_str() );
 }
 
 #elif _WIN64
@@ -19,8 +21,9 @@ void executeProc( const std::string& path )
 #include <Windows.h>
 #include <cstring>
 
-void executeProc( const std::string& path_str )
+void executeProc( const std::string& path_str_short )
 {
+	const auto path_str { widen( path_str_short ) };
 	spdlog::debug( "Executing game {}", path_str );
 
 	LPWSTR path;
