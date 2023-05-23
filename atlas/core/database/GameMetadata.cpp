@@ -200,7 +200,7 @@ catch ( ... )
 void GameMetadata::playGame( Transaction transaction )
 try
 {
-	if ( auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
+	if ( const auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
 	{
 		const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
