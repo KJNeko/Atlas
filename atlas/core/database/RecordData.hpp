@@ -52,6 +52,7 @@ struct RecordData
 	std::vector< GameMetadata > getVersions( Transaction transaction = Transaction( Autocommit ) );
 	const std::filesystem::path
 		getBannerPath( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
+	bool hasBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner(
 		const int width,

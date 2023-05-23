@@ -235,15 +235,12 @@ try
 catch ( const sqlite::exceptions::no_rows& e )
 {
 	//We didn't get a path. Try an alternative
-	std::string banner_path { ":/invalid_banner.png" };
+	std::string banner_path { "" };
 	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_id >>
 		[ & ]( const std::string str ) { banner_path = str; };
 
-	if ( banner_path == ":/invalid_banner.png" )
-	{
-		spdlog::warn( "{}->RecordData::getBannerPath({}): No banner found", m_id, static_cast< int >( type ) );
+	if ( banner_path.empty() )
 		return banner_path;
-	}
 	else
 		return config::paths::images::getPath() / banner_path;
 }
@@ -622,7 +619,7 @@ try
 	const auto image_root { config::paths::images::getPath() };
 
 	//Check if it exists
-	if ( getBannerPath( type, transaction ) != "" )
+	if ( hasBanner( type, transaction ) )
 	{
 		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_id
 					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
@@ -982,6 +979,30 @@ catch ( const std::exception& e )
 catch ( ... )
 {
 	spdlog::error( "{}->RecordData::removePreview({}): unknown exception", m_id, preview.string() );
+}
+
+bool RecordData::hasBanner( const BannerType type, Transaction trans ) const
+try
+{
+	int count { 0 };
+	trans << "SELECT COUNT(*) FROM banners WHERE record_id = ? AND type = ?" << m_id << static_cast< int >( type )
+		>> count;
+	return count;
+}
+catch ( const sqlite::sqlite_exception& e )
+{
+	spdlog::error( "{}->RecordData::hasBanner({}): {} [{},{}]", m_id, type, e.what(), e.get_code(), e.get_sql() );
+	return false;
+}
+catch ( const std::exception& e )
+{
+	spdlog::error( "{}->RecordData::hasBanner({}): {}", m_id, type, e.what() );
+	return false;
+}
+catch ( ... )
+{
+	spdlog::error( "{}->RecordData::hasBanner({}): unknown exception", m_id, type );
+	return false;
 }
 
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
