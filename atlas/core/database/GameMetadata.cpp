@@ -111,8 +111,6 @@ try
 				<< m_version.toStdString()
 		>> path;
 
-	std::cout << "GameMetadata::getPath: " << path << std::endl;
-
 	if ( isInPlace( transaction ) )
 		return { path };
 	else
