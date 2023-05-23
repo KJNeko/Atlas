@@ -7,9 +7,9 @@
 
 #ifdef _WIN32
 
-QString narrow( const wchar_t* s );
+std::string narrow( const wchar_t* s );
 std::wstring widen( const char* s );
-QString narrow( const std::wstring& s );
+std::string narrow( const std::wstring& s );
 std::wstring widen( QStringViews );
 
 #else

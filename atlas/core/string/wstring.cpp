@@ -3,7 +3,7 @@
 //
 #ifdef _WIN32
 
-QString narrow( const wchar_t* s )
+std::string narrow( const wchar_t* s )
 {
 	if ( s == nullptr ) return std::string();
 
@@ -25,7 +25,7 @@ std::wstring widen( const char* s )
 	return out;
 }
 
-QString narrow( const std::wstring& s )
+std::string narrow( const std::wstring& s )
 {
 	if ( s.empty() ) return std::string();
 
