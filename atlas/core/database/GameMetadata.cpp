@@ -200,9 +200,7 @@ catch ( ... )
 void GameMetadata::playGame( Transaction transaction )
 try
 {
-	if ( !std::filesystem::exists( getExecPath( transaction ) ) )
-		throw MetadataException( "Executable does not exist" );
-	else
+	if ( auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
 	{
 		const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
@@ -219,6 +217,8 @@ try
 			transaction );
 		return;
 	}
+	else
+		spdlog::error( "Failed to launch game with executable {}", executable.string() );
 }
 catch ( const sqlite::sqlite_exception& e )
 {
