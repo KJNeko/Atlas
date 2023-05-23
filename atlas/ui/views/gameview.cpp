@@ -163,7 +163,7 @@ void GameView::clearRecord()
 
 void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
-	//spdlog::info( "Painting Detail UI" );
+	spdlog::info( "Painting Detail UI" );
 
 	//spdlog::info( record->getTitle() );
 	if ( *m_record != nullptr )
@@ -177,7 +177,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_feather = 45;
 		const int image_blur = 45;
 		const int font_size = image_height * .1;
-		const int logo_size = static_cast< int >( ui->bannerFrame->width() * .25 );
+		const int logo_size = static_cast< int >( image_height * .75 );
 
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
@@ -195,7 +195,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 
 		//Get Logo
-		QPixmap logo { record->getBanner( logo_size, logo_size / 2, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
+		QPixmap logo { record->getBanner( logo_size, logo_size, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
 		QString str( record->getTitle() );
