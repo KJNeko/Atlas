@@ -7,6 +7,8 @@
 
 #ifdef _WIN32
 
+#include <string>
+
 std::string narrow( const wchar_t* s );
 std::wstring widen( const char* s );
 std::string narrow( const std::wstring& s );
