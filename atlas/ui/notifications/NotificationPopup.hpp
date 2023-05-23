@@ -23,7 +23,7 @@ namespace Ui
 QT_END_NAMESPACE
 
 template < typename T >
-concept has_signaler = requires( T t ) {
+concept has_get_signaler = requires( T t ) {
 	{
 		t.getSignaler()
 	} -> std::same_as< std::unique_ptr< typename T::Signaler > >;
@@ -36,7 +36,17 @@ concept has_void_signaler = requires( T t ) {
 	} -> std::same_as< void >;
 };
 
-template < typename T > concept is_notification = has_signaler< T >;
+template < typename T >
+concept has_self_close = requires( T t ) {
+	{
+		t.closeSelf()
+	} -> std::same_as< void >;
+};
+
+template < typename T >
+concept is_signaled_notification = has_get_signaler< T > && has_self_close< T > && !has_void_signaler< T >;
+
+template < typename T > concept is_simple_notification = has_void_signaler< T > && has_self_close< T >;
 
 class NotificationPopup final : public QDialog
 {
@@ -56,7 +66,7 @@ class NotificationPopup final : public QDialog
 	void expand();
 
 	template < typename T >
-		requires( is_notification< T > && !has_void_signaler< T > )
+		requires is_signaled_notification< T >
 	std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
 	{
 		//All of this should run on the main thread
@@ -66,6 +76,7 @@ class NotificationPopup final : public QDialog
 		if ( this->thread() == QThread::currentThread() )
 		{
 			T* notif { new T( name ) };
+			connect( this, &NotificationPopup::clearHistory, notif, &T::closeSelf );
 			Signaler signaler { notif->getSignaler() };
 			addMessage( notif );
 			return signaler;
@@ -87,6 +98,7 @@ class NotificationPopup final : public QDialog
 				{
 					if ( reveal ) expand();
 					T* notif { new T( name ) };
+					connect( this, &NotificationPopup::clearHistory, notif, &T::closeSelf );
 					addMessage( notif );
 					promise.set_value( notif->getSignaler() );
 
@@ -100,14 +112,16 @@ class NotificationPopup final : public QDialog
 	}
 
 	template < typename T >
-		requires has_void_signaler< T >
+		requires is_simple_notification< T >
 	void createNotification( const QString name, const bool reveal = false )
 	{
 		if ( this->thread() == QThread::currentThread() )
 		{
 			if ( reveal ) expand();
 
-			addMessage( new T( name ) );
+			T* notif { new T( name ) };
+			connect( this, &NotificationPopup::clearHistory, notif, &T::closeSelf );
+			addMessage( notif );
 			return;
 		}
 		else
@@ -123,6 +137,7 @@ class NotificationPopup final : public QDialog
 				{
 					if ( reveal ) expand();
 					T* notif { new T( name ) };
+					connect( this, &NotificationPopup::clearHistory, notif, &T::closeSelf );
 					addMessage( notif );
 
 					timer->deleteLater();
@@ -134,15 +149,15 @@ class NotificationPopup final : public QDialog
 
   signals:
 	void popupResized();
+	void clearHistory();
 
   private:
 
 	Ui::NotificationPopup* ui;
 
-  signals:
-
   private slots:
 	void on_btnHideShow_clicked();
+	void on_btnClearHistory_pressed();
 };
 
 void initNotificationPopup( QWidget* parent );

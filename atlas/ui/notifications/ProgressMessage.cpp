@@ -43,6 +43,12 @@ void ProgressMessage::changeMax( int max )
 void ProgressMessage::changeProgress( int progress )
 {
 	ui->progressBar->setValue( progress );
+
+	if ( progress == ui->progressBar->maximum() )
+	{
+		ui->btnDismiss->setEnabled( true );
+		if ( ui->checkBox->isChecked() ) closeSelf();
+	}
 }
 
 void ProgressMessage::changeMessage( QString message )
@@ -52,7 +58,7 @@ void ProgressMessage::changeMessage( QString message )
 
 void ProgressMessage::closeSelf()
 {
-	getNotificationPopup()->removeMessage( this );
+	if ( ui->progressBar->maximum() == ui->progressBar->value() ) getNotificationPopup()->removeMessage( this );
 }
 
 void ProgressMessageSignaler::setMax( int max )

@@ -39,6 +39,7 @@ class NotificationMessage final : public QWidget
 
   private slots:
 	void on_btnDismiss_clicked();
+	void closeSelf();
 };
 
 #endif //ATLASGAMEMANAGER_NOTIFICATIONMESSAGE_HPP

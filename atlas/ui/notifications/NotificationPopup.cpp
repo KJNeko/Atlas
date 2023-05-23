@@ -57,6 +57,11 @@ void NotificationPopup::expand()
 	ui->btnHideShow->setChecked( true );
 }
 
+void NotificationPopup::on_btnClearHistory_pressed()
+{
+	emit clearHistory();
+}
+
 namespace internal
 {
 	NotificationPopup* taskPopup { nullptr };

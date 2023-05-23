@@ -61,14 +61,11 @@ class ProgressMessage final : public QWidget
 	void changeMax( int max );
 	void changeProgress( int progress );
 	void changeMessage( QString message );
+
+  public slots:
 	void closeSelf();
 
 	friend class NotificationPopup;
 };
-
-namespace atlas::notifications
-{
-	std::unique_ptr< ProgressMessageSignaler > createProgressNotification( QString name, const bool reveal = false );
-}
 
 #endif //ATLASGAMEMANAGER_PROGRESSMESSAGE_HPP
