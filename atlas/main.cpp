@@ -24,6 +24,8 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
+	setlocale(LC_ALL, ".UTF8");
+
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
 	//initLogging();

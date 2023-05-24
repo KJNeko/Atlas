@@ -8,7 +8,6 @@
 #include "core/config.hpp"
 #include "core/database/Database.hpp"
 #include "core/logging.hpp"
-#include "core/string/wstring.hpp"
 #include "core/utils/execute/executeProc.hpp"
 
 QString GameMetadata::getVersionName() const
@@ -201,11 +200,11 @@ catch ( ... )
 void GameMetadata::playGame( Transaction transaction )
 try
 {
-	if ( const auto executable = widen( getExecPath( transaction ) ); std::filesystem::exists( executable ) )
+	if ( const auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
 	{
 		const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
-		executeProc( executable );
+		executeProc( QString::fromStdString(executable.string() ));
 
 		const auto duration {
 			std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )

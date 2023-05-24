@@ -13,7 +13,6 @@
 #include "core/database/Database.hpp"
 #include "core/database/GameMetadata.hpp"
 #include "core/imageManager.hpp"
-#include "core/string/wstring.hpp"
 
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
@@ -402,9 +401,9 @@ try
 
 	for ( const auto& link : getPreviewPaths( transaction ) )
 	{
-		if ( link.empty() || !std::filesystem::exists( widen( link ) ) )
+		if ( link.empty() || !std::filesystem::exists( link  ) )
 		{
-			spdlog::warn( "Preview image does not exist: {}", widen( link ) );
+			spdlog::warn( "Preview image does not exist: {}", link  );
 			continue;
 		}
 
@@ -660,7 +659,7 @@ try
 	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_id
 				<< std::filesystem::relative( new_path, root_images ).string() << 256;
 
-	assert( std::filesystem::exists( widen( new_path ) ) );
+	assert( std::filesystem::exists( new_path ) );
 }
 catch ( sqlite::errors::constraint_unique& e )
 {

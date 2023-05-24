@@ -1,50 +1,37 @@
 
 #include "executeProc.hpp"
 
+#include <QDebug>
+#include <QFuture>
+#include <QProcess>
+#include <QString>
+
 #include "core/logging.hpp"
-#include "core/string/wstring.hpp"
 
-#ifdef __linux__
-
-#include <string>
-
-void executeProc( const std::string& path_str_short )
+QFuture< int > executeProc( const QString& path )
 {
-	const auto path_str { widen( path_str_short ) };
-	spdlog::debug( "Executing game {}", path_str );
+	spdlog::debug( "Running {}", path.toStdString() );
 
-	std::system( ( '\"' + path_str + '\"' ).c_str() );
+	QProcess* process { new QProcess() };
+
+	process->start( path );
+
+	if ( !process->waitForStarted() ) spdlog::error( "Failed to start executable at {}", path );
+
+	//Wait for finished signal emitted from QProcess
+	QPromise< int >* promise { new QPromise< int > {} };
+	QFuture< int > future { promise->future() };
+
+	QProcess::connect(
+		process,
+		&QProcess::finished,
+		[ promise, process ]()
+		{
+			promise->addResult( process->exitCode() );
+			promise->finish();
+			process->deleteLater();
+			spdlog::debug( "Process finished" );
+		} );
+
+	return future;
 }
-
-#elif _WIN64
-
-#include <Windows.h>
-#include <cstring>
-
-void executeProc( const std::string& path_str_short )
-{
-	const auto path_str { widen( path_str_short ) };
-	spdlog::debug( "Executing game {}", path_str );
-
-	LPWSTR path;
-	path = new char[ 4096 * 4 ];
-	//std::strcpy( path, path_str.c_str() );
-	int len { MultiByteToWideChar( CP_ACP, 0, path_str.c_str(), path_str.size() + 1, 0, 0 ) };
-	wchar_t* buff = new wchar_t[ len ];
-	MultiByteToWideChar( CP_ACP, 0, path_str.c_str(), path_str.size() + 1, buff, len );
-	path = buff;
-
-	STARTUPINFOA si;
-	PROCESS_INFORMATION pi;
-
-	ZeroMemory( &si, sizeof( si ) );
-	si.cb = sizeof( si );
-	ZeroMemory( &pi, sizeof( pi ) );
-
-	if ( !CreateProcessW( nullptr, path, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
-		spdlog::error( "Failed to execute process {}", path );
-}
-
-#else
-#error "No define for handling this OS"
-#endif

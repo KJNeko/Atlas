@@ -88,6 +88,7 @@ target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+target_compile_definitions(Atlas PRIVATE UNICODE=1)
 
 #Post setup (Windows only)
 if (WIN32)
