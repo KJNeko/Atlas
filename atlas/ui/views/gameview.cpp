@@ -50,7 +50,6 @@ void GameView::reloadRecord()
 	QString genre = "Test Data";
 	QString tags = "Test Data";
 	QString current_version = "v1.0";
-
 	//END PLACEHOLDERS
 
 	//Set cover Image
@@ -163,9 +162,8 @@ void GameView::clearRecord()
 
 void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
-	spdlog::info( "Painting Detail UI" );
+	spdlog::info( "Painting Detail ui" );
 
-	//spdlog::info( record->getTitle() );
 	if ( *m_record != nullptr )
 	{
 		QPainter painter { this };
@@ -177,21 +175,21 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_feather = 45;
 		const int image_blur = 45;
 		const int font_size = image_height * .1;
-		const int logo_size = static_cast< int >( image_height * .75 );
+		const double scale_factor = ui->bannerFrame->width() > 2300 ? 1.0 : ui->bannerFrame->width() / 2300.0;
+		const int logo_size = image_height * 1.25 * scale_factor;
+		spdlog::info( scale_factor );
 
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
 		QPixmap banner {
 			record->getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
 		};
-
-		if ( banner.isNull() ) //return normal banner
+		//Check if there is a wide banner, if not use normal banner
+		if ( banner.isNull() )
 		{
-			spdlog::info( "banner is null" );
 			banner = record->getBanner(
 				banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Normal );
 		}
-		//blur banner
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 
 		//Get Logo
@@ -204,10 +202,10 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		int font_width = fm.horizontalAdvance( str );
 		int font_height = fm.height();
 
-		//spdlog::info( "current width: {} current height: {}", banner_size.width(), banner_size.height() );
+		//We need to do some magic for logo sizes
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
 		const QRect pixmap_logo { static_cast< int >( ui->bannerFrame->width() * .1 ),
-			                      ( image_height / 2 ) - ( logo.height() / 2 ) - 40,
+			                      ( image_height / 2 ) - ( logo.height() / 2 ) - 30,
 			                      logo.width(),
 			                      logo.height() };
 

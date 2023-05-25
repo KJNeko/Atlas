@@ -239,11 +239,13 @@ catch ( const sqlite::exceptions::no_rows& e )
 	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_id >>
 		[ & ]( const std::string str ) { banner_path = str; };
 
-	if ( banner_path.empty() )
+	/*if ( banner_path.empty() )
 		return banner_path;
 	else
-		return config::paths::images::getPath() / banner_path;
+		return config::paths::images::getPath() / banner_path;*/
+	return {};
 }
+
 catch ( const sqlite::sqlite_exception& e )
 {
 	spdlog::error(
@@ -255,11 +257,13 @@ catch ( const sqlite::sqlite_exception& e )
 		e.get_sql() );
 	return {};
 }
+
 catch ( const std::exception& e )
 {
 	spdlog::error( "{}->RecordData::getBannerPath({}): {}", m_id, static_cast< int >( type ), e.what() );
 	return {};
 }
+
 catch ( ... )
 {
 	//we do not need to return anything if there is nothing available.
