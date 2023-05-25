@@ -24,11 +24,11 @@
         <file>assets/settings.svg</file>
         <file>assets/Atlas_logo_v1.svg</file>
         <file>assets/Atlas_logo_v2.svg</file>
+        <file>assets/down_arrorw_small.svg</file>
+        <file>assets/up_arrorw_small.svg</file>
     </qresource>
     <qresource prefix="/Layouts">
         <file>assets/layouts/nav_default.svg</file>
-        <file>assets/up_arrorw_small.svg</file>
-        <file>assets/down_arrorw_small.svg</file>
     </qresource>
     <qresource prefix="/test">
         <file>assets/testfiles/test1.png</file>
