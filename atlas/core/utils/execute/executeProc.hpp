@@ -7,10 +7,12 @@
 
 #include <string>
 
+#include <QFuture>
+
 /**
  * @brief Executes the given path
  * @param path
  */
-void executeProc( const std::string& path );
+QFuture< int > executeProc( const QString& path );
 
 #endif //ATLAS_EXECUTEPROC_HPP

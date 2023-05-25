@@ -6,13 +6,15 @@
 
 #include "core/search/QueryBuilder.hpp"
 
-void Search::searchTextChanged( [[maybe_unused]] QString text )
+void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder order, const bool asc )
 {
-	if ( text.isEmpty() ) return triggerEmptySearch();
-
 	try
 	{
-		query = generateQuery( text.toStdString() );
+		if ( !text.isEmpty() )
+			query = generateQuery( text.toStdString(), order, asc );
+		else
+			query = "SELECT DISTINCT record_id FROM records NATURAL JOIN last_import_times ORDER BY "
+			      + orderToStr( order ) + std::string( asc ? " ASC" : " DESC" );
 		Transaction transaction { Transaction::NoAutocommit };
 
 		std::vector< Record > records;
@@ -28,22 +30,6 @@ void Search::searchTextChanged( [[maybe_unused]] QString text )
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "Search failed: {}", e.what() );
+		spdlog::error( "Search failed with query \"{}\": {}", query, e.what() );
 	}
-}
-
-void Search::triggerEmptySearch()
-{
-	Transaction transaction { Transaction::NoAutocommit };
-
-	std::vector< Record > records;
-
-	transaction << "SELECT record_id FROM records" >> [ & ]( const RecordID id )
-	{
-		if ( id > 1 ) records.emplace_back( id, transaction );
-	};
-
-	transaction.commit();
-
-	emit searchCompleted( std::move( records ) );
 }

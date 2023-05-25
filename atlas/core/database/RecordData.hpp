@@ -52,6 +52,7 @@ struct RecordData
 	std::vector< GameMetadata > getVersions( Transaction transaction = Transaction( Autocommit ) );
 	const std::filesystem::path
 		getBannerPath( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
+	bool hasBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
 	QPixmap getBanner(
 		const int width,
@@ -94,9 +95,6 @@ struct RecordData
 	void setDesc( const QString& str, Transaction transaction = Transaction( Autocommit ) );
 	void addUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );
 	void removeUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );
-
-	//! Syncs the data from the database
-	void sync( Transaction transaction = Transaction( Autocommit ) );
 
 	//! Fetches the RecordData for the given ID
 	/**

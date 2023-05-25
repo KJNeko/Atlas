@@ -19,3 +19,6 @@
 [submodule "dependencies/tracy"]
 	path = dependencies/tracy
 	url = https://github.com/wolfpld/tracy.git
+[submodule "dependencies/catch2"]
+	path = dependencies/catch2
+	url = https://github.com/catchorg/Catch2.git

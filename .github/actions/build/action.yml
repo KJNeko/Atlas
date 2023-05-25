@@ -28,47 +28,19 @@ runs:
   steps:
     - uses: ./.github/actions/setupgcc
 
-    - name: Prepare msbuild for tracy
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Cache tracy vcpkg
-      uses: actions/cache@v3
-      id: cache-tracy-vcpkg
-      with:
-        # path is in AppData\Local
-        path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-        key: ${{runner.os}}-tracy-vcpkg
-
-    - name: Prepare vcpkg for tracy
-      shell: powershell
-      if: ${{inputs.build-debug == 'true' && steps.cache-tracy-vcpkg.outputs.cache-hit != 'false'}}
-      run: |
-        cd ${{github.workspace}}\dependencies\tracy\
-        vcpkg install --triplet x64-windows-static
-
-    - name: Prepare tracy
-      shell: powershell
-      if: ${{inputs.build-debug == 'true'}}
-      run: |
-        cd ${{github.workspace}}\dependencies\tracy\capture\build\win32
-        msbuild capture.vcxproj /p:configuration=release /p:platform=x64
-        mkdir ${{github.workspace}}\builds\build-d
-        xcopy ${{github.workspace}}\dependencies\tracy\capture\build\win32 ${{github.workspace}}\builds\build-d\tracy /s /i /y
-        cd ${{github.workspace}}
-
     - name: Cache sqlite
       id: cache-sqlite
       uses: actions/cache@v3
       with:
         path: '${{github.workspace}}\sqlite'
-        key: ${{runner.os}}-sqlite-3400100
+        key: ${{runner.os}}-sqlite-3410200
 
     - name: Download SQLITE-Amalgamation
       if: steps.cache-sqlite.outputs.cache-hit != 'true'
       uses: carlosperate/download-file-action@v2.0.0
       id: download_amalgamation
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-amalgamation-3400100.zip
+        file-url: https://www.sqlite.org/2023/sqlite-amalgamation-3410200.zip
         file-name: sqlite-amalg.zip
         location: '${{github.workspace}}\sqlite'
 
@@ -77,7 +49,7 @@ runs:
       uses: carlosperate/download-file-action@v2.0.0
       id: download_dll
       with:
-        file-url: https://www.sqlite.org/2022/sqlite-dll-win64-x64-3400100.zip
+        file-url: https://www.sqlite.org/2023/sqlite-dll-win64-x64-3410200.zip
         file-name: sqlite-dll.zip
         location: '${{github.workspace}}\sqlite'
 
@@ -87,11 +59,16 @@ runs:
       run: |
         cd sqlite
         7z x sqlite-amalg.zip -o"./include"
-        cd include/sqlite-amalgamation-3400100
+        cd include/sqlite-amalgamation-3410200
         move * ..
         cd ../..
         7z x sqlite-dll.zip -o"./lib"
         cd ..
+
+    - name: Set SQLITE into path
+      shell: powershell
+      run: |
+        echo "${{github.workspace}}/sqlite" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Install Qt
       if: steps.cache-qt.outputs.cache-hit != 'true'

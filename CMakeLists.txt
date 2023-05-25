@@ -12,11 +12,11 @@ string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 if (WIN32)
     string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
-    
-    if(DEFINED ENV{QT_PATH})
+
+    if (DEFINED ENV{QT_PATH})
         set(QT_PATH $ENV{QT_PATH})
         message("Setting QT path from ENV")
-    endif()
+    endif ()
 endif ()
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND NOT DEFINED ATLAS_PROFILE_ENABLE)
@@ -32,8 +32,8 @@ endif ()
 option(SPDLOG_FMT_EXTERNAL "" ON)
 add_subdirectory(dependencies/fmt)
 #add_subdirectory(dependencies/gtest)
+add_subdirectory(dependencies/catch2)
 add_subdirectory(dependencies/spdlog)
-
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
@@ -45,7 +45,7 @@ if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
 
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Network REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
 if (WIN32)
     find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
@@ -87,8 +87,9 @@ message("FGL_FLAGS: ${FGL_FLAGS}")
 add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network SQLite::SQLite3 fmt::fmt spdlog::spdlog)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+target_compile_definitions(Atlas PRIVATE UNICODE=1)
 
 #Post setup (Windows only)
 if (WIN32)
@@ -114,5 +115,10 @@ endif ()
 
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
 
+file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-
+add_executable(AtlasTests ${TESTS} ${SOURCES} ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+target_include_directories(AtlasTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
+target_include_directories(AtlasTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
+target_link_libraries(AtlasTests PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts Qt6::Test SQLite::SQLite3 fmt::fmt spdlog::spdlog Catch2::Catch2WithMain)
+set_target_properties(AtlasTests PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})

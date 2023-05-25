@@ -17,6 +17,7 @@
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 #pragma GCC diagnostic ignored "-Wuseless-cast"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #ifdef __linux__
 #pragma GCC diagnostic ignored "-Wdangling-reference"
 #endif

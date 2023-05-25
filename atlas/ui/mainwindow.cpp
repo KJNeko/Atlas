@@ -1,10 +1,16 @@
 #include "mainwindow.h"
 
+#include <QtConcurrent>
+
 #include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
+#include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "ui/notifications/NotificationMessage.hpp"
+#include "ui/notifications/NotificationPopup.hpp"
+#include "ui/notifications/ProgressMessage.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -14,8 +20,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	addTreeRoot( "Games", "0" );
 
-	connect( ui->SearchBox, &QLineEdit::textChanged, &record_search, &Search::searchTextChanged );
-	connect( this, &MainWindow::triggerEmptySearch, &record_search, &Search::triggerEmptySearch );
+	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
+	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
@@ -37,7 +43,13 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	config::notify();
 
-	emit triggerEmptySearch();
+	emit triggerSearch( "", SortOrder::Name, true );
+
+	initNotificationPopup( this );
+	getNotificationPopup()->hide();
+	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
+
+	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
 }
 
 MainWindow::~MainWindow()
@@ -106,10 +118,11 @@ void MainWindow::on_homeButton_pressed()
 	ui->stackedWidget->setCurrentIndex( 0 );
 }
 
-void MainWindow::resizeEvent( [[maybe_unused]] QResizeEvent* event )
+void MainWindow::resizeEvent( QResizeEvent* event )
 {
+	QMainWindow::resizeEvent( event );
+
 	//Store window height and width
-	spdlog::debug( "Window width:{} Window Height:{}", MainWindow::width(), MainWindow::height() );
 	config::grid_ui::windowHeight::
 		set( config::grid_ui::windowHeight::get() != MainWindow::height() ? MainWindow::height() :
 	                                                                        config::grid_ui::windowHeight::get() );
@@ -121,6 +134,8 @@ void MainWindow::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
 	ui->recordView->reloadConfig();
+
+	movePopup();
 }
 
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
@@ -141,4 +156,87 @@ void MainWindow::on_actionAboutQt_triggered()
 	AboutQtDialog aboutQtDialog { this };
 	aboutQtDialog.setModal( true );
 	aboutQtDialog.exec();
+}
+
+void MainWindow::on_actionViewFileHistory_triggered()
+{
+	StatsDialog dialog;
+	dialog.exec();
+}
+
+void MainWindow::searchTextChanged( const QString str )
+{
+	const auto search_type = [ & ]()
+	{
+		switch ( ui->sortSelection->currentIndex() )
+		{
+			default:
+				[[fallthrough]];
+			case 0:
+				return SortOrder::Name;
+			case 1:
+				return SortOrder::Creator;
+			case 2:
+				return SortOrder::Engine;
+			case 3:
+				return SortOrder::Time;
+		}
+	}();
+
+	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+}
+
+void MainWindow::on_sortOrderButton_clicked()
+{
+	if ( ui->sortOrderButton->text() == "ASC" )
+		ui->sortOrderButton->setText( "DESC" );
+	else
+		ui->sortOrderButton->setText( "ASC" );
+
+	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
+{
+	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::showMessagePopup()
+{
+	auto& task_popup { *getNotificationPopup() };
+
+	if ( task_popup.isVisible() )
+		task_popup.hide();
+	else
+	{
+		task_popup.show();
+		movePopup();
+	}
+}
+
+void MainWindow::on_btnShowMessageLog_clicked()
+{
+	showMessagePopup();
+}
+
+void MainWindow::moveEvent( QMoveEvent* event )
+{
+	QMainWindow::moveEvent( event );
+	movePopup();
+}
+
+void MainWindow::movePopup()
+{
+	auto& task_popup { *getNotificationPopup() };
+	const auto [ x, y ] = task_popup.size();
+
+	const auto point {
+		ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() - QPoint { x, y } - QPoint( 5, 5 ) )
+	};
+	task_popup.move( point );
+}
+
+void MainWindow::taskPopupResized()
+{
+	movePopup();
 }

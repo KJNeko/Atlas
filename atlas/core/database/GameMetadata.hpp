@@ -49,6 +49,7 @@ struct GameMetadata
 	std::filesystem::path getExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
 	std::uint64_t getFolderSize( Transaction transaction = Transaction( Autocommit ) ) const;
 	RecordID getParentID() const;
+	std::uint64_t getImportTime( Transaction transaction = Transaction( Autocommit ) ) const;
 
   public:
 

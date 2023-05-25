@@ -1,43 +1,37 @@
 
 #include "executeProc.hpp"
 
+#include <QDebug>
+#include <QFuture>
+#include <QProcess>
+#include <QString>
+
 #include "core/logging.hpp"
 
-#ifdef __linux__
-
-#include <string>
-
-void executeProc( const std::string& path )
+QFuture< int > executeProc( const QString& path )
 {
-	spdlog::debug( "Executing game {}", path );
+	spdlog::debug( "Running {}", path.toStdString() );
 
-	std::system( ( '\"' + path + '\"' ).c_str() );
+	QProcess* process { new QProcess() };
+
+	process->start( path );
+
+	if ( !process->waitForStarted() ) spdlog::error( "Failed to start executable at {}", path );
+
+	//Wait for finished signal emitted from QProcess
+	QPromise< int >* promise { new QPromise< int > {} };
+	QFuture< int > future { promise->future() };
+
+	QProcess::connect(
+		process,
+		&QProcess::finished,
+		[ promise, process ]()
+		{
+			promise->addResult( process->exitCode() );
+			promise->finish();
+			process->deleteLater();
+			spdlog::debug( "Process finished" );
+		} );
+
+	return future;
 }
-
-#elif _WIN64
-
-#include <Windows.h>
-#include <cstring>
-
-void executeProc( const std::string& path_str )
-{
-	spdlog::debug( "Executing game {}", path_str );
-
-	LPSTR path;
-	path = new char[ 4096 * 4 ];
-	std::strcpy( path, path_str.c_str() );
-
-	STARTUPINFOA si;
-	PROCESS_INFORMATION pi;
-
-	ZeroMemory( &si, sizeof( si ) );
-	si.cb = sizeof( si );
-	ZeroMemory( &pi, sizeof( pi ) );
-
-	if ( !CreateProcessA( nullptr, path, nullptr, nullptr, FALSE, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi ) )
-		spdlog::error( "Failed to execute process {}", path );
-}
-
-#else
-#error "No define for handling this OS"
-#endif

@@ -4,16 +4,13 @@
 
 #include "Database.hpp"
 
+#include "Record.hpp"
 #include "core/config.hpp"
 
 namespace internal
 {
 	static sqlite::database* db { nullptr };
-#ifdef TRACY_ENABLE
-	static TracyLockable( std::mutex, db_mtx );
-#else
 	static std::mutex db_mtx;
-#endif
 
 	static std::atomic< std::thread::id > last_locked {};
 
@@ -38,17 +35,23 @@ try
 {
 	initLogging();
 
-	spdlog::debug( "Initalizing database with path {}", init_path );
-	if ( init_path != ":memory:" && !std::filesystem::exists( init_path ) )
-		std::filesystem::create_directories( init_path.parent_path() );
+	if ( init_path == ":memory:" )
+	{
+		internal::db = new sqlite::database( ":memory:" );
+	}
+	else
+	{
+		if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
+			std::filesystem::create_directories( init_path.parent_path() );
 
-	internal::db = new sqlite::database( init_path.string() );
-
+		internal::db = new sqlite::database( init_path.string() );
+	}
 	NonTransaction transaction;
 
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
 		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, date_added INTEGER, UNIQUE(record_id, version));",
+		"CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS SELECT DISTINCT record_id, game_metadata.date_added FROM records NATURAL JOIN game_metadata ORDER BY game_metadata.date_added DESC;",
 
 		//Extra data for records
 		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
@@ -77,6 +80,9 @@ try
 		//Image tables
 		"CREATE TABLE IF NOT EXISTS previews (record_id REFERENCES records(record_id), path TEXT UNIQUE, position INTEGER DEFAULT 256, UNIQUE(record_id, path))",
 		"CREATE TABLE IF NOT EXISTS banners (record_id REFERENCES records(record_id), path TEXT UNIQUE, type INTEGER, UNIQUE(record_id, path, type))",
+
+		//Stats tables
+		"CREATE TABLE IF NOT EXISTS data_change (timestamp INTEGER, delta INTEGER)",
 	};
 
 	for ( const auto& query_str : table_queries ) transaction << query_str;
@@ -87,36 +93,25 @@ try
 
 	try
 	{
-		Transaction transaction_record { Transaction::Autocommit };
+		if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
+		{
+			const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
 
-		transaction_record
-			<< "INSERT INTO records (record_id, title, creator, engine, last_played_r, total_playtime) VALUES ($1, $2, $3, $4, 0, 0)"
-			<< static_cast< std::uint64_t >( 1 ) << "Galaxy Crossing: First Conquest"
-			<< "Atlas Games"
-			<< "Unity";
+			record->addVersion(
+				"Chapter: 1",
+				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest",
+				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+				0,
+				true );
+		}
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
 		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
 	}
-
-	try
+	catch ( const RecordAlreadyExists& e )
 	{
-		Transaction transaction_record { Transaction::Autocommit };
-		transaction_record
-			<< "INSERT INTO game_metadata (record_id, version, game_path, exec_path, in_place, last_played, version_playtime, folder_size, date_added) VALUES ($1, $2, $3, $4, $5, 0, 0, 0, 0)"
-			<< static_cast< std::uint64_t >( 1 ) << "Chapter: 1"
-			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest"
-			<< "C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe"
-			<< true;
-
-		transaction_record << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)"
-						   << static_cast< std::uint64_t >( BannerType::Normal )
-						   << ":/images/assets/Grid_Capsule_Default.webp" << 1;
-	}
-	catch ( ... )
-	{
-		spdlog::info( "Failed to insert dummy record metadata" );
+		//do nothing
 	}
 }
 catch ( sqlite::sqlite_exception& e )
@@ -258,7 +253,6 @@ void NonTransaction::abort()
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
 	m_previous_statement = sql;
-	spdlog::debug( "Executing {} without transaction", sql );
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	return Database::ref() << sql;
 }
