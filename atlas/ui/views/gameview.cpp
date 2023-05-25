@@ -2,6 +2,8 @@
 
 #include <QDateTime>
 #include <QGraphicsBlurEffect>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QPaintEvent>
 #include <QPainter>
 
@@ -53,17 +55,34 @@ void GameView::reloadRecord()
 	//END PLACEHOLDERS
 
 	//Set cover Image
-	QPixmap cover {
-		record->getBanner( ui->coverImage->width(), ui->coverImage->height(), FIT_BLUR_EXPANDING, BannerType::Cover )
-	};
+	QPixmap cover { record->getBanner(
+		ui->coverImage->width() - 10, ui->coverImage->height() - 10, FIT_BLUR_EXPANDING, BannerType::Cover ) };
 	if ( cover.isNull() )
 	{
 		ui->coverWidget->hide();
 	}
 	else
 	{
+		QGraphicsBlurEffect* be { new QGraphicsBlurEffect };
+
 		ui->coverWidget->show();
-		ui->coverImage->setPixmap( cover );
+		QPixmap item { ui->coverWidget->size() };
+		QPixmap background { ui->coverWidget->size() };
+		background.fill( Qt::black );
+
+		QGraphicsScene scene;
+		QGraphicsPixmapItem cover_item;
+		QGraphicsPixmapItem background_item;
+		background_item.setPixmap( background );
+		background_item.setGraphicsEffect( be );
+		cover_item.setPixmap( cover );
+		cover_item.setOffset( QPoint( 5, 5 ) );
+		scene.addItem( &background_item );
+		scene.addItem( &cover_item );
+		QPainter painter { &item };
+		scene.render( &painter );
+		ui->coverImage->setPixmap( item );
+		//ui->coverImage->setGraphicsEffect( se );
 	}
 
 	if ( record->getLastPlayed() == 0 )
@@ -172,8 +191,8 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		const Record& record { *m_record };
 		const int image_height = 360;
-		const int image_feather = 45;
-		const int image_blur = 45;
+		const int image_feather = 60;
+		const int image_blur = 75;
 		const int font_size = image_height * .1;
 		const double scale_factor = ui->bannerFrame->width() > 2300 ? 1.0 : ui->bannerFrame->width() / 2300.0;
 		const int logo_size = image_height * 1.25 * scale_factor;
