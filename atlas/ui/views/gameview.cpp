@@ -194,9 +194,17 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_feather = 60;
 		const int image_blur = 75;
 		const int font_size = image_height * .1;
-		const double scale_factor = ui->bannerFrame->width() > 2300 ? 1.0 : ui->bannerFrame->width() / 2300.0;
-		const int logo_size = image_height * 1.25 * scale_factor;
-		spdlog::info( scale_factor );
+
+		//Math for showing logo
+		//150 is min width for lofo heigh and 280 is max height
+		const double scale_factor = ui->bannerFrame->width() > 2300 ? .85 : ui->bannerFrame->width() / 2300.0;
+		const int logo_height = ( image_height * scale_factor ) < 150 ? 150 :
+		                        ( image_height * scale_factor ) > 280 ? 280 :
+		                                                                ( image_height * scale_factor );
+		const int logo_width = 600;
+
+		//spdlog::info( "height:{} width:{}", logo_height, logo_width );
+		//spdlog::info( ui->bannerFrame->width() );
 
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
@@ -212,7 +220,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 
 		//Get Logo
-		QPixmap logo { record->getBanner( logo_size, logo_size, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
+		QPixmap logo { record->getBanner( logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
 		QString str( record->getTitle() );
@@ -222,8 +230,12 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		int font_height = fm.height();
 
 		//We need to do some magic for logo sizes
-		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
-		const QRect pixmap_logo { static_cast< int >( ui->bannerFrame->width() * .1 ),
+		//634 is min size banner width can be
+		double logo_offset = 1.0 - ( 634.0 / ui->bannerFrame->width() );
+		spdlog::info( logo_offset );
+		logo_offset = logo_offset <= .01 ? .01 : logo_offset >= .1 ? .1 : logo_offset;
+		QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
+		const QRect pixmap_logo { static_cast< int >( ui->bannerFrame->width() * logo_offset ),
 			                      ( image_height / 2 ) - ( logo.height() / 2 ) - 30,
 			                      logo.width(),
 			                      logo.height() };
