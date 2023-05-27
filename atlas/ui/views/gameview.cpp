@@ -242,7 +242,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		QRect boundingRect;
 		const QRect font_rectangle = QRect(
-			static_cast< int >( ui->bannerFrame->width() * .1 ),
+			static_cast< int >( ui->bannerFrame->width() * logo_offset ),
 			( image_height / 2 ) - ( font_height / 2 ),
 			font_width,
 			font_height );
