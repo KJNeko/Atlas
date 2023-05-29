@@ -4,7 +4,7 @@
 #include <QWidget>
 
 #include "core/database/GameMetadata.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 
 QT_BEGIN_NAMESPACE
 

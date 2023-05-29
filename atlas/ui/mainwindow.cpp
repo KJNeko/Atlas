@@ -34,7 +34,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	search_thread.start();
 
 	//hide search icon
-	ui->searchIconSmall->hide();
+	//ui->searchIconSmall->hide();
 	ui->NavTop->hide();
 
 	//Set Font
@@ -44,9 +44,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	config::notify();
 
 	//Share the recordView's model to gameList
-	ui->gameList->setModel( ui->recordView->model() );
+	//ui->gameList->setModel( ui->recordView->model() );
 	//Share selection model
-	ui->gameList->setSelectionModel( ui->recordView->selectionModel() );
+	//ui->gameList->setSelectionModel( ui->recordView->selectionModel() );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 

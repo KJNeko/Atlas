@@ -4,7 +4,6 @@
 
 #include "Database.hpp"
 
-#include "Record.hpp"
 #include "core/config.hpp"
 #include "core/database/record/Record.hpp"
 

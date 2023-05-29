@@ -491,39 +491,6 @@ border-top-left-radius:0px;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="searchIconSmall">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>101</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgba(0, 0, 0,40);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:0px;
-border-top-left-radius:0px;
-margin-right:5px;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="6">
         <widget class="QPushButton" name="sortOrderButton">
          <property name="sizePolicy">
@@ -786,7 +753,7 @@ border-bottom-left-radius:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1083</width>
-     <height>34</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -920,11 +887,6 @@ border-bottom-left-radius:5px;</string>
    <extends>QWidget</extends>
    <header>ui/views/DetailedRecordView.hpp</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GameList</class>
-   <extends>QListView</extends>
-   <header>ui/views/gamelist/GameList.hpp</header>
   </customwidget>
  </customwidgets>
  <resources>

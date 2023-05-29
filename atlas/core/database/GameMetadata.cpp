@@ -270,24 +270,6 @@ catch ( ... )
 		"({},{})->GameMetadata::addPlaytime({}): Unknown exception", m_parent->getID(), this->m_version, playtime );
 	std::rethrow_exception( std::current_exception() );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::
-		error( "({},{})->GameMetadata::addPlaytime({}): {}", m_parent->getID(), this->m_version, playtime, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::
-		error( "({},{})->GameMetadata::addPlaytime({}): {}", m_parent->getID(), this->m_version, playtime, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::addPlaytime({}): Unknown exception", m_parent->getID(), this->m_version, playtime );
-	std::rethrow_exception( std::current_exception() );
-}
 
 void GameMetadata::setLastPlayed( const std::uint64_t last_played, Transaction transaction )
 try
@@ -295,27 +277,6 @@ try
 	transaction << "UPDATE game_metadata SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
 				<< m_parent->getID() << m_version.toStdString();
 	m_parent->last_played.set( last_played, transaction );
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): {}", m_parent->getID(), this->m_version, last_played, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): {}", m_parent->getID(), this->m_version, last_played, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): Unknown exception",
-		m_parent->getID(),
-		this->m_version,
-		last_played );
-	std::rethrow_exception( std::current_exception() );
 }
 catch ( const sqlite::sqlite_exception& e )
 {

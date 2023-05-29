@@ -8,6 +8,7 @@
 #include <QPainter>
 
 #include "core/database/GameMetadata.hpp"
+#include "core/database/record/RecordBanner.hpp"
 #include "core/foldersize.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -40,7 +41,7 @@ void GameView::reloadRecord()
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	QString description = "Test Data";
-	QString developer = record->getCreator();
+	QString developer = record->creator.get();
 	QString publisher = "Test Data";
 	QString original_name = "Test Data";
 	QString censored = "Test Data";
@@ -55,7 +56,7 @@ void GameView::reloadRecord()
 	//END PLACEHOLDERS
 
 	//Set cover Image
-	QPixmap cover { record->getBanner(
+	QPixmap cover { record->banners().getBanner(
 		ui->coverImage->width() - 10, ui->coverImage->height() - 10, FIT_BLUR_EXPANDING, BannerType::Cover ) };
 	if ( cover.isNull() )
 	{
@@ -85,7 +86,7 @@ void GameView::reloadRecord()
 		//ui->coverImage->setGraphicsEffect( se );
 	}
 
-	if ( record->getLastPlayed() == 0 )
+	if ( record->last_played.get() == 0 )
 	{
 		ui->lbLastPlayed->setText( "Never" );
 	}
@@ -93,7 +94,7 @@ void GameView::reloadRecord()
 	{
 		//Convert UNIX timestamp to QDateTime
 		const QDateTime date {
-			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getLastPlayed() ), Qt::LocalTime )
+			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->last_played.get() ), Qt::LocalTime )
 		};
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
@@ -133,7 +134,7 @@ void GameView::reloadRecord()
 	std::sort(
 		playtimes.begin(), playtimes.end(), []( const auto& lhs, const auto& rhs ) { return lhs.first > rhs.first; } );
 
-	const auto latest_playtime { playtimes.empty() ? record->getLastPlayed() : playtimes[ 0 ].first };
+	const auto latest_playtime { playtimes.empty() ? record->last_played.get() : playtimes[ 0 ].first };
 
 	if ( latest_playtime == 0 )
 	{
@@ -149,11 +150,13 @@ void GameView::reloadRecord()
 	}
 
 	ui->lbTotalPlaytime->setText( QString( "%1" ).arg(
-		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->getTotalPlaytime() ), Qt::LocalTime )
+		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->total_playtime.get() ), Qt::LocalTime )
 			.toUTC()
 			.toString( "hh:mm:ss" ) ) );
 
-	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
+	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
+
+	//ui->gameNotes->setText( m_record.value()->getDesc() );
 
 	//Set height of PreviewList
 	if ( ui->previewList->model()->rowCount() > 0 )
@@ -209,21 +212,25 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
 		QPixmap banner {
-			record->getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
+			record->banners()
+				.getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
 		};
 		//Check if there is a wide banner, if not use normal banner
 		if ( banner.isNull() )
 		{
-			banner = record->getBanner(
-				banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Normal );
+			banner =
+				record->banners()
+					.getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Normal );
 		}
 		banner = blurToSize( banner, banner_size.width(), image_height, image_feather, image_blur, FEATHER_IMAGE );
 
 		//Get Logo
-		QPixmap logo { record->getBanner( logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo ) };
+		QPixmap logo {
+			record->banners().getBanner( logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo )
+		};
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
-		QString str( record->getTitle() );
+		QString str( record->title.get() );
 		QFontMetrics fm( font );
 		painter.setFont( font );
 		int font_width = fm.horizontalAdvance( str );
@@ -251,7 +258,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		//check if logo is null, if it is then draw text instead
 
-		logo.isNull() ? painter.drawText( font_rectangle, 0, record->getTitle(), &boundingRect ) :
+		logo.isNull() ? painter.drawText( font_rectangle, 0, record->title.get(), &boundingRect ) :
 						painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}
