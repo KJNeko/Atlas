@@ -99,8 +99,8 @@ try
 
 			record->addVersion(
 				"Chapter: 1",
-				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest",
-				"C:/Users/kj16609/Documents/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+				"C:/Atlas Games/Galaxy Crossing First Conquest",
+				"C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
 				0,
 				true );
 		}
