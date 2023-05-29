@@ -196,7 +196,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_height = 360;
 		const int image_feather = 60;
 		const int image_blur = 75;
-		const int font_size = image_height * .1;
+		const int font_size = static_cast< int >( image_height * .1 );
 
 		//Math for showing logo
 		//150 is min width for lofo heigh and 280 is max height
@@ -204,7 +204,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int logo_height =
 			( image_height * scale_factor ) < 150 ? 150 :
 			( image_height * scale_factor ) > 280 ? 280 :
-													( static_cast< const int >( image_height * scale_factor ) );
+													( static_cast< int >( image_height * scale_factor ) );
 		const int logo_width = 600;
 
 		//spdlog::info( "height:{} width:{}", logo_height, logo_width );
