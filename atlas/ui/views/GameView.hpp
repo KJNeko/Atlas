@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
-#include "core/database/GameMetadata.hpp"
 #include "core/database/record/Record.hpp"
+#include "core/database/record/RecordData.hpp"
 
 QT_BEGIN_NAMESPACE
 
