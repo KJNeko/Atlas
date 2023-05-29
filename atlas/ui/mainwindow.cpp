@@ -11,6 +11,7 @@
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
+#include "ui/views/gamelist/GameListDelegate.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -44,9 +45,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	config::notify();
 
 	//Share the recordView's model to gameList
-	//ui->gameList->setModel( ui->recordView->model() );
+	ui->gamesTree->setModel( ui->recordView->model() );
+	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	//Share selection model
-	//ui->gameList->setSelectionModel( ui->recordView->selectionModel() );
+	ui->gamesTree->setSelectionModel( ui->recordView->selectionModel() );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 

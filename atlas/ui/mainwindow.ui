@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1083</width>
-    <height>596</height>
+    <width>1043</width>
+    <height>788</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -169,8 +169,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>28</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
@@ -369,6 +369,81 @@
        <property name="horizontalSpacing">
         <number>0</number>
        </property>
+       <item row="3" column="4">
+        <widget class="QPushButton" name="sortOrderButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>42</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>ASC</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="SearchBox">
+         <property name="minimumSize">
+          <size>
+           <width>132</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0, 0, 0,40);
+border:none;
+border-top-right-radius:0px;
+border-bottom-right-radius:0px;
+border-bottom-left-radius:0px;
+border-top-left-radius:0px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QLabel" name="label_3">
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0, 0, 0,40);
+border:none;
+border-top-right-radius:5px;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:0px;
+border-top-left-radius:0px;</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
         <widget class="QLabel" name="SearchIcon">
          <property name="sizePolicy">
@@ -462,70 +537,7 @@ margin-left: 2px;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="SearchBox">
-         <property name="minimumSize">
-          <size>
-           <width>132</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgba(0, 0, 0,40);
-border:none;
-border-top-right-radius:0px;
-border-bottom-right-radius:0px;
-border-bottom-left-radius:0px;
-border-top-left-radius:0px;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="6">
-        <widget class="QPushButton" name="sortOrderButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>42</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>ASC</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="7">
-        <widget class="QTreeWidget" name="gamesTree">
-         <property name="columnCount">
-          <number>1</number>
-         </property>
-         <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="5">
+       <item row="3" column="1" colspan="3">
         <widget class="QComboBox" name="sortSelection">
          <item>
           <property name="text">
@@ -549,32 +561,8 @@ border-top-left-radius:0px;</string>
          </item>
         </widget>
        </item>
-       <item row="2" column="6">
-        <widget class="QLabel" name="label_3">
-         <property name="maximumSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="sizeIncrement">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgba(0, 0, 0,40);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:0px;
-border-top-left-radius:0px;</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
+       <item row="4" column="0" colspan="5">
+        <widget class="QTreeView" name="gamesTree"/>
        </item>
       </layout>
      </widget>
@@ -752,8 +740,8 @@ border-bottom-left-radius:5px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1083</width>
-     <height>21</height>
+     <width>1043</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="autoFillBackground">
