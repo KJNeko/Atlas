@@ -19,8 +19,8 @@
 GameView::GameView( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameView )
 {
 	ui->setupUi( this );
-	//ui->previewList->setItemDelegate( new ImageDelegate() );
-	//ui->previewList->setModel( new FilepathModel() );
+	ui->previewList->setItemDelegate( new ImageDelegate() );
+	ui->previewList->setModel( new FilepathModel() );
 }
 
 GameView::~GameView()

@@ -53,7 +53,7 @@ struct RecordData
 	Column< QString, RecordID > title { "title", "records", "record_id", m_id };
 	Column< QString, RecordID > creator { "creator", "records", "record_id", m_id };
 	Column< QString, RecordID > engine { "engine", "records", "record_id", m_id };
-	Column< std::uint64_t, RecordID > last_played { "last_played", "records", "record_id", m_id };
+	Column< std::uint64_t, RecordID > last_played { "last_played_r", "records", "record_id", m_id };
 	Column< std::uint32_t, RecordID > total_playtime { "total_playtime", "records", "record_id", m_id };
 
 	std::optional< GameMetadata > getVersion( const QString, Transaction transaction = Transaction( Autocommit ) );
