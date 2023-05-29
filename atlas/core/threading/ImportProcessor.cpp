@@ -7,8 +7,10 @@
 #include <QApplication>
 
 #include "core/config.hpp"
-#include "core/database/Record.hpp"
-#include "core/database/RecordData.hpp"
+#include "core/database/record/Record.hpp"
+#include "core/database/record/RecordBanner.hpp"
+#include "core/database/record/RecordData.hpp"
+#include "core/database/record/RecordPreviews.hpp"
 #include "core/foldersize.hpp"
 
 ImportProcessor::ImportProcessor() : QObject( nullptr )
@@ -130,19 +132,19 @@ void ImportProcessor::importGames(
 
 				if ( filename == "banner" && is_image )
 				{
-					record->setBanner( file.path(), Normal, transaction );
+					record->banners().setBanner( file.path(), Normal, transaction );
 				}
 				else if ( filename == "banner_w" && is_image )
 				{
-					record->setBanner( file.path(), Wide, transaction );
+					record->banners().setBanner( file.path(), Wide, transaction );
 				}
 				else if ( filename == "cover" && is_image )
 				{
-					record->setBanner( file.path(), Cover, transaction );
+					record->banners().setBanner( file.path(), Cover, transaction );
 				}
 				else if ( filename == "logo" && is_image )
 				{
-					record->setBanner( file.path(), Logo, transaction );
+					record->banners().setBanner( file.path(), Logo, transaction );
 				}
 			}
 
@@ -156,7 +158,7 @@ void ImportProcessor::importGames(
 					const bool is_image { std::find( image_ext.begin(), image_ext.end(), ext ) != image_ext.end() };
 					if ( is_image )
 					{
-						record->addPreview( file, transaction );
+						record->previews().addPreview( file, transaction );
 					}
 					emit updateSubText( QString( "Adding preview: %1" )
 					                        .arg( QString::fromStdString( file.path().filename().string() ) ) );

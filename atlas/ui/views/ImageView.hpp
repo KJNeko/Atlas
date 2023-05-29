@@ -8,7 +8,7 @@
 #include <QListView>
 #include <QMouseEvent>
 
-#include "core/database/RecordData.hpp"
+#include "core/database/record/RecordData.hpp"
 
 class FilepathModel;
 class ImageDelegate;

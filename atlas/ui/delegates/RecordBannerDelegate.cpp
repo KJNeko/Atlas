@@ -12,7 +12,8 @@
 
 #include "core/config.hpp"
 #include "core/database/GameMetadata.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
+#include "core/database/record/RecordBanner.hpp"
 #include "core/utils/QImageBlur.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
@@ -43,7 +44,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
-	QPixmap pixmap { record->getBanner( banner_size.width(), banner_size.height(), aspect_ratio, Normal ) };
+	QPixmap pixmap { record->banners().getBanner( banner_size.width(), banner_size.height(), aspect_ratio, Normal ) };
 
 	//Check if we need to add blur background. Draw behind original image
 	if ( aspect_ratio == FIT_BLUR_EXPANDING )
@@ -107,9 +108,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
 	//Draw Title
-	this->drawText( painter, options_rect, stripe_height, m_title_location, record->getTitle() );
+	this->drawText( painter, options_rect, stripe_height, m_title_location, record->title.get() );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->getEngine() );
+	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->title.get() );
 	//Draw Version
 	const auto& latest { record->getLatestVersion() };
 	if ( latest.has_value() )
@@ -117,7 +118,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	else
 		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->getCreator() );
+	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->title.get() );
 
 	painter->restore();
 }

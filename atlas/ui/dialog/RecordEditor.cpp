@@ -7,23 +7,23 @@
 #include "RecordEditor.hpp"
 
 #include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QMimeData>
 
+#include "core/database/record/RecordBanner.hpp"
+#include "core/database/record/RecordPreviews.hpp"
 #include "core/threading/ImportProcessor.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
-#include "ui/views/VersionView.hpp"
 #include "ui_RecordEditor.h"
 
 RecordEditor::RecordEditor( const RecordID record, QWidget* parent, Transaction transaction ) :
   QDialog( parent ),
   m_record( record, transaction ),
-  m_banner_path( m_record->getBannerPath( Normal, transaction ) ),
-  m_preview_paths( m_record->getPreviewPaths( transaction ) ),
+  m_banner_path( m_record->banners().getBannerPath( Normal, transaction ) ),
+  m_preview_paths( m_record->previews().getPreviewPaths( transaction ) ),
   m_versions( m_record->getVersions( transaction ) ),
   ui( new Ui::RecordEditor )
 {
@@ -32,21 +32,22 @@ RecordEditor::RecordEditor( const RecordID record, QWidget* parent, Transaction 
 
 void RecordEditor::loadRecordInfo()
 {
-	ui->titleLineEdit->setText( m_record->getTitle() );
-	ui->creatorLineEdit->setText( m_record->getCreator() );
-	ui->engineLineEdit->setText( m_record->getEngine() );
+	ui->titleLineEdit->setText( m_record->title.get() );
+	ui->creatorLineEdit->setText( m_record->creator.get() );
+	ui->engineLineEdit->setText( m_record->engine.get() );
 	//ui->gameText->setText( m_record->getDescription() );
 }
 
 void RecordEditor::loadBanners()
 {
 	ui->bannerPreview
-		->setPixmap( m_record->getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO, Normal ) );
+		->setPixmap( m_record->banners()
+	                     .getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO, Normal ) );
 }
 
 void RecordEditor::loadPreviews()
 {
-	ui->previewList->setPaths( m_record->getPreviewPaths() );
+	ui->previewList->setPaths( m_record->previews().getPreviewPaths() );
 }
 
 void RecordEditor::loadTags()
@@ -102,7 +103,8 @@ void RecordEditor::on_btnSetBanner_pressed()
 	file_dialog.setViewMode( QFileDialog::Detail );
 
 	if ( file_dialog.exec() )
-		m_record->setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
+		m_record->banners()
+			.setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
 }
 
 void RecordEditor::on_btnAddPreviews_pressed()
@@ -115,7 +117,8 @@ void RecordEditor::on_btnAddPreviews_pressed()
 
 	if ( file_dialog.exec() )
 	{
-		for ( const auto& path : file_dialog.selectedFiles() ) m_record->addPreview( { path.toStdString() } );
+		for ( const auto& path : file_dialog.selectedFiles() )
+			m_record->previews().addPreview( { path.toStdString() } );
 	}
 }
 
@@ -126,7 +129,7 @@ void RecordEditor::on_btnRemovePreviews_pressed()
 	     == QMessageBox::Yes )
 	{
 		//Remove selected
-		for ( const auto& preview : ui->previewList->selectedItems() ) m_record->removePreview( preview );
+		for ( const auto& preview : ui->previewList->selectedItems() ) m_record->previews().removePreview( preview );
 	}
 	else
 		return;
@@ -217,8 +220,8 @@ void RecordEditor::on_btnAddVersion_pressed()
 		== QMessageBox::Yes
 	};
 
-	const auto title { m_record->getTitle() };
-	const auto creator { m_record->getCreator() };
+	const auto title { m_record->title.get() };
+	const auto creator { m_record->creator.get() };
 
 	//Calculate filesize
 	std::size_t size { 0 };
@@ -289,13 +292,13 @@ void RecordEditor::switchTabs( const int index )
 void RecordEditor::on_btnChangeTitle_pressed()
 {
 	if ( const auto output =
-	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->getTitle() );
-	     output != m_record->getTitle() && !output.isEmpty() )
+	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->title.get() );
+	     output != m_record->title.get() && !output.isEmpty() )
 	{
 		Transaction trans { Autocommit };
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->getCreator( trans ).toStdString() << m_record->getEngine( trans ).toStdString()
+			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -304,7 +307,7 @@ void RecordEditor::on_btnChangeTitle_pressed()
 			return;
 		}
 
-		m_record->setTitle( output, trans );
+		m_record->title.set( output, trans );
 	}
 	loadRecordInfo();
 }
@@ -312,13 +315,13 @@ void RecordEditor::on_btnChangeTitle_pressed()
 void RecordEditor::on_btnChangeCreator_pressed()
 {
 	if ( const auto output =
-	         QInputDialog::getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->getCreator() );
-	     output != m_record->getCreator() && !output.isEmpty() )
+	         QInputDialog::getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->creator.get() );
+	     output != m_record->creator.get() && !output.isEmpty() )
 	{
 		Transaction trans { Autocommit };
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->getCreator( trans ).toStdString() << m_record->getEngine( trans ).toStdString()
+			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -330,21 +333,21 @@ void RecordEditor::on_btnChangeCreator_pressed()
 			return;
 		}
 
-		m_record->setCreator( output, trans );
+		m_record->creator.set( output, trans );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeEngine_pressed()
 {
-	if ( const auto output =
-	         QInputDialog::getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->getEngine() );
-	     output != m_record->getEngine() && !output.isEmpty() )
+	if ( const QString output =
+	         QInputDialog::getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->engine.get() );
+	     output != m_record->engine.get() && !output.isEmpty() )
 	{
 		Transaction trans { Autocommit };
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->getCreator( trans ).toStdString() << m_record->getEngine( trans ).toStdString()
+			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -353,7 +356,7 @@ void RecordEditor::on_btnChangeEngine_pressed()
 				warning( this, "Duplicate!", "There is already a game with the same creator, name and engine!" );
 			return;
 		}
-		m_record->setEngine( output, trans );
+		m_record->engine.set( output, trans );
 	}
 	loadRecordInfo();
 }
@@ -410,5 +413,5 @@ void RecordEditor::loadVersions()
 
 void RecordEditor::on_previewList_reordered()
 {
-	m_record->reorderPreviews( ui->previewList->model()->getFilepaths() );
+	m_record->previews().reorderPreviews( ui->previewList->model()->getFilepaths() );
 }

@@ -43,6 +43,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	config::notify();
 
+	//Share the recordView's model to gameList
+	ui->gameList->setModel( ui->recordView->model() );
+	//Share selection model
+	ui->gameList->setSelectionModel( ui->recordView->selectionModel() );
+
 	emit triggerSearch( "", SortOrder::Name, true );
 
 	initNotificationPopup( this );
@@ -72,14 +77,16 @@ void MainWindow::on_actionImport_triggered()
 	biDialog.exec();
 }
 
-void MainWindow::addTreeRoot( QString name, QString record_id )
+void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QString record_id )
 {
+	/*
 	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
 	QTreeWidget* treeWidget = this->ui->gamesTree;
 	QTreeWidgetItem* treeItem = new QTreeWidgetItem( treeWidget );
 
 	treeItem->setText( 0, name );
 	addTreeChild( treeItem, "Test Game", record_id );
+	 */
 }
 
 void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )

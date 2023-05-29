@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1520</width>
-    <height>780</height>
+    <width>1083</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -498,33 +498,29 @@ border-top-left-radius:0px;</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>36</width>
-           <height>36</height>
+           <width>101</width>
+           <height>32</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>40</width>
-           <height>36</height>
-          </size>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgba(0, 0, 0,40);
 border:none;
-margin-left:4px;
-border-radius:5px;</string>
+border-top-right-radius:5px;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:0px;
+border-top-left-radius:0px;
+margin-right:5px;</string>
          </property>
          <property name="text">
           <string/>
          </property>
-         <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="margin">
-          <number>6</number>
+         <property name="frame">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -789,8 +785,8 @@ border-bottom-left-radius:5px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1520</width>
-     <height>21</height>
+     <width>1083</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -924,6 +920,11 @@ border-bottom-left-radius:5px;</string>
    <extends>QWidget</extends>
    <header>ui/views/DetailedRecordView.hpp</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GameList</class>
+   <extends>QListView</extends>
+   <header>ui/views/gamelist/GameList.hpp</header>
   </customwidget>
  </customwidgets>
  <resources>

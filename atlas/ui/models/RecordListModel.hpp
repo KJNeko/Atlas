@@ -7,7 +7,7 @@
 
 #include <QAbstractListModel>
 
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 
 class RecordListModel : public QAbstractListModel
 {

@@ -6,6 +6,7 @@
 
 #include "Record.hpp"
 #include "core/config.hpp"
+#include "core/database/record/Record.hpp"
 
 namespace internal
 {

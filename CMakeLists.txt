@@ -31,7 +31,6 @@ endif ()
 
 option(SPDLOG_FMT_EXTERNAL "" ON)
 add_subdirectory(dependencies/fmt)
-#add_subdirectory(dependencies/gtest)
 add_subdirectory(dependencies/catch2)
 add_subdirectory(dependencies/spdlog)
 

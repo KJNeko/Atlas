@@ -11,7 +11,7 @@
 
 #include "core/database/Database.hpp"
 #include "core/database/GameMetadata.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 
 TEST_CASE( "Database Init Memory", "[database]" )
 {
