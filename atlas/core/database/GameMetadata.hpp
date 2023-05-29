@@ -10,9 +10,9 @@
 #include <QString>
 
 #include "Database.hpp"
-#include "Record.hpp"
 #include "core/Types.hpp"
 #include "core/database/Database.hpp"
+#include "core/database/record/Record.hpp"
 
 struct RecordData;
 

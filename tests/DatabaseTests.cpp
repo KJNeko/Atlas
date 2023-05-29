@@ -11,7 +11,7 @@
 
 #include "core/database/Database.hpp"
 #include "core/database/GameMetadata.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 
 TEST_CASE( "Database Init Memory", "[database]" )
 {
@@ -44,13 +44,13 @@ TEST_CASE( "Record", "[database][record]" )
 		{
 			SECTION( "getTitle" )
 			{
-				REQUIRE( record->getTitle() == "test" );
+				REQUIRE( record->title.get() == "test" );
 			}
 
 			SECTION( "setTitle" )
 			{
-				REQUIRE_NOTHROW( record->setTitle( "test2" ) );
-				REQUIRE( record->getTitle() == "test2" );
+				REQUIRE_NOTHROW( record->title.set( "test2" ) );
+				REQUIRE( record->title.get() == "test2" );
 			}
 		}
 
@@ -58,13 +58,13 @@ TEST_CASE( "Record", "[database][record]" )
 		{
 			SECTION( "getCreator" )
 			{
-				REQUIRE( record->getCreator() == "test" );
+				REQUIRE( record->creator.get() == "test" );
 			}
 
 			SECTION( "setCreator" )
 			{
-				REQUIRE_NOTHROW( record->setCreator( "test2" ) );
-				REQUIRE( record->getCreator() == "test2" );
+				REQUIRE_NOTHROW( record->creator.get( "test2" ) );
+				REQUIRE( record->creator.get() == "test2" );
 			}
 		}
 
@@ -72,13 +72,13 @@ TEST_CASE( "Record", "[database][record]" )
 		{
 			SECTION( "getEngine" )
 			{
-				REQUIRE( record->getEngine() == "test" );
+				REQUIRE( record->engine.get() == "test" );
 			}
 
 			SECTION( "setEngine" )
 			{
-				REQUIRE_NOTHROW( record->setEngine( "test2" ) );
-				REQUIRE( record->getEngine() == "test2" );
+				REQUIRE_NOTHROW( record->engine.get( "test2" ) );
+				REQUIRE( record->engine.get() == "test2" );
 			}
 		}
 
@@ -86,13 +86,13 @@ TEST_CASE( "Record", "[database][record]" )
 		{
 			SECTION( "getLastPlayed" )
 			{
-				REQUIRE( record->getLastPlayed() == 0 );
+				REQUIRE( record->last_played.get() == 0 );
 			}
 
 			SECTION( "setLastPlayed" )
 			{
-				REQUIRE_NOTHROW( record->setLastPlayed( 1 ) );
-				REQUIRE( record->getLastPlayed() == 1 );
+				REQUIRE_NOTHROW( record->last_played.get( 1 ) );
+				REQUIRE( record->last_played.get() == 1 );
 			}
 		}
 
@@ -100,13 +100,13 @@ TEST_CASE( "Record", "[database][record]" )
 		{
 			SECTION( "getTotalPlaytime" )
 			{
-				REQUIRE( record->getTotalPlaytime() == 0 );
+				REQUIRE( record->total_playtime.get() == 0 );
 			}
 
 			SECTION( "setTotalPlaytime" )
 			{
-				REQUIRE_NOTHROW( record->setTotalPlaytime( 1 ) );
-				REQUIRE( record->getTotalPlaytime() == 1 );
+				REQUIRE_NOTHROW( record->total_playtime.get( 1 ) );
+				REQUIRE( record->total_playtime.get() == 1 );
 			}
 		}
 
@@ -226,14 +226,14 @@ TEST_CASE( "Record", "[database][record]" )
 			{
 				SECTION( "setBanner" )
 				{
-					REQUIRE_NOTHROW( record->setBanner( "test.png", Normal ) );
-					REQUIRE( std::filesystem::exists( record->getBannerPath( Normal ) ) );
+					REQUIRE_NOTHROW( record->banners().setBanner( "test.png", Normal ) );
+					REQUIRE( std::filesystem::exists( record->banners().getBannerPath( Normal ) ) );
 					SECTION( "getBanner" )
 					{
 						REQUIRE( !record->getBanner( Normal ).isNull() );
 					}
 
-					std::filesystem::remove( record->getBannerPath( Normal ) );
+					std::filesystem::remove( record->banners().getBannerPath( Normal ) );
 				}
 			}
 
@@ -241,13 +241,13 @@ TEST_CASE( "Record", "[database][record]" )
 			{
 				SECTION( "setBanner" )
 				{
-					REQUIRE_NOTHROW( record->setBanner( "test.png", Wide ) );
+					REQUIRE_NOTHROW( record->banners().setBanner( "test.png", Wide ) );
 					REQUIRE( std::filesystem::exists( record->getBannerPath( Wide ) ) );
 					SECTION( "getBanner" )
 					{
-						REQUIRE( !record->getBanner( Wide ).isNull() );
+						REQUIRE( !record->banners().getBanner( Wide ).isNull() );
 					}
-					std::filesystem::remove( record->getBannerPath( Wide ) );
+					std::filesystem::remove( record->banners().getBannerPath( Wide ) );
 				}
 			}
 
@@ -255,13 +255,13 @@ TEST_CASE( "Record", "[database][record]" )
 			{
 				SECTION( "setBanner" )
 				{
-					REQUIRE_NOTHROW( record->setBanner( "test.png", Cover ) );
+					REQUIRE_NOTHROW( record->banners().setBanner( "test.png", Cover ) );
 					REQUIRE( std::filesystem::exists( record->getBannerPath( Cover ) ) );
 					SECTION( "getBanner" )
 					{
-						REQUIRE( !record->getBanner( Cover ).isNull() );
+						REQUIRE( !record->banners().getBanner( Cover ).isNull() );
 					}
-					std::filesystem::remove( record->getBannerPath( Cover ) );
+					std::filesystem::remove( record->banners().getBannerPath( Cover ) );
 				}
 			}
 
@@ -269,13 +269,13 @@ TEST_CASE( "Record", "[database][record]" )
 			{
 				SECTION( "setBanner" )
 				{
-					REQUIRE_NOTHROW( record->setBanner( "test.png", Logo ) );
+					REQUIRE_NOTHROW( record->banners().setBanner( "test.png", Logo ) );
 					REQUIRE( std::filesystem::exists( record->getBannerPath( Logo ) ) );
 					SECTION( "getBanner" )
 					{
-						REQUIRE( !record->getBanner( Logo ).isNull() );
+						REQUIRE( !record->banners().getBanner( Logo ).isNull() );
 					}
-					std::filesystem::remove( record->getBannerPath( Logo ) );
+					std::filesystem::remove( record->banners().getBannerPath( Logo ) );
 				}
 			}
 

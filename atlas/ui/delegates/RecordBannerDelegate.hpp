@@ -8,7 +8,7 @@
 #include <QAbstractItemDelegate>
 
 #include "core/config.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 #include "core/utils/QImageBlur.hpp"
 
 class RecordBannerDelegate : public QAbstractItemDelegate

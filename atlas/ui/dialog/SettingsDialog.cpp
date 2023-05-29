@@ -45,6 +45,13 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 
 	//Add full list of fonts to comboBox.
 	ui->cbFont->addItems( QFontDatabase::families() );
+	ui->cbAppFont->addItems( QFontDatabase::families() );
+	//ui->cbAppFont->setItemText()
+
+	//Set Fonts
+	//ui->sbAppFontSize->setCurrentText( std::string( config::application::fontSize::get() ) );
+	ui->sbAppFontSize->setValue( config::application::fontSize::get() );
+	ui->cbAppFont->setCurrentText( config::application::font::get() );
 
 	prepareThemeSettings();
 	preparePathsSettings();
@@ -82,10 +89,12 @@ void SettingsDialog::prepareThemeSettings()
 	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
 }
 
-void SettingsDialog::saveThemeSettings()
+void SettingsDialog::saveApplicationSettings()
 {
 	config::ui::use_system_theme::set( ui->cbUseSystemTheme->isChecked() );
 	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
+	config::application::font::set( ui->cbAppFont->currentText() );
+	config::application::fontSize::set( ui->sbAppFontSize->value() );
 
 	reloadTheme();
 }
@@ -305,7 +314,7 @@ void SettingsDialog::on_applySettings_pressed()
 {
 	savePathsSettings();
 	saveBannerViewerSettings();
-	saveThemeSettings();
+	saveApplicationSettings();
 	this->accept();
 }
 
@@ -535,4 +544,18 @@ void SettingsDialog::on_cbLockY_stateChanged( int state )
 void SettingsDialog::on_cbCenterItems_stateChanged( int state )
 {
 	gridPreviewDelegate->m_center_widgets = state;
+}
+
+void SettingsDialog::on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx )
+{
+	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
+	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
+	SettingsDialog::setFont( font );
+}
+
+void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
+{
+	QFont font { ui->cbAppFont->currentText(), num };
+	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
+	SettingsDialog::setFont( font );
 }

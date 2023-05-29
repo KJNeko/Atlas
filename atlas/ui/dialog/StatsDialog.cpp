@@ -15,7 +15,7 @@
 
 #include "core/database/Database.hpp"
 #include "core/database/GameMetadata.hpp"
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 #include "ui_StatsDialog.h"
 
 StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::StatsDialog )

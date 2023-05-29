@@ -12,6 +12,10 @@
 #include "core/database/Database.hpp"
 
 struct GameMetadata;
+class RecordBanner;
+class RecordPreviews;
+
+#include "core/database/helpers.hpp"
 
 struct RecordData
 {
@@ -40,45 +44,26 @@ struct RecordData
 
   public:
 
+	RecordBanner banners();
+	RecordPreviews previews();
+
 	//Getters
 	RecordID getID() const;
-	const QString getTitle( Transaction transaction = Transaction( Autocommit ) ) const;
-	const QString getCreator( Transaction transaction = Transaction( Autocommit ) ) const;
-	const QString getEngine( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::uint64_t getLastPlayed( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::uint32_t getTotalPlaytime( Transaction transaction = Transaction( Autocommit ) ) const;
+
+	Column< QString, RecordID > title { "title", "records", "record_id", m_id };
+	Column< QString, RecordID > creator { "creator", "records", "record_id", m_id };
+	Column< QString, RecordID > engine { "engine", "records", "record_id", m_id };
+	Column< std::uint64_t, RecordID > last_played { "last_played_r", "records", "record_id", m_id };
+	Column< std::uint32_t, RecordID > total_playtime { "total_playtime", "records", "record_id", m_id };
+
 	std::optional< GameMetadata > getVersion( const QString, Transaction transaction = Transaction( Autocommit ) );
 	std::optional< GameMetadata > getLatestVersion( Transaction transaction = Transaction( Autocommit ) );
 	std::vector< GameMetadata > getVersions( Transaction transaction = Transaction( Autocommit ) );
-	const std::filesystem::path
-		getBannerPath( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	bool hasBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner(
-		const int width,
-		const int height,
-		const SCALE_TYPE aspect_ratio_mode,
-		const BannerType type,
-		Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner(
-		const QSize size,
-		const SCALE_TYPE aspect_ratio_mode,
-		const BannerType type,
-		Transaction transaction = Transaction( Autocommit ) ) const;
-	const std::vector< std::filesystem::path > getPreviewPaths( Transaction transaction = Transaction( Autocommit ) )
-		const;
-	std::vector< QPixmap > getPreviews( Transaction transaction = Transaction( Autocommit ) ) const;
 	QString getDesc( Transaction transaction = Transaction( Autocommit ) ) const;
 	std::vector< QString > getUserTags( Transaction transaction = Transaction( Autocommit ) ) const;
 	std::vector< QString > getAllTags( Transaction transaction = Transaction( Autocommit ) ) const;
 
 	//Setters
-	void setTitle( QString, Transaction = Transaction( Autocommit ) );
-	void setCreator( QString, Transaction = Transaction( Autocommit ) );
-	void setEngine( QString, Transaction = Transaction( Autocommit ) );
-	void setLastPlayed( const std::uint64_t, Transaction = Transaction( Autocommit ) );
-	void addPlaytime( const std::uint32_t, Transaction = Transaction( Autocommit ) );
-	void setTotalPlaytime( const std::uint32_t, Transaction = Transaction( Autocommit ) );
 	void addVersion(
 		QString version,
 		std::filesystem::path game_path,
@@ -87,11 +72,8 @@ struct RecordData
 		bool in_place,
 		Transaction transaction = Transaction( Autocommit ) );
 	void removeVersion( const GameMetadata&, Transaction = Transaction( Autocommit ) );
-	void setBanner( const std::filesystem::path&, const BannerType, Transaction = Transaction( Autocommit ) );
 	//void setBannerOverride( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
-	void addPreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
-	void removePreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
-	void reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction = Transaction( Autocommit ) );
+
 	void setDesc( const QString& str, Transaction transaction = Transaction( Autocommit ) );
 	void addUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );
 	void removeUserTag( const QString str, Transaction transaction = Transaction( Autocommit ) );

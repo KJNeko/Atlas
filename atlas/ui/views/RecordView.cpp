@@ -9,6 +9,8 @@
 #include <QMouseEvent>
 
 #include "core/database/GameMetadata.hpp"
+#include "core/database/record/RecordBanner.hpp"
+#include "core/database/record/RecordPreviews.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/RecordListModel.hpp"
@@ -98,13 +100,13 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 	//Image stuff
 	auto image_menu { menu.addMenu( "Banner/Previews" ) };
 
-	const auto banner { record->getBanner( Normal ) };
+	const auto banner { record->banners().getBanner( Normal ) };
 	if ( banner.isNull() )
 		image_menu->addAction( "Banner not set" );
 	else
 		image_menu->addAction( QString( "Banner: (%1x%2)" ).arg( banner.width() ).arg( banner.height() ) );
 
-	image_menu->addAction( QString( "%1 previews" ).arg( record->getPreviewPaths().size() ) );
+	image_menu->addAction( QString( "%1 previews" ).arg( record->previews().getPreviewPaths().size() ) );
 	image_menu->addSeparator();
 	image_menu->addAction(
 		"Set banner",
@@ -114,7 +116,7 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 				QFileDialog::
 					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record->setBanner( path.toStdString(), Normal );
+			if ( !path.isEmpty() ) record->banners().setBanner( path.toStdString(), Normal );
 		} );
 	image_menu->addAction(
 		"Add preview",
@@ -124,7 +126,7 @@ void RecordView::on_customContextMenuRequested( const QPoint& pos )
 				QFileDialog::
 					getOpenFileName( this, "Select preview", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record->addPreview( path.toStdString() );
+			if ( !path.isEmpty() ) record->previews().addPreview( path.toStdString() );
 		} );
 	image_menu->addAction(
 		"Manage images",

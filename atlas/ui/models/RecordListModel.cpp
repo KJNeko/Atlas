@@ -40,13 +40,12 @@ int RecordListModel::rowCount( [[maybe_unused]] const QModelIndex& index ) const
 
 QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 {
-	if ( role == Qt::DisplayRole )
+	switch ( role )
 	{
-		return {
-			QVariant::fromStdVariant( std::variant< Record >( m_records
-			                                                      .at( static_cast< std::size_t >( index.row() ) ) ) )
-		};
+		case Qt::DisplayRole:
+			return QVariant::fromStdVariant( std::variant<
+											 Record >( m_records.at( static_cast< std::size_t >( index.row() ) ) ) );
+		default:
+			return {};
 	}
-
-	return {};
 }

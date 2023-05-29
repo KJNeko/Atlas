@@ -11,6 +11,7 @@
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
+#include "ui/views/gamelist/GameListDelegate.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
@@ -34,9 +35,27 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	search_thread.start();
 
 	//hide search icon
-	ui->searchIconSmall->hide();
+	//ui->searchIconSmall->hide();
+	ui->NavTop->hide();
+
+	//Set Font
+	QFont font { config::application::font::get(), config::application::fontSize::get() };
+	QApplication::setFont( font );
 
 	config::notify();
+
+	emit triggerSearch( "", SortOrder::Name, true );
+
+	initNotificationPopup( this );
+	getNotificationPopup()->hide();
+	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
+
+	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
+	//Share the recordView's model to gameList
+	ui->gamesTree->setModel( ui->recordView->model() );
+	ui->gamesTree->setItemDelegate( new GameListDelegate() );
+	//Share selection model
+	ui->gamesTree->setSelectionModel( ui->recordView->selectionModel() );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
@@ -67,14 +86,16 @@ void MainWindow::on_actionImport_triggered()
 	biDialog.exec();
 }
 
-void MainWindow::addTreeRoot( QString name, QString record_id )
+void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QString record_id )
 {
+	/*
 	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
 	QTreeWidget* treeWidget = this->ui->gamesTree;
 	QTreeWidgetItem* treeItem = new QTreeWidgetItem( treeWidget );
 
 	treeItem->setText( 0, name );
 	addTreeChild( treeItem, "Test Game", record_id );
+	 */
 }
 
 void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )

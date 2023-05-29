@@ -4,9 +4,9 @@
 
 #include "core/database/GameMetadata.hpp"
 
-#include "RecordData.hpp"
 #include "core/config.hpp"
 #include "core/database/Database.hpp"
+#include "core/database/record/RecordData.hpp"
 #include "core/logging.hpp"
 #include "core/utils/execute/executeProc.hpp"
 
@@ -204,7 +204,7 @@ try
 	{
 		const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
-		executeProc( QString::fromStdString(executable.string() ));
+		executeProc( QString::fromStdString( executable.string() ) );
 
 		const auto duration {
 			std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )
@@ -247,7 +247,10 @@ try
 {
 	transaction << "UPDATE game_metadata SET version_playtime = ? WHERE record_id = ? AND version = ?"
 				<< playtime + getPlaytime( transaction ) << m_parent->getID() << m_version.toStdString();
-	m_parent->addPlaytime( playtime, transaction );
+
+	const auto current { m_parent->total_playtime.get( transaction ) };
+
+	m_parent->total_playtime.set( playtime + current, transaction );
 }
 catch ( const sqlite::sqlite_exception& e )
 {
@@ -273,7 +276,7 @@ try
 {
 	transaction << "UPDATE game_metadata SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
 				<< m_parent->getID() << m_version.toStdString();
-	m_parent->setLastPlayed( last_played, transaction );
+	m_parent->last_played.set( last_played, transaction );
 }
 catch ( const sqlite::sqlite_exception& e )
 {

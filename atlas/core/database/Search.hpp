@@ -9,7 +9,7 @@
 
 #include <QString>
 
-#include "core/database/Record.hpp"
+#include "core/database/record/Record.hpp"
 #include "core/search/QueryBuilder.hpp"
 
 class Search : public QObject
