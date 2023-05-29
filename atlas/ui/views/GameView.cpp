@@ -201,9 +201,10 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		//Math for showing logo
 		//150 is min width for lofo heigh and 280 is max height
 		const double scale_factor = ui->bannerFrame->width() > 2300 ? .85 : ui->bannerFrame->width() / 2300.0;
-		const int logo_height = ( image_height * scale_factor ) < 150 ? 150 :
-		                        ( image_height * scale_factor ) > 280 ? 280 :
-		                                                                ( image_height * scale_factor );
+		const int logo_height =
+			( image_height * scale_factor ) < 150 ? 150 :
+			( image_height * scale_factor ) > 280 ? 280 :
+													( static_cast< const int >( image_height * scale_factor ) );
 		const int logo_width = 600;
 
 		//spdlog::info( "height:{} width:{}", logo_height, logo_width );
