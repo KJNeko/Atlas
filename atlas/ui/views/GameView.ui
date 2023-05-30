@@ -122,6 +122,12 @@ border:none;</string>
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background:none;</string>
            </property>
@@ -291,6 +297,12 @@ border-radius:3px;</string>
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background:none;</string>
            </property>
@@ -358,8 +370,14 @@ border-radius:3px;</string>
            </property>
            <property name="minimumSize">
             <size>
-             <width>70</width>
+             <width>80</width>
              <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -685,24 +703,47 @@ border-radius: 2px;</string>
             </property>
             <item row="0" column="0">
              <layout class="QGridLayout" name="detailView">
-              <item row="4" column="6">
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+              <item row="4" column="7">
+               <widget class="QWidget" name="Links" native="true">
+                <property name="minimumSize">
                  <size>
-                  <width>10</width>
-                  <height>20</height>
+                  <width>35</width>
+                  <height>0</height>
                  </size>
                 </property>
-               </spacer>
+                <property name="styleSheet">
+                 <string notr="true">background:none;</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_13">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_5">
+                   <property name="styleSheet">
+                    <string notr="true">background:none;
+border-style: outset;
+border-width: 1px;
+border-color: rgba(120, 120, 120, 100);
+border-top:none;
+border-right: none;
+border-left:none;
+padding-bottom:5px;</string>
+                   </property>
+                   <property name="text">
+                    <string>Links</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QTextEdit" name="teLinks">
+                   <property name="styleSheet">
+                    <string notr="true">background-color:transparent;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </item>
-              <item row="4" column="8">
-               <spacer name="horizontalSpacer_3">
+              <item row="4" column="4">
+               <spacer name="horizontalSpacer_18">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -789,106 +830,6 @@ padding-bottom:5px;</string>
                 </layout>
                </widget>
               </item>
-              <item row="4" column="7">
-               <widget class="QWidget" name="Links" native="true">
-                <property name="minimumSize">
-                 <size>
-                  <width>35</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background:none;</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_13">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_5">
-                   <property name="styleSheet">
-                    <string notr="true">background:none;
-border-style: outset;
-border-width: 1px;
-border-color: rgba(120, 120, 120, 100);
-border-top:none;
-border-right: none;
-border-left:none;
-padding-bottom:5px;</string>
-                   </property>
-                   <property name="text">
-                    <string>Links</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QTextEdit" name="teLinks">
-                   <property name="styleSheet">
-                    <string notr="true">background-color:transparent;</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="QWidget" name="coverWidget" native="true">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>110</width>
-                  <height>160</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>110</width>
-                  <height>160</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background:none;</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_7">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="coverImage">
-                   <property name="minimumSize">
-                    <size>
-                     <width>110</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>110</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
               <item row="4" column="0">
                <spacer name="horizontalSpacer_20">
                 <property name="orientation">
@@ -905,8 +846,8 @@ padding-bottom:5px;</string>
                 </property>
                </spacer>
               </item>
-              <item row="4" column="2">
-               <spacer name="horizontalSpacer_21">
+              <item row="4" column="8">
+               <spacer name="horizontalSpacer_3">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -923,10 +864,16 @@ padding-bottom:5px;</string>
               </item>
               <item row="4" column="3">
                <widget class="QWidget" name="Description" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>61</width>
-                  <height>0</height>
+                  <height>250</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -989,8 +936,85 @@ padding-bottom:5px;</string>
                 </layout>
                </widget>
               </item>
-              <item row="4" column="4">
-               <spacer name="horizontalSpacer_18">
+              <item row="4" column="1">
+               <widget class="QWidget" name="coverWidget" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>110</width>
+                  <height>160</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>110</width>
+                  <height>160</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background:transparent;</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="coverImage">
+                   <property name="minimumSize">
+                    <size>
+                     <width>110</width>
+                     <height>160</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>110</width>
+                     <height>160</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <spacer name="horizontalSpacer_21">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="6">
+               <spacer name="horizontalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -1045,7 +1069,6 @@ border-radius: 2px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../resources.qrc"/>
   <include location="../../resources.qrc"/>
  </resources>
  <connections/>
