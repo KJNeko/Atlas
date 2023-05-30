@@ -55,16 +55,17 @@ void GameView::reloadRecord()
 	QString current_version = "v1.0";
 	//END PLACEHOLDERS
 
-	//Set cover Image
+	//Get cover image
 	QPixmap cover { record->banners().getBanner(
-		ui->coverImage->width() - 10, ui->coverImage->height() - 10, FIT_BLUR_EXPANDING, BannerType::Cover ) };
-	if ( cover.isNull() )
+		ui->coverImage->width(), ui->coverImage->height(), SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Cover ) };
+	if ( cover.isNull() ) // if no cover image is returned, hide it
 	{
 		ui->coverWidget->hide();
 	}
-	else
+	else //show cover image with black shadow around border.
 	{
 		QGraphicsBlurEffect* be { new QGraphicsBlurEffect };
+		be->setBlurRadius( 5 );
 
 		ui->coverWidget->show();
 		QPixmap item { ui->coverWidget->size() };
@@ -76,14 +77,13 @@ void GameView::reloadRecord()
 		QGraphicsPixmapItem background_item;
 		background_item.setPixmap( background );
 		background_item.setGraphicsEffect( be );
-		cover_item.setPixmap( cover );
-		cover_item.setOffset( QPoint( 5, 5 ) );
+		//cover_item.setPixmap( cover );
+		//cover_item.setOffset( QPoint( 5, 5 ) );
 		scene.addItem( &background_item );
-		scene.addItem( &cover_item );
+		//scene.addItem( &cover_item );
 		QPainter painter { &item };
 		scene.render( &painter );
 		ui->coverImage->setPixmap( item );
-		//ui->coverImage->setGraphicsEffect( se );
 	}
 
 	if ( record->last_played.get() == 0 )
