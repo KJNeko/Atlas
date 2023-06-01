@@ -21,6 +21,15 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 
 		pixmap = pixmap.scaled( item.rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
+		//Reset the current brush
+		painter->setBrush( Qt::NoBrush );
+		QPen pen;
+		//Used for border around the grid capsule
+		pen.setBrush( Qt::transparent );
+		pen.setWidth( 1 );
+		pen.setStyle( Qt::SolidLine );
+		painter->setPen( pen );
+
 		if ( item.state & QStyle::State_Selected )
 		{
 			painter->fillRect( item.rect, item.palette.highlight() );
