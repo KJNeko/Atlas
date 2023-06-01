@@ -4,6 +4,7 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>
 
@@ -56,34 +57,25 @@ void GameView::reloadRecord()
 	//END PLACEHOLDERS
 
 	//Get cover image
+	const int cover_offset = 0;
+
 	QPixmap cover { record->banners().getBanner(
-		ui->coverImage->width(), ui->coverImage->height(), SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Cover ) };
+		ui->coverImage->width() - cover_offset,
+		ui->coverImage->height() - cover_offset,
+		SCALE_TYPE::KEEP_ASPECT_RATIO,
+		BannerType::Cover ) };
+
+	const QRect cover_rect { 5, 5, cover.width(), cover.height() };
+
 	if ( cover.isNull() ) // if no cover image is returned, hide it
 	{
 		ui->coverWidget->hide();
 	}
 	else //show cover image with black shadow around border.
 	{
-		QGraphicsBlurEffect* be { new QGraphicsBlurEffect };
-		be->setBlurRadius( 5 );
-
 		ui->coverWidget->show();
-		QPixmap item { ui->coverWidget->size() };
-		QPixmap background { ui->coverWidget->size() };
-		background.fill( Qt::black );
 
-		QGraphicsScene scene;
-		QGraphicsPixmapItem cover_item;
-		QGraphicsPixmapItem background_item;
-		background_item.setPixmap( background );
-		background_item.setGraphicsEffect( be );
-		//cover_item.setPixmap( cover );
-		//cover_item.setOffset( QPoint( 5, 5 ) );
-		scene.addItem( &background_item );
-		//scene.addItem( &cover_item );
-		QPainter painter { &item };
-		scene.render( &painter );
-		ui->coverImage->setPixmap( item );
+		ui->coverImage->setPixmap( cover );
 	}
 
 	if ( record->last_played.get() == 0 )

@@ -21,15 +21,17 @@ try
 }
 catch ( const sqlite::exceptions::no_rows& e )
 {
-	//We didn't get a path. Try an alternative
-	std::string banner_path { "" };
+	//We didn't get a path. Do not return anything.
+
+	/*std::string banner_path { "" };
 	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID() >>
 		[ & ]( const std::string str ) { banner_path = str; };
 
 	if ( banner_path.empty() )
 		return banner_path;
 	else
-		return config::paths::images::getPath() / banner_path;
+		return config::paths::images::getPath() / banner_path;*/
+	return {};
 }
 catch ( const sqlite::sqlite_exception& e )
 {
