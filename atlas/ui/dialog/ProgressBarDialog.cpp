@@ -13,6 +13,7 @@ ProgressBarDialog::ProgressBarDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->setupUi( this );
 
 	showSubProgress( false );
+	setSubText( "" ); //Set to blank.
 }
 
 ProgressBarDialog::~ProgressBarDialog()

@@ -42,19 +42,20 @@ void GameView::reloadRecord()
 	const auto& record { *m_record };
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
-	QString description = "Test Data";
+	QString description = record->getDesc();
 	QString developer = record->creator.get();
-	QString publisher = "Test Data";
-	QString original_name = "Test Data";
-	QString censored = "Test Data";
-	QString language = "Test Data";
-	QString translations = "Test Data";
-	QString voice = "Test Data";
-	QString platform = "Test Data";
-	QString release_date = "Test Data";
-	QString genre = "Test Data";
-	QString tags = "Test Data";
-	QString current_version = "v1.0";
+	QString engine = record->engine.get();
+	QString publisher = "";
+	QString original_name = "";
+	QString censored = "";
+	QString language = "";
+	QString translations = "";
+	QString voice = "";
+	QString platform = "";
+	QString release_date = "";
+	QString genre = "";
+	QString tags = "";
+	QString current_version = "";
 	//END PLACEHOLDERS
 
 	//Get cover image
@@ -138,9 +139,8 @@ void GameView::reloadRecord()
 			.toUTC()
 			.toString( "hh:mm:ss" ) ) );
 
+	//PREVIEWS
 	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( record->previews().getPreviewPaths() );
-
-	//ui->gameNotes->setText( m_record.value()->getDesc() );
 
 	//Set height of PreviewList
 	if ( ui->previewList->model()->rowCount() > 0 )
