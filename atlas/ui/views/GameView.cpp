@@ -10,6 +10,7 @@
 
 #include "core/database/GameMetadata.hpp"
 #include "core/database/record/RecordBanner.hpp"
+#include "core/database/record/RecordPreviews.hpp"
 #include "core/foldersize.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -65,18 +66,9 @@ void GameView::reloadRecord()
 		SCALE_TYPE::KEEP_ASPECT_RATIO,
 		BannerType::Cover ) };
 
-	const QRect cover_rect { 5, 5, cover.width(), cover.height() };
+	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
 
-	if ( cover.isNull() ) // if no cover image is returned, hide it
-	{
-		ui->coverWidget->hide();
-	}
-	else //show cover image with black shadow around border.
-	{
-		ui->coverWidget->show();
-
-		ui->coverImage->setPixmap( cover );
-	}
+	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	if ( record->last_played.get() == 0 )
 	{
@@ -146,7 +138,7 @@ void GameView::reloadRecord()
 			.toUTC()
 			.toString( "hh:mm:ss" ) ) );
 
-	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
+	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( record->previews().getPreviewPaths() );
 
 	//ui->gameNotes->setText( m_record.value()->getDesc() );
 
