@@ -8,5 +8,6 @@
 #include <cstdint>
 
 using RecordID = std::uint32_t;
+#define INVALID_RECORD 0
 
 #endif //ATLAS_TYPES_HPP
