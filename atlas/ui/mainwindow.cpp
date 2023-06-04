@@ -20,8 +20,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Check db first, if nothing is there add default
 	//default
-	addTreeRoot( "Games", "0" );
-
 	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
@@ -91,33 +89,6 @@ void MainWindow::on_actionImport_triggered()
 
 	SingleImporter importer { this };
 	importer.exec();
-}
-
-void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QString record_id )
-{
-	/*
-	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidget* treeWidget = this->ui->gamesTree;
-	QTreeWidgetItem* treeItem = new QTreeWidgetItem( treeWidget );
-
-	treeItem->setText( 0, name );
-	addTreeChild( treeItem, "Test Game", record_id );
-	 */
-}
-
-void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )
-{
-	/*
-	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-
-	// QTreeWidgetItem::setText(int column, const QString & text)
-	treeItem->setText( 0, name );
-	treeItem->setText( 1, description );
-
-	// QTreeWidgetItem::addChild(QTreeWidgetItem * child)
-	parent->addChild( treeItem );
-	 */
 }
 
 void MainWindow::on_actionOptions_triggered()
