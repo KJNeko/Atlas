@@ -4,16 +4,15 @@
 
 #include "FileScanner.hpp"
 
-#include <assert.h>
 #include <queue>
 
 #include "core/logging.hpp"
 
-FileInfo FileScannerGenerator::operator()()
+FileInfo& FileScannerGenerator::operator()()
 {
 	m_h();
 	if ( m_h.promise().exception ) std::rethrow_exception( m_h.promise().exception );
-	return std::move( m_h.promise().value );
+	return m_h.promise().value;
 }
 
 #pragma GCC diagnostic push
@@ -28,15 +27,14 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 		throw std::runtime_error( "Path does not exist." );
 	}
 
-	spdlog::debug( "Scanning path {}", path );
-	std::queue< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
-
-	dirs.push( { path, 0 } );
-
 	auto dir_empty = []( const std::filesystem::path& dir_path ) -> bool
 	{ return std::filesystem::directory_iterator( dir_path ) == std::filesystem::directory_iterator(); };
 
 	if ( dir_empty( path ) ) co_return FileInfo { path, path, 0, 0 };
+
+	std::queue< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
+
+	dirs.push( { path, 0 } );
 
 	while ( dirs.size() > 0 )
 	{
@@ -98,24 +96,25 @@ FileScanner::FileScanner( const std::filesystem::path& path ) : m_path( path ), 
 	files.emplace_back( file_scanner() );
 }
 
-FileInfo& FileScanner::at( std::size_t index )
+const FileInfo& FileScanner::at( std::size_t index )
 {
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
-		const auto size { files.size() };
+		// Index is higher then what we have.
+		// Scanner is also NOT done.
+		// We use the coroutine to fetch what the next file should be.
 
-		files.emplace_back( file_scanner() );
-
-		assert( files.size() > 0 );
-		assert( files.size() == size + 1 );
-
+		auto temp { file_scanner() };
+		spdlog::info( "Got file {} with size {}", temp.path, temp.size );
+		files.emplace_back( temp );
+		spdlog::info( "Emplaced back" );
 		return files.at( files.size() - 1 );
 	}
 	else
 		return files.at( index );
 }
 
-bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator& end ) const
+bool FileScanner::iterator::operator==( const std::unreachable_sentinel_t ) const
 {
 	return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
 }

@@ -79,7 +79,7 @@ struct FileScannerGenerator
 
 	~FileScannerGenerator() { m_h.destroy(); }
 
-	FileInfo operator()();
+	FileInfo& operator()();
 };
 
 struct FileScanner
@@ -111,7 +111,7 @@ struct FileScanner
 		// Operator != required to check for end I assume. Where if the this returns true then we are good to continue
 		// So instead we can just return the state of the scanner. And if the scanner is complete then we'll return false here.
 		//bool operator !=
-		bool operator==( [[maybe_unused]] const iterator& end ) const;
+		bool operator==( const std::unreachable_sentinel_t ) const;
 
 		// Required for the for loop
 		const FileInfo& operator*() { return m_scanner.at( m_idx ); }
@@ -123,14 +123,14 @@ struct FileScanner
 
   private:
 
-	FileInfo& at( std::size_t index );
+	const FileInfo& at( std::size_t index );
 
   public:
 
 	iterator begin() { return iterator( 0, *this ); }
 
 	//This *probably* isn't required(?) but the for loop will want it anyways. So we can just return literaly anything here since it's not used anyways.
-	iterator end() { return iterator( 0, *this ); }
+	std::unreachable_sentinel_t end() { return {}; }
 
 	std::filesystem::path path() const { return m_path; }
 };
