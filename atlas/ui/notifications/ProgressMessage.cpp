@@ -80,3 +80,8 @@ void ProgressMessageSignaler::setFinished()
 {
 	emit selfClose();
 }
+
+void ProgressMessageSignaler::setRange( [[maybe_unused]] int min, int max )
+{
+	emit maxChanged( max );
+}

@@ -25,7 +25,7 @@ std::optional< GameImportData >
 	if ( potential_executables.size() > 0 )
 	{
 		const auto [ title, creator, version, engine ] =
-			extractGroups( regex, QString::fromStdString( folder.string() ) );
+			regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 
 		return { GameImportData { std::filesystem::relative( folder, base ),
 			                      title,
@@ -69,7 +69,7 @@ void ImportPreProcessor::processDirectory( const QString regex, const std::files
 			const std::filesystem::path& folder { file.path() };
 			if ( std::filesystem::is_directory( folder ) )
 			{
-				if ( valid( regex, QString::fromStdString( folder.string() ) ) )
+				if ( regex::valid( regex, QString::fromStdString( folder.string() ) ) )
 				{
 					spdlog::debug( "Folder {} passed regex. Scanning for executables", folder );
 

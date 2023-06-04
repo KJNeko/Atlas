@@ -164,4 +164,18 @@ class NotificationPopup final : public QDialog
 void initNotificationPopup( QWidget* parent );
 NotificationPopup* getNotificationPopup();
 
+template < typename T >
+	requires is_signaled_notification< T >
+std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
+{
+	return getNotificationPopup()->createNotification< T >( name, reveal );
+}
+
+template < typename T >
+	requires is_simple_notification< T >
+void createNotification( const QString name, const bool reveal = false )
+{
+	getNotificationPopup()->createNotification< T >( name, reveal );
+}
+
 #endif //ATLASGAMEMANAGER_TASKPOPUP_HPP

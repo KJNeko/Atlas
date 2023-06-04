@@ -90,11 +90,6 @@ struct RecordData
 	 * @param title
 	 * @param creator
 	 * @param engine
-	 * @param last_played
-	 * @param total_playtime
-	 * @param versions
-	 * @param banner
-	 * @param previews
 	 * @param transaction
 	 */
 	RecordData( QString title, QString creator, QString engine, Transaction = Transaction( Transaction::Autocommit ) );
@@ -111,6 +106,10 @@ bool recordExists(
 	Transaction transaction = Transaction( Transaction::Autocommit ) );
 
 //! Returns 0 if there is not record with this data
-RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction );
+RecordID recordID(
+	const QString& title,
+	const QString& creator,
+	const QString& engine,
+	Transaction transaction = Transaction( Autocommit ) );
 
 #endif //ATLAS_RECORD_HPP

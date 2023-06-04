@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SimpleImporter</class>
+ <widget class="QWidget" name="SimpleImporter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1837</width>
+    <height>1191</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SimpleImporter</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QTreeView" name="dirView"/>
+     <widget class="QFrame" name="folderFrame">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QFrame" name="gameInfoFrame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QCheckBox" name="cbIsRoot">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>100</y>
+            <width>221</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Is game directory</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="creatorEdit">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>180</y>
+            <width>113</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="engineEdit">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>240</y>
+            <width>113</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="versionEdit">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>310</y>
+            <width>113</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="titleEdit">
+          <property name="geometry">
+           <rect>
+            <x>190</x>
+            <y>130</y>
+            <width>113</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="cbRelatedName">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>370</y>
+            <width>191</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Name is related</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox">
+          <property name="geometry">
+           <rect>
+            <x>190</x>
+            <y>370</y>
+            <width>94</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>Title</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Creator</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Engine</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="folderSelectionLabel">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>50</y>
+            <width>65</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Folder %1 selected</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>140</y>
+            <width>65</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Title:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>200</y>
+            <width>65</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Creator:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>270</y>
+            <width>65</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Version:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>310</y>
+            <width>65</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Engine:</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="fileFrame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>20</y>
+            <width>191</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Is executable</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>70</y>
+            <width>96</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>CheckBox</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

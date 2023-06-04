@@ -2,12 +2,13 @@
 
 #include <QtConcurrent>
 
-#include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "ui/importer/simpleImporter/SimpleImporter.hpp"
+#include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
@@ -75,15 +76,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImport_triggered()
 {
-	BatchImportDialog biDialog;
-	//connect( &biDialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
-	connect(
-		&biDialog,
-		&BatchImportDialog::importComplete,
-		ui->recordView,
-		&RecordView::addRecords,
-		Qt::SingleShotConnection );
-	biDialog.exec();
+	//TODO: Add the ability to pick one of the importers. Single, Simple, Batch, Ect.
+
+	/*
+	SimpleImporter* importer { new SimpleImporter( this ) };
+
+	if ( const auto dir = QFileDialog::getExistingDirectory(
+			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
+	     !dir.isEmpty() )
+	{
+		importer->setRoot( dir );
+		importer->exec();
+	}*/
+
+	SingleImporter importer { this };
+	importer.exec();
 }
 
 void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QString record_id )
@@ -100,6 +107,7 @@ void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QS
 
 void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )
 {
+	/*
 	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
 	QTreeWidgetItem* treeItem = new QTreeWidgetItem();
 
@@ -109,6 +117,7 @@ void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString de
 
 	// QTreeWidgetItem::addChild(QTreeWidgetItem * child)
 	parent->addChild( treeItem );
+	 */
 }
 
 void MainWindow::on_actionOptions_triggered()

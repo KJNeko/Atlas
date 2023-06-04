@@ -5,6 +5,8 @@
 #ifndef ATLASGAMEMANAGER_SIMPLEIMPORTER_HPP
 #define ATLASGAMEMANAGER_SIMPLEIMPORTER_HPP
 
+#include <QDialog>
+#include <QItemSelection>
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -16,7 +18,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class SimpleImporter final : public QWidget
+class SimpleImporter final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( SimpleImporter )
@@ -26,9 +28,15 @@ class SimpleImporter final : public QWidget
 	explicit SimpleImporter( QWidget* parent = nullptr );
 	~SimpleImporter() override;
 
+	void setRoot( const QString path );
+
   private:
 
 	Ui::SimpleImporter* ui;
+
+  private slots:
+	//void onCustomContextMenuRequested( const QPoint& point );
+	void dirView_itemSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );
 };
 
 #endif //ATLASGAMEMANAGER_SIMPLEIMPORTER_HPP

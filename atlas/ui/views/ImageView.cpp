@@ -18,10 +18,15 @@ ImageView::ImageView( QWidget* parent ) : QListView( parent )
 	QListView::setModel( new FilepathModel() );
 	QListView::setItemDelegate( new ImageDelegate() );
 
-	connect( model(), &FilepathModel::reordered, this, &ImageView::modelReordered );
+	connect( pathmodel(), &FilepathModel::reordered, this, &ImageView::modelReordered );
 }
 
-FilepathModel* ImageView::model()
+FilepathModel* ImageView::pathmodel() const
+{
+	return dynamic_cast< FilepathModel* >( QListView::model() );
+}
+
+FilepathModel* ImageView::pathmodel()
 {
 	return dynamic_cast< FilepathModel* >( QListView::model() );
 }
@@ -33,7 +38,7 @@ ImageDelegate* ImageView::delegate()
 
 void ImageView::modelReordered()
 {
-	emit reordered( model()->getFilepaths() );
+	emit reordered( paths() );
 }
 
 std::vector< std::filesystem::path > ImageView::selectedItems() const
@@ -49,4 +54,22 @@ std::vector< std::filesystem::path > ImageView::selectedItems() const
 	}
 
 	return paths;
+}
+
+std::vector< std::filesystem::path > ImageView::paths() const
+{
+	return pathmodel()->getFilepaths();
+}
+
+std::vector< QString > ImageView::pathsQString() const
+{
+	std::vector< QString > pathsQString;
+	const auto std_paths { paths() };
+
+	for ( const auto& path : std_paths )
+	{
+		pathsQString.push_back( QString::fromStdString( path.string() ) );
+	}
+
+	return pathsQString;
 }

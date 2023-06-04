@@ -26,7 +26,7 @@ inline std::size_t folderSize( FileScanner& folder )
 
 inline std::size_t folderSize( const std::filesystem::path& path )
 {
-	if ( !std::filesystem::exists( path ) ) return 0;
+	if ( !std::filesystem::exists( path ) || std::filesystem::is_empty( path ) ) return 0;
 
 	FileScanner scanner { path };
 	return folderSize( scanner );
