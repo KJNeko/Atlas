@@ -220,11 +220,12 @@ enum PreviewType
 
 enum BannerType
 {
-	Error = 0,
-	Normal = 1,
-	Wide = 2,
-	Cover = 3,
-	Logo = 4,
+	Error = -1,
+	Normal = 0,
+	Wide = 1,
+	Cover = 2,
+	Logo = 3,
+	SENTINEL // Used to determine the number of banner types
 };
 
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
