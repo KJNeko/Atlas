@@ -14,14 +14,14 @@
 
 struct FileInfo
 {
-	std::string filename {};
-	std::string ext {};
-	std::filesystem::path path {};
+	std::string filename { "" };
+	std::string ext { "" };
+	std::filesystem::path path { "" };
 	std::size_t size { 0 };
 	std::uint8_t depth { 0 };
-	std::filesystem::path relative {};
+	std::filesystem::path relative { "" };
 
-	FileInfo() = default;
+	FileInfo() = delete;
 
 	FileInfo(
 		std::filesystem::path path_in,
@@ -30,10 +30,10 @@ struct FileInfo
 		const std::uint8_t file_depth ) :
 	  filename( path_in.filename().string() ),
 	  ext( path_in.extension().string() ),
-	  path( std::move( path_in ) ),
+	  path( path_in ),
 	  size( filesize ),
 	  depth( file_depth ),
-	  relative( std::filesystem::relative( path, source ) )
+	  relative( std::filesystem::relative( std::move( path_in ), source ) )
 	{}
 };
 
@@ -44,7 +44,7 @@ struct FileScannerGenerator
 
 	struct promise_type
 	{
-		FileInfo value {};
+		std::optional< FileInfo > value { std::nullopt };
 		std::exception_ptr exception { nullptr };
 
 		FileScannerGenerator get_return_object() { return FileScannerGenerator( handle_type::from_promise( *this ) ); }
@@ -79,17 +79,16 @@ struct FileScannerGenerator
 
 	~FileScannerGenerator() { m_h.destroy(); }
 
-	FileInfo& operator()();
+	FileInfo operator()();
 };
 
 struct FileScanner
 {
 	std::filesystem::path m_path;
-	std::vector< FileInfo > files {};
+	FileScannerGenerator file_scanner;
+	std::vector< FileInfo > files;
 
 	friend class iterator;
-
-	FileScannerGenerator file_scanner;
 
   private:
 
