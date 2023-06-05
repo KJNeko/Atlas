@@ -22,22 +22,22 @@ enum class SupportingType
 
 struct DirInfo
 {
-	bool is_supporting { false };
-	SupportingType type { SupportingType::TITLE };
-
-	bool is_root_dir { false };
+	bool is_game_dir { false };
 	QString title { "" };
 	QString creator { "" };
 	QString version { "" };
 	QString engine { "" };
+
+	bool is_supporting_name { false };
+	SupportingType supporting_type { SupportingType::NoSupportingType };
 };
 
-enum class FileInfo
+struct FileInfo
 {
-	NoFileInfo,
-	Preview,
-	Banner,
-	Executable
+	bool is_banner { false };
+	BannerType banner_type { BannerType::Normal };
+
+	bool is_preview { false };
 };
 
 struct Node
