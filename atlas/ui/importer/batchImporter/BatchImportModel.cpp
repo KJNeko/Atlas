@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QLocale>
 
-#include "core/database/record/RecordData.hpp"
+#include "core/database/record/Record.hpp"
 #include "core/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const

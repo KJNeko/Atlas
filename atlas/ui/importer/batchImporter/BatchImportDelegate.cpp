@@ -11,7 +11,7 @@
 #include <QPainter>
 #include <QString>
 
-#include "ui/models/BatchImportModel.hpp"
+#include "BatchImportModel.hpp"
 
 void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const

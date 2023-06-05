@@ -9,7 +9,7 @@
 
 #include <QAbstractTableModel>
 
-#include "core/threading/ImportPreProcessor.hpp"
+#include "core/import/GameImportData.hpp"
 
 enum ImportColumns
 {

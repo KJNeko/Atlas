@@ -1,12 +1,11 @@
 #include "mainwindow.h"
 
-#include <QtConcurrent>
-
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/notifications/NotificationMessage.hpp"
@@ -87,8 +86,11 @@ void MainWindow::on_actionImport_triggered()
 		importer->exec();
 	}*/
 
-	SingleImporter importer { this };
+	BatchImportDialog importer { this };
 	importer.exec();
+
+	//SingleImporter importer { this };
+	//importer.exec();
 }
 
 void MainWindow::on_actionOptions_triggered()

@@ -7,6 +7,7 @@
 #include <QFuture>
 #include <QtConcurrent>
 
+#include "GameImportData.hpp"
 #include "core/database/Database.hpp"
 #include "core/database/record/Record.hpp"
 #include "core/database/record/RecordBanner.hpp"
@@ -46,9 +47,10 @@ namespace internal
 		promise.setProgressValue( 0 );
 
 		//Verify that everything is valid
-		if ( !std::filesystem::exists( root ) ) throw std::runtime_error( "Root path does not exist" );
+		if ( !std::filesystem::exists( root ) )
+			throw std::runtime_error( fmt::format( "Root path {:ce} does not exist", root ) );
 		if ( !std::filesystem::exists( root / relative_executable ) )
-			throw std::runtime_error( "Executable does not exist" );
+			throw std::runtime_error( fmt::format( "Executable {:ce} does not exist", root / relative_executable ) );
 		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
 		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
 		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
@@ -145,27 +147,27 @@ namespace internal
 } // namespace internal
 
 QFuture< RecordID > importGame(
-	const std::filesystem::path root,
-	const std::filesystem::path relative_executable,
-	const QString title,
-	const QString creator,
-	const QString engine,
-	const QString version,
-	const std::array< QString, BannerType::SENTINEL > banners,
-	const std::vector< QString > previews,
-	const bool owning )
+	std::filesystem::path root,
+	std::filesystem::path relative_executable,
+	QString title,
+	QString creator,
+	QString engine,
+	QString version,
+	std::array< QString, BannerType::SENTINEL > banners,
+	std::vector< QString > previews,
+	bool owning )
 {
 	QFuture< RecordID > future { QtConcurrent::
 		                             run( QThreadPool::globalInstance(),
 		                                  internal::importGame,
-		                                  root,
-		                                  relative_executable,
-		                                  title,
-		                                  creator,
-		                                  engine,
-		                                  version,
-		                                  banners,
-		                                  previews,
+		                                  std::move( root ),
+		                                  std::move( relative_executable ),
+		                                  std::move( title ),
+		                                  std::move( creator ),
+		                                  std::move( engine ),
+		                                  std::move( version ),
+		                                  std::move( banners ),
+		                                  std::move( previews ),
 		                                  owning ) };
 
 	QFutureWatcher< RecordID >* watcher { new QFutureWatcher< RecordID >() };
@@ -201,4 +203,21 @@ QFuture< RecordID > importGame(
 	QObject::connect( watcher, &QFutureWatcher< std::optional< Record > >::canceled, watcher, &QObject::deleteLater );
 
 	return future;
+}
+
+QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
+{
+	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
+		std::move( data );
+
+	return importGame(
+		root / path,
+		root / path / executable,
+		std::move( title ),
+		std::move( creator ),
+		"",
+		std::move( version ),
+		std::move( banners ),
+		std::move( previews ),
+		owning );
 }
