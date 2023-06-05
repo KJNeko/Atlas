@@ -14,6 +14,7 @@
 #include "core/database/record/RecordPreviews.hpp"
 #include "core/foldersize.hpp"
 #include "core/imageManager.hpp"
+#include "core/utils/FileScanner.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
 
@@ -55,26 +56,32 @@ namespace internal
 		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
 		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
 
+		FileScanner scanner { root };
+
+		//Get the size of the folder
+		signaler->setProgress( Progress::CollectingFileInformation );
+		signaler->setMessage( "Calculating folder size: 0B" );
+		std::size_t folder_size { 0 };
+		std::vector< std::filesystem::path > relative_paths;
+		QLocale locale;
+		for ( const auto& file : scanner )
+		{
+			relative_paths.emplace_back( std::filesystem::relative( file.path, root ) );
+			folder_size += file.size;
+
+			if ( folder_size % 1024 == 0 )
+			{
+				signaler->setMessage( QString( "Calculating folder size: %1" )
+				                          .arg( locale.formattedDataSize( folder_size ) ) );
+			}
+		}
+
+		signaler->setMessage( "Waiting on database lock" );
 		Transaction t { NoAutocommit };
 
 		signaler->setProgress( Progress::ImportRecordData );
 		signaler->setMessage( "Importing record data" );
 		auto record { importRecord( title, creator, engine, t ) };
-
-		signaler->setProgress( Progress::CollectingFileInformation );
-		signaler->setMessage( "Collecting file information" );
-		std::vector< std::filesystem::path > relative_paths;
-		for ( const auto& entry : std::filesystem::recursive_directory_iterator( root ) )
-		{
-			if ( entry.is_regular_file() )
-			{
-				relative_paths.emplace_back( std::filesystem::relative( entry.path(), root ) );
-				signaler->setProgress( Progress::CollectingFileInformation );
-				signaler->setMessage( QString( "Processed %1 files" ).arg( relative_paths.size() ) );
-			}
-		}
-
-		std::size_t folder_size { 0 };
 
 		if ( owning )
 		{
@@ -100,13 +107,7 @@ namespace internal
 					spdlog::error( "importGame: Failed to copy file {} to {}", source.string(), dest.string() );
 					throw std::runtime_error( "Failed to copy file" );
 				}
-
-				folder_size += std::filesystem::file_size( dest );
 			}
-		}
-		else
-		{
-			for ( const auto& path : relative_paths ) folder_size += std::filesystem::file_size( root / path );
 		}
 
 		signaler->setProgress( Progress::VersionData );
