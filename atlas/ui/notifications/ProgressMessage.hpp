@@ -27,6 +27,8 @@ class ProgressMessageSignaler final : public QObject
 
 	ProgressMessageSignaler( QObject* parent = nullptr ) : QObject( parent ) {}
 
+	~ProgressMessageSignaler() override { emit selfClose(); }
+
   public slots:
 
 	void setMax( int max );

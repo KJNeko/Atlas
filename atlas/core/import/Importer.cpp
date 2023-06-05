@@ -31,20 +31,20 @@ namespace internal
 
 	void importGame(
 		QPromise< RecordID >& promise,
-		const std::filesystem::path root,
-		const std::filesystem::path relative_executable,
-		const QString title,
-		const QString creator,
-		const QString engine,
-		const QString version,
-		const std::array< QString, BannerType::SENTINEL > banners,
-		const std::vector< QString > previews,
+		const std::filesystem::path& root,
+		const std::filesystem::path& relative_executable,
+		const QString& title,
+		const QString& creator,
+		const QString& engine,
+		const QString& version,
+		const std::array< QString, BannerType::SENTINEL >& banners,
+		const std::vector< QString >& previews,
 		const bool owning )
 	try
 	{
+		auto signaler { createNotification< ProgressMessage >( QString( "Importing game %1" ).arg( title ), true ) };
+
 		promise.start();
-		promise.setProgressRange( 0, Progress::Complete );
-		promise.setProgressValue( 0 );
 
 		//Verify that everything is valid
 		if ( !std::filesystem::exists( root ) )
@@ -57,18 +57,20 @@ namespace internal
 
 		Transaction t { NoAutocommit };
 
-		promise.setProgressValueAndText( Progress::ImportRecordData, "Importing record data" );
+		signaler->setProgress( Progress::ImportRecordData );
+		signaler->setMessage( "Importing record data" );
 		auto record { importRecord( title, creator, engine, t ) };
 
-		promise.setProgressValueAndText( Progress::CollectingFileInformation, "Collecting file information" );
+		signaler->setProgress( Progress::CollectingFileInformation );
+		signaler->setMessage( "Collecting file information" );
 		std::vector< std::filesystem::path > relative_paths;
 		for ( const auto& entry : std::filesystem::recursive_directory_iterator( root ) )
 		{
 			if ( entry.is_regular_file() )
 			{
 				relative_paths.emplace_back( std::filesystem::relative( entry.path(), root ) );
-				promise.setProgressValueAndText(
-					Progress::CollectingFileInformation, QString( "Processed %1 files" ).arg( relative_paths.size() ) );
+				signaler->setProgress( Progress::CollectingFileInformation );
+				signaler->setMessage( QString( "Processed %1 files" ).arg( relative_paths.size() ) );
 			}
 		}
 
@@ -76,14 +78,16 @@ namespace internal
 
 		if ( owning )
 		{
-			promise.setProgressRange( 0, static_cast< int >( relative_paths.size() ) );
+			signaler->setMax( static_cast< int >( relative_paths.size() ) );
 
 			for ( std::size_t i = 0; i < relative_paths.size(); i++ )
 			{
 				const QString path_name { QString::fromStdString( relative_paths[ i ].string() ) };
-				promise.setProgressValueAndText(
-					static_cast< int >( i ),
-					QString( "Copying file %1 %2/%3" ).arg( path_name ).arg( i ).arg( relative_paths.size() ) );
+				signaler->setProgress( static_cast< int >( i ) );
+				signaler->setMessage( QString( "Copying file %1 %2/%3" )
+				                          .arg( path_name )
+				                          .arg( i )
+				                          .arg( relative_paths.size() ) );
 
 				const auto source { root / relative_paths[ i ] };
 				const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
@@ -105,11 +109,14 @@ namespace internal
 			for ( const auto& path : relative_paths ) folder_size += std::filesystem::file_size( root / path );
 		}
 
-		promise.setProgressRange( 0, Progress::Complete );
-		promise.setProgressValueAndText( Progress::VersionData, "Importing version data" );
+		signaler->setProgress( Progress::VersionData );
+		signaler->setMessage( "Importing version data" );
+		signaler->setMax( Progress::Complete );
+
 		record->addVersion( version, root, relative_executable, folder_size, owning, t );
 
-		promise.setProgressValueAndText( Progress::Banners, "Importing banners" );
+		signaler->setProgress( Progress::Banners );
+		signaler->setMessage( "Importing banners" );
 		for ( int i = 0; i < BannerType::SENTINEL; i++ )
 		{
 			const auto path { banners[ static_cast< std::size_t >( i ) ] };
@@ -120,14 +127,17 @@ namespace internal
 			}
 		}
 
-		promise.setProgressValueAndText( Progress::Previews, "Importing previews" );
+		signaler->setMessage( "Importing previews" );
+		signaler->setProgress( Progress::Previews );
 		for ( const auto& path : previews )
 		{
 			const auto preview_path { imageManager::importImage( path.toStdString() ) };
+			signaler->setMessage( QString( "Importing preview %1" ).arg( preview_path.string().c_str() ) );
 			record->previews().addPreview( preview_path, t );
 		}
 
-		promise.setProgressValueAndText( Progress::Complete, "Complete" );
+		signaler->setProgress( Progress::Complete );
+		signaler->setMessage( "Complete" );
 
 		t.commit();
 		promise.addResult( record->getID() );
@@ -157,52 +167,18 @@ QFuture< RecordID > importGame(
 	std::vector< QString > previews,
 	bool owning )
 {
-	QFuture< RecordID > future { QtConcurrent::
-		                             run( QThreadPool::globalInstance(),
-		                                  internal::importGame,
-		                                  std::move( root ),
-		                                  std::move( relative_executable ),
-		                                  std::move( title ),
-		                                  std::move( creator ),
-		                                  std::move( engine ),
-		                                  std::move( version ),
-		                                  std::move( banners ),
-		                                  std::move( previews ),
-		                                  owning ) };
-
-	QFutureWatcher< RecordID >* watcher { new QFutureWatcher< RecordID >() };
-	watcher->setFuture( std::move( future ) );
-
-	auto progress_notification { createNotification< ProgressMessage >( "Game import", true ) };
-
-	QObject::connect(
-		watcher,
-		&QFutureWatcher< std::optional< Record > >::progressValueChanged,
-		progress_notification.get(),
-		&ProgressMessageSignaler::progressChanged );
-
-	QObject::connect(
-		watcher,
-		&QFutureWatcher< std::optional< Record > >::progressTextChanged,
-		progress_notification.get(),
-		&ProgressMessageSignaler::messageChanged );
-
-	QObject::connect(
-		watcher,
-		&QFutureWatcher< std::optional< Record > >::finished,
-		progress_notification.get(),
-		&ProgressMessageSignaler::setFinished );
-
-	QObject::connect(
-		watcher,
-		&QFutureWatcher< std::optional< Record > >::progressRangeChanged,
-		progress_notification.get(),
-		&ProgressMessageSignaler::setRange );
-
-	QObject::connect( watcher, &QFutureWatcher< std::optional< Record > >::finished, watcher, &QObject::deleteLater );
-	QObject::connect( watcher, &QFutureWatcher< std::optional< Record > >::canceled, watcher, &QObject::deleteLater );
-
-	return future;
+	return QtConcurrent::
+		run( QThreadPool::globalInstance(),
+	         internal::importGame,
+	         std::move( root ),
+	         std::move( relative_executable ),
+	         std::move( title ),
+	         std::move( creator ),
+	         std::move( engine ),
+	         std::move( version ),
+	         std::move( banners ),
+	         std::move( previews ),
+	         owning );
 }
 
 QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
