@@ -9,6 +9,8 @@
 #include <QFuture>
 #include <QtConcurrent>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/foldersize.hpp"
 #include "core/utils/FileScanner.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
@@ -17,6 +19,7 @@
 std::optional< GameImportData >
 	runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
 {
+	ZoneScoped;
 	FileScanner scanner { folder };
 	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
@@ -88,6 +91,7 @@ std::optional< GameImportData >
 
 void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex )
 {
+	ZoneScoped;
 	promise.start();
 
 	//List of futures for all of the 'valid' directories we've found so far.
@@ -131,6 +135,7 @@ void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::
 
 void GameScanner::start( const std::filesystem::path path, const QString regex )
 {
+	ZoneScoped;
 	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
 	m_watcher.setFuture( m_runner_future );
 	connect( &m_watcher, &QFutureWatcher< void >::finished, this, &GameScanner::emitComplete );

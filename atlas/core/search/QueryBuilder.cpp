@@ -4,6 +4,8 @@
 
 #include "QueryBuilder.hpp"
 
+#include <tracy/Tracy.hpp>
+
 enum TokenOperators
 {
 	NOT,
@@ -47,6 +49,7 @@ inline static constexpr std::array< std::pair< std::string_view, SystemTokens >,
 
 std::string_view trimSpaces( std::string_view str )
 {
+	ZoneScoped;
 	const auto start_nonspace { str.find_first_not_of( ' ' ) };
 	const auto end_nonspace { str.find_last_not_of( ' ' ) };
 
@@ -61,6 +64,7 @@ std::string_view trimSpaces( std::string_view str )
 
 std::string parseBytesize( std::string_view str )
 {
+	ZoneScoped;
 	str = trimSpaces( str );
 	std::size_t num { std::stoull( std::string( str.substr( 0, str.size() - 1 ) ) ) };
 	const char last { str.at( str.size() - 1 ) };
@@ -90,6 +94,7 @@ std::string parseBytesize( std::string_view str )
 
 bool isNamespace( const std::string_view str )
 {
+	ZoneScoped;
 	for ( const auto& [ text, type ] : namespaces )
 		if ( str.starts_with( text ) ) return true;
 	return false;
@@ -97,6 +102,7 @@ bool isNamespace( const std::string_view str )
 
 bool isOperator( const std::string_view str )
 {
+	ZoneScoped;
 	for ( const auto& [ text, type ] : operators )
 		if ( str.starts_with( text ) ) return true;
 	return false;
@@ -104,6 +110,7 @@ bool isOperator( const std::string_view str )
 
 std::string parseOperator( const std::string_view str )
 {
+	ZoneScoped;
 	for ( const auto& [ text, type ] : operators )
 	{
 		if ( str.starts_with( text ) )
@@ -140,6 +147,7 @@ std::string parseOperator( const std::string_view str )
 
 std::string parseSystem( const std::string_view str )
 {
+	ZoneScoped;
 	for ( const auto& [ text, type ] : systems )
 	{
 		if ( str.starts_with( text ) )
@@ -190,6 +198,7 @@ std::pair< std::string_view, std::string_view > seperateNamespace( const std::st
  */
 std::string parseNamespace( const std::string_view str )
 {
+	ZoneScoped;
 	for ( const auto& [ text, type ] : namespaces )
 	{
 		if ( str.starts_with( text ) )
@@ -238,6 +247,7 @@ std::string parseNamespace( const std::string_view str )
  */
 std::string parse( const std::string_view str )
 {
+	ZoneScoped;
 	if ( isNamespace( str ) )
 		return parseNamespace( str );
 	else if ( isOperator( str ) )
@@ -249,6 +259,7 @@ std::string parse( const std::string_view str )
 //! Extracts characters until reaching a grouping operator or namespace or system tag
 std::string_view extractUntilNext( std::string_view& str )
 {
+	ZoneScoped;
 	constexpr auto start { 0 };
 
 	auto next { str.npos };
@@ -288,6 +299,7 @@ std::string_view extractUntilNext( std::string_view& str )
 
 std::string processString( std::string_view str_view )
 {
+	ZoneScoped;
 	str_view = trimSpaces( str_view );
 	spdlog::debug( "Processing search query: \"{}\"", str_view );
 	std::string query;
@@ -309,6 +321,7 @@ std::string processString( std::string_view str_view )
 
 std::string escape( std::string_view view )
 {
+	ZoneScoped;
 	std::string str { view };
 
 	auto pos { str.find( '\'' ) };
@@ -328,6 +341,7 @@ std::string escape( std::string_view view )
 
 std::string orderToStr( const SortOrder order )
 {
+	ZoneScoped;
 	switch ( order )
 	{
 		default:
@@ -345,6 +359,7 @@ std::string orderToStr( const SortOrder order )
 
 std::string generateQuery( const std::string str, const SortOrder order, const bool asc )
 {
+	ZoneScoped;
 	const std::string query { "SELECT DISTINCT record_id FROM records NATURAL JOIN game_metadata WHERE" };
 	const std::string_view str_view { str };
 

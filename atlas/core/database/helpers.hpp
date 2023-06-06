@@ -32,7 +32,6 @@ class Column
 {
 	std::enable_if< cached, std::optional< CType > > m_cached_value {};
 
-	const RecordID m_record_id;
 	const std::string_view col_name {};
 
 	const std::string fetch_sql;
@@ -42,7 +41,6 @@ class Column
 
 	Column(
 		const std::string_view name, const std::string_view table, const std::string_view id_col, const IDType id ) :
-	  m_record_id( id ),
 	  col_name( name ),
 	  fetch_sql( fmt::format( "SELECT {} FROM {} WHERE {} = {}", col_name, table, id_col, id ) ),
 	  update_sql( fmt::format( "UPDATE {} SET {} = ? WHERE {} = {}", table, col_name, id_col, id ) )
@@ -51,6 +49,7 @@ class Column
 	//! Gets the value (from cache if possible)
 	CType get( Transaction transaction = Transaction( Autocommit ) )
 	{
+		ZoneScoped;
 		if constexpr ( cached )
 		{
 			if ( m_cached_value.has_value() ) return m_cached_value.value();
@@ -69,6 +68,7 @@ class Column
 	template < typename In >
 	void set( const In& type, Transaction transaction = Transaction( Autocommit ) )
 	{
+		ZoneScoped;
 		if constexpr ( cached )
 		{
 			m_cached_value = type;
@@ -80,6 +80,7 @@ class Column
 	//! Wipes the cache
 	void wipe()
 	{
+		ZoneScoped;
 		if constexpr ( cached )
 		{
 			//Can wipe

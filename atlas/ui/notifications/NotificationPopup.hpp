@@ -13,6 +13,8 @@
 #include <QTimer>
 #include <QWidget>
 
+#include <tracy/Tracy.hpp>
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -69,6 +71,7 @@ class NotificationPopup final : public QDialog
 		requires is_signaled_notification< T >
 	std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
 	{
+		ZoneScoped;
 		//All of this should run on the main thread
 
 		using Signaler = std::unique_ptr< typename T::Signaler >;
@@ -116,6 +119,7 @@ class NotificationPopup final : public QDialog
 		requires is_simple_notification< T >
 	void createNotification( const QString name, const bool reveal = false )
 	{
+		ZoneScoped;
 		if ( this->thread() == QThread::currentThread() )
 		{
 			if ( reveal ) expand();
@@ -168,6 +172,7 @@ template < typename T >
 	requires is_signaled_notification< T >
 std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
 {
+	ZoneScoped;
 	return getNotificationPopup()->createNotification< T >( name, reveal );
 }
 
@@ -175,6 +180,7 @@ template < typename T >
 	requires is_simple_notification< T >
 void createNotification( const QString name, const bool reveal = false )
 {
+	ZoneScoped;
 	getNotificationPopup()->createNotification< T >( name, reveal );
 }
 

@@ -4,6 +4,8 @@
 
 #include "Record.hpp"
 
+#include <tracy/Tracy.hpp>
+
 namespace internal
 {
 	inline static std::unordered_map< RecordID, std::shared_ptr< RecordData > > map;
@@ -12,6 +14,7 @@ namespace internal
 	//! Returns the ptr for the given key. Returns nullptr if not found
 	inline static std::shared_ptr< RecordData > getPtr( const RecordID key, Transaction& transaction )
 	{
+		ZoneScoped;
 		std::lock_guard guard { map_mtx };
 		if ( auto itter = map.find( key ); itter != map.end() )
 			return itter->second;
@@ -25,6 +28,7 @@ namespace internal
 
 	inline static std::shared_ptr< RecordData > movePtr( RecordData&& data )
 	{
+		ZoneScoped;
 		std::lock_guard guard { map_mtx };
 
 		if ( auto itter = map.find( data.getID() ); itter != map.end() )
@@ -51,6 +55,7 @@ Record::Record( RecordData&& data ) :
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
 try
 {
+	ZoneScoped;
 	if ( recordExists( title, creator, engine, transaction ) )
 		throw RecordAlreadyExists( Record(
 			recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction ) );

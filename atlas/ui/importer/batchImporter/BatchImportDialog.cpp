@@ -135,6 +135,8 @@ void BatchImportDialog::importFiles()
 			}
 		} );
 
+	spdlog::debug( "Finished queueing imports" );
+
 	accept();
 }
 

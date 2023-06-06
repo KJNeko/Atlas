@@ -8,6 +8,7 @@
 
 void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder order, const bool asc )
 {
+	ZoneScoped;
 	try
 	{
 		if ( !text.isEmpty() )

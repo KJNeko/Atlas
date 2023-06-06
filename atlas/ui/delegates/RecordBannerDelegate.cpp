@@ -19,6 +19,7 @@
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
+	ZoneScoped;
 	painter->save();
 
 	//draw test rect
@@ -126,6 +127,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 QSize RecordBannerDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
+	ZoneScoped;
 	return m_grid_size;
 }
 
@@ -133,6 +135,7 @@ void RecordBannerDelegate::
 	drawText( QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str )
 		const
 {
+	ZoneScoped;
 	if ( location != NONE )
 	{
 		const QSize size { rect.width(), strip_size };
@@ -183,6 +186,7 @@ void RecordBannerDelegate::
 
 void RecordBannerDelegate::reloadConfig()
 {
+	ZoneScoped;
 	m_grid_size = calculateSize(
 		config::grid_ui::itemViewWidth::get(),
 		config::grid_ui::bannerSizeX::get(),
@@ -244,6 +248,7 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
 
 QSize RecordBannerDelegate::calculateSize( const int w_width, const int b_width, const int b_height, const int spacing )
 {
+	ZoneScoped;
 	const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
 	int viewport = w_width - scroll_bar - spacing;
 

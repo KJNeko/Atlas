@@ -13,6 +13,8 @@
 #include <QMessageBox>
 #include <QPixmap>
 
+#include <tracy/TracyC.h>
+
 #include "config.hpp"
 #include "core/database/Database.hpp"
 #include "system.hpp"
@@ -21,6 +23,7 @@ namespace imageManager
 {
 	void cleanOrphans()
 	{
+		ZoneScoped;
 		spdlog::debug( "Clearing orphan previews/banners" );
 		//Grab all images from the database
 		Transaction transaction { Transaction::Autocommit };
@@ -40,16 +43,20 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
+		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
 			const QString qstr { QString::fromStdString( path.string() ) };
 			QImage temp_image;
 
+			TracyCZoneN( tracy_ImageLoad, "Image load", true );
 			if ( !temp_image.load( qstr ) )
 			{
 				spdlog::error( "Failed to load image {}", path.string() );
+				TracyCZoneEnd( tracy_ImageLoad );
 				return {};
 			}
+			TracyCZoneEnd( tracy_ImageLoad );
 
 			//Save the image to a temp file depending on os
 			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "atlas" / "temp.webp" };
@@ -58,19 +65,27 @@ namespace imageManager
 
 			std::string image_type { config::images::image_type::get().toStdString() };
 
+			TracyCZoneN( tracy_SaveImage, "Image save", true );
 			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 99 );
+			TracyCZoneEnd( tracy_SaveImage );
 
 			const auto hash_file = []( const std::filesystem::path& hash_path ) -> QByteArray
 			{
+				ZoneScopedN( "Hash file" );
 				if ( std::ifstream ifs( hash_path ); ifs )
 				{
-					std::vector< char > buffer;
-					buffer.resize( std::filesystem::file_size( hash_path ) );
-					ifs.read( buffer.data(), static_cast< long >( buffer.size() ) );
-
+					std::array< std::byte, 4096 > buffer {};
 					QCryptographicHash hash { QCryptographicHash::Sha256 };
-					hash.addData( { reinterpret_cast< const char* >( buffer.data() ),
-					                static_cast< qsizetype >( buffer.size() ) } );
+
+					while ( !ifs.eof() && !ifs.fail() )
+					{
+						ifs.read( reinterpret_cast< char* >( buffer.data() ), static_cast< long >( buffer.size() ) );
+
+						std::size_t read { static_cast< std::size_t >( ifs.gcount() ) };
+
+						hash.addData( { reinterpret_cast< const char* >( buffer.data() ),
+						                static_cast< qsizetype >( read ) } );
+					}
 
 					return hash.result();
 				}
@@ -89,7 +104,9 @@ namespace imageManager
 
 				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + path.extension().string() ) };
 
+				TracyCZoneN( tracy_CopyImage, "Image copy (original)", true );
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( path, dest_path );
+				TracyCZoneEnd( tracy_CopyImage );
 
 				if ( !std::filesystem::exists( dest_path ) )
 				{
@@ -106,7 +123,9 @@ namespace imageManager
 
 				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + ".webp" ) };
 
+				TracyCZoneN( tracy_CopyImage, "Image copy (temp)", true );
 				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
+				TracyCZoneEnd( tracy_CopyImage );
 
 				std::filesystem::remove( temp_path );
 

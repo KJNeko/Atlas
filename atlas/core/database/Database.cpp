@@ -10,7 +10,11 @@
 namespace internal
 {
 	static sqlite::database* db { nullptr };
+#ifdef TRACY_ENABLE
+	static TracyLockableN( std::mutex, db_mtx, "Database lock" );
+#else
 	static std::mutex db_mtx;
+#endif
 
 	static std::atomic< std::thread::id > last_locked {};
 
@@ -19,6 +23,7 @@ namespace internal
 
 sqlite::database& Database::ref()
 {
+	ZoneScoped;
 	if ( internal::db != nullptr )
 		return *internal::db;
 	else
@@ -27,12 +32,14 @@ sqlite::database& Database::ref()
 
 internal::MtxType& Database::lock()
 {
+	ZoneScoped;
 	return internal::db_mtx;
 }
 
 void Database::initalize( const std::filesystem::path init_path )
 try
 {
+	ZoneScoped;
 	initLogging();
 
 	if ( init_path == ":memory:" )
@@ -122,6 +129,7 @@ catch ( sqlite::sqlite_exception& e )
 
 void Database::deinit()
 {
+	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
 	delete internal::db;
 	internal::db = nullptr;
@@ -129,6 +137,7 @@ void Database::deinit()
 
 internal::LockGuardType TransactionData::getLock()
 {
+	ZoneScoped;
 	//Check if we are already locked
 	if ( internal::last_locked == std::this_thread::get_id() )
 	{
@@ -141,16 +150,19 @@ internal::LockGuardType TransactionData::getLock()
 
 TransactionData::TransactionData() : guard( getLock() )
 {
+	ZoneScoped;
 	internal::last_locked = std::this_thread::get_id();
 }
 
 TransactionData::~TransactionData()
 {
+	ZoneScoped;
 	internal::last_locked = std::thread::id();
 }
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
 {
+	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		spdlog::error( "Transaction: Database was not ready!" );
@@ -164,6 +176,7 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 
 Transaction::~Transaction()
 {
+	ZoneScoped;
 	if ( data.use_count() == 1 && !data->invalid )
 	{
 		if ( m_autocommit )
@@ -178,6 +191,7 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
+	ZoneScoped;
 	if ( !data->ran_once )
 	{
 		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
@@ -191,6 +205,7 @@ void Transaction::commit()
 
 void Transaction::abort()
 {
+	ZoneScoped;
 	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
 	if ( !data->ran_once )
 	{
@@ -205,6 +220,8 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
+	ZoneScoped;
+	TracyMessage( sql.c_str(), sql.size() );
 	if ( data == nullptr ) throw TransactionInvalid( sql );
 
 	data->ran_once = true;
@@ -218,11 +235,13 @@ Transaction::Transaction( Transaction& other ) :
   data( other.data ),
   m_autocommit( other.m_autocommit )
 {
+	ZoneScoped;
 	if ( data == nullptr ) throw TransactionInvalid( other.m_previous_statement );
 }
 
 NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {
+	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		guard.reset();
@@ -232,11 +251,13 @@ NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database:
 
 NonTransaction::~NonTransaction()
 {
+	ZoneScoped;
 	if ( !finished ) abort();
 }
 
 void NonTransaction::commit()
 {
+	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -244,6 +265,7 @@ void NonTransaction::commit()
 
 void NonTransaction::abort()
 {
+	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -252,6 +274,7 @@ void NonTransaction::abort()
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
+	ZoneScoped;
 	m_previous_statement = sql;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	return Database::ref() << sql;

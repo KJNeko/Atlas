@@ -6,10 +6,13 @@
 
 #include <queue>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/logging.hpp"
 
 FileInfo FileScannerGenerator::operator()()
 {
+	ZoneScoped;
 	if ( m_h.done() ) throw std::runtime_error( "FileScannerGenerator is done." );
 	m_h();
 
@@ -105,6 +108,7 @@ FileScanner::FileScanner( const std::filesystem::path& path ) :
 
 const FileInfo& FileScanner::at( std::size_t index )
 {
+	ZoneScoped;
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
 		// Index is higher then what we have.
@@ -125,5 +129,6 @@ const FileInfo& FileScanner::at( std::size_t index )
 
 bool FileScanner::iterator::operator==( const std::unreachable_sentinel_t ) const
 {
+	ZoneScoped;
 	return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
 }

@@ -10,6 +10,7 @@
 
 void GameListDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	const Record record { index.data().value< Record >() };
 	const QString title { record->title.get() };
 
@@ -24,6 +25,7 @@ void GameListDelegate::paint( QPainter* painter, const QStyleOptionViewItem& opt
 
 QSize GameListDelegate::sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	//Font height
 	QFontMetrics fm { option.font };
 

@@ -8,11 +8,14 @@
 
 #include <QPainter>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/config.hpp"
 #include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
+	ZoneScoped;
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
 
 	if ( std::filesystem::exists( path ) )
@@ -39,5 +42,6 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 QSize ImageDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
+	ZoneScoped;
 	return { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 }
