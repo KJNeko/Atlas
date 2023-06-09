@@ -63,16 +63,24 @@ try
 		//Extra data for records
 		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
 
-		//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
-		"CREATE TABLE IF NOT EXISTS f95zone_data (f95_id INTEGER PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS dlsite_data (dlsite_id TEXT PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS gl_data (glid INTGEGER PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS atlas_data (atlas_id INTEGER PRIMARY KEY, id_name TEXT, short_name TEXT, title TEXT, original_name TEXT, category TEXT, engine TEXT, status TEXT, version TEXT, developer TEXT, creator TEXT, overview TEXT, censored TEXT, language TEXT, translations TEXT, genre TEXT, voice TEXT, os TEXT, release_date DATE, length TEXT, banner TEXT, banner_wide TEXT, cover TEXT, logo TEXT, last_update DATE)",
+		//Update handling
+		"CREATE TABLE IF NOT EXISTS processed_updates (update_id INTEGER PRIMARY KEY, update_time INTEGER);",
 
-		"CREATE TABLE IF NOT EXISTS f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
-		"CREATE TABLE IF NOT EXISTS dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));",
-		"CREATE TABLE IF NOT EXISTS gl_mapping (record_id REFERENCES records(record_id), glid REFERENCES gl_data(glid), UNIQUE(record_id, glid))",
-		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(atlas_id), UNIQUE(record_id, atlas_id))",
+		//Atlas data tables
+		"CREATE TABLE IF NOT EXISTS atlas_data (id INTEGER PRIMARY KEY, id_name STRING UNIQUE, short_name STRING,"
+		"title STRING, original_name STRING, category STRING, engine STRING, status STRING, version STRING,"
+		"developer STRING, creator STRING, overview STRING, censored STRING, language STRING, translations STRING,"
+		"genre STRING, tags STRING, voice STRING, os STRING, release_date DATE, length STRING, banner STRING, banner_wide STRING,"
+		"cover STRING, logo STRING, wallpaper STRING, previews STRING, last_db_update STRING);",
+
+		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id INTEGER REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(id), UNIQUE(record_id, atlas_id));",
+
+		//F95 data tables
+		"CREATE TABLE IF NOT EXISTS f95_zone_data (f95_id INTEGER UNIQUE, id INTEGER PRIMARY KEY, banner_url STRING, site_url STRING,"
+		"last_thread_comment STRING, thread_publish_date STRING, last_record_update STRING, views STRING, likes STRING, tags STRING, rating STRING,"
+		"screens STRING, replies STRING);",
+
+		"CREATE TABLE IF NOT EXISTS f95_zone_mapping (record_id INTEGER REFERENCES records(record_id), f95_id INTEGER REFERENCES f95_zone_data(f95_id), UNIQUE(record_id, f95_id));",
 
 		//Tags
 		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
