@@ -40,9 +40,15 @@ find_package(SQLite3 3.41.2 REQUIRED)
 message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
 
+if (WIN32)
+    set(QT_PATH "C:/Qt/6.4.3/mingw_64")
+endif ()
+
+
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
+
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
