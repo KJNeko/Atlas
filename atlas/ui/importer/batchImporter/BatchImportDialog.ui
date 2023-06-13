@@ -218,29 +218,6 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="cbDownloadBanners">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="text">
-                <string>Download Banners</string>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="cbDownloadVNDB">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Download metadata from VNDB</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QCheckBox" name="cbMoveImported">
                <property name="enabled">
                 <bool>true</bool>

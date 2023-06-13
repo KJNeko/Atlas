@@ -4,9 +4,10 @@
 
 #include "SIModel.hpp"
 
-#include <QDir>
+#include <stack>
 
-#include "core/logging.hpp"
+#include <QColor>
+#include <QDir>
 
 std::uint64_t hash( const int first, const int second )
 {
@@ -29,37 +30,50 @@ QModelIndex SIModel::index( int row, int column, const QModelIndex& parent_idx )
 {
 	if ( !hasIndex( row, column, parent_idx ) ) return QModelIndex();
 
-	Node* parent { nullptr };
-
 	if ( !parent_idx.isValid() )
-		parent = m_root;
+	{
+		const Node* child { m_root->child( row ) };
+
+		if ( child )
+			return createIndex( row, column, child );
+		else
+			return QModelIndex();
+	}
 	else
-		parent = static_cast< Node* >( parent_idx.internalPointer() );
-
-	Node* child { parent->child( row ) };
-	if ( child ) return createIndex( row, column, child );
-
-	return QModelIndex();
+	{
+		const Node* parent { static_cast< Node* >( parent_idx.internalPointer() ) };
+		const Node* child { parent->child( row ) };
+		if ( child )
+			return createIndex( row, column, child );
+		else
+			return QModelIndex();
+	}
 }
 
 QModelIndex SIModel::parent( const QModelIndex& index ) const
 {
 	if ( !index.isValid() ) return QModelIndex();
 
-	Node* child { static_cast< Node* >( index.internalPointer() ) };
-	Node* parent { child->parent() };
-	if ( parent && parent != m_root )
-		return createIndex( parent->row(), 0, parent );
-	else
-		return QModelIndex();
+	const Node* child { static_cast< Node* >( index.internalPointer() ) };
+	const Node* parent { child->parent() };
+
+	if ( parent == m_root ) return QModelIndex();
+
+	return createIndex( parent->row(), 0, parent );
 }
 
 int SIModel::rowCount( const QModelIndex& index ) const
 {
+	if ( index.column() > 0 ) return 0;
+
 	if ( !index.isValid() )
 		return m_root->childCount();
 	else
-		return static_cast< Node* >( index.internalPointer() )->childCount();
+	{
+		Node* ptr { static_cast< Node* >( index.internalPointer() ) };
+		if ( !ptr->scanned() ) ptr->scan();
+		return ptr->childCount();
+	}
 }
 
 int SIModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -92,4 +106,10 @@ SIModel::~SIModel()
 Node::Node( const QString str, Node* parent, const bool scan_immediate ) : m_path( str ), m_parent( parent )
 {
 	if ( scan_immediate ) scan();
+
+	QFileInfo info { str };
+	if ( info.isDir() )
+		m_info = DirInfo();
+	else
+		m_info = FileInfo();
 }

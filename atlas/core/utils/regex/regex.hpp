@@ -23,9 +23,7 @@
  *
  *
  * When `skip regexify` is unchecked the following is done
- * - All `{}` groups (`{title}` for example) are stripped down and replaced liked so `{title}` -> `(?P<title>[^\\\/]+)`
- * - The exception to this is `{path}` which is
- * - The start of the regex has `^` appended to it
+ * - All `{}` groups (`{title}` for example) are stripped down and replaced like so `{title}` -> `(?P<title>[^\\\/]+)`
  * - The end of the regex has `$` appended to it
  * - This means the following `{title}/{creator}` gets converted to `(?P<title>[^\\\/]+)\\(?P<creator>[^\\\/]+)`
  *
@@ -49,26 +47,28 @@
  * - Capture groups `creator` `version` and `engine` exist and are searched for. But are ultimately optional
  */
 
-QString groupify( const QString group_name );
-
-//! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
-QString escapeStr( QString pattern );
-
-QString processRegexify( QString pattern );
-
-QString regexify( QString pattern );
-
-bool valid( QString pattern, QString text );
-
-struct GroupsOutput
+namespace regex
 {
-	QString title;
-	QString creator;
-	QString version;
-	QString engine;
-};
+	QString groupify( const QString group_name );
 
-//! Extracts all groups from a given string with a given pattern.
-GroupsOutput extractGroups( QString pattern, QString text );
+	//! SHOULD NOT BE USED ANYWHERE EXCEPT FOR PATHS
+	QString escapeStr( QString pattern );
 
+	QString processRegexify( QString pattern );
+
+	QString regexify( QString pattern );
+
+	bool valid( QString pattern, QString text );
+
+	struct GroupsOutput
+	{
+		QString title;
+		QString creator;
+		QString version;
+		QString engine;
+	};
+
+	//! Extracts all groups from a given string with a given pattern.
+	GroupsOutput extractGroups( QString pattern, QString text );
+} // namespace regex
 #endif //ATLAS_REGEX_HPP

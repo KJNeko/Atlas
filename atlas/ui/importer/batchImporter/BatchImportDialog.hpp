@@ -2,9 +2,10 @@
 #define BATCHIMPORTDIALOG_H
 
 #include <QDialog>
+#include <QThreadPool>
 
-#include "core/threading/ImportPreProcessor.hpp"
-#include "core/threading/ImportProcessor.hpp"
+#include "core/Types.hpp"
+#include "core/import/GameScanner.hpp"
 
 namespace Ui
 {
@@ -16,11 +17,6 @@ class BatchImportDialog : public QDialog
 	Q_DISABLE_COPY_MOVE( BatchImportDialog )
 	Q_OBJECT
 
-	QThread processing_thread {};
-	ImportPreProcessor preprocessor {};
-	ImportProcessor processor {};
-	ProgressBarDialog progress { this };
-
   public:
 
 	explicit BatchImportDialog( QWidget* parent = nullptr );
@@ -28,6 +24,7 @@ class BatchImportDialog : public QDialog
 
   private:
 
+	GameScanner scanner {};
 	Ui::BatchImportDialog* ui;
 
 	void loadConfig();
@@ -47,11 +44,9 @@ class BatchImportDialog : public QDialog
 		const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList< int >& roles = QList< int >() );
 	void processFinishedDirectory( const GameImportData data );
 	void finishedPreProcessing();
-	void finishedImporting();
 	void importFailure( const QString top, const QString bottom );
 
   signals:
-	void startProcessingDirectory( const QString regex, const std::filesystem::path path );
 	void addToModel( const GameImportData data );
 	void startImportingGames(
 		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );

@@ -173,6 +173,7 @@ void RecordView::reloadConfig()
 		case BANNER_VIEW:
 			{
 				auto delegate { dynamic_cast< RecordBannerDelegate* >( QListView::itemDelegate() ) };
+				assert( delegate != nullptr );
 				delegate->reloadConfig();
 				//Set spacing between each item
 				QListView::setSpacing( delegate->m_grid_spacing );

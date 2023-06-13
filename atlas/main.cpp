@@ -17,6 +17,14 @@
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <csignal>
+
+#include <sys/stat.h>
+#endif
+
 void clear_lock()
 {
 	std::filesystem::remove( "atlas_lock" );
@@ -24,7 +32,7 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-	setlocale(LC_ALL, ".UTF8");
+	setlocale( LC_ALL, ".UTF8" );
 
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
@@ -35,43 +43,79 @@ int main( int argc, char** argv )
 	{
 		if ( std::ifstream ifs( "atlas_lock" ); ifs )
 		{
-			qint64 pid;
+			int pid;
 			ifs >> pid;
 
-			QMessageBox::warning(
-				nullptr,
-				"Atlas is already running?",
-				QString(
-					"Atlas is already running with pid: %s. Please close the other instance before opening a new one." )
-					.arg( pid ) );
+			//Check if PID still is running
+#ifdef _WIN32
+			HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
+			//Check if process is the same executable
+			if ( handle )
+			{
+				TCHAR buffer[ MAX_PATH ];
+				GetModuleFileNameEx( handle, 0, buffer, MAX_PATH );
+				const std::filesystem::path path { std::filesystem::current_path() };
+				const std::string prev_path { buffer };
+				if ( path != prev_path )
+				{
+					//Process is not the same executable
+					QMessageBox::warning(
+						nullptr,
+						"Atlas is already running?",
+						QString(
+							"Atlas is already running with pid: %s. Please close the other instance before opening a new one." )
+							.arg( QString::number( pid ) ) );
+					return 0;
+				}
+			}
+			else
+			{
+				//We can only assume our previous instance is dead.
+				//Remove the lock file and continue.
+				std::filesystem::remove( "atlas_lock" );
+			}
+
+#else
+			struct stat sts;
+			const std::string str { "/proc/" + std::to_string( pid ) };
+
+			if ( kill( pid, 0 ) == -1 && errno == ESRCH )
+			{
+				//Process doesn't exist
+				spdlog::info( "App is dead but didn't clean up it's own lock, removing lock" );
+				std::filesystem::remove( "atlas_lock" );
+			}
+			else if ( stat( str.c_str(), &sts ) == 0 && errno == ENOENT )
+			{
+				//TODO: Check if process is the same executable and continue if not
+			}
+			else
+			{
+				QMessageBox::warning(
+					nullptr,
+					"Atlas is already running?",
+					QString(
+						"Atlas is already running with pid: %1. Please close the other instance before opening a new one." )
+						.arg( QString::number( pid ) ) );
+			}
+#endif
 		}
-		else
-		{
-			//wtf?
-			QMessageBox::critical(
-				nullptr,
-				"Failed to acquire lock",
-				"Failed to acquire lock! Please make sure you have write permissions to the directory Atlas is in. Report to a dev if this issue persists. Wtf?" );
-		}
-		return EXIT_SUCCESS;
+	}
+
+	std::at_quick_exit( clear_lock );
+	std::atexit( clear_lock );
+	if ( std::ofstream ofs( "atlas_lock" ); ofs )
+	{
+		//Write PID
+		ofs << std::to_string( QCoreApplication::applicationPid() );
 	}
 	else
 	{
-		std::at_quick_exit( clear_lock );
-		std::atexit( clear_lock );
-		if ( std::ofstream ofs( "atlas_lock" ); ofs )
-		{
-			//Write PID
-			ofs << std::to_string( QCoreApplication::applicationPid() );
-		}
-		else
-		{
-			QMessageBox::critical(
-				nullptr,
-				"Failed to acquire lock",
-				"Failed to acquire lock! Please make sure you have write permissions to the directory Atlas is in. Report to a dev if this issue persists." );
-			return EXIT_FAILURE;
-		}
+		QMessageBox::critical(
+			nullptr,
+			"Failed to acquire lock",
+			"Failed to acquire lock! Please make sure you have write permissions to the directory Atlas is in. Report to a dev if this issue persists." );
+		return EXIT_FAILURE;
 	}
 
 	//Fix for windeployqt not adding the bin directory to itself for some reason

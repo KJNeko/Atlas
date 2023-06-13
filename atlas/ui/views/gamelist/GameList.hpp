@@ -14,6 +14,7 @@
 class GameList : public QListView
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE( GameList )
 
   public:
 

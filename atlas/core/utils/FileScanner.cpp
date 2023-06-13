@@ -4,21 +4,26 @@
 
 #include "FileScanner.hpp"
 
-#include <assert.h>
 #include <queue>
 
 #include "core/logging.hpp"
 
 FileInfo FileScannerGenerator::operator()()
 {
+	if ( m_h.done() ) throw std::runtime_error( "FileScannerGenerator is done." );
 	m_h();
+
 	if ( m_h.promise().exception ) std::rethrow_exception( m_h.promise().exception );
-	return std::move( m_h.promise().value );
+	if ( m_h.promise().value.has_value() )
+		return m_h.promise().value.value();
+	else
+		throw std::runtime_error( "Failed to get value from FileScannerGenerator." );
 }
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wswitch-default"
-#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#pragma GCC diagnostic ignored "-Wswitch-default" // Added due to GCC bug 109867
+
+//#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
@@ -28,15 +33,14 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 		throw std::runtime_error( "Path does not exist." );
 	}
 
-	spdlog::debug( "Scanning path {}", path );
-	std::queue< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
-
-	dirs.push( { path, 0 } );
-
 	auto dir_empty = []( const std::filesystem::path& dir_path ) -> bool
 	{ return std::filesystem::directory_iterator( dir_path ) == std::filesystem::directory_iterator(); };
 
 	if ( dir_empty( path ) ) co_return FileInfo { path, path, 0, 0 };
+
+	std::queue< std::pair< std::filesystem::path, std::uint8_t > > dirs {};
+
+	dirs.push( { path, 0 } );
 
 	while ( dirs.size() > 0 )
 	{
@@ -93,29 +97,33 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 
 #pragma GCC diagnostic pop
 
-FileScanner::FileScanner( const std::filesystem::path& path ) : m_path( path ), file_scanner( scan_files( path ) )
-{
-	files.emplace_back( file_scanner() );
-}
+FileScanner::FileScanner( const std::filesystem::path& path ) :
+  m_path( path ),
+  file_scanner( scan_files( path ) ),
+  files( { file_scanner() } )
+{}
 
-FileInfo& FileScanner::at( std::size_t index )
+const FileInfo& FileScanner::at( std::size_t index )
 {
 	if ( index >= files.size() && !file_scanner.m_h.done() )
 	{
-		const auto size { files.size() };
+		// Index is higher then what we have.
+		// Scanner is also NOT done.
+		// We use the coroutine to fetch what the next file should be.
 
-		files.emplace_back( file_scanner() );
+		std::size_t diff { index - ( files.size() - 1 ) };
 
-		assert( files.size() > 0 );
-		assert( files.size() == size + 1 );
-
-		return files.at( files.size() - 1 );
+		while ( diff > 0 && !file_scanner.m_h.done() )
+		{
+			files.emplace_back( file_scanner() );
+			--diff;
+		}
 	}
-	else
-		return files.at( index );
+
+	return files.at( index );
 }
 
-bool FileScanner::iterator::operator==( [[maybe_unused]] const iterator& end ) const
+bool FileScanner::iterator::operator==( const std::unreachable_sentinel_t ) const
 {
 	return m_scanner.file_scanner.m_h.done() && ( m_idx == m_scanner.files.size() );
 }

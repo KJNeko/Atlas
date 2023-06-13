@@ -1,15 +1,17 @@
 #include "BatchImportDialog.hpp"
 
+#include <QAbstractItemView>
 #include <QFileDialog>
+#include <QFutureWatcher>
 #include <QMessageBox>
 #include <QMimeDatabase>
+#include <QtConcurrent>
 
-#include "ProgressBarDialog.hpp"
+#include "BatchImportDelegate.hpp"
+#include "BatchImportModel.hpp"
 #include "core/config.hpp"
-#include "core/foldersize.hpp"
+#include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"
-#include "ui/delegates/BatchImportDelegate.hpp"
-#include "ui/models/BatchImportModel.hpp"
 #include "ui_BatchImportDialog.h"
 
 BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::BatchImportDialog )
@@ -22,53 +24,13 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 	ui->twGames->setEditTriggers( QAbstractItemView::AllEditTriggers );
 
-	processor.moveToThread( &processing_thread );
-	preprocessor.moveToThread( &processing_thread );
-	processing_thread.start();
-
-	connect( this, &BatchImportDialog::startProcessingDirectory, &preprocessor, &ImportPreProcessor::processDirectory );
-	connect(
-		&preprocessor, &ImportPreProcessor::finishedDirectory, this, &BatchImportDialog::processFinishedDirectory );
-	connect( &preprocessor, &ImportPreProcessor::finishedProcessing, this, &BatchImportDialog::finishedPreProcessing );
-
+	connect( &scanner, &GameScanner::scanComplete, this, &BatchImportDialog::finishedPreProcessing );
+	connect( &scanner, &GameScanner::foundGame, this, &BatchImportDialog::processFinishedDirectory );
 	connect(
 		this,
 		&BatchImportDialog::addToModel,
-		dynamic_cast< BatchImportModel* >( ui->twGames->model() ),
+		static_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
-
-	connect(
-		this,
-		&BatchImportDialog::startImportingGames,
-		&processor,
-		&ImportProcessor::importGames,
-		Qt::QueuedConnection );
-	connect(
-		&processor,
-		&ImportProcessor::importComplete,
-		this,
-		&BatchImportDialog::finishedImporting,
-		Qt::QueuedConnection );
-	connect(
-		&processor, &ImportProcessor::importFailure, this, &BatchImportDialog::importFailure, Qt::QueuedConnection );
-
-	//Must be issued on the dialog's thread or else it'll never run.
-	connect( this, &BatchImportDialog::unpauseImport, &processor, &ImportProcessor::unpause, Qt::DirectConnection );
-
-	//Connecting progress bar
-	connect( &processor, &ImportProcessor::updateText, &progress, &ProgressBarDialog::setText );
-	connect( &processor, &ImportProcessor::updateSubText, &progress, &ProgressBarDialog::setSubText );
-	connect( &processor, &ImportProcessor::updateMax, &progress, &ProgressBarDialog::setMax );
-	connect( &processor, &ImportProcessor::updateSubMax, &progress, &ProgressBarDialog::setSubMax );
-	connect( &processor, &ImportProcessor::updateValue, &progress, &ProgressBarDialog::setValue );
-	connect( &processor, &ImportProcessor::updateSubValue, &progress, &ProgressBarDialog::setSubValue );
-	connect( &processor, &ImportProcessor::startProgressBar, &progress, &ProgressBarDialog::show );
-	connect( &processor, &ImportProcessor::closeProgressBar, &progress, &ProgressBarDialog::hide );
-
-	progress.showSubProgress( true );
-
-	if ( config::geometry::batch_import_dialog::hasValue() )
-		restoreGeometry( config::geometry::batch_import_dialog::get() );
 
 	loadConfig();
 }
@@ -78,8 +40,6 @@ void BatchImportDialog::loadConfig()
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
 	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
-	ui->cbDownloadBanners->setChecked( config::importer::downloadBanner::get() );
-	ui->cbDownloadVNDB->setChecked( config::importer::downloadVNDB::get() );
 	ui->cbMoveImported->setChecked( config::importer::moveImported::get() );
 }
 
@@ -88,8 +48,6 @@ void BatchImportDialog::saveConfig()
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
 	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
-	config::importer::downloadBanner::set( ui->cbDownloadBanners->isChecked() );
-	config::importer::downloadVNDB::set( ui->cbDownloadVNDB->isChecked() );
 	config::importer::moveImported::set( ui->cbMoveImported->isChecked() );
 }
 
@@ -97,9 +55,6 @@ BatchImportDialog::~BatchImportDialog()
 {
 	saveConfig();
 	config::geometry::batch_import_dialog::set( saveGeometry() );
-
-	processing_thread.quit();
-	processing_thread.wait();
 
 	delete ui;
 }
@@ -141,18 +96,20 @@ void BatchImportDialog::processFiles()
 		stripEndSlash( std::filesystem::path( ui->tbFormat->text().toStdString() ).make_preferred() )
 	};
 
-	const QString cleaned_regex { regexify( escapeStr( QString::fromStdString( ( base / search ).string() ) ) ) };
+	const QString cleaned_regex {
+		regex::regexify( regex::escapeStr( QString::fromStdString( ( base / search ).string() ) ) )
+	};
 
 	spdlog::debug( "Scanning {} for games", base );
 
-	emit startProcessingDirectory( cleaned_regex, base );
+	scanner.start( base, cleaned_regex );
 
 	ui->twGames->resizeColumnsToContents();
 }
 
 void BatchImportDialog::importFiles()
 {
-	const auto& games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
+	const auto games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
 
 	if ( ui->cbMoveImported->isChecked() )
 		if (
@@ -165,17 +122,25 @@ void BatchImportDialog::importFiles()
 
 	ui->btnBack->setDisabled( true );
 
-	//progress.showSubProgress( ui->cbMoveImported->isChecked() );
+	const bool owning { ui->cbMoveImported->isChecked() };
+	const std::filesystem::path root { ui->tbPath->text().toStdString() };
 
-	emit startImportingGames( games, ui->tbPath->text().toStdString(), ui->cbMoveImported->isChecked() );
+	(void)QtConcurrent::run(
+		[ games, owning, root ]()
+		{
+			for ( auto game : games )
+			{
+				spdlog::debug( "Triggering import game for {}", game.title );
+				(void)importGame( std::move( game ), root, owning );
+			}
+		} );
 
-	this->setDisabled( true );
+	accept();
 }
 
 void BatchImportDialog::on_btnNext_pressed()
 {
 	spdlog::debug( "next pressed" );
-
 	if ( ui->btnNext->text() == "Import" )
 	{
 		importFiles();
@@ -202,6 +167,12 @@ void BatchImportDialog::on_btnNext_pressed()
 			return;
 		}
 
+		if ( !ui->tbFormat->text().contains( "{version}" ) )
+		{
+			ui->statusLabel->setText( "Autofill missing \"{version}\" which is required" );
+			return;
+		}
+
 		ui->swImportGames->setCurrentIndex( 1 );
 		ui->btnBack->setEnabled( true );
 		ui->btnNext->setDisabled( true );
@@ -216,9 +187,7 @@ void BatchImportDialog::on_btnBack_pressed()
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 
-	//Abort the processing thread
-	this->processor.abort();
-	this->preprocessor.abort();
+	scanner.abort();
 
 	ui->btnNext->setText( "Next" );
 	ui->btnNext->setEnabled( true );
@@ -248,12 +217,6 @@ void BatchImportDialog::finishedPreProcessing()
 	ui->btnNext->setEnabled( true );
 }
 
-void BatchImportDialog::finishedImporting()
-{
-	emit importComplete( this->processor.getCompleted() );
-	accept();
-}
-
 void BatchImportDialog::on_btnCancel_pressed()
 {
 	reject();
@@ -264,8 +227,7 @@ void BatchImportDialog::reject()
 	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
 	     == QMessageBox::Yes )
 	{
-		this->processor.abort();
-		this->preprocessor.abort();
+		scanner.abort();
 	}
 
 	QDialog::reject();
@@ -283,10 +245,8 @@ void BatchImportDialog::importFailure( const QString top, const QString bottom )
 			 QMessageBox::No )
 	     == QMessageBox::No )
 	{
-		processor.abort();
-		preprocessor.abort();
+		scanner.abort();
 		this->setEnabled( true );
-		progress.hide();
 	}
 	else
 		emit unpauseImport();

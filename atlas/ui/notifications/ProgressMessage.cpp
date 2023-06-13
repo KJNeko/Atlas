@@ -7,6 +7,7 @@
 #include "ProgressMessage.hpp"
 
 #include "NotificationPopup.hpp"
+#include "core/logging.hpp"
 #include "ui_ProgressMessage.h"
 
 ProgressMessage::ProgressMessage( const QString name, QWidget* parent ) :
@@ -73,10 +74,15 @@ void ProgressMessageSignaler::setProgress( int progress )
 
 void ProgressMessageSignaler::setMessage( QString message )
 {
-	emit messageChanged( message );
+	emit messageChanged( std::move( message ) );
 }
 
 void ProgressMessageSignaler::setFinished()
 {
 	emit selfClose();
+}
+
+void ProgressMessageSignaler::setRange( [[maybe_unused]] int min, int max )
+{
+	setMax( max );
 }

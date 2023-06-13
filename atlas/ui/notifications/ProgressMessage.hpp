@@ -25,14 +25,17 @@ class ProgressMessageSignaler final : public QObject
 
   public:
 
+	ProgressMessageSignaler( QObject* parent = nullptr ) : QObject( parent ) {}
+
+	~ProgressMessageSignaler() override { emit selfClose(); }
+
+  public slots:
+
 	void setMax( int max );
 	void setProgress( int progress );
 	void setMessage( QString message );
 	void setFinished();
-
-	ProgressMessageSignaler( QObject* parent = nullptr ) : QObject( parent ) {}
-
-  private:
+	void setRange( int min, int max );
 
   signals:
 	void maxChanged( int max );
@@ -49,13 +52,18 @@ class ProgressMessage final : public QWidget
 	explicit ProgressMessage( const QString name, QWidget* parent = nullptr );
 	~ProgressMessage() override;
 
-	using Signaler = ProgressMessageSignaler;
-
-	std::unique_ptr< ProgressMessageSignaler > getSignaler();
-
   private:
 
 	Ui::ProgressMessage* ui;
+
+	friend class NotificationPopup;
+	template < typename T >
+	friend T::Signaler createNotification( const QString, const bool );
+
+  public:
+
+	using Signaler = ProgressMessageSignaler;
+	std::unique_ptr< ProgressMessageSignaler > getSignaler();
 
   private slots:
 	void changeMax( int max );
@@ -64,8 +72,6 @@ class ProgressMessage final : public QWidget
 
   public slots:
 	void closeSelf();
-
-	friend class NotificationPopup;
 };
 
 #endif //ATLASGAMEMANAGER_PROGRESSMESSAGE_HPP

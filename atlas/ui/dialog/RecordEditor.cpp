@@ -14,7 +14,6 @@
 
 #include "core/database/record/RecordBanner.hpp"
 #include "core/database/record/RecordPreviews.hpp"
-#include "core/threading/ImportProcessor.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui_RecordEditor.h"
@@ -413,5 +412,5 @@ void RecordEditor::loadVersions()
 
 void RecordEditor::on_previewList_reordered()
 {
-	m_record->previews().reorderPreviews( ui->previewList->model()->getFilepaths() );
+	m_record->previews().reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
 }

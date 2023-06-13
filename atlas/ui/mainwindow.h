@@ -33,8 +33,6 @@ class MainWindow : public QMainWindow
 
 	Ui::MainWindow* ui;
 
-	void addTreeRoot( QString name, QString record_id );
-	void addTreeChild( QTreeWidgetItem* parent, QString name, QString record_id );
 	void openBatchImportDialog();
 	void resizeEvent( QResizeEvent* event ) override;
 	void showEvent( QShowEvent* event ) override;

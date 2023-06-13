@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 
-#include <QtConcurrent>
-
-#include "./dialog/BatchImportDialog.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "ui/importer/batchImporter/BatchImportDialog.hpp"
+#include "ui/importer/simpleImporter/SimpleImporter.hpp"
+#include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
@@ -19,8 +19,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Check db first, if nothing is there add default
 	//default
-	addTreeRoot( "Games", "0" );
-
 	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
@@ -77,40 +75,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImport_triggered()
 {
-	BatchImportDialog biDialog;
-	//connect( &biDialog, SIGNAL( importComplete() ), ui->recordView, SLOT( refresh() ), Qt::SingleShotConnection );
-	connect(
-		&biDialog,
-		&BatchImportDialog::importComplete,
-		ui->recordView,
-		&RecordView::addRecords,
-		Qt::SingleShotConnection );
-	biDialog.exec();
-}
+	//TODO: Add the ability to pick one of the importers. Single, Simple, Batch, Ect.
 
-void MainWindow::addTreeRoot( [[maybe_unused]] QString name, [[maybe_unused]] QString record_id )
-{
 	/*
-	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidget* treeWidget = this->ui->gamesTree;
-	QTreeWidgetItem* treeItem = new QTreeWidgetItem( treeWidget );
+	SimpleImporter* importer { new SimpleImporter( this ) };
 
-	treeItem->setText( 0, name );
-	addTreeChild( treeItem, "Test Game", record_id );
-	 */
-}
+	if ( const auto dir = QFileDialog::getExistingDirectory(
+			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
+	     !dir.isEmpty() )
+	{
+		importer->setRoot( dir );
+		importer->exec();
+	}*/
 
-void MainWindow::addTreeChild( QTreeWidgetItem* parent, QString name, QString description )
-{
-	// QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-	QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+	BatchImportDialog importer { this };
+	importer.exec();
 
-	// QTreeWidgetItem::setText(int column, const QString & text)
-	treeItem->setText( 0, name );
-	treeItem->setText( 1, description );
-
-	// QTreeWidgetItem::addChild(QTreeWidgetItem * child)
-	parent->addChild( treeItem );
+	//SingleImporter importer { this };
+	//importer.exec();
 }
 
 void MainWindow::on_actionOptions_triggered()

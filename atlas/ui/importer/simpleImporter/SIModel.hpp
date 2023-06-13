@@ -8,28 +8,58 @@
 #include <QAbstractItemModel>
 #include <QDir>
 
+#include "core/config.hpp"
 #include "core/logging.hpp"
 
-enum Type
+enum class SupportingType
 {
-	DIR_NONE,
-	GAME_ROOT,
-	GAME_EXEC,
-	PREVIEW,
-	BANNER_N,
-	BANNER_W,
-	BANNER_L,
-	BANNER_C
+	NoSupportingType,
+	TITLE,
+	CREATOR,
+	VERSION,
+	ENGINE
+};
+
+struct DirInfo
+{
+	bool is_game_dir { false };
+	QString title { "" };
+	QString creator { "" };
+	QString version { "" };
+	QString engine { "" };
+
+	bool is_supporting_name { false };
+	SupportingType supporting_type { SupportingType::NoSupportingType };
+};
+
+struct FileInfo
+{
+	bool is_banner { false };
+	BannerType banner_type { BannerType::Normal };
+
+	bool is_preview { false };
 };
 
 struct Node
 {
 	Q_DISABLE_COPY_MOVE( Node )
 
-	Type m_type { DIR_NONE };
+	std::variant< DirInfo, FileInfo > m_info { DirInfo {} };
 	QString m_path;
 
+  private:
+
+	bool m_scanned { false };
+
+  public:
+
 	Node( const QString str, Node* parent = nullptr, const bool scan_immediate = false );
+
+	QString name() const
+	{
+		const auto split_pos { m_path.lastIndexOf( QDir::separator() ) };
+		return m_path.mid( split_pos + 1 );
+	}
 
 	void scan()
 	{
@@ -41,25 +71,33 @@ struct Node
 		for ( const auto& entry : dir.entryInfoList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot ) )
 			m_children.push_back( new Node( entry.absoluteFilePath(), this ) );
 
-		qDebug() << "Finished scan of " << dir << " found " << m_children.size() << " children";
-
-		for ( auto& child : m_children ) child->scan();
+		m_scanned = true;
 	}
 
-	int childCount() { return static_cast< int >( m_children.size() ); }
+	bool scanned() const { return m_scanned; }
 
-	int row()
+	int childCount() const { return static_cast< int >( m_children.size() ); }
+
+	int row() const
 	{
 		if ( m_parent )
 		{
 			const auto& parent_children { m_parent->m_children };
 			return static_cast< int >( std::distance(
-				std::find( parent_children.begin(), parent_children.end(), this ), parent_children.begin() ) );
+				parent_children.begin(), std::find( parent_children.begin(), parent_children.end(), this ) ) );
 		}
 		return 0;
 	}
 
-	Node* parent() { return m_parent; }
+	const Node* parent() const { return m_parent; }
+
+	const Node* child( const int idx ) const
+	{
+		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
+			return nullptr;
+		else
+			return m_children[ static_cast< std::size_t >( idx ) ];
+	}
 
 	Node* child( const int idx )
 	{
