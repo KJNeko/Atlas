@@ -79,7 +79,7 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 				continue;
 			}
 
-			if constexpr ( sys::is_unix )
+			if constexpr ( sys::is_linux )
 			{
 				if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
 				{
@@ -105,10 +105,10 @@ std::vector< std::filesystem::path >
 
 	for ( auto& path : paths )
 	{
-		if constexpr ( sys::is_unix )
+		if constexpr ( sys::is_linux )
 			if ( path.extension() == ".sh" ) execs.emplace_back( std::move( path ), 20 );
 
-		if ( path.extension() == ".exe" ) execs.emplace_back( std::move( path ), sys::is_unix ? 10 : 20 );
+		if ( path.extension() == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
