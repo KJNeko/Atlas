@@ -10,7 +10,11 @@
 namespace internal
 {
 	static sqlite::database* db { nullptr };
+#ifdef TRACY_ENABLE
+	static TracyLockableN( std::mutex, db_mtx, "Database lock" );
+#else
 	static std::mutex db_mtx;
+#endif
 
 	static std::atomic< std::thread::id > last_locked {};
 
@@ -19,6 +23,7 @@ namespace internal
 
 sqlite::database& Database::ref()
 {
+	ZoneScoped;
 	if ( internal::db != nullptr )
 		return *internal::db;
 	else
@@ -27,12 +32,14 @@ sqlite::database& Database::ref()
 
 internal::MtxType& Database::lock()
 {
+	ZoneScoped;
 	return internal::db_mtx;
 }
 
 void Database::initalize( const std::filesystem::path init_path )
 try
 {
+	ZoneScoped;
 	initLogging();
 
 	if ( init_path == ":memory:" )
@@ -56,16 +63,24 @@ try
 		//Extra data for records
 		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
 
-		//Dummy tables. Should be filled out later (Exists to allow X_mapping to use `REFERENCE`
-		"CREATE TABLE IF NOT EXISTS f95zone_data (f95_id INTEGER PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS dlsite_data (dlsite_id TEXT PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS gl_data (glid INTGEGER PRIMARY KEY);",
-		"CREATE TABLE IF NOT EXISTS atlas_data (atlas_id INTEGER PRIMARY KEY, id_name TEXT, short_name TEXT, title TEXT, original_name TEXT, category TEXT, engine TEXT, status TEXT, version TEXT, developer TEXT, creator TEXT, overview TEXT, censored TEXT, language TEXT, translations TEXT, genre TEXT, voice TEXT, os TEXT, release_date DATE, length TEXT, banner TEXT, banner_wide TEXT, cover TEXT, logo TEXT, last_update DATE)",
+		//Atlas data tables
+		"CREATE TABLE IF NOT EXISTS atlas_data (id INTEGER PRIMARY KEY, id_name STRING UNIQUE, short_name STRING,"
+		"title STRING, original_name STRING, category STRING, engine STRING, status STRING, version STRING,"
+		"developer STRING, creator STRING, overview STRING, censored STRING, language STRING, translations STRING,"
+		"genre STRING, tags STRING, voice STRING, os STRING, release_date DATE, length STRING, banner STRING, banner_wide STRING,"
+		"cover STRING, logo STRING, wallpaper STRING, previews STRING, last_db_update STRING);",
 
-		"CREATE TABLE IF NOT EXISTS f95zone_mapping (record_id REFERENCES records(record_id), f95_id REFERENCES f95zone_data(f95_id), UNIQUE(record_id, f95_id));",
-		"CREATE TABLE IF NOT EXISTS dlsite_mapping (record_id REFERENCES records(record_id), dlsite_id REFERENCES dlsite_data(dlsite_id), UNIQUE(record_id, dlsite_id));",
-		"CREATE TABLE IF NOT EXISTS gl_mapping (record_id REFERENCES records(record_id), glid REFERENCES gl_data(glid), UNIQUE(record_id, glid))",
-		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(atlas_id), UNIQUE(record_id, atlas_id))",
+		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id INTEGER REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(id), UNIQUE(record_id, atlas_id));",
+
+		//F95 data tables
+		"CREATE TABLE IF NOT EXISTS f95_zone_data (f95_id INTEGER UNIQUE, id INTEGER PRIMARY KEY, banner_url STRING, site_url STRING,"
+		"last_thread_comment STRING, thread_publish_date STRING, last_record_update STRING, views STRING, likes STRING, tags STRING, rating STRING,"
+		"screens STRING, replies STRING);",
+
+		"CREATE TABLE IF NOT EXISTS f95_zone_mapping (record_id INTEGER REFERENCES records(record_id), f95_id INTEGER REFERENCES f95_zone_data(f95_id), UNIQUE(record_id, f95_id));",
+
+		//Update handling
+		"CREATE TABLE IF NOT EXISTS updates (update_time INTEGER PRIMARY KEY, processed_time INTEGER, md5 BLOB);",
 
 		//Tags
 		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
@@ -122,6 +137,7 @@ catch ( sqlite::sqlite_exception& e )
 
 void Database::deinit()
 {
+	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
 	delete internal::db;
 	internal::db = nullptr;
@@ -129,6 +145,7 @@ void Database::deinit()
 
 internal::LockGuardType TransactionData::getLock()
 {
+	ZoneScoped;
 	//Check if we are already locked
 	if ( internal::last_locked == std::this_thread::get_id() )
 	{
@@ -141,16 +158,19 @@ internal::LockGuardType TransactionData::getLock()
 
 TransactionData::TransactionData() : guard( getLock() )
 {
+	ZoneScoped;
 	internal::last_locked = std::this_thread::get_id();
 }
 
 TransactionData::~TransactionData()
 {
+	ZoneScoped;
 	internal::last_locked = std::thread::id();
 }
 
 Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
 {
+	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		spdlog::error( "Transaction: Database was not ready!" );
@@ -164,6 +184,7 @@ Transaction::Transaction( const bool autocommit ) : data( new TransactionData() 
 
 Transaction::~Transaction()
 {
+	ZoneScoped;
 	if ( data.use_count() == 1 && !data->invalid )
 	{
 		if ( m_autocommit )
@@ -178,6 +199,7 @@ Transaction::~Transaction()
 
 void Transaction::commit()
 {
+	ZoneScoped;
 	if ( !data->ran_once )
 	{
 		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
@@ -191,6 +213,7 @@ void Transaction::commit()
 
 void Transaction::abort()
 {
+	ZoneScoped;
 	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
 	if ( !data->ran_once )
 	{
@@ -205,6 +228,8 @@ void Transaction::abort()
 
 sqlite::database_binder Transaction::operator<<( const std::string& sql )
 {
+	ZoneScoped;
+	TracyMessage( sql.c_str(), sql.size() );
 	if ( data == nullptr ) throw TransactionInvalid( sql );
 
 	data->ran_once = true;
@@ -218,11 +243,13 @@ Transaction::Transaction( Transaction& other ) :
   data( other.data ),
   m_autocommit( other.m_autocommit )
 {
+	ZoneScoped;
 	if ( data == nullptr ) throw TransactionInvalid( other.m_previous_statement );
 }
 
 NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
 {
+	ZoneScoped;
 	if ( internal::db == nullptr )
 	{
 		guard.reset();
@@ -232,11 +259,13 @@ NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database:
 
 NonTransaction::~NonTransaction()
 {
+	ZoneScoped;
 	if ( !finished ) abort();
 }
 
 void NonTransaction::commit()
 {
+	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -244,6 +273,7 @@ void NonTransaction::commit()
 
 void NonTransaction::abort()
 {
+	ZoneScoped;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	finished = true;
 	guard.reset();
@@ -252,6 +282,7 @@ void NonTransaction::abort()
 
 sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
 {
+	ZoneScoped;
 	m_previous_statement = sql;
 	if ( finished ) throw TransactionInvalid( m_previous_statement );
 	return Database::ref() << sql;

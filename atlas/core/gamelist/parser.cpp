@@ -13,12 +13,17 @@ namespace gl
 	{
 		std::vector< std::filesystem::path > games;
 
-		for ( const auto& file : std::filesystem::recursive_directory_iterator( root ) )
+		auto itter = std::filesystem::recursive_directory_iterator( root );
+
+		while ( itter != std::filesystem::recursive_directory_iterator() )
 		{
-			if ( file.is_regular_file() && file.path().filename() == "GL_Infos.ini" )
-				games.push_back( file.path().parent_path() );
-			else
-				continue;
+			if ( itter->is_regular_file() && itter->path().filename() == "GL_Infos.ini" )
+			{
+				games.emplace_back( itter->path().parent_path() );
+				itter.pop();
+			}
+
+			++itter;
 		}
 
 		return games;
@@ -39,7 +44,7 @@ namespace gl
 	{
 		GameListInfos infos;
 
-		QSettings settings( QString::fromStdString( path.string() ), QSettings::IniFormat );
+		const QSettings settings( QString::fromStdString( path.string() ), QSettings::IniFormat );
 
 		infos.version = settings.value( "GameList/Version" ).toString();
 		infos.f95_id = settings.value( "GameList/ID" ).toULongLong();

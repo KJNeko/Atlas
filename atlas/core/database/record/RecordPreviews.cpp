@@ -11,6 +11,7 @@
 const std::vector< std::filesystem::path > RecordPreviews::getPreviewPaths( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::vector< std::filesystem::path > previews;
 	const auto root_images { config::paths::images::getPath() };
 	transaction << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_record.getID() >>
@@ -38,6 +39,7 @@ catch ( ... )
 std::vector< QPixmap > RecordPreviews::getPreviews( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::vector< QPixmap > images;
 
 	for ( const auto& link : getPreviewPaths( transaction ) )
@@ -77,6 +79,7 @@ catch ( ... )
 void RecordPreviews::addPreview( const std::filesystem::path& path, Transaction transaction )
 try
 {
+	ZoneScoped;
 	//Move preview to image folder
 	const auto root_images { config::paths::images::getPath() };
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
@@ -113,6 +116,7 @@ catch ( ... )
 void RecordPreviews::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
 try
 {
+	ZoneScoped;
 	const auto active_previews { getPreviewPaths( transaction ) };
 
 	//Set all previews to max order
@@ -155,6 +159,7 @@ catch ( ... )
 void RecordPreviews::removePreview( const std::filesystem::path& preview, Transaction trans )
 try
 {
+	ZoneScoped;
 	const auto image_root { config::paths::images::getPath() };
 	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_record.getID()
 		  << std::filesystem::relative( preview, image_root ).string();

@@ -8,10 +8,10 @@
 namespace sys
 {
 
-#ifdef __unix__
-	[[maybe_unused]] constexpr bool is_unix { true };
+#ifdef __linux__
+	[[maybe_unused]] constexpr bool is_linux { true };
 #else
-	[[maybe_unused]] constexpr bool is_unix { false };
+	[[maybe_unused]] constexpr bool is_linux { false };
 #endif
 
 #ifdef _WIN32

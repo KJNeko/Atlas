@@ -152,6 +152,7 @@ int main( int argc, char** argv )
 
 	QPixmapCache::setCacheLimit( 1024 * 128 );
 
+
 	MainWindow w;
 	w.show();
 	const int code { app.exec() };

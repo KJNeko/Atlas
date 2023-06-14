@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-  <author/>
-  <comment/>
-  <exportmacro/>
-  <class>GLImporter</class>
-  <widget class="QDialog" name="GLImporter">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>400</width>
-        <height>300</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>GLImporter</string>
-    </property>
-  </widget>
-  <pixmapfunction/>
-  <connections/>
+ <class>GLImporter</class>
+ <widget class="QDialog" name="GLImporter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>928</width>
+    <height>669</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GLImporter</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Found %1 games</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

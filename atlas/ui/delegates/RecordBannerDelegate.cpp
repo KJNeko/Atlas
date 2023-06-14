@@ -19,6 +19,7 @@
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
+	ZoneScoped;
 	painter->save();
 
 	//draw test rect
@@ -110,7 +111,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//Draw Title
 	this->drawText( painter, options_rect, stripe_height, m_title_location, record->title.get() );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->title.get() );
+	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->engine.get() );
 	//Draw Version
 	const auto& latest { record->getLatestVersion() };
 	if ( latest.has_value() )
@@ -118,7 +119,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	else
 		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->title.get() );
+	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->creator.get() );
 
 	painter->restore();
 }
@@ -126,6 +127,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 QSize RecordBannerDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
+	ZoneScoped;
 	return m_grid_size;
 }
 
@@ -133,6 +135,7 @@ void RecordBannerDelegate::
 	drawText( QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str )
 		const
 {
+	ZoneScoped;
 	if ( location != NONE )
 	{
 		const QSize size { rect.width(), strip_size };
@@ -183,6 +186,7 @@ void RecordBannerDelegate::
 
 void RecordBannerDelegate::reloadConfig()
 {
+	ZoneScoped;
 	m_grid_size = calculateSize(
 		config::grid_ui::itemViewWidth::get(),
 		config::grid_ui::bannerSizeX::get(),
@@ -244,6 +248,7 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
 
 QSize RecordBannerDelegate::calculateSize( const int w_width, const int b_width, const int b_height, const int spacing )
 {
+	ZoneScoped;
 	const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
 	int viewport = w_width - scroll_bar - spacing;
 

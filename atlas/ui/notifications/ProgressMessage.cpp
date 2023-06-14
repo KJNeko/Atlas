@@ -6,6 +6,8 @@
 
 #include "ProgressMessage.hpp"
 
+#include <tracy/Tracy.hpp>
+
 #include "NotificationPopup.hpp"
 #include "core/logging.hpp"
 #include "ui_ProgressMessage.h"
@@ -26,6 +28,7 @@ ProgressMessage::~ProgressMessage()
 
 std::unique_ptr< ProgressMessageSignaler > ProgressMessage::getSignaler()
 {
+	ZoneScoped;
 	std::unique_ptr< ProgressMessageSignaler > signaler { std::make_unique< ProgressMessageSignaler >() };
 
 	connect( signaler.get(), &ProgressMessageSignaler::maxChanged, this, &ProgressMessage::changeMax );

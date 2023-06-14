@@ -38,6 +38,7 @@ void GameView::setRecord( const Record record )
 
 void GameView::reloadRecord()
 {
+	ZoneScoped;
 	if ( m_record == nullptr ) return;
 	const auto& record { *m_record };
 
@@ -168,6 +169,7 @@ void GameView::clearRecord()
 
 void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
+	ZoneScoped;
 	spdlog::info( "Painting Detail ui" );
 
 	if ( *m_record != nullptr )
@@ -251,6 +253,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 GameMetadata GameView::selectedVersion()
 {
+	ZoneScoped;
 	if ( !m_record.has_value() ) throw std::runtime_error( "selectedVersion: Record invalid" );
 
 	if ( m_record.value()->getVersions().size() == 0 )

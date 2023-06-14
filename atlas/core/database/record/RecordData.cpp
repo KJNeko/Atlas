@@ -17,6 +17,7 @@
 
 RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id )
 {
+	ZoneScoped;
 	if ( id == 0 ) throw std::runtime_error( "Invalid record id" );
 
 	bool exists;
@@ -34,6 +35,7 @@ RecordID RecordData::getID() const
 std::optional< GameMetadata > RecordData::getVersion( const QString version_name, Transaction transaction )
 try
 {
+	ZoneScoped;
 	const auto versions { getVersions( transaction ) };
 
 	const auto idx { std::find_if(
@@ -65,6 +67,7 @@ catch ( ... )
 std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transaction )
 try
 {
+	ZoneScoped;
 	const auto versions { getVersions( transaction ) };
 	if ( versions.empty() )
 		return std::nullopt;
@@ -90,6 +93,7 @@ catch ( ... )
 std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
 try
 {
+	ZoneScoped;
 	std::vector< GameMetadata > metadata;
 	transaction << "SELECT version FROM game_metadata WHERE record_id = ? ORDER BY date_added DESC" << m_id >>
 		[ this, &metadata, &transaction ]( std::string version )
@@ -122,6 +126,7 @@ void RecordData::addVersion(
 	Transaction transaction )
 try
 {
+	ZoneScoped;
 	spdlog::debug(
 		"RecordData::addVersion() - Adding version {} to record {}:{}",
 		version.toStdString(),
@@ -170,6 +175,7 @@ catch ( ... )
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
 try
 {
+	ZoneScoped;
 	const auto active_versions { getVersions( transaction ) };
 
 	auto itter { std::find( active_versions.begin(), active_versions.end(), version ) };
@@ -207,6 +213,7 @@ catch ( ... )
 RecordData::RecordData( QString title_in, QString creator_in, QString engine_in, Transaction transaction )
 try
 {
+	ZoneScoped;
 	RecordID record_id { 0 };
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
 				<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
@@ -255,6 +262,7 @@ catch ( ... )
 QString RecordData::getDesc( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	try
 	{
 		std::string str;
@@ -285,6 +293,7 @@ catch ( ... )
 void RecordData::setDesc( const QString& str, Transaction transaction )
 try
 {
+	ZoneScoped;
 	bool found { false };
 	transaction << "SELECT count(*) FROM game_notes WHERE record_id = ?" << m_id >> found;
 
@@ -310,6 +319,7 @@ catch ( ... )
 std::vector< QString > RecordData::getAllTags( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::vector< QString > tags;
 	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> [ &tags ]( const std::string& str )
 	{ tags.emplace_back( QString::fromStdString( str ) ); };
@@ -334,6 +344,7 @@ catch ( ... )
 std::vector< QString > RecordData::getUserTags( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::vector< QString > tags;
 	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >>
 		[ & ]( const std::string str ) { tags.emplace_back( QString::fromStdString( str ) ); };
@@ -359,6 +370,7 @@ catch ( ... )
 std::size_t strToTagID( const QString str, Transaction transaction = Transaction( Autocommit ) )
 try
 {
+	ZoneScoped;
 	std::size_t id { 0 };
 	transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str.toStdString() >> id;
 	return id;
@@ -386,6 +398,7 @@ catch ( ... )
 void RecordData::addUserTag( const QString str, Transaction transaction )
 try
 {
+	ZoneScoped;
 	if ( auto tag_id = strToTagID( str, transaction ); tag_id != 0 )
 	{
 		//Tag exists
@@ -414,6 +427,7 @@ catch ( ... )
 void RecordData::removeUserTag( const QString str, Transaction transaction )
 try
 {
+	ZoneScoped;
 	const auto tag_id { strToTagID( str, transaction ) };
 	if ( tag_id == 0 )
 		return;
@@ -439,6 +453,7 @@ catch ( ... )
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 try
 {
+	ZoneScoped;
 	RecordID record_id { 0 };
 
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
@@ -475,6 +490,7 @@ catch ( ... )
 bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 try
 {
+	ZoneScoped;
 	return recordID( title, creator, engine, transaction );
 }
 catch ( [[maybe_unused]] sqlite::exceptions::no_rows& e )

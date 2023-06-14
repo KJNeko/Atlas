@@ -18,6 +18,7 @@ QString GameMetadata::getVersionName() const
 bool GameMetadata::isInPlace( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	bool in_place { false };
 
 	transaction << "SELECT in_place FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
@@ -40,6 +41,7 @@ catch ( ... )
 std::uint32_t GameMetadata::getPlaytime( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::uint32_t total_playtime { 0 };
 
 	transaction << "SELECT version_playtime FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
@@ -73,6 +75,7 @@ catch ( ... )
 std::uint64_t GameMetadata::getLastPlayed( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::uint64_t last_played { 0 };
 
 	transaction << "SELECT last_played FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
@@ -106,6 +109,7 @@ catch ( ... )
 std::filesystem::path GameMetadata::getPath( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::string path;
 	transaction << "SELECT game_path FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
 				<< m_version.toStdString()
@@ -141,6 +145,7 @@ catch ( ... )
 std::filesystem::path GameMetadata::getRelativeExecPath( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::string str;
 	transaction << "SELECT exec_path FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
 				<< m_version.toStdString()
@@ -173,6 +178,7 @@ catch ( ... )
 std::filesystem::path GameMetadata::getExecPath( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	return getPath( transaction ) / getRelativeExecPath( transaction );
 }
 catch ( const sqlite::sqlite_exception& e )
@@ -200,6 +206,7 @@ catch ( ... )
 void GameMetadata::playGame( Transaction transaction )
 try
 {
+	ZoneScoped;
 	if ( const auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
 	{
 		const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
@@ -245,6 +252,7 @@ catch ( ... )
 void GameMetadata::addPlaytime( const std::uint32_t playtime, Transaction transaction )
 try
 {
+	ZoneScoped;
 	transaction << "UPDATE game_metadata SET version_playtime = ? WHERE record_id = ? AND version = ?"
 				<< playtime + getPlaytime( transaction ) << m_parent->getID() << m_version.toStdString();
 
@@ -274,6 +282,7 @@ catch ( ... )
 void GameMetadata::setLastPlayed( const std::uint64_t last_played, Transaction transaction )
 try
 {
+	ZoneScoped;
 	transaction << "UPDATE game_metadata SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
 				<< m_parent->getID() << m_version.toStdString();
 	m_parent->last_played.set( last_played, transaction );
@@ -303,6 +312,7 @@ catch ( ... )
 std::uint64_t GameMetadata::getFolderSize( Transaction transaction ) const
 try
 {
+	ZoneScoped;
 	std::size_t folder_size { 0 };
 	transaction << "SELECT folder_size FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
 				<< m_version.toStdString()
@@ -339,6 +349,7 @@ RecordID GameMetadata::getParentID() const
 void GameMetadata::setVersionName( const QString str, Transaction transaction )
 try
 {
+	ZoneScoped;
 	transaction << "UPDATE game_metadata SET version = ? WHERE record_id = ? AND version = ?" << str.toStdString()
 				<< m_parent->getID() << m_version.toStdString();
 	m_version = str;
@@ -376,6 +387,7 @@ catch ( ... )
 void GameMetadata::setRelativeExecPath( const std::filesystem::path& path, Transaction transaction )
 try
 {
+	ZoneScoped;
 	transaction << "UPDATE game_metadata SET exec_path = ? WHERE record_id = ? AND version = ?" << path.string()
 				<< m_parent->getID() << m_version.toStdString();
 }
@@ -412,6 +424,7 @@ catch ( ... )
 std::uint64_t GameMetadata::getImportTime( Transaction trans ) const
 try
 {
+	ZoneScoped;
 	std::uint64_t import_time { 0 };
 	trans << "SELECT date_added FROM game_metadata WHERE record_id = ? AND version = ?" << m_parent->getID()
 		  << m_version.toStdString()

@@ -27,6 +27,7 @@ NotificationPopup::~NotificationPopup()
 
 void NotificationPopup::on_btnHideShow_clicked()
 {
+	ZoneScoped;
 	ui->scrollArea->setVisible( ui->btnHideShow->isChecked() );
 	//ui->listFrame->setVisible( ui->btnHideShow->isChecked());
 

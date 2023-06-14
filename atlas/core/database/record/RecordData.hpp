@@ -15,7 +15,7 @@ struct GameMetadata;
 class RecordBanner;
 class RecordPreviews;
 
-#include "core/database/helpers.hpp"
+#include "core/database/Column.hpp"
 
 struct RecordData
 {
@@ -25,22 +25,6 @@ struct RecordData
   private:
 
 	RecordID m_id { 0 };
-
-	/*QString m_title {};
-	QString m_creator {};
-	QString m_engine {};
-
-	//! Unix timestamp (Jan 01 1970 Epoch)
-	std::uint64_t m_last_played { 0 };
-
-	//! Seconds counter
-	std::uint32_t m_total_playtime { 0 };
-
-	std::vector< GameMetadata > m_versions {};
-
-	std::filesystem::path m_banner {};
-	std::filesystem::path m_override_banner {};
-	std::vector< std::filesystem::path > m_previews {};*/
 
   public:
 

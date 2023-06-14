@@ -11,10 +11,13 @@
 #include <QPixmapCache>
 #include <QWidget>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/config.hpp"
 
 QPixmap blurPixmap( const QPixmap& pixmap, qreal radius, bool quality )
 {
+	ZoneScoped;
 	QGraphicsScene scene;
 	QGraphicsPixmapItem item;
 	item.setPixmap( pixmap );
@@ -38,6 +41,7 @@ QPixmap blurToSize(
 	const int image_blur_radius,
 	const BLUR_TYPE image_blur_type )
 {
+	ZoneScoped;
 	if ( pixmap.isNull() ) return QPixmap();
 	auto resized { pixmap.toImage().scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation ) };
 	//const auto blurred_image { blurPixmap( pixmap, 25, false, false ) };

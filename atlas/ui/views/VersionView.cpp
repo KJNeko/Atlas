@@ -15,6 +15,7 @@
 
 VersionView::VersionView( QWidget* parent ) : QWidget( parent ), ui( new Ui::VersionView )
 {
+	ZoneScoped;
 	ui->setupUi( this );
 
 	ui->btnChangeExec->setEnabled( false );
@@ -28,6 +29,7 @@ VersionView::~VersionView()
 
 void VersionView::setVersion( const std::optional< GameMetadata > metadata )
 {
+	ZoneScoped;
 	m_metadata = metadata;
 
 	ui->btnChangeExec->setEnabled( m_metadata.has_value() );
@@ -38,6 +40,7 @@ void VersionView::setVersion( const std::optional< GameMetadata > metadata )
 
 void VersionView::reloadData()
 {
+	ZoneScoped;
 	if ( !m_metadata.has_value() ) return;
 
 	const auto& mdata { m_metadata.value() };
@@ -67,6 +70,7 @@ void VersionView::reloadData()
 
 void VersionView::on_btnChangeVersion_pressed()
 {
+	ZoneScoped;
 	if ( const auto output =
 	         QInputDialog::getText( this, "Change Version", "New Version", QLineEdit::Normal, ui->versionEdit->text() );
 	     !output.isEmpty() && output != ui->versionEdit->text() )
@@ -91,6 +95,7 @@ void VersionView::on_btnChangeVersion_pressed()
 
 void VersionView::on_btnChangeExec_pressed()
 {
+	ZoneScoped;
 	if ( const auto file = QFileDialog::getOpenFileName(
 			 this,
 			 "Select executable",
