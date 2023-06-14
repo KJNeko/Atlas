@@ -63,9 +63,6 @@ try
 		//Extra data for records
 		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
 
-		//Update handling
-		"CREATE TABLE IF NOT EXISTS processed_updates (update_id INTEGER PRIMARY KEY, update_time INTEGER);",
-
 		//Atlas data tables
 		"CREATE TABLE IF NOT EXISTS atlas_data (id INTEGER PRIMARY KEY, id_name STRING UNIQUE, short_name STRING,"
 		"title STRING, original_name STRING, category STRING, engine STRING, status STRING, version STRING,"
@@ -81,6 +78,9 @@ try
 		"screens STRING, replies STRING);",
 
 		"CREATE TABLE IF NOT EXISTS f95_zone_mapping (record_id INTEGER REFERENCES records(record_id), f95_id INTEGER REFERENCES f95_zone_data(f95_id), UNIQUE(record_id, f95_id));",
+
+		//Update handling
+		"CREATE TABLE IF NOT EXISTS updates (update_time INTEGER PRIMARY KEY, processed_time INTEGER, md5 BLOB);",
 
 		//Tags
 		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",

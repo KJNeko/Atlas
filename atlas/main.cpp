@@ -14,7 +14,6 @@
 
 #include "core/config.hpp"
 #include "core/database/Database.hpp"
-#include "core/remote/AtlasRemote.hpp"
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
 
@@ -153,8 +152,6 @@ int main( int argc, char** argv )
 
 	QPixmapCache::setCacheLimit( 1024 * 128 );
 
-	//Init remote system
-	//atlas::initRemoteHandler();
 
 	MainWindow w;
 	w.show();

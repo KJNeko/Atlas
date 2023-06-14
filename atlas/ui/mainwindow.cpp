@@ -5,6 +5,7 @@
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "core/remote/AtlasRemote.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
@@ -61,7 +62,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	getNotificationPopup()->hide();
 	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
 
-	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
+	//Init remote system
+	atlas::initRemoteHandler();
 }
 
 MainWindow::~MainWindow()
