@@ -38,7 +38,7 @@ int main( int argc, char** argv )
 
 	//initLogging();
 	QApplication app { argc, argv };
-
+	/*
 	if ( std::filesystem::exists( "atlas_lock" ) )
 	{
 		if ( std::ifstream ifs( "atlas_lock" ); ifs )
@@ -117,7 +117,7 @@ int main( int argc, char** argv )
 			"Failed to acquire lock! Please make sure you have write permissions to the directory Atlas is in. Report to a dev if this issue persists." );
 		return EXIT_FAILURE;
 	}
-
+*/
 	//Fix for windeployqt not adding the bin directory to itself for some reason
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
 
@@ -151,7 +151,6 @@ int main( int argc, char** argv )
 	Database::initalize( db_path );
 
 	QPixmapCache::setCacheLimit( 1024 * 128 );
-
 
 	MainWindow w;
 	w.show();
