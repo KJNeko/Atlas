@@ -22,3 +22,6 @@ build.bat
 *.user
 .vscode
 *.autosave
+
+/dependencies/zlib/zconf.h.included
+/dependencies/zlib/zconf.h
