@@ -13,6 +13,10 @@ const std::filesystem::path RecordBanner::getBannerPath( const BannerType type, 
 try
 {
 	ZoneScoped;
+
+	//ID 1 will always be the test record.
+	if ( m_record.getID() == 1 ) return { ":/images/assets/Grid_Capsule_Default.webp" };
+
 	std::string banner_path;
 	transaction << "SELECT path FROM banners WHERE record_id = ? AND type = ? limit 1" << m_record.getID()
 				<< static_cast< int >( type )
