@@ -287,7 +287,7 @@ namespace atlas
 		}
 	}
 
-	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
+	void AtlasRemote::processUpdateFile( [[maybe_unused]] const std::uint64_t update_time )
 	{}
 
 } // namespace atlas

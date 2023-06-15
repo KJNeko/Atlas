@@ -51,7 +51,7 @@ void SimpleImporter::dirView_itemSelectionChanged(
 	updateSidebar();
 }
 
-void SimpleImporter::onCustomContextMenuRequested( const QPoint& point )
+void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint& point )
 {}
 
 std::vector< QPersistentModelIndex > SimpleImporter::selected() const
