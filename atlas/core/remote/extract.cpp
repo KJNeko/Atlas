@@ -34,8 +34,6 @@ namespace atlas
 			strm.avail_in = 0;
 			strm.next_in = nullptr;
 			ret = inflateInit( &strm );
-			strm.next_in = in;
-			strm.next_out = out;
 			if ( ret != Z_OK ) throw std::runtime_error( fmt::format( "Failed to initialize zlib: {}", ret ) );
 
 			do {
@@ -47,9 +45,11 @@ namespace atlas
 				}
 
 				if ( strm.avail_in == 0 ) break;
+				strm.next_in = in;
 
 				do {
 					strm.avail_out = CHUNK;
+					strm.next_out = out;
 
 					ret = inflate( &strm, Z_NO_FLUSH );
 					assert( ret != Z_STREAM_ERROR );
