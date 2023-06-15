@@ -474,7 +474,7 @@ void SingleImporter::fillIn()
 
 		const auto stem { path.stem().string() };
 
-		const auto qt_str { QString::fromStdString( path ) };
+		const auto qt_str { QString::fromStdString( path.string() ) };
 
 		if ( stem == "banner" )
 			ui->leBannerNormal->setText( qt_str );
