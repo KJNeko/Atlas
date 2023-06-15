@@ -109,7 +109,7 @@ namespace atlas
 			[
 			  {
 			    "date": 1686679308,
-			    "name": "1686679308.gzip",
+			    "name": "1686679308.update",
 			    "md5": "c199a08bde792f0674cab838dd900d3a"
 			  }
 			]
@@ -141,12 +141,11 @@ namespace atlas
 			}
 
 			const auto& date { obj[ "date" ].toInteger() };
-			const auto& name { obj[ "name" ].toString() };
-			const auto& md5 { obj[ "md5" ].toString() };
-			const auto& md5_data { QByteArray::fromHex( md5.toUtf8() ) };
+			const auto& md5_str { obj[ "md5" ].toString() };
+			const auto& md5 { QByteArray::fromHex( md5_str.toUtf8() ) };
 			std::vector< std::byte > md5_data_c {};
-			md5_data_c.resize( static_cast< unsigned long >( md5_data.size() ) );
-			memcpy( md5_data_c.data(), md5_data.data(), static_cast< size_t >( md5_data.size() ) );
+			md5_data_c.resize( static_cast< unsigned long >( md5.size() ) );
+			memcpy( md5_data_c.data(), md5.data(), static_cast< size_t >( md5.size() ) );
 
 			const auto it = std::find_if(
 				updates.begin(),
@@ -176,7 +175,7 @@ namespace atlas
 	void AtlasRemote::downloadUpdateSlot( const std::uint64_t update_time )
 	{
 		ZoneScoped;
-		const auto update_path { fmt::format( REMOTE "packages/{}.gzip", update_time ) };
+		const auto update_path { fmt::format( REMOTE "packages/{}.update", update_time ) };
 		QNetworkRequest request { QUrl { QString::fromStdString( update_path ) } };
 		auto* reply { m_manager.get( request ) };
 
@@ -247,7 +246,7 @@ namespace atlas
 
 			//Check if the file exists
 			const std::filesystem::path local_update_archive_path {
-				fmt::format( "./data/updates/{}.gzip", update_time )
+				fmt::format( "./data/updates/{}.update", update_time )
 			};
 			if ( std::filesystem::exists( local_update_archive_path ) )
 			{
@@ -396,8 +395,9 @@ namespace atlas
 						{
 							//Create a table for now.
 							transaction << fmt::format(
-								"CREATE TABLE {} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
+								"CREATE TABLE {}_data_{} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
 								table_name,
+								key.toStdString(),
 								supporting_table );
 						}
 
@@ -426,6 +426,7 @@ namespace atlas
 					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
 
 		transaction.commit();
+		spdlog::info( "Finished processing remote update file file {:ce}", path );
 	}
 	catch ( sqlite::sqlite_exception& e )
 	{
@@ -434,8 +435,11 @@ namespace atlas
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
 	{
+		ZoneScoped;
 		//Check if the file exists
-		const std::filesystem::path local_update_archive_path { fmt::format( "./data/updates/{}.gzip", update_time ) };
+		const std::filesystem::path local_update_archive_path {
+			fmt::format( "./data/updates/{}.update", update_time )
+		};
 
 		if ( !std::filesystem::exists( local_update_archive_path ) )
 		{
@@ -470,6 +474,7 @@ namespace atlas
 
 		//Process the file
 		parse( extracted_path );
+		std::filesystem::remove( extracted_path );
 	}
 
 } // namespace atlas
