@@ -38,7 +38,7 @@ option(SPDLOG_FMT_EXTERNAL "" ON)
 add_subdirectory(dependencies/fmt)
 add_subdirectory(dependencies/catch2)
 add_subdirectory(dependencies/spdlog)
-add_subdirectory(dependencies/zlib)
+include(dependencies/cmake_zlib.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
