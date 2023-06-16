@@ -4,79 +4,102 @@
 
 #include <filesystem>
 #include <fstream>
-#include <zlib.h>
+#include <lz4frame.h>
+#include <stdio.h>
 
-#include <QDir>
+#include <tracy/Tracy.hpp>
 
 #include "core/logging.hpp"
 
 namespace atlas
 {
+
+	std::size_t get_block_size( const LZ4F_frameInfo_t* info )
+	{
+		switch ( info->blockSizeID )
+		{
+			default:
+				throw std::runtime_error( "Invalid block size" );
+			case LZ4F_default:
+				[[fallthrough]];
+			case LZ4F_max64KB:
+				return 1 << 16;
+			case LZ4F_max256KB:
+				return 1 << 18;
+			case LZ4F_max1MB:
+				return 1 << 20;
+			case LZ4F_max4MB:
+				return 1 << 22;
+		}
+	}
+
 	std::filesystem::path extract( const std::filesystem::path path )
 	{
-		if ( std::ifstream ifs( path, std::ios::binary ); ifs )
+		ZoneScoped;
+		spdlog::info( "Extracting {}", path );
+		LZ4F_dctx* dctx { nullptr };
+		if ( const auto status = LZ4F_createDecompressionContext( &dctx, LZ4F_VERSION ); LZ4F_isError( status ) )
 		{
-			//Open out location
-			const std::filesystem::path out_path { QDir::tempPath().toStdString() + "/atlas/" + path.stem().string() };
-			std::filesystem::create_directories( out_path.parent_path() );
-			std::ofstream ofs { out_path, std::ios::binary };
+			throw std::runtime_error(
+				fmt::format( "Failed to create decompression context: {}", LZ4F_getErrorName( status ) ) );
+		}
 
-			int ret;
-			unsigned have;
-			z_stream strm;
-			constexpr int CHUNK { 1 << 18 }; // 256kb
-			unsigned char in[ CHUNK ];
-			unsigned char out[ CHUNK ];
+		if ( std::ifstream ifs( path ); ifs )
+		{
+			std::ofstream ofs { path.parent_path() / path.stem() };
 
-			strm.zalloc = nullptr;
-			strm.zfree = nullptr;
-			strm.opaque = nullptr;
-			strm.avail_in = 0;
-			strm.next_in = nullptr;
-			ret = inflateInit( &strm );
-			if ( ret != Z_OK ) throw std::runtime_error( fmt::format( "Failed to initialize zlib: {}", ret ) );
-
-			do {
-				strm.avail_in = static_cast< unsigned int >( ifs.readsome( reinterpret_cast< char* >( in ), CHUNK ) );
-				if ( ifs.fail() || ifs.bad() )
-				{
-					(void)inflateEnd( &strm );
-					throw std::runtime_error( "Failed to read file" );
-				}
-
-				if ( strm.avail_in == 0 ) break;
-				strm.next_in = in;
-
-				do {
-					strm.avail_out = CHUNK;
-					strm.next_out = out;
-
-					ret = inflate( &strm, Z_NO_FLUSH );
-					assert( ret != Z_STREAM_ERROR );
-					switch ( ret )
-					{
-						case Z_NEED_DICT:
-							[[fallthrough]];
-						case Z_DATA_ERROR:
-							[[fallthrough]];
-						case Z_MEM_ERROR:
-							(void)inflateEnd( &strm );
-							throw std::runtime_error( fmt::format( "Failed to inflate file: {}", ret ) );
-						default:
-							break;
-					}
-
-					have = CHUNK - strm.avail_out;
-
-					ofs << std::string_view( reinterpret_cast< char* >( out ), have );
-				}
-				while ( strm.avail_out == 0 );
+			//Read header
+			std::array< char, LZ4F_HEADER_SIZE_MAX > header_buffer;
+			std::size_t header_size {
+				static_cast< size_t >( ifs.readsome( header_buffer.data(), header_buffer.size() ) )
+			};
+			std::size_t processed_bytes { header_size };
+			assert( header_size >= LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH );
+			LZ4F_frameInfo_t info;
+			if ( const auto fires = LZ4F_getFrameInfo( dctx, &info, header_buffer.data(), &processed_bytes );
+			     LZ4F_isError( fires ) )
+			{
+				throw std::runtime_error( fmt::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
 			}
-			while ( ret != Z_STREAM_END );
-			(void)inflateEnd( &strm );
-			return out_path;
+
+			const auto block_size { get_block_size( &info ) };
+			std::vector< char > decompression_buffer;
+			decompression_buffer.resize( block_size );
+
+			//Rewind file
+			ifs.seekg( static_cast< long >( processed_bytes ), std::ios::beg );
+
+			std::size_t ret { 1 };
+
+			std::vector< char > buffer;
+
+			while ( ret != 0 && ifs.good() )
+			{
+				const std::size_t left_over { buffer.size() };
+				buffer.resize( block_size );
+
+				//Read in_buffer
+				std::size_t read_bytes { buffer.size() };
+				read_bytes += static_cast< size_t >(
+					ifs.readsome( buffer.data() + left_over, static_cast< long >( buffer.size() - left_over ) ) );
+				std::size_t dst_size { block_size };
+				if ( read_bytes == 0 ) break;
+				ret = LZ4F_decompress(
+					dctx, decompression_buffer.data(), &dst_size, buffer.data(), &read_bytes, nullptr );
+
+				//Lop off data processed from buffer
+				buffer.erase( buffer.begin(), buffer.begin() + static_cast< long >( read_bytes ) );
+
+				//write output
+				ofs << std::string_view( decompression_buffer.data(), dst_size );
+			}
 		}
 		else
-			throw std::runtime_error( fmt::format( "Failed to open file {}", path ) );
+			throw std::runtime_error( fmt::format( "Failed to open file: {}", path.string() ) );
+
+		LZ4F_freeDecompressionContext( dctx );
+		spdlog::info( "Finished extracting {} to {:ce}", path, path.parent_path() / path.stem() );
+		return path.parent_path() / path.stem();
 	}
+
 } // namespace atlas

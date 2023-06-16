@@ -14,6 +14,7 @@
 
 #include "core/config.hpp"
 #include "core/database/Database.hpp"
+#include "core/remote/extract.hpp"
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
 

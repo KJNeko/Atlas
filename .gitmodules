@@ -19,3 +19,6 @@
 [submodule "dependencies/catch2"]
 	path = dependencies/catch2
 	url = https://github.com/catchorg/Catch2.git
+[submodule "dependencies/lz4"]
+	path = dependencies/lz4
+	url = https://github.com/lz4/lz4.git

@@ -213,9 +213,12 @@ namespace atlas
 				ofs.write( reinterpret_cast< char* >( buffer.data() ), read_bytes );
 
 				if ( read_bytes == 0 ) break;
-				spdlog::debug( "Read {} bytes from remote to {}", read_bytes, dest_folder / file_name.toStdString() );
 			}
 		}
+
+		//Signal to process update file
+		emit processUpdateFile( static_cast< uint64_t >( file_name.left( file_name.lastIndexOf( '.' ) )
+		                                                     .toLongLong() ) );
 		reply->deleteLater();
 	}
 
@@ -286,6 +289,110 @@ namespace atlas
 		}
 	}
 
+	bool idExists( const std::string table_name, const std::uint64_t id, Transaction& Transaction )
+	{
+		ZoneScoped;
+		bool exists = false;
+		Transaction << fmt::format( "SELECT EXISTS(SELECT 1 FROM {} WHERE id = {} LIMIT 1)", table_name, id ) >>
+			[ &exists ]( const bool e ) { exists = e; };
+		return exists;
+	}
+
+	void updateData(
+		const std::string& table_name, const std::uint64_t id, const QJsonObject& obj, Transaction& transaction )
+	{
+		const auto keys { obj.keys() };
+		std::string query { fmt::format( "UPDATE {} SET ", table_name ) };
+
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			const auto value { obj[ key ] };
+
+			switch ( value.type() )
+			{
+				case QJsonValue::Bool:
+					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
+					break;
+				case QJsonValue::Double:
+					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
+					break;
+				case QJsonValue::String:
+					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
+					break;
+				case QJsonValue::Array:
+					[[fallthrough]];
+				case QJsonValue::Object:
+					[[fallthrough]];
+				case QJsonValue::Undefined:
+					[[fallthrough]];
+				case QJsonValue::Null:
+					[[fallthrough]];
+				default:
+					break;
+			}
+			if ( i != keys.size() - 1 ) query += ", ";
+		}
+
+		query += fmt::format( " WHERE id = {}", id );
+		transaction << query;
+	}
+
+	void insertData( const std::string& table_name, const QJsonObject& obj, Transaction& transaction )
+	{
+		const auto keys { obj.keys() };
+		std::string query { fmt::format( "INSERT INTO {} (", table_name ) };
+
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			query += fmt::format( "{}", key.toStdString() );
+			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+		}
+		query += ") VALUES (";
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			const auto value { obj[ key ] };
+
+			if ( value.isArray() )
+			{
+				//In this case we use the supporting table
+				const std::string supporting_table { fmt::format( "{}_data_{}", table_name, key.toStdString() ) };
+				//Does the supporting table exist?
+				int count;
+				transaction << "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?;"
+							<< supporting_table
+					>> count;
+
+				if ( count == 0 )
+				{
+					//Create a table for now.
+					transaction << fmt::format(
+						"CREATE TABLE {}_data_{} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
+						table_name,
+						key.toStdString(),
+						supporting_table );
+				}
+
+				//Insert the data into the supporting table
+				transaction << fmt::format( "INSERT INTO {} (value) VALUES (?);", supporting_table )
+							<< value.toString().toStdString();
+			}
+			else if ( value.isDouble() )
+				query += fmt::format( "{}", value.toInteger() );
+			else if ( value.isNull() )
+				query += fmt::format( "NULL" );
+			else
+				query += fmt::format( "\'{}\'", value.toString().replace( '\'', "\'\'" ).toStdString() );
+			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+		}
+
+		query += ");";
+
+		transaction << query;
+	}
+
 	void parse( const std::filesystem::path path )
 	try
 	{
@@ -321,6 +428,10 @@ namespace atlas
 				const auto keys { obj.keys() };
 
 				std::string query { query_start };
+
+				assert( !keys.empty() );
+				assert( keys.contains( "id" ) );
+				const std::uint64_t id { static_cast< std::uint64_t >( obj[ "id" ].toInteger() ) };
 
 				//Check if table exists
 				bool table_exists { false };
@@ -367,56 +478,10 @@ namespace atlas
 					transaction << table_creation_query;
 				}
 
-				for ( int i = 0; i < keys.size(); ++i )
-				{
-					const auto key { keys[ i ] };
-					query += fmt::format( "{}", key.toStdString() );
-					if ( i != keys.size() - 1 ) query += fmt::format( "," );
-				}
-				query += ") VALUES (";
-				for ( int i = 0; i < keys.size(); ++i )
-				{
-					const auto key { keys[ i ] };
-					const auto value { obj[ key ] };
-
-					if ( value.isArray() )
-					{
-						//In this case we use the supporting table
-						const std::string supporting_table {
-							fmt::format( "{}_data_{}", table_key.toStdString(), key.toStdString() )
-						};
-						//Does the supporting table exist?
-						int count;
-						transaction << "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?;"
-									<< supporting_table
-							>> count;
-
-						if ( count == 0 )
-						{
-							//Create a table for now.
-							transaction << fmt::format(
-								"CREATE TABLE {}_data_{} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
-								table_name,
-								key.toStdString(),
-								supporting_table );
-						}
-
-						//Insert the data into the supporting table
-						transaction << fmt::format( "INSERT INTO {} (value) VALUES (?);", supporting_table )
-									<< value.toString().toStdString();
-					}
-					else if ( value.isDouble() )
-						query += fmt::format( "{}", value.toInteger() );
-					else if ( value.isNull() )
-						query += fmt::format( "NULL" );
-					else
-						query += fmt::format( "\'{}\'", value.toString().replace( '\'', "\'\'" ).toStdString() );
-					if ( i != keys.size() - 1 ) query += fmt::format( "," );
-				}
-
-				query += ");";
-
-				transaction << query;
+				if ( idExists( table_name, id, transaction ) )
+					updateData( table_name, id, obj, transaction );
+				else
+					insertData( table_name, obj, transaction );
 			}
 		}
 
@@ -436,6 +501,7 @@ namespace atlas
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
 	{
 		ZoneScoped;
+		spdlog::info( "Processing update for time {}", update_time );
 		//Check if the file exists
 		const std::filesystem::path local_update_archive_path {
 			fmt::format( "./data/updates/{}.update", update_time )
@@ -473,7 +539,8 @@ namespace atlas
 		}
 
 		//Process the file
-		parse( extracted_path );
+		spdlog::info( "Processing file {:ce}", extracted_path );
+		atlas::parse( extracted_path );
 		std::filesystem::remove( extracted_path );
 	}
 
