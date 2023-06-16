@@ -66,7 +66,7 @@ std::optional< GameImportData >
 		{
 			for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
 			{
-				if ( file.is_regular_file() ) previews.emplace_back( QString::fromStdString( file.path() ) );
+				if ( file.is_regular_file() ) previews.emplace_back( QString::fromStdString( file.path().string() ) );
 			}
 		}
 
