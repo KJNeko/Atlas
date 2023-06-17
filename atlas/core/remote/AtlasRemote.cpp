@@ -204,7 +204,7 @@ namespace atlas
 		const QString file_name { reply->url().fileName() };
 		const std::filesystem::path dest_folder { "./data/updates/" };
 		std::filesystem::create_directories( dest_folder );
-		if ( std::ofstream ofs( dest_folder / file_name.toStdString() ); ofs )
+		if ( std::ofstream ofs( dest_folder / file_name.toStdString(), std::ios::binary ); ofs )
 		{
 			while ( !reply->atEnd() )
 			{
@@ -276,8 +276,19 @@ namespace atlas
 				}
 				else
 				{
-					spdlog::warn( "Update {} exists but md5 doesn't match. Downloading again.", update_time );
+					//local hex
+					const auto local_hex {
+						QByteArrayView( local_md5.data(), local_md5.size() ).toByteArray().toHex().toStdString()
+					};
+					const auto md5_hex { QByteArrayView( md5.data(), md5.size() ).toByteArray().toHex().toStdString() };
+
+					spdlog::warn(
+						"Update {} exists but md5 {} vs {} doesn't match. Downloading again.",
+						update_time,
+						local_hex,
+						md5_hex );
 					//Download the file from remote.
+					std::filesystem::remove( fmt::format( "./data/updates/{}.update", update_time ) );
 					emit downloadUpdate( update_time );
 				}
 			}
@@ -393,21 +404,18 @@ namespace atlas
 		transaction << query;
 	}
 
-	void parse( const std::filesystem::path path )
-	try
+	void parse( const std::vector< char > file_data )
 	{
 		ZoneScoped;
-		spdlog::info( "Parsing {:ce}", path );
-		QFile file { QString::fromStdString( path.string() ) };
-		file.open( QIODevice::ReadOnly );
-		const auto file_data { file.readAll() };
+		const QByteArray array { file_data.data(), static_cast< qsizetype >( file_data.size() ) };
 
-		const QJsonObject json { QJsonDocument::fromJson( file_data ).object() };
+		const QJsonObject json { QJsonDocument::fromJson( array ).object() };
 
 		Transaction transaction { NoAutocommit };
 
 		for ( const auto& table_key : json.keys() )
 		{
+			std::size_t row_counter { 0 };
 			ZoneScopedN( "Process set" );
 			const auto key_str { table_key.toStdString() };
 			TracyMessage( key_str.c_str(), key_str.size() );
@@ -482,23 +490,18 @@ namespace atlas
 					updateData( table_name, id, obj, transaction );
 				else
 					insertData( table_name, obj, transaction );
+
+				++row_counter;
+
+				if ( row_counter % 1000 == 0) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
 			}
+
+			transaction.commit();
 		}
-
-		const std::string file_stem { path.stem().string() };
-		const std::uint64_t update_time { std::stoull( file_stem ) };
-		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
-					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
-
-		transaction.commit();
-		spdlog::info( "Finished processing remote update file file {:ce}", path );
-	}
-	catch ( sqlite::sqlite_exception& e )
-	{
-		spdlog::error( "Error parsing {:ce}: {}: query: {}", path, e.what(), e.get_sql() );
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
+	try
 	{
 		ZoneScoped;
 		spdlog::info( "Processing update for time {}", update_time );
@@ -530,18 +533,17 @@ namespace atlas
 			return;
 		}
 
-		//Extract the file
-		const std::filesystem::path extracted_path { atlas::extract( local_update_archive_path ) };
-		if ( extracted_path.empty() || !std::filesystem::exists( extracted_path ) )
-		{
-			spdlog::warn( "Failed to extract update {}. {:ce}", update_time, extracted_path );
-			return;
-		}
+		spdlog::info( "Processing file {:ce}", local_update_archive_path );
+		atlas::parse( atlas::extract( local_update_archive_path ) );
 
-		//Process the file
-		spdlog::info( "Processing file {:ce}", extracted_path );
-		atlas::parse( extracted_path );
-		std::filesystem::remove( extracted_path );
+		Transaction transaction { NoAutocommit };
+		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
+					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
+		transaction.commit();
+	}
+	catch ( sqlite::sqlite_exception& e )
+	{
+		spdlog::error( "Error parsing update {}. {}: query: {}", update_time, e.what(), e.get_sql() );
 	}
 
 } // namespace atlas
