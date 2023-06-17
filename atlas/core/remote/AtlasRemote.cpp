@@ -15,6 +15,8 @@
 #include "core/logging.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"
+#include "ui/notifications/NotificationPopup.hpp"
+#include "ui/notifications/ProgressMessage.hpp"
 
 #define REMOTE "https://atlas-gamesdb.com/"
 
