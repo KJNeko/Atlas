@@ -46,11 +46,11 @@ int main( int argc, char** argv )
 	{
 		if ( std::ifstream ifs( "atlas_lock" ); ifs )
 		{
+			//Check if PID still is running
+#ifdef _WIN32
 			DWORD pid;
 			ifs >> pid;
 
-			//Check if PID still is running
-#ifdef _WIN32
 			/*
 			HANDLE handle = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
 			//Check if process is the same executable
@@ -80,6 +80,9 @@ int main( int argc, char** argv )
 			}
 */
 #else
+			std::uint64_t pid;
+			ifs >> pid;
+
 			struct stat sts;
 			const std::string str { "/proc/" + std::to_string( pid ) };
 
