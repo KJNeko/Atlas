@@ -291,7 +291,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -1988,7 +1988,7 @@ padding:10x;</string>
            <rect>
             <x>15</x>
             <y>140</y>
-            <width>46</width>
+            <width>56</width>
             <height>25</height>
            </rect>
           </property>
