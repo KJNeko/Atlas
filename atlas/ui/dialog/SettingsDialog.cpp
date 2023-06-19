@@ -101,6 +101,9 @@ void SettingsDialog::saveApplicationSettings()
 	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
 	config::application::font::set( ui->cbAppFont->currentText() );
 	config::application::fontSize::set( ui->sbAppFontSize->value() );
+	//Set font for application
+	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
+	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
 
 	reloadTheme();
 }
@@ -555,13 +558,13 @@ void SettingsDialog::on_cbCenterItems_stateChanged( int state )
 void SettingsDialog::on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx )
 {
 	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
-	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
-	SettingsDialog::setFont( font );
+	ui->lbSampleText->setFont( font );
+	//lbSampleText->
+	//dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
 }
 
 void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 {
 	QFont font { ui->cbAppFont->currentText(), num };
-	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
-	SettingsDialog::setFont( font );
+	ui->lbSampleText->setFont( font );
 }
