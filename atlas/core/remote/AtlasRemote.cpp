@@ -317,6 +317,8 @@ namespace atlas
 		const auto keys { obj.keys() };
 		std::string query { fmt::format( "UPDATE {} SET ", table_name ) };
 
+		bool first { true };
+
 		for ( int i = 0; i < keys.size(); ++i )
 		{
 			const auto key { keys[ i ] };
@@ -325,16 +327,26 @@ namespace atlas
 			switch ( value.type() )
 			{
 				case QJsonValue::Bool:
+					if ( first )
+						first = false;
+					else
+						query += ",";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
-					if ( i != keys.size() - 1 ) query += ", ";
 					break;
 				case QJsonValue::Double:
+					if ( first )
+						first = false;
+					else
+						query += ",";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
-					if ( i != keys.size() - 1 ) query += ", ";
 					break;
 				case QJsonValue::String:
+					if ( first )
+						first = false;
+					else
+						query += ",";
 					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
-					if ( i != keys.size() - 1 ) query += ", ";
+					//If not last key and (next index is not above max and next object is not null or undefined or object or array)
 					break;
 				case QJsonValue::Array:
 					[[fallthrough]];
@@ -497,7 +509,7 @@ namespace atlas
 
 				++row_counter;
 
-				if ( row_counter % 1000 == 0) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
+				if ( row_counter % 1000 == 0 ) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
 			}
 
 			transaction.commit();
