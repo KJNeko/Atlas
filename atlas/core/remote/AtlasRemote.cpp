@@ -512,9 +512,9 @@ namespace atlas
 
 				if ( row_counter % 1000 == 0 ) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
 			}
-
-			transaction.commit();
 		}
+
+		transaction.commit();
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
