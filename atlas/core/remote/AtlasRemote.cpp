@@ -330,22 +330,23 @@ namespace atlas
 					if ( first )
 						first = false;
 					else
-						query += ",";
+						query += ", ";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
 					break;
 				case QJsonValue::Double:
 					if ( first )
 						first = false;
 					else
-						query += ",";
+						query += ", ";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
 					break;
 				case QJsonValue::String:
 					if ( first )
 						first = false;
 					else
-						query += ",";
-					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
+						query += ", ";
+					query += fmt::format(
+						"{} = '{}'", key.toStdString(), value.toString().replace( '\'', "\'\'" ).toStdString() );
 					//If not last key and (next index is not above max and next object is not null or undefined or object or array)
 					break;
 				case QJsonValue::Array:
@@ -362,6 +363,7 @@ namespace atlas
 		}
 
 		query += fmt::format( " WHERE id = {}", id );
+		spdlog::info( "Updating {}", query );
 		transaction << query;
 	}
 
