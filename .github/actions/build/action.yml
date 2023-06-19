@@ -78,6 +78,7 @@ runs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
+        modules: 'qtcharts qtimageformats qtwebsockets'
         cache: true
 
     - name: CMake Release

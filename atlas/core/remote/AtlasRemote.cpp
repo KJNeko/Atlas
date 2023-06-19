@@ -204,7 +204,7 @@ namespace atlas
 		const QString file_name { reply->url().fileName() };
 		const std::filesystem::path dest_folder { "./data/updates/" };
 		std::filesystem::create_directories( dest_folder );
-		if ( std::ofstream ofs( dest_folder / file_name.toStdString() ); ofs )
+		if ( std::ofstream ofs( dest_folder / file_name.toStdString(), std::ios::binary ); ofs )
 		{
 			while ( !reply->atEnd() )
 			{
@@ -213,9 +213,12 @@ namespace atlas
 				ofs.write( reinterpret_cast< char* >( buffer.data() ), read_bytes );
 
 				if ( read_bytes == 0 ) break;
-				spdlog::debug( "Read {} bytes from remote to {}", read_bytes, dest_folder / file_name.toStdString() );
 			}
 		}
+
+		//Signal to process update file
+		emit processUpdateFile( static_cast< uint64_t >( file_name.left( file_name.lastIndexOf( '.' ) )
+		                                                     .toLongLong() ) );
 		reply->deleteLater();
 	}
 
@@ -273,8 +276,19 @@ namespace atlas
 				}
 				else
 				{
-					spdlog::warn( "Update {} exists but md5 doesn't match. Downloading again.", update_time );
+					//local hex
+					const auto local_hex {
+						QByteArrayView( local_md5.data(), local_md5.size() ).toByteArray().toHex().toStdString()
+					};
+					const auto md5_hex { QByteArrayView( md5.data(), md5.size() ).toByteArray().toHex().toStdString() };
+
+					spdlog::warn(
+						"Update {} exists but md5 {} vs {} doesn't match. Downloading again.",
+						update_time,
+						local_hex,
+						md5_hex );
 					//Download the file from remote.
+					std::filesystem::remove( fmt::format( "./data/updates/{}.update", update_time ) );
 					emit downloadUpdate( update_time );
 				}
 			}
@@ -286,21 +300,122 @@ namespace atlas
 		}
 	}
 
-	void parse( const std::filesystem::path path )
-	try
+	bool idExists( const std::string table_name, const std::uint64_t id, Transaction& Transaction )
 	{
 		ZoneScoped;
-		spdlog::info( "Parsing {:ce}", path );
-		QFile file { QString::fromStdString( path.string() ) };
-		file.open( QIODevice::ReadOnly );
-		const auto file_data { file.readAll() };
+		bool exists = false;
+		Transaction << fmt::format( "SELECT EXISTS(SELECT 1 FROM {} WHERE id = {} LIMIT 1)", table_name, id ) >>
+			[ &exists ]( const bool e ) { exists = e; };
+		return exists;
+	}
 
-		const QJsonObject json { QJsonDocument::fromJson( file_data ).object() };
+	void updateData(
+		const std::string& table_name, const std::uint64_t id, const QJsonObject& obj, Transaction& transaction )
+	{
+		const auto keys { obj.keys() };
+		std::string query { fmt::format( "UPDATE {} SET ", table_name ) };
+
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			const auto value { obj[ key ] };
+
+			switch ( value.type() )
+			{
+				case QJsonValue::Bool:
+					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
+					break;
+				case QJsonValue::Double:
+					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
+					break;
+				case QJsonValue::String:
+					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
+					break;
+				case QJsonValue::Array:
+					[[fallthrough]];
+				case QJsonValue::Object:
+					[[fallthrough]];
+				case QJsonValue::Undefined:
+					[[fallthrough]];
+				case QJsonValue::Null:
+					[[fallthrough]];
+				default:
+					break;
+			}
+			if ( i != keys.size() - 1 ) query += ", ";
+		}
+
+		query += fmt::format( " WHERE id = {}", id );
+		transaction << query;
+	}
+
+	void insertData( const std::string& table_name, const QJsonObject& obj, Transaction& transaction )
+	{
+		const auto keys { obj.keys() };
+		std::string query { fmt::format( "INSERT INTO {} (", table_name ) };
+
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			query += fmt::format( "{}", key.toStdString() );
+			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+		}
+		query += ") VALUES (";
+		for ( int i = 0; i < keys.size(); ++i )
+		{
+			const auto key { keys[ i ] };
+			const auto value { obj[ key ] };
+
+			if ( value.isArray() )
+			{
+				//In this case we use the supporting table
+				const std::string supporting_table { fmt::format( "{}_data_{}", table_name, key.toStdString() ) };
+				//Does the supporting table exist?
+				int count;
+				transaction << "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?;"
+							<< supporting_table
+					>> count;
+
+				if ( count == 0 )
+				{
+					//Create a table for now.
+					transaction << fmt::format(
+						"CREATE TABLE {}_data_{} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
+						table_name,
+						key.toStdString(),
+						supporting_table );
+				}
+
+				//Insert the data into the supporting table
+				transaction << fmt::format( "INSERT INTO {} (value) VALUES (?);", supporting_table )
+							<< value.toString().toStdString();
+			}
+			else if ( value.isDouble() )
+				query += fmt::format( "{}", value.toInteger() );
+			else if ( value.isNull() )
+				query += fmt::format( "NULL" );
+			else
+				query += fmt::format( "\'{}\'", value.toString().replace( '\'', "\'\'" ).toStdString() );
+			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+		}
+
+		query += ");";
+
+		transaction << query;
+	}
+
+	void parse( const std::vector< char > file_data )
+	{
+		ZoneScoped;
+		const QByteArray array { file_data.data(), static_cast< qsizetype >( file_data.size() ) };
+
+		const QJsonObject json { QJsonDocument::fromJson( array ).object() };
 
 		Transaction transaction { NoAutocommit };
 
 		for ( const auto& table_key : json.keys() )
 		{
+			std::size_t row_counter { 0 };
 			ZoneScopedN( "Process set" );
 			const auto key_str { table_key.toStdString() };
 			TracyMessage( key_str.c_str(), key_str.size() );
@@ -321,6 +436,10 @@ namespace atlas
 				const auto keys { obj.keys() };
 
 				std::string query { query_start };
+
+				assert( !keys.empty() );
+				assert( keys.contains( "id" ) );
+				const std::uint64_t id { static_cast< std::uint64_t >( obj[ "id" ].toInteger() ) };
 
 				//Check if table exists
 				bool table_exists { false };
@@ -367,75 +486,25 @@ namespace atlas
 					transaction << table_creation_query;
 				}
 
-				for ( int i = 0; i < keys.size(); ++i )
-				{
-					const auto key { keys[ i ] };
-					query += fmt::format( "{}", key.toStdString() );
-					if ( i != keys.size() - 1 ) query += fmt::format( "," );
-				}
-				query += ") VALUES (";
-				for ( int i = 0; i < keys.size(); ++i )
-				{
-					const auto key { keys[ i ] };
-					const auto value { obj[ key ] };
+				if ( idExists( table_name, id, transaction ) )
+					updateData( table_name, id, obj, transaction );
+				else
+					insertData( table_name, obj, transaction );
 
-					if ( value.isArray() )
-					{
-						//In this case we use the supporting table
-						const std::string supporting_table {
-							fmt::format( "{}_data_{}", table_key.toStdString(), key.toStdString() )
-						};
-						//Does the supporting table exist?
-						int count;
-						transaction << "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?;"
-									<< supporting_table
-							>> count;
+				++row_counter;
 
-						if ( count == 0 )
-						{
-							//Create a table for now.
-							transaction << fmt::format(
-								"CREATE TABLE {}_data_{} (id INTEGER PRIMARY KEY REFERENCES {} (id), value);",
-								table_name,
-								key.toStdString(),
-								supporting_table );
-						}
-
-						//Insert the data into the supporting table
-						transaction << fmt::format( "INSERT INTO {} (value) VALUES (?);", supporting_table )
-									<< value.toString().toStdString();
-					}
-					else if ( value.isDouble() )
-						query += fmt::format( "{}", value.toInteger() );
-					else if ( value.isNull() )
-						query += fmt::format( "NULL" );
-					else
-						query += fmt::format( "\'{}\'", value.toString().replace( '\'', "\'\'" ).toStdString() );
-					if ( i != keys.size() - 1 ) query += fmt::format( "," );
-				}
-
-				query += ");";
-
-				transaction << query;
+				if ( row_counter % 1000 == 0) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
 			}
+
+			transaction.commit();
 		}
-
-		const std::string file_stem { path.stem().string() };
-		const std::uint64_t update_time { std::stoull( file_stem ) };
-		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
-					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
-
-		transaction.commit();
-		spdlog::info( "Finished processing remote update file file {:ce}", path );
-	}
-	catch ( sqlite::sqlite_exception& e )
-	{
-		spdlog::error( "Error parsing {:ce}: {}: query: {}", path, e.what(), e.get_sql() );
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
+	try
 	{
 		ZoneScoped;
+		spdlog::info( "Processing update for time {}", update_time );
 		//Check if the file exists
 		const std::filesystem::path local_update_archive_path {
 			fmt::format( "./data/updates/{}.update", update_time )
@@ -464,17 +533,17 @@ namespace atlas
 			return;
 		}
 
-		//Extract the file
-		const std::filesystem::path extracted_path { atlas::extract( local_update_archive_path ) };
-		if ( extracted_path.empty() || !std::filesystem::exists( extracted_path ) )
-		{
-			spdlog::warn( "Failed to extract update {}. {:ce}", update_time, extracted_path );
-			return;
-		}
+		spdlog::info( "Processing file {:ce}", local_update_archive_path );
+		atlas::parse( atlas::extract( local_update_archive_path ) );
 
-		//Process the file
-		parse( extracted_path );
-		std::filesystem::remove( extracted_path );
+		Transaction transaction { NoAutocommit };
+		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
+					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
+		transaction.commit();
+	}
+	catch ( sqlite::sqlite_exception& e )
+	{
+		spdlog::error( "Error parsing update {}. {}: query: {}", update_time, e.what(), e.get_sql() );
 	}
 
 } // namespace atlas

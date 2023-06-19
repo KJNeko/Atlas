@@ -13,12 +13,12 @@
 [submodule "dependencies/sqlite_modern_cpp"]
 	path = dependencies/sqlite_modern_cpp
 	url = https://github.com/SqliteModernCpp/sqlite_modern_cpp.git
-[submodule "dependencies/gtest"]
-	path = dependencies/gtest
-	url = https://github.com/google/googletest.git
 [submodule "dependencies/tracy"]
 	path = dependencies/tracy
 	url = https://github.com/wolfpld/tracy.git
 [submodule "dependencies/catch2"]
 	path = dependencies/catch2
 	url = https://github.com/catchorg/Catch2.git
+[submodule "dependencies/lz4"]
+	path = dependencies/lz4
+	url = https://github.com/lz4/lz4.git

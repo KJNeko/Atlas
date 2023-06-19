@@ -9,7 +9,7 @@
 
 namespace atlas
 {
-	std::filesystem::path extract( const std::filesystem::path path );
+	std::vector< char > extract( const std::filesystem::path path );
 }
 
 #endif //ATLASGAMEMANAGER_EXTRACT_HPP

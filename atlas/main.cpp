@@ -17,13 +17,16 @@
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
 
+// clang-format off
 #ifdef _WIN32
 #include <windows.h>
+#include <psapi.h>
 #else
 #include <csignal>
 
 #include <sys/stat.h>
 #endif
+// clang-format on
 
 void clear_lock()
 {
@@ -32,7 +35,7 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-	setlocale( LC_ALL, ".UTF8" );
+	//setlocale( LC_ALL, ".UTF8" );
 
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
@@ -43,19 +46,20 @@ int main( int argc, char** argv )
 	{
 		if ( std::ifstream ifs( "atlas_lock" ); ifs )
 		{
-			int pid;
-			ifs >> pid;
-
 			//Check if PID still is running
 #ifdef _WIN32
-			HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
+			DWORD pid;
+			ifs >> pid;
+
+			/*
+			HANDLE handle = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
 			//Check if process is the same executable
 			if ( handle )
 			{
-				TCHAR buffer[ MAX_PATH ];
-				GetModuleFileNameEx( handle, 0, buffer, MAX_PATH );
+				std::array< char, MAX_PATH > buffer;
+				GetModuleFileNameExA( handle, 0, buffer.data(), MAX_PATH );
 				const std::filesystem::path path { std::filesystem::current_path() };
-				const std::string prev_path { buffer };
+				const std::string_view prev_path { std::string_view( buffer.data(), strlen( buffer.data() ) ) };
 				if ( path != prev_path )
 				{
 					//Process is not the same executable
@@ -74,8 +78,11 @@ int main( int argc, char** argv )
 				//Remove the lock file and continue.
 				std::filesystem::remove( "atlas_lock" );
 			}
-
+*/
 #else
+			std::uint64_t pid;
+			ifs >> pid;
+
 			struct stat sts;
 			const std::string str { "/proc/" + std::to_string( pid ) };
 

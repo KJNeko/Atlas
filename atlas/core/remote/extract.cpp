@@ -4,79 +4,132 @@
 
 #include <filesystem>
 #include <fstream>
-#include <zlib.h>
+#include <lz4frame.h>
 
-#include <QDir>
+#include <tracy/Tracy.hpp>
 
 #include "core/logging.hpp"
 
 namespace atlas
 {
-	std::filesystem::path extract( const std::filesystem::path path )
+
+	std::size_t get_block_size( const LZ4F_frameInfo_t* info )
 	{
+		switch ( info->blockSizeID )
+		{
+			default:
+				throw std::runtime_error( "Invalid block size" );
+			case LZ4F_default:
+				[[fallthrough]];
+			case LZ4F_max64KB:
+				return 1 << 16;
+			case LZ4F_max256KB:
+				return 1 << 18;
+			case LZ4F_max1MB:
+				return 1 << 20;
+			case LZ4F_max4MB:
+				return 1 << 22;
+		}
+	}
+
+	std::vector< char > extract( const std::filesystem::path path )
+	{
+		ZoneScoped;
+		spdlog::info( "Extracting {}", path );
+		LZ4F_dctx* dctx { nullptr };
+		if ( const auto status = LZ4F_createDecompressionContext( &dctx, LZ4F_VERSION ); LZ4F_isError( status ) )
+		{
+			throw std::runtime_error(
+				fmt::format( "Failed to create decompression context: {}", LZ4F_getErrorName( status ) ) );
+		}
+
+		std::vector< char > out_data;
+		out_data.reserve( std::filesystem::file_size( path ) );
+
 		if ( std::ifstream ifs( path, std::ios::binary ); ifs )
 		{
-			//Open out location
-			const std::filesystem::path out_path { QDir::tempPath().toStdString() + "/atlas/" + path.stem().string() };
-			std::filesystem::create_directories( out_path.parent_path() );
-			std::ofstream ofs { out_path, std::ios::binary };
+			//Read header
+			std::array< char, LZ4F_HEADER_SIZE_MAX > header_buffer;
+			std::size_t header_size {
+				static_cast< size_t >( ifs.readsome( header_buffer.data(), header_buffer.size() ) )
+			};
+			std::size_t processed_bytes { header_size };
 
-			int ret;
-			unsigned have;
-			z_stream strm;
-			constexpr int CHUNK { 1 << 18 }; // 256kb
-			unsigned char in[ CHUNK ];
-			unsigned char out[ CHUNK ];
-
-			strm.zalloc = nullptr;
-			strm.zfree = nullptr;
-			strm.opaque = nullptr;
-			strm.avail_in = 0;
-			strm.next_in = nullptr;
-			ret = inflateInit( &strm );
-			if ( ret != Z_OK ) throw std::runtime_error( fmt::format( "Failed to initialize zlib: {}", ret ) );
-
-			do {
-				strm.avail_in = static_cast< unsigned int >( ifs.readsome( reinterpret_cast< char* >( in ), CHUNK ) );
-				if ( ifs.fail() || ifs.bad() )
-				{
-					(void)inflateEnd( &strm );
-					throw std::runtime_error( "Failed to read file" );
-				}
-
-				if ( strm.avail_in == 0 ) break;
-				strm.next_in = in;
-
-				do {
-					strm.avail_out = CHUNK;
-					strm.next_out = out;
-
-					ret = inflate( &strm, Z_NO_FLUSH );
-					assert( ret != Z_STREAM_ERROR );
-					switch ( ret )
-					{
-						case Z_NEED_DICT:
-							[[fallthrough]];
-						case Z_DATA_ERROR:
-							[[fallthrough]];
-						case Z_MEM_ERROR:
-							(void)inflateEnd( &strm );
-							throw std::runtime_error( fmt::format( "Failed to inflate file: {}", ret ) );
-						default:
-							break;
-					}
-
-					have = CHUNK - strm.avail_out;
-
-					ofs << std::string_view( reinterpret_cast< char* >( out ), have );
-				}
-				while ( strm.avail_out == 0 );
+			if ( header_size < LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH )
+			{
+				spdlog::error(
+					"extract: header_size < MIN_SIZE: {} < {}", header_size, LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH );
+				throw std::runtime_error( fmt::format(
+					"extract: header_size < MIN_SIZE: {} < {}", header_size, LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH ) );
 			}
-			while ( ret != Z_STREAM_END );
-			(void)inflateEnd( &strm );
-			return out_path;
+
+			LZ4F_frameInfo_t info;
+			if ( const auto fires = LZ4F_getFrameInfo( dctx, &info, header_buffer.data(), &processed_bytes );
+			     LZ4F_isError( fires ) )
+			{
+				throw std::runtime_error( fmt::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
+			}
+
+			const auto block_size { get_block_size( &info ) };
+
+			char* const decompression_buffer = new char[ block_size ];
+			std::memset( decompression_buffer, 0, block_size );
+
+			spdlog::info( "Header ate {} bytes", processed_bytes );
+			//Rewind file
+			ifs.seekg( static_cast< long long >( processed_bytes ), std::ios::beg );
+
+			std::size_t ret { 1 };
+
+			std::array< char, 1 << 16 > buffer;
+			std::size_t bytes_left { 0 };
+
+			while ( ret != 0 && ifs.good() && !ifs.eof() )
+			{
+				bytes_left += static_cast< size_t >(
+					ifs.readsome( buffer.data() + bytes_left, static_cast< long >( buffer.size() - bytes_left ) ) );
+
+				assert( bytes_left <= buffer.size() );
+
+				//This counter gets overwritten with the number of bytes read from buffer
+				// This counter is set with the number of bytes we have
+				std::size_t in_buffer_bytes { bytes_left };
+
+				//This counter gets overwritten with the number of bytes written to decomp buffer.
+				// This counter is set with the output buffer size
+				std::size_t out_buffer_bytes { block_size };
+
+				if ( bytes_left == 0 ) break;
+				ret = LZ4F_decompress(
+					dctx, decompression_buffer, &out_buffer_bytes, buffer.data(), &in_buffer_bytes, nullptr );
+				const auto bytes_processed { in_buffer_bytes };
+
+				if ( LZ4F_isError( ret ) )
+				{
+					spdlog::error( "Failed to decompress: {}", LZ4F_getErrorName( ret ) );
+					throw std::runtime_error( fmt::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
+				}
+				//Shift buffer over by ready_bytes (bytes read by LZ4F_decompress)
+				std::memmove( buffer.data(), buffer.data() + bytes_processed, buffer.size() - bytes_processed );
+				//Narrow down bytes_left to new range
+				bytes_left = buffer.size() - bytes_processed;
+
+				//Copy into out buffer
+				const auto pre_size { out_data.size() };
+				out_data.resize( out_data.size() + out_buffer_bytes );
+				std::memcpy( out_data.data() + pre_size, decompression_buffer, out_buffer_bytes );
+			}
 		}
 		else
-			throw std::runtime_error( fmt::format( "Failed to open file {}", path ) );
+			throw std::runtime_error( fmt::format( "Failed to open file: {}", path.string() ) );
+
+		LZ4F_freeDecompressionContext( dctx );
+		const auto file_size { std::filesystem::file_size( path ) };
+		const auto data_size { out_data.size() };
+		const float percent { static_cast< float >( data_size ) / static_cast< float >( file_size ) };
+		spdlog::info(
+			"Finished extracting file {} -> {}: {}%", std::filesystem::file_size( path ), out_data.size(), percent );
+		return out_data;
 	}
+
 } // namespace atlas

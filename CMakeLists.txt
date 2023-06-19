@@ -38,7 +38,9 @@ option(SPDLOG_FMT_EXTERNAL "" ON)
 add_subdirectory(dependencies/fmt)
 #add_subdirectory(dependencies/catch2)
 add_subdirectory(dependencies/spdlog)
-add_subdirectory(dependencies/zlib)
+
+#lz4
+include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
@@ -98,9 +100,11 @@ message("FGL_FLAGS: ${FGL_FLAGS}")
 add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sqlite_modern_cpp/hdr)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient zlib)
+target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
-target_compile_definitions(Atlas PRIVATE UNICODE=1)
+if (WIN32)
+    target_compile_definitions(Atlas PRIVATE UNICODE=1)
+endif ()
 
 #Post setup (Windows only)
 if (WIN32)
