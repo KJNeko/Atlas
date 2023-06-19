@@ -363,7 +363,6 @@ namespace atlas
 		}
 
 		query += fmt::format( " WHERE id = {}", id );
-		spdlog::info( "Updating {}", query );
 		transaction << query;
 	}
 
