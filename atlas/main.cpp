@@ -80,7 +80,7 @@ int main( int argc, char** argv )
 			}
 
 #else
-			std::uint64_t pid;
+			int pid;
 			ifs >> pid;
 
 			struct stat sts;

@@ -15,6 +15,8 @@
 #include "core/logging.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"
+#include "ui/notifications/NotificationPopup.hpp"
+#include "ui/notifications/ProgressMessage.hpp"
 
 #define REMOTE "https://atlas-gamesdb.com/"
 
@@ -315,6 +317,8 @@ namespace atlas
 		const auto keys { obj.keys() };
 		std::string query { fmt::format( "UPDATE {} SET ", table_name ) };
 
+		bool first { true };
+
 		for ( int i = 0; i < keys.size(); ++i )
 		{
 			const auto key { keys[ i ] };
@@ -323,13 +327,27 @@ namespace atlas
 			switch ( value.type() )
 			{
 				case QJsonValue::Bool:
+					if ( first )
+						first = false;
+					else
+						query += ", ";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
 					break;
 				case QJsonValue::Double:
+					if ( first )
+						first = false;
+					else
+						query += ", ";
 					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
 					break;
 				case QJsonValue::String:
-					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
+					if ( first )
+						first = false;
+					else
+						query += ", ";
+					query += fmt::format(
+						"{} = '{}'", key.toStdString(), value.toString().replace( '\'', "\'\'" ).toStdString() );
+					//If not last key and (next index is not above max and next object is not null or undefined or object or array)
 					break;
 				case QJsonValue::Array:
 					[[fallthrough]];
@@ -342,7 +360,6 @@ namespace atlas
 				default:
 					break;
 			}
-			if ( i != keys.size() - 1 ) query += ", ";
 		}
 
 		query += fmt::format( " WHERE id = {}", id );
@@ -493,11 +510,11 @@ namespace atlas
 
 				++row_counter;
 
-				if ( row_counter % 1000 == 0) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
+				if ( row_counter % 1000 == 0 ) spdlog::info( "Processed {} rows for table {}", row_counter, table_key );
 			}
-
-			transaction.commit();
 		}
+
+		transaction.commit();
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
