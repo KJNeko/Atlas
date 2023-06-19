@@ -46,12 +46,18 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	//Add full list of fonts to comboBox.
 	ui->cbFont->addItems( QFontDatabase::families() );
 	ui->cbAppFont->addItems( QFontDatabase::families() );
-	//ui->cbAppFont->setItemText()
 
 	//Set Fonts
-	//ui->sbAppFontSize->setCurrentText( std::string( config::application::fontSize::get() ) );
+	QFont font;
 	ui->sbAppFontSize->setValue( config::application::fontSize::get() );
-	ui->cbAppFont->setCurrentText( config::application::font::get() );
+	ui->cbAppFont->setCurrentText(
+		config::application::font::get() == "" ? QString::fromStdString( font.defaultFamily().toStdString() ) :
+												 config::application::font::get() );
+
+	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
+	ui->cbFont->setCurrentText(
+		config::grid_ui::font::get() == "" ? QString::fromStdString( font.defaultFamily().toStdString() ) :
+											 config::application::font::get() );
 
 	prepareThemeSettings();
 	preparePathsSettings();

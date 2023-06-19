@@ -78,7 +78,7 @@ int main( int argc, char** argv )
 				//Remove the lock file and continue.
 				std::filesystem::remove( "atlas_lock" );
 			}
-*/
+
 #else
 			std::uint64_t pid;
 			ifs >> pid;
