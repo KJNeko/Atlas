@@ -326,12 +326,15 @@ namespace atlas
 			{
 				case QJsonValue::Bool:
 					query += fmt::format( "{} = {}", key.toStdString(), value.toBool() );
+					if ( i != keys.size() - 1 ) query += ", ";
 					break;
 				case QJsonValue::Double:
 					query += fmt::format( "{} = {}", key.toStdString(), value.toDouble() );
+					if ( i != keys.size() - 1 ) query += ", ";
 					break;
 				case QJsonValue::String:
 					query += fmt::format( "{} = '{}'", key.toStdString(), value.toString().toStdString() );
+					if ( i != keys.size() - 1 ) query += ", ";
 					break;
 				case QJsonValue::Array:
 					[[fallthrough]];
@@ -344,7 +347,6 @@ namespace atlas
 				default:
 					break;
 			}
-			if ( i != keys.size() - 1 ) query += ", ";
 		}
 
 		query += fmt::format( " WHERE id = {}", id );
