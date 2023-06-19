@@ -118,7 +118,13 @@ border:none;</string>
          <bool>false</bool>
         </property>
         <property name="spacing">
-         <number>5</number>
+         <number>0</number>
+        </property>
+        <property name="gridSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
         </property>
         <property name="viewMode">
          <enum>QListView::ListMode</enum>
@@ -128,6 +134,9 @@ border:none;</string>
         </property>
         <property name="uniformItemSizes">
          <bool>true</bool>
+        </property>
+        <property name="itemAlignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
         <item>
          <property name="text">
@@ -282,7 +291,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -292,21 +301,21 @@ border-right:none;
        <item row="2" column="1">
         <widget class="QWidget" name="verticalWidget" native="true">
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="6" column="0">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="checkBox_4">
+            <property name="text">
+             <string>Launch in Fullscreen Mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
            <widget class="QCheckBox" name="checkBox_2">
             <property name="text">
              <string>Minimize Atlas to system tray when the application is closed</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Minimize Atlas to system tray</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="checkBox_3">
             <property name="text">
              <string>Update install size of games on libary update</string>
@@ -314,9 +323,9 @@ border-right:none;
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QCheckBox" name="checkBox_4">
+           <widget class="QCheckBox" name="checkBox">
             <property name="text">
-             <string>Use fizzy matching in name filter</string>
+             <string>Use fuzzy matching in name filter</string>
             </property>
            </widget>
           </item>
@@ -392,6 +401,21 @@ border-right:none;
               <height>16777215</height>
              </size>
             </property>
+            <item>
+             <property name="text">
+              <string>Do Nothing</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Minimize</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Close</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="1">
@@ -408,6 +432,16 @@ border-right:none;
               <height>16777215</height>
              </size>
             </property>
+            <item>
+             <property name="text">
+              <string>Do Nothing</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Restore Window</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="0">
