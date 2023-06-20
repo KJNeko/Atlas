@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(AtlasGameManager LANGUAGES CXX)
+project(AtlasGameManager LANGUAGES CXX C)
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

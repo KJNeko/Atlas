@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.21)
-project(lz4 C)
 
 set(LZ4_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lz4/lib)
 
