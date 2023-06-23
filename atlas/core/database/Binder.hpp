@@ -16,7 +16,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
 void extract( sqlite3_stmt* stmt, T& t )
 {
-	ZoneScoped;
+	ZoneScopedN( "extract<integral>" );
 	t = static_cast< T >( sqlite3_column_int64( stmt, index ) );
 }
 
@@ -24,7 +24,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::string >
 void extract( sqlite3_stmt* stmt, std::string& t )
 {
-	ZoneScoped;
+	ZoneScopedN( "extract<std::string>" );
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
 	t = std::string( reinterpret_cast< const char* >( txt ) );
 }
@@ -33,7 +33,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, QString >
 void extract( sqlite3_stmt* stmt, QString& t )
 {
-	ZoneScoped;
+	ZoneScopedN( "extract<QString>" );
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
 	t = QString::fromLocal8Bit(
 		reinterpret_cast< const char* >( txt ),
@@ -44,7 +44,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::vector< std::byte > >
 void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t )
 {
-	ZoneScoped;
+	ZoneScopedN( "extract<std::vector<std::byte>>" );
 	const void* data { sqlite3_column_blob( stmt, index ) };
 	const std::size_t size { static_cast< std::size_t >( sqlite3_column_bytes( stmt, index ) ) };
 
@@ -70,7 +70,7 @@ template < typename T >
 	requires std::is_integral_v< T >
 int bindParameter( sqlite3_stmt* stmt, const T val, const int idx )
 {
-	ZoneScoped;
+	ZoneScopedN( "bindParameter<integral>" );
 	return sqlite3_bind_int64( stmt, idx, static_cast< sqlite3_int64 >( val ) );
 }
 
@@ -141,16 +141,15 @@ class Binder
 						sqlite3_expanded_sql( stmt ) ) );
 				}
 			case SQLITE_ROW:
-				spdlog::warn(
+				/*spdlog::warn(
 					"DB: Query returned more rows then expected. Possibly malformed? Query:\"{}\"",
-					sqlite3_expanded_sql( stmt ) );
+					sqlite3_expanded_sql( stmt ) );*/
 				extract< 0, T >( stmt, t );
 				break;
 			case SQLITE_DONE:
 				break;
 		}
 
-		spdlog::debug( "Executing {}", sqlite3_expanded_sql( stmt ) );
 		sqlite3_finalize( stmt );
 		stmt = nullptr;
 	}
@@ -177,7 +176,7 @@ class Binder
 						//Extract the row
 						Tpl tpl;
 						extractRow< 0 >( stmt, tpl );
-						std::apply( func, tpl );
+						std::apply( func, std::move( tpl ) );
 						break;
 					}
 				default:
@@ -190,7 +189,6 @@ class Binder
 			if ( done ) break;
 		}
 
-		spdlog::debug( "Executing {}", sqlite3_expanded_sql( stmt ) );
 		sqlite3_finalize( stmt );
 		stmt = nullptr;
 	}

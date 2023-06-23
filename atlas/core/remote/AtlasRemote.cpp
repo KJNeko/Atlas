@@ -11,6 +11,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include <tracy/TracyC.h>
+
 #include "core/database/Transaction.hpp"
 #include "core/logging.hpp"
 #include "core/utils/regex/regex.hpp"
@@ -320,6 +322,7 @@ namespace atlas
 	void updateData(
 		const std::string& table_name, const std::uint64_t id, const QJsonObject& obj, Transaction& transaction )
 	{
+		ZoneScoped;
 		const auto keys { obj.keys() };
 		std::string query { fmt::format( "UPDATE {} SET ", table_name ) };
 
@@ -327,8 +330,8 @@ namespace atlas
 
 		for ( int i = 0; i < keys.size(); ++i )
 		{
-			const auto key { keys[ i ] };
-			const auto value { obj[ key ] };
+			const auto& key { keys[ i ] };
+			const auto& value { obj[ key ] };
 
 			switch ( value.type() )
 			{
@@ -369,25 +372,42 @@ namespace atlas
 		}
 
 		query += fmt::format( " WHERE id = {}", id );
-		transaction << query;
+		transaction << std::move( query );
 	}
 
 	void insertData( const std::string& table_name, const QJsonObject& obj, Transaction& transaction )
 	{
-		const auto keys { obj.keys() };
+		ZoneScoped;
+		const auto& keys { obj.keys() };
+		TracyCZoneN( query_build_ctx, "Build query", true );
 		std::string query { fmt::format( "INSERT INTO {} (", table_name ) };
+
+		std::size_t counter { 0 };
 
 		for ( int i = 0; i < keys.size(); ++i )
 		{
-			const auto key { keys[ i ] };
+			const auto& key { keys[ i ] };
 			query += fmt::format( "{}", key.toStdString() );
 			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+			++counter;
 		}
 		query += ") VALUES (";
+
+		for ( std::size_t i = 0; i < counter; ++i )
+		{
+			query += "?";
+			if ( i < counter - 1 ) query += ",";
+		}
+		query += ")";
+		TracyCZoneEnd( query_build_ctx );
+
+		auto binder { transaction << std::move( query ) };
+
 		for ( int i = 0; i < keys.size(); ++i )
 		{
-			const auto key { keys[ i ] };
-			const auto value { obj[ key ] };
+			ZoneScopedN( "Process key" );
+			const auto& key { keys[ i ] };
+			const auto& value { obj[ key ] };
 
 			if ( value.isArray() )
 			{
@@ -414,17 +434,16 @@ namespace atlas
 							<< value.toString().toStdString();
 			}
 			else if ( value.isDouble() )
-				query += fmt::format( "{}", value.toInteger() );
+				binder << static_cast< std::uint64_t >( value.toInteger() );
 			else if ( value.isNull() )
-				query += fmt::format( "NULL" );
+				binder << std::nullopt;
+			else if ( value.isString() )
+				binder << value.toString();
 			else
-				query += fmt::format( "\'{}\'", value.toString().replace( '\'', "\'\'" ).toStdString() );
-			if ( i != keys.size() - 1 ) query += fmt::format( "," );
+			{
+				spdlog::warn( "Unhandled type for {}! in `insertData`", key );
+			}
 		}
-
-		query += ");";
-
-		transaction << query;
 	}
 
 	void parse( const std::vector< char > file_data )
@@ -432,7 +451,7 @@ namespace atlas
 		ZoneScoped;
 		const QByteArray array { file_data.data(), static_cast< qsizetype >( file_data.size() ) };
 
-		const QJsonObject json { QJsonDocument::fromJson( array ).object() };
+		const QJsonObject& json { QJsonDocument::fromJson( array ).object() };
 
 		Transaction transaction { NoAutocommit };
 
@@ -440,27 +459,20 @@ namespace atlas
 		{
 			std::size_t row_counter { 0 };
 			ZoneScopedN( "Process set" );
-			const auto key_str { table_key.toStdString() };
+			const auto& key_str { table_key.toStdString() };
 			TracyMessage( key_str.c_str(), key_str.size() );
-			const QJsonArray data = json[ table_key ].toArray();
+			const QJsonArray& data = json[ table_key ].toArray();
 
 			//Name of the table we intend to shove all this data into.
 			const std::string table_name { table_key.endsWith( "_data" ) ? table_key.toStdString() :
 				                                                           table_key.toStdString() + "_data" };
 
-			//The query we will be building onto
-			const std::string query_start { fmt::format( "INSERT INTO {} (", table_name ) };
-
 			for ( const auto& obj_data : data )
 			{
 				ZoneScopedN( "Process object" );
-				const auto obj { obj_data.toObject() };
+				const auto& obj { obj_data.toObject() };
+				const auto& keys { obj.keys() };
 
-				const auto keys { obj.keys() };
-
-				std::string query { query_start };
-
-				assert( !keys.empty() );
 				assert( keys.contains( "id" ) );
 				const std::uint64_t id { static_cast< std::uint64_t >( obj[ "id" ].toInteger() ) };
 
@@ -506,7 +518,7 @@ namespace atlas
 
 					table_creation_query += ");";
 
-					transaction << table_creation_query;
+					transaction << std::move( table_creation_query );
 				}
 
 				if ( idExists( table_name, id, transaction ) )
