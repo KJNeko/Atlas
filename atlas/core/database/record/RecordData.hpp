@@ -16,6 +16,7 @@ class RecordBanner;
 class RecordPreviews;
 
 #include "core/database/Column.hpp"
+#include "core/remote/concept.hpp"
 
 struct RecordData
 {
@@ -33,6 +34,33 @@ struct RecordData
 
 	//Getters
 	RecordID getID() const;
+
+	template < typename T >
+		requires is_remote< T >
+	std::optional< T > getRemoteData( Transaction transaction = Transaction( Autocommit ) )
+	{
+		T::fetch_for_rid( m_id );
+	}
+
+	template < typename T >
+		requires is_remote< T >
+	void linkRemote( T& data, Transaction transaction = Transaction( Autocommit ) )
+	{
+		data.link_to_rid( m_id, transaction );
+	}
+
+	//! Unlinks a remote given by T.
+	/**
+	 * Uses T's in getRemoteData to acquire id to unlink to.
+	 * @tparam T Remote data type to unlink
+	 */
+	template < typename T >
+		requires is_remote< T >
+	void unlinkRemote( Transaction transaction = Transaction( Autocommit ) )
+	{
+		auto data { getRemoteData< T >( transaction ) };
+		data.unlink_to_rid( m_id, transaction );
+	}
 
 	Column< QString, RecordID > title { "title", "records", "record_id", m_id };
 	Column< QString, RecordID > creator { "creator", "records", "record_id", m_id };

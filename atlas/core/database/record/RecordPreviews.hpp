@@ -10,7 +10,7 @@
 
 #include <QPixmap>
 
-#include "core/database/Database.hpp"
+#include "core/database/Transaction.hpp"
 
 class RecordData;
 

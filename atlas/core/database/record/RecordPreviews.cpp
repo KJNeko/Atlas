@@ -9,7 +9,6 @@
 #include "core/imageManager.hpp"
 
 const std::vector< std::filesystem::path > RecordPreviews::getPreviewPaths( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > previews;
@@ -19,25 +18,8 @@ try
 
 	return previews;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordPreviews::getPreviewPaths(): {} [{},{}]", m_record.getID(), e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordPreviews::getPreviewPaths(): {}", m_record.getID(), e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordPreviews::getPreviewPaths(): unknown exception", m_record.getID() );
-	return {};
-}
 
 std::vector< QPixmap > RecordPreviews::getPreviews( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::vector< QPixmap > images;
@@ -59,25 +41,8 @@ try
 
 	return images;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::
-		error( "{}->RecordPreviews::getPreviews(): {} [{},{}]", m_record.getID(), e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordPreviews::getPreviews(): {}", m_record.getID(), e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordPreviews::getPreviews(): unknown exception", m_record.getID() );
-	return {};
-}
 
 void RecordPreviews::addPreview( const std::filesystem::path& path, Transaction transaction )
-try
 {
 	ZoneScoped;
 	//Move preview to image folder
@@ -89,32 +54,15 @@ try
 
 	assert( std::filesystem::exists( new_path ) );
 }
+
+/*
 catch ( sqlite::errors::constraint_unique& e )
 {
 	//Eat unique constraint since it just means the preview was already added
 	return;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordPreviews::addPreview({}): {} [{},{}]",
-		m_record.getID(),
-		path.string(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordPreviews::addPreview({}): {}", m_record.getID(), path.string(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordPreviews::addPreview({}): unknown exception", m_record.getID(), path.string() );
-}
+}*/
 
 void RecordPreviews::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
-try
 {
 	ZoneScoped;
 	const auto active_previews { getPreviewPaths( transaction ) };
@@ -142,43 +90,11 @@ try
 		}
 	}
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordPreviews::reorderPreviews(): {} [{},{}]", m_record.getID(), e.what(), e.get_code(), e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordPreviews::reorderPreviews(): {}", m_record.getID(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordPreviews::reorderPreviews(): unknown exception", m_record.getID() );
-}
 
 void RecordPreviews::removePreview( const std::filesystem::path& preview, Transaction trans )
-try
 {
 	ZoneScoped;
 	const auto image_root { config::paths::images::getPath() };
 	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_record.getID()
 		  << std::filesystem::relative( preview, image_root ).string();
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordPreviews::removePreview({}): {} [{},{}]",
-		m_record.getID(),
-		preview.string(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordPreviews::removePreview({}): {}", m_record.getID(), preview.string(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordPreviews::removePreview({}): unknown exception", m_record.getID(), preview.string() );
 }

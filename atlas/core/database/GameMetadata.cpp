@@ -39,7 +39,6 @@ catch ( ... )
 }
 
 std::uint32_t GameMetadata::getPlaytime( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::uint32_t total_playtime { 0 };
@@ -50,30 +49,8 @@ try
 
 	return total_playtime;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getPlaytime: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getPlaytime: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getPlaytime: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::uint64_t GameMetadata::getLastPlayed( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::uint64_t last_played { 0 };
@@ -84,30 +61,8 @@ try
 
 	return last_played;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getLastPlayed: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getLastPlayed: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getLastPlayed: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::filesystem::path GameMetadata::getPath( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::string path;
@@ -120,30 +75,8 @@ try
 	else
 		return config::paths::games::getPath() / std::filesystem::path( path );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getPath: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getPath: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getPath: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::filesystem::path GameMetadata::getRelativeExecPath( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::string str;
@@ -152,59 +85,14 @@ try
 		>> str;
 	return { str };
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getRelativeExecPath: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getRelativeExecPath: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::
-		error( "({},{})->GameMetadata::getRelativeExecPath: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::filesystem::path GameMetadata::getExecPath( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	return getPath( transaction ) / getRelativeExecPath( transaction );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getExecPath: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getExecPath: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getExecPath: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 void GameMetadata::playGame( Transaction transaction )
-try
 {
 	ZoneScoped;
 	if ( const auto executable = getExecPath( transaction ); std::filesystem::exists( executable ) )
@@ -227,30 +115,8 @@ try
 	else
 		spdlog::error( "Failed to launch game with executable {}", executable.string() );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::playGame: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::playGame: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::playGame: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 void GameMetadata::addPlaytime( const std::uint32_t playtime, Transaction transaction )
-try
 {
 	ZoneScoped;
 	transaction << "UPDATE game_metadata SET version_playtime = ? WHERE record_id = ? AND version = ?"
@@ -260,57 +126,16 @@ try
 
 	m_parent->total_playtime.set( playtime + current, transaction );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::
-		error( "({},{})->GameMetadata::addPlaytime({}): {}", m_parent->getID(), this->m_version, playtime, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::
-		error( "({},{})->GameMetadata::addPlaytime({}): {}", m_parent->getID(), this->m_version, playtime, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::addPlaytime({}): Unknown exception", m_parent->getID(), this->m_version, playtime );
-	std::rethrow_exception( std::current_exception() );
-}
 
 void GameMetadata::setLastPlayed( const std::uint64_t last_played, Transaction transaction )
-try
 {
 	ZoneScoped;
 	transaction << "UPDATE game_metadata SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
 				<< m_parent->getID() << m_version.toStdString();
 	m_parent->last_played.set( last_played, transaction );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): {}", m_parent->getID(), this->m_version, last_played, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): {}", m_parent->getID(), this->m_version, last_played, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setLastPlayed({}): Unknown exception",
-		m_parent->getID(),
-		this->m_version,
-		last_played );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::uint64_t GameMetadata::getFolderSize( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::size_t folder_size { 0 };
@@ -319,27 +144,6 @@ try
 		>> folder_size;
 	return folder_size;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getFolderSize: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getFolderSize: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getFolderSize: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
-}
 
 RecordID GameMetadata::getParentID() const
 {
@@ -347,82 +151,21 @@ RecordID GameMetadata::getParentID() const
 }
 
 void GameMetadata::setVersionName( const QString str, Transaction transaction )
-try
 {
 	ZoneScoped;
 	transaction << "UPDATE game_metadata SET version = ? WHERE record_id = ? AND version = ?" << str.toStdString()
 				<< m_parent->getID() << m_version.toStdString();
 	m_version = str;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setVersionName({}): {}",
-		m_parent->getID(),
-		this->m_version,
-		str.toStdString(),
-		e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setVersionName({}): {}",
-		m_parent->getID(),
-		this->m_version,
-		str.toStdString(),
-		e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setVersionName({}): Unknown exception",
-		m_parent->getID(),
-		this->m_version,
-		str.toStdString() );
-	std::rethrow_exception( std::current_exception() );
-}
 
 void GameMetadata::setRelativeExecPath( const std::filesystem::path& path, Transaction transaction )
-try
 {
 	ZoneScoped;
 	transaction << "UPDATE game_metadata SET exec_path = ? WHERE record_id = ? AND version = ?" << path.string()
 				<< m_parent->getID() << m_version.toStdString();
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setRelativeExecPath({}): {}",
-		m_parent->getID(),
-		this->m_version,
-		path.string(),
-		e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setRelativeExecPath({}): {}",
-		m_parent->getID(),
-		this->m_version,
-		path.string(),
-		e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::setRelativeExecPath({}): Unknown exception",
-		m_parent->getID(),
-		this->m_version,
-		path.string() );
-	std::rethrow_exception( std::current_exception() );
-}
 
 std::uint64_t GameMetadata::getImportTime( Transaction trans ) const
-try
 {
 	ZoneScoped;
 	std::uint64_t import_time { 0 };
@@ -431,25 +174,4 @@ try
 		>> import_time;
 
 	return import_time;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"({},{})->GameMetadata::getImportTime: {} [{}, {}]",
-		m_parent->getID(),
-		this->m_version,
-		e.what(),
-		e.errstr(),
-		e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "({},{})->GameMetadata::getImportTime: {}", m_parent->getID(), this->m_version, e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "({},{})->GameMetadata::getImportTime: Unknown exception", m_parent->getID(), this->m_version );
-	std::rethrow_exception( std::current_exception() );
 }

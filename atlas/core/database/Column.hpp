@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "Transaction.hpp"
+
 template < typename T >
 struct ColIntermediate
 {

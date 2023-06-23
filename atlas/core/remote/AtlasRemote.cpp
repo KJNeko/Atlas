@@ -11,7 +11,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "core/database/Database.hpp"
+#include "core/database/Transaction.hpp"
 #include "core/logging.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"
@@ -280,9 +280,15 @@ namespace atlas
 				{
 					//local hex
 					const auto local_hex {
-						QByteArrayView( local_md5.data(), local_md5.size() ).toByteArray().toHex().toStdString()
+						QByteArrayView( local_md5.data(), static_cast< qsizetype >( local_md5.size() ) )
+							.toByteArray()
+							.toHex()
+							.toStdString()
 					};
-					const auto md5_hex { QByteArrayView( md5.data(), md5.size() ).toByteArray().toHex().toStdString() };
+					const auto md5_hex { QByteArrayView( md5.data(), static_cast< qsizetype >( md5.size() ) )
+						                     .toByteArray()
+						                     .toHex()
+						                     .toStdString() };
 
 					spdlog::warn(
 						"Update {} exists but md5 {} vs {} doesn't match. Downloading again.",
@@ -518,7 +524,6 @@ namespace atlas
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
-	try
 	{
 		ZoneScoped;
 		spdlog::info( "Processing update for time {}", update_time );
@@ -539,7 +544,7 @@ namespace atlas
 										std::uint64_t tmp_processed_time { 0 };
 										Transaction t { Autocommit };
 										t << "SELECT processed_time FROM updates WHERE update_time = ?" << update_time
-											>> [ &tmp_processed_time ]( const std::uint64_t processed_time_i )
+											>> [ &tmp_processed_time ]( const std::uint64_t processed_time_i ) noexcept
 										{ tmp_processed_time = processed_time_i; };
 										return tmp_processed_time;
 									}() };
@@ -557,10 +562,6 @@ namespace atlas
 		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
 					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
 		transaction.commit();
-	}
-	catch ( sqlite::sqlite_exception& e )
-	{
-		spdlog::error( "Error parsing update {}. {}: query: {}", update_time, e.what(), e.get_sql() );
 	}
 
 } // namespace atlas

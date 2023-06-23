@@ -33,7 +33,6 @@ RecordID RecordData::getID() const
 }
 
 std::optional< GameMetadata > RecordData::getVersion( const QString version_name, Transaction transaction )
-try
 {
 	ZoneScoped;
 	const auto versions { getVersions( transaction ) };
@@ -48,24 +47,8 @@ try
 	else
 		return *idx;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getVersion(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return std::nullopt;
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getVersion(): {}", m_id, e.what() );
-	return std::nullopt;
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getVersion(): unknown exception", m_id );
-	return std::nullopt;
-}
 
 std::optional< GameMetadata > RecordData::getLatestVersion( Transaction transaction )
-try
 {
 	ZoneScoped;
 	const auto versions { getVersions( transaction ) };
@@ -74,24 +57,8 @@ try
 	else
 		return versions.at( 0 );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getLatestVersion(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return std::nullopt;
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getLatestVersion(): {}", m_id, e.what() );
-	return std::nullopt;
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getLatestVersion(): unknown exception", m_id );
-	return std::nullopt;
-}
 
 std::vector< GameMetadata > RecordData::getVersions( Transaction transaction )
-try
 {
 	ZoneScoped;
 	std::vector< GameMetadata > metadata;
@@ -101,21 +68,6 @@ try
 
 	return metadata;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getVersions(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getVersions(): {}", m_id, e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getVersions(): unknown exception", m_id );
-	return {};
-}
 
 void RecordData::addVersion(
 	QString version,
@@ -124,7 +76,6 @@ void RecordData::addVersion(
 	const uint64_t folder_size,
 	bool in_place,
 	Transaction transaction )
-try
 {
 	ZoneScoped;
 	spdlog::debug(
@@ -153,27 +104,8 @@ try
 			   .count()
 		<< folder_size;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::addVersion({}): {} [{},{}]",
-		m_id,
-		version.toStdString(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::addVersion({}): {}", m_id, version.toStdString(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::addVersion({}): unknown exception", m_id, version.toStdString() );
-}
 
 void RecordData::removeVersion( const GameMetadata& version, Transaction transaction )
-try
 {
 	ZoneScoped;
 	const auto active_versions { getVersions( transaction ) };
@@ -190,28 +122,8 @@ try
 			   .count()
 		<< ( 0 - static_cast< std::int64_t >( version.getFolderSize() ) );
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::removeVersion({}): {} [{},{}]",
-		m_id,
-		version.getVersionName().toStdString(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::removeVersion({}): {}", m_id, version.getVersionName().toStdString(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::
-		error( "{}->RecordData::removeVersion({}): unknown exception", m_id, version.getVersionName().toStdString() );
-}
 
 RecordData::RecordData( QString title_in, QString creator_in, QString engine_in, Transaction transaction )
-try
 {
 	ZoneScoped;
 	RecordID record_id { 0 };
@@ -230,37 +142,8 @@ try
 			<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
 		>> [ & ]( const RecordID id ) { m_id = id; };
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"RecordData::RecordData({}, {}, {}): {} [{},{}]",
-		title_in.toStdString(),
-		creator_in.toStdString(),
-		engine_in.toStdString(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"RecordData::RecordData({}, {}, {}): {}",
-		title_in.toStdString(),
-		creator_in.toStdString(),
-		engine_in.toStdString(),
-		e.what() );
-}
-catch ( ... )
-{
-	spdlog::error(
-		"RecordData::RecordData({}, {}, {}): unknown exception",
-		title_in.toStdString(),
-		creator_in.toStdString(),
-		engine_in.toStdString() );
-}
 
 QString RecordData::getDesc( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	try
@@ -269,29 +152,13 @@ try
 		transaction << "SELECT notes FROM game_notes WHERE record_id = ?" << m_id >> str;
 		return QString::fromStdString( str );
 	}
-	catch ( sqlite::exceptions::no_rows& e )
+	catch ( const NoRows& e )
 	{
 		return {};
 	}
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getDesc(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getDesc(): {}", m_id, e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getDesc(): unknown exception", m_id );
-	return {};
-}
 
 void RecordData::setDesc( const QString& str, Transaction transaction )
-try
 {
 	ZoneScoped;
 	bool found { false };
@@ -302,101 +169,33 @@ try
 	else
 		transaction << "INSERT INTO game_notes (record_id, notes) VALUES (?, ?)" << m_id << str.toStdString();
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::setDesc({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::setDesc({}): {}", m_id, str.toStdString(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::setDesc({}): unknown exception", m_id, str.toStdString() );
-}
 
 std::vector< QString > RecordData::getAllTags( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::vector< QString > tags;
-	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> [ &tags ]( const std::string& str )
-	{ tags.emplace_back( QString::fromStdString( str ) ); };
+	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> tags;
 	return tags;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getAllTags(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getAllTags(): {}", m_id, e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getAllTags(): unknown exception", m_id );
-	return {};
 }
 
 std::vector< QString > RecordData::getUserTags( Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	std::vector< QString > tags;
-	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >>
-		[ & ]( const std::string str ) { tags.emplace_back( QString::fromStdString( str ) ); };
+	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >> tags;
 
 	return tags;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "{}->RecordData::getUserTags(): {} [{},{}]", m_id, e.what(), e.get_code(), e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::getUserTags(): {}", m_id, e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::getUserTags(): unknown exception", m_id );
-	return {};
-}
 
 std::size_t strToTagID( const QString str, Transaction transaction = Transaction( Autocommit ) )
-try
 {
 	ZoneScoped;
 	std::size_t id { 0 };
 	transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str.toStdString() >> id;
 	return id;
 }
-catch ( [[maybe_unused]] sqlite::exceptions::no_rows& e )
-{
-	return 0;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error( "strToTagID({}): {} [{},{}]", str.toStdString(), e.what(), e.get_code(), e.get_sql() );
-	return 0;
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "strToTagID({}): {}", str.toStdString(), e.what() );
-	return 0;
-}
-catch ( ... )
-{
-	spdlog::error( "strToTagID({}): unknown exception", str.toStdString() );
-	return 0;
-}
 
 void RecordData::addUserTag( const QString str, Transaction transaction )
-try
 {
 	ZoneScoped;
 	if ( auto tag_id = strToTagID( str, transaction ); tag_id != 0 )
@@ -410,22 +209,8 @@ try
 		transaction << "INSERT INTO tag_mappings (record_id, tag_id) VALUES (?, ?)" << m_id << tag_id;
 	}
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::addUserTag({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::addUserTag({}): {}", m_id, str.toStdString(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::addUserTag({}): unknown exception", m_id, str.toStdString() );
-}
 
 void RecordData::removeUserTag( const QString str, Transaction transaction )
-try
 {
 	ZoneScoped;
 	const auto tag_id { strToTagID( str, transaction ) };
@@ -436,22 +221,8 @@ try
 		transaction << "DELETE FROM tag_mappings WHERE record_id = ? AND tag_id = ?;" << m_id << tag_id;
 	}
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::removeUserTag({}): {} [{},{}]", m_id, str.toStdString(), e.what(), e.get_code(), e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::removeUserTag({}): {}", m_id, str.toStdString(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::removeUserTag({}): unknown exception", m_id, str.toStdString() );
-}
 
 RecordID recordID( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
-try
 {
 	ZoneScoped;
 	RecordID record_id { 0 };
@@ -462,30 +233,6 @@ try
 
 	return record_id;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"recordID({}, {}, {}): {} [{},{}]",
-		title.toStdString(),
-		creator.toStdString(),
-		engine.toStdString(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-	return 0;
-}
-catch ( const std::exception& e )
-{
-	spdlog::
-		error( "recordID({}, {}, {}): {}", title.toStdString(), creator.toStdString(), engine.toStdString(), e.what() );
-	return 0;
-}
-catch ( ... )
-{
-	spdlog::error(
-		"recordID({}, {}, {}): unknown exception", title.toStdString(), creator.toStdString(), engine.toStdString() );
-	return 0;
-}
 
 bool recordExists( const QString& title, const QString& creator, const QString& engine, Transaction transaction )
 try
@@ -493,35 +240,8 @@ try
 	ZoneScoped;
 	return recordID( title, creator, engine, transaction );
 }
-catch ( [[maybe_unused]] sqlite::exceptions::no_rows& e )
+catch ( [[maybe_unused]] const NoRows& e )
 {
-	return false;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"recordExists({}, {}, {}): {} [{},{}]",
-		title.toStdString(),
-		creator.toStdString(),
-		engine.toStdString(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-	return false;
-}
-catch ( const std::exception& e )
-{
-	spdlog::error(
-		"recordExists({}, {}, {}): {}", title.toStdString(), creator.toStdString(), engine.toStdString(), e.what() );
-	return false;
-}
-catch ( ... )
-{
-	spdlog::error(
-		"recordExists({}, {}, {}): unknown exception",
-		title.toStdString(),
-		creator.toStdString(),
-		engine.toStdString() );
 	return false;
 }
 

@@ -24,43 +24,27 @@ try
 
 	return { config::paths::images::getPath() / banner_path };
 }
-catch ( const sqlite::exceptions::no_rows& e )
+catch ( const NoRows& e )
 {
 	//We didn't get a path. Try an alternative
-	std::string banner_path { "" };
-	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID() >>
-		[ & ]( const std::string str ) { banner_path = str; };
+	std::string banner_path;
+	try
+	{
+		transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID()
+			>> banner_path;
+	}
+	catch ( [[maybe_unused]] const NoRows& )
+	{
+		return {};
+	}
 
 	if ( banner_path.empty() )
 		return banner_path;
 	else
 		return config::paths::images::getPath() / banner_path;
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordBanner::getBannerPath({}): {} [{},{}]",
-		m_record.getID(),
-		static_cast< int >( type ),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordBanner::getBannerPath({}): {}", m_record.getID(), static_cast< int >( type ), e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::
-		error( "{}->RecordBanner::getBannerPath({}): unknown exception", m_record.getID(), static_cast< int >( type ) );
-	return {};
-}
 
 QPixmap RecordBanner::getBanner( const BannerType type, Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	const auto path { getBannerPath( type, transaction ) };
@@ -70,27 +54,6 @@ try
 	else
 		return QPixmap { QString::fromStdString( path.string() ) };
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordBanner::getBanner({}): {} [{},{}]",
-		m_record.getID(),
-		static_cast< int >( type ),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordBanner::getBanner({}): {}", m_record.getID(), static_cast< int >( type ), e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordBanner::getBanner({}): unknown exception", m_record.getID(), static_cast< int >( type ) );
-	return {};
-}
 
 QPixmap RecordBanner::getBanner(
 	const int width,
@@ -98,7 +61,6 @@ QPixmap RecordBanner::getBanner(
 	const SCALE_TYPE aspect_ratio_mode,
 	const BannerType type,
 	Transaction transaction ) const
-try
 {
 	ZoneScoped;
 	const auto key { QString::fromStdString( getBannerPath( type, transaction ).filename().string() )
@@ -141,30 +103,8 @@ try
 		}
 	}
 }
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordBanner::getBanner({}): {} [{},{}]",
-		m_record.getID(),
-		static_cast< int >( type ),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-	return {};
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordBanner::getBanner({}): {}", m_record.getID(), static_cast< int >( type ), e.what() );
-	return {};
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordBanner::getBanner({}): unknown exception", m_record.getID(), static_cast< int >( type ) );
-	return {};
-}
 
 void RecordBanner::setBanner( const std::filesystem::path& path, const BannerType type, Transaction transaction )
-try
 {
 	ZoneScoped;
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_record.getID() );
@@ -185,29 +125,13 @@ try
 					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
 	}
 }
+
+/*
 catch ( sqlite::errors::constraint_unique& e )
 {
 	//In this case we want to just eat the unique constraint. Since it just means the banner was set to the same thing as before.
 	return;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordBanner::setBanner({}): {} [{},{}]",
-		m_record.getID(),
-		path.string(),
-		e.what(),
-		e.get_code(),
-		e.get_sql() );
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordBanner::setBanner({}): {}", m_record.getID(), path.string(), e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordBanner::setBanner({}): unknown exception", m_record.getID(), path.string() );
-}
+}*/
 
 QPixmap RecordBanner::
 	getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, const BannerType type, Transaction transaction )
@@ -218,7 +142,6 @@ QPixmap RecordBanner::
 }
 
 bool RecordBanner::hasBanner( const BannerType type, Transaction trans ) const
-try
 {
 	ZoneScoped;
 	int count { 0 };
@@ -226,20 +149,4 @@ try
 		  << static_cast< int >( type )
 		>> count;
 	return count;
-}
-catch ( const sqlite::sqlite_exception& e )
-{
-	spdlog::error(
-		"{}->RecordData::hasBanner({}): {} [{},{}]", m_record.getID(), type, e.what(), e.get_code(), e.get_sql() );
-	return false;
-}
-catch ( const std::exception& e )
-{
-	spdlog::error( "{}->RecordData::hasBanner({}): {}", m_record.getID(), type, e.what() );
-	return false;
-}
-catch ( ... )
-{
-	spdlog::error( "{}->RecordData::hasBanner({}): unknown exception", m_record.getID(), type );
-	return false;
 }

@@ -6,6 +6,7 @@
 #define ATLAS_DATABASE_HPP
 
 #include <filesystem>
+#include <sqlite3.h>
 
 #include <QObject>
 
@@ -25,8 +26,6 @@
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
 #pragma GCC diagnostic ignored "-Wpragmas"
 
-#include <sqlite_modern_cpp.h>
-
 #include <tracy/Tracy.hpp>
 
 #pragma GCC diagnostic pop
@@ -45,7 +44,7 @@ namespace internal
 class Database
 {
 	//! Returns a ref to the sqlite DB
-	static sqlite::database& ref();
+	static sqlite3& ref();
 
 	//! Returns a ref to the global DB lock
 	static internal::MtxType& lock();
@@ -64,6 +63,7 @@ class Database
 	friend struct Transaction;
 	friend struct NonTransaction;
 	friend class TransactionData;
+	friend class Binder;
 };
 
 struct TransactionInvalid : public std::runtime_error
@@ -73,107 +73,15 @@ struct TransactionInvalid : public std::runtime_error
 	{}
 };
 
-//! Internal class used for Transaction and NonTransaction's shared data
-class TransactionData
+struct DbResults
 {
-	internal::LockGuardType guard;
-
-	internal::LockGuardType getLock();
-
-	//! True if operator<< has been called at least once
-	bool ran_once { false };
-
-	//! True if commit/abort has been called
-	bool invalid { false };
-
-  public:
-
-	TransactionData();
-
-	~TransactionData();
-
-	friend struct Transaction;
-	friend struct NonTransaction;
+	int rows_returned { 0 };
 };
 
-enum TransactionAutocommit
-{
-	Autocommit = true,
-	NoAutocommit = false
-};
+struct DbException : public std::runtime_error
+{};
 
-//! Transaction unit to the database.
-struct Transaction
-{
-	using enum TransactionAutocommit;
-
-  private:
-
-	Transaction* m_parent { nullptr };
-	std::shared_ptr< TransactionData > data;
-	bool m_autocommit { false };
-	std::string m_previous_statement {};
-
-	//! Releases the pointer to the shared data section for all Transactions up the chain.
-	inline void releaseData()
-	{
-		data.reset();
-		if ( m_parent != nullptr ) m_parent->releaseData();
-	}
-
-  public:
-
-	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
-	Transaction() = delete;
-
-	/**
-	 * @param autocommit if commit() should be called on dtor, Otherwise abort() is called if not called previously
-	 */
-	explicit Transaction( const bool autocommit = false );
-	Transaction( Transaction& other );
-	Transaction( const Transaction& other ) = delete;
-	Transaction( Transaction&& other ) = delete;
-	Transaction& operator=( const Transaction& other ) = delete;
-
-	//! @throws TransactionInvalid
-	sqlite::database_binder operator<<( const std::string& sql );
-
-	/**
-	 * @brief Commits the transaction. Committing all changes made by this transaction
-	 * @throws TransactionInvalid when attempting to call commit() after an abort() or commit() twice
-	 */
-	void commit();
-
-	/**
-	 * @brief Aborts the transaction. Reverting all changes made by this transaction
-	 * @throws TransactionInvalid when attempting to call abort() after a commit() or abort() twice
-	 */
-	void abort();
-
-	~Transaction();
-};
-
-struct NonTransaction
-{
-	Q_DISABLE_COPY_MOVE( NonTransaction )
-
-  private:
-
-	bool finished { false };
-	std::unique_ptr< internal::LockGuardType > guard;
-	std::string m_previous_statement {};
-
-  public:
-
-	NonTransaction();
-
-	sqlite::database_binder operator<<( const std::string& sql );
-
-	void commit();
-
-	void abort();
-
-	~NonTransaction();
-};
+struct NoRows : public DbException
+{};
 
 #endif //ATLAS_DATABASE_HPP

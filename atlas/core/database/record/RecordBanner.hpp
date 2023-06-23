@@ -8,7 +8,7 @@
 class RecordData;
 
 #include "core/config.hpp"
-#include "core/database/Database.hpp"
+#include "core/database/Transaction.hpp"
 
 class RecordBanner
 {

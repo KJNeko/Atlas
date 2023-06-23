@@ -4,28 +4,29 @@
 
 #include "Database.hpp"
 
+#include <sqlite3.h>
+
+#include "Transaction.hpp"
 #include "core/config.hpp"
 #include "core/database/record/Record.hpp"
 
 namespace internal
 {
-	static sqlite::database* db { nullptr };
+	static sqlite3* db_handle { nullptr };
 #ifdef TRACY_ENABLE
 	static TracyLockableN( std::mutex, db_mtx, "Database lock" );
 #else
 	static std::mutex db_mtx;
 #endif
 
-	static std::atomic< std::thread::id > last_locked {};
-
 	//static std::mutex db_mtx {};
 } // namespace internal
 
-sqlite::database& Database::ref()
+sqlite3& Database::ref()
 {
 	ZoneScoped;
-	if ( internal::db != nullptr )
-		return *internal::db;
+	if ( internal::db_handle != nullptr )
+		return *internal::db_handle;
 	else
 		throw std::runtime_error( "ref: Database was not initalized!" );
 }
@@ -37,23 +38,22 @@ internal::MtxType& Database::lock()
 }
 
 void Database::initalize( const std::filesystem::path init_path )
-try
 {
 	ZoneScoped;
 	initLogging();
 
-	if ( init_path == ":memory:" )
-	{
-		internal::db = new sqlite::database( ":memory:" );
-	}
-	else
-	{
-		if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
-			std::filesystem::create_directories( init_path.parent_path() );
+	if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
+		std::filesystem::create_directories( init_path.parent_path() );
 
-		internal::db = new sqlite::database( init_path.string() );
+	const int ret_code { sqlite3_open_v2( init_path.c_str(), &internal::db_handle, SQLITE_OPEN_READWRITE, nullptr ) };
+
+	if ( ret_code != SQLITE_OK )
+	{
+		spdlog::critical( "Failed to load sqlite!" );
+		std::abort();
 	}
-	NonTransaction transaction;
+
+	Transaction transaction { NonTransaction };
 
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
@@ -106,184 +106,22 @@ try
 
 	config::db::first_start::set( false );
 
-	try
+	if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
 	{
-		if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
-		{
-			const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
+		const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
 
-			record->addVersion(
-				"Chapter: 1",
-				"C:/Atlas Games/Galaxy Crossing First Conquest",
-				"C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
-				0,
-				true );
-		}
+		record->addVersion(
+			"Chapter: 1",
+			"C:/Atlas Games/Galaxy Crossing First Conquest",
+			"C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+			0,
+			true );
 	}
-	catch ( sqlite::sqlite_exception& e )
-	{
-		spdlog::info( "Failed to insert dummy record: {}", e.errstr() );
-	}
-	catch ( const RecordAlreadyExists& e )
-	{
-		//do nothing
-	}
-}
-catch ( sqlite::sqlite_exception& e )
-{
-	spdlog::error( "initalize: Database has failed to initalize: {}", e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
 }
 
 void Database::deinit()
 {
 	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
-	delete internal::db;
-	internal::db = nullptr;
-}
-
-internal::LockGuardType TransactionData::getLock()
-{
-	ZoneScoped;
-	//Check if we are already locked
-	if ( internal::last_locked == std::this_thread::get_id() )
-	{
-		spdlog::critical( "Deadlock detected! Ejecting!" );
-		throw std::runtime_error( "Deadlock" );
-	}
-	else
-		return internal::LockGuardType( Database::lock() );
-}
-
-TransactionData::TransactionData() : guard( getLock() )
-{
-	ZoneScoped;
-	internal::last_locked = std::this_thread::get_id();
-}
-
-TransactionData::~TransactionData()
-{
-	ZoneScoped;
-	internal::last_locked = std::thread::id();
-}
-
-Transaction::Transaction( const bool autocommit ) : data( new TransactionData() ), m_autocommit( autocommit )
-{
-	ZoneScoped;
-	if ( internal::db == nullptr )
-	{
-		spdlog::error( "Transaction: Database was not ready!" );
-		data.reset();
-		throw TransactionInvalid( m_previous_statement );
-	}
-
-	*this << "BEGIN TRANSACTION";
-	data->ran_once = false;
-}
-
-Transaction::~Transaction()
-{
-	ZoneScoped;
-	if ( data.use_count() == 1 && !data->invalid )
-	{
-		if ( m_autocommit )
-			commit();
-		else
-		{
-			spdlog::warn( "Transaction defaulted to abort on dtor! Check if this is intended!" );
-			abort();
-		}
-	}
-}
-
-void Transaction::commit()
-{
-	ZoneScoped;
-	if ( !data->ran_once )
-	{
-		spdlog::warn( "commit(): Nothing was done in this Transaction? Check if this is intended" );
-	}
-	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid( m_previous_statement );
-	*this << "COMMIT TRANSACTION";
-
-	data->invalid = true;
-	releaseData();
-}
-
-void Transaction::abort()
-{
-	ZoneScoped;
-	spdlog::warn( "A transaction was aborted! Last executed:\"{}\"", m_previous_statement );
-	if ( !data->ran_once )
-	{
-		spdlog::warn( "abort(): Nothing was done in this Transaction? Check if this is intended" );
-	}
-	if ( data.use_count() == 0 || data->invalid ) throw TransactionInvalid( m_previous_statement );
-	*this << "ROLLBACK TRANSACTION";
-
-	data->invalid = true;
-	releaseData();
-}
-
-sqlite::database_binder Transaction::operator<<( const std::string& sql )
-{
-	ZoneScoped;
-	TracyMessage( sql.c_str(), sql.size() );
-	if ( data == nullptr ) throw TransactionInvalid( sql );
-
-	data->ran_once = true;
-	if ( data.use_count() == 0 ) throw TransactionInvalid( sql );
-	m_previous_statement = sql;
-	return Database::ref() << sql;
-}
-
-Transaction::Transaction( Transaction& other ) :
-  m_parent( &other ),
-  data( other.data ),
-  m_autocommit( other.m_autocommit )
-{
-	ZoneScoped;
-	if ( data == nullptr ) throw TransactionInvalid( other.m_previous_statement );
-}
-
-NonTransaction::NonTransaction() : guard( new internal::LockGuardType( Database::lock() ) )
-{
-	ZoneScoped;
-	if ( internal::db == nullptr )
-	{
-		guard.reset();
-		throw TransactionInvalid( m_previous_statement );
-	}
-}
-
-NonTransaction::~NonTransaction()
-{
-	ZoneScoped;
-	if ( !finished ) abort();
-}
-
-void NonTransaction::commit()
-{
-	ZoneScoped;
-	if ( finished ) throw TransactionInvalid( m_previous_statement );
-	finished = true;
-	guard.reset();
-}
-
-void NonTransaction::abort()
-{
-	ZoneScoped;
-	if ( finished ) throw TransactionInvalid( m_previous_statement );
-	finished = true;
-	guard.reset();
-	spdlog::error( "Transaction aborted!" );
-}
-
-sqlite::database_binder NonTransaction::operator<<( const std::string& sql )
-{
-	ZoneScoped;
-	m_previous_statement = sql;
-	if ( finished ) throw TransactionInvalid( m_previous_statement );
-	return Database::ref() << sql;
+	sqlite3_close_v2( internal::db_handle );
 }

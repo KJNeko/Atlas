@@ -16,7 +16,7 @@
 #include <tracy/TracyC.h>
 
 #include "config.hpp"
-#include "core/database/Database.hpp"
+#include "core/database/Transaction.hpp"
 #include "system.hpp"
 
 namespace imageManager

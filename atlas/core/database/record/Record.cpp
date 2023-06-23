@@ -53,7 +53,6 @@ Record::Record( RecordData&& data ) :
 
 //! imports a new record and returns it. Will return an existing record if the record already exists
 Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
-try
 {
 	ZoneScoped;
 	if ( recordExists( title, creator, engine, transaction ) )
@@ -63,19 +62,4 @@ try
 	RecordData data { std::move( title ), std::move( creator ), std::move( engine ), transaction };
 
 	return Record( data.getID(), transaction );
-}
-catch ( sqlite::sqlite_exception& e )
-{
-	spdlog::error( "importRecord: Failed to import record: {} {} {}", e.what(), e.errstr(), e.get_sql() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( std::exception& e )
-{
-	spdlog::error( "importRecord: Failed to import record: {}", e.what() );
-	std::rethrow_exception( std::current_exception() );
-}
-catch ( ... )
-{
-	spdlog::error( "importRecord: Failed to import record: Unknown error" );
-	std::rethrow_exception( std::current_exception() );
 }

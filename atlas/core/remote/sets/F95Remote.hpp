@@ -1,0 +1,11 @@
+//
+// Created by kj16609 on 6/23/23.
+//
+
+#ifndef ATLASGAMEMANAGER_F95REMOTE_HPP
+#define ATLASGAMEMANAGER_F95REMOTE_HPP
+
+class F95Remote
+{};
+
+#endif //ATLASGAMEMANAGER_F95REMOTE_HPP
