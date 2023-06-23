@@ -22,7 +22,7 @@ RecordData::RecordData( const RecordID id, Transaction transaction ) : m_id( id 
 
 	bool exists;
 	transaction << "SELECT record_id FROM records WHERE record_id = ?" << m_id >>
-		[ & ]( [[maybe_unused]] const RecordID ) { exists = true; };
+		[ & ]( [[maybe_unused]] const RecordID ) noexcept { exists = true; };
 
 	if ( !exists ) throw std::runtime_error( "Record does not exist" );
 }
@@ -129,7 +129,7 @@ RecordData::RecordData( QString title_in, QString creator_in, QString engine_in,
 	RecordID record_id { 0 };
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?"
 				<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
-		>> [ & ]( const RecordID id ) { record_id = id; };
+		>> [ & ]( const RecordID id ) noexcept { record_id = id; };
 
 	if ( record_id != 0 )
 	{
@@ -140,7 +140,7 @@ RecordData::RecordData( QString title_in, QString creator_in, QString engine_in,
 	transaction
 			<< "INSERT INTO records (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
 			<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
-		>> [ & ]( const RecordID id ) { m_id = id; };
+		>> [ & ]( const RecordID id ) noexcept { m_id = id; };
 }
 
 QString RecordData::getDesc( Transaction transaction ) const
@@ -174,7 +174,8 @@ std::vector< QString > RecordData::getAllTags( Transaction transaction ) const
 {
 	ZoneScoped;
 	std::vector< QString > tags;
-	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> tags;
+	transaction << "SELECT tag FROM full_tags WHERE record_id = ?" << m_id >> [ &tags ]( std::string str ) noexcept
+	{ tags.emplace_back( QString::fromStdString( std::move( str ) ) ); };
 	return tags;
 }
 
@@ -182,7 +183,8 @@ std::vector< QString > RecordData::getUserTags( Transaction transaction ) const
 {
 	ZoneScoped;
 	std::vector< QString > tags;
-	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >> tags;
+	transaction << "SELECT tag FROM tag_mappings NATURAL JOIN tags WHERE record_id = ?" << m_id >>
+		[ &tags ]( std::string str ) noexcept { tags.emplace_back( QString::fromStdString( std::move( str ) ) ); };
 
 	return tags;
 }
@@ -229,7 +231,7 @@ RecordID recordID( const QString& title, const QString& creator, const QString& 
 
 	transaction << "SELECT record_id FROM records WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
 				<< creator.toStdString() << engine.toStdString()
-		>> [ &record_id ]( [[maybe_unused]] const RecordID id ) { record_id = id; };
+		>> [ &record_id ]( [[maybe_unused]] const RecordID id ) noexcept { record_id = id; };
 
 	return record_id;
 }

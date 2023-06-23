@@ -313,7 +313,7 @@ namespace atlas
 		ZoneScoped;
 		bool exists = false;
 		Transaction << fmt::format( "SELECT EXISTS(SELECT 1 FROM {} WHERE id = {} LIMIT 1)", table_name, id ) >>
-			[ &exists ]( const bool e ) { exists = e; };
+			[ &exists ]( const bool e ) noexcept { exists = e; };
 		return exists;
 	}
 

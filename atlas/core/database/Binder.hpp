@@ -16,6 +16,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
 void extract( sqlite3_stmt* stmt, T& t )
 {
+	ZoneScoped;
 	t = static_cast< T >( sqlite3_column_int64( stmt, index ) );
 }
 
@@ -23,6 +24,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::string >
 void extract( sqlite3_stmt* stmt, std::string& t )
 {
+	ZoneScoped;
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
 	t = std::string( reinterpret_cast< const char* >( txt ) );
 }
@@ -31,9 +33,10 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, QString >
 void extract( sqlite3_stmt* stmt, QString& t )
 {
+	ZoneScoped;
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
-	t = QString::fromRawData(
-		reinterpret_cast< const QChar* >( txt ),
+	t = QString::fromLocal8Bit(
+		reinterpret_cast< const char* >( txt ),
 		static_cast< qsizetype >( strlen( reinterpret_cast< const char* >( txt ) ) ) );
 }
 
@@ -41,6 +44,7 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::vector< std::byte > >
 void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t )
 {
+	ZoneScoped;
 	const void* data { sqlite3_column_blob( stmt, index ) };
 	const std::size_t size { static_cast< std::size_t >( sqlite3_column_bytes( stmt, index ) ) };
 
@@ -51,6 +55,7 @@ void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t )
 template < std::uint64_t index, typename... Args >
 void extractRow( sqlite3_stmt* stmt, std::tuple< Args... >& tpl )
 {
+	ZoneScoped;
 	auto& ref { std::get< index >( tpl ) };
 	extract< index, std::remove_reference_t< decltype( ref ) > >( stmt, ref );
 
@@ -59,13 +64,14 @@ void extractRow( sqlite3_stmt* stmt, std::tuple< Args... >& tpl )
 
 template < typename T >
 	requires( !std::is_integral_v< T > )
-void bindParameter( sqlite3_stmt* stmt, const T val, const int idx );
+int bindParameter( sqlite3_stmt* stmt, const T val, const int idx );
 
 template < typename T >
 	requires std::is_integral_v< T >
-void bindParameter( sqlite3_stmt* stmt, const T val, const int idx )
+int bindParameter( sqlite3_stmt* stmt, const T val, const int idx )
 {
-	sqlite3_bind_int64( stmt, idx, static_cast< sqlite3_int64 >( val ) );
+	ZoneScoped;
+	return sqlite3_bind_int64( stmt, idx, static_cast< sqlite3_int64 >( val ) );
 }
 
 class Binder
@@ -74,27 +80,18 @@ class Binder
 	bool done { false };
 	int param_counter { 0 };
 
+	Q_DISABLE_COPY_MOVE( Binder )
+
   public:
 
-	Binder( const std::string sql )
-	{
-		if ( sqlite3_prepare_v2( &Database::ref(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
-		     != SQLITE_OK )
-		{
-			spdlog::error( "Failed to prepare statement {}", sql );
-			throw std::runtime_error( "Failed to prepare statement" );
-		}
-	}
+	Binder() = delete;
 
-	/*template<typename T>
-	Binder& operator<<(const T t)
-	{
-		bindParameter<T>(stmt, t, ++param_counter);
-	}*/
+	Binder( const std::string sql );
 
 	template < typename T >
 	Binder& operator<<( T t )
 	{
+		ZoneScoped;
 		if ( param_counter > sqlite3_bind_parameter_count( stmt ) )
 		{
 			throw std::runtime_error( fmt::format(
@@ -104,36 +101,64 @@ class Binder
 				std::string( sqlite3_sql( stmt ) ) ) );
 		}
 
-		bindParameter< T >( stmt, std::move( t ), ++param_counter );
+		switch ( bindParameter< T >( stmt, std::move( t ), ++param_counter ) )
+		{
+			case SQLITE_OK:
+				break;
+			default:
+				{
+					throw std::runtime_error( fmt::format(
+						"DB: Failed to bind to \"{}\": Reason: \"{}\"",
+						sqlite3_sql( stmt ),
+						sqlite3_errmsg( &Database::ref() ) ) );
+				}
+		}
+
 		return *this;
 	}
 
 	template < typename T >
 	void operator>>( T& t )
 	{
-		sqlite3_step( stmt );
-		extract< 0, T >( stmt, t );
-	}
-
-	template < typename T >
-	void operator>>( std::vector< T >& vec )
-	{
-		while ( !done )
+		ZoneScoped;
+		switch ( sqlite3_step( stmt ) )
 		{
-			sqlite3_step( stmt );
-			T tmp;
-			extract< 0, T >( stmt, tmp );
-
-			if constexpr ( std::is_trivially_move_constructible_v< T > )
-				vec.emplace_back( std::move( tmp ) );
-			else
-				vec.emplace_back( tmp );
+			default:
+				[[fallthrough]];
+			case SQLITE_MISUSE:
+				[[fallthrough]];
+			case SQLITE_BUSY:
+				[[fallthrough]];
+			case SQLITE_ERROR:
+				{
+					spdlog::error(
+						"DB: Query error: \"{}\", Query: \"{}\"",
+						sqlite3_errmsg( &Database::ref() ),
+						sqlite3_expanded_sql( stmt ) );
+					throw std::runtime_error( fmt::format(
+						"DB: Query error: \"{}\", Query: \"{}\"",
+						sqlite3_errmsg( &Database::ref() ),
+						sqlite3_expanded_sql( stmt ) ) );
+				}
+			case SQLITE_ROW:
+				spdlog::warn(
+					"DB: Query returned more rows then expected. Possibly malformed? Query:\"{}\"",
+					sqlite3_expanded_sql( stmt ) );
+				extract< 0, T >( stmt, t );
+				break;
+			case SQLITE_DONE:
+				break;
 		}
+
+		spdlog::debug( "Executing {}", sqlite3_expanded_sql( stmt ) );
+		sqlite3_finalize( stmt );
+		stmt = nullptr;
 	}
 
 	template < typename Function >
 	void operator>>( Function&& func )
 	{
+		ZoneScoped;
 		using FuncArgs = FunctionDecomp< Function >;
 		using Tpl = FuncArgs::ArgTuple;
 
@@ -164,7 +189,13 @@ class Binder
 
 			if ( done ) break;
 		}
+
+		spdlog::debug( "Executing {}", sqlite3_expanded_sql( stmt ) );
+		sqlite3_finalize( stmt );
+		stmt = nullptr;
 	}
+
+	~Binder();
 };
 
 #endif //ATLASGAMEMANAGER_BINDER_HPP
