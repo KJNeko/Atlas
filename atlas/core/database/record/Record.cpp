@@ -12,7 +12,7 @@ namespace internal
 	inline static std::mutex map_mtx;
 
 	//! Returns the ptr for the given key. Returns nullptr if not found
-	inline static std::shared_ptr< RecordData > getPtr( const RecordID key, Transaction& transaction )
+	inline static std::shared_ptr< RecordData > getPtr( const RecordID key )
 	{
 		ZoneScoped;
 		std::lock_guard guard { map_mtx };
@@ -20,7 +20,7 @@ namespace internal
 			return itter->second;
 		else
 		{
-			auto ptr = std::make_shared< RecordData >( key, transaction );
+			auto ptr = std::make_shared< RecordData >( key );
 			map.emplace( key, ptr );
 			return ptr;
 		}
@@ -43,8 +43,7 @@ namespace internal
 
 } // namespace internal
 
-Record::Record( const RecordID id, Transaction transaction ) :
-  std::shared_ptr< RecordData >( internal::getPtr( id, transaction ) )
+Record::Record( const RecordID id ) : std::shared_ptr< RecordData >( internal::getPtr( id ) )
 {}
 
 Record::Record( RecordData&& data ) :
@@ -52,14 +51,14 @@ Record::Record( RecordData&& data ) :
 {}
 
 //! imports a new record and returns it. Will return an existing record if the record already exists
-Record importRecord( QString title, QString creator, QString engine, Transaction transaction )
+Record importRecord( QString title, QString creator, QString engine )
 {
 	ZoneScoped;
-	if ( recordExists( title, creator, engine, transaction ) )
-		throw RecordAlreadyExists( Record(
-			recordID( std::move( title ), std::move( creator ), std::move( engine ), transaction ), transaction ) );
+	if ( recordExists( title, creator, engine ) )
+		throw RecordAlreadyExists(
+			Record( recordID( std::move( title ), std::move( creator ), std::move( engine ) ) ) );
 
-	RecordData data { std::move( title ), std::move( creator ), std::move( engine ), transaction };
+	RecordData data { std::move( title ), std::move( creator ), std::move( engine ) };
 
-	return Record( data.getID(), transaction );
+	return Record( data.getID() );
 }

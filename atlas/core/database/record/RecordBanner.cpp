@@ -9,7 +9,7 @@
 #include "RecordData.hpp"
 #include "core/imageManager.hpp"
 
-const std::filesystem::path RecordBanner::getBannerPath( const BannerType type, Transaction transaction ) const
+const std::filesystem::path RecordBanner::getBannerPath( const BannerType type ) const
 try
 {
 	ZoneScoped;
@@ -18,6 +18,7 @@ try
 	if ( m_record.getID() == 1 ) return { ":/images/assets/Grid_Capsule_Default.webp" };
 
 	std::string banner_path;
+	RapidTransaction transaction;
 	transaction << "SELECT path FROM banners WHERE record_id = ? AND type = ? limit 1" << m_record.getID()
 				<< static_cast< int >( type )
 		>> banner_path;
@@ -30,6 +31,7 @@ catch ( const NoRows& e )
 	std::string banner_path;
 	try
 	{
+		RapidTransaction transaction;
 		transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID()
 			>> banner_path;
 	}
@@ -44,10 +46,10 @@ catch ( const NoRows& e )
 		return config::paths::images::getPath() / banner_path;
 }
 
-QPixmap RecordBanner::getBanner( const BannerType type, Transaction transaction ) const
+QPixmap RecordBanner::getBanner( const BannerType type ) const
 {
 	ZoneScoped;
-	const auto path { getBannerPath( type, transaction ) };
+	const auto path { getBannerPath( type ) };
 
 	if ( path.empty() )
 		return {};
@@ -55,16 +57,12 @@ QPixmap RecordBanner::getBanner( const BannerType type, Transaction transaction 
 		return QPixmap { QString::fromStdString( path.string() ) };
 }
 
-QPixmap RecordBanner::getBanner(
-	const int width,
-	const int height,
-	const SCALE_TYPE aspect_ratio_mode,
-	const BannerType type,
-	Transaction transaction ) const
+QPixmap RecordBanner::
+	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, const BannerType type ) const
 {
 	ZoneScoped;
-	const auto key { QString::fromStdString( getBannerPath( type, transaction ).filename().string() )
-		             + QString::number( width ) + "x" + QString::number( height )
+	const auto key { QString::fromStdString( getBannerPath( type ).filename().string() ) + QString::number( width )
+		             + "x" + QString::number( height )
 		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };
 
 	//spdlog::info( key );
@@ -74,13 +72,13 @@ QPixmap RecordBanner::getBanner(
 		return banner;
 	else
 	{
-		banner = getBanner( type, transaction );
+		banner = getBanner( type );
 		if ( banner.isNull() )
 		{
 			spdlog::warn(
 				"Failed to get image for banner in record: {}, title: {}",
 				m_record.getID(),
-				m_record.title.get( transaction ).toStdString() );
+				m_record.title.get().toStdString() );
 			return {};
 		}
 		else
@@ -104,7 +102,7 @@ QPixmap RecordBanner::getBanner(
 	}
 }
 
-void RecordBanner::setBanner( const std::filesystem::path& path, const BannerType type, Transaction transaction )
+void RecordBanner::setBanner( const std::filesystem::path& path, const BannerType type )
 {
 	ZoneScoped;
 	spdlog::debug( "Setting banner to {} for record_id {}", path, m_record.getID() );
@@ -114,7 +112,8 @@ void RecordBanner::setBanner( const std::filesystem::path& path, const BannerTyp
 	const auto image_root { config::paths::images::getPath() };
 
 	//Check if it exists
-	if ( hasBanner( type, transaction ) )
+	RapidTransaction transaction;
+	if ( hasBanner( type ) )
 	{
 		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_record.getID()
 					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
@@ -133,18 +132,17 @@ catch ( sqlite::errors::constraint_unique& e )
 	return;
 }*/
 
-QPixmap RecordBanner::
-	getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, const BannerType type, Transaction transaction )
-		const
+QPixmap RecordBanner::getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, const BannerType type ) const
 {
 	ZoneScoped;
-	return getBanner( size.width(), size.height(), aspect_ratio_mode, type, transaction );
+	return getBanner( size.width(), size.height(), aspect_ratio_mode, type );
 }
 
-bool RecordBanner::hasBanner( const BannerType type, Transaction trans ) const
+bool RecordBanner::hasBanner( const BannerType type ) const
 {
 	ZoneScoped;
 	int count { 0 };
+	RapidTransaction trans;
 	trans << "SELECT COUNT(*) FROM banners WHERE record_id = ? AND type = ?" << m_record.getID()
 		  << static_cast< int >( type )
 		>> count;

@@ -18,12 +18,12 @@
 #include "ui/models/FilepathModel.hpp"
 #include "ui_RecordEditor.h"
 
-RecordEditor::RecordEditor( const RecordID record, QWidget* parent, Transaction transaction ) :
+RecordEditor::RecordEditor( const RecordID record, QWidget* parent ) :
   QDialog( parent ),
-  m_record( record, transaction ),
-  m_banner_path( m_record->banners().getBannerPath( Normal, transaction ) ),
-  m_preview_paths( m_record->previews().getPreviewPaths( transaction ) ),
-  m_versions( m_record->getVersions( transaction ) ),
+  m_record( record ),
+  m_banner_path( m_record->banners().getBannerPath( Normal ) ),
+  m_preview_paths( m_record->previews().getPreviewPaths() ),
+  m_versions( m_record->getVersions() ),
   ui( new Ui::RecordEditor )
 {
 	ui->setupUi( this );
@@ -294,10 +294,10 @@ void RecordEditor::on_btnChangeTitle_pressed()
 	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->title.get() );
 	     output != m_record->title.get() && !output.isEmpty() )
 	{
-		Transaction trans { Autocommit };
+		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
+			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -306,7 +306,7 @@ void RecordEditor::on_btnChangeTitle_pressed()
 			return;
 		}
 
-		m_record->title.set( output, trans );
+		m_record->title.set( output );
 	}
 	loadRecordInfo();
 }
@@ -317,10 +317,10 @@ void RecordEditor::on_btnChangeCreator_pressed()
 	         QInputDialog::getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->creator.get() );
 	     output != m_record->creator.get() && !output.isEmpty() )
 	{
-		Transaction trans { Autocommit };
+		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
+			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -332,7 +332,7 @@ void RecordEditor::on_btnChangeCreator_pressed()
 			return;
 		}
 
-		m_record->creator.set( output, trans );
+		m_record->creator.set( output );
 	}
 	loadRecordInfo();
 }
@@ -343,10 +343,10 @@ void RecordEditor::on_btnChangeEngine_pressed()
 	         QInputDialog::getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->engine.get() );
 	     output != m_record->engine.get() && !output.isEmpty() )
 	{
-		Transaction trans { Autocommit };
+		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->creator.get( trans ).toStdString() << m_record->engine.get( trans ).toStdString()
+			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -355,7 +355,7 @@ void RecordEditor::on_btnChangeEngine_pressed()
 				warning( this, "Duplicate!", "There is already a game with the same creator, name and engine!" );
 			return;
 		}
-		m_record->engine.set( output, trans );
+		m_record->engine.set( output );
 	}
 	loadRecordInfo();
 }

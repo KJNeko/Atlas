@@ -10,21 +10,21 @@ namespace internal
 	template < typename T >
 	concept has_remote_link_to = requires( T t ) {
 		{
-			t.link_to_rid( RecordID( 0 ), Transaction( Autocommit ) )
+			t.link_to_rid( RecordID( 0 ), RapidTransaction() )
 		} -> std::same_as< void >;
 	};
 
 	template < typename T >
 	concept has_remote_unlink_to = requires( T t ) {
 		{
-			t.unlink_to_rid( RecordID( 0 ), Transaction( Autocommit ) )
+			t.unlink_to_rid( RecordID( 0 ), RapidTransaction() )
 		} -> std::same_as< void >;
 	};
 
 	template < typename T >
 	concept has_fetch_for = requires() {
 		{
-			T::fetch_for_rid( RecordID( 0 ), Transaction( Autocommit ) )
+			T::fetch_for_rid( RecordID( 0 ), RapidTransaction() )
 		} -> std::same_as< std::optional< T > >;
 	};
 

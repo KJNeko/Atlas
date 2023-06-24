@@ -12,7 +12,7 @@ class Record : public std::shared_ptr< RecordData >
   public:
 
 	Record() = default;
-	Record( const RecordID id, Transaction transaction = Transaction( Transaction::Autocommit ) );
+	Record( const RecordID id );
 	Record( RecordData&& data );
 };
 
@@ -28,8 +28,7 @@ Q_DECLARE_METATYPE( Record )
  * @throws RecordAlreadyExists
  * @return
  */
-Record importRecord(
-	QString title, QString creator, QString engine, Transaction transaction = Transaction( Transaction::Autocommit ) );
+Record importRecord( QString title, QString creator, QString engine );
 
 struct RecordException : public std::runtime_error
 {

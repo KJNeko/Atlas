@@ -29,37 +29,33 @@ struct GameMetadata
 
 	//Setters
 	//! Adds playtime to this and it's parent record
-	void addPlaytime( const std::uint32_t playtime, Transaction transaction = Transaction( Autocommit ) );
+	void addPlaytime( const std::uint32_t playtime );
 	//! Sets the last played timestamp for this and it's parent record
-	void setLastPlayed( const std::uint64_t last_played, Transaction transaction = Transaction( Autocommit ) );
+	void setLastPlayed( const std::uint64_t last_played );
 	//! Executes the game for this record.
-	void playGame( Transaction transaction = Transaction( Autocommit ) );
+	void playGame();
 
-	void setVersionName( const QString str, Transaction transaction = Transaction( Autocommit ) );
-	void setRelativeExecPath( const std::filesystem::path& path, Transaction transaction = Transaction( Autocommit ) );
+	void setVersionName( const QString str );
+	void setRelativeExecPath( const std::filesystem::path& path );
 
 	//Getters
 	QString getVersionName() const;
 	//! If return true then the game is not located in config::paths::games::get()
-	bool isInPlace( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::uint32_t getPlaytime( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::uint64_t getLastPlayed( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::filesystem::path getPath( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::filesystem::path getRelativeExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::filesystem::path getExecPath( Transaction transaction = Transaction( Autocommit ) ) const;
-	std::uint64_t getFolderSize( Transaction transaction = Transaction( Autocommit ) ) const;
+	bool isInPlace() const;
+	std::uint32_t getPlaytime() const;
+	std::uint64_t getLastPlayed() const;
+	std::filesystem::path getPath() const;
+	std::filesystem::path getRelativeExecPath() const;
+	std::filesystem::path getExecPath() const;
+	std::uint64_t getFolderSize() const;
 	RecordID getParentID() const;
-	std::uint64_t getImportTime( Transaction transaction = Transaction( Autocommit ) ) const;
+	std::uint64_t getImportTime() const;
 
   public:
 
 	GameMetadata() = delete;
 
-	GameMetadata(
-		const RecordID m_id, const QString& version_in, Transaction transaction = Transaction( Autocommit ) ) :
-	  m_parent( m_id, transaction ),
-	  m_version( version_in )
-	{}
+	GameMetadata( const RecordID m_id, const QString& version_in ) : m_parent( m_id ), m_version( version_in ) {}
 
 	bool operator==( const GameMetadata& other ) const
 	{

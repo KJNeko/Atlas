@@ -24,23 +24,14 @@ class RecordBanner
 
   public:
 
-	const std::filesystem::path
-		getBannerPath( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	bool hasBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner( const BannerType type, Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner(
-		const int width,
-		const int height,
-		const SCALE_TYPE aspect_ratio_mode,
-		const BannerType type,
-		Transaction transaction = Transaction( Autocommit ) ) const;
-	QPixmap getBanner(
-		const QSize size,
-		const SCALE_TYPE aspect_ratio_mode,
-		const BannerType type,
-		Transaction transaction = Transaction( Autocommit ) ) const;
+	const std::filesystem::path getBannerPath( const BannerType type ) const;
+	bool hasBanner( const BannerType type ) const;
+	QPixmap getBanner( const BannerType type ) const;
+	QPixmap getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, const BannerType type )
+		const;
+	QPixmap getBanner( const QSize size, const SCALE_TYPE aspect_ratio_mode, const BannerType type ) const;
 
-	void setBanner( const std::filesystem::path&, const BannerType, Transaction = Transaction( Autocommit ) );
+	void setBanner( const std::filesystem::path&, const BannerType type );
 };
 
 #endif //ATLASGAMEMANAGER_RECORDBANNER_HPP

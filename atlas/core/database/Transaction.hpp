@@ -9,47 +9,74 @@
 
 #include "Binder.hpp"
 
-//! Internal class used for Transaction and NonTransaction's shared data
-class TransactionData
+template < bool is_commitable = false >
+struct TransactionBase
 {
-	internal::LockGuardType guard;
+	TransactionBase();
 
-	internal::LockGuardType getLock();
+	/*
+	TransactionBase()
+	{
+		if constexpr ( is_commitable ) m_finished = false;
+	}*/
 
-	//! True if operator<< has been called at least once
-	bool ran_once { false };
+	TransactionBase( const TransactionBase& ) = delete;
+	TransactionBase( TransactionBase&& ) = delete;
+	TransactionBase& operator=( const TransactionBase& other ) = delete;
 
-	//! True if commit/abort has been called
-	bool invalid { false };
+	bool m_finished { false };
+	std::mutex self_mtx {};
+	std::lock_guard< std::mutex > guard;
 
-  public:
+	Binder operator<<( std::string sql )
+	{
+		if constexpr ( is_commitable )
+			sqlite3_exec( &Database::ref(), "BEGIN TRANSACTION;", nullptr, nullptr, nullptr );
 
-	TransactionData();
+		return Binder { sql };
+	}
 
-	~TransactionData();
+	void commit()
+	{
+		if constexpr ( is_commitable )
+		{
+			if ( !m_finished )
+			{
+				sqlite3_exec( &Database::ref(), "COMMIT;", nullptr, nullptr, nullptr );
+				Binder( "COMMIT TRANSACTION" );
+				m_finished = true;
+			}
+		}
+	}
 
-	friend struct Transaction;
-	friend struct NonTransaction;
+	~TransactionBase();
+	/*{
+		if constexpr ( is_commitable )
+		{
+			if ( !m_finished )
+			{
+				Binder( "ABORT TRANSACTION" );
+				m_finished = true;
+			}
+		}
+	}*/
 };
 
-enum TransactionType
-{
-	Autocommit = 0,
-	NoAutocommit,
-	ReadOnly,
-	NonTransaction
-};
-
+using Transaction = TransactionBase< true >;
+using RapidTransaction = TransactionBase< false >;
+/*
 //! Transaction unit to the database.
 struct Transaction
 {
-	using enum TransactionType;
+	using enum TransactionFlag;
 
   private:
 
 	Transaction* m_parent { nullptr };
+
+	//! Will be nullptr if m_flags & FastLock
 	std::shared_ptr< TransactionData > data;
-	TransactionType m_type;
+	TransactionFlag m_flags;
 	std::string m_previous_statement {};
 
 	//! Releases the pointer to the shared data section for all Transactions up the chain.
@@ -64,10 +91,7 @@ struct Transaction
 	//! @throws TransactionInvalid when trying to create a transaction without the database being initialized first
 	Transaction() = delete;
 
-	/**
-	 * @param autocommit if commit() should be called on dtor, Otherwise abort() is called if not called previously
-	 */
-	explicit Transaction( const TransactionType type );
+	explicit Transaction( const TransactionFlag type = TransactionFlag::DEFAULT );
 	Transaction( Transaction& other );
 	Transaction( const Transaction& other ) = delete;
 	Transaction( Transaction&& other ) = delete;
@@ -76,18 +100,11 @@ struct Transaction
 	//! @throws TransactionInvalid
 	Binder operator<<( std::string sql );
 
-	/**
-	 * @brief Commits the transaction. Committing all changes made by this transaction
-	 * @throws TransactionInvalid when attempting to call commit() after an abort() or commit() twice
-	 */
 	void commit();
 
-	/**
-	 * @brief Aborts the transaction. Reverting all changes made by this transaction
-	 * @throws TransactionInvalid when attempting to call abort() after a commit() or abort() twice
-	 */
+
 	void abort();
 
 	~Transaction();
-};
+};*/
 #endif //ATLASGAMEMANAGER_TRANSACTION_HPP

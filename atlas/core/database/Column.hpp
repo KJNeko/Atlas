@@ -72,9 +72,10 @@ class Column
 
 	//! Gets the value (from cache if possible)
 	template < typename T = CType >
-	T get( Transaction transaction = Transaction( Autocommit ) )
+	T get()
 	{
 		ZoneScoped;
+		RapidTransaction transaction;
 		if constexpr ( cached )
 		{
 			m_last_accessed = std::chrono::steady_clock::now();
@@ -91,9 +92,10 @@ class Column
 	}
 
 	//! Sets the value
-	void set( const CType& type, Transaction transaction = Transaction( Autocommit ) )
+	void set( const CType& type )
 	{
 		ZoneScoped;
+		RapidTransaction transaction;
 		if constexpr ( cached )
 		{
 			m_cached_value = type;
@@ -143,9 +145,10 @@ class Column< std::vector< CType >, IDType, cached >
 
 	//! Gets the value (from cache if possible)
 	template < typename T = CType >
-	std::vector< T > get( Transaction transaction = Transaction( Autocommit ) )
+	std::vector< T > get()
 	{
 		ZoneScoped;
+		RapidTransaction transaction;
 		if constexpr ( cached )
 		{
 			m_last_accessed = std::chrono::steady_clock::now();
@@ -165,9 +168,10 @@ class Column< std::vector< CType >, IDType, cached >
 	}
 
 	//! Sets the value
-	void add( const CType& type, Transaction transaction = Transaction( Autocommit ) )
+	void add( const CType& type )
 	{
 		ZoneScoped;
+		RapidTransaction transaction;
 		if constexpr ( cached )
 		{
 			//Check if it exists already
@@ -185,7 +189,7 @@ class Column< std::vector< CType >, IDType, cached >
 		transaction << insert_sql << ColIntermediate< CType >::to( type );
 	}
 
-	void remove( const CType& type, Transaction transaction = Transaction( Autocommit ) )
+	void remove( const CType& type )
 	{
 		ZoneScoped;
 
@@ -196,6 +200,7 @@ class Column< std::vector< CType >, IDType, cached >
 			m_cached_value.erase( idx );
 		}
 
+		RapidTransaction transaction;
 		transaction << delete_sql << ColIntermediate< CType >::to( type );
 	}
 

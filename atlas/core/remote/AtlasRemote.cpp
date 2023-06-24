@@ -123,7 +123,7 @@ namespace atlas
 		const auto updates = []() -> std::vector< std::pair< std::uint64_t, std::uint64_t > >
 		{
 			std::vector< std::pair< std::uint64_t, std::uint64_t > > tmp_updates;
-			Transaction t { Autocommit };
+			RapidTransaction t {};
 			t << "SELECT update_time, processed_time FROM updates" >>
 				[ &tmp_updates ]( const std::uint64_t update_time, const std::uint64_t processed_time )
 			{ tmp_updates.emplace_back( update_time, processed_time ); };
@@ -156,7 +156,7 @@ namespace atlas
 				updates.end(),
 				[ date ]( const auto& pair ) { return pair.first == static_cast< std::uint64_t >( date ); } );
 
-			Transaction t { Autocommit };
+			RapidTransaction t {};
 			if ( it == updates.end() )
 			{
 				spdlog::debug( "Adding update {} to database", date );
@@ -165,7 +165,6 @@ namespace atlas
 				  << md5_data_c;
 			}
 
-			t.commit();
 		}
 		triggerDownloadRemote();
 		reply->deleteLater();
@@ -238,7 +237,7 @@ namespace atlas
 		const auto updates = []()
 		{
 			std::vector< std::tuple< std::uint64_t, std::uint64_t, std::vector< std::byte > > > tmp_updates;
-			Transaction t { Autocommit };
+			RapidTransaction t {};
 			t << "SELECT update_time, processed_time, md5 FROM updates" >>
 				[ &tmp_updates ](
 					const std::uint64_t update_time, const std::uint64_t processed_time, std::vector< std::byte > md5 )
@@ -453,7 +452,7 @@ namespace atlas
 
 		const QJsonObject& json { QJsonDocument::fromJson( array ).object() };
 
-		Transaction transaction { NoAutocommit };
+		Transaction transaction {};
 
 		for ( const auto& table_key : json.keys() )
 		{
@@ -554,7 +553,7 @@ namespace atlas
 		const auto processed_time { [ &update_time ]()
 			                        {
 										std::uint64_t tmp_processed_time { 0 };
-										Transaction t { Autocommit };
+										RapidTransaction t {};
 										t << "SELECT processed_time FROM updates WHERE update_time = ?" << update_time
 											>> [ &tmp_processed_time ]( const std::uint64_t processed_time_i ) noexcept
 										{ tmp_processed_time = processed_time_i; };
@@ -570,10 +569,9 @@ namespace atlas
 		spdlog::info( "Processing file {:ce}", local_update_archive_path );
 		atlas::parse( atlas::extract( local_update_archive_path ) );
 
-		Transaction transaction { NoAutocommit };
+		Transaction transaction {};
 		transaction << "UPDATE updates SET processed_time = ? WHERE update_time = ?;"
 					<< std::chrono::steady_clock::now().time_since_epoch().count() << update_time;
-		transaction.commit();
 	}
 
 } // namespace atlas

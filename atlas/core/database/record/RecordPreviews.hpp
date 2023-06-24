@@ -28,13 +28,12 @@ class RecordPreviews
 
   public:
 
-	const std::vector< std::filesystem::path > getPreviewPaths( Transaction transaction = Transaction( Autocommit ) )
-		const;
-	std::vector< QPixmap > getPreviews( Transaction transaction = Transaction( Autocommit ) ) const;
+	const std::vector< std::filesystem::path > getPreviewPaths() const;
+	std::vector< QPixmap > getPreviews() const;
 
-	void addPreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
-	void removePreview( const std::filesystem::path&, Transaction = Transaction( Autocommit ) );
-	void reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction = Transaction( Autocommit ) );
+	void addPreview( const std::filesystem::path& );
+	void removePreview( const std::filesystem::path& );
+	void reorderPreviews( const std::vector< std::filesystem::path >& paths );
 };
 
 #endif //ATLASGAMEMANAGER_RECORDPREVIEWS_HPP

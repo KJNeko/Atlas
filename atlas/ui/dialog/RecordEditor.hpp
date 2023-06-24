@@ -37,8 +37,7 @@ class RecordEditor : public QDialog
 
   public:
 
-	explicit RecordEditor(
-		const RecordID record, QWidget* parent = nullptr, Transaction transaction = Transaction( Autocommit ) );
+	explicit RecordEditor( const RecordID record, QWidget* parent = nullptr );
 	~RecordEditor() override;
 
 	void switchTabs( const int index );

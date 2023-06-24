@@ -8,9 +8,10 @@
 #include "core/config.hpp"
 #include "core/imageManager.hpp"
 
-const std::vector< std::filesystem::path > RecordPreviews::getPreviewPaths( Transaction transaction ) const
+const std::vector< std::filesystem::path > RecordPreviews::getPreviewPaths() const
 {
 	ZoneScoped;
+	RapidTransaction transaction;
 	std::vector< std::filesystem::path > previews;
 	const auto root_images { config::paths::images::getPath() };
 	transaction << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_record.getID() >>
@@ -19,12 +20,12 @@ const std::vector< std::filesystem::path > RecordPreviews::getPreviewPaths( Tran
 	return previews;
 }
 
-std::vector< QPixmap > RecordPreviews::getPreviews( Transaction transaction ) const
+std::vector< QPixmap > RecordPreviews::getPreviews() const
 {
 	ZoneScoped;
 	std::vector< QPixmap > images;
 
-	for ( const auto& link : getPreviewPaths( transaction ) )
+	for ( const auto& link : getPreviewPaths() )
 	{
 		if ( link.empty() || !std::filesystem::exists( link ) )
 		{
@@ -42,9 +43,10 @@ std::vector< QPixmap > RecordPreviews::getPreviews( Transaction transaction ) co
 	return images;
 }
 
-void RecordPreviews::addPreview( const std::filesystem::path& path, Transaction transaction )
+void RecordPreviews::addPreview( const std::filesystem::path& path )
 {
 	ZoneScoped;
+	RapidTransaction transaction;
 	//Move preview to image folder
 	const auto root_images { config::paths::images::getPath() };
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
@@ -62,11 +64,12 @@ catch ( sqlite::errors::constraint_unique& e )
 	return;
 }*/
 
-void RecordPreviews::reorderPreviews( const std::vector< std::filesystem::path >& paths, Transaction transaction )
+void RecordPreviews::reorderPreviews( const std::vector< std::filesystem::path >& paths )
 {
 	ZoneScoped;
-	const auto active_previews { getPreviewPaths( transaction ) };
+	const auto active_previews { getPreviewPaths() };
 
+	RapidTransaction transaction;
 	//Set all previews to max order
 	constexpr std::size_t max_order { 256 };
 	// max_order is just used to prevent strange previews that somehow were not in this list from being set to 0
@@ -91,9 +94,10 @@ void RecordPreviews::reorderPreviews( const std::vector< std::filesystem::path >
 	}
 }
 
-void RecordPreviews::removePreview( const std::filesystem::path& preview, Transaction trans )
+void RecordPreviews::removePreview( const std::filesystem::path& preview )
 {
 	ZoneScoped;
+	RapidTransaction trans;
 	const auto image_root { config::paths::images::getPath() };
 	trans << "DELETE FROM previews WHERE record_id = ? AND path = ?" << m_record.getID()
 		  << std::filesystem::relative( preview, image_root ).string();

@@ -55,7 +55,7 @@ void Database::initalize( const std::filesystem::path init_path )
 		std::abort();
 	}
 
-	Transaction transaction { NonTransaction };
+	RapidTransaction transaction {};
 
 	const std::vector< std::string > table_queries {
 		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
@@ -103,8 +103,6 @@ void Database::initalize( const std::filesystem::path init_path )
 	};
 
 	for ( const auto& query_str : table_queries ) transaction << query_str;
-
-	transaction.commit();
 
 	config::db::first_start::set( false );
 

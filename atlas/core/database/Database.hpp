@@ -30,6 +30,16 @@
 
 #pragma GCC diagnostic pop
 
+enum TransactionFlag
+{
+	None = 0,
+	FastLock = 0b000010, //! Indicates that the transaction should not hold a lock. Binder will instead hold the lock.
+	AutoCommit =
+		0b000100, //! Indicates that the error/warning should be silence for letting Transaction dtor call abort(). Instead makes the dtor call commit()
+	Trans = 0b100000, //! Indicates to BEGIN/END TRANSACTION
+	DEFAULT = Trans
+};
+
 namespace internal
 {
 #ifdef TRACY_ENABLE
@@ -43,9 +53,6 @@ namespace internal
 
 class Database
 {
-	//! Returns a ref to the sqlite DB
-	static sqlite3& ref();
-
 	//! Returns a ref to the global DB lock
 	static internal::MtxType& lock();
 
@@ -58,11 +65,11 @@ class Database
 
 	//static void update();
 
+	//! Returns a ref to the sqlite DB
+	static sqlite3& ref();
+
   private:
 
-	friend struct Transaction;
-	friend struct NonTransaction;
-	friend class TransactionData;
 	friend class Binder;
 };
 

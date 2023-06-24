@@ -22,7 +22,7 @@ StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::Sta
 {
 	ui->setupUi( this );
 
-	Transaction transaction { Autocommit };
+	Transaction transaction {};
 
 	QChart* chart { new QChart };
 	QLineSeries* size_series { new QLineSeries };

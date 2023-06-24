@@ -16,16 +16,14 @@ void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder o
 		else
 			query = "SELECT DISTINCT record_id FROM records NATURAL JOIN last_import_times ORDER BY "
 			      + orderToStr( order ) + std::string( asc ? " ASC" : " DESC" );
-		Transaction transaction { Transaction::NoAutocommit };
+		RapidTransaction transaction {};
 
 		std::vector< Record > records;
 
 		transaction << query >> [ & ]( const RecordID id )
 		{
-			if ( id > 1 ) records.emplace_back( id, transaction );
+			if ( id > 1 ) records.emplace_back( id );
 		};
-
-		transaction.commit();
 
 		emit searchCompleted( std::move( records ) );
 	}

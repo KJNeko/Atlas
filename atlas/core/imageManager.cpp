@@ -26,7 +26,7 @@ namespace imageManager
 		ZoneScoped;
 		spdlog::debug( "Clearing orphan previews/banners" );
 		//Grab all images from the database
-		Transaction transaction { Transaction::Autocommit };
+		RapidTransaction transaction {};
 
 		for ( const auto& path : std::filesystem::directory_iterator( config::paths::images::getPath() ) )
 		{
@@ -58,17 +58,6 @@ namespace imageManager
 			}
 			TracyCZoneEnd( tracy_ImageLoad );
 
-			//Save the image to a temp file depending on os
-			const std::filesystem::path temp_path { std::filesystem::temp_directory_path() / "atlas" / "temp.webp" };
-
-			if ( !std::filesystem::exists( temp_path.parent_path() ) ) create_directories( temp_path.parent_path() );
-
-			std::string image_type { config::images::image_type::get().toStdString() };
-
-			TracyCZoneN( tracy_SaveImage, "Image save", true );
-			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 99 );
-			TracyCZoneEnd( tracy_SaveImage );
-
 			const auto hash_file = []( const std::filesystem::path& hash_path ) -> QByteArray
 			{
 				ZoneScopedN( "Hash file" );
@@ -92,6 +81,29 @@ namespace imageManager
 				else
 					return {};
 			};
+
+			//Save the image to a temp file depending on os
+			const std::filesystem::path temp_path {
+				std::filesystem::temp_directory_path() / "atlas"
+				/ fmt::format( "temp_{}.webp", hash_file( path ).toHex().toStdString() )
+			};
+
+			if ( !std::filesystem::exists( temp_path.parent_path() ) )
+				std::filesystem::create_directories( temp_path.parent_path() );
+
+			std::string image_type { config::images::image_type::get().toStdString() };
+
+			TracyCZoneN( tracy_SaveImage, "Image save", true );
+			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 99 );
+			TracyCZoneEnd( tracy_SaveImage );
+
+			if ( !std::filesystem::exists( temp_path ) )
+			{
+				spdlog::warn(
+					"Path did not exist during image import! Path: {:ce}\n Parent: {:ce}",
+					temp_path,
+					temp_path.parent_path() );
+			}
 
 			const auto dest_root { config::paths::images::getPath() };
 

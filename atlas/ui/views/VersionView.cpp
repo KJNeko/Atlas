@@ -75,7 +75,7 @@ void VersionView::on_btnChangeVersion_pressed()
 	         QInputDialog::getText( this, "Change Version", "New Version", QLineEdit::Normal, ui->versionEdit->text() );
 	     !output.isEmpty() && output != ui->versionEdit->text() )
 	{
-		Transaction trans { Autocommit };
+		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM game_metadata WHERE version = ? AND record_id = ?" << output.toStdString()
 			  << m_metadata->getParentID()
@@ -87,7 +87,7 @@ void VersionView::on_btnChangeVersion_pressed()
 			return;
 		}
 
-		this->m_metadata->setVersionName( output, trans );
+		this->m_metadata->setVersionName( output );
 	}
 
 	reloadData();

@@ -85,16 +85,15 @@ namespace internal
 		TracyCZoneEnd( tracy_FileScanner );
 
 		signaler->setMessage( "Waiting on database lock" );
-		Transaction t { NoAutocommit };
 
 		signaler->setProgress( Progress::ImportRecordData );
 		signaler->setMessage( "Importing record data" );
-		auto record { importRecord( title, creator, engine, t ) };
+		auto record { importRecord( title, creator, engine ) };
 
 		signaler->setProgress( Progress::VersionData );
 		signaler->setMessage( "Importing version data" );
 
-		record->addVersion( version, root, relative_executable, folder_size, owning, t );
+		record->addVersion( version, root, relative_executable, folder_size, owning );
 
 		if ( owning )
 		{
@@ -132,7 +131,7 @@ namespace internal
 			const auto path { banners[ static_cast< std::size_t >( i ) ] };
 			if ( !path.isEmpty() )
 			{
-				record->banners().setBanner( path.toStdString(), static_cast< BannerType >( i ), t );
+				record->banners().setBanner( path.toStdString(), static_cast< BannerType >( i ) );
 			}
 		}
 
@@ -141,13 +140,12 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler->setMessage( QString( "Importing preview %1" ).arg( path ) );
-			record->previews().addPreview( path.toStdString(), t );
+			record->previews().addPreview( path.toStdString() );
 		}
 
 		signaler->setProgress( Progress::Complete );
 		signaler->setMessage( "Complete" );
 
-		t.commit();
 		promise.addResult( record->getID() );
 		promise.finish();
 	}
