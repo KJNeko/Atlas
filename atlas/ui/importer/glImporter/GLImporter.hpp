@@ -5,6 +5,8 @@
 #ifndef ATLASGAMEMANAGER_GLIMPORTER_HPP
 #define ATLASGAMEMANAGER_GLIMPORTER_HPP
 
+#include <filesystem>
+
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
@@ -26,9 +28,14 @@ class GLImporter : public QDialog
 	explicit GLImporter( QWidget* parent = nullptr );
 	~GLImporter() override;
 
+	void setImportDir( const std::filesystem::path path );
+
   private:
 
 	Ui::GLImporter* ui;
+
+  signals:
+	void startImport( const std::filesystem::path );
 };
 
 #endif //ATLASGAMEMANAGER_GLIMPORTER_HPP

@@ -9,235 +9,99 @@
 
 #include "Transaction.hpp"
 
-template < typename T >
-struct ColIntermediate
+template < typename IdType, typename T >
+struct DColumn
 {
-	using Type = T;
-
-	static Type to( const T& t ) { return t; }
-
-	static T from( const Type& t ) { return t; }
-};
-
-template <>
-struct ColIntermediate< QString >
-{
-	using Type = std::string;
-
-	static std::string to( const QString& str ) { return str.toStdString(); }
-
-	static QString from( const std::string& str ) { return QString::fromStdString( str ); }
-};
-
-template < typename T >
-concept has_size_func = requires( T t ) {
-	{
-		t.size()
-	} -> std::convertible_to< std::uint64_t >;
-};
-
-template < typename T >
-concept has_at_assign = requires( T t ) {
-	{
-		t.at( 0 ) = {}
-	};
-};
-
-template < typename T >
-concept has_emplace = requires( T t ) {
-	{
-		t.emplace_back( {} )
-	};
-};
-
-template < typename CType, typename IDType, const bool cached = false >
-class Column
-{
-	std::enable_if< cached, std::optional< CType > > m_cached_value {};
-	std::enable_if< cached, std::chrono::time_point< std::chrono::steady_clock > > m_last_accessed {};
-
-	const std::string_view col_name {};
-
-	const std::string fetch_sql {};
-	const std::string update_sql {};
+	const IdType m_id;
+	std::optional< T > value;
 
   public:
 
-	Column(
-		const std::string_view name, const std::string_view table, const std::string_view id_col, const IDType id ) :
-	  col_name( name ),
-	  fetch_sql( fmt::format( "SELECT {} FROM {} WHERE {} = {}", col_name, table, id_col, id ) ),
-	  update_sql( fmt::format( "UPDATE {} SET {} = ? WHERE {} = {}", table, col_name, id_col, id ) )
-	{}
-
-	//! Gets the value (from cache if possible)
-	template < typename T = CType >
-	T get()
+	void set( T t )
 	{
 		ZoneScoped;
-		RapidTransaction transaction;
-		if constexpr ( cached )
-		{
-			m_last_accessed = std::chrono::steady_clock::now();
-			if ( m_cached_value.has_value() ) return m_cached_value.value();
-		}
-
-		typename ColIntermediate< T >::Type tmp;
-
-		transaction << fetch_sql >> tmp;
-
-		if constexpr ( cached ) m_cached_value = tmp;
-
-		return ColIntermediate< T >::from( tmp );
+		RapidTransaction() << fmt::format( "UPDATE {} SET {} = ? WHERE {} = ?", table(), col(), keyCol() ) << m_id << t;
 	}
 
-	//! Sets the value
-	void set( const CType& type )
+	T get( bool use_cache = true )
 	{
 		ZoneScoped;
-		RapidTransaction transaction;
-		if constexpr ( cached )
-		{
-			m_cached_value = type;
-		}
-
-		transaction << update_sql << ColIntermediate< CType >::to( type );
-	}
-
-	//! Wipes the cache
-	void wipe()
-	{
-		ZoneScoped;
-		if constexpr ( cached )
-		{
-			//Can wipe
-			m_cached_value = std::nullopt;
-			return;
-		}
+		if ( use_cache && value.has_value() )
+			return value.value();
 		else
 		{
-			return;
+			T tmp_val;
+			RapidTransaction() << fmt::format( "SELECT {} FROM {} WHERE {} = ?", col(), table(), keyCol() ) << m_id
+				>> tmp_val;
+			value = tmp_val;
+			return std::move( tmp_val );
 		}
 	}
-};
 
-template < typename CType, typename IDType, const bool cached >
-class Column< std::vector< CType >, IDType, cached >
-{
-	std::enable_if< cached, std::vector< CType > > m_cached_value {};
-	std::enable_if< cached, std::chrono::time_point< std::chrono::steady_clock > > m_last_accessed;
+	void refresh() { value = get( false ); }
 
-	const std::string_view col_name {};
+  private:
 
-	const std::string fetch_sql {};
-	const std::string insert_sql {};
-	const std::string delete_sql {};
+	std::optional< T > tryFetch()
+	{
+		try
+		{
+			return get( false );
+		}
+		catch ( ... )
+		{
+			return std::nullopt;
+		}
+	}
+
+	virtual std::string_view table() = 0;
+	virtual std::string_view col() = 0;
+	virtual std::string_view keyCol() = 0;
 
   public:
 
-	Column(
-		const std::string_view name, const std::string_view table, const std::string_view id_col, const IDType id ) :
-	  col_name( name ),
-	  fetch_sql( fmt::format( "SELECT {} FROM {} WHERE {} = {}", col_name, table, id_col, id ) ),
-	  insert_sql( fmt::format( "INSERT INTO {} ({}, {}) VALUES ({}, {})", table, id_col, col_name, id, col_name ) ),
-	  delete_sql( fmt::format( "DELETE FROM {} WHERE {} = {}", table, id_col, id ) )
-	{}
+	DColumn( const IdType id, const T val ) : m_id( id ), value( val ) {}
 
-	//! Gets the value (from cache if possible)
-	template < typename T = CType >
-	std::vector< T > get()
-	{
-		ZoneScoped;
-		RapidTransaction transaction;
-		if constexpr ( cached )
-		{
-			m_last_accessed = std::chrono::steady_clock::now();
-			if ( m_cached_value.has_value() ) return m_cached_value.value();
-		}
+	DColumn( const IdType id, const bool immediate ) : m_id( id ), value( immediate ? tryFetch() : std::nullopt ) {}
 
-		using Intermediate = ColIntermediate< CType >::Type;
-
-		std::vector< T > tmp;
-
-		transaction << fetch_sql >> [ &tmp ]( const Intermediate val )
-		{ tmp.emplace_back( ColIntermediate< CType >::from( val ) ); };
-
-		if constexpr ( cached ) m_cached_value = tmp;
-
-		return tmp;
-	}
-
-	//! Sets the value
-	void add( const CType& type )
-	{
-		ZoneScoped;
-		RapidTransaction transaction;
-		if constexpr ( cached )
-		{
-			//Check if it exists already
-			if ( std::find( m_cached_value.begin(), m_cached_value.end(), type ) != m_cached_value.end() )
-				return;
-			else
-				m_cached_value.emplace_back( type );
-		}
-		else
-		{
-			const auto tmp { get( transaction ) };
-			if ( std::find( tmp.begin(), tmp.end(), type ) != tmp.end() ) return;
-		}
-
-		transaction << insert_sql << ColIntermediate< CType >::to( type );
-	}
-
-	void remove( const CType& type )
-	{
-		ZoneScoped;
-
-		if constexpr ( cached )
-		{
-			const auto idx { std::find( m_cached_value.begin(), m_cached_value.end(), type ) };
-			if ( idx == m_cached_value.end() ) return;
-			m_cached_value.erase( idx );
-		}
-
-		RapidTransaction transaction;
-		transaction << delete_sql << ColIntermediate< CType >::to( type );
-	}
-
-	//! Wipes the cache
-	void wipe()
-	{
-		ZoneScoped;
-		if constexpr ( cached )
-		{
-			//Can wipe
-			m_cached_value = std::nullopt;
-			return;
-		}
-		else
-		{
-			return;
-		}
-	}
+	virtual ~DColumn() = default;
 };
 
-template < typename CType, typename IDType >
-using CachedColumn = Column< CType, IDType, true >;
+#define DEFINE_COL_STRUCT( type, col_name, our_type )                                                                  \
+	struct our_type : public COL< type >                                                                               \
+	{                                                                                                                  \
+		std::string_view col() override                                                                                \
+		{                                                                                                              \
+			return col_name;                                                                                           \
+		}                                                                                                              \
+                                                                                                                       \
+		our_type( const KEY_TYPE id, const bool immediate = false ) : COL< type >( id, immediate )                     \
+		{}                                                                                                             \
+		our_type( const KEY_TYPE id, type t ) : COL< type >( id, std::move( t ) )                                      \
+		{}                                                                                                             \
+	};
 
-template < typename CType, typename IDType, const bool is_cached = false >
-using ListColumn = Column< std::vector< CType >, IDType, is_cached >;
-
-template < typename CType, typename IDType >
-using CachedListColumn = ListColumn< std::string, RecordID, false >;
-
-/*
-struct Example
-{
-	RecordID m_id;
-
-	Column< std::string, RecordID > creator { "creator", "records", "record_id", m_id };
-	Column< std::uint64_t, RecordID > last_playted { "last_played", "records", "record_id", m_id };
-};
-*/
+#define DEFINE_COL_BASE( table_name, key_name )                                                                        \
+	template < typename T >                                                                                            \
+	struct COL : public DColumn< KEY_TYPE, T >                                                                         \
+	{                                                                                                                  \
+		COL( const KEY_TYPE id, T t ) : DColumn< KEY_TYPE, T >( id, std::move( t ) )                                   \
+		{}                                                                                                             \
+                                                                                                                       \
+		COL( const KEY_TYPE id, const bool immediate = false ) : DColumn< KEY_TYPE, T >( id, immediate )               \
+		{}                                                                                                             \
+                                                                                                                       \
+	  private:                                                                                                         \
+                                                                                                                       \
+		std::string_view table() override                                                                              \
+		{                                                                                                              \
+			return table_name;                                                                                         \
+		}                                                                                                              \
+                                                                                                                       \
+		std::string_view keyCol() override                                                                             \
+		{                                                                                                              \
+			return key_name;                                                                                           \
+		}                                                                                                              \
+	};
 
 #endif //ATLASGAMEMANAGER_COLUMN_HPP

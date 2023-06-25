@@ -60,7 +60,7 @@ QPixmap RecordBanner::getBanner( const BannerType type ) const
 QPixmap RecordBanner::
 	getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, const BannerType type ) const
 {
-	ZoneScoped;
+	ZoneScopedN( "getBannerResized" );
 	const auto key { QString::fromStdString( getBannerPath( type ).filename().string() ) + QString::number( width )
 		             + "x" + QString::number( height )
 		             + QString::number( static_cast< unsigned int >( aspect_ratio_mode ) ) };

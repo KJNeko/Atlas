@@ -28,7 +28,7 @@ struct TransactionBase
 	std::mutex self_mtx {};
 	std::lock_guard< std::mutex > guard;
 
-	Binder operator<<( std::string sql )
+	Binder operator<<( std::string_view sql )
 	{
 		if constexpr ( is_commitable )
 			sqlite3_exec( &Database::ref(), "BEGIN TRANSACTION;", nullptr, nullptr, nullptr );

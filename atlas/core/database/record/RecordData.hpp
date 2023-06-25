@@ -9,14 +9,30 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
+#include "core/database/Column.hpp"
 #include "core/database/Database.hpp"
+#include "core/remote/concept.hpp"
 
 struct GameMetadata;
 class RecordBanner;
 class RecordPreviews;
 
-#include "core/database/Column.hpp"
-#include "core/remote/concept.hpp"
+#define COL RecordDataColumn
+#define KEY_TYPE RecordID
+
+DEFINE_COL_BASE( "records", "record_id" )
+
+DEFINE_COL_STRUCT( QString, "title", RecordDataTitle )
+DEFINE_COL_STRUCT( QString, "engine", RecordDataEngine )
+DEFINE_COL_STRUCT( QString, "creator", RecordDataCreator )
+DEFINE_COL_STRUCT( std::uint64_t, "last_played_r", RecordDataLastPlayed )
+DEFINE_COL_STRUCT( std::uint32_t, "total_playtime", RecordDataTotalPlaytime )
+
+#undef COL
+#undef KEY_TYPE
+
+class F95Data;
+class AtlasData;
 
 struct RecordData
 {
@@ -32,41 +48,13 @@ struct RecordData
 	RecordBanner banners();
 	RecordPreviews previews();
 
-	//Getters
-	RecordID getID() const;
+	RecordID getID() const { return m_id; }
 
-	template < typename T >
-		requires is_remote< T >
-	std::optional< T > getRemoteData()
-	{
-		T::fetch_for_rid( m_id );
-	}
-
-	template < typename T >
-		requires is_remote< T >
-	void linkRemote( T& data )
-	{
-		data.link_to_rid( m_id );
-	}
-
-	//! Unlinks a remote given by T.
-	/**
-	 * Uses T's in getRemoteData to acquire id to unlink to.
-	 * @tparam T Remote data type to unlink
-	 */
-	template < typename T >
-		requires is_remote< T >
-	void unlinkRemote()
-	{
-		auto data { getRemoteData< T >() };
-		data.unlink_to_rid( m_id );
-	}
-
-	Column< QString, RecordID > title { "title", "records", "record_id", m_id };
-	Column< QString, RecordID > creator { "creator", "records", "record_id", m_id };
-	Column< QString, RecordID > engine { "engine", "records", "record_id", m_id };
-	Column< std::uint64_t, RecordID > last_played { "last_played_r", "records", "record_id", m_id };
-	Column< std::uint32_t, RecordID > total_playtime { "total_playtime", "records", "record_id", m_id };
+	RecordDataTitle title { m_id };
+	RecordDataCreator creator { m_id };
+	RecordDataEngine engine { m_id };
+	RecordDataLastPlayed last_played { m_id };
+	RecordDataTotalPlaytime total_playtime { m_id };
 
 	std::optional< GameMetadata > getVersion( const QString );
 	std::optional< GameMetadata > getLatestVersion();
@@ -74,6 +62,11 @@ struct RecordData
 	QString getDesc() const;
 	std::vector< QString > getUserTags() const;
 	std::vector< QString > getAllTags() const;
+
+	F95Data f95Data();
+	void linkF95Data( const F95ID id );
+	AtlasData atlasData();
+	void linkAtlasData( const AtlasID id );
 
 	//Setters
 	void addVersion(

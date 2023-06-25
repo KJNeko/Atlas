@@ -28,11 +28,6 @@ RecordData::RecordData( const RecordID id ) : m_id( id )
 	if ( !exists ) throw std::runtime_error( "Record does not exist" );
 }
 
-RecordID RecordData::getID() const
-{
-	return m_id;
-}
-
 std::optional< GameMetadata > RecordData::getVersion( const QString version_name )
 {
 	ZoneScoped;

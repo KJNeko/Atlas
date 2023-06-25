@@ -90,7 +90,7 @@ class Binder
 
 	Binder() = delete;
 
-	Binder( const std::string sql );
+	Binder( const std::string_view sql );
 
 	template < typename T >
 	Binder& operator<<( T t )
