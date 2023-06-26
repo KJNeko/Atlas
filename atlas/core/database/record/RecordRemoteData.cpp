@@ -13,11 +13,6 @@ F95Data RecordData::f95Data()
 	return F95Data { id };
 }
 
-void RecordData::linkF95Data( const F95ID id )
-{
-	RapidTransaction() << "INSERT INTO f95_mappings (record_id, f95_id) VALUES (?, ?)" << m_id << id;
-}
-
 AtlasData RecordData::atlasData()
 {
 	AtlasID id { 0 };

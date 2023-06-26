@@ -41,7 +41,7 @@ void GameView::reloadRecord()
 	const auto& record { *m_record };
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
-	QString description = "Test Data";
+	QString description = record->getDesc();
 	QString developer = record->creator.get();
 	QString publisher = "Test Data";
 	QString original_name = "Test Data";

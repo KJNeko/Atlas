@@ -29,6 +29,8 @@ void processGame( QPromise< void >& promise, const std::filesystem::path path, G
 
 	if ( internal_id == 0 ) spdlog::warn( "Missing data for thread {}", info.f95_id );
 
+	//We found a link! Time to use it
+
 	F95Data f95_data { internal_id };
 }
 

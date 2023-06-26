@@ -11,7 +11,6 @@
 #include "core/config.hpp"
 #include "core/database/Column.hpp"
 #include "core/database/Database.hpp"
-#include "core/remote/concept.hpp"
 
 struct GameMetadata;
 class RecordBanner;
@@ -31,8 +30,8 @@ DEFINE_COL_STRUCT( std::uint32_t, "total_playtime", RecordDataTotalPlaytime )
 #undef COL
 #undef KEY_TYPE
 
-class F95Data;
-class AtlasData;
+struct F95Data;
+struct AtlasData;
 
 struct RecordData
 {
@@ -64,7 +63,6 @@ struct RecordData
 	std::vector< QString > getAllTags() const;
 
 	F95Data f95Data();
-	void linkF95Data( const F95ID id );
 	AtlasData atlasData();
 	void linkAtlasData( const AtlasID id );
 
