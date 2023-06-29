@@ -158,6 +158,7 @@ class NotificationPopup final : public QDialog
 	void popupResized();
 	void clearHistory();
 	void triggerShow();
+	void triggerHide();
 
   private:
 

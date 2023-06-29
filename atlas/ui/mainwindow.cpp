@@ -59,6 +59,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	getNotificationPopup()->hide();
 	connect( getNotificationPopup(), &NotificationPopup::popupResized, this, &MainWindow::movePopup );
 	connect( getNotificationPopup(), &NotificationPopup::triggerShow, this, &MainWindow::showMessagePopup );
+	connect( getNotificationPopup(), &NotificationPopup::triggerHide, this, &MainWindow::hideMessagePopup );
 
 	//Init remote system
 	atlas::initRemoteHandler();
@@ -204,18 +205,23 @@ void MainWindow::showMessagePopup()
 {
 	auto& task_popup { *getNotificationPopup() };
 
-	if ( task_popup.isVisible() )
-		task_popup.hide();
-	else
-	{
-		task_popup.show();
-		movePopup();
-	}
+	task_popup.show();
+	movePopup();
+}
+
+void MainWindow::hideMessagePopup()
+{
+	auto& task_popup { *getNotificationPopup() };
+	task_popup.hide();
 }
 
 void MainWindow::on_btnShowMessageLog_clicked()
 {
-	showMessagePopup();
+	auto& task_popup { *getNotificationPopup() };
+	if ( task_popup.isVisible() )
+		hideMessagePopup();
+	else
+		showMessagePopup();
 }
 
 void MainWindow::moveEvent( QMoveEvent* event )

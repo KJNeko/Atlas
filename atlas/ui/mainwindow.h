@@ -58,6 +58,7 @@ class MainWindow : public QMainWindow
 	void on_sortOrderButton_clicked();
 	void on_sortSelection_currentIndexChanged( int index );
 	void showMessagePopup();
+	void hideMessagePopup();
 	void on_btnShowMessageLog_clicked();
 	void movePopup();
 	void taskPopupResized();
