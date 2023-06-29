@@ -16,8 +16,6 @@ NotificationPopup::NotificationPopup( QWidget* parent ) :
   ui( new Ui::NotificationPopup )
 {
 	ui->setupUi( this );
-
-	this->layout()->setSizeConstraint( QLayout::SetFixedSize );
 }
 
 NotificationPopup::~NotificationPopup()
@@ -25,15 +23,27 @@ NotificationPopup::~NotificationPopup()
 	delete ui;
 }
 
-void NotificationPopup::on_btnHideShow_clicked()
+void NotificationPopup::showEvent( QShowEvent* event )
+{
+	QDialog::showEvent( event );
+	adjustSize();
+}
+
+QSize NotificationPopup::sizeHint() const
+{
+	//Get size hint of bottom row
+	const auto bottom_row { ui->controlRow->sizeHint() };
+	const auto scroll_area { ui->scrollAreaWidgetContents->sizeHint() };
+
+	return { bottom_row.width(), bottom_row.height() + scroll_area.height() + 15 };
+}
+
+void NotificationPopup::on_btnHideShow_toggled( bool checked )
 {
 	ZoneScoped;
-	ui->scrollArea->setVisible( ui->btnHideShow->isChecked() );
-	//ui->listFrame->setVisible( ui->btnHideShow->isChecked());
 
-	this->updateGeometry();
-	this->update();
-	this->window()->resize( this->minimumSize() );
+	ui->scrollArea->setVisible( checked );
+	adjustSize();
 }
 
 void NotificationPopup::resizeEvent( QResizeEvent* event )
@@ -46,15 +56,33 @@ void NotificationPopup::addMessage( QWidget* message )
 {
 	ui->scrollAreaWidgetContents->layout()->addWidget( message );
 	ui->scrollArea->scroll( 0, ui->scrollArea->verticalScrollBar()->maximum() );
+
+	const auto count { ui->scrollAreaWidgetContents->children().size() - 1 };
+	if ( count > 0 )
+	{
+		ui->btnHideShow->setEnabled( true );
+	}
+	ui->label->setText( QString( "%1 messages" ).arg( count ) );
+	adjustSize();
 }
 
 void NotificationPopup::removeMessage( QWidget* message )
 {
 	delete message;
+	const auto count { ui->scrollAreaWidgetContents->children().size() - 1 };
+	if ( count == 0 )
+	{
+		ui->btnHideShow->setEnabled( false );
+		ui->btnHideShow->setChecked( false );
+		ui->scrollArea->setVisible( false );
+	}
+	ui->label->setText( QString( "%1 messages" ).arg( count ) );
+	adjustSize();
 }
 
 void NotificationPopup::expand()
 {
+	triggerShow();
 	ui->btnHideShow->setChecked( true );
 }
 

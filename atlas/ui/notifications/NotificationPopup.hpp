@@ -60,6 +60,8 @@ class NotificationPopup final : public QDialog
 	explicit NotificationPopup( QWidget* parent = nullptr );
 	~NotificationPopup() override;
 
+	void showEvent( QShowEvent* event ) override;
+	QSize sizeHint() const override;
 	void resizeEvent( QResizeEvent* event ) override;
 
 	void addMessage( QWidget* notification );
@@ -155,13 +157,14 @@ class NotificationPopup final : public QDialog
   signals:
 	void popupResized();
 	void clearHistory();
+	void triggerShow();
 
   private:
 
 	Ui::NotificationPopup* ui;
 
   private slots:
-	void on_btnHideShow_clicked();
+	void on_btnHideShow_toggled( bool checked );
 	void on_btnClearHistory_pressed();
 };
 

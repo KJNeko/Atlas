@@ -261,13 +261,6 @@ QSize RecordBannerDelegate::calculateSize( const int w_width, const int b_width,
 	//item_count = w_width >= offset ? item_count : item_count - 1;
 	//const int x_offset { ( w_width - scroll_bar - ( ( item_count + 1 ) * spacing ) - ( item_count * b_width ) )
 	//	                 / item_count };
-	spdlog::debug(
-		"bwidth:{} w_width:{} t_width:{} item_count:{} offset:{}",
-		b_width,
-		w_width - scroll_bar,
-		tiw,
-		item_count,
-		offset );
 	//Return offset with widget if center widgets is used.
 	//QSize qsize { offset >= 0 ? offset + b_width : b_width, b_height };
 	QSize qsize { m_center_widgets ? b_width + static_cast< int >( offset ) : b_width, b_height };

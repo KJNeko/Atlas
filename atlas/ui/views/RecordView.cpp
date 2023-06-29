@@ -172,7 +172,6 @@ void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 void RecordView::reloadConfig()
 {
 	ZoneScoped;
-	spdlog::info( "Current render mode: {}", static_cast< int >( current_render_mode ) );
 	switch ( current_render_mode )
 	{
 		case NO_MODE:
@@ -187,7 +186,6 @@ void RecordView::reloadConfig()
 				delegate->sizeHintChanged( selectionModel()->currentIndex() );
 
 				QWidget::repaint();
-				spdlog::info( "Repainting UI\n" );
 				return;
 			}
 		default:

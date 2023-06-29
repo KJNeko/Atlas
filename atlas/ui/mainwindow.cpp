@@ -43,13 +43,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	config::notify();
 
-	emit triggerSearch( "", SortOrder::Name, true );
-
 	initNotificationPopup( this );
 	getNotificationPopup()->hide();
-	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
+	connect( getNotificationPopup(), &NotificationPopup::popupResized, this, &MainWindow::movePopup );
 
-	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
 	//Share the recordView's model to gameList
 	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
@@ -60,10 +57,12 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	initNotificationPopup( this );
 	getNotificationPopup()->hide();
-	connect( getNotificationPopup(), &::NotificationPopup::popupResized, this, &MainWindow::movePopup );
+	connect( getNotificationPopup(), &NotificationPopup::popupResized, this, &MainWindow::movePopup );
+	connect( getNotificationPopup(), &NotificationPopup::triggerShow, this, &MainWindow::showMessagePopup );
 
 	//Init remote system
 	atlas::initRemoteHandler();
+	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
 }
 
 MainWindow::~MainWindow()
