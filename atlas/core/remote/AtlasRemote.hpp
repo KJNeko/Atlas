@@ -14,7 +14,6 @@ class QNetworkReply;
 
 namespace atlas
 {
-
 	//! Manages all remote connections to the Atlas remote server
 	class AtlasRemote : public QObject
 	{
@@ -23,34 +22,38 @@ namespace atlas
 		QThread m_thread {};
 		QNetworkAccessManager m_manager {};
 
+		void downloadManifest();
+		void downloadUpdates();
+		void processPendingUpdates();
+		void markComplete( const std::uint64_t update_time, const bool yes = true );
+
+		//! Returns a list of all updates.
+		std::vector< std::pair< std::uint64_t, std::uint64_t > > getUpdatesList() const;
+		std::uint64_t getNextUpdateTime() const;
+
 	  public:
 
 		AtlasRemote();
 
 		void triggerCheckRemote();
-		void triggerDownloadRemote();
 
 	  signals:
 		//! Emitted when the remote should be checked.
 		void checkRemoteSignal();
-		void downloadRemoteSignal();
-		//! Emitted when the remote has an update to download/process
-		void updateAvailable();
-		//! Emitted when an update has been downloaded and is able to be processed.
-		void updateDownloaded( const std::filesystem::path path );
-		//! Emitted when an update has finished processing.
-		void updateComplete( const std::filesystem::path path );
-
-		void downloadUpdate( const std::uint64_t update_time );
+		//! Asks the remote to download the timestamp file
+		void triggerDownloadFor( const std::uint64_t timestamp );
+		void triggerParseFor( const std::uint64_t timestamp );
 
 	  private slots:
 		//! Updates the local DB with the updates available
-		void updateRemoteList();
 		void processUpdateFile( const std::uint64_t update_time );
-		void downloadUpdateSlot( const std::uint64_t update_time );
+		void downloadUpdate( const std::uint64_t update_time );
+		//! Handles manifest requests from the server.
 		void handleJsonResponse( QNetworkReply* reply );
+		//! Handles download responses from the remote
 		void handleDownloader( QNetworkReply* reply );
-		void downloadRemote();
+		//! Causes the remote to go through a full check. Asking for new updates and processing them.
+		void check();
 	};
 
 	void initRemoteHandler();
