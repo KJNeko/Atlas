@@ -62,3 +62,10 @@ int bindParameter( sqlite3_stmt* stmt, const QString val, const int idx ) noexce
 	ZoneScopedN( "bindParameter<QString>" );
 	return bindParameter( stmt, val.toStdString(), idx );
 }
+
+template <>
+int bindParameter( sqlite3_stmt* stmt, const double val, const int idx ) noexcept
+{
+	ZoneScopedN( "bindParameter<double>" );
+	return sqlite3_bind_double( stmt, idx, val );
+}

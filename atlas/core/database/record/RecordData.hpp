@@ -11,27 +11,44 @@
 #include "core/config.hpp"
 #include "core/database/Column.hpp"
 #include "core/database/Database.hpp"
+#include "core/fgl/string_literal.hpp"
 
 struct GameMetadata;
 class RecordBanner;
 class RecordPreviews;
 
-#define COL RecordDataColumn
-#define KEY_TYPE RecordID
-
-DEFINE_COL_BASE( "records", "record_id" )
-
-DEFINE_COL_STRUCT( QString, "title", RecordDataTitle )
-DEFINE_COL_STRUCT( QString, "engine", RecordDataEngine )
-DEFINE_COL_STRUCT( QString, "creator", RecordDataCreator )
-DEFINE_COL_STRUCT( std::uint64_t, "last_played_r", RecordDataLastPlayed )
-DEFINE_COL_STRUCT( std::uint32_t, "total_playtime", RecordDataTotalPlaytime )
-
-#undef COL
-#undef KEY_TYPE
-
 struct F95Data;
 struct AtlasData;
+
+template <>
+struct ColType< "title", "records" >
+{
+	typedef QString Type;
+};
+
+template <>
+struct ColType< "creator", "records" >
+{
+	typedef QString Type;
+};
+
+template <>
+struct ColType< "engine", "records" >
+{
+	typedef QString Type;
+};
+
+template <>
+struct ColType< "total_playtime", "records" >
+{
+	typedef std::uint64_t Type;
+};
+
+template <>
+struct ColType< "last_played_r", "records" >
+{
+	typedef std::uint64_t Type;
+};
 
 struct RecordData
 {
@@ -49,11 +66,20 @@ struct RecordData
 
 	RecordID getID() const { return m_id; }
 
-	RecordDataTitle title { m_id };
-	RecordDataCreator creator { m_id };
-	RecordDataEngine engine { m_id };
-	RecordDataLastPlayed last_played { m_id };
-	RecordDataTotalPlaytime total_playtime { m_id };
+	template < fgl::string_literal col_name >
+	ColType< col_name, "records" >::Type get()
+	{
+		typename ColType< col_name, "records" >::Type val;
+		RapidTransaction() << atlas::database::utility::select_query< col_name, "records", "record_id" >() << m_id
+			>> val;
+		return val;
+	}
+
+	template < fgl::string_literal col_name >
+	void set( ColType< col_name, "records" >::Type t )
+	{
+		RapidTransaction() << atlas::database::utility::update_query< col_name, "records", "record_id" >() << t << m_id;
+	}
 
 	std::optional< GameMetadata > getVersion( const QString );
 	std::optional< GameMetadata > getLatestVersion();

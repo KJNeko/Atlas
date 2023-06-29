@@ -8,100 +8,46 @@
 #include <string>
 
 #include "Transaction.hpp"
+#include "core/fgl/string_literal.hpp"
 
-template < typename IdType, typename T >
-struct DColumn
+namespace atlas::database::utility
 {
-	const IdType m_id;
-	std::optional< T > value;
-
-  public:
-
-	void set( T t )
+	template < auto Data >
+	consteval const auto& make_static()
 	{
-		ZoneScoped;
-		RapidTransaction() << fmt::format( "UPDATE {} SET {} = ? WHERE {} = ?", table(), col(), keyCol() ) << m_id << t;
+		return Data;
 	}
 
-	T get( bool use_cache = true )
+	template < fgl::string_literal column, fgl::string_literal table_name, fgl::string_literal table_key_name >
+	static consteval std::string_view update_query()
 	{
-		ZoneScoped;
-		if ( use_cache && value.has_value() )
-			return value.value();
-		else
-		{
-			T tmp_val;
-			RapidTransaction() << fmt::format( "SELECT {} FROM {} WHERE {} = ?", col(), table(), keyCol() ) << m_id
-				>> tmp_val;
-			value = tmp_val;
-			return std::move( tmp_val );
-		}
+		constexpr fgl::string_literal begin { "UPDATE  " };
+		constexpr fgl::string_literal set { " SET " };
+		constexpr fgl::string_literal where { " = ? WHERE " };
+		constexpr fgl::string_literal end { " = ?" };
+		constexpr auto& static_data {
+			make_static< begin + table_name + set + column + where + table_key_name + end >()
+		};
+		return std::string_view( static_data.begin(), static_data.size() );
 	}
 
-	void refresh() { value = get( false ); }
-
-  private:
-
-	std::optional< T > tryFetch()
+	template < fgl::string_literal column, fgl::string_literal table_name, fgl::string_literal table_key_name >
+	static consteval std::string_view select_query()
 	{
-		try
-		{
-			return get( false );
-		}
-		catch ( ... )
-		{
-			return std::nullopt;
-		}
+		constexpr fgl::string_literal begin { "SELECT  " };
+		constexpr fgl::string_literal from { " FROM " };
+		constexpr fgl::string_literal where { " WHERE " };
+		constexpr fgl::string_literal end { " = ?" };
+
+		constexpr auto& static_data {
+			make_static< begin + column + from + table_name + where + table_key_name + end >()
+		};
+
+		return std::string_view( static_data.begin(), static_data.size() );
 	}
+} // namespace atlas::database::utility
 
-	virtual std::string_view table() = 0;
-	virtual std::string_view col() = 0;
-	virtual std::string_view keyCol() = 0;
-
-  public:
-
-	DColumn( const IdType id, const T val ) : m_id( id ), value( val ) {}
-
-	DColumn( const IdType id, const bool immediate ) : m_id( id ), value( immediate ? tryFetch() : std::nullopt ) {}
-
-	virtual ~DColumn() = default;
-};
-
-#define DEFINE_COL_STRUCT( type, col_name, our_type )                                                                  \
-	struct our_type : public COL< type >                                                                               \
-	{                                                                                                                  \
-		std::string_view col() override                                                                                \
-		{                                                                                                              \
-			return col_name;                                                                                           \
-		}                                                                                                              \
-                                                                                                                       \
-		our_type( const KEY_TYPE id, const bool immediate = false ) : COL< type >( id, immediate )                     \
-		{}                                                                                                             \
-		our_type( const KEY_TYPE id, type t ) : COL< type >( id, std::move( t ) )                                      \
-		{}                                                                                                             \
-	};
-
-#define DEFINE_COL_BASE( table_name, key_name )                                                                        \
-	template < typename T >                                                                                            \
-	struct COL : public DColumn< KEY_TYPE, T >                                                                         \
-	{                                                                                                                  \
-		COL( const KEY_TYPE id, T t ) : DColumn< KEY_TYPE, T >( id, std::move( t ) )                                   \
-		{}                                                                                                             \
-                                                                                                                       \
-		COL( const KEY_TYPE id, const bool immediate = false ) : DColumn< KEY_TYPE, T >( id, immediate )               \
-		{}                                                                                                             \
-                                                                                                                       \
-	  private:                                                                                                         \
-                                                                                                                       \
-		std::string_view table() override                                                                              \
-		{                                                                                                              \
-			return table_name;                                                                                         \
-		}                                                                                                              \
-                                                                                                                       \
-		std::string_view keyCol() override                                                                             \
-		{                                                                                                              \
-			return key_name;                                                                                           \
-		}                                                                                                              \
-	};
+template < fgl::string_literal col_name, fgl::string_literal table_name >
+struct ColType;
 
 #endif //ATLASGAMEMANAGER_COLUMN_HPP

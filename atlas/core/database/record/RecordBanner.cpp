@@ -78,7 +78,7 @@ QPixmap RecordBanner::
 			spdlog::warn(
 				"Failed to get image for banner in record: {}, title: {}",
 				m_record.getID(),
-				m_record.title.get().toStdString() );
+				m_record.get< "title" >().toStdString() );
 			return {};
 		}
 		else

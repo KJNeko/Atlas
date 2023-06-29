@@ -31,9 +31,9 @@ RecordEditor::RecordEditor( const RecordID record, QWidget* parent ) :
 
 void RecordEditor::loadRecordInfo()
 {
-	ui->titleLineEdit->setText( m_record->title.get() );
-	ui->creatorLineEdit->setText( m_record->creator.get() );
-	ui->engineLineEdit->setText( m_record->engine.get() );
+	ui->titleLineEdit->setText( m_record->get< "title" >() );
+	ui->creatorLineEdit->setText( m_record->get< "creator" >() );
+	ui->engineLineEdit->setText( m_record->get< "engine" >() );
 	//ui->gameText->setText( m_record->getDescription() );
 }
 
@@ -219,8 +219,8 @@ void RecordEditor::on_btnAddVersion_pressed()
 		== QMessageBox::Yes
 	};
 
-	const auto title { m_record->title.get() };
-	const auto creator { m_record->creator.get() };
+	const auto title { m_record->get< "title" >() };
+	const auto creator { m_record->get< "creator" >() };
 
 	//Calculate filesize
 	std::size_t size { 0 };
@@ -291,13 +291,13 @@ void RecordEditor::switchTabs( const int index )
 void RecordEditor::on_btnChangeTitle_pressed()
 {
 	if ( const auto output =
-	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->title.get() );
-	     output != m_record->title.get() && !output.isEmpty() )
+	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->get< "title" >() );
+	     output != m_record->get< "title" >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
+			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -306,21 +306,21 @@ void RecordEditor::on_btnChangeTitle_pressed()
 			return;
 		}
 
-		m_record->title.set( output );
+		m_record->set< "title" >( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeCreator_pressed()
 {
-	if ( const auto output =
-	         QInputDialog::getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->creator.get() );
-	     output != m_record->creator.get() && !output.isEmpty() )
+	if ( const auto output = QInputDialog::
+	         getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->get< "creator" >() );
+	     output != m_record->get< "creator" >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
+			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -332,21 +332,21 @@ void RecordEditor::on_btnChangeCreator_pressed()
 			return;
 		}
 
-		m_record->creator.set( output );
+		m_record->set< "creator" >( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeEngine_pressed()
 {
-	if ( const QString output =
-	         QInputDialog::getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->engine.get() );
-	     output != m_record->engine.get() && !output.isEmpty() )
+	if ( const QString output = QInputDialog::
+	         getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->get< "engine" >() );
+	     output != m_record->get< "engine" >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->creator.get().toStdString() << m_record->engine.get().toStdString()
+			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -355,7 +355,7 @@ void RecordEditor::on_btnChangeEngine_pressed()
 				warning( this, "Duplicate!", "There is already a game with the same creator, name and engine!" );
 			return;
 		}
-		m_record->engine.set( output );
+		m_record->set< "engine" >( output );
 	}
 	loadRecordInfo();
 }

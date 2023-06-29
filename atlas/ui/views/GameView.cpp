@@ -42,7 +42,7 @@ void GameView::reloadRecord()
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	QString description = record->getDesc();
-	QString developer = record->creator.get();
+	QString developer = record->get< "creator" >();
 	QString publisher = "Test Data";
 	QString original_name = "Test Data";
 	QString censored = "Test Data";
@@ -87,7 +87,7 @@ void GameView::reloadRecord()
 		//ui->coverImage->setGraphicsEffect( se );
 	}
 
-	if ( record->last_played.get() == 0 )
+	if ( record->get< "last_played_r" >() == 0 )
 	{
 		ui->lbLastPlayed->setText( "Never" );
 	}
@@ -95,7 +95,7 @@ void GameView::reloadRecord()
 	{
 		//Convert UNIX timestamp to QDateTime
 		const QDateTime date {
-			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->last_played.get() ), Qt::LocalTime )
+			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->get< "last_played_r" >() ), Qt::LocalTime )
 		};
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
@@ -135,7 +135,7 @@ void GameView::reloadRecord()
 	std::sort(
 		playtimes.begin(), playtimes.end(), []( const auto& lhs, const auto& rhs ) { return lhs.first > rhs.first; } );
 
-	const auto latest_playtime { playtimes.empty() ? record->last_played.get() : playtimes[ 0 ].first };
+	const auto latest_playtime { playtimes.empty() ? record->get< "last_played_r" >() : playtimes[ 0 ].first };
 
 	if ( latest_playtime == 0 )
 	{
@@ -151,7 +151,7 @@ void GameView::reloadRecord()
 	}
 
 	ui->lbTotalPlaytime->setText( QString( "%1" ).arg(
-		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->total_playtime.get() ), Qt::LocalTime )
+		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->get< "total_playtime" >() ), Qt::LocalTime )
 			.toUTC()
 			.toString( "hh:mm:ss" ) ) );
 
@@ -233,7 +233,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		};
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
-		QString str( record->title.get() );
+		QString str( record->get< "title" >() );
 		QFontMetrics fm( font );
 		painter.setFont( font );
 		int font_width = fm.horizontalAdvance( str );
@@ -261,7 +261,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		//check if logo is null, if it is then draw text instead
 
-		logo.isNull() ? painter.drawText( font_rectangle, 0, record->title.get(), &boundingRect ) :
+		logo.isNull() ? painter.drawText( font_rectangle, 0, record->get< "title" >(), &boundingRect ) :
 						painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}
