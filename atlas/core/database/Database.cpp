@@ -45,9 +45,8 @@ void Database::initalize( const std::filesystem::path init_path )
 	if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
 		std::filesystem::create_directories( init_path.parent_path() );
 
-	const int ret_code {
-		sqlite3_open_v2( init_path.c_str(), &internal::db_handle, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr )
-	};
+	const int ret_code { sqlite3_open_v2(
+		init_path.string().c_str(), &internal::db_handle, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr ) };
 
 	if ( ret_code != SQLITE_OK )
 	{
