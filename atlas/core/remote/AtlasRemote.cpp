@@ -180,6 +180,9 @@ namespace atlas
 			}
 
 			const std::uint64_t update_time { static_cast< std::uint64_t >( obj[ "date" ].toInteger() ) };
+
+			if ( update_time == 1686886200 ) continue;
+
 			const auto& md5_str { obj[ "md5" ].toString() };
 			const auto& md5 { QByteArray::fromHex( md5_str.toUtf8() ) };
 			std::vector< std::byte > md5_data_c {};
