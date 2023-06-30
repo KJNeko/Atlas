@@ -32,8 +32,7 @@ TransactionBase< true >::~TransactionBase()
 	if ( !m_finished )
 	{
 		Binder( "ROLLBACK TRANSACTION" );
-		spdlog::warn( "Aborted transaction in dtor!" );
-		m_finished = true;
+		throw std::runtime_error( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
 	}
 
 	last_locked = std::thread::id( 0 );
