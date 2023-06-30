@@ -109,9 +109,10 @@ void MainWindow::on_actionGameListImporter_triggered()
 			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
 	     !dir.isEmpty() )
 	{
-		GLImporter importer { this };
-		importer.setImportDir( { dir.toStdString() } );
-		importer.exec();
+		GLImporter* importer { new GLImporter( this ) };
+		importer->show();
+		importer->setImportDir( { dir.toStdString() } );
+		importer->deleteLater();
 	}
 	else
 		QMessageBox::information( this, "Error", "No directory provided." );
