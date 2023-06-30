@@ -16,10 +16,9 @@
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "ui_GLImporter.h"
 
-void processGame( QPromise< void >& promise, const std::filesystem::path path )
+void GLImporterRunner::processGame( const std::filesystem::path path )
 {
 	spdlog::info( "Processing game directory {}", path );
-	promise.start();
 	const auto info_path { path / "GL_Infos.ini" };
 	if ( !std::filesystem::exists( info_path ) ) //Huh?
 		return;
@@ -32,7 +31,12 @@ void processGame( QPromise< void >& promise, const std::filesystem::path path )
 	RapidTransaction() << "SELECT atlas_id FROM f95_zone_data NATURAL JOIN atlas_data WHERE f95_id = ?" << info.f95_id
 		>> internal_id;
 
-	if ( internal_id == 0 ) spdlog::warn( "Missing data for thread {}", info.f95_id );
+	if ( internal_id == 0 )
+	{
+		spdlog::warn( "Missing data for thread {}", info.f95_id );
+		emit message( QString::fromStdString( fmt::format( "Missing remote data for thread {}", info.f95_id ) ) );
+		return;
+	}
 
 	//We found a link! Time to use it
 	AtlasData data { internal_id };
@@ -44,6 +48,7 @@ void processGame( QPromise< void >& promise, const std::filesystem::path path )
 	if ( executables.size() == 0 )
 	{
 		spdlog::error( "Failed to import {:c}. No executables found?", path );
+		emit message( QString::fromStdString( fmt::format( "Failed to import {:c}. No executables found?", path ) ) );
 	}
 
 	//Use this data to import the game
@@ -57,42 +62,42 @@ void processGame( QPromise< void >& promise, const std::filesystem::path path )
 		{},
 		{} ) };
 
-	future.waitForFinished();
+	emit message( QString::fromStdString( fmt::format( "Successfully imported game {}", path ) ) );
 
-	promise.finish();
+	future.waitForFinished();
 }
 
-void importGLGames( QPromise< void >& promise, const std::filesystem::path path )
+void GLImporterRunner::importGLGames( const std::filesystem::path path )
 {
-	promise.start();
 	//Start scanning all files for GL info items
 	auto itter = std::filesystem::recursive_directory_iterator( path );
-
-	std::vector< QFuture< void > > futures;
 
 	while ( itter != std::filesystem::recursive_directory_iterator() )
 	{
 		if ( itter->is_regular_file() && itter->path().filename() == "GL_Infos.ini" )
-			futures.emplace_back( QtConcurrent::run( processGame, itter->path() ) );
+		{
+			emit processGLFolder( itter->path() );
+			itter.pop();
+		}
+		else
+			++itter;
 	}
 
-	for ( QFuture< void >& future : futures )
-	{
-		//Spin loop to check if we are canceled or not. Cancel all the futures if we are canceled too.
-		while ( !future.isFinished() )
-		{
-			if ( promise.isCanceled() ) future.cancel();
-			std::this_thread::yield();
-			using namespace std::chrono_literals;
-			std::this_thread::sleep_for( 10ms );
-		}
-	}
-	promise.finish();
+	spdlog::info( "GLImporter: Waiting on futures" );
+}
+
+GLImporterRunner::GLImporterRunner()
+{
+	connect( this, &GLImporterRunner::processGLFolder, this, &GLImporterRunner::processGame );
 }
 
 GLImporter::GLImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::GLImporter )
 {
 	ui->setupUi( this );
+
+	connect( this, &GLImporter::startImport, &runner, &GLImporterRunner::importGLGames );
+	connect( &runner, &GLImporterRunner::message, this, &GLImporter::addMessage );
+	runner.moveToThread( &m_thread );
 }
 
 GLImporter::~GLImporter()
@@ -102,5 +107,10 @@ GLImporter::~GLImporter()
 
 void GLImporter::setImportDir( const std::filesystem::path path )
 {
-	QtConcurrent::run( importGLGames, path );
+	emit startImport( path );
+}
+
+void GLImporter::addMessage( const QString msg )
+{
+	ui->textBrowser->setText( ui->textBrowser->toPlainText() + "\n" + msg );
 }

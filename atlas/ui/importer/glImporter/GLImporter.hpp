@@ -8,6 +8,7 @@
 #include <filesystem>
 
 #include <QDialog>
+#include <QFuture>
 
 QT_BEGIN_NAMESPACE
 
@@ -18,10 +19,30 @@ namespace Ui
 
 QT_END_NAMESPACE
 
+class GLImporterRunner : public QObject
+{
+	Q_OBJECT
+
+	GLImporterRunner();
+
+  public:
+
+  signals:
+	void processGLFolder( const std::filesystem::path path );
+	void message( const QString msg );
+
+  public slots:
+	void importGLGames( const std::filesystem::path root );
+	void processGame( const std::filesystem::path path );
+};
+
 class GLImporter : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( GLImporter )
+
+	QThread m_thread {};
+	GLImporterRunner runner {};
 
   public:
 
@@ -36,6 +57,9 @@ class GLImporter : public QDialog
 
   signals:
 	void startImport( const std::filesystem::path );
+
+  public slots:
+	void addMessage( const QString );
 };
 
 #endif //ATLASGAMEMANAGER_GLIMPORTER_HPP
