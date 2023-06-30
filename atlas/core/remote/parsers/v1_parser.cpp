@@ -187,31 +187,40 @@ namespace remote::parsers::v1
 	void processJson( const QJsonObject& json )
 	{
 		Transaction transaction {};
-
-		for ( const auto& table_key : json.keys() )
+		try
 		{
-			const auto set { nameToSet( table_key ) };
-			if ( set == InvalidSet )
+			for ( const auto& table_key : json.keys() )
 			{
-				throw std::runtime_error( "Unexpected data in set!" );
+				const auto set { nameToSet( table_key ) };
+				if ( set == InvalidSet )
+				{
+					throw std::runtime_error( "Unexpected data in set!" );
+				}
+
+				ZoneScopedN( "Process set" );
+				const auto& key_str { table_key.toStdString() };
+				TracyMessage( key_str.c_str(), key_str.size() );
+				const QJsonArray& data = json[ table_key ].toArray();
+
+				switch ( set )
+				{
+					case SetAtlas:
+						parseAtlasArray( data, transaction );
+						break;
+					case SetF95:
+						parseF95Array( data, transaction );
+						break;
+					default:
+						throw std::runtime_error( "Unexpected set!" );
+				}
 			}
 
-			ZoneScopedN( "Process set" );
-			const auto& key_str { table_key.toStdString() };
-			TracyMessage( key_str.c_str(), key_str.size() );
-			const QJsonArray& data = json[ table_key ].toArray();
-
-			switch ( set )
-			{
-				case SetAtlas:
-					parseAtlasArray( data, transaction );
-					break;
-				case SetF95:
-					parseF95Array( data, transaction );
-					break;
-				default:
-					throw std::runtime_error( "Unexpected set!" );
-			}
+			transaction.commit();
+		}
+		catch ( ... )
+		{
+			transaction.abort();
+			std::rethrow_exception( std::current_exception() );
 		}
 	}
 
