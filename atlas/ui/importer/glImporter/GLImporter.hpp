@@ -23,9 +23,9 @@ class GLImporterRunner : public QObject
 {
 	Q_OBJECT
 
-	GLImporterRunner();
-
   public:
+
+	GLImporterRunner();
 
   signals:
 	void processGLFolder( const std::filesystem::path path );
