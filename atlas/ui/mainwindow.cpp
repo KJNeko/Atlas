@@ -7,11 +7,11 @@
 #include "core/config.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
+#include "ui/importer/glImporter/GLImporter.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
-#include "ui/notifications/ProgressMessage.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
@@ -73,26 +73,34 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::on_actionImport_triggered()
+void MainWindow::on_actionSimpleImporter_triggered()
 {
-	//TODO: Add the ability to pick one of the importers. Single, Simple, Batch, Ect.
-
-	/*
-	SimpleImporter* importer { new SimpleImporter( this ) };
-
 	if ( const auto dir = QFileDialog::getExistingDirectory(
 			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
 	     !dir.isEmpty() )
 	{
-		importer->setRoot( dir );
-		importer->exec();
-	}*/
+		SimpleImporter importer { this };
+		importer.setRoot( dir );
+		importer.exec();
+	}
+}
 
+void MainWindow::on_actionSingleImporter_triggered()
+{
+	SingleImporter importer { this };
+	importer.exec();
+}
+
+void MainWindow::on_actionBulkImporter_triggered()
+{
 	BatchImportDialog importer { this };
 	importer.exec();
+}
 
-	//SingleImporter importer { this };
-	//importer.exec();
+void MainWindow::on_actionGameListImporter_triggered()
+{
+	GLImporter importer { this };
+	importer.exec();
 }
 
 void MainWindow::on_actionOptions_triggered()

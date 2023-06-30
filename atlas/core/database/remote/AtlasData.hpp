@@ -9,8 +9,8 @@
 
 #include <QString>
 
+#include "AtlasColType.hpp"
 #include "core/Types.hpp"
-#include "core/database/Column.hpp"
 #include "core/database/Transaction.hpp"
 #include "core/fgl/string_literal.hpp"
 

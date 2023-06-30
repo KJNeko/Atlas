@@ -1,8 +1,11 @@
 //
-// Created by kj16609 on 6/28/23.
+// Created by kj16609 on 6/30/23.
 //
 
-#include "F95Data.hpp"
+#ifndef ATLASGAMEMANAGER_F95COLTYPE_HPP
+#define ATLASGAMEMANAGER_F95COLTYPE_HPP
+
+#include "core/database/Column.hpp"
 
 template <>
 struct ColType< "atlas_id", "f95_data" >
@@ -75,3 +78,5 @@ struct ColType< "replies", "f95_data" >
 {
 	typedef QString Type;
 };
+
+#endif //ATLASGAMEMANAGER_F95COLTYPE_HPP

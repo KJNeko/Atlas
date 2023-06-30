@@ -773,7 +773,16 @@ border-bottom-left-radius:5px;</string>
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionImport"/>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import</string>
+     </property>
+     <addaction name="actionSimpleImporter"/>
+     <addaction name="actionBulkImporter"/>
+     <addaction name="actionGameListImporter"/>
+     <addaction name="actionSingleImporter"/>
+    </widget>
+    <addaction name="menuImport"/>
     <addaction name="actionMange"/>
     <addaction name="actionDownload"/>
     <addaction name="actionOptions"/>
@@ -795,11 +804,6 @@ border-bottom-left-radius:5px;</string>
    <addaction name="menuGames"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionImport">
-   <property name="text">
-    <string>Import</string>
-   </property>
-  </action>
   <action name="actionMange">
    <property name="text">
     <string>Mange</string>
@@ -861,6 +865,26 @@ border-bottom-left-radius:5px;</string>
   <action name="actionViewFileHistory">
    <property name="text">
     <string>View file history</string>
+   </property>
+  </action>
+  <action name="actionSimpleImporter">
+   <property name="text">
+    <string>Simple</string>
+   </property>
+  </action>
+  <action name="actionBulkImporter">
+   <property name="text">
+    <string>Bulk</string>
+   </property>
+  </action>
+  <action name="actionGameListImporter">
+   <property name="text">
+    <string>GameList</string>
+   </property>
+  </action>
+  <action name="actionSingleImporter">
+   <property name="text">
+    <string>Single</string>
    </property>
   </action>
  </widget>

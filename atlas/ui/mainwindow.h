@@ -42,7 +42,11 @@ class MainWindow : public QMainWindow
 	void triggerSearch( QString text, const SortOrder order, const bool asc );
 
   private slots:
-	void on_actionImport_triggered();
+	void on_actionSimpleImporter_triggered();
+	void on_actionBulkImporter_triggered();
+	void on_actionGameListImporter_triggered();
+	void on_actionSingleImporter_triggered();
+	//void on_actionImport_triggered();
 	void on_actionOptions_triggered();
 	void on_actionExit_triggered();
 	//void on_actionDownload_triggered();

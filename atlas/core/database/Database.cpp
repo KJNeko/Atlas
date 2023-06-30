@@ -79,8 +79,6 @@ void Database::initalize( const std::filesystem::path init_path )
 		"last_thread_comment STRING, thread_publish_date STRING, last_record_update STRING, views STRING, likes STRING, tags STRING, rating STRING,"
 		"screens STRING, replies STRING);",
 
-		"CREATE TABLE IF NOT EXISTS f95_zone_mapping (record_id INTEGER REFERENCES records(record_id), f95_id INTEGER REFERENCES f95_zone_data(f95_id), UNIQUE(record_id, f95_id));",
-
 		//Update handling
 		"CREATE TABLE IF NOT EXISTS updates (update_time INTEGER PRIMARY KEY, processed_time INTEGER, md5 BLOB);",
 

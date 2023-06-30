@@ -9,8 +9,8 @@
 
 #include <QString>
 
+#include "F95ColType.hpp"
 #include "core/Types.hpp"
-#include "core/database/Column.hpp"
 
 struct F95Data
 {
