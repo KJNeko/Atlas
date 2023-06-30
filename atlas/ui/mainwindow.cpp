@@ -112,7 +112,8 @@ void MainWindow::on_actionGameListImporter_triggered()
 		GLImporter* importer { new GLImporter( this ) };
 		importer->show();
 		importer->setImportDir( { dir.toStdString() } );
-		importer->deleteLater();
+		importer->exec();
+		delete importer;
 	}
 	else
 		QMessageBox::information( this, "Error", "No directory provided." );

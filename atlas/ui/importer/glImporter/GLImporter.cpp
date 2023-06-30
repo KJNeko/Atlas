@@ -69,6 +69,7 @@ void GLImporterRunner::processGame( const std::filesystem::path path )
 
 void GLImporterRunner::importGLGames( const std::filesystem::path path )
 {
+	spdlog::info( "Starting GL import at directory {}", path );
 	//Start scanning all files for GL info items
 	auto itter = std::filesystem::recursive_directory_iterator( path );
 
