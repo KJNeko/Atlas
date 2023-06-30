@@ -64,7 +64,7 @@ struct TransactionBase
 		}
 	}
 
-	~TransactionBase();
+	~TransactionBase() noexcept( false );
 	/*{
 		if constexpr ( is_commitable )
 		{

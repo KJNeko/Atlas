@@ -27,7 +27,7 @@ TransactionBase< true >::TransactionBase() : guard( getLock() )
 {}
 
 template <>
-TransactionBase< true >::~TransactionBase()
+TransactionBase< true >::~TransactionBase() noexcept( false )
 {
 	if ( !m_finished )
 	{
@@ -43,5 +43,5 @@ TransactionBase< false >::TransactionBase() : guard( self_mtx )
 {}
 
 template <>
-TransactionBase< false >::~TransactionBase()
+TransactionBase< false >::~TransactionBase() noexcept( false )
 {}

@@ -16,6 +16,7 @@
 
 void processGame( QPromise< void >& promise, const std::filesystem::path path, GLImporter* importer )
 {
+	promise.start();
 	const auto info_path { path / "GL_Infos.ini" };
 	if ( !std::filesystem::exists( info_path ) ) //Huh?
 		return;
@@ -32,10 +33,13 @@ void processGame( QPromise< void >& promise, const std::filesystem::path path, G
 	//We found a link! Time to use it
 
 	F95Data f95_data { internal_id };
+
+	promise.finish();
 }
 
 void importGLGames( QPromise< void >& promise, const std::filesystem::path path, GLImporter* importer )
 {
+	promise.start();
 	//Start scanning all files for GL info items
 	auto itter = std::filesystem::recursive_directory_iterator( path );
 
@@ -60,6 +64,7 @@ void importGLGames( QPromise< void >& promise, const std::filesystem::path path,
 			std::this_thread::sleep_for( 10ms );
 		}
 	}
+	promise.finish();
 }
 
 GLImporter::GLImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::GLImporter )
