@@ -75,6 +75,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionSimpleImporter_triggered()
 {
+	QMessageBox::information( this, "Importer", "Please select the game directory" );
 	if ( const auto dir = QFileDialog::getExistingDirectory(
 			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
 	     !dir.isEmpty() )
@@ -83,6 +84,8 @@ void MainWindow::on_actionSimpleImporter_triggered()
 		importer.setRoot( dir );
 		importer.exec();
 	}
+	else
+		QMessageBox::information( this, "Error", "No directory provided." );
 }
 
 void MainWindow::on_actionSingleImporter_triggered()
@@ -99,8 +102,19 @@ void MainWindow::on_actionBulkImporter_triggered()
 
 void MainWindow::on_actionGameListImporter_triggered()
 {
-	GLImporter importer { this };
-	importer.exec();
+	QMessageBox::information(
+		this, "Game List", "Please select root (Root being the games directory) for your game list install" );
+
+	if ( const auto dir = QFileDialog::getExistingDirectory(
+			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
+	     !dir.isEmpty() )
+	{
+		GLImporter importer { this };
+		importer.setImportDir( { dir.toStdString() } );
+		importer.exec();
+	}
+	else
+		QMessageBox::information( this, "Error", "No directory provided." );
 }
 
 void MainWindow::on_actionOptions_triggered()
