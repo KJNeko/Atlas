@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
-          ref: staging
+          ref: nightly
 
       - name: Prepare version string
         run: |
