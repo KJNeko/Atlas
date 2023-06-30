@@ -161,7 +161,7 @@ namespace remote::parsers::v1
 	void insertF95Data( const QJsonObject& obj, Transaction& trans )
 	{
 		constexpr std::string_view query {
-			"INSERT INTO f95_data (f95_id, atlas_id, banner_url, site_url, last_thread_comment, thread_publish_date, last_record_update, views, likes, tags, rating, screens, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			"INSERT INTO f95_zone_data (f95_id, atlas_id, banner_url, site_url, last_thread_comment, thread_publish_date, last_record_update, views, likes, tags, rating, screens, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 		};
 
 		trans << query << obj[ "f95_id" ].toInteger() << obj[ "atlas_id" ].toInteger() << obj[ "banner_url" ].toString()
