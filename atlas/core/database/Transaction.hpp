@@ -42,10 +42,25 @@ struct TransactionBase
 		{
 			if ( !m_finished )
 			{
-				sqlite3_exec( &Database::ref(), "COMMIT;", nullptr, nullptr, nullptr );
-				Binder( "COMMIT TRANSACTION" );
+				sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
 				m_finished = true;
 			}
+			else
+				throw TransactionInvalid( "Attempted to commit a finished transaction" );
+		}
+	}
+
+	void abort()
+	{
+		if constexpr ( is_commitable )
+		{
+			if ( !m_finished )
+			{
+				sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
+				m_finished = true;
+			}
+			else
+				throw TransactionInvalid( "Attempted to abort a finished transaction" );
 		}
 	}
 
