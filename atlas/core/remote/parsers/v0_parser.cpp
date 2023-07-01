@@ -7,7 +7,7 @@
 #include "core/database/Transaction.hpp"
 #include "core/remote/parsers/parser.hpp"
 
-namespace remote::parsers::v1
+namespace remote::parsers::v0
 {
 	enum DataSet
 	{

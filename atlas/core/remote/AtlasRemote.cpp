@@ -247,13 +247,21 @@ namespace atlas
 
 		//Figure out what version we are trying to parse.
 
-		const auto version = 1;
+		if ( !json.contains( "min_ver" ) )
+		{
+			spdlog::error( "Failed to parse update file. Missing min_ver" );
+			qDebug() << json.keys();
+			return;
+		}
+
+		const std::uint64_t version { static_cast< std::uint64_t >( json[ "min_ver" ].toInteger() ) };
 
 		using namespace remote::parsers;
 
-		if ( version < MAX_REMOTE_VERSION )
+		if ( version <= MAX_REMOTE_VERSION )
 		{
 			spdlog::error( "Failed to parse update file! Version was {}. Our max is {}", version, MAX_REMOTE_VERSION );
+			return;
 		}
 
 		switch ( version )
@@ -264,14 +272,12 @@ namespace atlas
 						"Failed to parse update file! Version was {}. Our max is {}!", version, MAX_REMOTE_VERSION );
 					return;
 				}
-			case 1:
+			case 0:
 				{
-					v1::processJson( json );
+					v0::processJson( json );
 					break;
 				}
 		}
-
-		remote::parsers::v1::processJson( json );
 	}
 
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )

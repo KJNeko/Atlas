@@ -9,9 +9,14 @@
 
 namespace remote::parsers
 {
-	constexpr std::uint64_t MAX_REMOTE_VERSION { 1 };
 
-	namespace v1
+	//This is clearly used. Yet gcc thinks it is not
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-const-variable"
+	constexpr std::uint64_t MAX_REMOTE_VERSION { 0 };
+#pragma GCC diagnostic pop
+
+	namespace v0
 	{
 		void processJson( const QJsonObject& json );
 	}
