@@ -104,7 +104,7 @@ PenaltyBreakOpenParenthesis: 999
 PenaltyReturnTypeOnItsOwnLine: 999
 PointerAlignment: Left
 QualifierAlignment: Custom
-QualifierOrder: [ 'inline','static','const','constexpr','type','volatile' ]
+QualifierOrder: [ 'inline','static','friend','const','constexpr','type','volatile' ]
 ReferenceAlignment: Pointer
 ReflowComments: false
 RequiresClausePosition: OwnLine
@@ -129,6 +129,6 @@ SpacesInConditionalStatement: true
 SpacesInParentheses: true
 SpacesInSquareBrackets: true
 Standard: Latest
-StatementAttributeLikeMacros: [emit]
-StatementMacros: [Q_UNUSED]
+StatementAttributeLikeMacros: [ emit ]
+StatementMacros: [ Q_UNUSED ]
 ...

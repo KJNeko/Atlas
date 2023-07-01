@@ -179,7 +179,6 @@ try
 			std::this_thread::sleep_for( 10ms );
 		}
 	}
-
 }
 catch ( std::exception& e )
 {
