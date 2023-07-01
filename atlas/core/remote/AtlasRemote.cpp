@@ -258,7 +258,7 @@ namespace atlas
 
 		using namespace remote::parsers;
 
-		if ( version <= MAX_REMOTE_VERSION )
+		if ( version > MAX_REMOTE_VERSION )
 		{
 			spdlog::error( "Failed to parse update file! Version was {}. Our max is {}", version, MAX_REMOTE_VERSION );
 			return;
