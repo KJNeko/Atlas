@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow
 
   signals:
 	void triggerSearch( QString text, const SortOrder order, const bool asc );
+	void triggerReSearch();
 
   private slots:
 	void on_actionSimpleImporter_triggered();

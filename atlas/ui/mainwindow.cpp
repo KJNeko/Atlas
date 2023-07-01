@@ -22,6 +22,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
+	connect( this, &MainWindow::triggerReSearch, &record_search, &Search::runQuery );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
 
 	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
@@ -83,6 +84,8 @@ void MainWindow::on_actionSimpleImporter_triggered()
 		SimpleImporter importer { this };
 		importer.setRoot( dir );
 		importer.exec();
+		//Trigger search
+		emit triggerReSearch();
 	}
 	else
 		QMessageBox::information( this, "Error", "No directory provided." );
@@ -92,12 +95,14 @@ void MainWindow::on_actionSingleImporter_triggered()
 {
 	SingleImporter importer { this };
 	importer.exec();
+	emit triggerReSearch();
 }
 
 void MainWindow::on_actionBulkImporter_triggered()
 {
 	BatchImportDialog importer { this };
 	importer.exec();
+	emit triggerReSearch();
 }
 
 void MainWindow::on_actionGameListImporter_triggered()
@@ -114,6 +119,7 @@ void MainWindow::on_actionGameListImporter_triggered()
 		importer->setImportDir( { dir.toStdString() } );
 		importer->exec();
 		delete importer;
+		emit triggerReSearch();
 	}
 	else
 		QMessageBox::information( this, "Error", "No directory provided." );

@@ -6,7 +6,7 @@
 
 #include "core/search/QueryBuilder.hpp"
 
-void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder order, const bool asc )
+void Search::searchTextChanged( const QString text, const SortOrder order, const bool asc )
 {
 	ZoneScoped;
 	try
@@ -16,19 +16,30 @@ void Search::searchTextChanged( [[maybe_unused]] QString text, const SortOrder o
 		else
 			query = "SELECT DISTINCT record_id FROM records NATURAL JOIN last_import_times ORDER BY "
 			      + orderToStr( order ) + std::string( asc ? " ASC" : " DESC" );
-		RapidTransaction transaction {};
 
-		std::vector< Record > records;
-
-		transaction << query >> [ & ]( const RecordID id )
-		{
-			if ( id > 1 ) records.emplace_back( id );
-		};
-
-		emit searchCompleted( std::move( records ) );
+		runQuery();
 	}
 	catch ( std::exception& e )
 	{
 		spdlog::error( "Search failed with query \"{}\": {}", query, e.what() );
 	}
+}
+
+void Search::runQuery()
+{
+	if ( query.empty() )
+	{
+		query = "SELECT DISTINCT record_id FROM records NATURAL JOIN last_import_times ORDER BY "
+		      + orderToStr( SortOrder::Name ) + std::string( " ASC" );
+	}
+
+	std::vector< Record > records;
+
+	RapidTransaction transaction {};
+	transaction << query >> [ & ]( const RecordID id )
+	{
+		if ( id > 1 ) records.emplace_back( id );
+	};
+
+	emit searchCompleted( std::move( records ) );
 }
