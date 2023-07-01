@@ -4,8 +4,9 @@
 
 #include "RecordBannerDelegate.hpp"
 
+#include <moc_RecordBannerDelegate.cpp>
+
 #include <QGraphicsDropShadowEffect>
-#include <QGraphicsView>
 #include <QMenu>
 #include <QPainter>
 #include <QPixmapCache>

@@ -4,6 +4,8 @@
 
 #include "FilepathModel.hpp"
 
+#include <moc_FilepathModel.cpp>
+
 #include <QIODevice>
 #include <QMimeData>
 

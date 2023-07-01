@@ -4,6 +4,8 @@
 
 #include "ConfigNotification.hpp"
 
+#include <moc_ConfigNotification.cpp>
+
 #include "config.hpp"
 
 namespace config

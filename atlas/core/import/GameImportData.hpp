@@ -46,6 +46,10 @@ struct GameImportData
 	  banners( std::move( banners_in ) ),
 	  previews( std::move( previews_in ) )
 	{}
+
+	GameImportData() = delete;
+	GameImportData( GameImportData&& other ) = default;
+	GameImportData( const GameImportData& other ) = default;
 };
 
 #endif //ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP

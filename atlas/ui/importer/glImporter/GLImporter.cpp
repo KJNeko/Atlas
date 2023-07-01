@@ -3,8 +3,9 @@
 //
 
 // You may need to build the project (run Qt uic code generator) to get "ui_GLImporter.h" resolved
-
 #include "GLImporter.hpp"
+
+#include <moc_GLImporter.cpp>
 
 #include <QtConcurrent>
 
@@ -56,7 +57,7 @@ void GLImporterRunner::processGame( const std::filesystem::path path )
 		path,
 		scoreExecutables( executables ).front(),
 		data.get< AtlasColumns::Title >(),
-		data.get< AtlasColumns::Creator>(),
+		data.get< AtlasColumns::Creator >(),
 		data.get< AtlasColumns::Engine >(),
 		info.version,
 		{},

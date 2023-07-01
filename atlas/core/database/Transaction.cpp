@@ -5,7 +5,7 @@
 #include "Transaction.hpp"
 
 inline static std::atomic< std::thread::id > last_locked {};
-inline static std::mutex trans_lock;
+inline static std::mutex trans_lock {};
 
 std::lock_guard< std::mutex > getLock()
 {

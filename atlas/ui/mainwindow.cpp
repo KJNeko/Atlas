@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include <moc_mainwindow.cpp>
+
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"

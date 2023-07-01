@@ -4,6 +4,7 @@
 
 #include "GameScanner.hpp"
 
+#include <moc_GameScanner.cpp>
 #include <queue>
 
 #include <QFuture>
@@ -21,6 +22,7 @@ void runner(
 	const QString regex,
 	const std::filesystem::path folder,
 	const std::filesystem::path base )
+try
 {
 	ZoneScoped;
 	promise.start();
@@ -80,31 +82,46 @@ void runner(
 		}
 
 		if ( promise.isCanceled() ) return;
-		promise.addResult( GameImportData { std::filesystem::relative( folder, base ),
-		                                    std::move( title ),
-		                                    std::move( creator ),
-		                                    engine.isEmpty() ? engineName( determineEngine( scanner ) ) :
-		                                                       std::move( engine ),
-		                                    version.isEmpty() ? "0.0" : std::move( version ),
-		                                    folderSize( scanner ),
-		                                    potential_executables,
-		                                    potential_executables.at( 0 ),
-		                                    std::move( banners ),
-		                                    std::move( previews )
+		spdlog::info( "Adding result" );
+		GameImportData data { std::filesystem::relative( folder, base ),
+			                  std::move( title ),
+			                  std::move( creator ),
+			                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
+			                  version.isEmpty() ? "0.0" : std::move( version ),
+			                  folderSize( scanner ),
+			                  potential_executables,
+			                  potential_executables.at( 0 ),
+			                  std::move( banners ),
+			                  std::move( previews ) };
 
-		} );
+		promise.addResult( std::move( data ) );
 	}
 	else
 		spdlog::warn( "No executables found for path {}", folder );
 
+	spdlog::info( "Marking {} as finished", folder );
 	promise.finish();
+	spdlog::info( "Finishing" );
 	return;
+}
+catch ( std::exception& e )
+{
+	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
+	promise.finish();
+}
+catch ( ... )
+{
+	spdlog::error( "Ate error before entering Qt space!" );
+	promise.finish();
 }
 
 void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex )
+try
 {
 	ZoneScoped;
 	promise.start();
+	using namespace std::chrono_literals;
+	std::this_thread::sleep_for( 10ms );
 
 	std::vector< QFuture< void > > futures;
 
@@ -130,12 +147,10 @@ void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::
 				if ( regex::valid( regex, QString::fromStdString( path.string() ) ) )
 				{
 					//The regex was a match. We can now process this directory further
-					spdlog::debug( "Adding game {} to processing queue", path );
 					futures.emplace_back( QtConcurrent::run( &m_thread_pool, runner, regex, path, base )
 					                          .then( [ this ]( const GameImportData data )
 					                                 { emit foundGame( data ); } ) );
 					if ( promise.isCanceled() ) break;
-					spdlog::debug( "Added game {} to processing queue", path );
 					//Directory should NOT be added to found_paths to be processed later since we shouldn't continue needing to look deeper.
 				}
 				else //Directory wasn't a match. But we can try searching deeper.
@@ -144,7 +159,7 @@ void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::
 		}
 	}
 
-	spdlog::info("Waiting for futures to finish");
+	spdlog::info( "Waiting for futures to finish" );
 
 	for ( auto& future : futures )
 	{
@@ -167,13 +182,28 @@ void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::
 
 	promise.finish();
 }
+catch ( std::exception& e )
+{
+	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
+	promise.finish();
+}
+catch ( ... )
+{
+	spdlog::error( "Ate error before entering Qt space!" );
+	promise.finish();
+}
 
 void GameScanner::start( const std::filesystem::path path, const QString regex )
 {
 	ZoneScoped;
 	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
-	m_watcher.setFuture( m_runner_future );
-	connect( &m_watcher, &QFutureWatcher< void >::finished, this, &GameScanner::emitComplete );
+	if ( m_runner_future.isFinished() )
+		emitComplete();
+	else
+	{
+		connect( &m_watcher, &QFutureWatcher< void >::finished, this, &GameScanner::emitComplete );
+		m_watcher.setFuture( m_runner_future );
+	}
 }
 
 void GameScanner::pause()

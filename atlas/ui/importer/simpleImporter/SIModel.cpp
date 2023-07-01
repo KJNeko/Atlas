@@ -4,6 +4,7 @@
 
 #include "SIModel.hpp"
 
+#include <moc_SIModel.cpp>
 #include <stack>
 
 #include <QColor>

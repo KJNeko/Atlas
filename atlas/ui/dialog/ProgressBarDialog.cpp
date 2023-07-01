@@ -6,6 +6,8 @@
 
 #include "ProgressBarDialog.hpp"
 
+#include <moc_ProgressBarDialog.cpp>
+
 #include "ui_ProgressBarDialog.h"
 
 ProgressBarDialog::ProgressBarDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::ProgressBarDialog )

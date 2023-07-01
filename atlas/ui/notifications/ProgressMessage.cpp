@@ -6,6 +6,8 @@
 
 #include "ProgressMessage.hpp"
 
+#include <moc_ProgressMessage.cpp>
+
 #include <tracy/Tracy.hpp>
 
 #include "NotificationPopup.hpp"

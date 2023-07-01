@@ -4,6 +4,8 @@
 
 #include "Search.hpp"
 
+#include <moc_Search.cpp>
+
 #include "core/search/QueryBuilder.hpp"
 
 void Search::searchTextChanged( const QString text, const SortOrder order, const bool asc )

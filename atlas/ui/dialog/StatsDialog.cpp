@@ -6,6 +6,8 @@
 
 #include "StatsDialog.hpp"
 
+#include <moc_StatsDialog.cpp>
+
 #include <QChart>
 #include <QDate>
 #include <QDateTime>

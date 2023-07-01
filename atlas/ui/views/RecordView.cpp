@@ -4,6 +4,8 @@
 
 #include "RecordView.hpp"
 
+#include <moc_RecordView.cpp>
+
 #include <QFileDialog>
 #include <QMenu>
 #include <QMouseEvent>

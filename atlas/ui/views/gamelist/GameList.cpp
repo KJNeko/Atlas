@@ -6,6 +6,8 @@
 
 #include "GameList.hpp"
 
+#include <moc_GameList.cpp>
+
 #include "GameListDelegate.hpp"
 
 GameList::GameList( QWidget* parent ) : QListView( parent )

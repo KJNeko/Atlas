@@ -4,6 +4,8 @@
 
 #include "ImageView.hpp"
 
+#include <moc_ImageView.cpp>
+
 #include "ui/delegates/ImageDelegate.hpp"
 #include "ui/models/FilepathModel.hpp"
 

@@ -1,11 +1,12 @@
 #include "aboutqtdialog.h"
+
+#include <moc_aboutqtdialog.cpp>
+
 #include "ui_aboutqtdialog.h"
 
-AboutQtDialog::AboutQtDialog(QWidget *parent) :
-  QDialog(parent),
-  ui(new Ui::AboutQtDialog)
+AboutQtDialog::AboutQtDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::AboutQtDialog )
 {
-	ui->setupUi(this);
+	ui->setupUi( this );
 }
 
 AboutQtDialog::~AboutQtDialog()

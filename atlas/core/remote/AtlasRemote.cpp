@@ -5,6 +5,7 @@
 #include "AtlasRemote.hpp"
 
 #include <fstream>
+#include <moc_AtlasRemote.cpp>
 
 #include <QFile>
 #include <QJsonArray>

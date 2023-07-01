@@ -4,6 +4,8 @@
 
 #include "RecordListModel.hpp"
 
+#include <moc_RecordListModel.cpp>
+
 void RecordListModel::setRecords( std::vector< Record > records )
 {
 	beginResetModel();

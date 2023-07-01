@@ -6,6 +6,8 @@
 
 #include "NotificationMessage.hpp"
 
+#include <moc_NotificationMessage.cpp>
+
 #include "NotificationPopup.hpp"
 #include "core/logging.hpp"
 #include "ui_NotificationMessage.h"

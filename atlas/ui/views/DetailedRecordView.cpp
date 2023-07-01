@@ -3,6 +3,8 @@
 //
 #include "DetailedRecordView.hpp"
 
+#include <moc_DetailedRecordView.cpp>
+
 #include "ui_DetailedRecordView.h"
 
 DetailedRecordView::DetailedRecordView( QWidget* parent ) : QWidget( parent ), ui( new Ui::DetailedRecordView )

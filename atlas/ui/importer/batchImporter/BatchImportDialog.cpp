@@ -1,8 +1,9 @@
 #include "BatchImportDialog.hpp"
 
+#include <moc_BatchImportDialog.cpp>
+
 #include <QAbstractItemView>
 #include <QFileDialog>
-#include <QFutureWatcher>
 #include <QMessageBox>
 #include <QMimeDatabase>
 #include <QtConcurrent>

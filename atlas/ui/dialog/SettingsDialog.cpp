@@ -6,6 +6,8 @@
 
 #include "SettingsDialog.hpp"
 
+#include <moc_SettingsDialog.cpp>
+
 #include <QFile>
 #include <QMessageBox>
 #include <QStandardItemModel>

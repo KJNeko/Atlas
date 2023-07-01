@@ -1,5 +1,7 @@
 #include "GameView.hpp"
 
+#include <moc_GameView.cpp>
+
 #include <QDateTime>
 #include <QGraphicsBlurEffect>
 #include <QGraphicsPixmapItem>

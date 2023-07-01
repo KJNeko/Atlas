@@ -4,6 +4,8 @@
 
 #include "GameListDelegate.hpp"
 
+#include <moc_GameListDelegate.cpp>
+
 #include <QPainter>
 
 #include "ui/models/RecordListModel.hpp"

@@ -6,6 +6,8 @@
 
 #include "NotificationPopup.hpp"
 
+#include <moc_NotificationPopup.cpp>
+
 #include <QScrollBar>
 
 #include "core/logging.hpp"

@@ -6,12 +6,12 @@
 
 #include "SingleImporter.hpp"
 
+#include <moc_SingleImporter.cpp>
+
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "core/database/GameMetadata.hpp"
-#include "core/database/record/Record.hpp"
 #include "core/database/record/RecordData.hpp"
 #include "core/gamelist/utils.hpp"
 #include "core/import/Importer.hpp"

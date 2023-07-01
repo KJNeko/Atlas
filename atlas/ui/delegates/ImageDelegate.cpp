@@ -5,6 +5,7 @@
 #include "ImageDelegate.hpp"
 
 #include <filesystem>
+#include <moc_ImageDelegate.cpp>
 
 #include <QPainter>
 

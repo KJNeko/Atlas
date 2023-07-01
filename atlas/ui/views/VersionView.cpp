@@ -6,6 +6,8 @@
 
 #include "VersionView.hpp"
 
+#include <moc_VersionView.cpp>
+
 #include <QDateTime>
 #include <QFileDialog>
 #include <QInputDialog>

@@ -4,6 +4,8 @@
 
 #include "ImageWidget.hpp"
 
+#include <moc_ImageWidget.cpp>
+
 #include <QDragEnterEvent>
 #include <QMimeData>
 

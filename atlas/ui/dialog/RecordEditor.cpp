@@ -6,6 +6,8 @@
 
 #include "RecordEditor.hpp"
 
+#include <moc_RecordEditor.cpp>
+
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QInputDialog>
