@@ -13,7 +13,9 @@ class Record : public std::shared_ptr< RecordData >
 
 	Record() = default;
 	Record( const RecordID id );
-	Record( RecordData&& data );
+	Record( Record&& data ) = default;
+	Record( const Record& other ) = default;
+	Record& operator=( const Record& other ) = default;
 };
 
 Q_DECLARE_METATYPE( Record )

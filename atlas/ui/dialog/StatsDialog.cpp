@@ -10,13 +10,9 @@
 
 #include <QChart>
 #include <QDate>
-#include <QDateTime>
 #include <QDateTimeAxis>
-#include <QTime>
 #include <QValueAxis>
 
-#include "core/database/Database.hpp"
-#include "core/database/GameMetadata.hpp"
 #include "core/database/record/Record.hpp"
 #include "ui_StatsDialog.h"
 
@@ -26,7 +22,7 @@ StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::Sta
 
 	Transaction transaction {};
 
-	QChart* chart { new QChart };
+	QChart* chart { new QChart() };
 	QLineSeries* size_series { new QLineSeries };
 
 	std::int64_t counter { 0 };

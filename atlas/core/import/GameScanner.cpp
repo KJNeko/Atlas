@@ -22,104 +22,104 @@ void runner(
 	const QString regex,
 	const std::filesystem::path folder,
 	const std::filesystem::path base )
-try
 {
 	ZoneScoped;
-	promise.start();
-	spdlog::debug( "Runner active for game {}", folder );
-	if ( promise.isCanceled() ) return;
-	FileScanner scanner { folder };
-	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
-
-	if ( promise.isCanceled() ) return;
-	if ( potential_executables.size() > 0 )
+	try
 	{
-		const auto [ title, creator, version, engine ] =
-			regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-
-		spdlog::info( "Found game at path {}", folder );
-
-		//Search for banners
-		std::array< QString, BannerType::SENTINEL > banners {};
-
-		for ( const auto& file : scanner )
-		{
-			if ( promise.isCanceled() ) return;
-			if ( file.depth > 1 ) break;
-
-			const auto& path { file.path };
-			const auto& stem { path.filename().stem() };
-
-			if ( stem == "banner" )
-			{
-				banners[ Normal ] = QString::fromStdString( path.string() );
-			}
-			else if ( stem == "banner_w" )
-			{
-				banners[ Wide ] = QString::fromStdString( path.string() );
-			}
-			else if ( stem == "logo" )
-			{
-				banners[ Logo ] = QString::fromStdString( path.string() );
-			}
-			else if ( stem == "cover" )
-			{
-				banners[ Cover ] = QString::fromStdString( path.string() );
-			}
-			else
-				continue;
-		}
-
-		std::vector< QString > previews;
-
-		if ( std::filesystem::exists( folder / "previews" ) )
-		{
-			for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
-			{
-				if ( promise.isCanceled() ) return;
-				if ( file.is_regular_file() ) previews.emplace_back( QString::fromStdString( file.path().string() ) );
-			}
-		}
+		//promise.start();
+		spdlog::debug( "Runner active for game {}", folder );
+		if ( promise.isCanceled() ) return;
+		FileScanner scanner { folder };
+		std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
 		if ( promise.isCanceled() ) return;
-		spdlog::info( "Adding result" );
-		GameImportData data { std::filesystem::relative( folder, base ),
-			                  std::move( title ),
-			                  std::move( creator ),
-			                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
-			                  version.isEmpty() ? "0.0" : std::move( version ),
-			                  folderSize( scanner ),
-			                  potential_executables,
-			                  potential_executables.at( 0 ),
-			                  std::move( banners ),
-			                  std::move( previews ) };
+		if ( potential_executables.size() > 0 )
+		{
+			const auto [ title, creator, version, engine ] =
+				regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-		promise.addResult( std::move( data ) );
+			spdlog::info( "Found game at path {}", folder );
+
+			//Search for banners
+			std::array< QString, BannerType::SENTINEL > banners {};
+
+			for ( const auto& file : scanner )
+			{
+				if ( promise.isCanceled() ) return;
+				if ( file.depth > 1 ) break;
+
+				const auto& path { file.path };
+				const auto& stem { path.filename().stem() };
+
+				if ( stem == "banner" )
+				{
+					banners[ Normal ] = QString::fromStdString( path.string() );
+				}
+				else if ( stem == "banner_w" )
+				{
+					banners[ Wide ] = QString::fromStdString( path.string() );
+				}
+				else if ( stem == "logo" )
+				{
+					banners[ Logo ] = QString::fromStdString( path.string() );
+				}
+				else if ( stem == "cover" )
+				{
+					banners[ Cover ] = QString::fromStdString( path.string() );
+				}
+				else
+					continue;
+			}
+
+			std::vector< QString > previews;
+
+			if ( std::filesystem::exists( folder / "previews" ) )
+			{
+				for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
+				{
+					if ( promise.isCanceled() ) return;
+					if ( file.is_regular_file() )
+						previews.emplace_back( QString::fromStdString( file.path().string() ) );
+				}
+			}
+
+			if ( promise.isCanceled() ) return;
+			spdlog::info( "Adding result" );
+			GameImportData data { std::filesystem::relative( folder, base ),
+				                  std::move( title ),
+				                  std::move( creator ),
+				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
+				                  version.isEmpty() ? "0.0" : std::move( version ),
+				                  folderSize( scanner ),
+				                  potential_executables,
+				                  potential_executables.at( 0 ),
+				                  std::move( banners ),
+				                  std::move( previews ) };
+
+			promise.addResult( std::move( data ) );
+		}
+		else
+			spdlog::warn( "No executables found for path {}", folder );
+
+		spdlog::info( "Marking {} as finished", folder );
+		spdlog::info( "Finishing" );
+		return;
 	}
-	else
-		spdlog::warn( "No executables found for path {}", folder );
-
-	spdlog::info( "Marking {} as finished", folder );
-	promise.finish();
-	spdlog::info( "Finishing" );
-	return;
-}
-catch ( std::exception& e )
-{
-	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
-	promise.finish();
-}
-catch ( ... )
-{
-	spdlog::error( "Ate error before entering Qt space!" );
-	promise.finish();
+	catch ( const std::exception& e )
+	{
+		spdlog::error( "GameScanner::runner: {}", e.what() );
+		promise.setException( std::current_exception() );
+	}
+	catch ( ... )
+	{
+		promise.setException( std::current_exception() );
+	}
 }
 
 void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex )
 try
 {
 	ZoneScoped;
-	promise.start();
 	using namespace std::chrono_literals;
 	std::this_thread::sleep_for( 10ms );
 
@@ -180,17 +180,14 @@ try
 		}
 	}
 
-	promise.finish();
 }
 catch ( std::exception& e )
 {
 	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
-	promise.finish();
 }
 catch ( ... )
 {
 	spdlog::error( "Ate error before entering Qt space!" );
-	promise.finish();
 }
 
 void GameScanner::start( const std::filesystem::path path, const QString regex )

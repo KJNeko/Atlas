@@ -173,6 +173,8 @@ class Binder
 		//Execute the query.
 		while ( true )
 		{
+			if ( stmt == nullptr ) throw std::runtime_error( "stmt was nullptr" );
+
 			const auto step_ret { sqlite3_step( stmt ) };
 
 			if ( step_ret == SQLITE_ROW ) [[likely]]

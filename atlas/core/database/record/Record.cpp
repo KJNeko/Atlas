@@ -46,10 +46,6 @@ namespace internal
 Record::Record( const RecordID id ) : std::shared_ptr< RecordData >( internal::getPtr( id ) )
 {}
 
-Record::Record( RecordData&& data ) :
-  std::shared_ptr< RecordData >( internal::movePtr( std::forward< RecordData >( data ) ) )
-{}
-
 //! imports a new record and returns it. Will return an existing record if the record already exists
 Record importRecord( QString title, QString creator, QString engine )
 {
