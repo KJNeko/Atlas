@@ -42,7 +42,7 @@ void GameView::reloadRecord()
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	QString description = record->getDesc();
-	QString developer = record->get< "creator" >();
+	QString developer = record->get< RecordColumns::Creator >();
 	QString publisher = "Test Data";
 	QString original_name = "Test Data";
 	QString censored = "Test Data";
@@ -87,7 +87,7 @@ void GameView::reloadRecord()
 		//ui->coverImage->setGraphicsEffect( se );
 	}
 
-	if ( record->get< "last_played_r" >() == 0 )
+	if ( record->get< RecordColumns::LastPlayed >() == 0 )
 	{
 		ui->lbLastPlayed->setText( "Never" );
 	}
@@ -95,7 +95,8 @@ void GameView::reloadRecord()
 	{
 		//Convert UNIX timestamp to QDateTime
 		const QDateTime date {
-			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->get< "last_played_r" >() ), Qt::LocalTime )
+			QDateTime::
+				fromSecsSinceEpoch( static_cast< qint64 >( record->get< RecordColumns::LastPlayed >() ), Qt::LocalTime )
 		};
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
@@ -135,7 +136,8 @@ void GameView::reloadRecord()
 	std::sort(
 		playtimes.begin(), playtimes.end(), []( const auto& lhs, const auto& rhs ) { return lhs.first > rhs.first; } );
 
-	const auto latest_playtime { playtimes.empty() ? record->get< "last_played_r" >() : playtimes[ 0 ].first };
+	const auto latest_playtime { playtimes.empty() ? record->get< RecordColumns::LastPlayed >() :
+		                                             playtimes[ 0 ].first };
 
 	if ( latest_playtime == 0 )
 	{
@@ -150,10 +152,12 @@ void GameView::reloadRecord()
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
 	}
 
-	ui->lbTotalPlaytime->setText( QString( "%1" ).arg(
-		QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->get< "total_playtime" >() ), Qt::LocalTime )
-			.toUTC()
-			.toString( "hh:mm:ss" ) ) );
+	ui->lbTotalPlaytime
+		->setText( QString( "%1" ).arg( QDateTime::fromSecsSinceEpoch(
+											static_cast< qint64 >( record->get< RecordColumns::TotalPlaytime >() ),
+											Qt::LocalTime )
+	                                        .toUTC()
+	                                        .toString( "hh:mm:ss" ) ) );
 
 	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
 
@@ -233,7 +237,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		};
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
-		QString str( record->get< "title" >() );
+		QString str( record->get< RecordColumns::Title >() );
 		QFontMetrics fm( font );
 		painter.setFont( font );
 		int font_width = fm.horizontalAdvance( str );
@@ -261,7 +265,7 @@ void GameView::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		//check if logo is null, if it is then draw text instead
 
-		logo.isNull() ? painter.drawText( font_rectangle, 0, record->get< "title" >(), &boundingRect ) :
+		logo.isNull() ? painter.drawText( font_rectangle, 0, record->get< RecordColumns::Title >(), &boundingRect ) :
 						painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}

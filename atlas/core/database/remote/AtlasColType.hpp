@@ -7,28 +7,69 @@
 
 #include "core/database/Column.hpp"
 
-template <>
-struct ColType< "id_name", "atlas_data" >
+enum class AtlasColumns
 {
-	typedef QString Type;
+	IdName,
+	ShortName,
+	Title,
+	OriginalName,
+	Category,
+	Engine,
+	Status,
+	Version,
+	Developer,
+	Creator,
+	Overview,
+	Censored,
+	Language,
+	Translations,
+	Genre,
+	Tags,
+	Voice,
+	OS,
+	ReleaseDate,
+	Length,
+	Banner,
+	BannerWide,
+	Cover,
+	Logo,
+	Wallpaper,
+	Previews,
+	LastDbUpdate
+};
+
+template < AtlasColumns col >
+struct AtlasColInfo;
+
+template < AtlasColumns col >
+using AtlasColType = AtlasColInfo< col >::Type;
+
+template <>
+struct AtlasColInfo< AtlasColumns::IdName >
+{
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "id_name" };
 };
 
 template <>
-struct ColType< "title", "atlas_data" >
+struct AtlasColInfo< AtlasColumns::Title >
 {
-	typedef QString Type;
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "title" };
 };
 
 template <>
-struct ColType< "creator", "atlas_data" >
+struct AtlasColInfo< AtlasColumns::Creator >
 {
-	typedef QString Type;
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "creator" };
 };
 
 template <>
-struct ColType< "engine", "atlas_data" >
+struct AtlasColInfo< AtlasColumns::Engine >
 {
-	typedef QString Type;
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "engine" };
 };
 
 #endif //ATLASGAMEMANAGER_ATLASCOLTYPE_HPP

@@ -7,76 +7,26 @@
 
 #include "core/database/Column.hpp"
 
-template <>
-struct ColType< "atlas_id", "f95_data" >
+enum class F95Columns
 {
-	typedef std::uint64_t Type;
+	AtlasIDCol,
+	BannerURL,
+	SiteURL,
+	LastThreadComment,
+	ThreadPublishDate,
+	LastRecordUpdate,
+	Views,
+	Likes,
+	Tags,
+	Rating,
+	Screens,
+	Replies
 };
 
-template <>
-struct ColType< "banner_url", "f95_data" >
-{
-	typedef QString Type;
-};
+template < F95Columns col >
+struct F95ColInfo;
 
-template <>
-struct ColType< "site_url", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "last_thread_comment", "f95_data" >
-{
-	typedef std::uint64_t Type;
-};
-
-template <>
-struct ColType< "thread_publish_date", "f95_data" >
-{
-	typedef std::uint64_t Type;
-};
-
-template <>
-struct ColType< "last_record_update", "f95_data" >
-{
-	typedef std::uint64_t Type;
-};
-
-template <>
-struct ColType< "views", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "likes", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "tags", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "rating", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "screens", "f95_data" >
-{
-	typedef QString Type;
-};
-
-template <>
-struct ColType< "replies", "f95_data" >
-{
-	typedef QString Type;
-};
+template < F95Columns col >
+using F95ColType = F95ColInfo< col >::Type;
 
 #endif //ATLASGAMEMANAGER_F95COLTYPE_HPP

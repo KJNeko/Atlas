@@ -16,13 +16,20 @@
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/regex/regex.hpp"
 
-std::optional< GameImportData >
-	runner( const QString regex, const std::filesystem::path folder, const std::filesystem::path base )
+void runner(
+	QPromise< GameImportData >& promise,
+	const QString regex,
+	const std::filesystem::path folder,
+	const std::filesystem::path base )
 {
 	ZoneScoped;
+	promise.start();
+	spdlog::debug( "Runner active for game {}", folder );
+	if ( promise.isCanceled() ) return;
 	FileScanner scanner { folder };
 	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
+	if ( promise.isCanceled() ) return;
 	if ( potential_executables.size() > 0 )
 	{
 		const auto [ title, creator, version, engine ] =
@@ -35,6 +42,7 @@ std::optional< GameImportData >
 
 		for ( const auto& file : scanner )
 		{
+			if ( promise.isCanceled() ) return;
 			if ( file.depth > 1 ) break;
 
 			const auto& path { file.path };
@@ -66,33 +74,39 @@ std::optional< GameImportData >
 		{
 			for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
 			{
+				if ( promise.isCanceled() ) return;
 				if ( file.is_regular_file() ) previews.emplace_back( QString::fromStdString( file.path().string() ) );
 			}
 		}
 
-		return { GameImportData { std::filesystem::relative( folder, base ),
-			                      std::move( title ),
-			                      std::move( creator ),
-			                      engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
-			                      version.isEmpty() ? "0.0" : std::move( version ),
-			                      folderSize( scanner ),
-			                      potential_executables,
-			                      potential_executables.at( 0 ),
-			                      std::move( banners ),
-			                      std::move( previews )
+		if ( promise.isCanceled() ) return;
+		promise.addResult( GameImportData { std::filesystem::relative( folder, base ),
+		                                    std::move( title ),
+		                                    std::move( creator ),
+		                                    engine.isEmpty() ? engineName( determineEngine( scanner ) ) :
+		                                                       std::move( engine ),
+		                                    version.isEmpty() ? "0.0" : std::move( version ),
+		                                    folderSize( scanner ),
+		                                    potential_executables,
+		                                    potential_executables.at( 0 ),
+		                                    std::move( banners ),
+		                                    std::move( previews )
 
-		} };
+		} );
 	}
 	else
 		spdlog::warn( "No executables found for path {}", folder );
 
-	return { std::nullopt };
+	promise.finish();
+	return;
 }
 
 void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex )
 {
 	ZoneScoped;
 	promise.start();
+
+	std::vector< QFuture< void > > futures;
 
 	//List of futures for all of the 'valid' directories we've found so far.
 	std::queue< std::filesystem::path > to_scan {};
@@ -116,17 +130,38 @@ void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::
 				if ( regex::valid( regex, QString::fromStdString( path.string() ) ) )
 				{
 					//The regex was a match. We can now process this directory further
-					QtConcurrent::run( &m_thread_pool, runner, regex, path, base )
-						.then(
-							[ this ]( const std::optional< GameImportData > data )
-							{
-								if ( data.has_value() ) emit foundGame( data.value() );
-							} );
+					spdlog::debug( "Adding game {} to processing queue", path );
+					futures.emplace_back( QtConcurrent::run( &m_thread_pool, runner, regex, path, base )
+					                          .then( [ this ]( const GameImportData data )
+					                                 { emit foundGame( data ); } ) );
+					if ( promise.isCanceled() ) break;
+					spdlog::debug( "Added game {} to processing queue", path );
 					//Directory should NOT be added to found_paths to be processed later since we shouldn't continue needing to look deeper.
 				}
 				else //Directory wasn't a match. But we can try searching deeper.
 					to_scan.push( path );
 			}
+		}
+	}
+
+	spdlog::info("Waiting for futures to finish");
+
+	for ( auto& future : futures )
+	{
+		while ( true )
+		{
+			promise.suspendIfRequested();
+			if ( promise.isCanceled() )
+			{
+				future.cancel();
+				future.waitForFinished();
+				break;
+			}
+
+			if ( future.isCanceled() || future.isFinished() ) break;
+			std::this_thread::yield();
+			using namespace std::chrono_literals;
+			std::this_thread::sleep_for( 10ms );
 		}
 	}
 

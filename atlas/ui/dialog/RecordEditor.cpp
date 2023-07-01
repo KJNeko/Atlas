@@ -31,9 +31,9 @@ RecordEditor::RecordEditor( const RecordID record, QWidget* parent ) :
 
 void RecordEditor::loadRecordInfo()
 {
-	ui->titleLineEdit->setText( m_record->get< "title" >() );
-	ui->creatorLineEdit->setText( m_record->get< "creator" >() );
-	ui->engineLineEdit->setText( m_record->get< "engine" >() );
+	ui->titleLineEdit->setText( m_record->get< RecordColumns::Title >() );
+	ui->creatorLineEdit->setText( m_record->get< RecordColumns::Creator >() );
+	ui->engineLineEdit->setText( m_record->get< RecordColumns::Engine >() );
 	//ui->gameText->setText( m_record->getDescription() );
 }
 
@@ -219,8 +219,8 @@ void RecordEditor::on_btnAddVersion_pressed()
 		== QMessageBox::Yes
 	};
 
-	const auto title { m_record->get< "title" >() };
-	const auto creator { m_record->get< "creator" >() };
+	const auto title { m_record->get< RecordColumns::Title >() };
+	const auto creator { m_record->get< RecordColumns::Creator >() };
 
 	//Calculate filesize
 	std::size_t size { 0 };
@@ -290,14 +290,15 @@ void RecordEditor::switchTabs( const int index )
 
 void RecordEditor::on_btnChangeTitle_pressed()
 {
-	if ( const auto output =
-	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->get< "title" >() );
-	     output != m_record->get< "title" >() && !output.isEmpty() )
+	if ( const auto output = QInputDialog::
+	         getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->get< RecordColumns::Title >() );
+	     output != m_record->get< RecordColumns::Title >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
+			  << m_record->get< RecordColumns::Creator >().toStdString()
+			  << m_record->get< RecordColumns::Engine >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -306,21 +307,22 @@ void RecordEditor::on_btnChangeTitle_pressed()
 			return;
 		}
 
-		m_record->set< "title" >( output );
+		m_record->set< RecordColumns::Title >( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeCreator_pressed()
 {
-	if ( const auto output = QInputDialog::
-	         getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->get< "creator" >() );
-	     output != m_record->get< "creator" >() && !output.isEmpty() )
+	if ( const auto output = QInputDialog::getText(
+			 this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->get< RecordColumns::Creator >() );
+	     output != m_record->get< RecordColumns::Creator >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
+			  << m_record->get< RecordColumns::Creator >().toStdString()
+			  << m_record->get< RecordColumns::Engine >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -332,21 +334,22 @@ void RecordEditor::on_btnChangeCreator_pressed()
 			return;
 		}
 
-		m_record->set< "creator" >( output );
+		m_record->set< RecordColumns::Creator >( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeEngine_pressed()
 {
-	if ( const QString output = QInputDialog::
-	         getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->get< "engine" >() );
-	     output != m_record->get< "engine" >() && !output.isEmpty() )
+	if ( const QString output = QInputDialog::getText(
+			 this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->get< RecordColumns::Engine >() );
+	     output != m_record->get< RecordColumns::Engine >() && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
 		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->get< "creator" >().toStdString() << m_record->get< "engine" >().toStdString()
+			  << m_record->get< RecordColumns::Creator >().toStdString()
+			  << m_record->get< RecordColumns::Engine >().toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -355,7 +358,7 @@ void RecordEditor::on_btnChangeEngine_pressed()
 				warning( this, "Duplicate!", "There is already a game with the same creator, name and engine!" );
 			return;
 		}
-		m_record->set< "engine" >( output );
+		m_record->set< RecordColumns::Engine >( output );
 	}
 	loadRecordInfo();
 }

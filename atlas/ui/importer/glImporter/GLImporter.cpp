@@ -55,9 +55,9 @@ void GLImporterRunner::processGame( const std::filesystem::path path )
 	auto future { importGame(
 		path,
 		scoreExecutables( executables ).front(),
-		data.get< "title" >(),
-		data.get< "creator" >(),
-		data.get< "engine" >(),
+		data.get< AtlasColumns::Title >(),
+		data.get< AtlasColumns::Creator>(),
+		data.get< AtlasColumns::Engine >(),
 		info.version,
 		{},
 		{} ) };

@@ -27,20 +27,23 @@ struct AtlasData
 
   public:
 
-	template < fgl::string_literal col_name >
-	ColType< col_name, "atlas_data" >::Type get()
+	template < AtlasColumns col >
+	AtlasColType< col > get()
 	{
-		typename ColType< col_name, "atlas_data" >::Type val;
-		RapidTransaction() << atlas::database::utility::select_query< col_name, "atlas_data", "atlas_id" >() << atlas_id
+		AtlasColType< col > val;
+		RapidTransaction()
+				<< atlas::database::utility::select_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
+				<< atlas_id
 			>> val;
 		return val;
 	}
 
-	template < fgl::string_literal col_name >
-	void set( ColType< col_name, "atlas_data" >::Type t )
+	template < AtlasColumns col >
+	void set( AtlasColType< col > t )
 	{
-		RapidTransaction() << atlas::database::utility::update_query< col_name, "atlas_data", "atlas_id" >() << t
-						   << atlas_id;
+		RapidTransaction()
+			<< atlas::database::utility::update_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >() << t
+			<< atlas_id;
 	}
 
 	AtlasData( const AtlasID id ) : atlas_id( id ) {}

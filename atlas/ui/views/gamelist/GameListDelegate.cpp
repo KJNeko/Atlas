@@ -12,7 +12,7 @@ void GameListDelegate::paint( QPainter* painter, const QStyleOptionViewItem& opt
 {
 	ZoneScoped;
 	const Record record { index.data().value< Record >() };
-	const QString title { record->get< "title" >() };
+	const QString title { record->get< RecordColumns::Title >() };
 
 	painter->save();
 
@@ -30,7 +30,7 @@ QSize GameListDelegate::sizeHint( const QStyleOptionViewItem& option, const QMod
 	QFontMetrics fm { option.font };
 
 	const Record record { index.data().value< Record >() };
-	const QString title { record->get< "title" >() };
+	const QString title { record->get< RecordColumns::Title >() };
 
 	return fm.size( Qt::TextSingleLine, title );
 }

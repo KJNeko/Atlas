@@ -20,34 +20,51 @@ class RecordPreviews;
 struct F95Data;
 struct AtlasData;
 
-template <>
-struct ColType< "title", "records" >
+enum class RecordColumns
 {
-	typedef QString Type;
+	Title,
+	Creator,
+	Engine,
+	LastPlayed,
+	TotalPlaytime
+};
+
+template < RecordColumns col >
+struct ColInfo;
+
+template <>
+struct ColInfo< RecordColumns::Title >
+{
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "title" };
 };
 
 template <>
-struct ColType< "creator", "records" >
+struct ColInfo< RecordColumns::Creator >
 {
-	typedef QString Type;
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "creator" };
 };
 
 template <>
-struct ColType< "engine", "records" >
+struct ColInfo< RecordColumns::Engine >
 {
-	typedef QString Type;
+	using Type = QString;
+	static constexpr fgl::string_literal col_name { "engine" };
 };
 
 template <>
-struct ColType< "total_playtime", "records" >
+struct ColInfo< RecordColumns::LastPlayed >
 {
-	typedef std::uint64_t Type;
+	using Type = std::uint64_t;
+	static constexpr fgl::string_literal col_name { "last_played_r" };
 };
 
 template <>
-struct ColType< "last_played_r", "records" >
+struct ColInfo< RecordColumns::TotalPlaytime >
 {
-	typedef std::uint64_t Type;
+	using Type = std::uint64_t;
+	static constexpr fgl::string_literal col_name { "total_playtime" };
 };
 
 struct RecordData
@@ -66,19 +83,22 @@ struct RecordData
 
 	RecordID getID() const { return m_id; }
 
-	template < fgl::string_literal col_name >
-	ColType< col_name, "records" >::Type get()
+	template < RecordColumns col >
+	ColInfo< col >::Type get()
 	{
-		typename ColType< col_name, "records" >::Type val;
-		RapidTransaction() << atlas::database::utility::select_query< col_name, "records", "record_id" >() << m_id
+		typename ColInfo< col >::Type val;
+		RapidTransaction()
+				<< atlas::database::utility::select_query< ColInfo< col >::col_name, "records", "record_id" >() << m_id
 			>> val;
 		return val;
 	}
 
-	template < fgl::string_literal col_name >
-	void set( ColType< col_name, "records" >::Type t )
+	template < RecordColumns col >
+	void set( ColInfo< col >::Type t )
 	{
-		RapidTransaction() << atlas::database::utility::update_query< col_name, "records", "record_id" >() << t << m_id;
+		RapidTransaction()
+			<< atlas::database::utility::update_query< ColInfo< col >::col_name, "records", "record_id" >() << t
+			<< m_id;
 	}
 
 	std::optional< GameMetadata > getVersion( const QString );

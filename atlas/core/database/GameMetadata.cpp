@@ -126,9 +126,9 @@ void GameMetadata::addPlaytime( const std::uint32_t playtime )
 	transaction << "UPDATE game_metadata SET version_playtime = ? WHERE record_id = ? AND version = ?"
 				<< playtime + getPlaytime() << m_parent->getID() << m_version.toStdString();
 
-	const auto current { m_parent->get< "total_playtime" >() };
+	const auto current { m_parent->get< RecordColumns::TotalPlaytime >() };
 
-	m_parent->set< "total_playtime" >( playtime + current );
+	m_parent->set< RecordColumns::TotalPlaytime >( playtime + current );
 }
 
 void GameMetadata::setLastPlayed( const std::uint64_t last_played )
@@ -137,7 +137,7 @@ void GameMetadata::setLastPlayed( const std::uint64_t last_played )
 	RapidTransaction transaction;
 	transaction << "UPDATE game_metadata SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
 				<< m_parent->getID() << m_version.toStdString();
-	m_parent->set< "last_played_r" >( last_played );
+	m_parent->set< RecordColumns::LastPlayed >( last_played );
 }
 
 std::uint64_t GameMetadata::getFolderSize() const

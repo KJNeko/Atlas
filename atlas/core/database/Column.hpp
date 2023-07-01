@@ -47,7 +47,4 @@ namespace atlas::database::utility
 	}
 } // namespace atlas::database::utility
 
-template < fgl::string_literal col_name, fgl::string_literal table_name >
-struct ColType;
-
 #endif //ATLASGAMEMANAGER_COLUMN_HPP

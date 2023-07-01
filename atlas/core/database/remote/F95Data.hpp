@@ -20,20 +20,23 @@ struct F95Data
 
   public:
 
-	template < fgl::string_literal col_name >
-	ColType< col_name, "f95_zone_data" >::Type get()
+	template < F95Columns col >
+	F95ColType< col > get()
 	{
-		typename ColType< col_name, "f95_zone_data" >::Type val;
-		RapidTransaction() << atlas::database::utility::select_query< col_name, "f95_zone_data", "f95_id" >() << f95_id
+		F95ColType< col > val;
+		RapidTransaction()
+				<< atlas::database::utility::select_query< F95ColInfo< col >::col_name, "f95_zone_data", "f95_id" >()
+				<< f95_id
 			>> val;
 		return val;
 	}
 
-	template < fgl::string_literal col_name >
-	void set( ColType< col_name, "f95_zone_data" >::Type t )
+	template < F95Columns col >
+	void set( F95ColType< col > t )
 	{
-		RapidTransaction() << atlas::database::utility::update_query< col_name, "f95_zone_data", "f95_id" >() << t
-						   << f95_id;
+		RapidTransaction()
+			<< atlas::database::utility::update_query< F95ColInfo< col >::col_name, "f95_zone_data", "f95_id" >() << t
+			<< f95_id;
 	}
 
 	/**

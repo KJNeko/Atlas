@@ -78,7 +78,7 @@ void RecordData::addVersion(
 		"RecordData::addVersion() - Adding version {} to record {}:{}",
 		version.toStdString(),
 		m_id,
-		get< "title" >().toStdString() );
+		get< RecordColumns::Title >().toStdString() );
 	//Check if version is already added
 	const auto active_versions { getVersions() };
 
