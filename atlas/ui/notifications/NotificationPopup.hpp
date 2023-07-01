@@ -173,7 +173,7 @@ void initNotificationPopup( QWidget* parent );
 NotificationPopup* getNotificationPopup();
 
 template < typename T >
-	requires is_signaled_notification< T >
+	requires is_signaled_notification< T > && (!is_simple_notification< T >)
 std::unique_ptr< typename T::Signaler > createNotification( const QString name, const bool reveal = false )
 {
 	ZoneScoped;
@@ -181,7 +181,7 @@ std::unique_ptr< typename T::Signaler > createNotification( const QString name, 
 }
 
 template < typename T >
-	requires is_simple_notification< T >
+	requires is_simple_notification< T > && (!is_signaled_notification< T >)
 void createNotification( const QString name, const bool reveal = false )
 {
 	ZoneScoped;

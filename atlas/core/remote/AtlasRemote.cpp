@@ -19,6 +19,7 @@
 #include "core/remote/parsers/parser.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"
+#include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
 #include "ui/notifications/ProgressMessage.hpp"
 
@@ -182,7 +183,7 @@ namespace atlas
 
 			const std::uint64_t update_time { static_cast< std::uint64_t >( obj[ "date" ].toInteger() ) };
 
-			if ( update_time == 1686886200 ) continue;
+			if ( update_time == 1686886200 || update_time == 1687918793 ) continue;
 
 			const auto& md5_str { obj[ "md5" ].toString() };
 			const auto& md5 { QByteArray::fromHex( md5_str.toUtf8() ) };
@@ -208,6 +209,8 @@ namespace atlas
 			}
 		}
 		reply->deleteLater();
+
+		processPendingUpdates();
 	}
 	catch ( const std::exception& e )
 	{
@@ -251,7 +254,7 @@ namespace atlas
 		{
 			spdlog::error( "Failed to parse update file. Missing min_ver" );
 			qDebug() << json.keys();
-			return;
+			throw std::runtime_error( "Failed to parse update file. Missing min_ver" );
 		}
 
 		const std::uint64_t version { static_cast< std::uint64_t >( json[ "min_ver" ].toInteger() ) };
@@ -344,10 +347,13 @@ namespace atlas
 		catch ( const std::exception& e )
 		{
 			spdlog::error( "Failed to process update file {}: What: {}", update_time, e.what() );
+			createNotification< NotificationMessage >(
+				QString( "Failed to process update file %1\nWhat: %2" ).arg( update_time ).arg( e.what() ), true );
 		}
 	}
 
 	void AtlasRemote::processPendingUpdates()
+	try
 	{
 		auto update_time { getNextUpdateTime() };
 
@@ -362,9 +368,15 @@ namespace atlas
 			update_time = getNextUpdateTime();
 		}
 	}
+	catch ( std::exception& e )
+	{
+		spdlog::warn( "Failed to process updates: {}", e.what() );
+	}
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
 	{
+		createNotification< NotificationMessage >( QString( "Processed update for time %1" ).arg( update_time ), true );
+
 		RapidTransaction()
 			<< "UPDATE updates SET processed_time = ? WHERE update_time = ?"
 			<< ( yes ? std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now()

@@ -27,7 +27,11 @@ class ProgressMessageSignaler final : public QObject
 
 	ProgressMessageSignaler( QObject* parent = nullptr ) : QObject( parent ) {}
 
-	~ProgressMessageSignaler() override { emit selfClose(); }
+	~ProgressMessageSignaler() override
+	{
+		setFinished();
+		emit selfClose();
+	}
 
   public slots:
 

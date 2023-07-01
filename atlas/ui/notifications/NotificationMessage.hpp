@@ -23,12 +23,13 @@ class NotificationMessage final : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( NotificationMessage )
 
-	using Signaler = void;
 
   public:
 
 	explicit NotificationMessage( const QString msg, QWidget* parent = nullptr );
 	~NotificationMessage() override;
+
+	using Signaler = void;
 
 	Signaler getSignaler() { return; }
 
@@ -37,7 +38,7 @@ class NotificationMessage final : public QWidget
 	Ui::NotificationMessage* ui;
 	friend class NotificationPopup;
 
-  private slots:
+  public slots:
 	void on_btnDismiss_clicked();
 	void closeSelf();
 };

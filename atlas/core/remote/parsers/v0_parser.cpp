@@ -6,6 +6,7 @@
 
 #include "core/database/Transaction.hpp"
 #include "core/remote/parsers/parser.hpp"
+#include "ui/notifications/ProgressMessage.hpp"
 
 namespace remote::parsers::v0
 {
@@ -106,6 +107,10 @@ namespace remote::parsers::v0
 
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
 	{
+		auto signaler { createNotification< ProgressMessage >( QString( "Processing update for Atlas data" ), true ) };
+		const int max { static_cast< int >( data.size() - 1 ) };
+		signaler->setMax( max );
+		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
 			const auto& obj { obj_data.toObject() };
@@ -114,6 +119,9 @@ namespace remote::parsers::v0
 				updateAtlasData( obj, trans ); //This is probably an update
 			else
 				insertAtlasData( obj, trans );
+			++counter;
+			signaler->setProgress( counter );
+			signaler->setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
@@ -173,6 +181,10 @@ namespace remote::parsers::v0
 
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
+		auto signaler { createNotification< ProgressMessage >( QString( "Processing update for F95 data" ), true ) };
+		const int max { static_cast< int >( data.size() - 1 ) };
+		signaler->setMax( max );
+		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
 			const auto& obj { obj_data.toObject() };
@@ -181,6 +193,10 @@ namespace remote::parsers::v0
 				updateF95Data( obj, trans );
 			else
 				insertF95Data( obj, trans );
+
+			++counter;
+			signaler->setProgress( counter );
+			signaler->setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
@@ -189,12 +205,15 @@ namespace remote::parsers::v0
 		Transaction transaction {};
 		try
 		{
-			for ( const auto& table_key : json.keys() )
+			const auto keys { json.keys() };
+			for ( const auto& table_key : keys )
 			{
+				if ( table_key == "min_ver" ) continue;
+
 				const auto set { nameToSet( table_key ) };
 				if ( set == InvalidSet )
 				{
-					throw std::runtime_error( "Unexpected data in set!" );
+					throw std::runtime_error( fmt::format( "Unexpected data in set! Key = {}", table_key ) );
 				}
 
 				ZoneScopedN( "Process set" );
