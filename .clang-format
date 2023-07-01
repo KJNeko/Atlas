@@ -66,6 +66,10 @@ FixNamespaceComments: true
 IncludeBlocks: Regroup
 DerivePointerAlignment: false
 IncludeCategories:
+  - Regex: '^<moc_.*>'
+    Priority: 2
+    SortPriority: 2
+    CaseSensitive: false
   - Regex: '^<Q.*>'
     Priority: 3
     SortPriority: 3
