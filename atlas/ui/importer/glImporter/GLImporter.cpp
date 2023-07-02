@@ -102,6 +102,7 @@ GLImporter::GLImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::GLImp
 	connect( this, &GLImporter::startImport, &runner, &GLImporterRunner::importGLGames );
 	connect( &runner, &GLImporterRunner::message, this, &GLImporter::addMessage );
 	runner.moveToThread( &m_thread );
+	m_thread.start();
 }
 
 GLImporter::~GLImporter()
