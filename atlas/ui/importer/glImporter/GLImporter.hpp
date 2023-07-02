@@ -19,6 +19,14 @@ namespace Ui
 
 QT_END_NAMESPACE
 
+enum FailType
+{
+	MissingExecutable,
+	MissingData,
+	InvalidThread,
+	Except
+};
+
 class GLImporterRunner : public QObject
 {
 	Q_OBJECT
@@ -28,12 +36,14 @@ class GLImporterRunner : public QObject
 	GLImporterRunner();
 
   signals:
-	void processGLFolder( const std::filesystem::path path );
+	void processGLFolder( const std::filesystem::path root, const std::filesystem::path path );
 	void message( const QString msg );
+	void success();
+	void failed( FailType type );
 
   public slots:
 	void importGLGames( const std::filesystem::path root );
-	void processGame( const std::filesystem::path path );
+	void processGame( const std::filesystem::path root, const std::filesystem::path path );
 };
 
 class GLImporter : public QDialog
@@ -44,6 +54,11 @@ class GLImporter : public QDialog
 	QThread m_thread {};
 	GLImporterRunner runner {};
 
+	std::uint64_t success { 0 };
+	std::uint64_t failed_exception { 0 };
+	std::uint64_t failed_data { 0 };
+	std::uint64_t failed_exec { 0 };
+
   public:
 
 	explicit GLImporter( QWidget* parent = nullptr );
@@ -53,6 +68,8 @@ class GLImporter : public QDialog
 
   private:
 
+	void updateText();
+
 	Ui::GLImporter* ui;
 
   signals:
@@ -60,6 +77,8 @@ class GLImporter : public QDialog
 
   public slots:
 	void addMessage( const QString );
+	void addSuccess();
+	void addFailed( const FailType type );
 };
 
 #endif //ATLASGAMEMANAGER_GLIMPORTER_HPP

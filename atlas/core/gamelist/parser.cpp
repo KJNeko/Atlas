@@ -46,10 +46,10 @@ namespace gl
 
 		const QSettings settings( QString::fromStdString( path.string() ), QSettings::IniFormat );
 
-		infos.version = settings.value( "GameList/Version" ).toString();
-		infos.f95_id = settings.value( "GameList/ID" ).toULongLong();
-		infos.name = settings.value( "GameList/Name" ).toString();
-		infos.thread_url = settings.value( "GameList/Thread" ).toString();
+		infos.version = settings.value( "GameList/Version", "" ).toString();
+		infos.f95_id = settings.value( "GameList/ID", 0 ).toULongLong();
+		infos.name = settings.value( "GameList/Name", "" ).toString();
+		infos.thread_url = settings.value( "GameList/Thread", "" ).toString();
 
 		return infos;
 	}

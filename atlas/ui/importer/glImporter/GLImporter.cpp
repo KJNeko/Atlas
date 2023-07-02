@@ -17,77 +17,101 @@
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "ui_GLImporter.h"
 
-void GLImporterRunner::processGame( const std::filesystem::path path )
+void GLImporterRunner::processGame( const std::filesystem::path root, const std::filesystem::path path )
 {
-	spdlog::info( "Processing game directory {}", path );
-	const auto info_path { path / "GL_Infos.ini" };
+	ZoneScoped;
+	const auto info_path { root / path / "GL_Infos.ini" };
 	if ( !std::filesystem::exists( info_path ) ) //Huh?
+	{
+		spdlog::error( "Path {} does not exist", info_path );
 		return;
+	}
 
 	const auto info { gl::parse( info_path ) };
 
 	//Import game using f95 info
 	//Fetch info from f95 data set
 	AtlasID internal_id { 0 };
-	RapidTransaction() << "SELECT atlas_id FROM f95_zone_data NATURAL JOIN atlas_data WHERE f95_id = ?" << info.f95_id
-		>> internal_id;
 
-	if ( internal_id == 0 )
+	if ( !info.name.isEmpty() )
 	{
-		spdlog::warn( "Missing data for thread {}", info.f95_id );
-		emit message( QString::fromStdString( fmt::format( "Missing remote data for thread {}", info.f95_id ) ) );
+		const auto search_str { info.name.simplified().toUpper().replace( " ", "" ) };
+
+		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE id_name LIKE ?" << search_str >> internal_id;
+
+		if ( internal_id == 0 )
+		{
+			emit message( QString::fromStdString(
+				fmt::format( "Failed to determine thread from name. Aborting for {}", path ) ) );
+			emit failed( MissingData );
+			return;
+		}
+	}
+	else
+	{
+		emit message( QString::fromStdString(
+			fmt::format( "Failed to determine thread. Not enough info. Aborting for {}", path ) ) );
+		emit failed( MissingData );
 		return;
 	}
 
 	//We found a link! Time to use it
 	AtlasData data { internal_id };
 
-	FileScanner scanner { path };
+	FileScanner scanner { root / path };
 	const auto executables { detectExecutables( scanner ) };
 	//Try to find an executable at the path
 
 	if ( executables.size() == 0 )
 	{
-		spdlog::error( "Failed to import {:c}. No executables found?", path );
+		spdlog::error( "Failed to import {}. No executables found?", path );
 		emit message( QString::fromStdString( fmt::format( "Failed to import {:c}. No executables found?", path ) ) );
+		emit failed( MissingExecutable );
 	}
 
 	auto [ title, creator, engine ] = data.get< AtlasColumns::Title, AtlasColumns::Creator, AtlasColumns::Engine >();
 
 	//Use this data to import the game
-	auto future { importGame(
-		path,
-		scoreExecutables( executables ).front(),
-		std::move( title ),
-		std::move( creator ),
-		std::move( engine ),
-		info.version,
-		{},
-		{} ) };
-
-	emit message( QString::fromStdString( fmt::format( "Successfully imported game {}", path ) ) );
-
-	future.waitForFinished();
+	try
+	{
+		auto future { importGame(
+			path,
+			scoreExecutables( executables ).front(),
+			std::move( title ),
+			std::move( creator ),
+			std::move( engine ),
+			info.version,
+			{},
+			{} ) };
+		emit message( QString::fromStdString( fmt::format( "Successfully imported game {}", path ) ) );
+		future.waitForFinished();
+		emit success();
+	}
+	catch ( std::exception& e )
+	{
+		spdlog::warn( "GLImporter: {}: {}", path, e.what() );
+		emit message( QString::fromStdString( fmt::format( "Failed to import {}: {}", path, e.what() ) ) );
+		emit failed( Except );
+	}
 }
 
-void GLImporterRunner::importGLGames( const std::filesystem::path path )
+void GLImporterRunner::importGLGames( const std::filesystem::path root )
 {
-	spdlog::info( "Starting GL import at directory {}", path );
+	ZoneScoped;
+	spdlog::info( "Starting GL import at directory {}", root );
 	//Start scanning all files for GL info items
-	auto itter = std::filesystem::recursive_directory_iterator( path );
+	auto itter = std::filesystem::recursive_directory_iterator( root );
 
 	while ( itter != std::filesystem::recursive_directory_iterator() )
 	{
 		if ( itter->is_regular_file() && itter->path().filename() == "GL_Infos.ini" )
 		{
-			emit processGLFolder( itter->path() );
+			emit processGLFolder( root, std::filesystem::relative( itter->path().parent_path(), root ) );
 			itter.pop();
 		}
 		else
 			++itter;
 	}
-
-	spdlog::info( "GLImporter: Waiting on futures" );
 }
 
 GLImporterRunner::GLImporterRunner()
@@ -97,10 +121,13 @@ GLImporterRunner::GLImporterRunner()
 
 GLImporter::GLImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::GLImporter )
 {
+	ZoneScoped;
 	ui->setupUi( this );
 
-	connect( this, &GLImporter::startImport, &runner, &GLImporterRunner::importGLGames );
-	connect( &runner, &GLImporterRunner::message, this, &GLImporter::addMessage );
+	connect( this, &GLImporter::startImport, &runner, &GLImporterRunner::importGLGames, Qt::QueuedConnection );
+	connect( &runner, &GLImporterRunner::message, this, &GLImporter::addMessage, Qt::QueuedConnection );
+	connect( &runner, &GLImporterRunner::success, this, &GLImporter::addSuccess, Qt::QueuedConnection );
+	connect( &runner, &GLImporterRunner::failed, this, &GLImporter::addFailed, Qt::QueuedConnection );
 	runner.moveToThread( &m_thread );
 	m_thread.start();
 }
@@ -117,5 +144,48 @@ void GLImporter::setImportDir( const std::filesystem::path path )
 
 void GLImporter::addMessage( const QString msg )
 {
-	ui->textBrowser->setText( ui->textBrowser->toPlainText() + "\n" + msg );
+	ZoneScoped;
+	ui->textBrowser->append( msg );
+}
+
+void GLImporter::addSuccess()
+{
+	++success;
+	updateText();
+}
+
+void GLImporter::addFailed( const FailType type )
+{
+	switch ( type )
+	{
+		default:
+			[[fallthrough]];
+		case Except:
+			{
+				++failed_exception;
+				break;
+			}
+		case MissingData:
+			{
+				++failed_data;
+				break;
+			}
+		case MissingExecutable:
+			{
+				++failed_exec;
+				break;
+			}
+	}
+	updateText();
+}
+
+void GLImporter::updateText()
+{
+	const QString success_str { QString( "%1 successful" ).arg( success ) };
+	const QString failed_str { QString( "%1 failed (%2 data, %3 errors)" )
+		                           .arg( failed_exception + failed_data + failed_exec )
+		                           .arg( failed_data + failed_exec )
+		                           .arg( failed_exception ) };
+
+	ui->label->setText( success_str + "" + failed_str );
 }
