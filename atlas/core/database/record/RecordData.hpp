@@ -89,7 +89,7 @@ struct RecordData
 	template < RecordColumns col >
 	ColInfo< col >::Type get()
 	{
-		typename ColInfo< col >::Type val;
+		typename ColInfo< col >::Type val {};
 		RapidTransaction()
 				<< atlas::database::utility::select_query< ColInfo< col >::col_name, "records", "record_id" >() << m_id
 			>> val;
@@ -100,7 +100,7 @@ struct RecordData
 		requires( sizeof...( cols ) > 1 )
 	std::tuple< RecordColType< cols >... > get()
 	{
-		std::tuple< RecordColType< cols >... > tpl;
+		std::tuple< RecordColType< cols >... > tpl {};
 		RapidTransaction()
 				<< atlas::database::utility::select_query_t< "records", "record_id", ColInfo< cols >::col_name... >()
 				<< m_id

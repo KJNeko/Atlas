@@ -23,7 +23,7 @@ struct F95Data
 	template < F95Columns col >
 	F95ColType< col > get()
 	{
-		F95ColType< col > val;
+		F95ColType< col > val {};
 		RapidTransaction()
 				<< atlas::database::utility::select_query< F95ColInfo< col >::col_name, "f95_zone_data", "f95_id" >()
 				<< f95_id

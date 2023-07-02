@@ -30,7 +30,7 @@ struct AtlasData
 	template < AtlasColumns col >
 	AtlasColType< col > get()
 	{
-		AtlasColType< col > val;
+		AtlasColType< col > val {};
 		RapidTransaction()
 				<< atlas::database::utility::select_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
 				<< atlas_id
@@ -42,7 +42,7 @@ struct AtlasData
 		requires( sizeof...( cols ) > 1 )
 	std::tuple< AtlasColType< cols >... > get()
 	{
-		std::tuple< AtlasColType< cols >... > tpl;
+		std::tuple< AtlasColType< cols >... > tpl {};
 		RapidTransaction() << atlas::database::utility::
 					select_query_t< "atlas_data", "atlas_id", AtlasColInfo< cols >::col_name... >()
 						   << atlas_id
