@@ -5,6 +5,7 @@
 #ifndef ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 #define ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 
+#include <deque>
 #include <filesystem>
 
 #include <QAbstractItemModel>

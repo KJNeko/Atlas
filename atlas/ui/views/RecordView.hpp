@@ -17,7 +17,7 @@ enum DelegateType
 	BANNER_VIEW = 1,
 };
 
-class RecordView : public QListView
+class RecordView final : public QListView
 {
 	Q_OBJECT
 

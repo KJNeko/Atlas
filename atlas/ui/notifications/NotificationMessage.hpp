@@ -23,7 +23,6 @@ class NotificationMessage final : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( NotificationMessage )
 
-
   public:
 
 	explicit NotificationMessage( const QString msg, QWidget* parent = nullptr );

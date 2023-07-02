@@ -8,7 +8,7 @@ namespace Ui
 	class AboutQtDialog;
 }
 
-class AboutQtDialog : public QDialog
+class AboutQtDialog final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( AboutQtDialog )

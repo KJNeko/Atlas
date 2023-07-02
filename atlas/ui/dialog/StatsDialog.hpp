@@ -17,7 +17,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class StatsDialog : public QDialog
+class StatsDialog final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( StatsDialog )

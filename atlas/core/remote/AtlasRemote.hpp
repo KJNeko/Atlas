@@ -15,7 +15,7 @@ class QNetworkReply;
 namespace atlas
 {
 	//! Manages all remote connections to the Atlas remote server
-	class AtlasRemote : public QObject
+	class AtlasRemote final : public QObject
 	{
 		Q_OBJECT
 

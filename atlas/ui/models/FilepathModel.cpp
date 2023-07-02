@@ -86,7 +86,7 @@ bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 		//Insert to end
 		for ( int i = 0; i < col; ++i )
 		{
-			m_paths.push_back( std::filesystem::path() );
+			m_paths.push_back( {} );
 		}
 	}
 	else if ( row == 0 )
@@ -94,14 +94,14 @@ bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 		//beg
 		for ( int i = 0; i < col; ++i )
 		{
-			m_paths.insert( m_paths.begin(), std::filesystem::path() );
+			m_paths.insert( m_paths.begin(), {} );
 		}
 	}
 	else
 	{
 		for ( int i = 0; i < col; ++i )
 		{
-			m_paths.insert( m_paths.begin() + row, std::filesystem::path() );
+			m_paths.insert( m_paths.begin() + row, {} );
 		}
 	}
 

@@ -19,7 +19,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class SettingsDialog : public QDialog
+class SettingsDialog final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( SettingsDialog )

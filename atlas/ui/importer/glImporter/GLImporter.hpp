@@ -27,7 +27,7 @@ enum FailType
 	Except
 };
 
-class GLImporterRunner : public QObject
+class GLImporterRunner final : public QObject
 {
 	Q_OBJECT
 
@@ -46,7 +46,7 @@ class GLImporterRunner : public QObject
 	void processGame( const std::filesystem::path root, const std::filesystem::path path );
 };
 
-class GLImporter : public QDialog
+class GLImporter final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( GLImporter )

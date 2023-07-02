@@ -46,131 +46,131 @@ inline QSettings getSettingsObject()
 #define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
 
 #define SETTINGS_D( group, name, type, default_value )                                                                 \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline void set( const type& val )                                                                                 \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
-	}                                                                                                                  \
+		inline void set( const type& val )                                                                             \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
+		}                                                                                                              \
                                                                                                                        \
-	inline void setDefault()                                                                                           \
-	{                                                                                                                  \
-	  set( default_value );                                                                                            \
-	}                                                                                                                  \
+		inline void setDefault()                                                                                       \
+		{                                                                                                              \
+			set( default_value );                                                                                      \
+		}                                                                                                              \
                                                                                                                        \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                                   \
+		inline type get()                                                                                              \
+		{                                                                                                              \
+			if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                             \
                                                                                                                        \
-	  if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                            \
-		   settings_obj.canConvert< type >() )                                                                         \
-		return settings_obj.value< type >();                                                                           \
-	  else                                                                                                             \
-		throw std::                                                                                                    \
-			runtime_error( fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );      \
-	}                                                                                                                  \
-  }
+			if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                      \
+			     settings_obj.canConvert< type >() )                                                                   \
+				return settings_obj.value< type >();                                                                   \
+			else                                                                                                       \
+				throw std::runtime_error(                                                                              \
+					fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );             \
+		}                                                                                                              \
+	}
 
 #define SETTINGS_PATH( group, name, default_path )                                                                     \
-  SETTINGS_D( group, name, QString, default_path )                                                                     \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline std::filesystem::path getPath()                                                                             \
+	SETTINGS_D( group, name, QString, default_path )                                                                   \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  const std::filesystem::path filepath { group::name::get().toStdString() };                                       \
-	  std::filesystem::create_directories( filepath );                                                                 \
-	  return std::filesystem::canonical( filepath );                                                                   \
-	}                                                                                                                  \
+		inline std::filesystem::path getPath()                                                                         \
+		{                                                                                                              \
+			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
+			std::filesystem::create_directories( filepath );                                                           \
+			return std::filesystem::canonical( filepath );                                                             \
+		}                                                                                                              \
                                                                                                                        \
-	inline void setPath( const std::filesystem::path path )                                                            \
-	{                                                                                                                  \
-	  group::name::set( QString::fromStdString( path.string() ) );                                                     \
-	}                                                                                                                  \
-  }
+		inline void setPath( const std::filesystem::path path )                                                        \
+		{                                                                                                              \
+			group::name::set( QString::fromStdString( path.string() ) );                                               \
+		}                                                                                                              \
+	}
 
 #define SETTINGS_FILE( group, name, default_path )                                                                     \
-  SETTINGS_D( group, name, QString, default_path )                                                                     \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline std::filesystem::path getPath()                                                                             \
+	SETTINGS_D( group, name, QString, default_path )                                                                   \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  const std::filesystem::path filepath { group::name::get().toStdString() };                                       \
-	  std::filesystem::create_directories( filepath.parent_path() );                                                   \
-	  return std::filesystem::canonical( filepath );                                                                   \
-	}                                                                                                                  \
+		inline std::filesystem::path getPath()                                                                         \
+		{                                                                                                              \
+			const std::filesystem::path filepath { group::name::get().toStdString() };                                 \
+			std::filesystem::create_directories( filepath.parent_path() );                                             \
+			return std::filesystem::canonical( filepath );                                                             \
+		}                                                                                                              \
                                                                                                                        \
-	inline void setPath( const std::filesystem::path path )                                                            \
-	{                                                                                                                  \
-	  group::name::set( QString::fromStdString( path.string() ) );                                                     \
-	}                                                                                                                  \
-  }
+		inline void setPath( const std::filesystem::path path )                                                        \
+		{                                                                                                              \
+			group::name::set( QString::fromStdString( path.string() ) );                                               \
+		}                                                                                                              \
+	}
 
 #define SETTINGS( group, name, type )                                                                                  \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	inline bool hasValue()                                                                                             \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  return getSettingsObject().contains( KEY_VALUE( group, name ) );                                                 \
-	}                                                                                                                  \
+		inline bool hasValue()                                                                                         \
+		{                                                                                                              \
+			return getSettingsObject().contains( KEY_VALUE( group, name ) );                                           \
+		}                                                                                                              \
                                                                                                                        \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                                \
-	}                                                                                                                  \
+		inline type get()                                                                                              \
+		{                                                                                                              \
+			return { getSettingsObject().value( KEY_VALUE( group, name ) ).value< type >() };                          \
+		}                                                                                                              \
                                                                                                                        \
-	inline void set( const type val )                                                                                  \
-	{                                                                                                                  \
-	  getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                   \
-	}                                                                                                                  \
-  }
+		inline void set( const type val )                                                                              \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                             \
+		}                                                                                                              \
+	}
 
 #define SETTINGS_DE( group, name, type, default_value )                                                                \
-  namespace config::group::name                                                                                        \
-  {                                                                                                                    \
-	namespace de_internal                                                                                              \
+	namespace config::group::name                                                                                      \
 	{                                                                                                                  \
-	  inline void set( const int& val )                                                                                \
-	  {                                                                                                                \
-		getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                                 \
-	  }                                                                                                                \
+		namespace de_internal                                                                                          \
+		{                                                                                                              \
+			inline void set( const int& val )                                                                          \
+			{                                                                                                          \
+				getSettingsObject().setValue( KEY_VALUE( group, name ), val );                                         \
+			}                                                                                                          \
                                                                                                                        \
-	  inline void setDefault()                                                                                         \
-	  {                                                                                                                \
-		set( static_cast< int >( default_value ) );                                                                    \
-	  }                                                                                                                \
+			inline void setDefault()                                                                                   \
+			{                                                                                                          \
+				set( static_cast< int >( default_value ) );                                                            \
+			}                                                                                                          \
                                                                                                                        \
-	  inline int get()                                                                                                 \
-	  {                                                                                                                \
-		if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                                 \
+			inline int get()                                                                                           \
+			{                                                                                                          \
+				if ( !getSettingsObject().contains( KEY_VALUE( group, name ) ) ) setDefault();                         \
                                                                                                                        \
-		if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                          \
-			 settings_obj.canConvert< int >() )                                                                        \
-		  return settings_obj.value< int >();                                                                          \
-		else                                                                                                           \
-		  throw std::                                                                                                  \
-			  runtime_error( fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );    \
-	  }                                                                                                                \
+				if ( const auto settings_obj = getSettingsObject().value( KEY_VALUE( group, name ) );                  \
+				     settings_obj.canConvert< int >() )                                                                \
+					return settings_obj.value< int >();                                                                \
+				else                                                                                                   \
+					throw std::runtime_error(                                                                          \
+						fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );         \
+			}                                                                                                          \
                                                                                                                        \
-	  SETTINGS_D( group, name, int, default_value )                                                                    \
-	}                                                                                                                  \
+			SETTINGS_D( group, name, int, default_value )                                                              \
+		}                                                                                                              \
                                                                                                                        \
-	inline type get()                                                                                                  \
-	{                                                                                                                  \
-	  return static_cast< type >( de_internal::get() );                                                                \
-	}                                                                                                                  \
+		inline type get()                                                                                              \
+		{                                                                                                              \
+			return static_cast< type >( de_internal::get() );                                                          \
+		}                                                                                                              \
                                                                                                                        \
-	inline void set( const type val )                                                                                  \
-	{                                                                                                                  \
-	  de_internal::set( static_cast< int >( val ) );                                                                   \
-	}                                                                                                                  \
-  }
+		inline void set( const type val )                                                                              \
+		{                                                                                                              \
+			de_internal::set( static_cast< int >( val ) );                                                             \
+		}                                                                                                              \
+	}
 
 #define CONFIG_ATTACH_THIS                                                                                             \
-  connect(                                                                                                             \
-	  &( config::internal::getNotifier() ),                                                                            \
-	  &config::ConfigNotification::notification,                                                                       \
-	  this,                                                                                                            \
-	  &std::remove_pointer_t< decltype( this ) >::reloadConfig )
+	connect(                                                                                                           \
+		&( config::internal::getNotifier() ),                                                                          \
+		&config::ConfigNotification::notification,                                                                     \
+		this,                                                                                                          \
+		&std::remove_pointer_t< decltype( this ) >::reloadConfig )
 
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )

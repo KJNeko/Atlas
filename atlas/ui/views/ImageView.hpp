@@ -13,7 +13,7 @@
 class FilepathModel;
 class ImageDelegate;
 
-class ImageView : public QListView
+class ImageView final : public QListView
 {
 	Q_OBJECT
 

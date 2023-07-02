@@ -47,7 +47,7 @@ void GameView::reloadRecord()
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	QString description = record->getDesc();
 	QString developer = record->get< RecordColumns::Creator >();
-	QString engine = record->get<RecordColumns::Engine>();
+	QString engine = record->get< RecordColumns::Engine >();
 	QString publisher = "";
 	QString original_name = "";
 	QString censored = "";

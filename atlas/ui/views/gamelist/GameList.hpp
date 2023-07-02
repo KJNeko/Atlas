@@ -11,7 +11,7 @@
 #include "ui/models/RecordListModel.hpp"
 
 //! A list that displays a list of games.
-class GameList : public QListView
+class GameList final : public QListView
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( GameList )

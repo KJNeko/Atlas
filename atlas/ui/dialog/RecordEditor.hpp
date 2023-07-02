@@ -19,7 +19,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class RecordEditor : public QDialog
+class RecordEditor final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( RecordEditor )

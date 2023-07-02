@@ -8,7 +8,7 @@ namespace Ui
 	class AddGameDialog;
 }
 
-class AddGameDialog : public QDialog
+class AddGameDialog final : public QDialog
 {
 	Q_DISABLE_COPY_MOVE( AddGameDialog )
 	Q_OBJECT

@@ -12,7 +12,7 @@
 #include "core/database/record/Record.hpp"
 #include "core/search/QueryBuilder.hpp"
 
-class Search : public QObject
+class Search final : public QObject
 {
 	Q_OBJECT
 

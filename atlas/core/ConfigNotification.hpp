@@ -10,7 +10,7 @@
 namespace config
 {
 
-	class ConfigNotification : public QObject
+	class ConfigNotification final : public QObject
 	{
 		Q_OBJECT
 

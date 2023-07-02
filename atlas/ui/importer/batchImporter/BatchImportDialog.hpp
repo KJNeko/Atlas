@@ -12,7 +12,7 @@ namespace Ui
 	class BatchImportDialog;
 }
 
-class BatchImportDialog : public QDialog
+class BatchImportDialog final : public QDialog
 {
 	Q_DISABLE_COPY_MOVE( BatchImportDialog )
 	Q_OBJECT

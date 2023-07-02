@@ -7,7 +7,7 @@
 
 #include <QAbstractItemDelegate>
 
-class ImageDelegate : public QAbstractItemDelegate
+class ImageDelegate final : public QAbstractItemDelegate
 {
 	Q_OBJECT
 

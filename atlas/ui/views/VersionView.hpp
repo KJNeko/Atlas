@@ -20,7 +20,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class VersionView : public QWidget
+class VersionView final : public QWidget
 {
 	Q_DISABLE_COPY_MOVE( VersionView )
 	Q_OBJECT

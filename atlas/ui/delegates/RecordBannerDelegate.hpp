@@ -11,7 +11,7 @@
 #include "core/database/record/Record.hpp"
 #include "core/utils/QImageBlur.hpp"
 
-class RecordBannerDelegate : public QAbstractItemDelegate
+class RecordBannerDelegate final : public QAbstractItemDelegate
 {
 	Q_OBJECT
 

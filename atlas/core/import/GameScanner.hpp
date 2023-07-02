@@ -11,7 +11,7 @@
 
 #include "GameImportData.hpp"
 
-class GameScanner : public QObject
+class GameScanner final : public QObject
 {
 	Q_OBJECT
 

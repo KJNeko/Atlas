@@ -16,7 +16,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class SingleImporter : public QDialog
+class SingleImporter final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( SingleImporter )

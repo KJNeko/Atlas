@@ -7,7 +7,7 @@
 
 #include <QLabel>
 
-class ImageWidget : public QLabel
+class ImageWidget final : public QLabel
 {
 	Q_OBJECT
 

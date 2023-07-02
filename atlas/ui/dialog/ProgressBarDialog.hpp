@@ -16,7 +16,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class ProgressBarDialog : public QDialog
+class ProgressBarDialog final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressBarDialog )

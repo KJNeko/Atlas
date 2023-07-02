@@ -9,7 +9,7 @@
 
 #include "core/database/record/Record.hpp"
 
-class RecordListModel : public QAbstractListModel
+class RecordListModel final : public QAbstractListModel
 {
 	Q_OBJECT
 
