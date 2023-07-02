@@ -109,10 +109,13 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
+	const auto [ title, engine, creator ] =
+		record->get< RecordColumns::Title, RecordColumns::Engine, RecordColumns::Creator >();
+
 	//Draw Title
-	this->drawText( painter, options_rect, stripe_height, m_title_location, record->get< RecordColumns::Title >() );
+	this->drawText( painter, options_rect, stripe_height, m_title_location, title );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->get< RecordColumns::Engine >() );
+	this->drawText( painter, options_rect, stripe_height, m_engine_location, engine );
 	//Draw Version
 	const auto& latest { record->getLatestVersion() };
 	if ( latest.has_value() )
@@ -120,7 +123,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	else
 		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->get< RecordColumns::Creator >() );
+	this->drawText( painter, options_rect, stripe_height, m_creator_location, creator );
 
 	painter->restore();
 }

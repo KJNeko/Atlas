@@ -38,6 +38,18 @@ struct AtlasData
 		return val;
 	}
 
+	template < AtlasColumns... cols >
+		requires( sizeof...( cols ) > 1 )
+	std::tuple< AtlasColType< cols >... > get()
+	{
+		std::tuple< AtlasColType< cols >... > tpl;
+		RapidTransaction() << atlas::database::utility::
+					select_query_t< "atlas_data", "atlas_id", AtlasColInfo< cols >::col_name... >()
+						   << atlas_id
+			>> tpl;
+		return tpl;
+	}
+
 	template < AtlasColumns col >
 	void set( AtlasColType< col > t )
 	{

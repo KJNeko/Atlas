@@ -165,10 +165,10 @@ class Binder
 	template < typename Function >
 	void operator>>( Function&& func )
 	{
-		ran = true;
-		ZoneScopedN( "Get results into func" );
 		using FuncArgs = FunctionDecomp< Function >;
 		using Tpl = FuncArgs::ArgTuple;
+		ZoneScopedN( "Get results into func" );
+		ran = true;
 
 		//Execute the query.
 		while ( true )
@@ -182,6 +182,39 @@ class Binder
 				Tpl tpl;
 				extractRow< 0 >( stmt, tpl );
 				std::apply( func, std::move( tpl ) );
+				continue;
+			}
+			else if ( step_ret == SQLITE_DONE )
+				return;
+
+			switch ( sqlite3_step( stmt ) )
+			{
+				default:
+					{
+						spdlog::error( "Unhandled error in sqlite!" );
+						throw std::runtime_error( "Unhandled error in sqlite!" );
+					}
+			}
+		}
+	}
+
+	template < typename... Ts >
+		requires( sizeof...( Ts ) > 1 )
+	void operator>>( std::tuple< Ts... >& tpl )
+	{
+		ran = true;
+		ZoneScopedN( "Get results into func" );
+
+		//Execute the query.
+		while ( true )
+		{
+			if ( stmt == nullptr ) throw std::runtime_error( "stmt was nullptr" );
+
+			const auto step_ret { sqlite3_step( stmt ) };
+
+			if ( step_ret == SQLITE_ROW ) [[likely]]
+			{
+				extractRow< 0 >( stmt, tpl );
 				continue;
 			}
 			else if ( step_ret == SQLITE_DONE )

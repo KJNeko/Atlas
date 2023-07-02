@@ -32,6 +32,9 @@ enum class RecordColumns
 template < RecordColumns col >
 struct ColInfo;
 
+template < RecordColumns col >
+using RecordColType = ColInfo< col >::Type;
+
 template <>
 struct ColInfo< RecordColumns::Title >
 {
@@ -91,6 +94,18 @@ struct RecordData
 				<< atlas::database::utility::select_query< ColInfo< col >::col_name, "records", "record_id" >() << m_id
 			>> val;
 		return val;
+	}
+
+	template < RecordColumns... cols >
+		requires( sizeof...( cols ) > 1 )
+	std::tuple< RecordColType< cols >... > get()
+	{
+		std::tuple< RecordColType< cols >... > tpl;
+		RapidTransaction()
+				<< atlas::database::utility::select_query_t< "records", "record_id", ColInfo< cols >::col_name... >()
+				<< m_id
+			>> tpl;
+		return tpl;
 	}
 
 	template < RecordColumns col >

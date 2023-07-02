@@ -52,13 +52,15 @@ void GLImporterRunner::processGame( const std::filesystem::path path )
 		emit message( QString::fromStdString( fmt::format( "Failed to import {:c}. No executables found?", path ) ) );
 	}
 
+	auto [ title, creator, engine ] = data.get< AtlasColumns::Title, AtlasColumns::Creator, AtlasColumns::Engine >();
+
 	//Use this data to import the game
 	auto future { importGame(
 		path,
 		scoreExecutables( executables ).front(),
-		data.get< AtlasColumns::Title >(),
-		data.get< AtlasColumns::Creator >(),
-		data.get< AtlasColumns::Engine >(),
+		std::move( title ),
+		std::move( creator ),
+		std::move( engine ),
 		info.version,
 		{},
 		{} ) };
