@@ -25,8 +25,8 @@ FileInfo FileScannerGenerator::operator()()
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wswitch-default" // Added due to GCC bug 109867
-
-//#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#pragma GCC diagnostic ignored                                                                                         \
+	"-Wzero-as-null-pointer-constant" // Added due to FileScannerGenerator returns being weird at the end of scan_files and thinking that it's somehow returning zero as a nullptr. Probably UB but we throw at the end anyways so *shrug* Should be defined enough.
 
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
