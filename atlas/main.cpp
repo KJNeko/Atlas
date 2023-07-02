@@ -40,7 +40,7 @@ int main( int argc, char** argv )
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
 #ifdef _WIN32
-	CreateMutexA( 0, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
+	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
 	if ( GetLastError() == ERROR_ALREADY_EXISTS ) // did the mutex already exist?
 		return -1; // quit; mutex is released automatically
 
