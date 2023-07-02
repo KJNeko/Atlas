@@ -62,19 +62,19 @@ namespace fgl
 
 		const constexpr char* begin() const noexcept { return &array[ 0 ]; }
 
-		const constexpr char* end() const noexcept { return &array[ N - 1 ]; }
+		const constexpr char* end() const noexcept { return &array[ N ]; }
 
 		const constexpr char* cbegin() const noexcept { return &array[ 0 ]; }
 
-		const constexpr char* cend() const noexcept { return &array[ N - 1 ]; }
+		const constexpr char* cend() const noexcept { return &array[ N ]; }
 
 		template < std::size_t BN >
-		consteval string_literal< ( N - 1 ) + BN > operator+( const fgl::string_literal< BN > b ) const
+		consteval fgl::string_literal< ( N - 1 ) + BN > operator+( const fgl::string_literal< BN > b ) const
 		{
-			char tmp_array[ BN + ( N - 1 ) ] {};
+			char tmp_array[ ( N - 1 ) + BN ] {};
 
 			std::copy( begin(), end() - 1, &tmp_array[ 0 ] );
-			std::copy( b.begin(), b.end(), &tmp_array[ N - 2 ] );
+			std::copy( b.begin(), b.end(), &tmp_array[ N - 1 ] );
 
 			return { tmp_array };
 		}
