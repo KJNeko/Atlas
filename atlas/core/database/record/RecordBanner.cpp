@@ -27,23 +27,13 @@ try
 }
 catch ( const NoRows& e )
 {
-	//We didn't get a path. Try an alternative
-	std::string banner_path;
-	try
-	{
-		RapidTransaction transaction;
-		transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID()
-			>> banner_path;
-	}
-	catch ( [[maybe_unused]] const NoRows& )
-	{
-		return {};
-	}
+	//We didn't get a path. Do not return anything.
 
-	if ( banner_path.empty() )
-		return banner_path;
-	else
-		return config::paths::images::getPath() / banner_path;
+	/*std::string banner_path { "" };
+	transaction << "SELECT path FROM banners WHERE record_id = ? ORDER BY type DESC limit 1" << m_record.getID() >>
+		[ & ]( const std::string str ) { banner_path = str; };
+		return config::paths::images::getPath() / banner_path;*/
+	return {};
 }
 
 QPixmap RecordBanner::getBanner( const BannerType type ) const

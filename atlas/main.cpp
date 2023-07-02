@@ -39,47 +39,18 @@ int main( int argc, char** argv )
 
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
-	//initLogging();
-	QApplication app { argc, argv };
+#ifdef _WIN32
+	CreateMutexA( 0, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
+	if ( GetLastError() == ERROR_ALREADY_EXISTS ) // did the mutex already exist?
+		return -1; // quit; mutex is released automatically
 
+#else
 	if ( std::filesystem::exists( "atlas_lock" ) )
 	{
 		if ( std::ifstream ifs( "atlas_lock" ); ifs )
 		{
 			//Check if PID still is running
-#ifdef _WIN32
-			DWORD pid;
-			ifs >> pid;
 
-			/*
-			HANDLE handle = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
-			//Check if process is the same executable
-			if ( handle )
-			{
-				std::array< char, MAX_PATH > buffer;
-				GetModuleFileNameExA( handle, 0, buffer.data(), MAX_PATH );
-				const std::filesystem::path path { std::filesystem::current_path() };
-				const std::string_view prev_path { std::string_view( buffer.data(), strlen( buffer.data() ) ) };
-				if ( path != prev_path )
-				{
-					//Process is not the same executable
-					QMessageBox::warning(
-						nullptr,
-						"Atlas is already running?",
-						QString(
-							"Atlas is already running with pid: %s. Please close the other instance before opening a new one." )
-							.arg( QString::number( pid ) ) );
-					return 0;
-				}
-			}
-			else
-			{
-				//We can only assume our previous instance is dead.
-				//Remove the lock file and continue.
-				std::filesystem::remove( "atlas_lock" );
-			}
-*/
-#else
 			int pid;
 			ifs >> pid;
 
@@ -105,7 +76,6 @@ int main( int argc, char** argv )
 						"Atlas is already running with pid: %1. Please close the other instance before opening a new one." )
 						.arg( QString::number( pid ) ) );
 			}
-#endif
 		}
 	}
 
@@ -124,7 +94,9 @@ int main( int argc, char** argv )
 			"Failed to acquire lock! Please make sure you have write permissions to the directory Atlas is in. Report to a dev if this issue persists." );
 		return EXIT_FAILURE;
 	}
-
+#endif
+	//initLogging();
+	QApplication app { argc, argv };
 	//Fix for windeployqt not adding the bin directory to itself for some reason
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
 

@@ -41,7 +41,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->NavTop->hide();
 
 	//Set Font
-	QFont font { config::application::font::get(), config::application::fontSize::get() };
+	QFont font { config::application::font::get() == "" ? QApplication::font().defaultFamily() :
+		                                                  config::application::font::get(),
+		         config::application::fontSize::get() };
 	QApplication::setFont( font );
 
 	config::notify();

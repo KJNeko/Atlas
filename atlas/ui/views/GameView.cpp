@@ -6,11 +6,13 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>
 
 #include "core/database/GameMetadata.hpp"
 #include "core/database/record/RecordBanner.hpp"
+#include "core/database/record/RecordPreviews.hpp"
 #include "core/foldersize.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -45,49 +47,32 @@ void GameView::reloadRecord()
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	QString description = record->getDesc();
 	QString developer = record->get< RecordColumns::Creator >();
-	QString publisher = "Test Data";
-	QString original_name = "Test Data";
-	QString censored = "Test Data";
-	QString language = "Test Data";
-	QString translations = "Test Data";
-	QString voice = "Test Data";
-	QString platform = "Test Data";
-	QString release_date = "Test Data";
-	QString genre = "Test Data";
-	QString tags = "Test Data";
-	QString current_version = "v1.0";
+	QString engine = record->get<RecordColumns::Engine>();
+	QString publisher = "";
+	QString original_name = "";
+	QString censored = "";
+	QString language = "";
+	QString translations = "";
+	QString voice = "";
+	QString platform = "";
+	QString release_date = "";
+	QString genre = "";
+	QString tags = "";
+	QString current_version = "";
 	//END PLACEHOLDERS
 
-	//Set cover Image
+	//Get cover image
+	const int cover_offset = 0;
+
 	QPixmap cover { record->banners().getBanner(
-		ui->coverImage->width() - 10, ui->coverImage->height() - 10, FIT_BLUR_EXPANDING, BannerType::Cover ) };
-	if ( cover.isNull() )
-	{
-		ui->coverWidget->hide();
-	}
-	else
-	{
-		QGraphicsBlurEffect* be { new QGraphicsBlurEffect };
+		ui->coverImage->width() - cover_offset,
+		ui->coverImage->height() - cover_offset,
+		SCALE_TYPE::KEEP_ASPECT_RATIO,
+		BannerType::Cover ) };
 
-		ui->coverWidget->show();
-		QPixmap item { ui->coverWidget->size() };
-		QPixmap background { ui->coverWidget->size() };
-		background.fill( Qt::black );
+	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
 
-		QGraphicsScene scene;
-		QGraphicsPixmapItem cover_item;
-		QGraphicsPixmapItem background_item;
-		background_item.setPixmap( background );
-		background_item.setGraphicsEffect( be );
-		cover_item.setPixmap( cover );
-		cover_item.setOffset( QPoint( 5, 5 ) );
-		scene.addItem( &background_item );
-		scene.addItem( &cover_item );
-		QPainter painter { &item };
-		scene.render( &painter );
-		ui->coverImage->setPixmap( item );
-		//ui->coverImage->setGraphicsEffect( se );
-	}
+	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	if ( record->get< RecordColumns::LastPlayed >() == 0 )
 	{
@@ -161,9 +146,8 @@ void GameView::reloadRecord()
 	                                        .toUTC()
 	                                        .toString( "hh:mm:ss" ) ) );
 
-	//dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( m_record.value()->getPreviewPaths() );
-
-	//ui->gameNotes->setText( m_record.value()->getDesc() );
+	//PREVIEWS
+	dynamic_cast< FilepathModel* >( ui->previewList->model() )->setFilepaths( record->previews().getPreviewPaths() );
 
 	//Set height of PreviewList
 	if ( ui->previewList->model()->rowCount() > 0 )
