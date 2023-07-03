@@ -28,7 +28,7 @@ namespace atlas::database::utility
 		constexpr auto& static_data {
 			make_static< begin + table_name + set + column + where + table_key_name + end >()
 		};
-		return std::string_view( static_data.begin(), static_data.size() );
+		return std::string_view( static_data.begin(), static_data.size() - 1 );
 	}
 
 	template < fgl::string_literal column, fgl::string_literal table_name, fgl::string_literal table_key_name >
@@ -43,21 +43,21 @@ namespace atlas::database::utility
 			make_static< begin + column + from + table_name + where + table_key_name + end >()
 		};
 
-		return std::string_view( static_data.begin(), static_data.size() );
+		return std::string_view( static_data.begin(), static_data.size() - 1 );
 	}
 
 	template < fgl::string_literal str, fgl::string_literal last >
-	constexpr auto combineStringLiteralCSV()
+	consteval auto combineStringLiteralCSV()
 	{
-		constexpr fgl::string_literal comma { "," };
+		constexpr fgl::string_literal comma { ", " };
 		return str + comma + last;
 	}
 
 	template < fgl::string_literal str, fgl::string_literal... rest >
 		requires( sizeof...( rest ) > 1 )
-	constexpr auto combineStringLiteralCSV()
+	consteval auto combineStringLiteralCSV()
 	{
-		constexpr fgl::string_literal comma { "," };
+		constexpr fgl::string_literal comma { ", " };
 		return str + comma + combineStringLiteralCSV< rest... >();
 	}
 
@@ -72,7 +72,7 @@ namespace atlas::database::utility
 		constexpr auto& static_data { make_static<
 			begin + combineStringLiteralCSV< columns... >() + from + table + where + table_key_name + end >() };
 
-		return static_data;
+		return std::string_view( static_data.begin(), static_data.size() - 1 );
 	}
 } // namespace atlas::database::utility
 

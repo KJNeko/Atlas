@@ -78,6 +78,17 @@ namespace fgl
 
 			return { tmp_array };
 		}
+
+		template < std::size_t BN >
+		consteval fgl::string_literal< ( N - 1 ) + BN > operator+( const fgl::carray< char, BN > b ) const
+		{
+			char tmp_array[ ( N - 1 ) + BN ] {};
+
+			std::copy( begin(), end() - 1, &tmp_array[ 0 ] );
+			std::copy( &b[ 0 ], &b[ BN ], &tmp_array[ N - 1 ] );
+
+			return { tmp_array };
+		}
 	};
 
 	///@} group-types-string_literal
