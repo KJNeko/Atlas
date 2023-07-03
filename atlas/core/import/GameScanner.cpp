@@ -99,10 +99,11 @@ void runner(
 			promise.addResult( std::move( data ) );
 		}
 		else
+		{
 			spdlog::warn( "No executables found for path {}", folder );
+			throw std::runtime_error( fmt::format( "Failed to find executables for path {}", folder ) );
+		}
 
-		spdlog::info( "Marking {} as finished", folder );
-		spdlog::info( "Finishing" );
 		return;
 	}
 	catch ( const std::exception& e )
@@ -192,6 +193,8 @@ catch ( ... )
 void GameScanner::start( const std::filesystem::path path, const QString regex )
 {
 	ZoneScoped;
+	m_thread_pool.setMaxThreadCount( 2 );
+
 	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
 	if ( m_runner_future.isFinished() )
 		emitComplete();
