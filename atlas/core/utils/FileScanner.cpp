@@ -56,10 +56,20 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 		{
 			if ( itter->is_directory() )
 			{
-				//Add it to the scanlist
-				nested_dirs.emplace_back( *itter );
-				++itter;
-				continue;
+				//Add it to the scanlist if dir is not empty. Else yield or return (if dirs to process is zero)
+				if ( dir_empty( itter->path() ) )
+				{
+					if ( dirs.size() == 0 )
+						co_return FileInfo { *itter, path, 0, std::uint8_t( depth + 1 ) };
+					else
+						co_yield FileInfo { *itter, path, 0, std::uint8_t( depth + 1 ) };
+				}
+				else
+				{
+					nested_dirs.emplace_back( *itter );
+					++itter;
+					continue;
+				}
 			}
 
 			FileInfo info {
