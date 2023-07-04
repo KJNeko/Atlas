@@ -13,5 +13,12 @@ int main( int argc, char* argv[] )
 
 	QTimer::singleShot( 0, [ & ]() { app.exit( Catch::Session().run( argc, argv ) ); } );
 
-	return app.exec();
+	int val { app.exec() };
+
+#ifdef __WIN32
+	std::string fuck;
+	std::cout << "press any key to exit" << std::endl;
+	std::cin >> fuck;
+#endif
+	return val;
 }
