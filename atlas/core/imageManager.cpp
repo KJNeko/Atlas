@@ -6,6 +6,7 @@
 
 #include <fstream>
 
+#include <QBuffer>
 #include <QCryptographicHash>
 #include <QFile>
 #include <QImageReader>
@@ -44,116 +45,74 @@ namespace imageManager
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
 		ZoneScoped;
-		if ( std::filesystem::exists( path ) )
+		if ( std::ifstream ifs( path ); ifs )
 		{
-			const QString qstr { QString::fromStdString( path.string() ) };
-			QImage temp_image;
-
+			std::vector< char > data {};
+			data.resize( std::filesystem::file_size( path ) );
 			TracyCZoneN( tracy_ImageLoad, "Image load", true );
-			if ( !temp_image.load( qstr ) )
-			{
-				spdlog::error( "Failed to load image {}", path.string() );
-				TracyCZoneEnd( tracy_ImageLoad );
-				return {};
-			}
+			ifs.read( data.data(), static_cast< int >( data.size() ) );
 			TracyCZoneEnd( tracy_ImageLoad );
 
-			const auto hash_file = []( const std::filesystem::path& hash_path ) -> QByteArray
+			TracyCZoneN( tracy_ProcessImage, "Process image", true );
+			QImage temp_image {
+				QImage::fromData( reinterpret_cast< unsigned char* >( data.data() ), static_cast< int >( data.size() ) )
+			};
+			TracyCZoneEnd( tracy_ProcessImage );
+
+			const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
 			{
-				ZoneScopedN( "Hash file" );
-				if ( std::ifstream ifs( hash_path ); ifs )
-				{
-					std::array< std::byte, 4096 > buffer {};
-					QCryptographicHash hash { QCryptographicHash::Sha256 };
+				ZoneScopedN( "Hash" );
 
-					while ( !ifs.eof() && !ifs.fail() )
-					{
-						ifs.read( reinterpret_cast< char* >( buffer.data() ), static_cast< long >( buffer.size() ) );
+				QCryptographicHash hash { QCryptographicHash::Sha256 };
 
-						std::size_t read { static_cast< std::size_t >( ifs.gcount() ) };
+				hash.addData( { data_ptr, size } );
 
-						hash.addData( { reinterpret_cast< const char* >( buffer.data() ),
-						                static_cast< qsizetype >( read ) } );
-					}
-
-					return hash.result();
-				}
-				else
-					return {};
+				return hash.result();
 			};
-
-			//Save the image to a temp file depending on os
-			const std::filesystem::path temp_path {
-				std::filesystem::temp_directory_path() / "atlas"
-				/ fmt::format( "temp_{}.webp", hash_file( path ).toHex().toStdString() )
-			};
-
-			if ( !std::filesystem::exists( temp_path.parent_path() ) )
-				std::filesystem::create_directories( temp_path.parent_path() );
 
 			std::string image_type { config::images::image_type::get().toStdString() };
 
-			TracyCZoneN( tracy_SaveImage, "Image save", true );
-			temp_image.save( QString::fromStdString( temp_path.string() ), image_type.c_str(), 99 );
+			TracyCZoneN( tracy_SaveImage, "Image save to buffer", true );
+			QByteArray buffer;
+			temp_image.save( buffer );
 			TracyCZoneEnd( tracy_SaveImage );
-
-			if ( !std::filesystem::exists( temp_path ) )
-			{
-				spdlog::warn(
-					"Path did not exist during image import! Path: {:ce}\n Parent: {:ce}",
-					temp_path,
-					temp_path.parent_path() );
-			}
 
 			const auto dest_root { config::paths::images::getPath() };
 
-			if ( std::filesystem::file_size( temp_path ) > std::filesystem::file_size( path ) )
+			//Which is smaller?
+			if ( static_cast< std::uint64_t >( buffer.size() ) < data.size() )
 			{
-				//File is worse. So we keep the smaller one.
-				std::filesystem::remove( temp_path );
+				//Buffer is smaller. Meaning webp is smaller. Use it
+				const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
+				const auto dest { dest_root / ( hash.toHex().toStdString() + ".webp" ) };
 
-				const auto image_hash { hash_file( path ) };
-
-				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + path.extension().string() ) };
-
-				TracyCZoneN( tracy_CopyImage, "Image copy (original)", true );
-				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( path, dest_path );
-				TracyCZoneEnd( tracy_CopyImage );
-
-				if ( !std::filesystem::exists( dest_path ) )
+				//Copy buffer to file
+				if ( std::filesystem::exists( dest ) ) return dest;
+				if ( std::ofstream ofs( dest ); ofs )
 				{
-					spdlog::error( "Failed to copy {} to {}", path.string(), dest_path.string() );
-					return {};
+					ofs.write( buffer.data(), buffer.size() );
+					return dest;
 				}
-
-				return std::filesystem::relative( dest_path, std::filesystem::current_path() );
+				else
+					throw std::runtime_error( fmt::format( "Failed to open desination {}", dest ) );
 			}
 			else
 			{
-				//Keep the temp file
-				const auto image_hash { hash_file( temp_path ) };
+				//Buffer is larger. Meaning webp is worse. Don't use it.
+				const auto hash { hashData( data.data(), static_cast< int >( data.size() ) ) };
 
-				const auto dest_path { dest_root / ( image_hash.toHex().toStdString() + ".webp" ) };
+				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
-				TracyCZoneN( tracy_CopyImage, "Image copy (temp)", true );
-				if ( !std::filesystem::exists( dest_path ) ) std::filesystem::copy( temp_path, dest_path );
-				TracyCZoneEnd( tracy_CopyImage );
-
-				std::filesystem::remove( temp_path );
-
-				if ( !std::filesystem::exists( dest_path ) )
-				{
-					spdlog::error( "Failed to copy {} to {}", temp_path.string(), dest_path.string() );
-					return {};
-				}
-
-				return std::filesystem::relative( dest_path, std::filesystem::current_path() );
+				if ( std::filesystem::exists( dest ) ) return dest;
+				std::filesystem::copy( path, dest );
+				return dest;
 			}
 		}
 		else
-			spdlog::warn( "Failed to set open path for new banner at {:ce}", path );
-
-		return { ":/invalid.jpg" };
+		{
+			spdlog::warn( "Filepath {} does not exist. Unable to import image", path );
+			throw std::runtime_error( fmt::format( "Filepath {} does not exist. Unable to add as image", path ) );
+		}
 	}
 
 } // namespace imageManager
