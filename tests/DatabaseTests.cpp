@@ -31,9 +31,83 @@ TEST_CASE( "Database Init", "[database]" )
 	REQUIRE( std::filesystem::remove( "test.db" ) );
 }
 
-TEST_CASE( "Record", "[database][record]" )
+TEST_CASE( "Record", "[database][record][import]" )
 {
+	REQUIRE_NOTHROW( Database::initalize( ":memory:" ) );
+	SECTION( "Create record" )
+	{
+		const auto record { importRecord( "Test title", "Test creator", "Test engine" ) };
 
+		SECTION( "Test getters" )
+		{
+			SECTION( "title" )
+			{
+				REQUIRE( record->get< RecordColumns::Title >() == "Test title" );
+			}
+			SECTION( "creator" )
+			{
+				REQUIRE( record->get< RecordColumns::Creator >() == "Test creator" );
+			}
+			SECTION( "engine" )
+			{
+				REQUIRE( record->get< RecordColumns::Engine >() == "Test engine" );
+			}
+			SECTION( "last played" )
+			{
+				REQUIRE( record->get< RecordColumns::LastPlayed >() == 0 );
+			}
+			SECTION( "total playtime" )
+			{
+				REQUIRE( record->get< RecordColumns::TotalPlaytime >() == 0 );
+			}
+		}
+
+		SECTION( "Test setters" )
+		{
+			SECTION( "title" )
+			{
+				REQUIRE_NOTHROW( record->set< RecordColumns::Title >( "new Test title" ) );
+				REQUIRE( record->get< RecordColumns::Title >() == "new Test title" );
+			}
+			SECTION( "creator" )
+			{
+				REQUIRE_NOTHROW( record->set< RecordColumns::Creator >( "new Test creator" ) );
+				REQUIRE( record->get< RecordColumns::Creator >() == "new Test creator" );
+			}
+			SECTION( "engine" )
+			{
+				REQUIRE_NOTHROW( record->set< RecordColumns::Engine >( "new Test engine" ) );
+				REQUIRE( record->get< RecordColumns::Engine >() == "new Test engine" );
+			}
+			SECTION( "last played" )
+			{
+				REQUIRE_NOTHROW( record->set< RecordColumns::LastPlayed >( 5 ) );
+				REQUIRE( record->get< RecordColumns::LastPlayed >() == 5 );
+			}
+			SECTION( "total playtime" )
+			{
+				REQUIRE_NOTHROW( record->set< RecordColumns::TotalPlaytime >( 5 ) );
+				REQUIRE( record->get< RecordColumns::TotalPlaytime >() == 5 );
+			}
+		}
+	}
+}
+
+TEST_CASE( "Config record", "[database]" )
+{
+	//Ensure that the test record exists
+	REQUIRE_NOTHROW( Database::initalize( ":memory:" ) );
+
+	Record record { 1 };
+
+	REQUIRE( record->get< RecordColumns::Title >() == "Galaxy Crossing: First Conquest" );
+	REQUIRE( record->get< RecordColumns::Engine >() == "Unity" );
+	REQUIRE( record->get< RecordColumns::Creator >() == "Atlas Games" );
+
+	const auto version { record->getVersion( "Chapter: 1" ) };
+
+	REQUIRE(
+		version->getExecPath() == "C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe" );
 }
 
 TEST_CASE( "Database benches", "[!benchmark]" )

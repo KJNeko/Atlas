@@ -103,6 +103,7 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	config::db::first_start::set( false );
 
+	//Prepare our example record for the config
 	if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
 	{
 		const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
@@ -110,7 +111,7 @@ void Database::initalize( const std::filesystem::path init_path )
 		record->addVersion(
 			"Chapter: 1",
 			"C:/Atlas Games/Galaxy Crossing First Conquest",
-			"C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe",
+			"Galaxy Crossing First Conquest.exe",
 			0,
 			true );
 	}
