@@ -2,6 +2,8 @@
 // Created by kj16609 on 7/3/23.
 //
 
+#include <iostream>
+
 #include <QCoreApplication>
 #include <QTimer>
 
