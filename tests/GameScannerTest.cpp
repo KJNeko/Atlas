@@ -37,7 +37,11 @@ TEST_CASE( "File Scanner", "[import]" )
 		if ( file.extension() == ".exe" )
 		{
 			//Copy our exe as a dummy
+#ifdef _WIN32
+			std::filesystem::copy( "./AtlasTests.exe".file );
+#else
 			std::filesystem::copy( "./AtlasTests", file );
+#endif
 		}
 		else if ( file.extension() == ".dummy" )
 		{
