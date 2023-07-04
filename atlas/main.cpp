@@ -23,7 +23,6 @@
 #include <psapi.h>
 #else
 #include <csignal>
-
 #include <sys/stat.h>
 #endif
 // clang-format on
@@ -35,7 +34,9 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-	//setlocale( LC_ALL, ".UTF8" );
+#ifdef _WIN32
+	setlocale( LC_ALL, ".UTF8" );
+#endif
 
 	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
 
