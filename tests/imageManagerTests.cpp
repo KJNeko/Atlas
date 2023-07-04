@@ -33,7 +33,8 @@ TEST_CASE( "Image import test", "[import]" )
 	const auto new_file { imageManager::importImage( "./test_files/test_image.png" ) };
 	REQUIRE(
 		std::filesystem::relative( new_file, std::filesystem::current_path() )
-		== "data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" );
+		== std::filesystem::path( "data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" )
+			   .make_preferred() );
 	REQUIRE( std::filesystem::exists( new_file ) );
 	REQUIRE( std::filesystem::
 	             exists( "./data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" ) );
@@ -71,7 +72,8 @@ TEST_CASE( "Import import test - Special characters", "[import]" )
 	const auto new_file { imageManager::importImage( "./test_files/ファックウィンドウ.png" ) };
 	REQUIRE(
 		std::filesystem::relative( new_file, std::filesystem::current_path() )
-		== "data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" );
+		== std::filesystem::path( "data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" )
+			   .make_preferred() );
 	REQUIRE( std::filesystem::exists( new_file ) );
 	REQUIRE( std::filesystem::
 	             exists( "./data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" ) );
