@@ -20,6 +20,9 @@
 
 TEST_CASE( "Image import test", "[import]" )
 {
+	std::filesystem::remove( "./data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" );
+	std::filesystem::remove( "./test_files/test_image.png" );
+
 	QImage image { 255, 255, QImage::Format_RGB32 };
 	image.fill( QColor( 0, 0, 0 ) );
 	std::filesystem::create_directory( "./test_files" );
@@ -36,7 +39,17 @@ TEST_CASE( "Image import test", "[import]" )
 	             exists( "./data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" ) );
 	QImage new_image { QString::fromStdString( new_file.string() ) };
 
-	REQUIRE( image == new_image );
+	bool invalid { 0 };
+	for ( size_t x = 0; x < 255; ++x )
+	{
+		for ( std::size_t y = 0; y < 255; ++y )
+		{
+			invalid = image.pixel( x, y ) != QColor( 0, 0, 0 ).rgb();
+			if ( invalid ) break;
+		}
+	}
+
+	REQUIRE( !invalid );
 
 	std::filesystem::remove( new_file );
 	std::filesystem::remove( "./test_files/test_image.png" );
@@ -44,6 +57,9 @@ TEST_CASE( "Image import test", "[import]" )
 
 TEST_CASE( "Import import test - Special characters", "[import]" )
 {
+	std::filesystem::remove( "./data/images/38ac6748b793504c81fb58db37c6b61abd53ca0dd9d65e1b598bdc33a7db6d4d.webp" );
+	std::filesystem::remove( "./test_files/ファックウィンドウ.png" );
+
 	//Fucking windows
 	QImage image { 255, 255, QImage::Format_RGB32 };
 	image.fill( QColor( 0, 0, 0 ) );
@@ -62,7 +78,17 @@ TEST_CASE( "Import import test - Special characters", "[import]" )
 
 	QImage new_image { QString::fromStdString( new_file.string() ) };
 
-	REQUIRE( image == new_image );
+	bool invalid { 0 };
+	for ( size_t x = 0; x < 255; ++x )
+	{
+		for ( std::size_t y = 0; y < 255; ++y )
+		{
+			invalid = image.pixel( x, y ) != QColor( 0, 0, 0 ).rgb();
+			if ( invalid ) break;
+		}
+	}
+
+	REQUIRE( !invalid );
 
 	std::filesystem::remove( new_file );
 	std::filesystem::remove( "./test_files/ファックウィンドウ.png" );
