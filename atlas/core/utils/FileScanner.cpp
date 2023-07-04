@@ -86,6 +86,7 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 			}
 			else
 			{
+				//Dir is empty. If we don't have anything else to process then return. Else yield.
 				if ( i == nested_dirs.size() - 1 && dirs.size() == 0 )
 					co_return FileInfo { nested_dirs.at( i ), path, 0, std::uint8_t( depth + 1 ) };
 				else
