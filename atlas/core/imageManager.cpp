@@ -73,8 +73,10 @@ namespace imageManager
 			std::string image_type { config::images::image_type::get().toStdString() };
 
 			TracyCZoneN( tracy_SaveImage, "Image save to buffer", true );
-			QByteArray buffer;
-			temp_image.save( buffer );
+			QByteArray byteArray;
+			QBuffer buffer( &byteArray );
+			temp_image.save( &buffer, image_type.c_str(), 99 );
+			
 			TracyCZoneEnd( tracy_SaveImage );
 
 			const auto dest_root { config::paths::images::getPath() };

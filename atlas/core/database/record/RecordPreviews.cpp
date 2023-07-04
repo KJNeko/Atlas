@@ -51,10 +51,13 @@ void RecordPreviews::addPreview( const std::filesystem::path& path )
 	const auto root_images { config::paths::images::getPath() };
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 
+	spdlog::debug( new_path );
+	//assert( std::filesystem::exists( new_path ) );
+
 	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_record.getID()
 				<< std::filesystem::relative( new_path, root_images ).string() << 256;
 
-	assert( std::filesystem::exists( new_path ) );
+
 }
 
 /*
