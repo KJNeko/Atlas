@@ -92,7 +92,10 @@ namespace imageManager
 				if ( std::filesystem::exists( dest ) ) return dest;
 				if ( std::ofstream ofs( dest ); ofs )
 				{
-					ofs.write( buffer.data(), buffer.size() );
+					//This fixes buffer write errors
+					QImage img = QImage::fromData( byteArray );
+					img.save( QString::fromStdString(dest.string()) );
+					//ofs.write( buffer.data(), buffer.size() );
 					return dest;
 				}
 				else
