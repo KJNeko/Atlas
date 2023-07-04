@@ -73,8 +73,10 @@ namespace imageManager
 			std::string image_type { config::images::image_type::get().toStdString() };
 
 			TracyCZoneN( tracy_SaveImage, "Image save to buffer", true );
-			QByteArray buffer;
-			temp_image.save( buffer );
+			QByteArray byteArray;
+			QBuffer buffer( &byteArray );
+			temp_image.save( &buffer, image_type.c_str(), 99 );
+			
 			TracyCZoneEnd( tracy_SaveImage );
 
 			const auto dest_root { config::paths::images::getPath() };
@@ -90,7 +92,10 @@ namespace imageManager
 				if ( std::filesystem::exists( dest ) ) return dest;
 				if ( std::ofstream ofs( dest ); ofs )
 				{
-					ofs.write( buffer.data(), buffer.size() );
+					//This fixes buffer write errors
+					QImage img = QImage::fromData( byteArray );
+					img.save( QString::fromStdString(dest.string()) );
+					//ofs.write( buffer.data(), buffer.size() );
 					return dest;
 				}
 				else
