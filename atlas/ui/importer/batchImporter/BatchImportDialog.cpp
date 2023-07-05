@@ -150,9 +150,13 @@ void BatchImportDialog::importFiles()
 void BatchImportDialog::on_btnNext_pressed()
 {
 	ZoneScoped;
+
+	if ( import_triggered ) return;
+
 	spdlog::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
+		import_triggered = true;
 		importFiles();
 	}
 	else
