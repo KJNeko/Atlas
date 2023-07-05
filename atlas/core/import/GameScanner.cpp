@@ -38,8 +38,6 @@ void runner(
 			const auto [ title, creator, version, engine ] =
 				regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 
-			spdlog::info( "Found game at path {}", folder );
-
 			//Search for banners
 			std::array< QString, BannerType::SENTINEL > banners {};
 
@@ -84,7 +82,6 @@ void runner(
 			}
 
 			if ( promise.isCanceled() ) return;
-			spdlog::info( "Adding result" );
 			GameImportData data { std::filesystem::relative( folder, base ),
 				                  std::move( title ),
 				                  std::move( creator ),
