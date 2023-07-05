@@ -26,6 +26,7 @@ class BatchImportDialog final : public QDialog
 
 	GameScanner scanner {};
 	Ui::BatchImportDialog* ui;
+	bool search_started { false };
 	bool import_triggered { false };
 
 	void loadConfig();

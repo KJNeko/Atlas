@@ -161,6 +161,9 @@ void BatchImportDialog::on_btnNext_pressed()
 	}
 	else
 	{
+		if ( search_started ) return;
+
+		search_started = true;
 		//Verify that the path is set
 		const auto& path { ui->tbPath->text() };
 		if ( path.isEmpty() || !QFile::exists( path ) )
@@ -203,6 +206,7 @@ void BatchImportDialog::on_btnBack_pressed()
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 
 	scanner.abort();
+	search_started = false;
 
 	ui->btnNext->setText( "Next" );
 	ui->btnNext->setEnabled( true );
