@@ -23,10 +23,12 @@ FileInfo FileScannerGenerator::operator()()
 		throw std::runtime_error( "Failed to get value from FileScannerGenerator." );
 }
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wswitch-default" // Added due to GCC bug 109867
 #pragma GCC diagnostic ignored                                                                                         \
 	"-Wzero-as-null-pointer-constant" // Added due to FileScannerGenerator returns being weird at the end of scan_files and thinking that it's somehow returning zero as a nullptr. Probably UB but we throw at the end anyways so *shrug* Should be defined enough.
+#endif
 
 FileScannerGenerator scan_files( const std::filesystem::path path )
 {
@@ -99,7 +101,9 @@ FileScannerGenerator scan_files( const std::filesystem::path path )
 	throw std::runtime_error( "Managed to escape loop in coroutine scan_files" );
 }
 
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
 
 FileScanner::FileScanner( const std::filesystem::path& path ) :
   m_path( path ),

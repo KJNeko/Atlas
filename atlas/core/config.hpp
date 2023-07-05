@@ -34,8 +34,10 @@
  * | paths		| images			| string	| ./data/images |
  */
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-promo"
+#endif
 
 //TODO: Add cache
 inline QSettings getSettingsObject()
@@ -293,6 +295,8 @@ SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(
 	remote, check_rate, int, std::chrono::duration_cast< std::chrono::seconds >( std::chrono::hours( 24 ) ).count() )
 
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
 
 #endif //ATLAS_CONFIG_HPP

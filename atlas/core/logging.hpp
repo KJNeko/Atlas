@@ -9,6 +9,7 @@
 
 #include <QString>
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Weffc++"
@@ -25,10 +26,13 @@
 #ifdef __linux__
 #pragma GCC diagnostic ignored "-Wdangling-reference"
 #endif
+#endif
 
 #include <spdlog/spdlog.h>
 
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
 
 #include "Types.hpp"
 

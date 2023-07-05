@@ -12,6 +12,7 @@
 
 #include "core/logging.hpp"
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 
 #pragma GCC diagnostic ignored "-Wshadow"
@@ -29,6 +30,9 @@
 #include <tracy/Tracy.hpp>
 
 #pragma GCC diagnostic pop
+#else
+#include <tracy/Tracy.hpp>
+#endif
 
 enum TransactionFlag
 {

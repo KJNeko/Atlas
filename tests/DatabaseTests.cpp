@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QFile>
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
@@ -12,6 +13,11 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_all.hpp>
 #pragma GCC diagnostic pop
+#else
+#include <catch2/benchmark/catch_benchmark.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators_all.hpp>
+#endif
 
 #include "core/database/Database.hpp"
 #include "core/database/GameMetadata.hpp"
