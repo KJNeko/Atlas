@@ -4,6 +4,7 @@
 
 #include "engineDetection.hpp"
 
+#include <array>
 #include <iostream>
 
 #include <QMimeDatabase>
@@ -23,8 +24,14 @@ bool isEngineT< ENGINES_END >( [[maybe_unused]] FileScanner& scanner )
 	return true;
 }
 
-constexpr std::tuple< std::string_view, std::string_view > blacklist_execs { "UnityCrashHandler32.exe",
-	                                                                         "UnityCrashHandler64.exe" };
+constexpr std::tuple blacklist_execs { std::string_view( "UnityCrashHandler32.exe" ),
+	                                   std::string_view( "UnityCrashHandler64.exe" ),
+	                                   std::string_view( "payload.exe" ),
+	                                   std::string_view( "nwjc.exe" ),
+	                                   std::string_view( "notification_helper.exe" ),
+	                                   std::string_view( "nacl64.exe" ),
+	                                   std::string_view( "chromedriver.exe" ),
+	                                   std::string_view( "Squirrel.exe" ) };
 
 bool isBlacklistT( const std::string& name, const std::string_view comp )
 {
