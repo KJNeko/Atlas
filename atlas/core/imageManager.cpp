@@ -45,18 +45,22 @@ namespace imageManager
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
 		ZoneScoped;
+		//VERIFY THIS IS NEEDED
 		if ( std::ifstream ifs( path ); ifs )
 		{
-			std::vector< char > data {};
-			data.resize( std::filesystem::file_size( path ) );
-			TracyCZoneN( tracy_ImageLoad, "Image load", true );
-			ifs.read( data.data(), static_cast< int >( data.size() ) );
-			TracyCZoneEnd( tracy_ImageLoad );
+			QImage temp_image;
+			bool load_success = temp_image.load( QString::fromStdString(path.string()));
+				assert( load_success );
+			
+			QByteArray byteArray;
+			QBuffer buffer( &byteArray );
+			bool tsave = temp_image.save( &buffer, path.extension().string().substr(1).c_str(), 100);
+			spdlog::debug( tsave );
 
+			spdlog::debug( "Image Loaded: {}", load_success );
+			TracyCZoneN( tracy_ImageLoad, "Image load", true );
+			
 			TracyCZoneN( tracy_ProcessImage, "Process image", true );
-			QImage temp_image {
-				QImage::fromData( reinterpret_cast< unsigned char* >( data.data() ), static_cast< int >( data.size() ) )
-			};
 			TracyCZoneEnd( tracy_ProcessImage );
 
 			const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
@@ -72,44 +76,39 @@ namespace imageManager
 
 			std::string image_type { config::images::image_type::get().toStdString() };
 
-			TracyCZoneN( tracy_SaveImage, "Image save to buffer", true );
-			QByteArray byteArray;
-			QBuffer buffer( &byteArray );
-			temp_image.save( &buffer, image_type.c_str(), 99 );
+			TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
+
+			QByteArray webp_byteArray;
+			QBuffer webp_buffer( &webp_byteArray );
+			temp_image.save( &webp_buffer, image_type.c_str(), 99 );
 			
 			TracyCZoneEnd( tracy_SaveImage );
 
 			const auto dest_root { config::paths::images::getPath() };
 
 			//Which is smaller?
-			if ( static_cast< std::uint64_t >( buffer.size() ) < data.size() )
+			spdlog::info( "webp:{} <-> original:{}", webp_buffer.size(), buffer.size() );
+
+			if ( webp_buffer.size() < buffer.size() )
 			{
 				//Buffer is smaller. Meaning webp is smaller. Use it
-				const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
+				const auto hash { hashData( webp_buffer.data(), static_cast< int >( webp_buffer.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + ".webp" ) };
 
-				//Copy buffer to file
-				if ( std::filesystem::exists( dest ) ) return dest;
-				if ( std::ofstream ofs( dest ); ofs )
-				{
-					//This fixes buffer write errors
-					QImage img = QImage::fromData( byteArray );
-					img.save( QString::fromStdString(dest.string()) );
-					//ofs.write( buffer.data(), buffer.size() );
-					return dest;
-				}
-				else
-					throw std::runtime_error( fmt::format( "Failed to open desination {}", dest ) );
+				QImage img = QImage::fromData( webp_byteArray );
+				img.save( QString::fromStdString(dest.string()) );
+
+				return dest;
 			}
 			else
 			{
 				//Buffer is larger. Meaning webp is worse. Don't use it.
-				const auto hash { hashData( data.data(), static_cast< int >( data.size() ) ) };
-
+				const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
-				if ( std::filesystem::exists( dest ) ) return dest;
-				std::filesystem::copy( path, dest );
+				QImage img = QImage::fromData( byteArray );
+				img.save( QString::fromStdString(dest.string()) );
+				
 				return dest;
 			}
 		}

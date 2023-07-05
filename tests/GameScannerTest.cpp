@@ -38,7 +38,7 @@ TEST_CASE( "File Scanner", "[import]" )
 		{
 			//Copy our exe as a dummy
 #ifdef _WIN32
-			std::filesystem::copy( "./AtlasTests.exe".file );
+			std::filesystem::copy( "./AtlasTests.exe",file );
 #else
 			std::filesystem::copy( "./AtlasTests", file );
 #endif
