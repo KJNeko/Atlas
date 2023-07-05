@@ -31,7 +31,14 @@ constexpr std::tuple blacklist_execs { std::string_view( "UnityCrashHandler32.ex
 	                                   std::string_view( "notification_helper.exe" ),
 	                                   std::string_view( "nacl64.exe" ),
 	                                   std::string_view( "chromedriver.exe" ),
-	                                   std::string_view( "Squirrel.exe" ) };
+	                                   std::string_view( "Squirrel.exe" ),
+	                                   std::string_view( "zsynccmake.exe" ),
+	                                   std::string_view( "zsync" ),
+	                                   std::string_view( "pythonw.exe" ),
+	                                   std::string_view( "python.exe" ),
+	                                   std::string_view( "dxwebsetup" ),
+	                                   std::string_view( "UE4PrereqSetup_X64.exe" ),
+	                                   std::string_view( "UEPrereqSetup_x64.exe" ) };
 
 bool isBlacklistT( const std::string& name, const std::string_view comp )
 {

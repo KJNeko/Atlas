@@ -143,6 +143,12 @@ try
 			promise.suspendIfRequested();
 			if ( promise.isCanceled() ) return;
 			const std::filesystem::path& path { file.path() };
+			if ( std::filesystem::is_symlink( file ) )
+			{
+				spdlog::warn( "Symlink found: {}", file.path() );
+				continue;
+			}
+
 			if ( std::filesystem::is_directory( path ) )
 			{
 				if ( regex::valid( regex, QString::fromStdString( path.string() ) ) )
