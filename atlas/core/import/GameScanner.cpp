@@ -90,7 +90,7 @@ void runner(
 				                  std::move( creator ),
 				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
 				                  version.isEmpty() ? "0.0" : std::move( version ),
-				                  folderSize( scanner ),
+				                  0,
 				                  potential_executables,
 				                  potential_executables.at( 0 ),
 				                  std::move( banners ),
