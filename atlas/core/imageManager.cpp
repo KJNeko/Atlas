@@ -49,17 +49,18 @@ namespace imageManager
 		if ( std::ifstream ifs( path ); ifs )
 		{
 			QImage temp_image;
-			bool load_success = temp_image.load( QString::fromStdString(path.string()));
-				assert( load_success );
-			
+			TracyCZoneN( tracy_ImageLoad, "Image load", true );
+			const bool load_success { temp_image.load( QString::fromStdString( path.string() ) ) };
+			TracyCZoneEnd( tracy_ImageLoad );
+			if ( !load_success ) throw std::runtime_error( fmt::format( "Failed to import image {}", path ) );
+
 			QByteArray byteArray;
 			QBuffer buffer( &byteArray );
-			bool tsave = temp_image.save( &buffer, path.extension().string().substr(1).c_str(), 100);
+			const bool tsave { temp_image.save( &buffer, path.extension().string().substr( 1 ).c_str(), 100 ) };
 			spdlog::debug( tsave );
 
 			spdlog::debug( "Image Loaded: {}", load_success );
-			TracyCZoneN( tracy_ImageLoad, "Image load", true );
-			
+
 			TracyCZoneN( tracy_ProcessImage, "Process image", true );
 			TracyCZoneEnd( tracy_ProcessImage );
 
@@ -81,7 +82,7 @@ namespace imageManager
 			QByteArray webp_byteArray;
 			QBuffer webp_buffer( &webp_byteArray );
 			temp_image.save( &webp_buffer, image_type.c_str(), 99 );
-			
+
 			TracyCZoneEnd( tracy_SaveImage );
 
 			const auto dest_root { config::paths::images::getPath() };
@@ -96,7 +97,7 @@ namespace imageManager
 				const auto dest { dest_root / ( hash.toHex().toStdString() + ".webp" ) };
 
 				QImage img = QImage::fromData( webp_byteArray );
-				img.save( QString::fromStdString(dest.string()) );
+				img.save( QString::fromStdString( dest.string() ) );
 
 				return dest;
 			}
@@ -107,8 +108,8 @@ namespace imageManager
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
 				QImage img = QImage::fromData( byteArray );
-				img.save( QString::fromStdString(dest.string()) );
-				
+				img.save( QString::fromStdString( dest.string() ) );
+
 				return dest;
 			}
 		}
