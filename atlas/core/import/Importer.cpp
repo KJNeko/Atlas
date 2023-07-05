@@ -84,8 +84,6 @@ namespace internal
 		}
 		TracyCZoneEnd( tracy_FileScanner );
 
-		signaler->setMessage( "Waiting on database lock" );
-
 		signaler->setProgress( Progress::ImportRecordData );
 		signaler->setMessage( "Importing record data" );
 		auto record { importRecord( title, creator, engine ) };

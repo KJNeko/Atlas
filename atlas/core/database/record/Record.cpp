@@ -50,9 +50,7 @@ Record::Record( const RecordID id ) : std::shared_ptr< RecordData >( internal::g
 Record importRecord( QString title, QString creator, QString engine )
 {
 	ZoneScoped;
-	if ( recordExists( title, creator, engine ) )
-		throw RecordAlreadyExists(
-			Record( recordID( std::move( title ), std::move( creator ), std::move( engine ) ) ) );
+	if ( const auto id = recordID( title, creator, engine ); id != 0 ) return Record { id };
 
 	RecordData data { std::move( title ), std::move( creator ), std::move( engine ) };
 
