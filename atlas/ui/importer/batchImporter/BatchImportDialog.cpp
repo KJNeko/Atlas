@@ -17,6 +17,7 @@
 
 BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::BatchImportDialog )
 {
+	ZoneScoped;
 	ui->setupUi( this );
 	ui->progressBar->hide();
 	ui->btnBack->setHidden( true );
@@ -38,6 +39,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 void BatchImportDialog::loadConfig()
 {
+	ZoneScoped;
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
 	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
@@ -46,6 +48,7 @@ void BatchImportDialog::loadConfig()
 
 void BatchImportDialog::saveConfig()
 {
+	ZoneScoped;
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
 	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
@@ -62,6 +65,7 @@ BatchImportDialog::~BatchImportDialog()
 
 void BatchImportDialog::on_btnSetFolder_pressed()
 {
+	ZoneScoped;
 	auto directory { QFileDialog::getExistingDirectory( this, "Select folder to add" ) };
 
 	if ( directory.isEmpty() || !QFile::exists( directory ) )
@@ -72,6 +76,7 @@ void BatchImportDialog::on_btnSetFolder_pressed()
 
 void BatchImportDialog::processFiles()
 {
+	ZoneScoped;
 	ui->btnNext->setEnabled( false );
 	ui->btnNext->setText( "Import" );
 	ui->btnBack->setHidden( false );
@@ -110,6 +115,7 @@ void BatchImportDialog::processFiles()
 
 void BatchImportDialog::importFiles()
 {
+	ZoneScoped;
 	const auto games { dynamic_cast< BatchImportModel* >( ui->twGames->model() )->getData() };
 
 	if ( ui->cbMoveImported->isChecked() )
@@ -143,6 +149,7 @@ void BatchImportDialog::importFiles()
 
 void BatchImportDialog::on_btnNext_pressed()
 {
+	ZoneScoped;
 	spdlog::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
@@ -186,6 +193,7 @@ void BatchImportDialog::on_btnNext_pressed()
 
 void BatchImportDialog::on_btnBack_pressed()
 {
+	ZoneScoped;
 	spdlog::debug( "Back pressed" );
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
@@ -203,11 +211,13 @@ void BatchImportDialog::modelChanged(
 	[[maybe_unused]] const QModelIndex& bottomRight,
 	[[maybe_unused]] const QList< int >& roles )
 {
+	ZoneScoped;
 	ui->twGames->resizeColumnsToContents();
 }
 
 void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
 {
+	ZoneScoped;
 	emit addToModel( game_data );
 	ui->twGames->resizeColumnsToContents();
 	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
@@ -215,6 +225,7 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 
 void BatchImportDialog::finishedPreProcessing()
 {
+	ZoneScoped;
 	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
 	                              .arg( ui->twGames->model()->rowCount() ) );
 	ui->btnNext->setEnabled( true );
@@ -227,6 +238,7 @@ void BatchImportDialog::on_btnCancel_pressed()
 
 void BatchImportDialog::reject()
 {
+	ZoneScoped;
 	if ( QMessageBox::question( this, "Cancel Import", "Are you sure you want to cancel the import?" )
 	     == QMessageBox::Yes )
 	{
@@ -238,6 +250,7 @@ void BatchImportDialog::reject()
 
 void BatchImportDialog::importFailure( const QString top, const QString bottom )
 {
+	ZoneScoped;
 	spdlog::warn( "An import failure signal was detected" );
 	if ( QMessageBox::warning(
 			 this,
