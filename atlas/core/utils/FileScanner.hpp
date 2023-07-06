@@ -55,19 +55,39 @@ struct FileScannerGenerator
 
 		void unhandled_exception()
 		{
-			spdlog::critical( "An exception was thrown in the file scanner coroutine." );
+			if ( exception )
+			{
+				try
+				{
+					std::rethrow_exception( exception );
+				}
+				catch ( std::exception& e )
+				{
+					spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! {}", e.what() );
+				}
+				catch ( ... )
+				{
+					spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! FUCK!" );
+				}
+			}
+			else
+				spdlog::critical( "FileScannerGenerator: Unhandled exception but no value!" );
 			std::terminate();
 		}
 
 		void return_value( FileInfo&& from )
 		{
-			assert( from.filename != "" );
+			if ( from.filename == "" )
+				throw std::runtime_error( "FileScannerGenerator: return value had no filename!" );
+
 			value = std::move( from );
 		}
 
 		std::suspend_always yield_value( FileInfo from )
 		{
-			assert( from.filename != "" );
+			if ( from.filename == "" )
+				throw std::runtime_error( "FromScannerGenerator:: yield value had no filename!" );
+
 			value = std::move( from );
 			return {};
 		}

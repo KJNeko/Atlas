@@ -129,6 +129,10 @@ const FileInfo& FileScanner::at( std::size_t index )
 		}
 	}
 
+	if ( files.size() < index )
+		throw std::
+			runtime_error( fmt::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
+
 	return files.at( index );
 }
 
