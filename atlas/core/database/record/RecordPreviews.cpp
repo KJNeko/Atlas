@@ -56,8 +56,6 @@ void RecordPreviews::addPreview( const std::filesystem::path& path )
 
 	transaction << "INSERT INTO previews (record_id, path, position) VALUES (?, ?, ?)" << m_record.getID()
 				<< std::filesystem::relative( new_path, root_images ).string() << 256;
-
-
 }
 
 /*
