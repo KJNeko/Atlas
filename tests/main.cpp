@@ -7,7 +7,12 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <catch2/catch_session.hpp>
+#pragma GCC diagnostic pop
 
 int main( int argc, char* argv[] )
 {
