@@ -48,6 +48,7 @@ void ProgressMessage::changeMax( int max )
 
 void ProgressMessage::changeProgress( int progress )
 {
+	ZoneScoped;
 	ui->progressBar->setValue( progress );
 
 	if ( progress == ui->progressBar->maximum() )
@@ -59,11 +60,13 @@ void ProgressMessage::changeProgress( int progress )
 
 void ProgressMessage::changeMessage( QString message )
 {
+	ZoneScoped;
 	ui->lblProgressMsg->setText( message );
 }
 
 void ProgressMessage::closeSelf()
 {
+	ZoneScoped;
 	if ( ui->progressBar->maximum() == ui->progressBar->value() ) getNotificationPopup()->removeMessage( this );
 }
 

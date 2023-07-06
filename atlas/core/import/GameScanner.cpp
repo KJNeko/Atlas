@@ -26,8 +26,6 @@ void runner(
 	ZoneScoped;
 	try
 	{
-		//promise.start();
-		spdlog::debug( "Runner active for game {}", folder );
 		if ( promise.isCanceled() ) return;
 		FileScanner scanner { folder };
 		std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
@@ -148,6 +146,7 @@ try
 
 			if ( std::filesystem::is_directory( path ) )
 			{
+				ZoneScopedN( "Check directory" );
 				if ( regex::valid( regex, QString::fromStdString( path.string() ) ) )
 				{
 					//The regex was a match. We can now process this directory further
@@ -235,6 +234,7 @@ bool GameScanner::isPaused()
 
 GameScanner::~GameScanner()
 {
+	ZoneScoped;
 	if ( m_runner_future.isRunning() ) m_runner_future.cancel();
 
 	m_thread_pool.waitForDone();
