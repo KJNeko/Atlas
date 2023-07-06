@@ -50,18 +50,9 @@ namespace atlas
 		{
 			//Read header
 			std::array< char, LZ4F_HEADER_SIZE_MAX > header_buffer;
-			std::size_t header_size {
-				static_cast< size_t >( ifs.readsome( header_buffer.data(), header_buffer.size() ) )
-			};
-			std::size_t processed_bytes { header_size };
+			ifs.read( header_buffer.data(), header_buffer.size() );
 
-			if ( header_size < LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH )
-			{
-				spdlog::error(
-					"extract: header_size < MIN_SIZE: {} < {}", header_size, LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH );
-				throw std::runtime_error( fmt::format(
-					"extract: header_size < MIN_SIZE: {} < {}", header_size, LZ4F_MIN_SIZE_TO_KNOW_HEADER_LENGTH ) );
-			}
+			std::size_t processed_bytes { LZ4F_HEADER_SIZE_MAX };
 
 			LZ4F_frameInfo_t info;
 			if ( const auto fires = LZ4F_getFrameInfo( dctx, &info, header_buffer.data(), &processed_bytes );
