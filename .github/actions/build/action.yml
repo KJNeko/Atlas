@@ -63,7 +63,9 @@ runs:
         move * ..
         cd ../..
         7z x sqlite-dll.zip -o"./lib"
-        cd ..
+        cd lib
+        lib /DEF:sqlite3.def /OUT:sqlite3.lib
+        cd ../..
 
     - name: Set SQLITE into path
       shell: powershell
