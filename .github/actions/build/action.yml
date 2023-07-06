@@ -63,9 +63,7 @@ runs:
         move * ..
         cd ../..
         7z x sqlite-dll.zip -o"./lib"
-        cd lib
-        lib /DEF:sqlite3.def /OUT:sqlite3.lib
-        cd ../..
+        cd ..
 
     - name: Set SQLITE into path
       shell: powershell
@@ -86,12 +84,12 @@ runs:
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite'
+      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
     - name: CMake Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite'
+      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
     - name: Build Target Atlas Release
       shell: powershell
