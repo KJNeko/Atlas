@@ -7,7 +7,6 @@
 #include <fstream>
 #include <moc_AtlasRemote.cpp>
 
-#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -21,7 +20,6 @@
 #include "extract.hpp"
 #include "ui/notifications/NotificationMessage.hpp"
 #include "ui/notifications/NotificationPopup.hpp"
-#include "ui/notifications/ProgressMessage.hpp"
 
 #define REMOTE "https://atlas-gamesdb.com/"
 
