@@ -97,7 +97,7 @@ runs:
 
     - name: Build Target Atlas Release-Profile
       shell: powershell
-      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true' && inputs.build-profile == 'true}}
+      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true' && inputs.build-profile == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-rp -j8 --target Atlas
 
