@@ -11,8 +11,6 @@ message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 if (WIN32)
-    string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
-
     if (DEFINED ENV{QT_PATH})
         set(QT_PATH $ENV{QT_PATH})
         message("Setting QT path from ENV")
