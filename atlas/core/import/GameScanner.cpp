@@ -196,7 +196,7 @@ catch ( ... )
 void GameScanner::start( const std::filesystem::path path, const QString regex )
 {
 	ZoneScoped;
-	m_thread_pool.setMaxThreadCount( 2 );
+	//m_thread_pool.setMaxThreadCount( 2 );
 
 	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
 	if ( m_runner_future.isFinished() )
