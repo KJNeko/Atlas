@@ -18,6 +18,10 @@ inputs:
     description: "Build atlas"
     required: false
     default: 'true'
+  build-profile:
+    description: "Builds profiling tool and atlas in profiling mode"
+    required: false
+    default: 'false'
   version-string:
     description: "Version string"
     required: false
@@ -91,9 +95,15 @@ runs:
       if: ${{inputs.build-debug == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
+    - name: Build Target Atlas Release-Profile
+      shell: powershell
+      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true' && inputs.build-profile == 'true}}
+      run: |
+        cmake --build ${{github.workspace}}\builds\build-rp -j8 --target Atlas
+
     - name: Build Target Atlas Release
       shell: powershell
-      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'false'}}
+      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
 

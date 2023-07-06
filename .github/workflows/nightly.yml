@@ -21,18 +21,20 @@ jobs:
 
       - uses: ./.github/actions/build
         with:
-          build-release: false
-          build-debug: true
+          build-release: true
+          build-debug: false
           build-atlas: true
+          build-profile: true
           version-string: ${{ env.ATLAS_VERSION_STR }}
 
       - name: Package
         run: |
           env
           cd ${{github.workspace}}
-          mkdir Atlas-Release
-          move ${{github.workspace}}\builds\build-d\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Debug\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Debug 
+          move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Release\
+          move ${{github.workspace}}\builds\build-rp\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Release-Profiling\
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows-Profile.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release-Profiling 
 
       - name: Create release
         uses: softprops/action-gh-release@v1
@@ -47,3 +49,4 @@ jobs:
           target_commitish: staging
           files: |
             Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip
+            Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows-Profile.zip
