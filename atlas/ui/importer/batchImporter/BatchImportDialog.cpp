@@ -135,11 +135,16 @@ void BatchImportDialog::importFiles()
 	(void)QtConcurrent::run(
 		[ games, owning, root ]()
 		{
+			QThreadPool import_pool;
+			import_pool.setMaxThreadCount( 4 );
+
 			for ( auto game : games )
 			{
 				spdlog::debug( "Triggering import game for {}", game.title );
-				(void)importGame( std::move( game ), root, owning );
+				(void)importGame( std::move( game ), root, owning, import_pool );
 			}
+
+			import_pool.waitForDone();
 		} );
 
 	spdlog::debug( "Finished queueing imports" );

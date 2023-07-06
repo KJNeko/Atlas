@@ -169,11 +169,12 @@ QFuture< RecordID > importGame(
 	QString version,
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
-	bool owning )
+	bool owning,
+	QThreadPool& pool )
 {
 	ZoneScoped;
 	return QtConcurrent::
-		run( QThreadPool::globalInstance(),
+		run( &pool,
 	         internal::importGame,
 	         std::move( root ),
 	         std::move( relative_executable ),
@@ -201,5 +202,26 @@ QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path
 		std::move( version ),
 		std::move( banners ),
 		std::move( previews ),
-		owning );
+		owning,
+		*QThreadPool::globalInstance() );
+}
+
+QFuture< RecordID >
+	importGame( GameImportData data, const std::filesystem::path root, const bool owning, QThreadPool& pool )
+{
+	ZoneScoped;
+	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
+		std::move( data );
+
+	return importGame(
+		root / path,
+		root / path / executable,
+		std::move( title ),
+		std::move( creator ),
+		"",
+		std::move( version ),
+		std::move( banners ),
+		std::move( previews ),
+		owning,
+		pool );
 }
