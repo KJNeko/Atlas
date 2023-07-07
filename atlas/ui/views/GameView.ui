@@ -149,12 +149,6 @@ border:none;</string>
                 <height>0</height>
                </size>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">background-color:none;</string>
               </property>
@@ -312,12 +306,6 @@ border-radius:3px;</string>
             </property>
             <item row="1" column="0">
              <widget class="QLabel" name="lbLastPlayed">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">background-color:none;</string>
               </property>
@@ -387,12 +375,6 @@ border-radius:3px;</string>
                <size>
                 <width>70</width>
                 <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
                </size>
               </property>
               <property name="styleSheet">
