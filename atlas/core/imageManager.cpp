@@ -88,7 +88,7 @@ namespace imageManager
 			const auto dest_root { config::paths::images::getPath() };
 
 			//Which is smaller?
-			spdlog::info( "webp:{} <-> original:{}", webp_buffer.size(), buffer.size() );
+			spdlog::debug( "webp:{} <-> original:{}", webp_buffer.size(), buffer.size() );
 
 			if ( webp_buffer.size() < buffer.size() )
 			{
