@@ -32,6 +32,7 @@ RecordView::RecordView( QWidget* parent ) : QListView( parent )
 
 void RecordView::setRenderMode( const DelegateType type )
 {
+	spdlog::debug( "Setting Render Mode" );
 	ZoneScoped;
 	if ( type == current_render_mode ) return;
 
@@ -173,6 +174,7 @@ void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 
 void RecordView::reloadConfig()
 {
+	spdlog::debug("Config Reloaded")
 	ZoneScoped;
 	switch ( current_render_mode )
 	{

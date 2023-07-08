@@ -154,6 +154,7 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::resizeEvent( QResizeEvent* event )
 {
+	spdlog::debug( "Window Resize Event" );
 	QMainWindow::resizeEvent( event );
 
 	//Store window height and width
