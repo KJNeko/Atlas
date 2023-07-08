@@ -25,7 +25,7 @@ class RecordBanner
   public:
 
 	const std::filesystem::path getBannerPath( const BannerType type ) const;
-	bool hasBanner( const BannerType type ) const;
+	bool hasBanner( const BannerType type, const std::string file ) const;
 	QPixmap getBanner( const BannerType type ) const;
 	QPixmap getBanner( const int width, const int height, const SCALE_TYPE aspect_ratio_mode, const BannerType type )
 		const;

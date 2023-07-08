@@ -100,18 +100,19 @@ void RecordBanner::setBanner( const std::filesystem::path& path, const BannerTyp
 	//Move banner to image folder
 	const std::filesystem::path new_path { imageManager::importImage( path ) };
 	const auto image_root { config::paths::images::getPath() };
+	const auto file { std::filesystem::relative( new_path, image_root ).string() };
 
 	//Check if it exists
 	RapidTransaction transaction;
-	if ( hasBanner( type ) )
+	if ( hasBanner( type, file ))
 	{
-		transaction << "UPDATE banners SET record_id = ? AND path = ? AND type = ?" << m_record.getID()
-					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
+		transaction << "UPDATE banners SET path = ? , type = ? WHERE record_id=?"  << file
+					<< static_cast< int >( type )<< + m_record.getID();
 	}
 	else
 	{
 		transaction << "INSERT INTO banners (record_id, path, type) VALUES (?, ?, ?)" << m_record.getID()
-					<< std::filesystem::relative( new_path, image_root ).string() << static_cast< int >( type );
+					<< file << static_cast< int >( type );
 	}
 }
 
@@ -128,13 +129,14 @@ QPixmap RecordBanner::getBanner( const QSize size, const SCALE_TYPE aspect_ratio
 	return getBanner( size.width(), size.height(), aspect_ratio_mode, type );
 }
 
-bool RecordBanner::hasBanner( const BannerType type ) const
+bool RecordBanner::hasBanner( const BannerType type, const std::string file ) const
 {
 	ZoneScoped;
 	int count { 0 };
 	RapidTransaction trans;
-	trans << "SELECT COUNT(*) FROM banners WHERE record_id = ? AND type = ?" << m_record.getID()
-		  << static_cast< int >( type )
-		>> count;
-	return count;
+	trans << "SELECT COUNT(*) FROM banners WHERE record_id = ? AND path = ? AND type = ?" << m_record.getID()
+					<< file << static_cast< int >( type ) 
+					>> count;
+	
+	return static_cast<bool>(count);
 }
