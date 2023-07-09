@@ -41,10 +41,18 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->NavTop->hide();
 
 	//Set Font
-	QFont font { config::application::font::get() == "" ? QApplication::font().defaultFamily() :
-		                                                  config::application::font::get(),
-		         config::application::fontSize::get() };
-	QApplication::setFont( font );
+	QFont font;	
+	font.setPixelSize( config::application::fontSize::get() );
+	font.setFamily( config::application::font::get() == "" ? QApplication::font().defaultFamily() : config::application::font::get() );
+	
+	try{
+		QApplication::setFont( font );
+		//throw 505;
+	}
+	catch(int num)
+	{
+		spdlog::error("Unable to load default font. Verify system font available");
+	}
 
 	config::notify();
 
