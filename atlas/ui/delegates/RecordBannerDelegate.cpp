@@ -25,7 +25,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//draw test rect
 	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
-	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
+	painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
 	//painter->drawRect( test_rect );
 
 	//Draw banner if present
@@ -109,8 +109,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
-	const auto [ title, engine, creator ] =
+	auto [ title, engine, creator ] =
 		record->get< RecordColumns::Title, RecordColumns::Engine, RecordColumns::Creator >();
+	//Fix Title
+	title = title.replace( "_", "");
 
 	//Draw Title
 	this->drawText( painter, options_rect, stripe_height, m_title_location, title );
@@ -250,24 +252,33 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
 	CONFIG_ATTACH_THIS;
 }
 
-QSize RecordBannerDelegate::calculateSize( const int w_width, const int b_width, const int b_height, const int spacing )
+QSize RecordBannerDelegate::calculateSize( const int window_width, const int banner_width, const int banner_height, const int banner_spacing )
 {
+	spdlog::debug( "Window_width:{} | Banner_width:{} | Banner_height:{} | Spacing:{}", window_width, banner_width, banner_height, banner_spacing );
 	ZoneScoped;
-	const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
-	int viewport = w_width - scroll_bar - spacing;
+	//const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
+	int record_viewport = window_width;
 
-	int item_count { static_cast< int >( viewport / static_cast< double >( b_width + spacing ) ) };
-	//int item_count { ( viewport - b_count ) / ( b_width + spacing ) };
-	int tiw { ( item_count ) * ( b_width + spacing ) };
+	int item_count { static_cast< int >( record_viewport / static_cast< double >( banner_width ) ) };	
+	int banner_total_width { ( item_count ) * ( banner_width) };
+	double banner_offset { ( record_viewport - banner_total_width ) / static_cast< double >( item_count ) };
+	int banner_viewport { ( static_cast< int >( banner_offset ) * item_count ) + banner_total_width };
+	if(banner_viewport >= record_viewport)
+	{
+		banner_offset -= 1;
+	}
+	spdlog::debug( "record_viewport:{} | banner_viewport:{} | item_count:{} | banner_offset:{}", record_viewport, banner_viewport, item_count, static_cast< int >( banner_offset ) );
 
-	double offset { ( viewport - tiw ) / static_cast< double >( item_count ) };
-	offset = offset >= 5 ? offset - 2 : offset;
-	//item_count = w_width >= offset ? item_count : item_count - 1;
-	//const int x_offset { ( w_width - scroll_bar - ( ( item_count + 1 ) * spacing ) - ( item_count * b_width ) )
-	//	                 / item_count };
-	//Return offset with widget if center widgets is used.
-	//QSize qsize { offset >= 0 ? offset + b_width : b_width, b_height };
-	QSize qsize { m_center_widgets ? b_width + static_cast< int >( offset ) : b_width, b_height };
+	//USED TO CENTER WIDGETS
+	QSize qsize { m_center_widgets ? banner_width + static_cast< int >( banner_offset ) : banner_width + banner_spacing, banner_height +banner_spacing };
 
 	return qsize;
+}
+
+QString toCamelCase(const QString& s)
+{
+    QStringList cased;
+        //foreach (QString word, s.split(" ", QString::skip))cased << word.at(0).toUpper() + word.mid(1);
+
+    return cased.join(" ");
 }

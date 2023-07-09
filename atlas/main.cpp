@@ -130,7 +130,7 @@ int main( int argc, char** argv )
 	std::filesystem::path db_path = config::paths::database::getPath() / "atlas.db";
 	Database::initalize( db_path );
 
-	QPixmapCache::setCacheLimit( 1024 * 1024 );
+	QPixmapCache::setCacheLimit( 1024 * 512 );
 
 	MainWindow w;
 	w.show();

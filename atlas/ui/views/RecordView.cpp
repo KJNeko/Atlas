@@ -186,7 +186,7 @@ void RecordView::reloadConfig()
 				assert( delegate != nullptr );
 				delegate->reloadConfig();
 				//Set spacing between each item
-				QListView::setSpacing( delegate->m_grid_spacing );
+				//QListView::setSpacing( delegate->m_grid_spacing );
 				delegate->sizeHintChanged( selectionModel()->currentIndex() );
 
 				QWidget::repaint();

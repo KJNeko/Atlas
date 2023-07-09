@@ -81,7 +81,7 @@ namespace imageManager
 
 			QByteArray webp_byteArray;
 			QBuffer webp_buffer( &webp_byteArray );
-			temp_image.save( &webp_buffer, image_type.c_str(), 99 );
+			temp_image.save( &webp_buffer, image_type.c_str(), 90 );
 
 			TracyCZoneEnd( tracy_SaveImage );
 
