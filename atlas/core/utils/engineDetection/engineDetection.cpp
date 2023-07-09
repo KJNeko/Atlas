@@ -6,6 +6,8 @@
 
 #include <array>
 #include <iostream>
+#include <algorithm>
+#include <string>
 
 #include <QMimeDatabase>
 
@@ -77,18 +79,23 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 			const auto type {
 				mime_db.mimeTypeForFile( QString::fromStdString( path.string() ), QMimeDatabase::MatchContent )
 			};
-
+			//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
+			spdlog::info( "type:{} ext:{}", type.name(), ext );
 			//General executables
-			if ( type.inherits( "application/x-ms-dos-executable" ) && ext == ".exe" )
+			if ( type.inherits( "application/x-ms-dos-executable" ) )
 			{
+				spdlog::info( "Found executable:{}", path.string() );
+				//potential_executables.insert( potential_executables.begin(), relative );
 				//prioritize AMD64
 				path.string().std::string::find( "32" ) ?
 					potential_executables.insert( potential_executables.begin(), relative ) :
 					potential_executables.insert( potential_executables.end(), relative );
+				//potential_executables.emplace_back( relative );
 				continue;
 			}
-			else if ( type.inherits( "text/html" ) && filename == "index.html" )
+			else if ( type.inherits( "text/plain" ) && ext == ".html" )
 			{
+				spdlog::info( "Found HTML:{}", path.string() );
 				potential_executables.emplace_back( relative );
 				continue;
 			}
@@ -101,6 +108,7 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 					continue;
 				}
 			}
+			
 		}
 	}
 
@@ -122,7 +130,8 @@ std::vector< std::filesystem::path >
 		if constexpr ( sys::is_linux )
 			if ( path.extension() == ".sh" ) execs.emplace_back( std::move( path ), 20 );
 
-		if ( path.extension() == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( path.extension() == ".exe" || path.extension() == ".EXE" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( path.extension() == ".html" || path.extension() == ".HTML" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
