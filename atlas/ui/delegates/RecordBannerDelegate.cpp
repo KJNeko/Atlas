@@ -24,8 +24,11 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->save();
 
 	//draw test rect
-	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
+	const int rect_x = options.rect.x();
+	const int rect_y = options.rect.y();
+	QRect test_rect { rect_x, rect_y, m_grid_size.width(), m_grid_size.height() };
 	painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
+	
 	//painter->drawRect( test_rect );
 
 	//Draw banner if present
@@ -40,8 +43,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const bool enable_bottom_overlay { m_enable_bottom_overlay };
 
 	//For centering Items
-	const int x_offset { options.rect.x() + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
-	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
+
+	const int item_count { static_cast< int >( config::grid_ui::itemViewWidth::get() / static_cast< double >( config::grid_ui::bannerSizeX::get() ) ) };
+	const int image_offset { m_grid_size.width() - m_banner_size.width() };
+	spdlog::debug( "coloumn:{} row:{} item_count:{} image_offset:{}", index.column(), index.row(), item_count, image_offset );
+	const int x_offset { rect_x + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
+	const int y_offset { rect_y+ ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
 	const QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
 
 	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
@@ -70,7 +77,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//TODO: add ability to change selected color.
 	if ( options.state & QStyle::State_MouseOver )
 	{
-		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
+		painter->fillRect( pixmap_rect, QColor( 0, 0, 255, 50 ) );
 		// figure out where banner is and show pop up
 		//const int popup_x {banner_size.width()};
 		//const int popup_y {options_rect.y() + banner_size.height()/2};
@@ -109,10 +116,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
-	auto [ title, engine, creator ] =
+	const auto [ title, engine, creator ] =
 		record->get< RecordColumns::Title, RecordColumns::Engine, RecordColumns::Creator >();
 	//Fix Title
-	title = title.replace( "_", "");
+	//const auto title_fixed = toCamelCase(title);
 
 	//Draw Title
 	this->drawText( painter, options_rect, stripe_height, m_title_location, title );
@@ -254,20 +261,20 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
 
 QSize RecordBannerDelegate::calculateSize( const int window_width, const int banner_width, const int banner_height, const int banner_spacing )
 {
-	spdlog::debug( "Window_width:{} | Banner_width:{} | Banner_height:{} | Spacing:{}", window_width, banner_width, banner_height, banner_spacing );
+	//spdlog::debug( "Window_width:{} | Banner_width:{} | Banner_height:{} | Spacing:{}", window_width, banner_width, banner_height, banner_spacing );
 	ZoneScoped;
-	//const int scroll_bar = 16; // scroll bar = 15 +  extra spacing + 1px margin
+	
 	int record_viewport = window_width;
-
 	int item_count { static_cast< int >( record_viewport / static_cast< double >( banner_width ) ) };	
 	int banner_total_width { ( item_count ) * ( banner_width) };
 	double banner_offset { ( record_viewport - banner_total_width ) / static_cast< double >( item_count ) };
 	int banner_viewport { ( static_cast< int >( banner_offset ) * item_count ) + banner_total_width };
+	//Because Qt does not like floating points, we need to make sure the banner viewport is 1px less that what is available.
 	if(banner_viewport >= record_viewport)
 	{
 		banner_offset -= 1;
 	}
-	spdlog::debug( "record_viewport:{} | banner_viewport:{} | item_count:{} | banner_offset:{}", record_viewport, banner_viewport, item_count, static_cast< int >( banner_offset ) );
+	//spdlog::debug( "record_viewport:{} | banner_viewport:{} | item_count:{} | banner_offset:{}", record_viewport, banner_viewport, item_count, static_cast< int >( banner_offset ) );
 
 	//USED TO CENTER WIDGETS
 	QSize qsize { m_center_widgets ? banner_width + static_cast< int >( banner_offset ) : banner_width + banner_spacing, banner_height +banner_spacing };
@@ -275,10 +282,11 @@ QSize RecordBannerDelegate::calculateSize( const int window_width, const int ban
 	return qsize;
 }
 
-QString toCamelCase(const QString& s)
+QString RecordBannerDelegate::toCamelCase(const QString& s)
 {
-    QStringList cased;
-        //foreach (QString word, s.split(" ", QString::skip))cased << word.at(0).toUpper() + word.mid(1);
+    QStringList parts = s.split(' ', Qt::SkipEmptyParts);
+    for (int i = 0; i < parts.size(); ++i)
+        parts[i].replace(0, 1, parts[i][0].toUpper());
 
-    return cased.join(" ");
+    return parts.join(" ");
 }

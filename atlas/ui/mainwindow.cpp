@@ -69,6 +69,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
+
+	//Make sure mouse tracking is enabled for view
+	ui->recordView->setMouseTracking( true );
 }
 
 MainWindow::~MainWindow()
