@@ -174,7 +174,7 @@ void RecordView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )
 
 void RecordView::reloadConfig()
 {
-	spdlog::debug("Config Reloaded")
+	spdlog::debug( "Config Reloaded" );
 	ZoneScoped;
 	switch ( current_render_mode )
 	{
