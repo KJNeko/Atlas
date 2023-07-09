@@ -27,7 +27,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const int rect_x = options.rect.x();
 	const int rect_y = options.rect.y();
 	QRect test_rect { rect_x, rect_y, m_grid_size.width(), m_grid_size.height() };
-	painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
+	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
 	
 	//painter->drawRect( test_rect );
 
