@@ -3,8 +3,28 @@ Add resource links for each souce you have verified. Add what it has that we nee
 The main two sites are [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/)
 
 ## GAME SOURCES
+[F95Zone](https://f95zone.to/sam/latest_alpha/#/cat=games/page=1)
+
+[RPDL (Torrents)](https://rpdl.net/)
+
+[DLSite](https://www.dlsite.com/)
+
+[SXS Hentai](http://sxshentai.com/)
+
+[SVS Comics](https://svscomics.com/)
+
+[Lewdcorner](https://lewdcorner.com/latest-updates/)
 
 ## IMAGE SOURCES
+### Storefronts
+[Affect3D.com](https://affect3dstore.com/)
+
+[DLSite](https://www.dlsite.com/)
+
+[SXS Hentai](http://sxshentai.com/)
+
+[SVS Comics](https://svscomics.com/)
+
 
 ## 3D ASSET SOURCES (Blender, Unreal, Daz3D and Poser)
 ### Storefronts:
@@ -18,7 +38,9 @@ The main two sites are [F95Zone](https://f95zone.to/) and [DLSite](https://www.d
 
 [Unreal Engine](https://www.unrealengine.com/marketplace/en-US/store)
 
+------------------
 ### Download Sources:
+
 [F95Zone Assets](https://f95zone.to/sam/latest_alpha/#/cat=assets/page=1)
 
 [PS-DS.info](https://ps-ds.info/)
