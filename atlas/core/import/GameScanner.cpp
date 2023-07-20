@@ -126,6 +126,7 @@ try
 	to_scan.push( base );
 	while ( to_scan.size() > 0 )
 	{
+		ZoneScopedN( "Scan directory" );
 		promise.suspendIfRequested();
 		if ( promise.isCanceled() ) return;
 
@@ -135,6 +136,7 @@ try
 
 		for ( const auto& file : std::filesystem::directory_iterator( current ) )
 		{
+			ZoneScopedN( "Scan file" );
 			promise.suspendIfRequested();
 			if ( promise.isCanceled() ) return;
 			const std::filesystem::path& path { file.path() };

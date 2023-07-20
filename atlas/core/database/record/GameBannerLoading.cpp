@@ -174,6 +174,7 @@ void scaleImage(
 	if ( path.empty() || !std::filesystem::exists( path ) )
 	{
 		promise.addResult( QPixmap() );
+		return;
 	}
 
 	if ( promise.isCanceled() ) return;
@@ -187,6 +188,7 @@ void scaleImage(
 	}
 	else
 	{
+		ZoneScopedN( "Read image" );
 		QImageReader loader { QString::fromStdString( path.string() ) };
 		const auto image_size { loader.size() };
 
