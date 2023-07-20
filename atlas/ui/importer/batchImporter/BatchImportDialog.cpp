@@ -235,7 +235,9 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 {
 	ZoneScoped;
 	emit addToModel( game_data );
-	ui->twGames->resizeColumnsToContents();
+
+	if ( ui->twGames->model()->rowCount() % 64 == 0 ) ui->twGames->resizeColumnsToContents();
+
 	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
 }
 
@@ -244,6 +246,7 @@ void BatchImportDialog::finishedPreProcessing()
 	ZoneScoped;
 	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
 	                              .arg( ui->twGames->model()->rowCount() ) );
+	ui->twGames->resizeColumnsToContents();
 	ui->btnNext->setEnabled( true );
 }
 
