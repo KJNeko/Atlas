@@ -230,21 +230,20 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
              <item>
               <widget class="QCheckBox" name="cbScanFilesize">
                <property name="text">
-                <string>Scan filesize during
-import </ string >
-    </property>
-    </widget>
-    </item>
-    </layout>
-    </widget>
-    </item>
-    </layout>
-    </widget>
-    </item>
-    </layout>
-    </widget>
-    <widget class="QWidget" name="page_2">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+                <string>Scan filesize during import</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="leftMargin">
         <number>0</number>
        </property>
