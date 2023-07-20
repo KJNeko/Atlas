@@ -6,11 +6,13 @@
 
 #include <moc_RecordListView.cpp>
 
+#include <QFileDialog>
 #include <QMenu>
 #include <QMouseEvent>
 
 #include "core/database/Version.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
+#include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 RecordListView::RecordListView( QWidget* parent ) : QListView( parent )
@@ -72,19 +74,18 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	QMenu menu { this };
 	menu.move( mapToGlobal( pos ) );
 
-	/*
-	const auto record { selectionModel()->currentIndex().data().value< Game >() };
+	Game record { selectionModel()->currentIndex().data().value< Game >() };
 
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );
 	//menu.addAction( QString( "Creator: %1" ).arg( record->getCreator() ) );
 
-	const auto& versions { record->m_versions };
+	std::vector< Version > versions { record->m_versions };
 
 	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( versions.size() ) ) };
 
 	for ( auto& version : versions )
 	{
-		auto version_submenu { version_menu->addMenu( version.getVersionName() ) };
+		auto version_submenu { version_menu->addMenu( version->m_version ) };
 		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
 		version_submenu->addSeparator();
 		version_submenu->addAction( "Delete version" );
@@ -96,7 +97,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		"Manage versions",
 		[ record, this ]()
 		{
-			RecordEditor dialog { record.m_game_id, this };
+			RecordEditor dialog { record->m_game_id, this };
 			dialog.show();
 			dialog.switchTabs( 2 );
 			dialog.exec();
@@ -105,39 +106,43 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	//Image stuff
 	auto image_menu { menu.addMenu( "Banner/Previews" ) };
 
-	const auto banner { record.requestBanner(Normal).result() };
+	const auto banner { record.requestBanner( Normal ).result() };
 	if ( banner.isNull() )
 		image_menu->addAction( "Banner not set" );
 	else
 		image_menu->addAction( QString( "Banner: (%1x%2)" ).arg( banner.width() ).arg( banner.height() ) );
 
-	image_menu->addAction( QString( "%1 previews" ).arg( record.previewPaths().size() ) );
+	const auto id { record->m_game_id };
+
+	image_menu->addAction( QString( "%1 previews" ).arg( record->m_preview_paths.size() ) );
 	image_menu->addSeparator();
 	image_menu->addAction(
 		"Set banner",
-		[ record, this ]()
+		[ id, this ]()
 		{
+			Game game { id };
 			const auto path {
 				QFileDialog::
 					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record.setBanner( path.toStdString(), Normal );
+			if ( !path.isEmpty() ) game.setBanner( path.toStdString(), Normal );
 		} );
 	image_menu->addAction(
 		"Add preview",
-		[ record, this ]()
+		[ id, this ]()
 		{
+			Game game { id };
 			const auto path {
 				QFileDialog::
 					getOpenFileName( this, "Select preview", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
 			};
-			if ( !path.isEmpty() ) record.addPreview( path.toStdString() );
+			if ( !path.isEmpty() ) game.addPreview( path.toStdString() );
 		} );
 	image_menu->addAction(
 		"Manage images",
 		[ record, this ]()
 		{
-			RecordEditor dialog { record.m_game_id, this };
+			RecordEditor dialog { record->m_game_id, this };
 			dialog.show();
 			dialog.switchTabs( 1 );
 			dialog.exec();
@@ -147,13 +152,12 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		"Manage record",
 		[ record, this ]()
 		{
-			RecordEditor dialog { record.m_game_id, this };
+			RecordEditor dialog { record->m_game_id, this };
 			dialog.show();
 			dialog.exec();
 		} );
 
 	menu.exec();
-	 */
 }
 
 void RecordListView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event )

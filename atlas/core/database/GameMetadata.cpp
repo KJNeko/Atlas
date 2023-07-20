@@ -115,6 +115,9 @@ void Version::playGame()
 	}
 	else
 		spdlog::error( "Failed to launch game with executable {}", executable.string() );
+	//TODO: Need to make a hookable static object or something
+	// in order to indicate to it to launch the game
+	// that way we can eventually add in the ability to prevent other games from being launched and such.
 }
 
 void Version::addPlaytime( const std::uint32_t playtime )
