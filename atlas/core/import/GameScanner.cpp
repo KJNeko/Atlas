@@ -198,12 +198,13 @@ void GameScanner::start( const std::filesystem::path path, const QString regex )
 	m_thread_pool.setMaxThreadCount( 5 );
 
 	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
-	if ( m_runner_future.isFinished() )
+	if ( m_runner_future.isFinished() ) // Optimistic checking if we finished instantly.
 		emitComplete();
 	else
 	{
 		connect( &m_watcher, &QFutureWatcher< void >::finished, this, &GameScanner::emitComplete );
 		m_watcher.setFuture( m_runner_future );
+		QCoreApplication::processEvents();
 	}
 }
 
