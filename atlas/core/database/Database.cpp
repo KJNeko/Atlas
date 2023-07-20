@@ -8,7 +8,7 @@
 
 #include "Transaction.hpp"
 #include "core/config.hpp"
-#include "core/database/record/Record.hpp"
+#include "core/database/record/Game.hpp"
 
 namespace internal
 {
@@ -24,7 +24,6 @@ namespace internal
 
 sqlite3& Database::ref()
 {
-	ZoneScoped;
 	if ( internal::db_handle != nullptr )
 		return *internal::db_handle;
 	else
@@ -33,7 +32,6 @@ sqlite3& Database::ref()
 
 internal::MtxType& Database::lock()
 {
-	ZoneScoped;
 	return internal::db_mtx;
 }
 
@@ -57,12 +55,9 @@ void Database::initalize( const std::filesystem::path init_path )
 	RapidTransaction transaction {};
 
 	const std::vector< std::string > table_queries {
-		"CREATE TABLE IF NOT EXISTS records (record_id INTEGER PRIMARY KEY, title TEXT, creator TEXT, engine TEXT, last_played_r DATE, total_playtime INTEGER, UNIQUE(title, creator, engine));",
-		"CREATE TABLE IF NOT EXISTS game_metadata (record_id INTEGER REFERENCES records(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, date_added INTEGER, UNIQUE(record_id, version));",
-		"CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS SELECT DISTINCT record_id, game_metadata.date_added FROM records NATURAL JOIN game_metadata ORDER BY game_metadata.date_added DESC;",
-
-		//Extra data for records
-		"CREATE TABLE IF NOT EXISTS game_notes (record_id INTEGER REFERENCES records(record_id), notes TEXT, UNIQUE(record_id))",
+		"CREATE TABLE IF NOT EXISTS games (record_id INTEGER PRIMARY KEY, title TEXT NOT NULL, creator TEXT NOT NULL, engine TEXT, last_played_r DATE DEFAULT 0, total_playtime INTEGER DEFAULT 0, description TEXT, UNIQUE(title, creator, engine));",
+		"CREATE TABLE IF NOT EXISTS versions (record_id INTEGER REFERENCES games(record_id), version TEXT, game_path TEXT, exec_path TEXT, in_place, last_played DATE, version_playtime INTEGER, folder_size INTEGER, date_added INTEGER, UNIQUE(record_id, version));",
+		"CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS SELECT DISTINCT record_id, versions.date_added FROM games NATURAL JOIN versions ORDER BY versions.date_added DESC;",
 
 		//Atlas data tables
 		"CREATE TABLE IF NOT EXISTS atlas_data (atlas_id INTEGER PRIMARY KEY, id_name STRING UNIQUE, short_name STRING,"
@@ -71,7 +66,7 @@ void Database::initalize( const std::filesystem::path init_path )
 		"genre STRING, tags STRING, voice STRING, os STRING, release_date DATE, length STRING, banner STRING, banner_wide STRING,"
 		"cover STRING, logo STRING, wallpaper STRING, previews STRING, last_db_update STRING);",
 
-		"CREATE TABLE IF NOT EXISTS atlas_mapping (record_id INTEGER REFERENCES records(record_id), atlas_id INTEGER REFERENCES atlas_data(id), UNIQUE(record_id, atlas_id));",
+		"CREATE TABLE IF NOT EXISTS atlas_mappings (record_id INTEGER REFERENCES games(record_id), atlas_id INTEGER REFERENCES atlas_data(id), UNIQUE(record_id, atlas_id));",
 
 		//F95 data tables
 		"CREATE TABLE IF NOT EXISTS f95_zone_data (f95_id INTEGER UNIQUE PRIMARY KEY, atlas_id INTEGER REFERENCES atlas_data(atlas_id) UNIQUE , banner_url STRING, site_url STRING,"
@@ -83,17 +78,17 @@ void Database::initalize( const std::filesystem::path init_path )
 
 		//Tags
 		"CREATE TABLE IF NOT EXISTS tags (tag_id INTEGER PRIMARY KEY, tag TEXT UNIQUE)",
-		"CREATE TABLE IF NOT EXISTS tag_mappings (record_id INTEGER REFERENCES records(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
+		"CREATE TABLE IF NOT EXISTS tag_mappings (record_id INTEGER REFERENCES games(record_id), tag_id REFERENCES tags(tag_id), UNIQUE(record_id, tag_id))",
 
 		//Tag views
-		"CREATE VIEW IF NOT EXISTS title_tags (tag, record_id) AS SELECT 'title:' || title, record_id FROM records;",
-		"CREATE VIEW IF NOT EXISTS creator_tags (tag, record_id) AS SELECT 'creator:' || creator, record_id FROM records;",
-		"CREATE VIEW IF NOT EXISTS engine_tags (tag, record_id) AS SELECT 'engine:' || engine, record_id FROM records;",
-		"CREATE VIEW IF NOT EXISTS full_tags (tag, record_id) AS SELECT tag, record_id FROM tags NATURAL JOIN tag_mappings NATURAL JOIN records UNION SELECT tag, record_id FROM title_tags UNION SELECT tag, record_id FROM creator_tags UNION SELECT tag, record_id FROM engine_tags;",
+		"CREATE VIEW IF NOT EXISTS title_tags (tag, record_id) AS SELECT 'title:' || title, record_id FROM games;",
+		"CREATE VIEW IF NOT EXISTS creator_tags (tag, record_id) AS SELECT 'creator:' || creator, record_id FROM games;",
+		"CREATE VIEW IF NOT EXISTS engine_tags (tag, record_id) AS SELECT 'engine:' || engine, record_id FROM games;",
+		"CREATE VIEW IF NOT EXISTS full_tags (tag, record_id) AS SELECT tag, record_id FROM tags NATURAL JOIN tag_mappings NATURAL JOIN games UNION SELECT tag, record_id FROM title_tags UNION SELECT tag, record_id FROM creator_tags UNION SELECT tag, record_id FROM engine_tags;",
 
 		//Image tables
-		"CREATE TABLE IF NOT EXISTS previews (record_id REFERENCES records(record_id), path TEXT UNIQUE, position INTEGER DEFAULT 256, UNIQUE(record_id, path))",
-		"CREATE TABLE IF NOT EXISTS banners (record_id REFERENCES records(record_id), path TEXT UNIQUE, type INTEGER, UNIQUE(record_id, path, type))",
+		"CREATE TABLE IF NOT EXISTS previews (record_id REFERENCES games(record_id), path TEXT UNIQUE, position INTEGER DEFAULT 256, UNIQUE(record_id, path))",
+		"CREATE TABLE IF NOT EXISTS banners (record_id REFERENCES games(record_id), path TEXT UNIQUE, type INTEGER, UNIQUE(record_id, path, type))",
 
 		//Stats tables
 		"CREATE TABLE IF NOT EXISTS data_change (timestamp INTEGER, delta INTEGER)",
@@ -102,24 +97,10 @@ void Database::initalize( const std::filesystem::path init_path )
 	for ( const auto& query_str : table_queries ) transaction << query_str;
 
 	config::db::first_start::set( false );
-
-	//Prepare our example record for the config
-	if ( !recordExists( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) )
-	{
-		const Record record { importRecord( "Galaxy Crossing: First Conquest", "Atlas Games", "Unity" ) };
-
-		record->addVersion(
-			"Chapter: 1",
-			"C:/Atlas Games/Galaxy Crossing First Conquest",
-			"Galaxy Crossing First Conquest.exe",
-			0,
-			true );
-	}
 }
 
 void Database::deinit()
 {
-	ZoneScoped;
 	std::lock_guard guard { internal::db_mtx };
 	sqlite3_close_v2( internal::db_handle );
 }

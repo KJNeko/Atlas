@@ -7,8 +7,8 @@
 
 #include <QDialog>
 
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordData.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 
 QT_BEGIN_NAMESPACE
 
@@ -24,10 +24,10 @@ class RecordEditor final : public QDialog
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( RecordEditor )
 
-	Record m_record;
+	Game m_record;
 	std::filesystem::path m_banner_path;
 	std::vector< std::filesystem::path > m_preview_paths;
-	std::vector< GameMetadata > m_versions;
+	std::vector< Version > m_versions;
 
 	void loadRecordInfo();
 	void loadBanners();

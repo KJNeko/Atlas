@@ -12,10 +12,11 @@
 #include <QPixmapCache>
 
 #include "core/config.hpp"
-#include "core/database/GameMetadata.hpp"
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordBanner.hpp"
+#include "core/database/Version.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "ui/models/RecordListModel.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
@@ -23,13 +24,13 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	ZoneScoped;
 	painter->save();
 
+	//Draw banner if present
+	Game record { index.data().value< Game >() };
+
 	//draw test rect
 	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
 	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
 	//painter->drawRect( test_rect );
-
-	//Draw banner if present
-	const Record record { index.data().value< Record >() };
 
 	const auto banner_size { m_banner_size };
 
@@ -46,25 +47,54 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
-	QPixmap pixmap { record->banners().getBanner( banner_size.width(), banner_size.height(), aspect_ratio, Normal ) };
-
-	//Check if we need to add blur background. Draw behind original image
-	if ( aspect_ratio == FIT_BLUR_EXPANDING )
 	{
-		pixmap = blurToSize(
-			pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
+		ZoneScopedN( "Draw banner" );
+
+		const QString key { QString::fromStdString(
+			fmt::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
+
+		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
+
+		constexpr int BANNER_FUTURE_IDX { 0 };
+		constexpr int BANNER_IDX { 1 };
+
+		QPixmap pixmap;
+
+		if ( !banner.isFinished() )
+		{
+			//We got the future
+			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
+			if ( m_model != nullptr )
+				this->m_model->refreshOnFuture( index, std::move( banner ) );
+			else
+				pixmap = banner.result();
+		}
+		else
+		{
+			ZoneScopedN( "Get image from variant" );
+			//We got the banner and should continue as normal
+			pixmap = banner.result();
+
+			//Check if we need to add blur background. Draw behind original image
+			if ( aspect_ratio == FIT_BLUR_EXPANDING )
+			{
+				ZoneScopedN( "Blur image" );
+				pixmap = blurToSize(
+					pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
+			}
+		}
+
+		//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
+		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.width() - pixmap.width() ) / 2 : 0 };
+		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
+		const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
+
+		//Draw Shadow
+		//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
+		//painter->drawRect( shadow_rect );
+		//Draw Image
+		painter->drawPixmap( pixmap_rect, pixmap );
 	}
-
-	//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
-	const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.width() - pixmap.width() ) / 2 : 0 };
-	const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
-	const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
-
-	//Draw Shadow
-	//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
-	//painter->drawRect( shadow_rect );
-	//Draw Image
-	painter->drawPixmap( pixmap_rect, pixmap );
 
 	//Click & Selectec event
 	//TODO: add ability to change selected color.
@@ -109,21 +139,20 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
-	const auto [ title, engine, creator ] =
-		record->get< RecordColumns::Title, RecordColumns::Engine, RecordColumns::Creator >();
-
 	//Draw Title
-	this->drawText( painter, options_rect, stripe_height, m_title_location, title );
+	this->drawText( painter, options_rect, stripe_height, m_title_location, record->m_title );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, engine );
+	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version
-	const auto& latest { record->getLatestVersion() };
-	if ( latest.has_value() )
-		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->getVersionName() );
+	if ( record->m_versions.size() )
+	{
+		const Version latest { record->m_versions.at( 0 ) };
+		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
+	}
 	else
 		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, creator );
+	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
 
 	painter->restore();
 }
@@ -218,7 +247,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_center_widgets = config::grid_ui::centerWidgets::get();
 }
 
-RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
+RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
   QAbstractItemDelegate( parent ),
   m_grid_size { calculateSize(
 	  config::grid_ui::itemViewWidth::get(),
@@ -244,7 +273,8 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },
   m_window_width { config::grid_ui::windowWidth::get() },
-  m_center_widgets { config::grid_ui::centerWidgets::get() }
+  m_center_widgets { config::grid_ui::centerWidgets::get() },
+  m_model( model )
 
 {
 	CONFIG_ATTACH_THIS;

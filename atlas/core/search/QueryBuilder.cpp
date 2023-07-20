@@ -168,7 +168,7 @@ std::string parseSystem( const std::string_view str )
 
 						const auto bytes { parseBytesize( substr ) };
 
-						return " record_id IN (SELECT record_id FROM game_metadata GROUP BY record_id HAVING sum(folder_size) > "
+						return " record_id IN (SELECT record_id FROM versions GROUP BY record_id HAVING sum(folder_size) > "
 						     + bytes + ")";
 					}
 				case SYSTEM_END:
@@ -360,8 +360,11 @@ std::string orderToStr( const SortOrder order )
 std::string generateQuery( const std::string str, const SortOrder order, const bool asc )
 {
 	ZoneScoped;
-	const std::string query { "SELECT DISTINCT record_id FROM records NATURAL JOIN game_metadata WHERE" };
+	const std::string query { "SELECT DISTINCT record_id FROM games NATURAL JOIN versions WHERE" };
 	const std::string_view str_view { str };
-
-	return query + processString( str_view ) + " ORDER BY " + orderToStr( order ) + " " + ( asc ? "ASC" : "DESC" );
+	const auto processed { processString( str_view ) };
+	if ( processed.empty() )
+		return "SELECT record_id FROM games";
+	else
+		return query + processed + " ORDER BY " + orderToStr( order ) + " " + ( asc ? "ASC" : "DESC" );
 }

@@ -13,21 +13,20 @@
 #include <QDateTimeAxis>
 #include <QValueAxis>
 
-#include "core/database/record/Record.hpp"
+#include "core/database/Transaction.hpp"
+#include "core/database/record/Game.hpp"
 #include "ui_StatsDialog.h"
 
 StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::StatsDialog )
 {
 	ui->setupUi( this );
 
-	Transaction transaction {};
-
 	QChart* chart { new QChart() };
 	QLineSeries* size_series { new QLineSeries };
 
 	std::int64_t counter { 0 };
 
-	transaction << "SELECT timestamp, delta FROM data_change ORDER BY timestamp ASC" >>
+	RapidTransaction() << "SELECT timestamp, delta FROM data_change ORDER BY timestamp ASC" >>
 		[ & ]( const std::uint64_t timestamp, const std::int64_t delta )
 	{
 		counter += delta;

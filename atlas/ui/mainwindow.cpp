@@ -25,9 +25,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( this, &MainWindow::triggerReSearch, &record_search, &Search::runQuery );
-	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordView::setRecords );
+	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 
-	connect( ui->recordView, &RecordView::openDetailedView, this, &MainWindow::switchToDetailed );
+	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
@@ -56,7 +56,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	//Share selection model
-	ui->gamesTree->setSelectionModel( ui->recordView->selectionModel() );
+	//ui->gamesTree->setSelectionModel( ui->recordView->selectionModel() );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
@@ -135,12 +135,13 @@ void MainWindow::on_actionOptions_triggered()
 	settingsDialog.setModal( true );
 	settingsDialog.exec();
 
-	ui->recordView->reloadConfig();
+	//TODO
+	//ui->recordView->reloadConfig();
 
 	QWidget::repaint();
 }
 
-void MainWindow::switchToDetailed( const Record record )
+void MainWindow::switchToDetailed( const Game record )
 {
 	ui->detailedRecordView->setRecord( record );
 	ui->stackedWidget->setCurrentIndex( 1 );
@@ -164,10 +165,10 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 		set( config::grid_ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
 	                                                                      config::grid_ui::windowWidth::get() );
 
-	config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
-	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
+	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
+	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
-	ui->recordView->reloadConfig();
+	//ui->recordView->reloadConfig();
 
 	movePopup();
 }
@@ -175,9 +176,9 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
 {
 	//Store Banner View Dims
-	config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
-	config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
-	ui->recordView->reloadConfig();
+	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
+	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
+	//ui->recordView->reloadConfig();
 }
 
 void MainWindow::on_actionExit_triggered()

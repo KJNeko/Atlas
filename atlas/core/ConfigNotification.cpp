@@ -27,7 +27,6 @@ namespace config
 
 	ConfigNotification::ConfigNotification( QObject* parent ) : QObject( parent )
 	{
-		spdlog::info( "ConfigNotification constructor" );
 	}
 
 	void ConfigNotification::notify()

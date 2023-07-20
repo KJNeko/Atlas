@@ -8,6 +8,8 @@
 #include <QMimeDatabase>
 #include <QtConcurrent>
 
+#include <tracy/Tracy.hpp>
+
 #include "BatchImportDelegate.hpp"
 #include "BatchImportModel.hpp"
 #include "core/config.hpp"
