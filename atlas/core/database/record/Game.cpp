@@ -7,6 +7,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "GameData.hpp"
+#include "core/imageManager.hpp"
 
 namespace internal
 {
@@ -178,6 +179,12 @@ void Game::reorderPreviews( std::vector< std::filesystem::path > paths )
 
 void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 {
+	// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
+	if ( std::filesystem::relative( config::paths::images::getPath(), path ) == "" )
+	{
+		path = imageManager::importImage( path );
+	}
+
 	//Get the highest position
 	if ( index == 0 )
 	{
@@ -245,6 +252,13 @@ void Game::setBanner( std::filesystem::path path, const BannerType type )
 {
 	ZoneScoped;
 	int count { 0 };
+
+	// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
+	if ( std::filesystem::relative( config::paths::images::getPath(), path ) == "" )
+	{
+		path = imageManager::importImage( path );
+	}
+
 	RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
 					   << static_cast< uint8_t >( type )
 		>> count;
