@@ -104,7 +104,6 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 					continue;
 				}
 			}
-			
 		}
 	}
 
@@ -126,8 +125,10 @@ std::vector< std::filesystem::path >
 		if constexpr ( sys::is_linux )
 			if ( path.extension() == ".sh" ) execs.emplace_back( std::move( path ), 20 );
 
-		if ( path.extension() == ".exe" || path.extension() == ".EXE" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( path.extension() == ".html" || path.extension() == ".HTML" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( path.extension() == ".exe" || path.extension() == ".EXE" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( path.extension() == ".html" || path.extension() == ".HTML" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(

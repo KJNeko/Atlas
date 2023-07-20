@@ -42,10 +42,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//For centering Items
 
-	const int item_count { static_cast< int >( config::grid_ui::itemViewWidth::get() / static_cast< double >( config::grid_ui::bannerSizeX::get() ) ) };
+	const int item_count { static_cast<
+		int >( config::grid_ui::itemViewWidth::get() / static_cast< double >( config::grid_ui::bannerSizeX::get() ) ) };
 	const int image_offset { m_grid_size.width() - m_banner_size.width() };
-	spdlog::debug( "coloumn:{} row:{} item_count:{} image_offset:{}", index.column(), index.row(), item_count, image_offset );
-	const int x_offset { options.rect.x()  + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
+	spdlog::debug(
+		"coloumn:{} row:{} item_count:{} image_offset:{}", index.column(), index.row(), item_count, image_offset );
+	const int x_offset { options.rect.x() + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
 	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
 	const QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
 
@@ -281,25 +283,27 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
 	CONFIG_ATTACH_THIS;
 }
 
-QSize RecordBannerDelegate::calculateSize( const int window_width, const int banner_width, const int banner_height, const int banner_spacing )
+QSize RecordBannerDelegate::
+	calculateSize( const int window_width, const int banner_width, const int banner_height, const int banner_spacing )
 {
 	//spdlog::debug( "Window_width:{} | Banner_width:{} | Banner_height:{} | Spacing:{}", window_width, banner_width, banner_height, banner_spacing );
 	ZoneScoped;
 
 	int record_viewport = window_width;
 	int item_count { static_cast< int >( record_viewport / static_cast< double >( banner_width ) ) };
-	int banner_total_width { ( item_count ) * ( banner_width) };
+	int banner_total_width { ( item_count ) * ( banner_width ) };
 	double banner_offset { ( record_viewport - banner_total_width ) / static_cast< double >( item_count ) };
 	int banner_viewport { ( static_cast< int >( banner_offset ) * item_count ) + banner_total_width };
 	//Because Qt does not like floating points, we need to make sure the banner viewport is 1px less that what is available.
-	if(banner_viewport >= record_viewport)
+	if ( banner_viewport >= record_viewport )
 	{
 		banner_offset -= 1;
 	}
 	//spdlog::debug( "record_viewport:{} | banner_viewport:{} | item_count:{} | banner_offset:{}", record_viewport, banner_viewport, item_count, static_cast< int >( banner_offset ) );
 
 	//USED TO CENTER WIDGETS
-	QSize qsize { m_center_widgets ? banner_width + static_cast< int >( banner_offset ) : banner_width + banner_spacing, banner_height +banner_spacing };
+	QSize qsize { m_center_widgets ? banner_width + static_cast< int >( banner_offset ) : banner_width + banner_spacing,
+		          banner_height + banner_spacing };
 
 	return qsize;
 }

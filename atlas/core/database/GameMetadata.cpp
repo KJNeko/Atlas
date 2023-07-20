@@ -43,7 +43,8 @@ std::uint32_t Version::getPlaytime() const
 	RapidTransaction transaction;
 	std::uint32_t total_playtime { 0 };
 
-	transaction << "SELECT version_playtime FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id << m_version.toStdString()
+	transaction << "SELECT version_playtime FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
+				<< m_version.toStdString()
 		>> total_playtime;
 
 	return total_playtime;

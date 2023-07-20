@@ -26,8 +26,7 @@ namespace config
 	}
 
 	ConfigNotification::ConfigNotification( QObject* parent ) : QObject( parent )
-	{
-	}
+	{}
 
 	void ConfigNotification::notify()
 	{
