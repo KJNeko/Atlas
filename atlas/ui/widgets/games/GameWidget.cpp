@@ -44,7 +44,7 @@ void GameWidget::reloadRecord()
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
 	const QString& description = record->m_description;
 	const QString& developer = record->m_creator;
-	const QString& engine = record->m_engine;
+	[[maybe_unused]] const QString& engine = record->m_engine;
 	QString publisher = "";
 	QString original_name = "";
 	QString censored = "";

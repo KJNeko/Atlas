@@ -59,9 +59,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
 
-		constexpr int BANNER_FUTURE_IDX { 0 };
-		constexpr int BANNER_IDX { 1 };
-
 		QPixmap pixmap;
 
 		if ( !banner.isFinished() )

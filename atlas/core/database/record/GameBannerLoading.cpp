@@ -77,12 +77,11 @@ namespace internal
 		for ( std::uint64_t i = 0; i < cache.size(); ++i )
 		{
 			auto begin { cache.begin() };
-			std::advance( begin, i - offset );
+			std::advance( begin, i - static_cast< uint64_t >( offset ) );
 
 			if ( begin->second.last_accessed < stale_timepoint )
 			{
 				current_size -= begin->second.size();
-				if ( cache.size() > 0 ) TracyCPlot( "Pixmap bytes avg", current_size / cache.size() );
 				cache.erase( begin->first );
 				++offset;
 			}
@@ -120,7 +119,6 @@ namespace internal
 		PixmapItem item { std::move( pixmap ) };
 
 		current_size += item.size();
-		if ( cache.size() > 0 ) TracyCPlot( "Pixmap bytes avg", current_size / cache.size() );
 
 		cache.insert( { key, std::move( item ) } );
 

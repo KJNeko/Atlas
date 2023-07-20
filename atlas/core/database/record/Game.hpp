@@ -17,7 +17,7 @@
 class Version;
 struct GameData;
 
-class Game : public QObject
+class Game final : public QObject
 {
 	Q_OBJECT
 

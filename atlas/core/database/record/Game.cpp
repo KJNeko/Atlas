@@ -213,12 +213,12 @@ void Game::removePreview( const std::filesystem::path path )
 		removePreview( static_cast< uint64_t >( std::distance( previews.begin(), index ) ) );
 }
 
-void Game::addUserTag( QString str )
+void Game::addUserTag( [[maybe_unused]] QString str )
 {
 	//TODO
 }
 
-void Game::removeUserTag( QString str )
+void Game::removeUserTag( [[maybe_unused]] QString str )
 {
 	//TODO
 }
@@ -226,7 +226,7 @@ void Game::removeUserTag( QString str )
 void Game::setBanner( std::filesystem::path path, const BannerType type )
 {
 	ZoneScoped;
-	int count;
+	int count { 0 };
 	RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
 					   << static_cast< uint8_t >( type )
 		>> count;

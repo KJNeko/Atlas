@@ -51,7 +51,6 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 {
 	if ( !index.isValid() ) return {};
 
-	const auto& record { m_records.at( static_cast< std::uint64_t >( index.row() ) ) };
 	switch ( role )
 	{
 		case Qt::DisplayRole:
