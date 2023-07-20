@@ -8,12 +8,14 @@
 #include <QAbstractItemDelegate>
 
 #include "core/config.hpp"
-#include "core/database/record/Record.hpp"
+#include "core/database/record/Game.hpp"
 #include "core/utils/QImageBlur.hpp"
+class RecordListModel;
 
 class RecordBannerDelegate final : public QAbstractItemDelegate
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE( RecordBannerDelegate )
 
   public:
 
@@ -38,8 +40,9 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_window_height;
 	int m_window_width;
 	bool m_center_widgets;
+	RecordListModel* m_model { nullptr };
 
-	RecordBannerDelegate( QWidget* parent = nullptr );
+	RecordBannerDelegate( RecordListModel* model, QWidget* parent = nullptr );
 
   signals:
 	void sizeHintChanged( const QModelIndex& index ) const;

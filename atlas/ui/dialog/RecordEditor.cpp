@@ -13,9 +13,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QMimeData>
+#include <QtConcurrent>
 
-#include "core/database/record/RecordBanner.hpp"
-#include "core/database/record/RecordPreviews.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui_RecordEditor.h"
@@ -23,44 +22,43 @@
 RecordEditor::RecordEditor( const RecordID record, QWidget* parent ) :
   QDialog( parent ),
   m_record( record ),
-  m_banner_path( m_record->banners().getBannerPath( Normal ) ),
-  m_preview_paths( m_record->previews().getPreviewPaths() ),
-  m_versions( m_record->getVersions() ),
+  m_banner_path( m_record->m_banner_paths[ Normal ] ),
+  m_preview_paths( m_record->m_preview_paths ),
+  m_versions( m_record->m_versions ),
   ui( new Ui::RecordEditor )
 {
 	ui->setupUi( this );
+
+	//Trigger loading images
+	loadBanners();
 }
 
 void RecordEditor::loadRecordInfo()
 {
-	ui->titleLineEdit->setText( m_record->get< RecordColumns::Title >() );
-	ui->creatorLineEdit->setText( m_record->get< RecordColumns::Creator >() );
-	ui->engineLineEdit->setText( m_record->get< RecordColumns::Engine >() );
-	//ui->gameText->setText( m_record->getDescription() );
+	ui->titleLineEdit->setText( m_record->m_title );
+	ui->creatorLineEdit->setText( m_record->m_creator );
+	ui->engineLineEdit->setText( m_record->m_engine );
+	ui->gameText->setText( m_record->m_description );
 }
 
 void RecordEditor::loadBanners()
-{
-	ui->bannerPreview
-		->setPixmap( m_record->banners()
-	                     .getBanner( ui->bannerPreview->size() - QSize( 25, 40 ), KEEP_ASPECT_RATIO, Normal ) );
-}
+{}
 
 void RecordEditor::loadPreviews()
 {
-	ui->previewList->setPaths( m_record->previews().getPreviewPaths() );
+	ui->previewList->setPaths( m_record->m_preview_paths );
 }
 
 void RecordEditor::loadTags()
 {
-	const auto user_tags { m_record->getUserTags() };
+	const auto user_tags { m_record->m_tags };
 	QStringList user_tags_list;
 	for ( const auto& tag : user_tags ) user_tags_list.emplace_back( tag );
 
 	ui->userTagsList->clear();
 	ui->userTagsList->addItems( std::move( user_tags_list ) );
 
-	const auto all_tags { m_record->getAllTags() };
+	const auto all_tags { m_record->m_tags };
 	QStringList all_tags_list;
 	for ( const auto& tag : all_tags ) all_tags_list.emplace_back( tag );
 
@@ -104,8 +102,7 @@ void RecordEditor::on_btnSetBanner_pressed()
 	file_dialog.setViewMode( QFileDialog::Detail );
 
 	if ( file_dialog.exec() )
-		m_record->banners()
-			.setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
+		m_record.setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
 }
 
 void RecordEditor::on_btnAddPreviews_pressed()
@@ -118,8 +115,7 @@ void RecordEditor::on_btnAddPreviews_pressed()
 
 	if ( file_dialog.exec() )
 	{
-		for ( const auto& path : file_dialog.selectedFiles() )
-			m_record->previews().addPreview( { path.toStdString() } );
+		for ( const auto& path : file_dialog.selectedFiles() ) m_record.addPreview( { path.toStdString() } );
 	}
 }
 
@@ -130,7 +126,7 @@ void RecordEditor::on_btnRemovePreviews_pressed()
 	     == QMessageBox::Yes )
 	{
 		//Remove selected
-		for ( const auto& preview : ui->previewList->selectedItems() ) m_record->previews().removePreview( preview );
+		for ( const auto& preview : ui->previewList->selectedItems() ) m_record.removePreview( preview );
 	}
 	else
 		return;
@@ -144,9 +140,7 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 	if ( selected_list.size() == 0 ) return;
 	const auto selected { selected_list.at( 0 ) };
 
-	const auto version { m_record->getVersion( selected->text() ) };
-
-	if ( !version.has_value() ) return;
+	auto version { m_record->getVersion( selected->text() ) };
 
 	if (
 		QMessageBox::question(
@@ -154,12 +148,12 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 			"Are you sure?",
 			QString(
 				"Are you absolutely sure you want to delete %1. This can NOT be undone and you will lose ALL files associated with this version!" )
-				.arg( version->getVersionName() ) )
+				.arg( version->m_version ) )
 		== QMessageBox::Yes )
 	{
-		m_record->removeVersion( *version );
+		m_record.removeVersion( version );
 
-		for ( const auto& file : std::filesystem::recursive_directory_iterator( version->getPath() ) )
+		for ( const auto& file : std::filesystem::recursive_directory_iterator( version->m_game_path ) )
 		{
 			try
 			{
@@ -173,7 +167,7 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 
 		try
 		{
-			std::filesystem::remove_all( version->getPath() );
+			std::filesystem::remove_all( version->m_game_path );
 		}
 		catch ( std::filesystem::filesystem_error& e )
 		{
@@ -196,7 +190,10 @@ void RecordEditor::on_btnAddVersion_pressed()
 
 	if ( version_name.isEmpty() ) return;
 
-	if ( m_record->getVersion( version_name ).has_value() )
+	const auto& versions { m_record->m_versions };
+	if ( std::find_if(
+			 versions.begin(), versions.end(), [ & ]( const Version& ver ) { return ver->m_version == version_name; } )
+	     != versions.end() )
 	{
 		QMessageBox::critical( this, "Invalid Version Name", "A version with that name already exists!" );
 		return;
@@ -221,11 +218,8 @@ void RecordEditor::on_btnAddVersion_pressed()
 		== QMessageBox::Yes
 	};
 
-	const auto title { m_record->get< RecordColumns::Title >() };
-	const auto creator { m_record->get< RecordColumns::Creator >() };
-
-	//Calculate filesize
-	std::size_t size { 0 };
+	const auto& title { m_record->m_title };
+	const auto& creator { m_record->m_creator };
 
 	ProgressBarDialog* dialog { new ProgressBarDialog( this ) };
 	dialog->show();
@@ -256,8 +250,6 @@ void RecordEditor::on_btnAddVersion_pressed()
 			const auto source_path { source / file };
 			const auto dest { dest_path / file };
 
-			size += std::filesystem::file_size( source_path );
-
 			if ( !std::filesystem::exists( dest.parent_path() ) )
 				std::filesystem::create_directories( dest.parent_path() );
 
@@ -266,18 +258,11 @@ void RecordEditor::on_btnAddVersion_pressed()
 			dialog->setValue( ++counter );
 		}
 
-		m_record->addVersion( version_name, dest_path, relative, size, false );
+		m_record.addVersion( version_name, dest_path, relative );
 	}
 	else
 	{
-		dialog->setSubText( "Calculating size..." );
-		for ( auto file : files )
-		{
-			size += std::filesystem::file_size( source / file );
-			dialog->setValue( ++counter );
-		}
-
-		m_record->addVersion( version_name, source, relative, size, true );
+		m_record.addVersion( version_name, source, relative );
 	}
 
 	delete dialog;
@@ -292,15 +277,14 @@ void RecordEditor::switchTabs( const int index )
 
 void RecordEditor::on_btnChangeTitle_pressed()
 {
-	if ( const auto output = QInputDialog::
-	         getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->get< RecordColumns::Title >() );
-	     output != m_record->get< RecordColumns::Title >() && !output.isEmpty() )
+	if ( const auto output =
+	         QInputDialog::getText( this, "Change Title", "New Title", QLineEdit::Normal, m_record->m_title );
+	     output != m_record->m_title && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->get< RecordColumns::Creator >().toStdString()
-			  << m_record->get< RecordColumns::Engine >().toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ?;" << output.toStdString()
+			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -309,22 +293,21 @@ void RecordEditor::on_btnChangeTitle_pressed()
 			return;
 		}
 
-		m_record->set< RecordColumns::Title >( output );
+		m_record.setTitle( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeCreator_pressed()
 {
-	if ( const auto output = QInputDialog::getText(
-			 this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->get< RecordColumns::Creator >() );
-	     output != m_record->get< RecordColumns::Creator >() && !output.isEmpty() )
+	if ( const auto output =
+	         QInputDialog::getText( this, "Change Creator", "New Creator", QLineEdit::Normal, m_record->m_creator );
+	     output != m_record->m_creator && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->get< RecordColumns::Creator >().toStdString()
-			  << m_record->get< RecordColumns::Engine >().toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
+			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -336,22 +319,21 @@ void RecordEditor::on_btnChangeCreator_pressed()
 			return;
 		}
 
-		m_record->set< RecordColumns::Creator >( output );
+		m_record.setCreator( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnChangeEngine_pressed()
 {
-	if ( const QString output = QInputDialog::getText(
-			 this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->get< RecordColumns::Engine >() );
-	     output != m_record->get< RecordColumns::Engine >() && !output.isEmpty() )
+	if ( const QString output =
+	         QInputDialog::getText( this, "Change Engine", "New Engine", QLineEdit::Normal, m_record->m_engine );
+	     output != m_record->m_engine && !output.isEmpty() )
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM records WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->get< RecordColumns::Creator >().toStdString()
-			  << m_record->get< RecordColumns::Engine >().toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
+			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
 			>> count;
 
 		if ( count != 0 )
@@ -360,14 +342,15 @@ void RecordEditor::on_btnChangeEngine_pressed()
 				warning( this, "Duplicate!", "There is already a game with the same creator, name and engine!" );
 			return;
 		}
-		m_record->set< RecordColumns::Engine >( output );
+
+		m_record.setEngine( output );
 	}
 	loadRecordInfo();
 }
 
 void RecordEditor::on_btnApplyDesc_pressed()
 {
-	m_record->setDesc( ui->gameText->toPlainText() );
+	m_record.setDescription( ui->gameText->toPlainText() );
 }
 
 void RecordEditor::on_tagEdit_returnPressed()
@@ -376,9 +359,9 @@ void RecordEditor::on_tagEdit_returnPressed()
 
 	//If tag is already added then remove it instead
 	if ( const auto items = ui->userTagsList->findItems( text, Qt::MatchExactly ); items.size() > 0 )
-		m_record->removeUserTag( text );
+		m_record.removeUserTag( text );
 	else
-		m_record->addUserTag( text );
+		m_record.addUserTag( text );
 
 	ui->tagEdit->clear();
 
@@ -410,12 +393,12 @@ void RecordEditor::loadVersions()
 
 	QStringList list;
 
-	for ( const auto& version : m_record->getVersions() ) list.emplace_back( version.getVersionName() );
+	for ( const auto& version : m_record->m_versions ) list.emplace_back( version.getVersionName() );
 
 	ui->versionList->addItems( std::move( list ) );
 }
 
 void RecordEditor::on_previewList_reordered()
 {
-	m_record->previews().reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
+	m_record.reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
 }

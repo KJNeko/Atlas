@@ -28,7 +28,7 @@ class DummyRecordModel : public QAbstractListModel
 
 	QVariant data( [[maybe_unused]] const QModelIndex& index, [[maybe_unused]] int role ) const override
 	{
-		if ( role == Qt::DisplayRole ) return QVariant::fromStdVariant( std::variant< Record >( Record( 1 ) ) );
+		if ( role == Qt::DisplayRole ) return QVariant::fromStdVariant( std::variant< Game >( Game( 1 ) ) );
 		return {};
 	}
 };
@@ -37,7 +37,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
   QDialog( parent ),
   ui( new Ui::SettingsDialog ),
   gridPreviewModel( new DummyRecordModel() ),
-  gridPreviewDelegate( new RecordBannerDelegate() )
+  gridPreviewDelegate( new RecordBannerDelegate( nullptr ) )
 {
 	ui->setupUi( this );
 	qlv = ui->grid_preview;

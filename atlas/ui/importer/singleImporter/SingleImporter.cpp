@@ -12,7 +12,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "core/database/record/RecordData.hpp"
+#include "core/database/record/GameData.hpp"
 #include "core/gamelist/utils.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"

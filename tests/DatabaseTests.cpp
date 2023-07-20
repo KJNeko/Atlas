@@ -9,6 +9,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <catch2/benchmark/catch_benchmark.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_all.hpp>
@@ -20,8 +21,9 @@
 #endif
 
 #include "core/database/Database.hpp"
-#include "core/database/GameMetadata.hpp"
-#include "core/database/record/Record.hpp"
+#include "core/database/Version.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 
 TEST_CASE( "Database Init Memory", "[database]" )
 {
@@ -42,29 +44,29 @@ TEST_CASE( "Record", "[database][record][import]" )
 	REQUIRE_NOTHROW( Database::initalize( ":memory:" ) );
 	SECTION( "Create record" )
 	{
-		const auto record { importRecord( "Test title", "Test creator", "Test engine" ) };
+		auto record { importRecord( "Test title", "Test creator", "Test engine" ) };
 
 		SECTION( "Test getters" )
 		{
 			SECTION( "title" )
 			{
-				REQUIRE( record->get< RecordColumns::Title >() == "Test title" );
+				REQUIRE( record->m_title == "Test title" );
 			}
 			SECTION( "creator" )
 			{
-				REQUIRE( record->get< RecordColumns::Creator >() == "Test creator" );
+				REQUIRE( record->m_creator == "Test creator" );
 			}
 			SECTION( "engine" )
 			{
-				REQUIRE( record->get< RecordColumns::Engine >() == "Test engine" );
+				REQUIRE( record->m_engine == "Test engine" );
 			}
 			SECTION( "last played" )
 			{
-				REQUIRE( record->get< RecordColumns::LastPlayed >() == 0 );
+				REQUIRE( record->m_last_played == 0 );
 			}
 			SECTION( "total playtime" )
 			{
-				REQUIRE( record->get< RecordColumns::TotalPlaytime >() == 0 );
+				REQUIRE( record->m_total_playtime == 0 );
 			}
 		}
 
@@ -72,28 +74,28 @@ TEST_CASE( "Record", "[database][record][import]" )
 		{
 			SECTION( "title" )
 			{
-				REQUIRE_NOTHROW( record->set< RecordColumns::Title >( "new Test title" ) );
-				REQUIRE( record->get< RecordColumns::Title >() == "new Test title" );
+				REQUIRE_NOTHROW( record.setTitle( "new Test Title" ) );
+				REQUIRE( record->m_title == "new Test title" );
 			}
 			SECTION( "creator" )
 			{
-				REQUIRE_NOTHROW( record->set< RecordColumns::Creator >( "new Test creator" ) );
-				REQUIRE( record->get< RecordColumns::Creator >() == "new Test creator" );
+				REQUIRE_NOTHROW( record.setCreator( "new Test creator" ) );
+				REQUIRE( record->m_creator == "new Test creator" );
 			}
 			SECTION( "engine" )
 			{
-				REQUIRE_NOTHROW( record->set< RecordColumns::Engine >( "new Test engine" ) );
-				REQUIRE( record->get< RecordColumns::Engine >() == "new Test engine" );
+				REQUIRE_NOTHROW( record.setEngine( "new Test engine" ) );
+				REQUIRE( record->m_engine == "new Test engine" );
 			}
 			SECTION( "last played" )
 			{
-				REQUIRE_NOTHROW( record->set< RecordColumns::LastPlayed >( 5 ) );
-				REQUIRE( record->get< RecordColumns::LastPlayed >() == 5 );
+				REQUIRE_NOTHROW( record.addPlaytime( 5 ) );
+				REQUIRE( record->m_total_playtime == 5 );
 			}
 			SECTION( "total playtime" )
 			{
-				REQUIRE_NOTHROW( record->set< RecordColumns::TotalPlaytime >( 5 ) );
-				REQUIRE( record->get< RecordColumns::TotalPlaytime >() == 5 );
+				REQUIRE_NOTHROW( record.setLastPlayed( 5 ) );
+				REQUIRE( record->m_total_playtime == 5 );
 			}
 		}
 	}
@@ -104,16 +106,17 @@ TEST_CASE( "Config record", "[database]" )
 	//Ensure that the test record exists
 	REQUIRE_NOTHROW( Database::initalize( ":memory:" ) );
 
-	Record record { 1 };
+	Game record { 1 };
 
-	REQUIRE( record->get< RecordColumns::Title >() == "Galaxy Crossing: First Conquest" );
-	REQUIRE( record->get< RecordColumns::Engine >() == "Unity" );
-	REQUIRE( record->get< RecordColumns::Creator >() == "Atlas Games" );
+	REQUIRE( record->m_title == "Galaxy Crossing: First Conquest" );
+	REQUIRE( record->m_engine == "Unity" );
+	REQUIRE( record->m_creator == "Atlas Games" );
 
-	const auto version { record->getVersion( "Chapter: 1" ) };
+	REQUIRE( record->m_versions.size() == 1 );
+	const auto& version { record->m_versions.at( 0 ) };
 
 	REQUIRE(
-		version->getExecPath() == "C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe" );
+		version.getExecPath() == "C:/Atlas Games/Galaxy Crossing First Conquest/Galaxy Crossing First Conquest.exe" );
 }
 
 TEST_CASE( "Database benches", "[!benchmark]" )
@@ -121,7 +124,7 @@ TEST_CASE( "Database benches", "[!benchmark]" )
 	std::filesystem::remove( "test.db" );
 	Database::initalize( "test.db" );
 
-	const Record record { importRecord( "test", "test", "test" ) };
+	Game record { importRecord( "test", "test", "test" ) };
 
 	int counter { 0 };
 
@@ -130,12 +133,13 @@ TEST_CASE( "Database benches", "[!benchmark]" )
 		meter.measure(
 			[ & ]
 			{
-				record->addVersion(
+				VersionInfo info {
 					QString::fromStdString( fmt::format( "v{}.0", counter ) ),
 					"C:\\games\\my_game",
 					"game.exe",
-					1234,
-					true );
+				};
+
+				record.addVersion( info );
 
 				++counter;
 			} );

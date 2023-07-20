@@ -12,9 +12,8 @@
 
 #include "GameImportData.hpp"
 #include "core/database/Database.hpp"
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordBanner.hpp"
-#include "core/database/record/RecordPreviews.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 #include "core/foldersize.hpp"
 #include "core/imageManager.hpp"
 #include "core/utils/FileScanner.hpp"
@@ -91,7 +90,7 @@ namespace internal
 		signaler->setProgress( Progress::VersionData );
 		signaler->setMessage( "Importing version data" );
 
-		record->addVersion( version, root, relative_executable, folder_size, owning );
+		record.addVersion( version, root, relative_executable );
 
 		if ( owning )
 		{
@@ -129,7 +128,7 @@ namespace internal
 			const auto path { banners[ static_cast< std::size_t >( i ) ] };
 			if ( !path.isEmpty() )
 			{
-				record->banners().setBanner( path.toStdString(), static_cast< BannerType >( i ) );
+				record.setBanner( path.toStdString(), static_cast< BannerType >( i ) );
 			}
 		}
 
@@ -138,13 +137,13 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler->setMessage( QString( "Importing preview %1" ).arg( path ) );
-			record->previews().addPreview( path.toStdString() );
+			record.addPreview( { path.toStdString() } );
 		}
 
 		signaler->setProgress( Progress::Complete );
 		signaler->setMessage( "Complete" );
 
-		promise.addResult( record->getID() );
+		promise.addResult( record->m_game_id );
 		promise.finish();
 	}
 	catch ( std::exception& e )

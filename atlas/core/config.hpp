@@ -289,7 +289,7 @@ SETTINGS_D( images, store_all_as_one_type, bool, false )
 SETTINGS_D( images, image_type, QString, "webp" )
 
 SETTINGS_D( application, font, QString, "" )
-SETTINGS_D( application, fontSize, int, 9 )
+SETTINGS_D( application, fontSize, int, 12 )
 
 SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(

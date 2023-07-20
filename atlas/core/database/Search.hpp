@@ -9,7 +9,7 @@
 
 #include <QString>
 
-#include "core/database/record/Record.hpp"
+#include "core/database/record/Game.hpp"
 #include "core/search/QueryBuilder.hpp"
 
 class Search final : public QObject
@@ -22,7 +22,7 @@ class Search final : public QObject
 
   signals:
 	//! Emitted when a search is completed
-	void searchCompleted( std::vector< Record > );
+	void searchCompleted( std::vector< Game > );
 
   public slots:
 	//! Submits a text to get autocompleted.

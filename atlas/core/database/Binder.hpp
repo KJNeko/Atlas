@@ -18,7 +18,6 @@ template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
 void extract( sqlite3_stmt* stmt, T& t ) noexcept
 {
-	ZoneScopedN( "extract<integral>" );
 	t = static_cast< T >( sqlite3_column_int64( stmt, index ) );
 }
 
@@ -26,27 +25,53 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::string >
 void extract( sqlite3_stmt* stmt, std::string& t ) noexcept
 {
-	ZoneScopedN( "extract<std::string>" );
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
-	t = std::string( reinterpret_cast< const char* >( txt ) );
+
+	if ( txt == nullptr )
+	{
+		t = {};
+		return;
+	}
+	else
+	{
+		t = std::string( reinterpret_cast< const char* >( txt ) );
+		return;
+	}
 }
 
 template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, QString >
 void extract( sqlite3_stmt* stmt, QString& t ) noexcept
 {
-	ZoneScopedN( "extract<QString>" );
 	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
-	t = QString::fromLocal8Bit(
-		reinterpret_cast< const char* >( txt ),
-		static_cast< qsizetype >( strlen( reinterpret_cast< const char* >( txt ) ) ) );
+
+	if ( txt == nullptr )
+	{
+		t = {};
+		return;
+	}
+	else
+	{
+		t = QString::fromLocal8Bit(
+			reinterpret_cast< const char* >( txt ),
+			static_cast< qsizetype >( strlen( reinterpret_cast< const char* >( txt ) ) ) );
+		return;
+	}
+}
+
+template < std::uint64_t index, typename T >
+	requires std::is_same_v< T, std::filesystem::path >
+void extract( sqlite3_stmt* stmt, std::filesystem::path& t ) noexcept
+{
+	std::string str;
+	extract< index, std::string >( stmt, str );
+	t = { std::move( str ) };
 }
 
 template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::vector< std::byte > >
 void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t ) noexcept
 {
-	ZoneScopedN( "extract<std::vector<std::byte>>" );
 	const void* data { sqlite3_column_blob( stmt, index ) };
 	const std::size_t size { static_cast< std::size_t >( sqlite3_column_bytes( stmt, index ) ) };
 
@@ -72,7 +97,6 @@ template < typename T >
 	requires std::is_integral_v< T >
 int bindParameter( sqlite3_stmt* stmt, const T val, const int idx ) noexcept
 {
-	ZoneScopedN( "bindParameter<integral>" );
 	return sqlite3_bind_int64( stmt, idx, static_cast< sqlite3_int64 >( val ) );
 }
 
@@ -95,7 +119,6 @@ class Binder
 	template < typename T >
 	Binder& operator<<( T t )
 	{
-		ZoneScopedN( "Bind Value" );
 		if ( param_counter > max_param_count )
 		{
 			throw std::runtime_error( fmt::format(
@@ -125,10 +148,7 @@ class Binder
 	void operator>>( T& t )
 	{
 		ran = true;
-		ZoneScopedN( "Get results into value" );
-		TracyCZoneN( step_zone_tracy, "Sqlite3 step", true );
 		const auto step_ret { sqlite3_step( stmt ) };
-		TracyCZoneEnd( step_zone_tracy );
 
 		if ( step_ret == SQLITE_ROW ) [[likely]]
 		{
@@ -149,10 +169,10 @@ class Binder
 					[[fallthrough]];
 				case SQLITE_ERROR:
 					{
-						spdlog::error(
+						atlas::logging::dev::error( fmt::format(
 							"DB: Query error: \"{}\", Query: \"{}\"",
 							sqlite3_errmsg( &Database::ref() ),
-							sqlite3_expanded_sql( stmt ) );
+							sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( fmt::format(
 							"DB: Query error: \"{}\", Query: \"{}\"",
 							sqlite3_errmsg( &Database::ref() ),
@@ -167,7 +187,6 @@ class Binder
 	{
 		using FuncArgs = FunctionDecomp< Function >;
 		using Tpl = FuncArgs::ArgTuple;
-		ZoneScopedN( "Get results into func" );
 		ran = true;
 
 		//Execute the query.
@@ -175,23 +194,22 @@ class Binder
 		{
 			if ( stmt == nullptr ) throw std::runtime_error( "stmt was nullptr" );
 
-			const auto step_ret { sqlite3_step( stmt ) };
-
-			if ( step_ret == SQLITE_ROW ) [[likely]]
-			{
-				Tpl tpl;
-				extractRow< 0 >( stmt, tpl );
-				std::apply( func, std::move( tpl ) );
-				continue;
-			}
-			else if ( step_ret == SQLITE_DONE )
-				return;
-
 			switch ( sqlite3_step( stmt ) )
 			{
+				case SQLITE_ROW:
+					[[likely]]
+					{
+						Tpl tpl;
+						extractRow< 0 >( stmt, tpl );
+						std::apply( func, std::move( tpl ) );
+						break;
+					}
+				case SQLITE_DONE:
+					return;
 				default:
 					{
-						spdlog::error( "Unhandled error in sqlite!" );
+						atlas::logging::dev::error(
+							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}
@@ -203,7 +221,6 @@ class Binder
 	void operator>>( std::tuple< Ts... >& tpl )
 	{
 		ran = true;
-		ZoneScopedN( "Get results into func" );
 
 		//Execute the query.
 		while ( true )
