@@ -42,7 +42,8 @@ namespace internal
 		const QString& version,
 		const std::array< QString, BannerType::SENTINEL >& banners,
 		const std::vector< QString >& previews,
-		const bool owning )
+		const bool owning,
+		const bool scan_filesize )
 	try
 	{
 		ZoneScoped;
@@ -70,15 +71,19 @@ namespace internal
 		std::size_t folder_size { 0 };
 		std::size_t file_count { 0 };
 		QLocale locale;
-		for ( const auto& file : scanner )
+		if ( scan_filesize )
 		{
-			++file_count;
-			folder_size += file.size;
-
-			if ( folder_size % 1024 == 0 )
+			for ( const auto& file : scanner )
 			{
-				signaler->setMessage( QString( "Calculating folder size: %1" )
-				                          .arg( locale.formattedDataSize( static_cast< qint64 >( folder_size ) ) ) );
+				++file_count;
+				folder_size += file.size;
+
+				if ( folder_size % 1024 == 0 )
+				{
+					signaler
+						->setMessage( QString( "Calculating folder size: %1" )
+					                      .arg( locale.formattedDataSize( static_cast< qint64 >( folder_size ) ) ) );
+				}
 			}
 		}
 		TracyCZoneEnd( tracy_FileScanner );
@@ -169,6 +174,7 @@ QFuture< RecordID > importGame(
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
 	bool owning,
+	bool scan_filesize,
 	QThreadPool& pool )
 {
 	ZoneScoped;
@@ -183,30 +189,12 @@ QFuture< RecordID > importGame(
 	         std::move( version ),
 	         std::move( banners ),
 	         std::move( previews ),
-	         owning );
-}
-
-QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
-{
-	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
-		std::move( data );
-
-	return importGame(
-		root / path,
-		root / path / executable,
-		std::move( title ),
-		std::move( creator ),
-		"",
-		std::move( version ),
-		std::move( banners ),
-		std::move( previews ),
-		owning,
-		*QThreadPool::globalInstance() );
+	         owning,
+	         scan_filesize );
 }
 
 QFuture< RecordID >
-	importGame( GameImportData data, const std::filesystem::path root, const bool owning, QThreadPool& pool )
+	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize )
 {
 	ZoneScoped;
 	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
@@ -222,5 +210,31 @@ QFuture< RecordID >
 		std::move( banners ),
 		std::move( previews ),
 		owning,
+		scan_filesize,
+		*QThreadPool::globalInstance() );
+}
+
+QFuture< RecordID > importGame(
+	GameImportData data,
+	const std::filesystem::path root,
+	const bool owning,
+	const bool scan_filesize,
+	QThreadPool& pool )
+{
+	ZoneScoped;
+	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
+		std::move( data );
+
+	return importGame(
+		root / path,
+		root / path / executable,
+		std::move( title ),
+		std::move( creator ),
+		"",
+		std::move( version ),
+		std::move( banners ),
+		std::move( previews ),
+		owning,
+		scan_filesize,
 		pool );
 }

@@ -132,10 +132,11 @@ void BatchImportDialog::importFiles()
 	ui->btnBack->setDisabled( true );
 
 	const bool owning { ui->cbMoveImported->isChecked() };
+	const bool scan_filesize { ui->cbScanFilesize->isChecked() };
 	const std::filesystem::path root { ui->tbPath->text().toStdString() };
 
 	(void)QtConcurrent::run(
-		[ games, owning, root ]()
+		[ games, owning, root, scan_filesize ]()
 		{
 			QThreadPool import_pool;
 			import_pool.setMaxThreadCount( 4 );
@@ -143,7 +144,7 @@ void BatchImportDialog::importFiles()
 			for ( auto game : games )
 			{
 				spdlog::debug( "Triggering import game for {}", game.title );
-				(void)importGame( std::move( game ), root, owning, import_pool );
+				(void)importGame( std::move( game ), root, owning, scan_filesize, import_pool );
 			}
 
 			import_pool.waitForDone();

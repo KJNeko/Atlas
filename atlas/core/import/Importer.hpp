@@ -37,6 +37,7 @@ QFuture< RecordID > importGame(
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
 	bool owning = false,
+	bool scan_filesize = false,
 	QThreadPool& pool = *QThreadPool::globalInstance() );
 
 struct GameImportData;
@@ -48,8 +49,13 @@ struct GameImportData;
  * @param owning see `importGame`
  * @return
  */
-QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning );
 QFuture< RecordID >
-	importGame( GameImportData data, const std::filesystem::path root, const bool owning, QThreadPool& pool );
+	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize );
+QFuture< RecordID > importGame(
+	GameImportData data,
+	const std::filesystem::path root,
+	const bool owning,
+	const bool scan_filesize,
+	QThreadPool& pool );
 
 #endif //ATLASGAMEMANAGER_IMPORTER_HPP
