@@ -12,7 +12,7 @@
 #include <QPromise>
 
 #include "core/Types.hpp"
-#include "core/database/record/Record.hpp"
+#include "core/database/record/Game.hpp"
 
 /**
  *

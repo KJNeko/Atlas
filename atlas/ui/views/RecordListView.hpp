@@ -8,8 +8,8 @@
 #include <QListView>
 
 #include "core/Types.hpp"
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordData.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 
 enum DelegateType
 {
@@ -17,7 +17,7 @@ enum DelegateType
 	BANNER_VIEW = 1,
 };
 
-class RecordView final : public QListView
+class RecordListView final : public QListView
 {
 	Q_OBJECT
 
@@ -27,18 +27,20 @@ class RecordView final : public QListView
 
   public:
 
-	RecordView( QWidget* parent = nullptr );
+	RecordListView( QWidget* parent = nullptr );
 
 	void mouseDoubleClickEvent( QMouseEvent* event ) override;
 
 	void reloadConfig();
 
+	void paintEvent( QPaintEvent* event ) override;
+
   signals:
-	void openDetailedView( const Record record );
+	void openDetailedView( const Game record );
 
   public slots:
 	void addRecords( const std::vector< RecordID > records );
-	void setRecords( const std::vector< Record > records );
+	void setRecords( const std::vector< Game > records );
 	void setRenderMode( const DelegateType type );
 	void on_customContextMenuRequested( const QPoint& pos );
 };

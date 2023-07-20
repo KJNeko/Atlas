@@ -8,13 +8,16 @@
 
 #include <QPainter>
 
+#include <tracy/Tracy.hpp>
+
+#include "core/database/record/GameData.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 void GameListDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	const Record record { index.data().value< Record >() };
-	const QString title { record->get< RecordColumns::Title >() };
+	const Game record { index.data().value< Game >() };
+	const QString& title { record->m_title };
 
 	painter->save();
 
@@ -31,8 +34,8 @@ QSize GameListDelegate::sizeHint( const QStyleOptionViewItem& option, const QMod
 	//Font height
 	QFontMetrics fm { option.font };
 
-	const Record record { index.data().value< Record >() };
-	const QString title { record->get< RecordColumns::Title >() };
+	const Game record { index.data().value< Game >() };
+	const QString& title { record->m_title };
 
 	return fm.size( Qt::TextSingleLine, title );
 }

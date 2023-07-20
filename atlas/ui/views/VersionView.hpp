@@ -7,9 +7,9 @@
 
 #include <QWidget>
 
-#include "core/database/GameMetadata.hpp"
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordData.hpp"
+#include "core/database/Version.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 
 QT_BEGIN_NAMESPACE
 
@@ -25,7 +25,7 @@ class VersionView final : public QWidget
 	Q_DISABLE_COPY_MOVE( VersionView )
 	Q_OBJECT
 
-	std::optional< GameMetadata > m_metadata { std::nullopt };
+	std::optional< Version > m_metadata { std::nullopt };
 
 	void reloadData();
 
@@ -34,7 +34,7 @@ class VersionView final : public QWidget
 	explicit VersionView( QWidget* parent = nullptr );
 	~VersionView() override;
 
-	void setVersion( const std::optional< GameMetadata > metadata );
+	void setVersion( const std::optional< Version > metadata );
 
   public slots:
 	void on_btnChangeVersion_pressed();

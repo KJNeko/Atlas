@@ -7,7 +7,7 @@
 
 #include <QListView>
 
-#include "core/database/record/Record.hpp"
+#include "core/database/record/Game.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 //! A list that displays a list of games.

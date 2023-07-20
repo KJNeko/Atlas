@@ -17,7 +17,6 @@
 
 VersionView::VersionView( QWidget* parent ) : QWidget( parent ), ui( new Ui::VersionView )
 {
-	ZoneScoped;
 	ui->setupUi( this );
 
 	ui->btnChangeExec->setEnabled( false );
@@ -29,9 +28,8 @@ VersionView::~VersionView()
 	delete ui;
 }
 
-void VersionView::setVersion( const std::optional< GameMetadata > metadata )
+void VersionView::setVersion( const std::optional< Version > metadata )
 {
-	ZoneScoped;
 	m_metadata = metadata;
 
 	ui->btnChangeExec->setEnabled( m_metadata.has_value() );

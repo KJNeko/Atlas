@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameView</class>
- <widget class="QWidget" name="GameView">
+ <class>GameWidget</class>
+ <widget class="QWidget" name="GameWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -92,8 +92,8 @@
 border:none;</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="13">
-          <spacer name="horizontalSpacer_17">
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer_15">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -108,22 +108,29 @@ border:none;</string>
            </property>
           </spacer>
          </item>
-         <item row="0" column="8">
-          <widget class="QWidget" name="StorageUsed" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
+         <item row="4" column="1" colspan="13">
+          <widget class="QListView" name="previewList">
            <property name="styleSheet">
-            <string notr="true">background:none;</string>
+            <string notr="true">background-color: rgba(50,50, 50, 100);
+border-radius: 2px;</string>
+           </property>
+           <property name="flow">
+            <enum>QListView::LeftToRight</enum>
+           </property>
+           <property name="isWrapping" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="resizeMode">
+            <enum>QListView::Adjust</enum>
+           </property>
+           <property name="viewMode">
+            <enum>QListView::ListMode</enum>
+           </property>
+           <property name="uniformItemSizes">
+            <bool>true</bool>
+           </property>
+           <property name="itemAlignment">
+            <set>Qt::AlignCenter</set>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <property name="leftMargin">
@@ -185,93 +192,7 @@ border:none;</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="10">
-          <widget class="QPushButton" name="btnManageRecord">
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: rgba( 255, 255, 255, 55);
-border-radius:3px;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <spacer name="horizontalSpacer_15">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="12">
-          <widget class="QToolButton" name="btnFavorite">
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: rgba( 255, 255, 255, 50 );
-border-radius:3px;</string>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <spacer name="verticalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>12</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="4">
+         <item row="0" column="5">
           <widget class="QWidget" name="LastPlayed" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -377,6 +298,12 @@ border-radius:3px;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color:none;</string>
               </property>
@@ -437,7 +364,7 @@ border-radius:none;</string>
             <string>   PLAY</string>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg</iconset>
            </property>
            <property name="iconSize">
@@ -486,7 +413,7 @@ border-radius:3px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/info.svg</normaloff>:/images/assets/info.svg</iconset>
            </property>
            <property name="iconSize">
@@ -530,7 +457,7 @@ color: rgb(255, 255, 255);</string>
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1036,7 +963,7 @@ border-radius: 2px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../resources.qrc"/>
+  <include location="../../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

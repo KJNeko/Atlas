@@ -10,6 +10,8 @@
 using RecordID = std::uint32_t;
 using AtlasID = std::uint64_t;
 using F95ID = std::uint64_t;
-#define INVALID_RECORD 0
+[[maybe_unused]] constexpr AtlasID INVALID_ATLAS_ID { 0 };
+[[maybe_unused]] constexpr RecordID INVALID_RECORD_ID { 0 };
+[[maybe_unused]] constexpr F95ID INVALID_F95_ID { 0 };
 
 #endif //ATLAS_TYPES_HPP

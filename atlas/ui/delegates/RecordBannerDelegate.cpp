@@ -12,10 +12,11 @@
 #include <QPixmapCache>
 
 #include "core/config.hpp"
-#include "core/database/GameMetadata.hpp"
-#include "core/database/record/Record.hpp"
-#include "core/database/record/RecordBanner.hpp"
+#include "core/database/Version.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "ui/models/RecordListModel.hpp"
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
@@ -23,16 +24,13 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	ZoneScoped;
 	painter->save();
 
-	//draw test rect
-	const int rect_x = options.rect.x();
-	const int rect_y = options.rect.y();
-	QRect test_rect { rect_x, rect_y, m_grid_size.width(), m_grid_size.height() };
-	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
-	
-	//painter->drawRect( test_rect );
-
 	//Draw banner if present
-	const Record record { index.data().value< Record >() };
+	Game record { index.data().value< Game >() };
+
+	//draw test rect
+	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
+	//painter->fillRect( test_rect, QColor( 0, 255, 0, 50 ) );
+	//painter->drawRect( test_rect );
 
 	const auto banner_size { m_banner_size };
 
@@ -47,37 +45,66 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const int item_count { static_cast< int >( config::grid_ui::itemViewWidth::get() / static_cast< double >( config::grid_ui::bannerSizeX::get() ) ) };
 	const int image_offset { m_grid_size.width() - m_banner_size.width() };
 	spdlog::debug( "coloumn:{} row:{} item_count:{} image_offset:{}", index.column(), index.row(), item_count, image_offset );
-	const int x_offset { rect_x + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
-	const int y_offset { rect_y+ ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
+	const int x_offset { options.rect.x()  + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
+	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
 	const QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
 
 	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
-	QPixmap pixmap { record->banners().getBanner( banner_size.width(), banner_size.height(), aspect_ratio, Normal ) };
-
-	//Check if we need to add blur background. Draw behind original image
-	if ( aspect_ratio == FIT_BLUR_EXPANDING )
 	{
-		pixmap = blurToSize(
-			pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
+		ZoneScopedN( "Draw banner" );
+
+		const QString key { QString::fromStdString(
+			fmt::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
+
+		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
+
+		constexpr int BANNER_FUTURE_IDX { 0 };
+		constexpr int BANNER_IDX { 1 };
+
+		QPixmap pixmap;
+
+		if ( !banner.isFinished() )
+		{
+			//We got the future
+			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
+			if ( m_model != nullptr )
+				this->m_model->refreshOnFuture( index, std::move( banner ) );
+			else
+				pixmap = banner.result();
+		}
+		else
+		{
+			ZoneScopedN( "Get image from variant" );
+			//We got the banner and should continue as normal
+			pixmap = banner.result();
+
+			//Check if we need to add blur background. Draw behind original image
+			if ( aspect_ratio == FIT_BLUR_EXPANDING )
+			{
+				ZoneScopedN( "Blur image" );
+				pixmap = blurToSize(
+					pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
+			}
+		}
+
+		//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
+		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.width() - pixmap.width() ) / 2 : 0 };
+		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
+		const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
+
+		//Draw Shadow
+		//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
+		//painter->drawRect( shadow_rect );
+		//Draw Image
+		painter->drawPixmap( pixmap_rect, pixmap );
 	}
-
-	//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
-	const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.width() - pixmap.width() ) / 2 : 0 };
-	const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
-	const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
-
-	//Draw Shadow
-	//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
-	//painter->drawRect( shadow_rect );
-	//Draw Image
-	painter->drawPixmap( pixmap_rect, pixmap );
 
 	//Click & Selectec event
 	//TODO: add ability to change selected color.
 	if ( options.state & QStyle::State_MouseOver )
 	{
-		painter->fillRect( pixmap_rect, QColor( 0, 0, 255, 50 ) );
+		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
 		// figure out where banner is and show pop up
 		//const int popup_x {banner_size.width()};
 		//const int popup_y {options_rect.y() + banner_size.height()/2};
@@ -116,23 +143,20 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
-	const auto [ title, engine, creator ] =
-		record->get< RecordColumns::Title, RecordColumns::Engine, RecordColumns::Creator >();
-	//Fix Title
-	//const auto title_fixed = toCamelCase(title);
-
 	//Draw Title
-	this->drawText( painter, options_rect, stripe_height, m_title_location, title );
+	this->drawText( painter, options_rect, stripe_height, m_title_location, record->m_title );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, engine );
+	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version
-	const auto& latest { record->getLatestVersion() };
-	if ( latest.has_value() )
-		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->getVersionName() );
+	if ( record->m_versions.size() )
+	{
+		const Version latest { record->m_versions.at( 0 ) };
+		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
+	}
 	else
 		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, creator );
+	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
 
 	painter->restore();
 }
@@ -227,7 +251,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_center_widgets = config::grid_ui::centerWidgets::get();
 }
 
-RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
+RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
   QAbstractItemDelegate( parent ),
   m_grid_size { calculateSize(
 	  config::grid_ui::itemViewWidth::get(),
@@ -253,7 +277,8 @@ RecordBannerDelegate::RecordBannerDelegate( QWidget* parent ) :
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },
   m_window_width { config::grid_ui::windowWidth::get() },
-  m_center_widgets { config::grid_ui::centerWidgets::get() }
+  m_center_widgets { config::grid_ui::centerWidgets::get() },
+  m_model( model )
 
 {
 	CONFIG_ATTACH_THIS;
@@ -263,9 +288,9 @@ QSize RecordBannerDelegate::calculateSize( const int window_width, const int ban
 {
 	//spdlog::debug( "Window_width:{} | Banner_width:{} | Banner_height:{} | Spacing:{}", window_width, banner_width, banner_height, banner_spacing );
 	ZoneScoped;
-	
+
 	int record_viewport = window_width;
-	int item_count { static_cast< int >( record_viewport / static_cast< double >( banner_width ) ) };	
+	int item_count { static_cast< int >( record_viewport / static_cast< double >( banner_width ) ) };
 	int banner_total_width { ( item_count ) * ( banner_width) };
 	double banner_offset { ( record_viewport - banner_total_width ) / static_cast< double >( item_count ) };
 	int banner_viewport { ( static_cast< int >( banner_offset ) * item_count ) + banner_total_width };

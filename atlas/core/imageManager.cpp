@@ -45,8 +45,7 @@ namespace imageManager
 	std::filesystem::path importImage( const std::filesystem::path& path )
 	{
 		ZoneScoped;
-		//VERIFY THIS IS NEEDED
-		if ( std::ifstream ifs( path ); ifs )
+		if ( std::filesystem::exists( path ) )
 		{
 			QImage temp_image;
 			TracyCZoneN( tracy_ImageLoad, "Image load", true );
@@ -57,12 +56,8 @@ namespace imageManager
 			QByteArray byteArray;
 			QBuffer buffer( &byteArray );
 			const bool tsave { temp_image.save( &buffer, path.extension().string().substr( 1 ).c_str(), 100 ) };
-			spdlog::debug( tsave );
 
-			spdlog::debug( "Image Loaded: {}", load_success );
-
-			TracyCZoneN( tracy_ProcessImage, "Process image", true );
-			TracyCZoneEnd( tracy_ProcessImage );
+			if ( !tsave ) throw std::runtime_error( "Failed to save image to buffer to test size!" );
 
 			const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
 			{
@@ -96,8 +91,9 @@ namespace imageManager
 				const auto hash { hashData( webp_buffer.data(), static_cast< int >( webp_buffer.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + ".webp" ) };
 
-				QImage img = QImage::fromData( webp_byteArray );
-				img.save( QString::fromStdString( dest.string() ) );
+				// We shouldn't need to make a new image since we already have it? (tmp_image)
+				// const QImage img { QImage::fromData( webp_byteArray ) };
+				temp_image.save( QString::fromStdString( dest.string() ) );
 
 				return dest;
 			}
@@ -107,7 +103,7 @@ namespace imageManager
 				const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
-				QImage img = QImage::fromData( byteArray );
+				const QImage img { QImage::fromData( byteArray ) };
 				img.save( QString::fromStdString( dest.string() ) );
 
 				return dest;
@@ -115,7 +111,9 @@ namespace imageManager
 		}
 		else
 		{
-			spdlog::warn( "Filepath {} does not exist. Unable to import image", path );
+			atlas::logging::userwarn( fmt::format(
+				"importImage failed. Attempted to open file {} which doesn't exist anymore. Wrong permissions?",
+				path ) );
 			throw std::runtime_error( fmt::format( "Filepath {} does not exist. Unable to add as image", path ) );
 		}
 	}
