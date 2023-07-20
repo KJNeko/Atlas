@@ -146,8 +146,7 @@ void MainWindow::on_actionOptions_triggered()
 	settingsDialog.setModal( true );
 	settingsDialog.exec();
 
-	//TODO
-	//ui->recordView->reloadConfig();
+	ui->recordView->reloadConfig();
 
 	QWidget::repaint();
 }

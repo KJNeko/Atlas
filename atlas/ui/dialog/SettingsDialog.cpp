@@ -307,8 +307,6 @@ void SettingsDialog::savePathsSettings()
 		for ( const auto& image : std::filesystem::directory_iterator( config::paths::images::getPath() ) )
 			std::filesystem::copy( image, new_image_path / image.path().filename() );
 
-		//TODO: Might as well clean any orphans here too.
-
 		//Delete old image folder
 		std::filesystem::remove_all( config::paths::images::getPath() );
 
