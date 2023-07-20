@@ -220,10 +220,6 @@ std::string parseNamespace( const std::string_view str )
 						return fmt::format(
 							" record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'{}\')",
 							escape( sub ) );
-						//TODO: Do the tag system
-						return "";
-					case SYSTEM:
-						[[fallthrough]];
 					case NAMESPACE_END:
 						[[fallthrough]];
 					case INVALID_NAMESPACE:
