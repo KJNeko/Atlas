@@ -4,9 +4,8 @@
 
 #include "engineDetection.hpp"
 
-#include <array>
-#include <iostream>
 #include <algorithm>
+#include <array>
 #include <string>
 
 #include <QMimeDatabase>
@@ -80,16 +79,13 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 				mime_db.mimeTypeForFile( QString::fromStdString( path.string() ), QMimeDatabase::MatchContent )
 			};
 			//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
-			spdlog::info( "type:{} ext:{}", type.name(), ext );
 			//General executables
 			if ( type.inherits( "application/x-ms-dos-executable" ) )
 			{
-				spdlog::info( "Found executable:{}", path.string() );
 				//potential_executables.insert( potential_executables.begin(), relative );
 				//prioritize AMD64
-				path.string().std::string::find( "32" ) ?
-					potential_executables.insert( potential_executables.begin(), relative ) :
-					potential_executables.insert( potential_executables.end(), relative );
+				path.string().find( "32" ) ? potential_executables.insert( potential_executables.begin(), relative ) :
+											 potential_executables.insert( potential_executables.end(), relative );
 				//potential_executables.emplace_back( relative );
 				continue;
 			}
