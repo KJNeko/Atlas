@@ -91,7 +91,6 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 			}
 			else if ( type.inherits( "text/plain" ) && ext == ".html" )
 			{
-				spdlog::info( "Found HTML:{}", path.string() );
 				potential_executables.emplace_back( relative );
 				continue;
 			}
