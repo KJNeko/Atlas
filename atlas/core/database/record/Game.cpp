@@ -4,6 +4,8 @@
 
 #include "Game.hpp"
 
+#include <moc_Game.cpp>
+
 #include <tracy/Tracy.hpp>
 
 #include "GameData.hpp"
