@@ -10,13 +10,15 @@
 #include <QPixmap>
 #include <QSize>
 
+#include "Types.hpp"
+
 namespace imageManager
 {
 	//! Clears all images not found attached to any record
 	void cleanOrphans();
 
 	//! Stores the image located at `path` in the data folder
-	std::filesystem::path importImage( const std::filesystem::path& path );
+	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id );
 } // namespace imageManager
 
 #endif //ATLAS_IMAGEMANAGER_HPP

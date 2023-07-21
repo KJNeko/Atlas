@@ -42,7 +42,7 @@ namespace imageManager
 		}
 	}
 
-	std::filesystem::path importImage( const std::filesystem::path& path )
+	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
 		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
@@ -80,7 +80,8 @@ namespace imageManager
 
 			TracyCZoneEnd( tracy_SaveImage );
 
-			const auto dest_root { config::paths::images::getPath() };
+			const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
+			std::filesystem::create_directories( dest_root );
 
 			//Which is smaller?
 			spdlog::debug( "webp:{} <-> original:{}", webp_buffer.size(), buffer.size() );

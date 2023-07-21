@@ -182,9 +182,9 @@ void Game::reorderPreviews( std::vector< std::filesystem::path > paths )
 void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 {
 	// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
-	if ( std::filesystem::relative( config::paths::images::getPath(), path ) == "" )
+	if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 	{
-		path = imageManager::importImage( path );
+		path = imageManager::importImage( path, m_id );
 	}
 
 	//Get the highest position
@@ -255,10 +255,9 @@ void Game::setBanner( std::filesystem::path path, const BannerType type )
 	ZoneScoped;
 	int count { 0 };
 
-	// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
-	if ( std::filesystem::relative( config::paths::images::getPath(), path ) == "" )
+	if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 	{
-		path = imageManager::importImage( path );
+		path = imageManager::importImage( path, m_id );
 	}
 
 	RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
