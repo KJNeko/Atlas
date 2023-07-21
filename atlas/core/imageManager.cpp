@@ -57,7 +57,9 @@ namespace imageManager
 			QBuffer buffer( &byteArray );
 			const bool tsave { temp_image.save( &buffer, path.extension().string().substr( 1 ).c_str(), 100 ) };
 
-			if ( !tsave ) throw std::runtime_error( "Failed to save image to buffer to test size!" );
+			if ( !tsave )
+				throw std::runtime_error(
+					fmt::format( "Failed to save image to buffer to test size! Banner path: {}", path ) );
 
 			const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
 			{
