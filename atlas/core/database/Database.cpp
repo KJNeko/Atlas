@@ -96,6 +96,26 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	for ( const auto& query_str : table_queries ) transaction << query_str;
 
+	//Add dummy record
+	const QString test_name { "Galaxy Crossing: First Conquest" };
+	const QString test_creator { "Atlas Games" };
+	const QString test_engine { "Unity" };
+
+	if ( !recordExists( test_name, test_creator, test_engine ) )
+	{
+		Game game { importRecord( test_name, test_creator, test_engine ) };
+		game.addVersion(
+			"Chapter: 1", "C:/Atlas Games/Galaxy Crossing First Conquest", "Galaxy Crossing First Conquest.exe" );
+
+		QImage banner_image { ":/images/assets/Grid_Capsule_Default.webp" };
+		if ( banner_image.isNull() ) throw std::runtime_error( "Failed to open image asset for Grid Capsule Default" );
+		std::filesystem::create_directories( "./data/images" );
+		if ( !banner_image.save( "./data/images/config_image.webp" ) )
+			throw std::runtime_error( "Failed to save Grid Capsule Default image to temporary location" );
+
+		game.setBanner( "./data/images/config_image.webp", Normal );
+	}
+
 	config::db::first_start::set( false );
 }
 
