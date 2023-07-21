@@ -47,7 +47,7 @@ class RecordListModel final : public QAbstractListModel
 
 	enum RecordListModelRoles
 	{
-		Raw = 0x0100,
+		Raw = Qt::ItemDataRole::UserRole,
 		NormalBanner,
 		WideBanner,
 		LogoBanner,

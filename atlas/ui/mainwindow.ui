@@ -392,38 +392,6 @@ border-top-left-radius:0px;</string>
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>80</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnShowMessageLog">
-         <property name="text">
-          <string>Show/Hide Message Log</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </item>
@@ -676,8 +644,8 @@ margin-right:5px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>786</width>
-             <height>647</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">

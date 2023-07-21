@@ -7,13 +7,12 @@
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
+#include "core/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/glImporter/GLImporter.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
-#include "ui/notifications/NotificationMessage.hpp"
-#include "ui/notifications/NotificationPopup.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
@@ -59,9 +58,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	config::notify();
 
-	initNotificationPopup( this );
-	getNotificationPopup()->hide();
-	connect( getNotificationPopup(), &NotificationPopup::popupResized, this, &MainWindow::movePopup );
+	atlas::notifications::initNotifications( this );
 
 	//Share the recordView's model to gameList
 	ui->gamesTree->setModel( ui->recordView->model() );
@@ -71,15 +68,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
-	initNotificationPopup( this );
-	getNotificationPopup()->hide();
-	connect( getNotificationPopup(), &NotificationPopup::popupResized, this, &MainWindow::movePopup );
-	connect( getNotificationPopup(), &NotificationPopup::triggerShow, this, &MainWindow::showMessagePopup );
-	connect( getNotificationPopup(), &NotificationPopup::triggerHide, this, &MainWindow::hideMessagePopup );
-
 	//Init remote system
 	atlas::initRemoteHandler();
-	getNotificationPopup()->createNotification< NotificationMessage >( QString( "Welcome to Atlas!" ), true );
+	atlas::notifications::createMessage( "Welcome to atlas!" );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -168,7 +159,6 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::resizeEvent( QResizeEvent* event )
 {
-	spdlog::debug( "Window Resize Event" );
 	QMainWindow::resizeEvent( event );
 
 	//Store window height and width
@@ -250,29 +240,6 @@ void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int inde
 	searchTextChanged( ui->SearchBox->text() );
 }
 
-void MainWindow::showMessagePopup()
-{
-	auto& task_popup { *getNotificationPopup() };
-
-	task_popup.show();
-	movePopup();
-}
-
-void MainWindow::hideMessagePopup()
-{
-	auto& task_popup { *getNotificationPopup() };
-	task_popup.hide();
-}
-
-void MainWindow::on_btnShowMessageLog_clicked()
-{
-	auto& task_popup { *getNotificationPopup() };
-	if ( task_popup.isVisible() )
-		hideMessagePopup();
-	else
-		showMessagePopup();
-}
-
 void MainWindow::moveEvent( QMoveEvent* event )
 {
 	QMainWindow::moveEvent( event );
@@ -281,12 +248,12 @@ void MainWindow::moveEvent( QMoveEvent* event )
 
 void MainWindow::movePopup()
 {
-	auto& task_popup { *getNotificationPopup() };
+	auto& task_popup { atlas::notifications::handle() };
 	const auto [ x, y ] = task_popup.size();
 
-	const auto point {
-		ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() - QPoint { x, y } - QPoint( 5, 5 ) )
-	};
+	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }
+		               - QPoint( 5, 5 ) };
+
 	task_popup.move( point );
 }
 

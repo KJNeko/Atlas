@@ -5,8 +5,8 @@
 #include <QJsonArray>
 
 #include "core/database/Transaction.hpp"
+#include "core/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
-#include "ui/notifications/ProgressMessage.hpp"
 
 namespace remote::parsers::v0
 {
@@ -107,7 +107,8 @@ namespace remote::parsers::v0
 
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
 	{
-		auto signaler { createNotification< ProgressMessage >( QString( "Processing update for Atlas data" ), true ) };
+		auto signaler { atlas::notifications::createProgressMessage( "Processing update for Atlas data" ) };
+
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler->setMax( max );
 		int counter { 0 };
@@ -121,7 +122,7 @@ namespace remote::parsers::v0
 				insertAtlasData( obj, trans );
 			++counter;
 			signaler->setProgress( counter );
-			signaler->setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
+			signaler->setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
@@ -181,7 +182,7 @@ namespace remote::parsers::v0
 
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
-		auto signaler { createNotification< ProgressMessage >( QString( "Processing update for F95 data" ), true ) };
+		auto signaler { atlas::notifications::createProgressMessage( QString( "Processing update for F95 data" ) ) };
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler->setMax( max );
 		int counter { 0 };

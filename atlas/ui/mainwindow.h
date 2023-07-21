@@ -62,9 +62,6 @@ class MainWindow final : public QMainWindow
 	void searchTextChanged( const QString str );
 	void on_sortOrderButton_clicked();
 	void on_sortSelection_currentIndexChanged( int index );
-	void showMessagePopup();
-	void hideMessagePopup();
-	void on_btnShowMessageLog_clicked();
 	void movePopup();
 	void taskPopupResized();
 };

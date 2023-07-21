@@ -15,11 +15,10 @@
 
 #include "core/database/Transaction.hpp"
 #include "core/logging.hpp"
+#include "core/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"
-#include "ui/notifications/NotificationMessage.hpp"
-#include "ui/notifications/NotificationPopup.hpp"
 
 #define REMOTE "https://atlas-gamesdb.com/"
 
@@ -345,8 +344,9 @@ namespace atlas
 		catch ( const std::exception& e )
 		{
 			spdlog::error( "Failed to process update file {}: What: {}", update_time, e.what() );
-			createNotification< NotificationMessage >(
-				QString( "Failed to process update file %1\nWhat: %2" ).arg( update_time ).arg( e.what() ), true );
+			atlas::notifications::createMessage( QString( "Failed to process update file %1\nWhat: %2" )
+			                                         .arg( update_time )
+			                                         .arg( e.what() ) );
 		}
 	}
 
@@ -373,7 +373,7 @@ namespace atlas
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
 	{
-		createNotification< NotificationMessage >( QString( "Processed update for time %1" ).arg( update_time ), true );
+		atlas::notifications::createMessage( QString( "Processed update for time %1" ).arg( update_time ) );
 
 		RapidTransaction()
 			<< "UPDATE updates SET processed_time = ? WHERE update_time = ?"

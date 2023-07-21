@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NotificationManagerUI</class>
+ <widget class="QDialog" name="NotificationManagerUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>50</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NotificationManagerUI</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>0 notifications</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Close all messages</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="btnHideShow">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources.qrc">
+       <normaloff>:/images/assets/up_arrorw_small.svg</normaloff>
+       <normalon>:/images/assets/down_arrorw_small.svg</normalon>:/images/assets/up_arrorw_small.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

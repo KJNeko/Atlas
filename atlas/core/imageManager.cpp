@@ -86,8 +86,6 @@ namespace imageManager
 			std::filesystem::create_directories( dest_root );
 
 			//Which is smaller?
-			spdlog::debug( "webp:{} <-> original:{}", webp_buffer.size(), buffer.size() );
-
 			if ( webp_buffer.size() < buffer.size() )
 			{
 				//Buffer is smaller. Meaning webp is smaller. Use it

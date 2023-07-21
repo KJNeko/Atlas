@@ -16,9 +16,8 @@
 #include "core/database/record/GameData.hpp"
 #include "core/foldersize.hpp"
 #include "core/imageManager.hpp"
+#include "core/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
-#include "ui/notifications/NotificationPopup.hpp"
-#include "ui/notifications/ProgressMessage.hpp"
 
 namespace internal
 {
@@ -47,7 +46,7 @@ namespace internal
 	try
 	{
 		ZoneScoped;
-		auto signaler { createNotification< ProgressMessage >( QString( "Importing game %1" ).arg( title ), true ) };
+		auto signaler { atlas::notifications::createProgressMessage( QString( "Importing game %1" ).arg( title ) ) };
 
 		promise.start();
 

@@ -13,13 +13,13 @@
 
 enum ImportColumns
 {
-	FOLDER_PATH,
 	TITLE,
 	CREATOR,
 	ENGINE,
 	VERSION,
+	EXECUTABLES,
 	SIZE,
-	EXECUTABLES
+	FOLDER_PATH,
 };
 
 class BatchImportModel final : public QAbstractTableModel
