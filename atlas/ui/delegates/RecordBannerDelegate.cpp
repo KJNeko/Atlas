@@ -42,9 +42,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//For centering Items
 
-	const int item_count { static_cast<
-		int >( config::grid_ui::itemViewWidth::get() / static_cast< double >( config::grid_ui::bannerSizeX::get() ) ) };
-	const int image_offset { m_grid_size.width() - m_banner_size.width() };
 	const int x_offset { options.rect.x() + ( ( m_grid_size.width() - m_banner_size.width() ) / 2 ) };
 	const int y_offset { options.rect.y() + ( ( m_grid_size.height() - m_banner_size.height() ) / 2 ) };
 	const QRect options_rect { x_offset, y_offset, banner_size.width(), banner_size.height() };
