@@ -21,7 +21,7 @@ class Notification : public QDialog
 
   public:
 
-  private slots:
+  public slots:
 	void selfCloseTrigger();
 
   signals:

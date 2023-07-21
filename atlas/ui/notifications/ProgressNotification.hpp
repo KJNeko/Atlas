@@ -31,6 +31,8 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 	void setSubMessage( const QString str );
 	void setMessage( const QString str );
 
+	~ProgressSignaler();
+
   private:
 
   signals:
@@ -38,6 +40,7 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 	void maxChanged( int i );
 	void messageChanged( const QString str );
 	void subMessageChanged( const QString str );
+	void selfClose();
 };
 
 class ProgressNotification : public Notification

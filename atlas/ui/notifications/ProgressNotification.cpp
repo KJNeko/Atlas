@@ -29,6 +29,7 @@ std::unique_ptr< ProgressSignaler > ProgressNotification::getSignaler()
 	connect( raw, &ProgressSignaler::maxChanged, ui->progressBar, &QProgressBar::setMaximum );
 	connect( raw, &ProgressSignaler::messageChanged, ui->message, &QLabel::setText );
 	connect( raw, &ProgressSignaler::subMessageChanged, ui->subMessage, &QLabel::setText );
+	connect( raw, &ProgressSignaler::selfClose, this, &Notification::selfCloseTrigger );
 
 	return ptr;
 }
@@ -51,4 +52,9 @@ void ProgressSignaler::setSubMessage( const QString str )
 void ProgressSignaler::setMessage( const QString str )
 {
 	emit messageChanged( str );
+}
+
+ProgressSignaler::~ProgressSignaler()
+{
+	emit selfClose();
 }
