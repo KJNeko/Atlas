@@ -29,6 +29,7 @@ void NotificationManagerUI::addNotification( Notification* notif )
 	connect( notif, &Notification::selfClosePtr, this, &NotificationManagerUI::deleteNotification );
 	active_notifications.emplace_back( notif );
 	reorderChildren();
+	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications.size() ) );
 }
 
 void NotificationManagerUI::reorderChildren()
@@ -75,4 +76,5 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 		spdlog::warn( "Tried to delete a notification that didn't exist in the list!" );
 
 	reorderChildren();
+	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications.size() ) );
 }
