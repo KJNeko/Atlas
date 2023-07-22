@@ -12,8 +12,7 @@ void Notification::mousePressEvent( QMouseEvent* event )
 {
 	if ( event->button() == Qt::RightButton )
 	{
-		event->accept();
-		this->close();
+		emit selfClosePtr( this );
 		return;
 	}
 	else
