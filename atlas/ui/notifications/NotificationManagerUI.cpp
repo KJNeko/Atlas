@@ -33,6 +33,12 @@ void NotificationManagerUI::addNotification( Notification* notif )
 
 void NotificationManagerUI::reorderChildren()
 {
+	// No children so we should hide ourselves
+	if ( active_notifications.size() == 0 )
+		this->hide();
+	else
+		this->show();
+
 	QPoint g_pos { this->mapToGlobal( this->rect().topLeft() ) };
 
 	for ( Notification* child : active_notifications )
