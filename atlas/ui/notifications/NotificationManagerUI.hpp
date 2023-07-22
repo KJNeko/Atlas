@@ -25,7 +25,7 @@ class NotificationManagerUI : public QDialog
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( NotificationManagerUI )
 
-	std::vector< Notification* > active_notifications {};
+	std::uint64_t active_notifications { 0 };
 
   public:
 

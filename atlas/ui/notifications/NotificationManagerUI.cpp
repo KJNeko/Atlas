@@ -32,46 +32,7 @@ void NotificationManagerUI::addNotification( Notification* notif )
 	ui->notifications->layout()->addWidget( notif );
 	this->resize( this->minimumSize() );
 	this->updateGeometry();
-
-	/*
-	active_notifications.emplace_back( notif );
-	reorderChildren();
-	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications.size() ) );
-	notif->show();*/
-}
-
-void NotificationManagerUI::reorderChildren()
-{
-	/*
-	if ( !this->isVisible() )
-	{
-		//Hide all children instead
-		for ( auto* child : active_notifications ) child->hide();
-		return;
-	}
-
-	// No children so we should hide ourselves
-	if ( active_notifications.size() == 0 )
-		this->hide();
-	else
-		this->show();
-
-	QPoint g_pos { this->mapToGlobal( this->rect().topLeft() ) };
-
-	for ( Notification* child : active_notifications )
-	{
-		//Force child to be as small as possible
-		child->resize( child->sizeHint() );
-		child->updateGeometry();
-
-		// Offset spacing
-		g_pos -= QPoint( 0, 4 );
-
-		// Offset vertical size
-		g_pos -= QPoint( 0, child->height() );
-
-		child->move( g_pos );
-	}*/
+	ui->label->setText( QString( "%1 notifications" ).arg( ++active_notifications ) );
 }
 
 void NotificationManagerUI::resizeEvent( QResizeEvent* event )
@@ -90,20 +51,5 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 	delete ptr;
 	this->resize( this->minimumSize() );
 
-	/*
-	if ( auto itter = std::find( active_notifications.begin(), active_notifications.end(), ptr );
-	     itter != active_notifications.end() )
-	{
-		Notification* ptr_in { *itter };
-		ptr_in->close();
-		ptr_in->deleteLater();
-		active_notifications.erase( itter );
-	}
-	else
-		spdlog::warn( "Tried to delete a notification that didn't exist in the list!" );
-
-	reorderChildren();
-	 */
-
-	ui->label->setText( QString( "%1 notifications" ).arg( ui->notifications->layout()->children().size() ) );
+	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
 }
