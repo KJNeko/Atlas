@@ -21,7 +21,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class ProgressNotification : public Notification
+class ProgressNotification final : public Notification
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressNotification )
@@ -38,7 +38,7 @@ class ProgressNotification : public Notification
 	Ui::ProgressNotification* ui;
 };
 
-class ProgressSignaler : public atlas::notifications::NotificationSignaler
+class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressSignaler )

@@ -18,7 +18,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class FutureNotification : public Notification
+class FutureNotification final : public Notification
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( FutureNotification )

@@ -8,6 +8,10 @@
 #include <QDialog>
 #include <QWidget>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsuggest-final-types"
+#pragma GCC diagnostic ignored "-Wsuggest-final-methods"
+
 class Notification : public QWidget
 {
 	Q_OBJECT
@@ -17,7 +21,9 @@ class Notification : public QWidget
 
 	Notification( QWidget* parent = nullptr );
 
-	void mousePressEvent( QMouseEvent* event ) override;
+	~Notification() {}
+
+	void mousePressEvent( QMouseEvent* event ) override final;
 
   public:
 
@@ -28,5 +34,7 @@ class Notification : public QWidget
 	void selfClose();
 	void selfClosePtr( Notification* ptr );
 };
+
+#pragma GCC diagnostic pop
 
 #endif //ATLASGAMEMANAGER_NOTIFICATION_HPP
