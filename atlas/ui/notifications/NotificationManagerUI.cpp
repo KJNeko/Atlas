@@ -69,7 +69,9 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 	if ( auto itter = std::find( active_notifications.begin(), active_notifications.end(), ptr );
 	     itter != active_notifications.end() )
 	{
-		delete ( *itter );
+		Notification* ptr_in { *itter };
+		ptr_in->close();
+		ptr_in->deleteLater();
 		active_notifications.erase( itter );
 	}
 	else
