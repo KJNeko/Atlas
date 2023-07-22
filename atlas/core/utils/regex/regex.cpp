@@ -58,6 +58,12 @@ namespace regex
 		return processRegexify( escapeStr( std::move( pattern ) ) );
 	}
 
+	bool valid( QRegularExpression& regex, QString text )
+	{
+		const auto match { regex.match( text ) };
+		return match.hasMatch();
+	}
+
 	bool valid( QString pattern, QString text )
 	{
 		ZoneScoped;

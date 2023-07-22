@@ -82,7 +82,6 @@ void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t ) noexcept
 template < std::uint64_t index, typename... Args >
 void extractRow( sqlite3_stmt* stmt, std::tuple< Args... >& tpl ) noexcept
 {
-	ZoneScoped;
 	auto& ref { std::get< index >( tpl ) };
 	extract< index, std::remove_reference_t< decltype( ref ) > >( stmt, ref );
 

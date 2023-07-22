@@ -58,6 +58,7 @@ namespace regex
 
 	QString regexify( QString pattern );
 
+	bool valid( QRegularExpression& regex, QString text );
 	bool valid( QString pattern, QString text );
 
 	struct GroupsOutput

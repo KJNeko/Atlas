@@ -12,6 +12,8 @@
 #include <QDirIterator>
 #include <QMimeDatabase>
 
+#include <tracy/TracyC.h>
+
 #include "../../system.hpp"
 #include "core/logging.hpp"
 
@@ -65,46 +67,55 @@ bool isBlacklist( const std::string& name )
 
 std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 {
+	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
+		ZoneScopedN( "Process file" );
 		if ( depth > 1 ) break;
 
 		if ( std::filesystem::is_regular_file( path ) )
 		{
 			if ( isBlacklist( filename ) ) continue;
 
-			QMimeDatabase mime_db;
-			const auto type {
-				mime_db.mimeTypeForFile( QString::fromStdString( path.string() ), QMimeDatabase::MatchContent )
-			};
-			//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
-			//General executables
-			if ( type.inherits( "application/x-ms-dos-executable" ) )
+			if ( path.extension() == ".exe" || path.extension() == ".html" || path.extension() == ".sh" )
 			{
-				//potential_executables.insert( potential_executables.begin(), relative );
-				//prioritize AMD64
-				path.string().find( "32" ) ? potential_executables.insert( potential_executables.begin(), relative ) :
-											 potential_executables.insert( potential_executables.end(), relative );
-				//potential_executables.emplace_back( relative );
-				continue;
-			}
-			else if ( type.inherits( "text/plain" ) && ext == ".html" )
-			{
-				potential_executables.emplace_back( relative );
-				continue;
-			}
+				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
+				QMimeDatabase mime_db;
+				const auto type { mime_db.mimeTypeForFile( QString::fromStdString( path.string() ) ) };
+				TracyCZoneEnd( mimeInfo_Tracy );
 
-			if constexpr ( sys::is_linux )
-			{
-				if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
+				//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
+				//General executables
+				if ( type.inherits( "application/x-ms-dos-executable" ) )
+				{
+					//potential_executables.insert( potential_executables.begin(), relative );
+					//prioritize AMD64
+					path.string().find( "32" ) ?
+						potential_executables.insert( potential_executables.begin(), relative ) :
+						potential_executables.insert( potential_executables.end(), relative );
+					//potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( type.inherits( "text/plain" ) && ext == ".html" )
 				{
 					potential_executables.emplace_back( relative );
 					continue;
 				}
+
+				if constexpr ( sys::is_linux )
+				{
+					if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
+					{
+						potential_executables.emplace_back( relative );
+						continue;
+					}
+				}
 			}
+			else
+				continue;
 		}
 	}
 
@@ -119,6 +130,7 @@ std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, [[maybe_unused]] const Engine engine_type )
 {
+	ZoneScoped;
 	std::vector< std::pair< std::filesystem::path, int > > execs;
 
 	for ( auto& path : paths )
@@ -194,6 +206,7 @@ QString engineName( const Engine engine )
 template <>
 bool isEngineT< RenPy >( FileScanner& scanner )
 {
+	ZoneScopedN( "isEngine< RenPy >" );
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
@@ -212,6 +225,7 @@ QString engineNameT< RenPy >()
 template <>
 bool isEngineT< Unity >( FileScanner& scanner )
 {
+	ZoneScopedN( "isEngine< Unity >" );
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
@@ -271,6 +285,7 @@ QString engineNameT< WolfRPG >()
 template <>
 bool isEngineT< HTML >( [[maybe_unused]] FileScanner& scanner )
 {
+	ZoneScopedN( "isEngine< HTML >" );
 	bool html_found { false };
 
 	for ( const auto& file : scanner )
@@ -305,6 +320,7 @@ QString engineNameT< VisualNovelMaker >()
 template <>
 bool isEngineT< TyanoBuilder >( [[maybe_unused]] FileScanner& scanner )
 {
+	ZoneScopedN( "isEngine< TyanoBuilder >" );
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;

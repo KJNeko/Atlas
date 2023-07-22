@@ -12,6 +12,7 @@
 #include <QtConcurrent>
 
 #include <tracy/Tracy.hpp>
+#include <tracy/TracyC.h>
 
 #include "core/foldersize.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
@@ -33,49 +34,57 @@ void runner(
 		if ( promise.isCanceled() ) return;
 		if ( potential_executables.size() > 0 )
 		{
+			TracyCZoneN( extract_Tracy, "Extract groups", true );
 			const auto [ title, creator, version, engine ] =
 				regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+			TracyCZoneEnd( extract_Tracy );
 
 			//Search for banners
 			std::array< QString, BannerType::SENTINEL > banners {};
 
-			for ( const auto& file : scanner )
 			{
-				if ( promise.isCanceled() ) return;
-				if ( file.depth > 1 ) break;
+				ZoneScopedN( "Scan for banners" );
+				for ( const auto& file : scanner )
+				{
+					if ( promise.isCanceled() ) return;
+					if ( file.depth > 1 ) break;
 
-				const auto& path { file.path };
-				const auto& stem { path.filename().stem() };
+					const auto& path { file.path };
+					const auto& stem { path.filename().stem() };
 
-				if ( stem == "banner" )
-				{
-					banners[ Normal ] = QString::fromStdString( path.string() );
+					if ( stem == "banner" )
+					{
+						banners[ Normal ] = QString::fromStdString( path.string() );
+					}
+					else if ( stem == "banner_w" )
+					{
+						banners[ Wide ] = QString::fromStdString( path.string() );
+					}
+					else if ( stem == "logo" )
+					{
+						banners[ Logo ] = QString::fromStdString( path.string() );
+					}
+					else if ( stem == "cover" )
+					{
+						banners[ Cover ] = QString::fromStdString( path.string() );
+					}
+					else
+						continue;
 				}
-				else if ( stem == "banner_w" )
-				{
-					banners[ Wide ] = QString::fromStdString( path.string() );
-				}
-				else if ( stem == "logo" )
-				{
-					banners[ Logo ] = QString::fromStdString( path.string() );
-				}
-				else if ( stem == "cover" )
-				{
-					banners[ Cover ] = QString::fromStdString( path.string() );
-				}
-				else
-					continue;
 			}
 
 			std::vector< QString > previews;
 
-			if ( std::filesystem::exists( folder / "previews" ) )
 			{
-				for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
+				ZoneScopedN( "Scan for previews" );
+				if ( std::filesystem::exists( folder / "previews" ) )
 				{
-					if ( promise.isCanceled() ) return;
-					if ( file.is_regular_file() )
-						previews.emplace_back( QString::fromStdString( file.path().string() ) );
+					for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
+					{
+						if ( promise.isCanceled() ) return;
+						if ( file.is_regular_file() )
+							previews.emplace_back( QString::fromStdString( file.path().string() ) );
+					}
 				}
 			}
 
@@ -112,7 +121,7 @@ void runner(
 	}
 }
 
-void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex )
+void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, QString pattern )
 try
 {
 	ZoneScoped;
@@ -121,47 +130,44 @@ try
 
 	std::vector< QFuture< void > > futures;
 
-	//List of futures for all of the 'valid' directories we've found so far.
-	std::queue< std::filesystem::path > to_scan {};
-	to_scan.push( base );
-	while ( to_scan.size() > 0 )
+	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regex::regexify( std::move( pattern ) );
+	QRegularExpression regex { pattern };
+
+	for ( auto itter = std::filesystem::recursive_directory_iterator( base );
+	      itter != std::filesystem::recursive_directory_iterator(); )
 	{
-		ZoneScopedN( "Scan directory" );
+		ZoneScopedN( "Process directory" );
+
 		promise.suspendIfRequested();
 		if ( promise.isCanceled() ) return;
 
-		//List of all paths that we found nested. Will only be added to `to_scan` if the current path is NOT a valid match for the regex.
-		const auto current { to_scan.front() };
-		to_scan.pop();
-
-		for ( const auto& file : std::filesystem::directory_iterator( current ) )
+		if ( itter->is_directory() )
 		{
-			ZoneScopedN( "Scan file" );
-			promise.suspendIfRequested();
-			if ( promise.isCanceled() ) return;
-			const std::filesystem::path& path { file.path() };
-			if ( std::filesystem::is_symlink( file ) )
-			{
-				spdlog::warn( "Symlink found: {}", file.path() );
-				continue;
-			}
+			TracyCZoneN( regex_Tracy, "Regex", true );
+			const auto result { regex::valid( regex, QString::fromStdString( itter->path().string() ) ) };
+			TracyCZoneEnd( regex_Tracy );
 
-			if ( std::filesystem::is_directory( path ) )
+			if ( result )
 			{
-				ZoneScopedN( "Check directory" );
-				if ( regex::valid( regex, QString::fromStdString( path.string() ) ) )
-				{
-					//The regex was a match. We can now process this directory further
-					futures.emplace_back( QtConcurrent::run( &m_thread_pool, runner, regex, path, base )
-					                          .then( [ this ]( const GameImportData data )
-					                                 { emit foundGame( data ); } ) );
-					if ( promise.isCanceled() ) break;
-					//Directory should NOT be added to found_paths to be processed later since we shouldn't continue needing to look deeper.
-				}
-				else //Directory wasn't a match. But we can try searching deeper.
-					to_scan.push( path );
+				++directories_left;
+				//The regex was a match. We can now process this directory further
+				futures.emplace_back( QtConcurrent::run( &m_thread_pool, runner, pattern, itter->path(), base )
+				                          .then(
+											  [ this ]( const GameImportData data )
+											  {
+												  emit foundGame( data );
+												  --directories_left;
+											  } ) );
+
+				if ( promise.isCanceled() ) break;
+				itter.pop();
+				//Directory should NOT be added to found_paths to be processed later since we shouldn't continue needing to look deeper.
 			}
+			else
+				++itter;
 		}
+		else
+			++itter;
 	}
 
 	spdlog::info( "Waiting for futures to finish" );

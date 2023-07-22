@@ -6,8 +6,6 @@
 
 Binder::Binder( const std::string_view sql )
 {
-	ZoneScoped;
-
 	TracyCZoneN( prepare_tracy_zone, "Prepare query", true );
 	const auto prepare_ret {
 		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
@@ -26,7 +24,6 @@ Binder::Binder( const std::string_view sql )
 
 Binder::~Binder()
 {
-	ZoneScoped;
 	if ( !ran ) [[unlikely]]
 	{
 		sqlite3_step( stmt );
