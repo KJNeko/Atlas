@@ -29,9 +29,6 @@ class NotificationManagerUI : public QDialog
 
   public:
 
-	void createMessage( QString message );
-	atlas::notifications::Signaler< ProgressNotification > createProgressMessage( QString str );
-
 	void addNotification( Notification* notif );
 
 	void moveEvent( QMoveEvent* event ) override;

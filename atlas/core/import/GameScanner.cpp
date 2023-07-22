@@ -6,6 +6,7 @@
 
 #include <moc_GameScanner.cpp>
 #include <queue>
+#include <ranges>
 
 #include <QFuture>
 #include <QtConcurrent>
@@ -13,7 +14,6 @@
 #include <tracy/Tracy.hpp>
 
 #include "core/foldersize.hpp"
-#include "core/utils/FileScanner.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/regex/regex.hpp"
 
@@ -166,7 +166,9 @@ try
 
 	spdlog::info( "Waiting for futures to finish" );
 
-	for ( auto& future : futures )
+	emit prescanWaiting();
+
+	for ( auto& future : futures | std::views::reverse )
 	{
 		while ( true )
 		{
@@ -206,7 +208,6 @@ void GameScanner::start( const std::filesystem::path path, const QString regex )
 	{
 		connect( &m_watcher, &QFutureWatcher< void >::finished, this, &GameScanner::emitComplete );
 		m_watcher.setFuture( m_runner_future );
-		QCoreApplication::processEvents();
 	}
 }
 

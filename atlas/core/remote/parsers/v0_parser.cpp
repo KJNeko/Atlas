@@ -107,10 +107,10 @@ namespace remote::parsers::v0
 
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
 	{
-		auto signaler { atlas::notifications::createProgressMessage( "Processing update for Atlas data" ) };
+		ProgressSignaler signaler {};
 
 		const int max { static_cast< int >( data.size() - 1 ) };
-		signaler->setMax( max );
+		signaler.setMax( max );
 		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
@@ -121,8 +121,8 @@ namespace remote::parsers::v0
 			else
 				insertAtlasData( obj, trans );
 			++counter;
-			signaler->setProgress( counter );
-			signaler->setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
+			signaler.setProgress( counter );
+			signaler.setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
@@ -182,9 +182,9 @@ namespace remote::parsers::v0
 
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
-		auto signaler { atlas::notifications::createProgressMessage( QString( "Processing update for F95 data" ) ) };
+		ProgressSignaler signaler { QString( "Processing update for F95 data" ) };
 		const int max { static_cast< int >( data.size() - 1 ) };
-		signaler->setMax( max );
+		signaler.setMax( max );
 		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
@@ -196,8 +196,8 @@ namespace remote::parsers::v0
 				insertF95Data( obj, trans );
 
 			++counter;
-			signaler->setProgress( counter );
-			signaler->setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
+			signaler.setProgress( counter );
+			signaler.setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 

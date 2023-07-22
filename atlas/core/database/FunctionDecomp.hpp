@@ -44,4 +44,7 @@ struct FunctionDecomp< ReturnType ( * )( Args... ) >
 	static constexpr std::size_t arg_size = sizeof...( Args );
 };
 
+template < typename Func >
+using FunctionReturn = FunctionDecomp< Func >::ResultType;
+
 #endif //ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP

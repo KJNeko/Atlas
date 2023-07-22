@@ -23,6 +23,8 @@ class GameScanner final : public QObject
 
   public:
 
+	std::atomic< uint64_t > directories_left { 0 };
+
 	void start( const std::filesystem::path path, const QString regex );
 	void wait();
 
@@ -40,6 +42,8 @@ class GameScanner final : public QObject
   signals:
 	void scanComplete();
 	void foundGame( const GameImportData data );
+	//! Emitted when the prescanner has reached the point of waiting for the other threads to finish their work.
+	void prescanWaiting();
 };
 
 #endif //ATLASGAMEMANAGER_GAMESCANNER_HPP

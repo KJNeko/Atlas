@@ -30,6 +30,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 
 	connect( &scanner, &GameScanner::scanComplete, this, &BatchImportDialog::finishedPreProcessing );
 	connect( &scanner, &GameScanner::foundGame, this, &BatchImportDialog::processFinishedDirectory );
+	connect( &scanner, &GameScanner::prescanWaiting, this, &BatchImportDialog::waitingOnThreads );
 	connect(
 		this,
 		&BatchImportDialog::addToModel,
@@ -238,7 +239,16 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 
 	if ( ui->twGames->model()->rowCount() % 64 == 0 ) ui->twGames->resizeColumnsToContents();
 
-	ui->statusLabel->setText( QString( "Processed %1 games" ).arg( ui->twGames->model()->rowCount() ) );
+	if ( !import_waiting )
+		ui->statusLabel->setText(
+			QString( "Found %1 games. Waiting on %2 possible directories to complete. Runner still scanning" )
+				.arg( ui->twGames->model()->rowCount() )
+				.arg( scanner.directories_left ) );
+	else
+		ui->statusLabel
+			->setText( QString( "Found %1 games. Waiting on %2 to complete. Runner finished. Waiting on subthreads..." )
+		                   .arg( ui->twGames->model()->rowCount() )
+		                   .arg( scanner.directories_left ) );
 }
 
 void BatchImportDialog::finishedPreProcessing()
@@ -285,4 +295,9 @@ void BatchImportDialog::importFailure( const QString top, const QString bottom )
 	}
 	else
 		emit unpauseImport();
+}
+
+void BatchImportDialog::waitingOnThreads()
+{
+	import_waiting = true;
 }

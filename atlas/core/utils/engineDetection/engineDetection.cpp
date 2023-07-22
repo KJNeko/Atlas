@@ -8,6 +8,8 @@
 #include <array>
 #include <string>
 
+#include <QDir>
+#include <QDirIterator>
 #include <QMimeDatabase>
 
 #include "../../system.hpp"

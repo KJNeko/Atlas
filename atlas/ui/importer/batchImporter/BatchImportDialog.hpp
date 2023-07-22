@@ -28,6 +28,8 @@ class BatchImportDialog final : public QDialog
 	Ui::BatchImportDialog* ui;
 	bool search_started { false };
 	bool import_triggered { false };
+	//! If true then the main runner has finished and we are waiting on the preprocessing of the other threads.
+	bool import_waiting { false };
 
 	void loadConfig();
 	void saveConfig();
@@ -47,6 +49,7 @@ class BatchImportDialog final : public QDialog
 	void processFinishedDirectory( const GameImportData data );
 	void finishedPreProcessing();
 	void importFailure( const QString top, const QString bottom );
+	void waitingOnThreads();
 
   signals:
 	void addToModel( const GameImportData data );

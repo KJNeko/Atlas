@@ -6,6 +6,11 @@
 
 #include "ProgressNotification.hpp"
 
+#include <moc_ProgressNotification.cpp>
+
+#include <QTimer>
+
+#include "core/utils/mainThread/mainThread.hpp"
 #include "ui_ProgressNotification.h"
 
 ProgressNotification::ProgressNotification( QWidget* parent ) :
@@ -20,18 +25,15 @@ ProgressNotification::~ProgressNotification()
 	delete ui;
 }
 
-std::unique_ptr< ProgressSignaler > ProgressNotification::getSignaler()
+void ProgressSignaler::hookSignaler( ProgressNotification* notif )
 {
-	auto ptr { std::make_unique< ProgressSignaler >() };
-	auto* raw { ptr.get() };
+	Ui::ProgressNotification* ui { notif->ui };
 
-	connect( raw, &ProgressSignaler::progressChanged, ui->progressBar, &QProgressBar::setValue );
-	connect( raw, &ProgressSignaler::maxChanged, ui->progressBar, &QProgressBar::setMaximum );
-	connect( raw, &ProgressSignaler::messageChanged, ui->message, &QLabel::setText );
-	connect( raw, &ProgressSignaler::subMessageChanged, ui->subMessage, &QLabel::setText );
-	connect( raw, &ProgressSignaler::selfClose, this, &Notification::selfCloseTrigger );
-
-	return ptr;
+	connect( this, &ProgressSignaler::progressChanged, ui->progressBar, &QProgressBar::setValue );
+	connect( this, &ProgressSignaler::maxChanged, ui->progressBar, &QProgressBar::setMaximum );
+	connect( this, &ProgressSignaler::messageChanged, ui->message, &QLabel::setText );
+	connect( this, &ProgressSignaler::subMessageChanged, ui->subMessage, &QLabel::setText );
+	connect( this, &ProgressSignaler::selfClose, notif, &Notification::selfCloseTrigger );
 }
 
 void ProgressSignaler::setMax( int i )
@@ -52,6 +54,21 @@ void ProgressSignaler::setSubMessage( const QString str )
 void ProgressSignaler::setMessage( const QString str )
 {
 	emit messageChanged( str );
+}
+
+ProgressSignaler::ProgressSignaler()
+{
+	utils::executeOnMain(
+		[ this ]()
+		{
+			auto* ptr { new ProgressNotification() };
+			hookSignaler( ptr );
+		} );
+}
+
+ProgressSignaler::ProgressSignaler( QString str ) : ProgressSignaler()
+{
+	this->setMessage( std::move( str ) );
 }
 
 ProgressSignaler::~ProgressSignaler()

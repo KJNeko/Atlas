@@ -9,6 +9,7 @@
 #include "core/config.hpp"
 #include "core/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
+#include "core/utils/mainThread/mainThread.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/glImporter/GLImporter.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
@@ -18,6 +19,7 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
+	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
 	//default

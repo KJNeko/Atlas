@@ -20,13 +20,6 @@ namespace atlas::notifications
 	NotificationManagerUI& handle();
 
 	void createMessage( QString message );
-
-	Signaler< ProgressNotification > createProgressMessage( QString str );
-	//Signaler< GroupedProgressNotification > createGroupedProcessMessage();
-
-	template < typename... Ts >
-	void createDevNotification( const QString message, const Ts&... ts );
-
 } // namespace atlas::notifications
 
 #endif //ATLASGAMEMANAGER_NOTIFICATIONS_HPP
