@@ -61,6 +61,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	config::notify();
 
 	atlas::notifications::initNotifications( this );
+	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
 
 	//Share the recordView's model to gameList
 	ui->gamesTree->setModel( ui->recordView->model() );

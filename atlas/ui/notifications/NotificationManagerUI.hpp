@@ -31,6 +31,7 @@ class NotificationManagerUI : public QDialog
 
 	void addNotification( Notification* notif );
 
+	void resizeEvent( QResizeEvent* ) override;
 	void moveEvent( QMoveEvent* event ) override;
 
 	explicit NotificationManagerUI( QWidget* parent = nullptr );
@@ -44,6 +45,9 @@ class NotificationManagerUI : public QDialog
 
   private slots:
 	void deleteNotification( Notification* ptr );
+
+  signals:
+	void requestMove();
 };
 
 #endif //ATLASGAMEMANAGER_NOTIFICATIONMANAGERUI_HPP

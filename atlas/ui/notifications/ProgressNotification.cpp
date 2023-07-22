@@ -8,8 +8,9 @@
 
 #include <moc_ProgressNotification.cpp>
 
-#include <QTimer>
+#include <tracy/Tracy.hpp>
 
+#include "core/notifications.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui_ProgressNotification.h"
 
@@ -58,11 +59,13 @@ void ProgressSignaler::setMessage( const QString str )
 
 ProgressSignaler::ProgressSignaler()
 {
+	ZoneScoped;
 	utils::executeOnMain(
 		[ this ]()
 		{
 			auto* ptr { new ProgressNotification() };
 			hookSignaler( ptr );
+			atlas::notifications::handle().addNotification( ptr );
 		} );
 }
 

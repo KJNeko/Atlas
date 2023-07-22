@@ -16,10 +16,10 @@ void Notification::mousePressEvent( QMouseEvent* event )
 		return;
 	}
 	else
-		QDialog::mousePressEvent( event );
+		QWidget::mousePressEvent( event );
 }
 
-Notification::Notification( QWidget* parent ) : QDialog( parent, Qt::Tool | Qt::FramelessWindowHint )
+Notification::Notification( QWidget* parent ) : QWidget( parent )
 {
 	connect( this, &Notification::selfClose, this, &Notification::selfCloseTrigger );
 }

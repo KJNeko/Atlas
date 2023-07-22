@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QWidget>
 
-class Notification : public QDialog
+class Notification : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( Notification )

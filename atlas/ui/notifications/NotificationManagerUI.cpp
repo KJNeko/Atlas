@@ -17,6 +17,8 @@ NotificationManagerUI::NotificationManagerUI( QWidget* parent ) :
   ui( new Ui::NotificationManagerUI )
 {
 	ui->setupUi( this );
+	this->resize( this->minimumSize() );
+	this->updateGeometry();
 }
 
 NotificationManagerUI::~NotificationManagerUI()
@@ -27,13 +29,27 @@ NotificationManagerUI::~NotificationManagerUI()
 void NotificationManagerUI::addNotification( Notification* notif )
 {
 	connect( notif, &Notification::selfClosePtr, this, &NotificationManagerUI::deleteNotification );
+	ui->notifications->layout()->addWidget( notif );
+	this->resize( this->minimumSize() );
+	this->updateGeometry();
+
+	/*
 	active_notifications.emplace_back( notif );
 	reorderChildren();
 	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications.size() ) );
+	notif->show();*/
 }
 
 void NotificationManagerUI::reorderChildren()
 {
+	/*
+	if ( !this->isVisible() )
+	{
+		//Hide all children instead
+		for ( auto* child : active_notifications ) child->hide();
+		return;
+	}
+
 	// No children so we should hide ourselves
 	if ( active_notifications.size() == 0 )
 		this->hide();
@@ -55,17 +71,26 @@ void NotificationManagerUI::reorderChildren()
 		g_pos -= QPoint( 0, child->height() );
 
 		child->move( g_pos );
-	}
+	}*/
+}
+
+void NotificationManagerUI::resizeEvent( QResizeEvent* event )
+{
+	emit requestMove();
+	QDialog::resizeEvent( event );
 }
 
 void NotificationManagerUI::moveEvent( QMoveEvent* event )
 {
 	QWidget::moveEvent( event );
-	reorderChildren();
 }
 
 void NotificationManagerUI::deleteNotification( Notification* ptr )
 {
+	delete ptr;
+	this->resize( this->minimumSize() );
+
+	/*
 	if ( auto itter = std::find( active_notifications.begin(), active_notifications.end(), ptr );
 	     itter != active_notifications.end() )
 	{
@@ -78,5 +103,7 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 		spdlog::warn( "Tried to delete a notification that didn't exist in the list!" );
 
 	reorderChildren();
-	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications.size() ) );
+	 */
+
+	ui->label->setText( QString( "%1 notifications" ).arg( ui->notifications->layout()->children().size() ) );
 }
