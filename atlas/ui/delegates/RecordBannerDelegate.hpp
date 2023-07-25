@@ -6,6 +6,7 @@
 #define ATLAS_RECORDBANNERDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
+#include <QtCore/QModelIndex>
 
 #include "core/config.hpp"
 #include "core/database/record/Game.hpp"

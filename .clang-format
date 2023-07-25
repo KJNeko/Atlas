@@ -103,8 +103,7 @@ PackConstructorInitializers: CurrentLine
 PenaltyBreakOpenParenthesis: 999
 PenaltyReturnTypeOnItsOwnLine: 999
 PointerAlignment: Left
-QualifierAlignment: Custom
-QualifierOrder: [ 'inline','static','friend','const','constexpr','type','volatile' ]
+QualifierAlignment: Leave
 ReferenceAlignment: Pointer
 ReflowComments: false
 RequiresClausePosition: OwnLine
