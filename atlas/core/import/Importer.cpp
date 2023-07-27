@@ -94,12 +94,13 @@ namespace internal
 		signaler.setProgress( Progress::VersionData );
 		signaler.setMessage( "Importing version data" );
 
-		record.addVersion( version, root, relative_executable );
-
 		if ( owning )
 		{
 			ZoneScopedN( "Copying files" );
 			signaler.setMax( static_cast< int >( file_count ) );
+
+			const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
+				                                    / title.toStdString() / version.toStdString() };
 
 			std::size_t i { 0 };
 			for ( const auto& file : scanner )
@@ -110,8 +111,6 @@ namespace internal
 				signaler.setMessage( QString( "Copying file %1 %2/%3" ).arg( r_path_name ).arg( i ).arg( file_count ) );
 
 				const auto source { root / file.relative };
-				const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
-					                                    / title.toStdString() / version.toStdString() };
 				const auto dest { dest_root / file.relative };
 				std::filesystem::create_directories( dest.parent_path() );
 
@@ -121,7 +120,11 @@ namespace internal
 					throw std::runtime_error( "Failed to copy file" );
 				}
 			}
+
+			record.addVersion( version, dest_root, relative_executable );
 		}
+		else
+			record.addVersion( version, root, relative_executable );
 
 		signaler.setMax( Progress::Complete );
 		signaler.setProgress( Progress::Banners );
