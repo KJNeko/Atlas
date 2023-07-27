@@ -94,13 +94,14 @@ namespace internal
 		signaler.setProgress( Progress::VersionData );
 		signaler.setMessage( "Importing version data" );
 
+		// Used for when we move files to a directory we 'own'
+		const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
+			                                    / title.toStdString() / version.toStdString() };
+
 		if ( owning )
 		{
 			ZoneScopedN( "Copying files" );
 			signaler.setMax( static_cast< int >( file_count ) );
-
-			const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
-				                                    / title.toStdString() / version.toStdString() };
 
 			std::size_t i { 0 };
 			for ( const auto& file : scanner )
@@ -135,6 +136,12 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				record.setBanner( path.toStdString(), static_cast< BannerType >( i ) );
+
+				if ( owning )
+				{
+					// Remove the image file from the moved files.
+					std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
+				}
 			}
 		}
 
@@ -144,6 +151,12 @@ namespace internal
 		{
 			signaler.setMessage( QString( "Importing preview %1" ).arg( path ) );
 			record.addPreview( { path.toStdString() } );
+
+			if ( owning ) //If we own it then we should delete the path from our directory
+			{
+				// Remove the image file from the moved files
+				std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
+			}
 		}
 
 		signaler.setProgress( Progress::Complete );
