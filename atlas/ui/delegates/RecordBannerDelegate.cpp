@@ -7,11 +7,11 @@
 #include <moc_RecordBannerDelegate.cpp>
 
 #include <QGraphicsDropShadowEffect>
+#include <QLabel>
 #include <QMenu>
 #include <QMovie>
 #include <QPainter>
 #include <QPixmapCache>
-#include <Qlabel>
 
 #include "core/config.hpp"
 #include "core/database/Version.hpp"
