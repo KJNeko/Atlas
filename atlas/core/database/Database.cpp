@@ -101,9 +101,9 @@ void Database::initalize( const std::filesystem::path init_path )
 	const QString test_creator { "Atlas Games" };
 	const QString test_engine { "Unity" };
 
-	if ( !recordExists( test_name, test_creator, test_engine ) )
+	if ( !atlas::records::recordExists( test_name, test_creator, test_engine ) )
 	{
-		Game game { importRecord( test_name, test_creator, test_engine ) };
+		atlas::records::Game game { atlas::records::importRecord( test_name, test_creator, test_engine ) };
 		game.addVersion(
 			"Chapter: 1", "C:/Atlas Games/Galaxy Crossing First Conquest", "Galaxy Crossing First Conquest.exe" );
 

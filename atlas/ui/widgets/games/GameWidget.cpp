@@ -9,7 +9,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-#include "core/database/Version.hpp"
+#include "core/database/record/Version.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
@@ -30,7 +30,7 @@ GameWidget::~GameWidget()
 	delete ui;
 }
 
-void GameWidget::setRecord( const Game record )
+void GameWidget::setRecord( const atlas::records::Game record )
 {
 	m_record = record;
 	reloadRecord();
@@ -155,8 +155,6 @@ void GameWidget::reloadRecord()
 
 	const QPixmap cover { image_future.result() };
 
-	
-
 	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
@@ -178,7 +176,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		painter.save();
 
-		Game& record { *m_record };
+		atlas::records::Game& record { *m_record };
 		const int image_height { 360 };
 		const int image_feather { 60 };
 		const int image_blur { 75 };
@@ -282,7 +280,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 	}
 }
 
-std::optional< Version > GameWidget::selectedVersion()
+std::optional< atlas::records::Version > GameWidget::selectedVersion()
 {
 	ZoneScoped;
 	if ( !m_record.has_value() ) throw std::runtime_error( "selectedVersion: Record invalid" );

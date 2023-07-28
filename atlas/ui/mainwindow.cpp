@@ -148,7 +148,7 @@ void MainWindow::on_actionOptions_triggered()
 	QWidget::repaint();
 }
 
-void MainWindow::switchToDetailed( const Game record )
+void MainWindow::switchToDetailed( const atlas::records::Game record )
 {
 	ui->detailedRecordView->setRecord( record );
 	ui->stackedWidget->setCurrentIndex( 1 );

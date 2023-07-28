@@ -14,9 +14,9 @@
 #include <QPixmapCache>
 
 #include "core/config.hpp"
-#include "core/database/Version.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/Version.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
 
@@ -27,7 +27,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->save();
 
 	//Draw banner if present
-	Game record { index.data().value< Game >() };
+	atlas::records::Game record { index.data().value< atlas::records::Game >() };
 
 	//draw test rect
 	QRect test_rect { options.rect.x(), options.rect.y(), m_grid_size.width(), m_grid_size.height() };
@@ -164,7 +164,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//Draw Version
 	if ( record->m_versions.size() )
 	{
-		const Version latest { record->m_versions.at( 0 ) };
+		const atlas::records::Version latest { record->m_versions.at( 0 ) };
 		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
 	}
 	else

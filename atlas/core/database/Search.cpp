@@ -38,7 +38,7 @@ void Search::runQuery()
 		      + orderToStr( SortOrder::Name ) + std::string( " ASC" );
 	}
 
-	std::vector< Game > records;
+	std::vector< atlas::records::Game > records;
 
 	RapidTransaction transaction {};
 	transaction << query >> [ & ]( const RecordID id )

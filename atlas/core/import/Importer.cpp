@@ -89,7 +89,7 @@ namespace internal
 
 		signaler.setProgress( Progress::ImportRecordData );
 		signaler.setMessage( "Importing record data" );
-		auto record { importRecord( title, creator, engine ) };
+		auto record { atlas::records::importRecord( title, creator, engine ) };
 
 		signaler.setProgress( Progress::VersionData );
 		signaler.setMessage( "Importing version data" );

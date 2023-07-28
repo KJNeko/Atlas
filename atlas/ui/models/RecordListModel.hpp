@@ -37,7 +37,7 @@ class RecordListModel final : public QAbstractListModel
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( RecordListModel )
 
-	std::vector< Game > m_records {};
+	std::vector< atlas::records::Game > m_records {};
 
 	//Map of active loading images
 	QThread loading_thread {};
@@ -63,20 +63,20 @@ class RecordListModel final : public QAbstractListModel
 	void killLoaders();
 
   public slots:
-	void setRecords( std::vector< Game > records );
+	void setRecords( std::vector< atlas::records::Game > records );
 
 	/**
 	 * @param record
 	 * @param place_at where to place in the list (place_at > m_records.size()) will place at the end
 	 */
-	void addRecord( Game record, const std::size_t place_at = 0 );
+	void addRecord( atlas::records::Game record, const std::size_t place_at = 0 );
 
 	void removeRecord( QPersistentModelIndex index );
 
 	void reloadRecord( QPersistentModelIndex index );
 
   signals:
-	void recordsChanged( std::vector< Game > records );
+	void recordsChanged( std::vector< atlas::records::Game > records );
 	void emitReloadRecord( QPersistentModelIndex index );
 };
 

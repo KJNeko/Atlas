@@ -22,7 +22,7 @@ class Search final : public QObject
 
   signals:
 	//! Emitted when a search is completed
-	void searchCompleted( std::vector< Game > );
+	void searchCompleted( std::vector< atlas::records::Game > );
 
   public slots:
 	//! Submits a text to get autocompleted.

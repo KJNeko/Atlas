@@ -7,69 +7,73 @@
 
 #include "core/database/Column.hpp"
 
-enum class AtlasColumns
+namespace atlas::remote
 {
-	IdName,
-	ShortName,
-	Title,
-	OriginalName,
-	Category,
-	Engine,
-	Status,
-	Version,
-	Developer,
-	Creator,
-	Overview,
-	Censored,
-	Language,
-	Translations,
-	Genre,
-	Tags,
-	Voice,
-	OS,
-	ReleaseDate,
-	Length,
-	Banner,
-	BannerWide,
-	Cover,
-	Logo,
-	Wallpaper,
-	Previews,
-	LastDbUpdate
-};
 
-template < AtlasColumns col >
-struct AtlasColInfo;
+	enum class AtlasColumns
+	{
+		IdName,
+		ShortName,
+		Title,
+		OriginalName,
+		Category,
+		Engine,
+		Status,
+		Version,
+		Developer,
+		Creator,
+		Overview,
+		Censored,
+		Language,
+		Translations,
+		Genre,
+		Tags,
+		Voice,
+		OS,
+		ReleaseDate,
+		Length,
+		Banner,
+		BannerWide,
+		Cover,
+		Logo,
+		Wallpaper,
+		Previews,
+		LastDbUpdate
+	};
 
-template < AtlasColumns col >
-using AtlasColType = AtlasColInfo< col >::Type;
+	template < AtlasColumns col >
+	struct AtlasColInfo;
 
-template <>
-struct AtlasColInfo< AtlasColumns::IdName >
-{
-	using Type = QString;
-	static constexpr fgl::string_literal col_name { "id_name" };
-};
+	template < AtlasColumns col >
+	using AtlasColType = AtlasColInfo< col >::Type;
 
-template <>
-struct AtlasColInfo< AtlasColumns::Title >
-{
-	using Type = QString;
-	static constexpr fgl::string_literal col_name { "title" };
-};
+	template <>
+	struct AtlasColInfo< AtlasColumns::IdName >
+	{
+		using Type = QString;
+		static constexpr fgl::string_literal col_name { "id_name" };
+	};
 
-template <>
-struct AtlasColInfo< AtlasColumns::Creator >
-{
-	using Type = QString;
-	static constexpr fgl::string_literal col_name { "creator" };
-};
+	template <>
+	struct AtlasColInfo< AtlasColumns::Title >
+	{
+		using Type = QString;
+		static constexpr fgl::string_literal col_name { "title" };
+	};
 
-template <>
-struct AtlasColInfo< AtlasColumns::Engine >
-{
-	using Type = QString;
-	static constexpr fgl::string_literal col_name { "engine" };
-};
+	template <>
+	struct AtlasColInfo< AtlasColumns::Creator >
+	{
+		using Type = QString;
+		static constexpr fgl::string_literal col_name { "creator" };
+	};
+
+	template <>
+	struct AtlasColInfo< AtlasColumns::Engine >
+	{
+		using Type = QString;
+		static constexpr fgl::string_literal col_name { "engine" };
+	};
+} // namespace atlas::remote
 
 #endif //ATLASGAMEMANAGER_ATLASCOLTYPE_HPP

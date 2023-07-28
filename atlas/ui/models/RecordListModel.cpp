@@ -12,7 +12,7 @@
 
 #include "core/database/record/GameData.hpp"
 
-void RecordListModel::setRecords( std::vector< Game > records )
+void RecordListModel::setRecords( std::vector< atlas::records::Game > records )
 {
 	beginResetModel();
 	m_records = std::move( records );
@@ -20,7 +20,7 @@ void RecordListModel::setRecords( std::vector< Game > records )
 	emit recordsChanged( m_records );
 }
 
-void RecordListModel::addRecord( Game record, const std::size_t place_at )
+void RecordListModel::addRecord( atlas::records::Game record, const std::size_t place_at )
 {
 	const int pos { static_cast< int >( std::min( place_at, m_records.size() ) ) };
 	beginInsertRows( {}, pos, pos );
@@ -57,7 +57,8 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 			[[fallthrough]];
 		case RecordListModelRoles::Raw:
 			return QVariant::fromStdVariant( std::variant<
-											 Game >( m_records.at( static_cast< std::size_t >( index.row() ) ) ) );
+											 atlas::records::Game >( m_records.at( static_cast<
+																				   std::size_t >( index.row() ) ) ) );
 		default:
 			return { "You fucked something up" };
 	}

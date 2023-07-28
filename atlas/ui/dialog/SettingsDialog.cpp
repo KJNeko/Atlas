@@ -28,7 +28,8 @@ class DummyRecordModel : public QAbstractListModel
 
 	QVariant data( [[maybe_unused]] const QModelIndex& index, [[maybe_unused]] int role ) const override
 	{
-		if ( role == Qt::DisplayRole ) return QVariant::fromStdVariant( std::variant< Game >( Game( 1 ) ) );
+		if ( role == Qt::DisplayRole )
+			return QVariant::fromStdVariant( std::variant< atlas::records::Game >( atlas::records::Game( 1 ) ) );
 		return {};
 	}
 };

@@ -24,10 +24,10 @@ class RecordEditor final : public QDialog
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( RecordEditor )
 
-	Game m_record;
+	atlas::records::Game m_record;
 	std::filesystem::path m_banner_path;
 	std::vector< std::filesystem::path > m_preview_paths;
-	std::vector< Version > m_versions;
+	std::vector< atlas::records::Version > m_versions;
 
 	void loadRecordInfo();
 	void loadBanners();

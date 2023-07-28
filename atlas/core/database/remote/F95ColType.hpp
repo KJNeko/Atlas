@@ -7,26 +7,28 @@
 
 #include "core/database/Column.hpp"
 
-enum class F95Columns
+namespace atlas::remote
 {
-	AtlasIDCol,
-	BannerURL,
-	SiteURL,
-	LastThreadComment,
-	ThreadPublishDate,
-	LastRecordUpdate,
-	Views,
-	Likes,
-	Tags,
-	Rating,
-	Screens,
-	Replies
-};
+	enum class F95Columns
+	{
+		AtlasIDCol,
+		BannerURL,
+		SiteURL,
+		LastThreadComment,
+		ThreadPublishDate,
+		LastRecordUpdate,
+		Views,
+		Likes,
+		Tags,
+		Rating,
+		Screens,
+		Replies
+	};
 
-template < F95Columns col >
-struct F95ColInfo;
+	template < F95Columns col >
+	struct F95ColInfo;
 
-template < F95Columns col >
-using F95ColType = F95ColInfo< col >::Type;
-
+	template < F95Columns col >
+	using F95ColType = F95ColInfo< col >::Type;
+} // namespace atlas::remote
 #endif //ATLASGAMEMANAGER_F95COLTYPE_HPP

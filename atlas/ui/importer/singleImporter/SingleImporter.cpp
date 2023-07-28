@@ -245,7 +245,7 @@ void SingleImporter::verifyDataEntry()
 		return;
 	}
 
-	if ( recordExists( title, creator, engine ) )
+	if ( atlas::records::recordExists( title, creator, engine ) )
 	{
 		ui->infoLabel->setText( "Record already exists with the given title, creator, and engine" );
 		return;

@@ -9,113 +9,116 @@
 #include <QPixmapCache>
 
 #include "Game.hpp"
+#include "Version.hpp"
 #include "core/database/Database.hpp"
-#include "core/database/Version.hpp"
 #include "core/imageManager.hpp"
 
-GameData::GameData( const RecordID id ) : m_game_id( id )
+namespace atlas::records
 {
-	ZoneScoped;
-	if ( id == INVALID_RECORD_ID ) throw std::runtime_error( "Invalid record id" );
-
-	bool exists { false };
-	RapidTransaction()
-			<< "SELECT title, creator, engine, last_played_r, total_playtime, description FROM games WHERE record_id = ?"
-			<< m_game_id
-		>> [ & ](
-			   QString title,
-			   QString creator,
-			   QString engine,
-			   std::uint64_t last_played,
-			   const std::uint64_t total_playtime,
-			   QString desc ) noexcept
+	GameData::GameData( const RecordID id ) : m_game_id( id )
 	{
-		exists = true;
-		m_title = std::move( title );
-		m_creator = std::move( creator );
-		m_engine = std::move( engine );
-		m_last_played = last_played;
-		m_total_playtime = total_playtime;
-		m_description = std::move( desc );
-	};
+		ZoneScoped;
+		if ( id == INVALID_RECORD_ID ) throw std::runtime_error( "Invalid record id" );
 
-	if ( !exists ) throw std::runtime_error( "Record does not exist" );
+		bool exists { false };
+		RapidTransaction()
+				<< "SELECT title, creator, engine, last_played_r, total_playtime, description FROM games WHERE record_id = ?"
+				<< m_game_id
+			>> [ & ](
+				   QString title,
+				   QString creator,
+				   QString engine,
+				   std::uint64_t last_played,
+				   const std::uint64_t total_playtime,
+				   QString desc ) noexcept
+		{
+			exists = true;
+			m_title = std::move( title );
+			m_creator = std::move( creator );
+			m_engine = std::move( engine );
+			m_last_played = last_played;
+			m_total_playtime = total_playtime;
+			m_description = std::move( desc );
+		};
 
-	RapidTransaction() << "SELECT count(*) FROM previews WHERE record_id = ?" << m_game_id >> m_preview_count;
+		if ( !exists ) throw std::runtime_error( "Record does not exist" );
 
-	AtlasID atlas_id { INVALID_ATLAS_ID };
-	RapidTransaction() << "SELECT atlas_id FROM atlas_mappings WHERE record_id = ? " << m_game_id >> atlas_id;
-	if ( atlas_id != INVALID_ATLAS_ID ) atlas_data = { atlas_id };
+		RapidTransaction() << "SELECT count(*) FROM previews WHERE record_id = ?" << m_game_id >> m_preview_count;
 
-	RapidTransaction() << "SELECT version FROM versions WHERE record_id = ?" << m_game_id >>
-		[ & ]( const QString version ) { m_versions.emplace_back( Version( this->m_game_id, version ) ); };
+		AtlasID atlas_id { INVALID_ATLAS_ID };
+		RapidTransaction() << "SELECT atlas_id FROM atlas_mappings WHERE record_id = ? " << m_game_id >> atlas_id;
+		if ( atlas_id != INVALID_ATLAS_ID ) atlas_data = { atlas_id };
 
-	RapidTransaction() << "SELECT path, type FROM banners WHERE record_id = ?" << m_game_id >>
-		[ & ]( std::filesystem::path path, const uint8_t type ) noexcept
-	{ this->m_banner_paths[ type ] = std::move( path ); };
+		RapidTransaction() << "SELECT version FROM versions WHERE record_id = ?" << m_game_id >>
+			[ & ]( const QString version ) { m_versions.emplace_back( Version( this->m_game_id, version ) ); };
 
-	RapidTransaction() << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_game_id >>
-		[ & ]( std::filesystem::path path ) { this->m_preview_paths.emplace_back( std::move( path ) ); };
-}
+		RapidTransaction() << "SELECT path, type FROM banners WHERE record_id = ?" << m_game_id >>
+			[ & ]( std::filesystem::path path, const uint8_t type ) noexcept
+		{ this->m_banner_paths[ type ] = std::move( path ); };
 
-GameData::GameData( QString title_in, QString creator_in, QString engine_in )
-{
-	ZoneScoped;
-	RapidTransaction transaction;
-	RecordID record_id { 0 };
-	transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?"
-				<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
-		>> [ & ]( const RecordID id ) noexcept { record_id = id; };
-
-	if ( record_id != 0 )
-	{
-		Game game { record_id };
-		throw RecordAlreadyExists( game );
+		RapidTransaction() << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_game_id >>
+			[ & ]( std::filesystem::path path ) { this->m_preview_paths.emplace_back( std::move( path ) ); };
 	}
 
-	transaction
-			<< "INSERT INTO games (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
-			<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
-		>> [ & ]( const RecordID id ) noexcept { m_game_id = id; };
-}
+	GameData::GameData( QString title_in, QString creator_in, QString engine_in )
+	{
+		ZoneScoped;
+		RapidTransaction transaction;
+		RecordID record_id { 0 };
+		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?"
+					<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
+			>> [ & ]( const RecordID id ) noexcept { record_id = id; };
 
-const Version& GameData::getVersion( const QString name ) const
-{
-	for ( const auto& version : m_versions )
-		if ( version->m_version == name ) return version;
+		if ( record_id != 0 )
+		{
+			Game game { record_id };
+			throw RecordAlreadyExists( game );
+		}
 
-	throw std::runtime_error( "GameData: No version of name found" );
-}
+		transaction
+				<< "INSERT INTO games (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
+				<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
+			>> [ & ]( const RecordID id ) noexcept { m_game_id = id; };
+	}
 
-std::size_t strToTagID( const QString str )
-{
-	ZoneScoped;
-	RapidTransaction transaction;
-	std::size_t id { 0 };
-	transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str.toStdString() >> id;
-	return id;
-}
+	const Version& GameData::getVersion( const QString name ) const
+	{
+		for ( const auto& version : m_versions )
+			if ( version->m_version == name ) return version;
 
-RecordID recordID( const QString& title, const QString& creator, const QString& engine )
-{
-	ZoneScoped;
-	RecordID record_id { INVALID_RECORD_ID };
+		throw std::runtime_error( "GameData: No version of name found" );
+	}
 
-	RapidTransaction transaction;
-	transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title.toStdString()
-				<< creator.toStdString() << engine.toStdString()
-		>> [ &record_id ]( [[maybe_unused]] const RecordID id ) noexcept { record_id = id; };
+	std::size_t strToTagID( const QString str )
+	{
+		ZoneScoped;
+		RapidTransaction transaction;
+		std::size_t id { 0 };
+		transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str.toStdString() >> id;
+		return id;
+	}
 
-	return record_id;
-}
+	RecordID recordID( const QString& title, const QString& creator, const QString& engine )
+	{
+		ZoneScoped;
+		RecordID record_id { INVALID_RECORD_ID };
 
-bool recordExists( const QString& title, const QString& creator, const QString& engine )
-try
-{
-	ZoneScoped;
-	return recordID( title, creator, engine );
-}
-catch ( [[maybe_unused]] const NoRows& e )
-{
-	return false;
-}
+		RapidTransaction transaction;
+		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?"
+					<< title.toStdString() << creator.toStdString() << engine.toStdString()
+			>> [ &record_id ]( [[maybe_unused]] const RecordID id ) noexcept { record_id = id; };
+
+		return record_id;
+	}
+
+	bool recordExists( const QString& title, const QString& creator, const QString& engine )
+	try
+	{
+		ZoneScoped;
+		return recordID( title, creator, engine );
+	}
+	catch ( [[maybe_unused]] const NoRows& e )
+	{
+		return false;
+	}
+} // namespace atlas::records
