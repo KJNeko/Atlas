@@ -18,12 +18,12 @@ endfunction()
 function(PlatformPostSetup)
     if (WIN32)
         target_compile_definitions(Atlas PRIVATE UNICODE=1)
-
+        if(($CMAKE_CXX_PLATFORM_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MSVC"))
         add_custom_command(TARGET Atlas POST_BUILD
                 COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw
                 $<TARGET_FILE:Atlas>
                 COMMENT "Running windeployqt")
-
+        endif()
         add_custom_command(TARGET Atlas POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 $<TARGET_RUNTIME_DLLS:Atlas> $<TARGET_FILE_DIR:Atlas>
