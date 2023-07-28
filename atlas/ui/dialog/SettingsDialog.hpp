@@ -46,6 +46,11 @@ class SettingsDialog final : public QDialog
 	void on_settingsList_currentRowChanged( int idx );
 	void on_cbImageLayout_currentIndexChanged( int idx );
 	void on_cbBlurType_currentIndexChanged( int idx );
+	void on_btnGeneral_pressed();
+	void on_btnInterface_pressed();
+	void on_btnUilayout_pressed();
+	void on_btnPaths_pressed();
+	void on_btnThreading_pressed();
 	void on_applySettings_pressed();
 	void on_cancelSettings_pressed();
 	void reject() override;

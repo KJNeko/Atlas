@@ -44,6 +44,7 @@ namespace imageManager
 
 	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
+		//spdlog::debug( path );
 		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
@@ -81,7 +82,7 @@ namespace imageManager
 			//If GIF then store, do not convert
 			if ( ext == "gif" )
 			{
-				spdlog::debug( "Found gif:{}", path );
+				//spdlog::debug( "Found gif:{}", path );
 
 				const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };

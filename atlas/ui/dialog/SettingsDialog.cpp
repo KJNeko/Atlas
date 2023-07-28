@@ -61,6 +61,9 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 		config::grid_ui::font::get() == "" ? QString::fromStdString( font.defaultFamily().toStdString() ) :
 											 config::application::font::get() );
 
+	//Make sure menu is at index 0
+	ui->stackedWidget->setCurrentIndex( 0 );
+
 	prepareThemeSettings();
 	preparePathsSettings();
 	prepareGridViewerSettings();
@@ -317,6 +320,33 @@ void SettingsDialog::savePathsSettings()
 void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 {
 	ui->stackedWidget->setCurrentIndex( idx );
+}
+
+//USED TO CHANGE STACKED WIDGET INDEX
+
+void SettingsDialog::on_btnGeneral_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 0 );
+}
+
+void SettingsDialog::on_btnInterface_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 1 );
+}
+
+void SettingsDialog::on_btnUilayout_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 2 );
+}
+
+void SettingsDialog::on_btnPaths_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 3 );
+}
+
+void SettingsDialog::on_btnThreading_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 4 );
 }
 
 void SettingsDialog::on_applySettings_pressed()

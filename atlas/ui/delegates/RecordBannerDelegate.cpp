@@ -56,7 +56,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		const QString key { QString::fromStdString(
 			fmt::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
 
-		spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
+		//spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
 
 		if ( record.bannerPath( Normal ).extension() == ".gif" )
 		{

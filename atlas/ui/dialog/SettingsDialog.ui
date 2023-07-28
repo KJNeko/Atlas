@@ -114,15 +114,27 @@ border:none;</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label_43">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="btnGeneral">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -135,13 +147,7 @@ border:none;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_42">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="btnInterface">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -149,23 +155,20 @@ border:none;</string>
             </size>
            </property>
            <property name="text">
-            <string>Interfece</string>
+            <string>Interface</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_39">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="btnUilayout">
            <property name="minimumSize">
             <size>
              <width>0</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string/>
            </property>
            <property name="text">
             <string>UI Layout</string>
@@ -173,13 +176,7 @@ border:none;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_44">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>30</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="btnPaths">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -188,6 +185,19 @@ border:none;</string>
            </property>
            <property name="text">
             <string>Paths</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnThreading">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Threading</string>
            </property>
           </widget>
          </item>
@@ -319,7 +329,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -2264,6 +2274,13 @@ padding:10x;</string>
           <string>0B</string>
          </property>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="SettingsThreading">
+      <layout class="QGridLayout" name="gridLayout_13">
+       <item row="0" column="0">
+        <widget class="QWidget" name="widget_2" native="true"/>
        </item>
       </layout>
      </widget>
