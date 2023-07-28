@@ -28,7 +28,7 @@ VersionView::~VersionView()
 	delete ui;
 }
 
-void VersionView::setVersion( const std::optional< Version > metadata )
+void VersionView::setVersion( const std::optional< atlas::records::Version > metadata )
 {
 	m_metadata = metadata;
 

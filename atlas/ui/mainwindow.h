@@ -56,7 +56,7 @@ class MainWindow final : public QMainWindow
 	//void on_actionAboutUs_triggered();
 	//void on_actionGithub_triggered();
 	void on_actionAboutQt_triggered();
-	void switchToDetailed( const Game record );
+	void switchToDetailed( const atlas::records::Game record );
 	void on_homeButton_pressed();
 	void on_actionViewFileHistory_triggered();
 	void searchTextChanged( const QString str );

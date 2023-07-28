@@ -21,9 +21,9 @@
 #endif
 
 #include "core/database/Database.hpp"
-#include "core/database/Version.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/Version.hpp"
 
 TEST_CASE( "Database Init Memory", "[database]" )
 {

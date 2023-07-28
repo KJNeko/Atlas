@@ -4,6 +4,7 @@
 
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/Version.hpp"
 #include "core/logging.hpp"
 
 namespace atlas::logging::dev
@@ -87,7 +88,8 @@ namespace atlas::logging::dev
 	}
 
 	template <>
-	QJsonObject internalSerializer< std::vector< Version > >( const std::vector< Version >& paths )
+	QJsonObject internalSerializer<
+		std::vector< atlas::records::Version > >( const std::vector< atlas::records::Version >& paths )
 	{
 		QJsonObject obj;
 
@@ -108,19 +110,20 @@ namespace atlas::logging::dev
 	}
 
 	template <>
-	QJsonObject internalSerializer< std::shared_ptr< VersionData > >( const std::shared_ptr< VersionData >& shared_ptr )
+	QJsonObject internalSerializer< std::shared_ptr<
+		atlas::records::VersionData > >( const std::shared_ptr< atlas::records::VersionData >& shared_ptr )
 	{
 		QJsonObject obj;
 
 		obj[ "internal_ptr" ] = reinterpret_cast< qint64 >( shared_ptr.get() );
 		obj[ "ref count" ] = static_cast< qint64 >( shared_ptr.use_count() );
-		obj[ "data" ] = serialize< VersionData >( *shared_ptr.get() );
+		obj[ "data" ] = serialize< atlas::records::VersionData >( *shared_ptr.get() );
 
 		return obj;
 	}
 
 	template <>
-	QJsonObject internalSerializer< Version >( const Version& version )
+	QJsonObject internalSerializer< atlas::records::Version >( const atlas::records::Version& version )
 	{
 		QJsonObject obj;
 
@@ -132,7 +135,7 @@ namespace atlas::logging::dev
 	}
 
 	template <>
-	QJsonObject internalSerializer< VersionData >( const VersionData& data )
+	QJsonObject internalSerializer< atlas::records::VersionData >( const atlas::records::VersionData& data )
 	{
 		QJsonObject obj;
 
@@ -149,7 +152,7 @@ namespace atlas::logging::dev
 	}
 
 	template <>
-	QJsonObject internalSerializer< GameData >( const GameData& data )
+	QJsonObject internalSerializer< atlas::records::GameData >( const atlas::records::GameData& data )
 	{
 		QJsonObject obj;
 
@@ -170,19 +173,20 @@ namespace atlas::logging::dev
 	}
 
 	template <>
-	QJsonObject internalSerializer< std::shared_ptr< GameData > >( const std::shared_ptr< GameData >& shared_ptr )
+	QJsonObject internalSerializer<
+		std::shared_ptr< atlas::records::GameData > >( const std::shared_ptr< atlas::records::GameData >& shared_ptr )
 	{
 		QJsonObject obj;
 
 		obj[ "internal_ptr" ] = reinterpret_cast< qint64 >( shared_ptr.get() );
 		obj[ "ref count" ] = static_cast< qint64 >( shared_ptr.use_count() );
-		obj[ "data" ] = serialize< GameData >( *shared_ptr.get() );
+		obj[ "data" ] = serialize< atlas::records::GameData >( *shared_ptr.get() );
 
 		return obj;
 	}
 
 	template <>
-	QJsonObject internalSerializer< Game >( const Game& game )
+	QJsonObject internalSerializer< atlas::records::Game >( const atlas::records::Game& game )
 	{
 		QJsonObject obj;
 

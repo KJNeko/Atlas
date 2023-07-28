@@ -16,7 +16,7 @@
 void GameListDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	const Game record { index.data().value< Game >() };
+	const atlas::records::Game record { index.data().value< atlas::records::Game >() };
 	const QString& title { record->m_title };
 
 	painter->save();
@@ -34,7 +34,7 @@ QSize GameListDelegate::sizeHint( const QStyleOptionViewItem& option, const QMod
 	//Font height
 	QFontMetrics fm { option.font };
 
-	const Game record { index.data().value< Game >() };
+	const atlas::records::Game record { index.data().value< atlas::records::Game >() };
 	const QString& title { record->m_title };
 
 	return fm.size( Qt::TextSingleLine, title );

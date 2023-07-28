@@ -10,7 +10,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 
-#include "core/database/Version.hpp"
+#include "core/database/record/Version.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/RecordListModel.hpp"
@@ -57,10 +57,10 @@ void RecordListView::addRecords( const std::vector< RecordID > records )
 	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
 
-	for ( const auto& record : records ) model->addRecord( Game( record ) );
+	for ( const auto& record : records ) model->addRecord( atlas::records::Game( record ) );
 }
 
-void RecordListView::setRecords( const std::vector< Game > records )
+void RecordListView::setRecords( const std::vector< atlas::records::Game > records )
 {
 	ZoneScoped;
 	auto model { dynamic_cast< RecordListModel* >( QListView::model() ) };
@@ -74,12 +74,12 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	QMenu menu { this };
 	menu.move( mapToGlobal( pos ) );
 
-	Game record { selectionModel()->currentIndex().data().value< Game >() };
+	atlas::records::Game record { selectionModel()->currentIndex().data().value< atlas::records::Game >() };
 
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );
 	//menu.addAction( QString( "Creator: %1" ).arg( record->getCreator() ) );
 
-	std::vector< Version > versions { record->m_versions };
+	std::vector< atlas::records::Version > versions { record->m_versions };
 
 	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( versions.size() ) ) };
 
@@ -120,7 +120,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		"Set banner",
 		[ id, this ]()
 		{
-			Game game { id };
+			atlas::records::Game game { id };
 			const auto path {
 				QFileDialog::
 					getOpenFileName( this, "Select banner", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
@@ -131,7 +131,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		"Add preview",
 		[ id, this ]()
 		{
-			Game game { id };
+			atlas::records::Game game { id };
 			const auto path {
 				QFileDialog::
 					getOpenFileName( this, "Select preview", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.webp)" )
@@ -164,7 +164,7 @@ void RecordListView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event 
 {
 	if ( selectionModel()->hasSelection() )
 	{
-		emit openDetailedView( selectionModel()->currentIndex().data().value< Game >() );
+		emit openDetailedView( selectionModel()->currentIndex().data().value< atlas::records::Game >() );
 		event->accept();
 	}
 	else

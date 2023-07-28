@@ -192,7 +192,9 @@ void RecordEditor::on_btnAddVersion_pressed()
 
 	const auto& versions { m_record->m_versions };
 	if ( std::find_if(
-			 versions.begin(), versions.end(), [ & ]( const Version& ver ) { return ver->m_version == version_name; } )
+			 versions.begin(),
+			 versions.end(),
+			 [ & ]( const atlas::records::Version& ver ) { return ver->m_version == version_name; } )
 	     != versions.end() )
 	{
 		QMessageBox::critical( this, "Invalid Version Name", "A version with that name already exists!" );

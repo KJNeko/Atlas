@@ -61,7 +61,7 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			}
 		case Qt::BackgroundRole:
 			{
-				if ( recordExists( item.title, item.creator, item.engine ) )
+				if ( atlas::records::recordExists( item.title, item.creator, item.engine ) )
 					return QColor( 255, 0, 0 );
 				else
 					return {};

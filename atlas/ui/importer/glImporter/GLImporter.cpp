@@ -56,7 +56,7 @@ void GLImporterRunner::processGame( const std::filesystem::path root, const std:
 	}
 
 	//We found a link! Time to use it
-	AtlasData data { internal_id };
+	atlas::remote::AtlasData data { internal_id };
 
 	atlas::utils::FileScanner scanner { root / path };
 	const auto executables { detectExecutables( scanner ) };
@@ -69,7 +69,10 @@ void GLImporterRunner::processGame( const std::filesystem::path root, const std:
 		emit failed( MissingExecutable );
 	}
 
-	auto [ title, creator, engine ] = data.get< AtlasColumns::Title, AtlasColumns::Creator, AtlasColumns::Engine >();
+	auto [ title, creator, engine ] = data.get<
+		atlas::remote::AtlasColumns::Title,
+		atlas::remote::AtlasColumns::Creator,
+		atlas::remote::AtlasColumns::Engine >();
 
 	//Use this data to import the game
 	try

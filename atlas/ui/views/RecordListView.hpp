@@ -36,11 +36,11 @@ class RecordListView final : public QListView
 	void paintEvent( QPaintEvent* event ) override;
 
   signals:
-	void openDetailedView( const Game record );
+	void openDetailedView( const atlas::records::Game record );
 
   public slots:
 	void addRecords( const std::vector< RecordID > records );
-	void setRecords( const std::vector< Game > records );
+	void setRecords( const std::vector< atlas::records::Game > records );
 	void setRenderMode( const DelegateType type );
 	void on_customContextMenuRequested( const QPoint& pos );
 };

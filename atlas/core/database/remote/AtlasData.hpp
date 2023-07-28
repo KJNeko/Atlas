@@ -14,51 +14,51 @@
 #include "core/database/Transaction.hpp"
 #include "core/fgl/string_literal.hpp"
 
-//Before: 2269 bytes
-//After: 1124 bytes
-struct AtlasData
+namespace atlas::remote
 {
-	AtlasID atlas_id;
-
-  private:
-
-	static constexpr fgl::string_literal table_name { "atlas_data" };
-	static constexpr fgl::string_literal key_name { "atlas_id" };
-
-  public:
-
-	template < AtlasColumns col >
-	AtlasColType< col > get()
+	struct AtlasData
 	{
-		AtlasColType< col > val {};
-		RapidTransaction()
-				<< atlas::database::utility::select_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
-				<< atlas_id
-			>> val;
-		return val;
-	}
+		AtlasID atlas_id;
 
-	template < AtlasColumns... cols >
-		requires( sizeof...( cols ) > 1 )
-	std::tuple< AtlasColType< cols >... > get()
-	{
-		std::tuple< AtlasColType< cols >... > tpl {};
-		RapidTransaction() << atlas::database::utility::
-					select_query_t< "atlas_data", "atlas_id", AtlasColInfo< cols >::col_name... >()
-						   << atlas_id
-			>> tpl;
-		return tpl;
-	}
+	  private:
 
-	template < AtlasColumns col >
-	void set( AtlasColType< col > t )
-	{
-		RapidTransaction()
-			<< atlas::database::utility::update_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >() << t
-			<< atlas_id;
-	}
+		static constexpr fgl::string_literal table_name { "atlas_data" };
+		static constexpr fgl::string_literal key_name { "atlas_id" };
 
-	AtlasData( const AtlasID id ) : atlas_id( id ) {}
-};
+	  public:
 
+		template < AtlasColumns col >
+		AtlasColType< col > get()
+		{
+			AtlasColType< col > val {};
+			RapidTransaction() << atlas::database::utility::
+						select_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
+							   << atlas_id
+				>> val;
+			return val;
+		}
+
+		template < AtlasColumns... cols >
+			requires( sizeof...( cols ) > 1 )
+		std::tuple< AtlasColType< cols >... > get()
+		{
+			std::tuple< AtlasColType< cols >... > tpl {};
+			RapidTransaction() << atlas::database::utility::
+						select_query_t< "atlas_data", "atlas_id", AtlasColInfo< cols >::col_name... >()
+							   << atlas_id
+				>> tpl;
+			return tpl;
+		}
+
+		template < AtlasColumns col >
+		void set( AtlasColType< col > t )
+		{
+			RapidTransaction()
+				<< atlas::database::utility::update_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
+				<< t << atlas_id;
+		}
+
+		AtlasData( const AtlasID id ) : atlas_id( id ) {}
+	};
+} // namespace atlas::remote
 #endif //ATLASGAMEMANAGER_ATLASDTA_HPP

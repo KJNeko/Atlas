@@ -23,12 +23,12 @@ class GameWidget final : public QWidget
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( GameWidget )
 
-	std::optional< Game > m_record { std::nullopt };
+	std::optional< atlas::records::Game > m_record { std::nullopt };
 
 	std::size_t selected_version_idx { 0 };
 
 	//! Returns the user select version. Returns nullopt if no version was selected.
-	std::optional< Version > selectedVersion();
+	std::optional< atlas::records::Version > selectedVersion();
 
 	//! Reloads the widget with all the record information
 	void reloadRecord();
@@ -39,7 +39,7 @@ class GameWidget final : public QWidget
 	~GameWidget();
 
   public slots:
-	void setRecord( const Game record );
+	void setRecord( const atlas::records::Game record );
 	void clearRecord();
 	void paintEvent( QPaintEvent* event ) override;
 
