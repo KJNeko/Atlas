@@ -155,6 +155,8 @@ void GameWidget::reloadRecord()
 
 	const QPixmap cover { image_future.result() };
 
+	
+
 	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.

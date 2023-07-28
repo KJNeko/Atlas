@@ -8,8 +8,10 @@
 
 #include <QGraphicsDropShadowEffect>
 #include <QMenu>
+#include <QMovie>
 #include <QPainter>
 #include <QPixmapCache>
+#include <Qlabel>
 
 #include "core/config.hpp"
 #include "core/database/Version.hpp"
@@ -53,6 +55,24 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 		const QString key { QString::fromStdString(
 			fmt::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
+
+		//spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
+
+		if ( record.bannerPath( Normal ).extension() == ".gif" )
+		{
+			/*QLabel label;
+			QMovie* movie = new QMovie( QString::fromStdString( record.bannerPath( Normal ).string() ) );
+			label.setMovie( movie );
+			movie->start();
+
+			if ( !movie )
+			{
+				//recordlist
+				//QAbstractItemView::setIndexWidget( index, label );
+				//auto view = qobject_cast< NyView* >( parent() );
+				//view_.setIndexWidget( index, NULL );
+			}*/
+		}
 
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
 
