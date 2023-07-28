@@ -14,8 +14,8 @@
 
 #include "ProgressBarDialog.hpp"
 #include "core/config.hpp"
-#include "core/foldersize.hpp"
 #include "core/logging.hpp"
+#include "core/utils/foldersize.hpp"
 #include "ui_SettingsDialog.h"
 
 class DummyRecordModel : public QAbstractListModel
@@ -211,11 +211,12 @@ void SettingsDialog::preparePathsSettings()
 
 	//Set filesizes
 	ui->imagesSizeLabel
-		->setText( locale
-	                   .formattedDataSize( static_cast< qint64 >( folderSize( config::paths::images::getPath() ) ) ) );
+		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::images::
+	                                                                                              getPath() ) ) ) );
 
 	ui->gamesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( folderSize( config::paths::games::getPath() ) ) ) );
+		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::games::
+	                                                                                              getPath() ) ) ) );
 
 	ui->databaseSizeLabel->setText( locale.formattedDataSize(
 		static_cast< qint64 >( std::filesystem::file_size( config::paths::database::getPath() / "atlas.db" ) ) ) );

@@ -14,8 +14,8 @@
 #include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
 
-#include "core/foldersize.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
+#include "core/utils/foldersize.hpp"
 #include "core/utils/regex/regex.hpp"
 
 void runner(
@@ -28,7 +28,7 @@ void runner(
 	try
 	{
 		if ( promise.isCanceled() ) return;
-		FileScanner scanner { folder };
+		atlas::utils::FileScanner scanner { folder };
 		std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
 		if ( promise.isCanceled() ) return;

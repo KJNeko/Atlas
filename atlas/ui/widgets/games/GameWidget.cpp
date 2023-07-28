@@ -10,8 +10,8 @@
 #include <QPainter>
 
 #include "core/database/Version.hpp"
-#include "core/foldersize.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
 #include "ui/delegates/ImageDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
