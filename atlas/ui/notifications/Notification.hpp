@@ -9,8 +9,10 @@
 #include <QWidget>
 
 #pragma GCC diagnostic push
+#ifndef __clang__
 #pragma GCC diagnostic ignored "-Wsuggest-final-types"
 #pragma GCC diagnostic ignored "-Wsuggest-final-methods"
+#endif
 
 class Notification : public QWidget
 {
