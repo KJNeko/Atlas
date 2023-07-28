@@ -10,6 +10,7 @@
 struct ThreadPools
 {
 	QThreadPool image_loaders {};
+	QThreadPool image_importers {};
 
 	ThreadPools() { reloadConfig(); }
 

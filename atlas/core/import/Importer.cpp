@@ -130,32 +130,77 @@ namespace internal
 		signaler.setMax( Progress::Complete );
 		signaler.setProgress( Progress::Banners );
 		signaler.setMessage( "Importing banners" );
-		for ( int i = 0; i < BannerType::SENTINEL; i++ )
+
+		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
+
+		for ( std::size_t i = 0; i < BannerType::SENTINEL; i++ )
 		{
-			const auto path { banners[ static_cast< std::size_t >( i ) ] };
+			const auto path { banners[ i ] };
 			if ( !path.isEmpty() )
 			{
-				record.setBanner( path.toStdString(), static_cast< BannerType >( i ) );
+				banner_futures[ i ] = imageManager::importImage( { path.toStdString() }, record->m_game_id );
+			}
+			else
+				banner_futures[ i ] = { std::nullopt };
 
-				if ( owning )
-				{
-					// Remove the image file from the moved files.
-					std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
-				}
+			//If the game is going into our directory then we should clean up the banners
+			if ( owning )
+			{
+				// Remove the image file from the moved files.
+				std::filesystem::remove(
+					dest_root
+					/ std::filesystem::relative( { banners[ static_cast< std::size_t >( i ) ].toStdString() }, root ) );
 			}
 		}
 
 		signaler.setMessage( "Importing previews" );
 		signaler.setProgress( Progress::Previews );
+
+		std::vector< QFuture< std::filesystem::path > > preview_futures;
+
 		for ( const auto& path : previews )
 		{
 			signaler.setMessage( QString( "Importing preview %1" ).arg( path ) );
-			record.addPreview( { path.toStdString() } );
+			preview_futures.emplace_back( imageManager::importImage( { path.toStdString() }, record->m_game_id ) );
+			//record.addPreview( { path.toStdString() } );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
 				// Remove the image file from the moved files
 				std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
+			}
+		}
+
+		signaler.setMessage( "Waiting on image futures" );
+
+		for ( int i = 0; i < BannerType::SENTINEL; i++ )
+		{
+			auto opt { banner_futures[ static_cast< std::size_t >( i ) ] };
+
+			if ( opt.has_value() )
+			{
+				try
+				{
+					const std::filesystem::path path { opt.value().result() };
+					record.setBanner( path, static_cast< BannerType >( i ) );
+				}
+				catch ( std::exception& e )
+				{
+					spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+				}
+			}
+		}
+
+		for ( auto& future : preview_futures )
+		{
+			try
+			{
+				future.waitForFinished();
+				record.addPreview( future.result() );
+			}
+			catch ( std::exception& e )
+			{
+				spdlog::warn( "Failed to add preview from future: {}", e.what() );
 			}
 		}
 

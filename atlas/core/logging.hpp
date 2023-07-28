@@ -94,9 +94,10 @@ namespace atlas::logging
 	//! Loads the GUI hooks required for some warnings to display to the user
 	void initGUIHooks();
 
-	//! Notifys the user of a warning. Does NOT log to the logfile.
+	//! Notifies the user of a warning.
 	inline void userwarn( [[maybe_unused]] std::string message )
 	{
+		spdlog::warn( "userwarn: {}", message );
 		qDebug() << "userwarn: STUB";
 	}
 

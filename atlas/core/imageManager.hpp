@@ -7,6 +7,7 @@
 
 #include <filesystem>
 
+#include <QFuture>
 #include <QPixmap>
 #include <QSize>
 
@@ -18,7 +19,11 @@ namespace imageManager
 	void cleanOrphans();
 
 	//! Stores the image located at `path` in the data folder
-	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id );
+	//std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id );
+
+	//! Stores the image located at `path` in the data folder
+	QFuture< std::filesystem::path > importImage( const std::filesystem::path& path, const RecordID game_id );
+
 } // namespace imageManager
 
 #endif //ATLAS_IMAGEMANAGER_HPP

@@ -12,6 +12,7 @@ namespace internal
 void ThreadPools::reloadConfig()
 {
 	image_loaders.setMaxThreadCount( 2 );
+	image_importers.setMaxThreadCount( 4 );
 }
 
 ThreadPools& globalPools()

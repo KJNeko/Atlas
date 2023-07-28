@@ -13,11 +13,13 @@
 #include <QImageWriter>
 #include <QMessageBox>
 #include <QPixmap>
+#include <QtConcurrentRun>
 
 #include <tracy/TracyC.h>
 
 #include "config.hpp"
 #include "core/database/Transaction.hpp"
+#include "pools.hpp"
 #include "system.hpp"
 
 namespace imageManager
@@ -42,29 +44,34 @@ namespace imageManager
 		}
 	}
 
-	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
+	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
 		ZoneScoped;
 		if ( std::filesystem::exists( path ) )
 		{
 			QImage temp_image;
 			TracyCZoneN( tracy_ImageLoad, "Image load", true );
-			const bool load_success { temp_image.load( QString::fromStdString( path.string() ) ) };
+			//const bool load_success { temp_image.load( QString::fromStdString( path.string() ) ) };
 			TracyCZoneEnd( tracy_ImageLoad );
-			if ( !load_success ) throw std::runtime_error( fmt::format( "Failed to import image {}", path ) );
+			//if ( !load_success ) throw std::runtime_error( fmt::format( "Failed to import image {}", path ) );
 
-			QByteArray byteArray;
-			QBuffer buffer( &byteArray );
-			const bool tsave { temp_image.save( &buffer, path.extension().string().substr( 1 ).c_str(), 100 ) };
+			QFile file { path };
+			file.open( QFile::ReadOnly );
+			// Load image straight into byte array
+			QByteArray image_byte_array { file.readAll() };
+			//QBuffer buffer( &byteArray );
 
+			//const bool tsave { temp_image.save( &buffer, path.extension().string().substr( 1 ).c_str(), 100 ) };
+
+			/*
 			if ( !tsave )
 				throw std::runtime_error(
 					fmt::format( "Failed to save image to buffer to test size! Banner path: {}", path ) );
+			*/
 
 			const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
 			{
 				ZoneScopedN( "Hash" );
-
 				QCryptographicHash hash { QCryptographicHash::Sha256 };
 
 				hash.addData( { data_ptr, size } );
@@ -86,7 +93,7 @@ namespace imageManager
 			std::filesystem::create_directories( dest_root );
 
 			//Which is smaller?
-			if ( webp_buffer.size() < buffer.size() )
+			if ( webp_buffer.size() < image_byte_array.size() )
 			{
 				//Buffer is smaller. Meaning webp is smaller. Use it
 				const auto hash { hashData( webp_buffer.data(), static_cast< int >( webp_buffer.size() ) ) };
@@ -101,10 +108,10 @@ namespace imageManager
 			else
 			{
 				//Buffer is larger. Meaning webp is worse. Don't use it.
-				const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
+				const auto hash { hashData( image_byte_array.data(), static_cast< int >( image_byte_array.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
-				const QImage img { QImage::fromData( byteArray ) };
+				const QImage img { QImage::fromData( image_byte_array ) };
 				img.save( QString::fromStdString( dest.string() ) );
 
 				return dest;
@@ -117,6 +124,11 @@ namespace imageManager
 				path ) );
 			throw std::runtime_error( fmt::format( "Filepath {} does not exist. Unable to add as image", path ) );
 		}
+	}
+
+	QFuture< std::filesystem::path > importImage( const std::filesystem::path& path, const RecordID game_id )
+	{
+		return QtConcurrent::run( &( globalPools().image_importers ), &internalImportImage, path, game_id );
 	}
 
 } // namespace imageManager

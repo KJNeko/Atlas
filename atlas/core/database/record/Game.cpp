@@ -184,7 +184,7 @@ void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 	// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
 	if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 	{
-		path = imageManager::importImage( path, m_id );
+		path = imageManager::importImage( path, m_id ).result();
 	}
 
 	//Get the highest position
@@ -257,7 +257,7 @@ void Game::setBanner( std::filesystem::path path, const BannerType type )
 
 	if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 	{
-		path = imageManager::importImage( path, m_id );
+		path = imageManager::importImage( path, m_id ).result();
 	}
 
 	RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
