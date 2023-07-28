@@ -195,6 +195,11 @@ void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 	}
 
 	RapidTransaction() << "INSERT INTO previews (record_id, path, position) VALUES (?,?,?)" << m_id << path << index;
+	auto& previews { this->ptr->m_preview_paths };
+	previews.clear();
+
+	RapidTransaction() << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_id >>
+		[ &previews ]( std::filesystem::path path ) { previews.emplace_back( std::move( path ) ); };
 
 	emit dataChanged();
 }
@@ -275,6 +280,9 @@ void Game::setBanner( std::filesystem::path path, const BannerType type )
 		RapidTransaction() << "UPDATE banners SET path = ? WHERE record_id = ? AND type = ?" << path << m_id
 						   << static_cast< uint8_t >( type );
 	}
+
+	this->ptr->m_banner_paths[ static_cast< std::uint64_t >( type ) ] = std::move( path );
+
 	emit dataChanged();
 }
 
