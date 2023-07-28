@@ -48,7 +48,9 @@ void NotificationManagerUI::moveEvent( QMoveEvent* event )
 
 void NotificationManagerUI::deleteNotification( Notification* ptr )
 {
-	delete ptr;
+	ptr->setParent( nullptr );
+	ptr->close();
+	ptr->deleteLater();
 	this->resize( this->minimumSize() );
 
 	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
