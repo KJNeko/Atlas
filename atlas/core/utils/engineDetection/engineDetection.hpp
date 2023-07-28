@@ -36,7 +36,7 @@ enum Engine : int
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
-bool isEngineT( FileScanner& scanner );
+bool isEngineT( atlas::utils::FileScanner& scanner );
 
 //! String name of the engine.
 template < Engine engine >
@@ -45,12 +45,12 @@ QString engineNameT();
 //std::vector<std::filesystem::path> createFileList(const std::filesystem::path& path);
 
 //! Returns an engine type of ENGINES_END if no engine is determined
-Engine determineEngine( FileScanner& scanner );
+Engine determineEngine( atlas::utils::FileScanner& scanner );
 
 //! Returns a string name of the engine
 QString engineName( const Engine engine );
 
-std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner );
+std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanner& scanner );
 
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, const Engine engine = UNKNOWN );

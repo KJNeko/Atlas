@@ -58,7 +58,7 @@ void GLImporterRunner::processGame( const std::filesystem::path root, const std:
 	//We found a link! Time to use it
 	AtlasData data { internal_id };
 
-	FileScanner scanner { root / path };
+	atlas::utils::FileScanner scanner { root / path };
 	const auto executables { detectExecutables( scanner ) };
 	//Try to find an executable at the path
 

@@ -18,13 +18,13 @@
 #include "core/logging.hpp"
 
 template <>
-bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
 
 template <>
-bool isEngineT< ENGINES_END >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< ENGINES_END >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return true;
 }
@@ -65,7 +65,7 @@ bool isBlacklist( const std::string& name )
 	return std::apply( func, blacklist_execs );
 }
 
-std::vector< std::filesystem::path > detectExecutables( FileScanner& scanner )
+std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanner& scanner )
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
@@ -162,7 +162,7 @@ QString engineNameT< UNKNOWN >()
 }
 
 template < Engine engine >
-Engine findEngine( FileScanner& scanner )
+Engine findEngine( atlas::utils::FileScanner& scanner )
 {
 	if constexpr ( engine == ENGINES_END )
 		return UNKNOWN;
@@ -175,7 +175,7 @@ Engine findEngine( FileScanner& scanner )
 	}
 }
 
-Engine determineEngine( FileScanner& scanner )
+Engine determineEngine( atlas::utils::FileScanner& scanner )
 {
 	return findEngine< ENGINES_BEGIN >( scanner );
 }
@@ -204,7 +204,7 @@ QString engineName( const Engine engine )
 //Define all specializations of isEngine and engineNameT here
 
 template <>
-bool isEngineT< RenPy >( FileScanner& scanner )
+bool isEngineT< RenPy >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< RenPy >" );
 	for ( const auto& file : scanner )
@@ -223,7 +223,7 @@ QString engineNameT< RenPy >()
 }
 
 template <>
-bool isEngineT< Unity >( FileScanner& scanner )
+bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< Unity >" );
 	for ( const auto& file : scanner )
@@ -247,7 +247,7 @@ QString engineNameT< Unity >()
 }
 
 template <>
-bool isEngineT< Unreal >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< Unreal >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -259,7 +259,7 @@ QString engineNameT< Unreal >()
 }
 
 template <>
-bool isEngineT< RPGM >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< RPGM >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -271,7 +271,7 @@ QString engineNameT< RPGM >()
 }
 
 template <>
-bool isEngineT< WolfRPG >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< WolfRPG >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -283,7 +283,7 @@ QString engineNameT< WolfRPG >()
 }
 
 template <>
-bool isEngineT< HTML >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< HTML >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< HTML >" );
 	bool html_found { false };
@@ -306,7 +306,7 @@ QString engineNameT< HTML >()
 }
 
 template <>
-bool isEngineT< VisualNovelMaker >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< VisualNovelMaker >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -318,7 +318,7 @@ QString engineNameT< VisualNovelMaker >()
 }
 
 template <>
-bool isEngineT< TyanoBuilder >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< TyanoBuilder >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< TyanoBuilder >" );
 	for ( const auto& file : scanner )
@@ -342,7 +342,7 @@ QString engineNameT< TyanoBuilder >()
 }
 
 template <>
-bool isEngineT< Java >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< Java >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -354,7 +354,7 @@ QString engineNameT< Java >()
 }
 
 template <>
-bool isEngineT< Flash >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< Flash >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -366,7 +366,7 @@ QString engineNameT< Flash >()
 }
 
 template <>
-bool isEngineT< RAGS >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< RAGS >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -378,7 +378,7 @@ QString engineNameT< RAGS >()
 }
 
 template <>
-bool isEngineT< KiriKiri >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< KiriKiri >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -390,7 +390,7 @@ QString engineNameT< KiriKiri >()
 }
 
 template <>
-bool isEngineT< NScripter >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< NScripter >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -402,7 +402,7 @@ QString engineNameT< NScripter >()
 }
 
 template <>
-bool isEngineT< NVList >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< NVList >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }
@@ -414,7 +414,7 @@ QString engineNameT< NVList >()
 }
 
 template <>
-bool isEngineT< Sukai2 >( [[maybe_unused]] FileScanner& scanner )
+bool isEngineT< Sukai2 >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return false;
 }

@@ -14,10 +14,10 @@
 #include "core/database/Database.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
-#include "core/foldersize.hpp"
 #include "core/imageManager.hpp"
 #include "core/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
+#include "core/utils/foldersize.hpp"
 
 namespace internal
 {
@@ -63,7 +63,7 @@ namespace internal
 		TracyCZoneEnd( tracy_checkZone );
 
 		TracyCZoneN( tracy_FileScanner, "File scan", true );
-		FileScanner scanner { root };
+		atlas::utils::FileScanner scanner { root };
 
 		//Get the size of the folder
 		signaler.setProgress( Progress::CollectingFileInformation );
