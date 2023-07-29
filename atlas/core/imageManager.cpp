@@ -55,7 +55,8 @@ namespace imageManager
 			if ( !file.open( QFile::ReadOnly ) )
 				throw std::runtime_error( fmt::format( "Failed to load image from file: {}", path ) );
 			TracyCZoneN( tracy_ImageLoad, "Image load", true );
-			QByteArray byteArray = file.readAll();
+			const QByteArray byteArray { file.readAll() };
+			TracyCZoneEnd( tracy_ImageLoad );
 			file.close();
 
 			//Store image inside of QImage
@@ -65,8 +66,6 @@ namespace imageManager
 				throw std::runtime_error( fmt::format( "Failed to store image from byte array: {}", path.filename() ) );
 
 			const std::string ext { path.extension().string().substr( 1 ) };
-
-			TracyCZoneEnd( tracy_SaveImage );
 			const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
 			std::filesystem::create_directories( dest_root );
 
@@ -83,13 +82,11 @@ namespace imageManager
 			//If GIF then store, do not convert
 			if ( ext == "gif" )
 			{
-				//spdlog::debug( "Found gif:{}", path );
-
 				const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
 				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
 				//Qt is stupid and will not save gifs...  so we have to copy it
-				bool file_copied = std::filesystem::copy_file( path, dest );
+				const bool file_copied { std::filesystem::copy_file( path, dest ) };
 				if ( !file_copied )
 					throw std::
 						runtime_error( fmt::format( "Unable to save gif to images folder: {}", path.filename() ) );
@@ -98,25 +95,16 @@ namespace imageManager
 			}
 			else
 			{
-				QBuffer buffer( &byteArray );
-				const bool tsave { temp_image.save( &buffer, ext.c_str(), 100 ) };
-
-				if ( !tsave )
-					throw std::runtime_error(
-						fmt::format( "Failed to save image to buffer to test size! Banner path: {}", path ) );
-
-				std::string image_type { config::images::image_type::get().toStdString() };
+				const std::string image_type { config::images::image_type::get().toStdString() };
 
 				TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
-
 				QByteArray webp_byteArray;
 				QBuffer webp_buffer( &webp_byteArray );
 				temp_image.save( &webp_buffer, image_type.c_str(), 90 );
-
 				TracyCZoneEnd( tracy_SaveImage );
 
 				//Which is smaller?
-				if ( webp_buffer.size() < buffer.size() )
+				if ( webp_buffer.size() < byteArray.size() )
 				{
 					//Buffer is smaller. Meaning webp is smaller. Use it
 					const auto hash { hashData( webp_buffer.data(), static_cast< int >( webp_buffer.size() ) ) };
@@ -131,7 +119,7 @@ namespace imageManager
 				else
 				{
 					//Buffer is larger. Meaning webp is worse. Don't use it.
-					const auto hash { hashData( buffer.data(), static_cast< int >( buffer.size() ) ) };
+					const auto hash { hashData( byteArray.data(), static_cast< int >( byteArray.size() ) ) };
 					const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
 
 					const QImage img { QImage::fromData( byteArray ) };
