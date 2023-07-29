@@ -147,9 +147,8 @@ namespace internal
 			if ( owning )
 			{
 				// Remove the image file from the moved files.
-				std::filesystem::remove(
-					dest_root
-					/ std::filesystem::relative( { banners[ static_cast< std::size_t >( i ) ].toStdString() }, root ) );
+				std::filesystem::
+					remove( dest_root / std::filesystem::relative( { banners[ i ].toStdString() }, root ) );
 			}
 		}
 
