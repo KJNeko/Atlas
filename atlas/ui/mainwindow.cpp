@@ -64,10 +64,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
 
 	//Share the recordView's model to gameList
+	//NEED TO OVERIDE THIS TO SET HEADER DATA
+	//ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
 	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
-	//Share selection model
-	//ui->gamesTree->setSelectionModel( ui->recordView->selectionModel() );
+	ui->gamesTree->setHeaderHidden( true );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
@@ -77,6 +78,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
+	//ui->gamesTree->model()->setHeaderData( 1, Qt::Horizontal, QString( "Games" ) );
 }
 
 MainWindow::~MainWindow()
