@@ -204,7 +204,7 @@ namespace atlas::records
 		previews.clear();
 
 		RapidTransaction() << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_id >>
-			[ &previews ]( std::filesystem::path path ) { previews.emplace_back( std::move( path ) ); };
+			[ &previews ]( std::filesystem::path preview_path ) { previews.emplace_back( std::move( preview_path ) ); };
 
 		emit dataChanged();
 	}
