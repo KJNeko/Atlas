@@ -102,15 +102,16 @@ struct FileScannerGenerator
 	FileInfo operator()();
 };
 
-struct FileScanner
+class FileScanner
 {
+  private:
+
 	std::filesystem::path m_path;
 	FileScannerGenerator file_scanner;
 	std::vector< FileInfo > files;
+	const FileInfo& at( std::size_t index );
 
 	friend class iterator;
-
-  private:
 
 	class iterator
 	{
@@ -139,12 +140,6 @@ struct FileScanner
   public:
 
 	FileScanner( const std::filesystem::path& path );
-
-  private:
-
-	const FileInfo& at( std::size_t index );
-
-  public:
 
 	iterator begin() { return iterator( 0, *this ); }
 
