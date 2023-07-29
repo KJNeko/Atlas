@@ -51,16 +51,18 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	ui->cbAppFont->addItems( QFontDatabase::families() );
 
 	//Set Fonts
-	QFont font;
 	ui->sbAppFontSize->setValue( config::application::fontSize::get() );
+
 	ui->cbAppFont->setCurrentText(
-		config::application::font::get() == "" ? QString::fromStdString( font.defaultFamily().toStdString() ) :
-												 config::application::font::get() );
+		config::application::font::get() == "" ?
+			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
+			config::application::font::get() );
 
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
 	ui->cbFont->setCurrentText(
-		config::grid_ui::font::get() == "" ? QString::fromStdString( font.defaultFamily().toStdString() ) :
-											 config::application::font::get() );
+		config::grid_ui::font::get() == "" ?
+			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
+			config::application::font::get() );
 
 	//Make sure menu is at index 0
 	ui->stackedWidget->setCurrentIndex( 0 );

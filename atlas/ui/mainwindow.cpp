@@ -43,7 +43,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Set Font
 	QFont font {};
-	font.setPixelSize( config::application::fontSize::get() );
+	font.setPointSize( config::application::fontSize::get() );
 	font.setFamily(
 		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
 												 config::application::font::get() );
