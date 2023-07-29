@@ -9,11 +9,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-<<<<<<< HEAD
 #include "core/database/record/Version.hpp"
-=======
-#include "core/database/Version.hpp"
->>>>>>> 7e7948cc (Fixup FileScanner and it's components possibly conflicting with other classes. Hid in namespace)
 #include "core/utils/QImageBlur.hpp"
 #include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
