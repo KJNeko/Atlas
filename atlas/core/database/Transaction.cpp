@@ -35,7 +35,7 @@ TransactionBase< true >::~TransactionBase() noexcept( false )
 		throw std::runtime_error( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
 	}
 
-	last_locked = std::thread::id( 0 );
+	last_locked = std::thread::id();
 }
 
 template <>
