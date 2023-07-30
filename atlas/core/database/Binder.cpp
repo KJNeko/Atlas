@@ -6,11 +6,9 @@
 
 Binder::Binder( const std::string_view sql )
 {
-	TracyCZoneN( prepare_tracy_zone, "Prepare query", true );
 	const auto prepare_ret {
 		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
 	};
-	TracyCZoneEnd( prepare_tracy_zone );
 
 	if ( prepare_ret != SQLITE_OK )
 	{
