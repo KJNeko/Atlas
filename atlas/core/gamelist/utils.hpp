@@ -18,12 +18,22 @@ namespace gl
 	struct GameListInfos
 	{
 		QString version {};
-		std::uint64_t f95_id { 0 };
+		// I can only assume that this ID is actually some internal thing used by GL. Sadly we can't really access it without tid's assistance.
+		// So it's just a dummy for this time.
+		std::uint64_t gl_id { 0 };
 		QString name {};
 		QString thread_url {};
+		std::uint64_t f95_thread_id { INVALID_F95_ID };
 	};
 
+#define GL_INFO_FILENAME "GL_Infos.ini"
+
 	GameListInfos parse( const std::filesystem::path& path );
+
+	inline bool dirHasGLInfo( const std::filesystem::path& path )
+	{
+		return std::filesystem::exists( path / GL_INFO_FILENAME );
+	}
 
 } // namespace gl
 

@@ -1,64 +1,67 @@
 //
-// Created by kj16609 on 6/24/23.
+// Created by kj16609 on 7/28/23.
 //
 
-#ifndef ATLASGAMEMANAGER_ATLASDTA_HPP
-#define ATLASGAMEMANAGER_ATLASDTA_HPP
+#ifndef ATLASGAMEMANAGER_ATLASDATA_HPP
+#define ATLASGAMEMANAGER_ATLASDATA_HPP
 
-#include <cstdint>
+#include <memory>
 
 #include <QString>
 
-#include "AtlasColType.hpp"
 #include "core/Types.hpp"
-#include "core/database/Transaction.hpp"
-#include "core/fgl/string_literal.hpp"
 
 namespace atlas::remote
 {
-	struct AtlasData
+	namespace internal
 	{
-		AtlasID atlas_id;
+		struct AtlasData
+		{
+			AtlasID atlas_id { INVALID_ATLAS_ID };
+			QString id_name {};
+			QString short_name {};
+			QString title {};
+			QString original_name {};
+			QString category {};
+			QString engine {};
+			QString status {};
+			QString version {};
+			QString developer {};
+			QString creator {};
+			QString overview {};
+			QString censored {};
+			QString language {};
+			QString translations {};
+			QString genre {};
+			std::vector< QString > tags {};
+			QString voice {};
+			QString os {};
+			std::uint64_t release_date { 0 };
+			QString length {};
+			QString banner {};
+			QString banner_wide {};
+			QString cover {};
+			QString logo {};
+			QString wallpaper {};
+			std::vector< QString > previews {};
+			//! Time of the last remote update (Not the time we've synced)
+			std::uint64_t last_db_update { 0 };
 
-	  private:
+			AtlasData( const AtlasID id );
+		};
 
-		static constexpr fgl::string_literal table_name { "atlas_data" };
-		static constexpr fgl::string_literal key_name { "atlas_id" };
+	} // namespace internal
+
+	class AtlasRemoteData
+	{
+		std::shared_ptr< internal::AtlasData > data_ptr;
 
 	  public:
 
-		template < AtlasColumns col >
-		AtlasColType< col > get()
-		{
-			AtlasColType< col > val {};
-			RapidTransaction() << atlas::database::utility::
-						select_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
-							   << atlas_id
-				>> val;
-			return val;
-		}
+		AtlasRemoteData( AtlasID id );
 
-		template < AtlasColumns... cols >
-			requires( sizeof...( cols ) > 1 )
-		std::tuple< AtlasColType< cols >... > get()
-		{
-			std::tuple< AtlasColType< cols >... > tpl {};
-			RapidTransaction() << atlas::database::utility::
-						select_query_t< "atlas_data", "atlas_id", AtlasColInfo< cols >::col_name... >()
-							   << atlas_id
-				>> tpl;
-			return tpl;
-		}
-
-		template < AtlasColumns col >
-		void set( AtlasColType< col > t )
-		{
-			RapidTransaction()
-				<< atlas::database::utility::update_query< AtlasColInfo< col >::col_name, "atlas_data", "atlas_id" >()
-				<< t << atlas_id;
-		}
-
-		AtlasData( const AtlasID id ) : atlas_id( id ) {}
+		const internal::AtlasData* operator->() const { return data_ptr.get(); }
 	};
 } // namespace atlas::remote
-#endif //ATLASGAMEMANAGER_ATLASDTA_HPP
+
+#endif //ATLASGAMEMANAGER_ATLASDATA_HPP

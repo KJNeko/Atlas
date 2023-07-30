@@ -1,50 +1,56 @@
 //
-// Created by kj16609 on 6/24/23.
+// Created by kj16609 on 7/28/23.
 //
 
 #ifndef ATLASGAMEMANAGER_F95DATA_HPP
 #define ATLASGAMEMANAGER_F95DATA_HPP
 
-#include <cstdint>
+#include <memory>
 
 #include <QString>
 
-#include "F95ColType.hpp"
 #include "core/Types.hpp"
 
 namespace atlas::remote
 {
-	struct F95Data
-	{
-	  private:
 
-		std::uint64_t f95_id; //Primary key. NOT THE FORM ID
+	namespace internal
+	{
+		struct F95Data
+		{
+			F95ID f95_id { INVALID_F95_ID };
+			AtlasID atlas_id { INVALID_ATLAS_ID };
+			QString banner_url {};
+			QString site_url {};
+			QString last_thread_comment {};
+			QString thread_publish_date {};
+			QString last_record_update {};
+			QString views {};
+			QString likes {};
+			std::vector< QString > tags {};
+			QString rating {};
+			std::vector< QString > screens {};
+			QString replies {};
+
+			F95Data( const F95ID id );
+		};
+
+	} // namespace internal
+
+	bool hasF95DataFor( const F95ID f95_id );
+	void createDummyF95Record( const F95ID f95_id );
+
+	class F95RemoteData
+	{
+		F95ID id;
+		std::shared_ptr< internal::F95Data > data_ptr;
 
 	  public:
 
-		template < F95Columns col >
-		F95ColType< col > get()
-		{
-			F95ColType< col > val {};
-			RapidTransaction() << atlas::database::utility::
-						select_query< F95ColInfo< col >::col_name, "f95_zone_data", "f95_id" >()
-							   << f95_id
-				>> val;
-			return val;
-		}
+		F95RemoteData( const F95ID f95_id );
+		~F95RemoteData();
 
-		template < F95Columns col >
-		void set( F95ColType< col > t )
-		{
-			RapidTransaction()
-				<< atlas::database::utility::update_query< F95ColInfo< col >::col_name, "f95_zone_data", "f95_id" >()
-				<< t << f95_id;
-		}
-
-		/**
-	 * @param id *INTERNAL* Id of the f95 data (Not thread id)
-	 */
-		F95Data( const F95ID id ) : f95_id( id ) {}
+		const internal::F95Data* operator->() const { return data_ptr.get(); }
 	};
 } // namespace atlas::remote
 

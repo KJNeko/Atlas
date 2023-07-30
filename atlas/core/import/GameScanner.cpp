@@ -14,6 +14,9 @@
 #include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
 
+#include "core/database/remote/AtlasData.hpp"
+#include "core/database/remote/F95Data.hpp"
+#include "core/gamelist/utils.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/foldersize.hpp"
 #include "core/utils/regex/regex.hpp"
@@ -34,10 +37,51 @@ void runner(
 		if ( promise.isCanceled() ) return;
 		if ( potential_executables.size() > 0 )
 		{
-			TracyCZoneN( extract_Tracy, "Extract groups", true );
-			const auto [ title, creator, version, engine ] =
-				regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-			TracyCZoneEnd( extract_Tracy );
+			const auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
+			{
+				if ( gl::dirHasGLInfo( folder ) )
+				{
+					const auto gl_info { gl::parse( folder / GL_INFO_FILENAME ) };
+					// Grab information from remote.
+
+					if ( gl_info.f95_thread_id == INVALID_F95_ID )
+					{
+						//Unable to do anything with this
+						//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
+						return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+					}
+
+					//Try to find the thread info
+					if ( !atlas::remote::hasF95DataFor( gl_info.f95_thread_id ) )
+					{
+						return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+					}
+					else
+					{
+						try
+						{
+							atlas::remote::F95RemoteData f95_data { gl_info.f95_thread_id };
+							atlas::remote::AtlasRemoteData atlas_data { f95_data->atlas_id };
+
+							//Grab version info from gl_infos directly
+							regex::GroupsOutput output {
+								atlas_data->title, atlas_data->creator, gl_info.version, atlas_data->engine
+							};
+
+							return output;
+						}
+						catch ( std::exception& e )
+						{
+							spdlog::warn( "Failed to get remote data in scanner: {}", e.what() );
+							return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+						}
+					}
+				}
+				else
+				{
+					return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+				}
+			}();
 
 			//Search for banners
 			std::array< QString, BannerType::SENTINEL > banners {};
@@ -110,11 +154,13 @@ void runner(
 
 		return;
 	}
+
 	catch ( const std::exception& e )
 	{
 		spdlog::error( "GameScanner::runner: {}", e.what() );
 		promise.setException( std::current_exception() );
 	}
+
 	catch ( ... )
 	{
 		promise.setException( std::current_exception() );

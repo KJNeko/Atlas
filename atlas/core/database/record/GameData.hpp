@@ -35,7 +35,7 @@ namespace atlas::records
 		std::array< std::filesystem::path, BannerType::SENTINEL > m_banner_paths {};
 		std::vector< std::filesystem::path > m_preview_paths {};
 
-		std::optional< remote::AtlasData > atlas_data { std::nullopt };
+		std::optional< remote::AtlasRemoteData > atlas_data { std::nullopt };
 
 		//Some helpers for commonly used data sets.
 		const Version& getVersion( const QString ) const;

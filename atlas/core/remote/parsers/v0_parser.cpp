@@ -5,6 +5,7 @@
 #include <QJsonArray>
 
 #include "core/database/Transaction.hpp"
+#include "core/database/record/tags.hpp"
 #include "core/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
 
@@ -89,20 +90,67 @@ namespace remote::parsers::v0
 		constexpr std::string_view query { "INSERT INTO atlas_data ("
 			                               "atlas_id, id_name, short_name, title, original_name, category, "
 			                               "engine, status, version, developer, creator, overview, censored, "
-			                               "language, translations, genre, tags, voice, os, release_date, length, "
-			                               "banner, banner_wide, cover, logo, wallpaper, previews, last_db_update) "
-			                               "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" };
+			                               "language, translations, genre, voice, os, release_date, length, "
+			                               "banner, banner_wide, cover, logo, wallpaper, last_db_update) "
+			                               "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" };
 
 		trans << query << obj[ "atlas_id" ].toInteger() << obj[ "id_name" ].toString() << obj[ "short_name" ].toString()
 			  << obj[ "title" ].toString() << obj[ "original_name" ].toString() << obj[ "category" ].toString()
 			  << obj[ "engine" ].toString() << obj[ "status" ].toString() << obj[ "version" ].toString()
 			  << obj[ "developer" ].toString() << obj[ "creator" ].toString() << obj[ "overview" ].toString()
 			  << obj[ "censored" ].toString() << obj[ "language" ].toString() << obj[ "translations" ].toString()
-			  << obj[ "genre" ].toString() << obj[ "tags" ].toString() << obj[ "voice" ].toString()
-			  << obj[ "os" ].toString() << obj[ "release_date" ].toInteger() << obj[ "length" ].toString()
-			  << obj[ "banner" ].toString() << obj[ "banner_wide" ].toString() << obj[ "cover" ].toString()
-			  << obj[ "logo" ].toString() << obj[ "wallpaper" ].toString() << obj[ "previews" ].toString()
-			  << obj[ "last_db_update" ].toInteger();
+			  << obj[ "genre" ].toString() << obj[ "voice" ].toString() << obj[ "os" ].toString()
+			  << obj[ "release_date" ].toInteger() << obj[ "length" ].toString() << obj[ "banner" ].toString()
+			  << obj[ "banner_wide" ].toString() << obj[ "cover" ].toString() << obj[ "logo" ].toString()
+			  << obj[ "wallpaper" ].toString() << obj[ "last_db_update" ].toInteger();
+
+		const AtlasID atlas_id { static_cast< AtlasID >( obj[ "atlas_id" ].toInteger() ) };
+
+		if ( obj[ "tags" ].isString() )
+		{
+			//CSV mode
+			const auto parsed { obj[ "tags" ].toString().split( ',' ) };
+
+			for ( const auto& str : parsed )
+			{
+				const TagID tag_id { atlas::tags::createTag( str ) };
+
+				trans << "INSERT INTO atlas_tags (tag_id, atlas_id) VALUES (?,?)" << tag_id << atlas_id;
+			}
+		}
+		else if ( obj[ "tags" ].isArray() )
+		{
+			const QJsonArray tags = obj[ "tags" ].toArray();
+
+			for ( const QJsonValue& tag : tags )
+			{
+				const TagID tag_id { atlas::tags::createTag( tag.toString() ) };
+
+				trans << "INSERT INTO atlas_tags (tag_id, atlas_id) VALUES (?,?)" << tag_id << atlas_id;
+			}
+		}
+
+		if ( obj[ "previews" ].isString() )
+		{
+			const auto parsed { obj[ "previews" ].toString().split( ',' ) };
+
+			for ( auto str : parsed )
+			{
+				str = str.trimmed();
+
+				trans << "INSERT INTO atlas_previews (atlas_id, preview_url) VALUES (?,?)" << atlas_id << str;
+			}
+		}
+		else
+		{
+			const QJsonArray previews = obj[ "previews" ].toArray();
+
+			for ( const QJsonValue& preview_url : previews )
+			{
+				trans << "INSERT INTO atlas_previews (atlas_id, preview_url) VALUES (?,?)" << atlas_id
+					  << preview_url.toString();
+			}
+		}
 	}
 
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
@@ -170,14 +218,64 @@ namespace remote::parsers::v0
 	void insertF95Data( const QJsonObject& obj, Transaction& trans )
 	{
 		constexpr std::string_view query {
-			"INSERT INTO f95_zone_data (f95_id, atlas_id, banner_url, site_url, last_thread_comment, thread_publish_date, last_record_update, views, likes, tags, rating, screens, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			"INSERT INTO f95_zone_data (f95_id, atlas_id, banner_url, site_url, "
+			"last_thread_comment, thread_publish_date, last_record_update, views, "
+			"likes, tags, rating, screens, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 		};
 
 		trans << query << obj[ "f95_id" ].toInteger() << obj[ "atlas_id" ].toInteger() << obj[ "banner_url" ].toString()
 			  << obj[ "site_url" ].toString() << obj[ "last_thread_comment" ].toInteger()
 			  << obj[ "thread_publish_date" ].toInteger() << obj[ "last_record_update" ].toInteger()
-			  << obj[ "views" ].toInteger() << obj[ "likes" ].toInteger() << obj[ "tags" ].toString()
-			  << obj[ "rating" ].toDouble() << obj[ "screens" ].toString() << obj[ "replies" ].toInteger();
+			  << obj[ "views" ].toInteger() << obj[ "likes" ].toInteger() << obj[ "rating" ].toDouble()
+			  << obj[ "replies" ].toInteger();
+
+		const F95ID f95_id { static_cast< F95ID >( obj[ "f95_id" ].toInteger() ) };
+
+		if ( obj[ "tags" ].isString() )
+		{
+			//CSV mode
+			const auto parsed { obj[ "tags" ].toString().split( ',' ) };
+
+			for ( const auto& str : parsed )
+			{
+				const TagID tag_id { atlas::tags::createTag( str ) };
+
+				trans << "INSERT INTO f95_zone_tags (tag_id, f95_id) VALUES (?,?)" << tag_id << f95_id;
+			}
+		}
+		else if ( obj[ "tags" ].isArray() )
+		{
+			const QJsonArray tags = obj[ "tags" ].toArray();
+
+			for ( const QJsonValue& tag : tags )
+			{
+				const TagID tag_id { atlas::tags::createTag( tag.toString() ) };
+
+				trans << "INSERT INTO f95_zone_tags (tag_id, f95_id) VALUES (?,?)" << tag_id << f95_id;
+			}
+		}
+
+		if ( obj[ "screens" ].isString() )
+		{
+			const auto parsed { obj[ "screens" ].toString().split( ',' ) };
+
+			for ( auto str : parsed )
+			{
+				str = str.trimmed();
+
+				trans << "INSERT INTO f95_zone_screens (f95_id, screen_url) VALUES (?,?)" << f95_id << str;
+			}
+		}
+		else
+		{
+			const QJsonArray previews = obj[ "screens" ].toArray();
+
+			for ( const QJsonValue& preview_url : previews )
+			{
+				trans << "INSERT INTO f95_zone_screens (f95_id, screen_url) VALUES (?,?)" << f95_id
+					  << preview_url.toString();
+			}
+		}
 	}
 
 	void parseF95Array( const QJsonArray& data, Transaction& trans )

@@ -12,7 +12,6 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-#include "core/database/banners.hpp"
 
 namespace atlas::records
 {

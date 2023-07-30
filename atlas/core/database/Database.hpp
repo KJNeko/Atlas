@@ -34,16 +34,6 @@
 #include <tracy/Tracy.hpp>
 #endif
 
-enum TransactionFlag
-{
-	None = 0,
-	FastLock = 0b000010, //! Indicates that the transaction should not hold a lock. Binder will instead hold the lock.
-	AutoCommit =
-		0b000100, //! Indicates that the error/warning should be silence for letting Transaction dtor call abort(). Instead makes the dtor call commit()
-	Trans = 0b100000, //! Indicates to BEGIN/END TRANSACTION
-	DEFAULT = Trans
-};
-
 namespace internal
 {
 #ifdef TRACY_ENABLE

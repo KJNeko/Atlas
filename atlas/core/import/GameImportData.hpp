@@ -24,6 +24,9 @@ struct GameImportData
 	std::array< QString, BannerType::SENTINEL > banners {};
 	std::vector< QString > previews {};
 
+	//Remote information
+	AtlasID atlas_id { INVALID_ATLAS_ID };
+
 	GameImportData(
 		std::filesystem::path path_in,
 		QString title_in,
