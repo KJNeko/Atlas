@@ -42,7 +42,8 @@ namespace internal
 		const std::array< QString, BannerType::SENTINEL >& banners,
 		const std::vector< QString >& previews,
 		const bool owning,
-		const bool scan_filesize )
+		const bool scan_filesize,
+		const AtlasID atlas_id )
 	try
 	{
 		ZoneScoped;
@@ -126,6 +127,8 @@ namespace internal
 		}
 		else
 			record.addVersion( version, root, relative_executable );
+
+		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 
 		signaler.setMax( Progress::Complete );
 		signaler.setProgress( Progress::Banners );
@@ -231,8 +234,9 @@ QFuture< RecordID > importGame(
 	QString version,
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
-	bool owning,
-	bool scan_filesize,
+	const bool owning,
+	const bool scan_filesize,
+	const AtlasID atlas_id,
 	QThreadPool& pool )
 {
 	ZoneScoped;
@@ -248,14 +252,15 @@ QFuture< RecordID > importGame(
 	         std::move( banners ),
 	         std::move( previews ),
 	         owning,
-	         scan_filesize );
+	         scan_filesize,
+	         atlas_id );
 }
 
 QFuture< RecordID >
 	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize )
 {
 	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
+	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews, atlas_id ] =
 		std::move( data );
 
 	return importGame(
@@ -269,6 +274,7 @@ QFuture< RecordID >
 		std::move( previews ),
 		owning,
 		scan_filesize,
+		atlas_id,
 		*QThreadPool::globalInstance() );
 }
 
@@ -280,7 +286,7 @@ QFuture< RecordID > importGame(
 	QThreadPool& pool )
 {
 	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews ] =
+	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews, atlas_id ] =
 		std::move( data );
 
 	return importGame(
@@ -294,5 +300,6 @@ QFuture< RecordID > importGame(
 		std::move( previews ),
 		owning,
 		scan_filesize,
+		atlas_id,
 		pool );
 }

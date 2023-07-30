@@ -98,6 +98,11 @@ namespace atlas::records
 		[[nodiscard]] QFuture< QPixmap >
 			requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type );
 
+		//=============== Remote connection ====================================
+
+		//! Connects this record to a atlas_data mapping
+		void connectAtlasData( const AtlasID id );
+
 		// Used to accessing internal data
 		const GameData* operator->() const { return ptr.get(); }
 

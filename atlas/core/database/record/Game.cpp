@@ -292,6 +292,19 @@ namespace atlas::records
 		emit dataChanged();
 	}
 
+	void Game::connectAtlasData( const AtlasID atlas_id )
+	{
+		if ( atlas_id == INVALID_ATLAS_ID ) throw std::runtime_error( "Invalid atlas id" );
+
+		AtlasID new_id { INVALID_ATLAS_ID };
+		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> new_id;
+		if ( new_id == INVALID_ATLAS_ID ) throw std::runtime_error( "No Atlas data with this id" );
+
+		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, game_id) VALUES (?,?)" << atlas_id << m_id;
+
+		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
+	}
+
 	//! imports a new record and returns it. Will return an existing record if the record already exists
 	Game importRecord( QString title, QString creator, QString engine )
 	{

@@ -38,6 +38,7 @@ QFuture< RecordID > importGame(
 	std::vector< QString > previews,
 	bool owning = false,
 	bool scan_filesize = false,
+	AtlasID atlas_id = INVALID_ATLAS_ID,
 	QThreadPool& pool = *QThreadPool::globalInstance() );
 
 struct GameImportData;

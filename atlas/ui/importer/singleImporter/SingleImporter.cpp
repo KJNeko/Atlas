@@ -225,7 +225,9 @@ void SingleImporter::triggerImport()
 		version,
 		banners,
 		ui->previews->pathsQString(),
-		ui->cbMoveDir->isChecked() );
+		ui->cbMoveDir->isChecked(),
+		//TODO: Replace this placeholder with the ability for the SingleImporter to search existing remote records.
+		INVALID_ATLAS_ID );
 
 	close();
 }
