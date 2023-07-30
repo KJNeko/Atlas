@@ -11,7 +11,6 @@
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
-#include "ui/importer/glImporter/GLImporter.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
@@ -117,26 +116,6 @@ void MainWindow::on_actionBulkImporter_triggered()
 	BatchImportDialog importer { this };
 	importer.exec();
 	emit triggerReSearch();
-}
-
-void MainWindow::on_actionGameListImporter_triggered()
-{
-	QMessageBox::information(
-		this, "Game List", "Please select root (Root being the games directory) for your game list install" );
-
-	if ( const auto dir = QFileDialog::getExistingDirectory(
-			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
-	     !dir.isEmpty() )
-	{
-		GLImporter* importer { new GLImporter( this ) };
-		importer->show();
-		importer->setImportDir( { dir.toStdString() } );
-		importer->exec();
-		delete importer;
-		emit triggerReSearch();
-	}
-	else
-		QMessageBox::information( this, "Error", "No directory provided." );
 }
 
 void MainWindow::on_actionOptions_triggered()

@@ -45,7 +45,6 @@ class MainWindow final : public QMainWindow
   private slots:
 	void on_actionSimpleImporter_triggered();
 	void on_actionBulkImporter_triggered();
-	void on_actionGameListImporter_triggered();
 	void on_actionSingleImporter_triggered();
 	//void on_actionImport_triggered();
 	void on_actionOptions_triggered();
