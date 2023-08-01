@@ -34,31 +34,20 @@ This is written under the assumption that gcc is used. Other compilers (while no
 
 ## ii. Codegen flags
 
-> Note: These recommendations are for optimal performance when compiling for
-> native execution (to be run on the same machine and environment which is doing compilation).
-
----
-
 ## Debug
 
 ``-Og -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fwrapv -fverbose-asm -femit-class-debug-always``
 > * Recomended `-fanalyzer` should be used where possible
-
----
 
 ## System Release
 
 ``-DNDEBUG -Ofast -march=native -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -fdevirtualize-at-ltrans -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums``
 > * Only should be run on the same system used for compilation
 
----
-
 ## Release
 
 ``-DNDEBUG -Ofast -fdeclone-ctor-dtor -flto=auto -s``
 > * Default unless running on the same system as compilation (See System Release*)
-
----
 
 ## RelWithDebug
 
