@@ -85,7 +85,7 @@ namespace imageManager
 			return hash.result();
 		};
 
-		auto get_dest_file_path = [ byteArray, path, hashData, dest_root ]	// Use the image hash + ext as its filename
+		auto getDestFilePath = [ byteArray, path, hashData, dest_root ]	// Use the image hash + ext as its filename
 		{
 			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
 			const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
@@ -95,7 +95,7 @@ namespace imageManager
 		//If GIF then store, do not convert
 		if ( ext == "gif" )
 		{
-			auto dest = get_dest_file_path();
+			auto dest = getDestFilePath();
 
 			//Qt is stupid and will not save gifs...  so we have to copy it
 			const bool file_copied { std::filesystem::copy_file( path, dest ) };
@@ -108,19 +108,19 @@ namespace imageManager
 		const std::string image_type { config::images::image_type::get().toStdString() };
 
 
-		auto use_q_image = [ byteArray, path, dest_root, get_dest_file_path ]	// Use QImage instead of WebP format
+		auto useQImage = [ byteArray, path, dest_root, getDestFilePath ]	// Use QImage instead of WebP format
 		{
-			auto dest = get_dest_file_path();
+			auto dest = getDestFilePath();
 			const QImage img { QImage::fromData( byteArray ) };
 			img.save( QString::fromStdString( dest.string() ) );
 
 			return dest;
 		};
 
-		constexpr std::uint16_t webp_max( 16383 );
+		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
-			return use_q_image();	// Don't use WebP
+			return useQImage();	// Don't use WebP
 		}
 
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
@@ -132,11 +132,11 @@ namespace imageManager
 		//Which is bigger?
 		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
 		{
-			return use_q_image();
+			return useQImage();
 		}
 
 		//Buffer is smaller. Meaning webp is smaller. Use it
-		auto dest = get_dest_file_path();
+		auto dest {getDestFilePath()};
 		// We shouldn't need to make a new image since we already have it? (tmp_image)
 		// const QImage img { QImage::fromData( webp_byteArray ) };
 		temp_image.save( QString::fromStdString( dest.string() ) );
