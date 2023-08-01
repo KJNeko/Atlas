@@ -75,7 +75,7 @@ namespace imageManager
 		const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( dest_root );
 
-		const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray	// Hash data with Sha256
+		const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray // Hash data with Sha256
 		{
 			ZoneScopedN( "Hash" );
 			QCryptographicHash hash { QCryptographicHash::Sha256 };
@@ -85,7 +85,7 @@ namespace imageManager
 			return hash.result();
 		};
 
-		auto getDestFilePath = [ byteArray, path, hashData, dest_root ]	// Use the image hash + ext as its filename
+		auto getDestFilePath = [ &byteArray, &path, &hashData, &dest_root ] // Use the image hash + ext as its filename
 		{
 			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
 			const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
@@ -95,7 +95,7 @@ namespace imageManager
 		//If GIF then store, do not convert
 		if ( ext == "gif" )
 		{
-			auto dest = getDestFilePath();
+			const auto dest { getDestFilePath() };
 
 			//Qt is stupid and will not save gifs...  so we have to copy it
 			const bool file_copied { std::filesystem::copy_file( path, dest ) };
@@ -107,8 +107,7 @@ namespace imageManager
 
 		const std::string image_type { config::images::image_type::get().toStdString() };
 
-
-		auto useQImage = [ byteArray, path, dest_root, getDestFilePath ]	// Use QImage instead of WebP format
+		auto useQImage = [ &byteArray, &getDestFilePath ] // Use QImage instead of WebP format
 		{
 			auto dest = getDestFilePath();
 			const QImage img { QImage::fromData( byteArray ) };
@@ -120,7 +119,7 @@ namespace imageManager
 		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
-			return useQImage();	// Don't use WebP
+			return useQImage(); // Don't use WebP
 		}
 
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
@@ -136,10 +135,10 @@ namespace imageManager
 		}
 
 		//Buffer is smaller. Meaning webp is smaller. Use it
-		auto dest {getDestFilePath()};
+		const auto dest { getDestFilePath().string() };
 		// We shouldn't need to make a new image since we already have it? (tmp_image)
 		// const QImage img { QImage::fromData( webp_byteArray ) };
-		temp_image.save( QString::fromStdString( dest.string() ) );
+		temp_image.save( QString::fromStdString( dest ) );
 		return dest;
 	}
 
