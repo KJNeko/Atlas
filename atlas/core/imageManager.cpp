@@ -75,7 +75,7 @@ namespace imageManager
 		const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( dest_root );
 
-		const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray
+		const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray	// Hash data with Sha256
 		{
 			ZoneScopedN( "Hash" );
 			QCryptographicHash hash { QCryptographicHash::Sha256 };
@@ -85,11 +85,17 @@ namespace imageManager
 			return hash.result();
 		};
 
-		//If GIF then store, do not convert
-		if ( ext == "gif" )
+		auto get_dest_file_path = [ byteArray, path, hashData, dest_root ]	// Use the image hash + ext as its filename
 		{
 			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
 			const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
+			return dest;
+		};
+
+		//If GIF then store, do not convert
+		if ( ext == "gif" )
+		{
+			auto dest = get_dest_file_path();
 
 			//Qt is stupid and will not save gifs...  so we have to copy it
 			const bool file_copied { std::filesystem::copy_file( path, dest ) };
@@ -98,46 +104,43 @@ namespace imageManager
 
 			return dest;
 		}
-		else
+
+		const std::string image_type { config::images::image_type::get().toStdString() };
+
+
+		auto use_q_image = [ byteArray, path, dest_root, get_dest_file_path ]	// Use QImage instead of WebP format
 		{
-			const std::string image_type { config::images::image_type::get().toStdString() };
+			auto dest = get_dest_file_path();
+			const QImage img { QImage::fromData( byteArray ) };
+			img.save( QString::fromStdString( dest.string() ) );
 
-			TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
-			QByteArray webp_byteArray;
-			QBuffer webp_buffer( &webp_byteArray );
-			temp_image.save( &webp_buffer, image_type.c_str(), 90 );
-			TracyCZoneEnd( tracy_SaveImage );
+			return dest;
+		};
 
-			//Which is bigger?
-			if
-			(
-				( webp_buffer.size() >= byteArray.size() )	// Is WebP bigger?
-				|| ( temp_image.width() > webp_max )		// Is it too wide for WebP?
-				|| ( temp_image.height() > webp_max )		// Is it too tall for WebP?
-		    )
-			{
-				//Buffer is larger. Meaning webp is worse. Don't use it.
-				const auto hash { hashData( byteArray.data(), static_cast< int >( byteArray.size() ) ) };
-				const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
-
-				const QImage img { QImage::fromData( byteArray ) };
-				img.save( QString::fromStdString( dest.string() ) );
-
-				return dest;
-			}
-			else
-			{
-				//Buffer is smaller. Meaning webp is smaller. Use it
-				const auto hash { hashData( webp_buffer.data(), static_cast< int >( webp_buffer.size() ) ) };
-				const auto dest { dest_root / ( hash.toHex().toStdString() + ".webp" ) };
-
-				// We shouldn't need to make a new image since we already have it? (tmp_image)
-				// const QImage img { QImage::fromData( webp_byteArray ) };
-				temp_image.save( QString::fromStdString( dest.string() ) );
-
-				return dest;
-			}
+		constexpr std::uint16_t webp_max( 16383 );
+		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
+		{
+			return use_q_image();	// Don't use WebP
 		}
+
+		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
+		QByteArray webp_byteArray;
+		QBuffer webp_buffer( &webp_byteArray );
+		temp_image.save( &webp_buffer, image_type.c_str(), 90 );
+		TracyCZoneEnd( tracy_SaveImage );
+
+		//Which is bigger?
+		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
+		{
+			return use_q_image();
+		}
+
+		//Buffer is smaller. Meaning webp is smaller. Use it
+		auto dest = get_dest_file_path();
+		// We shouldn't need to make a new image since we already have it? (tmp_image)
+		// const QImage img { QImage::fromData( webp_byteArray ) };
+		temp_image.save( QString::fromStdString( dest.string() ) );
+		return dest;
 	}
 
 	QFuture< std::filesystem::path > importImage( const std::filesystem::path& path, const RecordID game_id )

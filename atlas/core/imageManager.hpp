@@ -15,7 +15,6 @@
 
 namespace imageManager
 {
-	const uint16_t webp_max(16383);
 	//! Clears all images not found attached to any record
 	void cleanOrphans();
 
