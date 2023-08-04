@@ -20,8 +20,7 @@ PlatformPreSetup()
 CompilerPreSetup()
 message("FGL_FLAGS: ${FGL_FLAGS}")
 
-
-
+#Add Dependencies
 add_subdirectory(dependencies/tracy)
 
 option(SPDLOG_FMT_EXTERNAL "" ON)
@@ -32,20 +31,26 @@ add_subdirectory(dependencies/spdlog)
 #lz4
 include(dependencies/lz4_build.cmake)
 
+string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 3.41.2 REQUIRED)
-message("include = ${SQLite3_INCLUDE_DIR}")
-message("lib = ${SQLite3_LIBRARY}")
-
-
-
 if (DEFINED QT_PATH)
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+        list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
 
+#We need to append QT_Path to prefix before finding windeployqt. 
+if (WIN32)
+    find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
+    message("windeployqt found: ${TOOL_WINDEPLOYQT}")
+endif ()
+#set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
+message("CMAKE_FIND_LIBRARY_SUFFIXES:  ${CMAKE_FIND_LIBRARY_SUFFIXES}")
+find_package(SQLite3 REQUIRED)
+message("include = ${SQLite3_INCLUDE_DIR}")
+message("lib = ${SQLite3_LIBRARY}")
 
 
 set(CMAKE_AUTOUIC ON)

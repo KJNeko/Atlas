@@ -1,17 +1,15 @@
 function(PlatformPreSetup)
 if (WIN32)
-    find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
-    message("windeployqt found: ${TOOL_WINDEPLOYQT}")
-    # set(QT_PATH "C:/Qt/6.4.3/mingw_64")
-    set(QT_PATH "C:/msys64/clang64")
-
-    string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+    #set(QT_PATH "C:/Qt/6.4.3/mingw_64")
+    #set(QT_PATH "C:/msys64/clang64")
 
     if (DEFINED ENV{QT_PATH})
         set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
         message("Setting QT path from ENV")
+    else()
+        message("Add QT_PATH as Environment variable")
     endif ()
-    set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
+    
 endif ()
 endfunction()
 
