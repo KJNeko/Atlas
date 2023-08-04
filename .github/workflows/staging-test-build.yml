@@ -22,7 +22,6 @@ jobs:
           submodules: false
       - uses: JacobDomagala/StaticAnalysis@v0.0.5
         with:
-          use_cmake: true
           apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev
 
   build-windows:
