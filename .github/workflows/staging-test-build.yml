@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: false
+          submodules: true
       - uses: JacobDomagala/StaticAnalysis@v0.0.5
         with:
           apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev
