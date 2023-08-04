@@ -48,7 +48,7 @@ int main( int argc, char** argv )
 #else
 	if ( std::filesystem::exists( "atlas_lock" ) )
 	{
-		if ( std::ifstream ifs( "atlas_lock" ); ifs )
+		if(std::ifstream ifs( "atlas_lock" ); ifs)
 		{
 			//Check if PID still is running
 
