@@ -31,41 +31,50 @@ runs:
   using: "composite"
   steps:
     - name: Grab dependencies
+      shell: bash
       run: apt install build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev -y
 
     - name: CMake Release
+      shell: bash
       if: ${{inputs.build-release == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
     - name: CMake Debug
+      shell: bash
       if: ${{inputs.build-debug == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
     - name: CMake Debug Release
+      shell: bash
       if: ${{inputs.build-release == 'true' && inputs.build-profile == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-rp -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles" -DATLAS_PROFILE_ENABLE=ON
 
     - name: Build Target Atlas Release-Profile
+      shell: bash
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true' && inputs.build-profile == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-rp -j8 --target Atlas
 
     - name: Build Target Atlas Release
+      shell: bash
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
 
     - name: Build Target Atlas Debug
+      shell: bash
       if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
 
     - name: Build Target AtlasTESTS Release
+      shell: bash
       if: ${{inputs.build-release == 'true' && inputs.build-tests == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-r -j8 --target AtlasTESTS
 
     - name: Build Target AtlasTESTS Debug
+      shell: bash
       if: ${{inputs.build-debug == 'true' && inputs.build-tests == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-d -j8 --target AtlasTESTS
