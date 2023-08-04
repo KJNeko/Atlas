@@ -5,6 +5,15 @@ on:
     branches: staging
 
 jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: RafikFarhad/clang-format-github-actions@v3
+        with:
+          sources: "atlas/**/*.hpp,atlas/**/*.cpp"
+          style: file
+
   build-windows:
     runs-on: windows-latest
     steps:
