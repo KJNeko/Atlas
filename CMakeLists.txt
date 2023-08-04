@@ -34,7 +34,7 @@ include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 3.41.2 REQUIRED)
+find_package(SQLite3 REQUIRED)
 message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
 
