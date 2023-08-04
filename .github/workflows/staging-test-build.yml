@@ -14,6 +14,17 @@ jobs:
   #         clang-format-version: '15'
   #         check-path: 'atlas'
 
+  tidy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+      - uses: JacobDomagala/StaticAnalysis@v0.0.5
+        with:
+          use_cmake: true
+          apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev
+
   build-windows:
     runs-on: windows-latest
     steps:
