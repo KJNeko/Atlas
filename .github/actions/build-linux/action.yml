@@ -32,7 +32,7 @@ runs:
   steps:
     - name: Grab dependencies
       shell: bash
-      run: apt install build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev -y
+      run: sudo apt install build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev -y
 
     - name: CMake Release
       shell: bash
