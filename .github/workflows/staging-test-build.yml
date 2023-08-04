@@ -22,7 +22,7 @@ jobs:
           submodules: true
       - uses: JacobDomagala/StaticAnalysis@v0.0.5
         with:
-          apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev qt6-charts-dev libqt6-charts6-dev
+          apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev qt6-charts-dev qt6-charts-dev
 
   build-windows:
     runs-on: windows-latest
