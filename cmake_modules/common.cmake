@@ -1,6 +1,9 @@
+# /cmake_modules/common.cmake
+
 message(DEBUG "Entering ${CMAKE_CURRENT_LIST_FILE}")
 message(DEBUG "Platform: ${CMAKE_CXX_PLATFORM_ID}")
 message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER_ID}")
+message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER}")
 
 
 
@@ -13,11 +16,16 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     include(msvc)
 endif()
 
-if(WIN32)
+if((WIN32))
+    message(DEBUG "Compiling for Windows")
     include(win32)
-elseif (LINUX)
+elseif (APPLE)
+    message(DEBUG "Compiling for Apple")
+elseif (UNIX)
+    message(DEBUG "Compiling for Unix")
     include(linux)
-else (APPLE)
+else()
+    message(DEBUG "Unknown Platform")
 endif ()
 
 include(profiling)

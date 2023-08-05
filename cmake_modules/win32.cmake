@@ -1,22 +1,23 @@
-function(PlatformPreSetup)
+# /cmake_modules/win32.cmake
+
 if (WIN32)
-    find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
-    message("windeployqt found: ${TOOL_WINDEPLOYQT}")
-    # set(QT_PATH "C:/Qt/6.4.3/mingw_64")
-    set(QT_PATH "C:/msys64/clang64")
 
-    string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+    function(PlatformPreSetup)
+        find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
+        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
+        set(QT_PATH "C:/Qt/6.4.3/mingw_64")
+        # set(QT_PATH "C:/msys64/clang64")
 
-    if (DEFINED ENV{QT_PATH})
-        set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
-        message("Setting QT path from ENV")
-    endif ()
-    set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
-endif ()
-endfunction()
+        string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
 
-function(PlatformPostSetup)
-    if (WIN32)
+        if (DEFINED ENV{QT_PATH})
+            set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
+            message("Setting QT path from ENV")
+        endif ()
+        set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
+    endfunction()   # PlatformPreSetup
+
+    function(PlatformPostSetup)
         target_compile_definitions(Atlas PRIVATE UNICODE=1)
         if(($CMAKE_CXX_PLATFORM_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MSVC"))
         add_custom_command(TARGET Atlas POST_BUILD
@@ -37,5 +38,6 @@ function(PlatformPostSetup)
                 ${CMAKE_BINARY_DIR}/bin/imageformats
                 COMMENT "Copying pre-compiled qwebp.dll for Qt 6.4.3")
 
-    endif ()
-endfunction()
+    endfunction()   # PlatformPostSetup
+
+endif ()    # if (WIN32)
