@@ -1,3 +1,5 @@
+# /CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.21)
 project(AtlasGameManager LANGUAGES CXX C)
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
@@ -34,19 +36,16 @@ include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 3.41.2 REQUIRED)
+find_package(SQLite3 3.35 REQUIRED)
 message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
-
 
 
 if (DEFINED QT_PATH)
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 endif ()
 
-
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
-
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
