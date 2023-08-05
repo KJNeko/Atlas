@@ -5,13 +5,13 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
-#include <filesystem>
-
 #include <QFuture>
 #include <QPixmap>
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
+
+#include <filesystem>
 
 namespace atlas::records
 {
