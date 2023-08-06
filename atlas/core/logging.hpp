@@ -24,11 +24,11 @@
 		#pragma GCC diagnostic ignored "-Wstringop-overflow"
 		#pragma GCC diagnostic ignored "-Wsuggest-final-types"
 		#pragma GCC diagnostic ignored "-Wsuggest-final-methods"
-		#endif
+	#endif	// __clang__
 	#if __GNUC__ >=13
 		#pragma GCC diagnostic ignored "-Wdangling-reference"
 	#endif
-#endif
+#endif // __GNUC__
 
 #include <QJsonArray>
 #include <QJsonDocument>
