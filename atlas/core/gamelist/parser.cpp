@@ -59,7 +59,7 @@ namespace gl
 			QRegularExpression regex { regex_str };
 			assert( regex.isValid() );
 			const auto match { regex.match( infos.thread_url ) };
-			if ( !match.isValid() || !match.hasCaptured( "f95_id" ) )
+			if ( !match.isValid() || match.captured( "f95_id" ) == "")
 			{
 				//TODO: devwarn here
 				spdlog::warn(
