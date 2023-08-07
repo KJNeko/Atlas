@@ -4,15 +4,15 @@
 
 #include "engineDetection.hpp"
 
-#include <algorithm>
-#include <array>
-#include <string>
-
 #include <QDir>
 #include <QDirIterator>
 #include <QMimeDatabase>
 
 #include <tracy/TracyC.h>
+
+#include <algorithm>
+#include <array>
+#include <string>
 
 #include "../../system.hpp"
 #include "core/logging.hpp"

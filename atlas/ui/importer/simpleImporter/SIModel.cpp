@@ -5,10 +5,11 @@
 #include "SIModel.hpp"
 
 #include <moc_SIModel.cpp>
-#include <stack>
 
 #include <QColor>
 #include <QDir>
+
+#include <stack>
 
 std::uint64_t hash( const int first, const int second )
 {

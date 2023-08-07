@@ -5,11 +5,11 @@
 #ifndef ATLAS_CONFIG_HPP
 #define ATLAS_CONFIG_HPP
 
-#include <filesystem>
-
 #include <QObject>
 #include <QSettings>
 #include <QVariant>
+
+#include <filesystem>
 
 #include "ConfigNotification.hpp"
 #include "logging.hpp"
