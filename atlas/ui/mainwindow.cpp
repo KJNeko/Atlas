@@ -22,8 +22,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Check db first, if nothing is there add default
 	//default
-	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
-	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
+	//connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
+	//connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( this, &MainWindow::triggerReSearch, &record_search, &Search::runQuery );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 

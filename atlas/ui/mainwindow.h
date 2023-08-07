@@ -58,7 +58,7 @@ class MainWindow final : public QMainWindow
 	void switchToDetailed( const atlas::records::Game record );
 	void on_homeButton_pressed();
 	void on_actionViewFileHistory_triggered();
-	void searchTextChanged( const QString str );
+	//void searchTextChanged( const QString str );
 	//void on_sortOrderButton_clicked();
 	//void on_sortSelection_currentIndexChanged( int index );
 	void movePopup();
