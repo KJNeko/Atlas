@@ -146,7 +146,7 @@ margin-left: 2px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
+             <iconset>
               <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
             </property>
             <property name="iconSize">
@@ -157,6 +157,77 @@ margin-left: 2px;</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonIconOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="SearchBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(0, 0, 0,40);
+border:none;
+border-top-right-radius:0px;
+border-bottom-right-radius:0px;
+border-bottom-left-radius:0px;
+border-top-left-radius:0px;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="FilterIcon">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="pixmap">
+             <pixmap>:/images/assets/setting_filter.svg</pixmap>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(0, 0, 0,40);
+border:none;
+border-top-right-radius:5px;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:0px;
+border-top-left-radius:0px;</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -197,7 +268,7 @@ border-bottom-left-radius:5px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+             <pixmap>:/images/assets/search.svg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -210,104 +281,18 @@ border-bottom-left-radius:5px;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLineEdit" name="SearchBox">
-            <property name="minimumSize">
+          <item row="0" column="4">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>132</width>
-              <height>32</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgba(0, 0, 0,40);
-border:none;
-border-top-right-radius:0px;
-border-bottom-right-radius:0px;
-border-bottom-left-radius:0px;
-border-top-left-radius:0px;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="frame">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_3">
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="sizeIncrement">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgba(0, 0, 0,40);
-border:none;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:0px;
-border-top-left-radius:0px;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="QComboBox" name="sortSelection">
-            <item>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Creator</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Engine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Import Time</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="sortOrderButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>42</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>ASC</string>
-            </property>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -379,7 +364,7 @@ border-top-left-radius:0px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
          </property>
          <property name="toolButtonStyle">
@@ -491,7 +476,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
@@ -552,7 +537,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+          <pixmap>:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -722,7 +707,7 @@ margin-right:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -882,9 +867,7 @@ margin-right:5px;</string>
    <header>ui/views/RecordListView.hpp</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

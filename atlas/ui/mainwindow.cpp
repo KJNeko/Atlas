@@ -187,7 +187,7 @@ void MainWindow::on_actionViewFileHistory_triggered()
 	dialog.exec();
 }
 
-void MainWindow::searchTextChanged( const QString str )
+/*void MainWindow::searchTextChanged( const QString str )
 {
 	const auto search_type = [ & ]()
 	{
@@ -207,22 +207,22 @@ void MainWindow::searchTextChanged( const QString str )
 	}();
 
 	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
-}
+}*/
 
-void MainWindow::on_sortOrderButton_clicked()
+/*void MainWindow::on_sortOrderButton_clicked()
 {
 	if ( ui->sortOrderButton->text() == "ASC" )
 		ui->sortOrderButton->setText( "DESC" );
 	else
 		ui->sortOrderButton->setText( "ASC" );
 
-	searchTextChanged( ui->SearchBox->text() );
-}
+	searchTextChanged( ui->SearchBox->text() );8
+}*/
 
-void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
+/*void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
 {
 	searchTextChanged( ui->SearchBox->text() );
-}
+}*/
 
 void MainWindow::moveEvent( QMoveEvent* event )
 {
