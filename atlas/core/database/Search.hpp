@@ -5,9 +5,9 @@
 #ifndef ATLAS_SEARCH_HPP
 #define ATLAS_SEARCH_HPP
 
-#include <vector>
-
 #include <QString>
+
+#include <vector>
 
 #include "core/database/record/Game.hpp"
 #include "core/search/QueryBuilder.hpp"

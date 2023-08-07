@@ -5,10 +5,10 @@
 #ifndef ATLAS_RECORDLISTMODEL_HPP
 #define ATLAS_RECORDLISTMODEL_HPP
 
-#include <iostream>
-
 #include <QAbstractListModel>
 #include <QFutureWatcher>
+
+#include <iostream>
 
 #include "core/database/record/Game.hpp"
 

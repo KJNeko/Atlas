@@ -2,15 +2,15 @@
 // Created by kj16609 on 1/11/23.
 //
 
-#include <filesystem>
-#include <fstream>
-
 #include <QApplication>
 #include <QFile>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QMessageBox>
 #include <QPixmapCache>
+
+#include <filesystem>
+#include <fstream>
 
 #include "core/config.hpp"
 #include "core/database/Database.hpp"

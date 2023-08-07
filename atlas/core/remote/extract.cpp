@@ -2,11 +2,11 @@
 // Created by kj16609 on 6/14/23.
 //
 
+#include <tracy/Tracy.hpp>
+
 #include <filesystem>
 #include <fstream>
 #include <lz4frame.h>
-
-#include <tracy/Tracy.hpp>
 
 #include "core/logging.hpp"
 

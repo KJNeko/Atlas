@@ -5,10 +5,10 @@
 #ifndef ATLAS_ENGINEDETECTION_HPP
 #define ATLAS_ENGINEDETECTION_HPP
 
+#include <QString>
+
 #include <filesystem>
 #include <vector>
-
-#include <QString>
 
 #include "core/utils/FileScanner.hpp"
 

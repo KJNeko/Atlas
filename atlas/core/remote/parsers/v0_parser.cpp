@@ -27,7 +27,7 @@ namespace remote::parsers::v0
 	}
 
 #define KEY_CHECK( key )                                                                                               \
-	if ( !obj.contains( key ) ) return false;
+  if ( !obj.contains( key ) ) return false;
 
 	bool validateAtlasKeys( const QJsonObject& obj )
 	{

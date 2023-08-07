@@ -4,8 +4,6 @@
 
 #include "imageManager.hpp"
 
-#include <fstream>
-
 #include <QBuffer>
 #include <QCryptographicHash>
 #include <QFile>
@@ -16,6 +14,8 @@
 #include <QtConcurrentRun>
 
 #include <tracy/TracyC.h>
+
+#include <fstream>
 
 #include "config.hpp"
 #include "core/database/Transaction.hpp"

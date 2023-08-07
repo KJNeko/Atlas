@@ -5,9 +5,9 @@
 #ifndef ATLAS_LOGGING_HPP
 #define ATLAS_LOGGING_HPP
 
-#include <filesystem>
-
 #include <QString>
+
+#include <filesystem>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

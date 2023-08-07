@@ -5,10 +5,10 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
-#include <filesystem>
-
 #include <QFuture>
 #include <QPixmap>
+
+#include <filesystem>
 
 #include "core/Types.hpp"
 #include "core/config.hpp"

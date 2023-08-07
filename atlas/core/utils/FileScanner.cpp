@@ -4,9 +4,9 @@
 
 #include "FileScanner.hpp"
 
-#include <queue>
-
 #include <tracy/Tracy.hpp>
+
+#include <queue>
 
 #include "core/logging.hpp"
 

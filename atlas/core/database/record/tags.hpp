@@ -5,9 +5,9 @@
 #ifndef ATLASGAMEMANAGER_TAGS_HPP
 #define ATLASGAMEMANAGER_TAGS_HPP
 
-#include <cstdint>
-
 #include <QString>
+
+#include <cstdint>
 
 using TagID = std::uint64_t;
 [[maybe_unused]] constexpr TagID INVALID_TAG_ID { 0 };
