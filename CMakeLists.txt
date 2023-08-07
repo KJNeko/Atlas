@@ -14,6 +14,9 @@ set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(common)
+if (DEFINED QT_PATH)
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+endif ()
 
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
@@ -41,9 +44,7 @@ message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
 
 
-if (DEFINED QT_PATH)
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
-endif ()
+
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 

@@ -3,10 +3,15 @@
 if (WIN32)
 
     function(PlatformPreSetup)
-        find_program(TOOL_WINDEPLOYQT windeployqt REQUIRED NO_CACHE)
-        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
-        set(QT_PATH "C:/Qt/6.4.3/mingw_64")
+        # set(QT_PATH "C:/Qt/6.4.3/mingw_64" )
         # set(QT_PATH "C:/msys64/clang64")
+        find_program(
+            TOOL_WINDEPLOYQT
+                windeployqt windeployqt6
+                REQUIRED NO_CACHE
+                HINTS "${QT_PATH}/bin"
+        )
+        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
 
         string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
 

@@ -5,7 +5,7 @@ message(DEBUG "Platform: ${CMAKE_CXX_PLATFORM_ID}")
 message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER}")
 
-
+include(qt)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     include(gcc)
