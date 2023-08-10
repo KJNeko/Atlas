@@ -2,6 +2,17 @@
 
 if (WIN32)
 
+    set(
+        NEEDED_QT_FOLDERS
+            "${CMAKE_BINARY_DIR}/bin/data"
+            "${CMAKE_BINARY_DIR}/bin/iconengines"
+            "${CMAKE_BINARY_DIR}/bin/imageformats"
+            "${CMAKE_BINARY_DIR}/bin/networkinformation"
+            "${CMAKE_BINARY_DIR}/bin/platforms"
+            "${CMAKE_BINARY_DIR}/bin/styles"
+            "${CMAKE_BINARY_DIR}/bin/tls"
+    )
+
     function(PlatformPreSetup)
         # set(QT_PATH "C:/Qt/6.4.3/mingw_64" )
         # set(QT_PATH "C:/msys64/clang64")
@@ -24,6 +35,10 @@ if (WIN32)
 
     function(PlatformPostSetup)
         target_compile_definitions(Atlas PRIVATE UNICODE=1)
+        add_custom_target(build-time-make-directory ALL
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${NEEDED_QT_FOLDERS}
+                COMMENT "Creating necessary folders"
+        )
         if(($CMAKE_CXX_PLATFORM_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MSVC"))
         add_custom_command(TARGET Atlas POST_BUILD
                 COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw
@@ -40,7 +55,7 @@ if (WIN32)
 
         add_custom_command(TARGET Atlas POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qwebp.dll
-                ${CMAKE_BINARY_DIR}/bin/imageformats
+                ${CMAKE_BINARY_DIR}/bin/imageformats/qwebp.dll
                 COMMENT "Copying pre-compiled qwebp.dll for Qt 6.4.3")
 
     endfunction()   # PlatformPostSetup
