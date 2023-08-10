@@ -5,8 +5,11 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
+
 #include <QFuture>		// Keep the Qt #includes up here to appease the AutoMoc.
 #include <QPixmap>
+
+#include <filesystem>
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
