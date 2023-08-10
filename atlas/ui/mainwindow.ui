@@ -215,9 +215,6 @@ border-top-left-radius:0px;</string>
               <height>32</height>
              </size>
             </property>
-            <property name="pixmap">
-             <pixmap>:/images/assets/setting_filter.svg</pixmap>
-            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgba(0, 0, 0,40);
 border:none;
@@ -228,6 +225,9 @@ border-top-left-radius:0px;</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>:/images/assets/setting_filter.svg</pixmap>
             </property>
            </widget>
           </item>
@@ -663,8 +663,8 @@ margin-right:5px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>28</height>
+             <width>791</width>
+             <height>660</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">

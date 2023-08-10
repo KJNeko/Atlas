@@ -23,7 +23,7 @@ class bcolors:
     UNDERLINE = "\033[4m"
 
 
-dbName = "atlas.db"
+dbName = "C:\\Users\\tower\source\\repos\\Atlas\\build\\bin\\data\\atlas.db"
 dbPath = ""
 
 con = sl.connect(dbName)
@@ -33,7 +33,7 @@ cursor = con.cursor()
 # Put this py file in the same folder as your "Atlas" directory
 # Make sure Atlas.db is also in the same folder
 # Change the path below to where you games directory is
-base_dir = "C:/Users/tower/OneDrive/Documents/Game Tester/games"
+base_dir = "C:\\games"
 
 
 def checkDataBase(dbName):

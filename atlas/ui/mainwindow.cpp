@@ -22,8 +22,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Check db first, if nothing is there add default
 	//default
-	//connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
-	//connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
+	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
+	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
 	connect( this, &MainWindow::triggerReSearch, &record_search, &Search::runQuery );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 
@@ -187,9 +187,9 @@ void MainWindow::on_actionViewFileHistory_triggered()
 	dialog.exec();
 }
 
-/*void MainWindow::searchTextChanged( const QString str )
+void MainWindow::searchTextChanged( const QString str )
 {
-	const auto search_type = [ & ]()
+	/*const auto search_type = [ & ]()
 	{
 		switch ( ui->sortSelection->currentIndex() )
 		{
@@ -203,11 +203,11 @@ void MainWindow::on_actionViewFileHistory_triggered()
 				return SortOrder::Engine;
 			case 3:
 				return SortOrder::Time;
-		}
-	}();
+		
+	}();}*/
 
-	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
-}*/
+	//emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+}
 
 /*void MainWindow::on_sortOrderButton_clicked()
 {
