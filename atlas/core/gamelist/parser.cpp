@@ -71,7 +71,7 @@ namespace gl
 			}
 			else
 			{
-				infos.f95_thread_id = ( match.captured( "f95_id" ).toULongLong() );
+				infos.f95_thread_id = static_cast< uint64_t >( match.captured( "f95_id" ).toULongLong() );
 			}
 		}
 		else
