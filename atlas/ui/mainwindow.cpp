@@ -189,7 +189,7 @@ void MainWindow::on_actionViewFileHistory_triggered()
 
 void MainWindow::searchTextChanged( const QString str )
 {
-	const auto search_type = [ & ]()
+	/*const auto search_type = [ & ]()
 	{
 		switch ( ui->sortSelection->currentIndex() )
 		{
@@ -203,26 +203,26 @@ void MainWindow::searchTextChanged( const QString str )
 				return SortOrder::Engine;
 			case 3:
 				return SortOrder::Time;
-		}
-	}();
+		
+	}();}*/
 
-	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+	//emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
 }
 
-void MainWindow::on_sortOrderButton_clicked()
+/*void MainWindow::on_sortOrderButton_clicked()
 {
 	if ( ui->sortOrderButton->text() == "ASC" )
 		ui->sortOrderButton->setText( "DESC" );
 	else
 		ui->sortOrderButton->setText( "ASC" );
 
-	searchTextChanged( ui->SearchBox->text() );
-}
+	searchTextChanged( ui->SearchBox->text() );8
+}*/
 
-void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
+/*void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
 {
 	searchTextChanged( ui->SearchBox->text() );
-}
+}*/
 
 void MainWindow::moveEvent( QMoveEvent* event )
 {

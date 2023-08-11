@@ -23,7 +23,7 @@ class bcolors:
     UNDERLINE = "\033[4m"
 
 
-dbName = "atlas.db"
+dbName = "C:\\Users\\tower\source\\repos\\Atlas\\build\\bin\\data\\atlas.db"
 dbPath = ""
 
 con = sl.connect(dbName)
@@ -33,7 +33,7 @@ cursor = con.cursor()
 # Put this py file in the same folder as your "Atlas" directory
 # Make sure Atlas.db is also in the same folder
 # Change the path below to where you games directory is
-base_dir = "C:/Users/tower/OneDrive/Documents/Game Tester/games"
+base_dir = "C:\\games"
 
 
 def checkDataBase(dbName):
@@ -132,18 +132,7 @@ def downloadImage(dir, url):
     seconds = random.uniform(0.2, 1)
     ext = os.path.splitext(os.path.basename(urlparse(url).path))[1]
     image_path = os.path.join(dir, "banner" + ext)
-    # TEMP FIX
-    if ext != ".jpg" and os.path.exists(os.path.join(dir, "banner.jpg")):
-        print(
-            bcolors.HEADER
-            + str(datetime.now())
-            + " : DEBUG   [REMOVING INCORRECT IMAGE] -> "
-            + bcolors.ENDC
-            + "banner.jpg for "
-            + "banner"
-            + ext
-        )
-        os.remove(os.path.join(dir, "banner.jpg"))
+
     if not os.path.exists(image_path):
         print(
             bcolors.HEADER
@@ -179,6 +168,7 @@ def downloadPreviewImage(dir, url):
                 shutil.copyfileobj(image.raw, f)
 
 
+# MAIN ENTRY POINT
 if checkDataBase(dbName):
     # Get a list of folders from games path
     for developer in os.listdir(base_dir):
@@ -224,12 +214,26 @@ if checkDataBase(dbName):
                             else:
                                 try:
                                     getBannerImage(atlas_id, version_folder)
+                                except:
+                                    print(
+                                        bcolors.FAIL
+                                        + str(datetime.now())
+                                        + " : ERROR   [ ERROR GETTING BANNER IMAGE  ] -> "
+                                        + bcolors.ENDC
+                                        + "Developer: "
+                                        + developer
+                                        + " | Title: "
+                                        + title
+                                        + " | Version: "
+                                        + version
+                                    )
+                                try:
                                     getPreviews(atlas_id, previews_folder)
                                 except:
                                     print(
                                         bcolors.FAIL
                                         + str(datetime.now())
-                                        + " : ERROR   [ DATABASE PARSER ERROR  ] -> "
+                                        + " : ERROR   [ ERROR GETTING PREVIEW IMAGES  ] -> "
                                         + bcolors.ENDC
                                         + "Developer: "
                                         + developer
