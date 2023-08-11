@@ -1,3 +1,5 @@
+# /CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.21)
 project(AtlasGameManager LANGUAGES CXX C)
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
@@ -12,6 +14,9 @@ set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(common)
+if (DEFINED QT_PATH)
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+endif ()
 
 message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
@@ -34,19 +39,14 @@ include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 3.41.2 REQUIRED)
+find_package(SQLite3 3.35 REQUIRED)
 message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
 
 
 
-if (DEFINED QT_PATH)
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
-endif ()
-
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
-
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
