@@ -5,9 +5,9 @@
 #ifndef ATLASGAMEMANAGER_F95DATA_HPP
 #define ATLASGAMEMANAGER_F95DATA_HPP
 
-#include <memory>
-
 #include <QString>
+
+#include <memory>
 
 #include "core/Types.hpp"
 

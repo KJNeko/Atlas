@@ -5,10 +5,10 @@
 #ifndef ATLAS_DATABASE_HPP
 #define ATLAS_DATABASE_HPP
 
+#include <QObject>
+
 #include <filesystem>
 #include <sqlite3.h>
-
-#include <QObject>
 
 #include "core/logging.hpp"
 

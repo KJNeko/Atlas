@@ -5,11 +5,11 @@
 #ifndef ATLASGAMEMANAGER_IMPORTER_HPP
 #define ATLASGAMEMANAGER_IMPORTER_HPP
 
-#include <filesystem>
-
 #include <QFuture>
 #include <QObject>
 #include <QPromise>
+
+#include <filesystem>
 
 #include "core/Types.hpp"
 #include "core/database/record/Game.hpp"

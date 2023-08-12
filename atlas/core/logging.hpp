@@ -5,30 +5,30 @@
 #ifndef ATLAS_LOGGING_HPP
 #define ATLAS_LOGGING_HPP
 
-#include <filesystem>
-
 #include <QString>
 
-#ifdef __GNUC__
-#pragma GCC diagnostic push
+#include <filesystem>
 
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic ignored "-Wswitch-default"
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wstrict-overflow"
-#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#ifndef __clang__
-#pragma GCC diagnostic ignored "-Wuseless-cast"
-#pragma GCC diagnostic ignored "-Wstringop-overflow"
-#pragma GCC diagnostic ignored "-Wsuggest-final-types"
-#pragma GCC diagnostic ignored "-Wsuggest-final-methods"
-#endif
-#ifdef __linux__
-#pragma GCC diagnostic ignored "-Wdangling-reference"
-#endif
-#endif
+#ifdef __GNUC__
+	#pragma GCC diagnostic push
+
+	#pragma GCC diagnostic ignored "-Weffc++"
+	#pragma GCC diagnostic ignored "-Wswitch-default"
+	#pragma GCC diagnostic ignored "-Wsign-conversion"
+	#pragma GCC diagnostic ignored "-Wstrict-overflow"
+	#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+	#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+	#pragma GCC diagnostic ignored "-Warray-bounds"
+	#ifndef __clang__
+		#pragma GCC diagnostic ignored "-Wuseless-cast"
+		#pragma GCC diagnostic ignored "-Wstringop-overflow"
+		#pragma GCC diagnostic ignored "-Wsuggest-final-types"
+		#pragma GCC diagnostic ignored "-Wsuggest-final-methods"
+	#endif	// __clang__
+	#if __GNUC__ >=13
+		#pragma GCC diagnostic ignored "-Wdangling-reference"
+	#endif
+#endif // __GNUC__
 
 #include <QJsonArray>
 #include <QJsonDocument>

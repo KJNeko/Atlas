@@ -4,9 +4,9 @@
 
 #include "GameData.hpp"
 
-#include <iostream>
-
 #include <QPixmapCache>
+
+#include <iostream>
 
 #include "Game.hpp"
 #include "Version.hpp"

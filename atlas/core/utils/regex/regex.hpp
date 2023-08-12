@@ -7,8 +7,8 @@
 
 #include <QString>
 
-#if ( QT_VERSION < QT_VERSION_CHECK( 6, 4, 2 ) )
-#error "Atlas requires Qt 6.4.2 or newer"
+#if ( QT_VERSION < QT_VERSION_CHECK( 6, 1, 0 ) )
+#error "Atlas requires Qt 6.1.0 or newer"
 #endif
 
 /**

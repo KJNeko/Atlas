@@ -82,9 +82,12 @@ namespace regex
 		const auto match { regex.match( text ) };
 
 		auto title { match.captured( "title" ) };
-		auto creator { match.hasCaptured( "creator" ) ? match.captured( "creator" ) : "" };
-		auto version { match.hasCaptured( "version" ) ? match.captured( "version" ) : "" };
-		auto engine { match.hasCaptured( "engine" ) ? match.captured( "engine" ) : "" };
+//		auto creator { match.hasCaptured( "creator" ) ? match.captured( "creator" ) : "" };
+//		auto version { match.hasCaptured( "version" ) ? match.captured( "version" ) : "" };
+//		auto engine { match.hasCaptured( "engine" ) ? match.captured( "engine" ) : "" };
+		auto creator { match.captured( "creator" )};
+		auto version { match.captured( "version" )};
+		auto engine { match.captured( "engine" )};
 
 		return { std::move( title ), std::move( creator ), std::move( version ), std::move( engine ) };
 	}
