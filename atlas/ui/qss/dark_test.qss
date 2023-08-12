@@ -71,6 +71,7 @@ QTreeView::item:selected:active {
 /*QLabel*/
 QLabel {
     border: none;
+    background-color: none;
     color: rgb(210, 210, 210);
 }
 
@@ -93,15 +94,36 @@ QStackedWidget>QWidget>QFrame {
 
 /* Line Edit*/
 QLineEdit {
-    background-color: rgb(56, 58, 64);
+    background-color: rgb(81, 83, 90);
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: rgb(210, 100, 210);
+    color: #3097D1;
+    /*color: rgb(210, 100, 210);*/
 }
 
 QLineEdit::Text {
-    color: rgb(210, 210, 210);
+    color: rgb(81, 83, 90);
+}
+
+/*GroupBox*/
+QGroupBox {
+    background-color: none;
+    border: 2px solid gray;
+    border-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-top: 1ex;
+}
+
+QGroupBox>QLabel {
+    background-color: none;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    color: rgb(255, 255, 255);
+    left: 7px;
+    padding: 0px 5px 0px 5px;
 }
 
 /* Buttons */
@@ -141,6 +163,8 @@ QCheckBox {
     background-color: transparent;
     color: rgb(210, 210, 210);
     border: none;
+    border-radius: 5px;
+
 }
 
 /* MENU BAR*/
@@ -243,6 +267,18 @@ QTreeView {
     color: rgb(255, 255, 255);
 }
 
+#SettingsMenu {
+    background-color: rgb(35, 36, 40);
+}
+
+#SettingsMenu>QWidget {
+    background-color: rgb(35, 36, 40);
+}
+
+#SettingsMenu>QWidget>QPushButton {
+    border: none;
+}
+
 QScrollBar:vertical {
     border-style: none;
     background-color: rgb(30, 31, 34);
@@ -275,4 +311,27 @@ QScrollBar::add-line:vertical {
 QScrollBar::sub-line:vertical {
     width: 0px;
     height: 0px;
+}
+
+QStackedWidget>QWidget {
+    background-color: rgb(49, 51, 56);
+}
+
+#recordView {
+    background-color: rgb(49, 51, 56);
+}
+
+/*Dialog Specific DO NOT CHANGE THESE SETTINGS*/
+QStackedWidget>QWidget>QFrame>QFrame {
+    background-color: none;
+    border: none;
+}
+
+QStackedWidget>QWidget>QWidget {
+    background-color: none;
+}
+
+QFrame>QLabel {
+    background-color: none;
+    border: none;
 }
