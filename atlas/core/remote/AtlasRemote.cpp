@@ -4,7 +4,6 @@
 
 #include "AtlasRemote.hpp"
 
-#include <fstream>
 #include <moc_AtlasRemote.cpp>
 
 #include <QJsonArray>
@@ -12,6 +11,8 @@
 #include <QJsonObject>
 
 #include <tracy/TracyC.h>
+
+#include <fstream>
 
 #include "core/database/Transaction.hpp"
 #include "core/logging.hpp"

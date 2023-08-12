@@ -1,3 +1,5 @@
+# /CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.21)
 project(AtlasGameManager LANGUAGES CXX C)
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
@@ -13,12 +15,28 @@ set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(common)
 
-message("CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+message("-- CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 PlatformPreSetup()
 CompilerPreSetup()
 message("FGL_FLAGS: ${FGL_FLAGS}")
+if (WIN32)
+    string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+
+    if (DEFINED ENV{QT_PATH})
+        set(QT_PATH $ENV{QT_PATH})
+        message("-- Setting QT path from ENV")
+    endif ()
+endif ()
+
+#Verify after setting QT_PATH
+if (DEFINED QT_PATH)
+    message("-- QT_PATH defined as ${QT_PATH}.")
+    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+else()
+    message("-- QT_PATH not defined.")
+endif ()
 
 
 
@@ -34,19 +52,14 @@ include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 REQUIRED)
-message("include = ${SQLite3_INCLUDE_DIR}")
-message("lib = ${SQLite3_LIBRARY}")
+find_package(SQLite3 3.35 REQUIRED)
+message("-- include = ${SQLite3_INCLUDE_DIR}")
+message("-- lib = ${SQLite3_LIBRARY}")
 
 
-
-if (DEFINED QT_PATH)
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
-endif ()
 
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
-
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -60,7 +73,7 @@ file(GLOB_RECURSE UI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/*.cpp")
 
 #Build exe
-message("FGL_FLAGS: ${FGL_FLAGS}")
+message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)

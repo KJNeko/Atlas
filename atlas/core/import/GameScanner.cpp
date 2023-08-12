@@ -5,14 +5,15 @@
 #include "GameScanner.hpp"
 
 #include <moc_GameScanner.cpp>
-#include <queue>
-#include <ranges>
 
 #include <QFuture>
 #include <QtConcurrent>
 
 #include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
+
+#include <queue>
+#include <ranges>
 
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"

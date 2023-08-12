@@ -5,10 +5,10 @@
 #ifndef ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 #define ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 
+#include <QAbstractItemModel>
+
 #include <deque>
 #include <filesystem>
-
-#include <QAbstractItemModel>
 
 class FilepathModel final : public QAbstractListModel
 {

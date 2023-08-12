@@ -5,10 +5,10 @@
 #ifndef ATLASGAMEMANAGER_UTILS_HPP
 #define ATLASGAMEMANAGER_UTILS_HPP
 
+#include <QString>
+
 #include <filesystem>
 #include <vector>
-
-#include <QString>
 
 namespace gl
 {

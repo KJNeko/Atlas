@@ -5,9 +5,9 @@
 #ifndef ATLAS_GAMEMETADATA_HPP
 #define ATLAS_GAMEMETADATA_HPP
 
-#include <filesystem>
-
 #include <QString>
+
+#include <filesystem>
 
 #include "core/Types.hpp"
 #include "core/database/Database.hpp"

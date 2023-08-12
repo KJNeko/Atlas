@@ -5,11 +5,11 @@
 #ifndef ATLAS_IMAGEMANAGER_HPP
 #define ATLAS_IMAGEMANAGER_HPP
 
-#include <filesystem>
-
 #include <QFuture>
 #include <QPixmap>
 #include <QSize>
+
+#include <filesystem>
 
 #include "Types.hpp"
 
