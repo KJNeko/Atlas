@@ -22,13 +22,13 @@ if (WIN32)
                 REQUIRED NO_CACHE
                 HINTS "${QT_PATH}/bin"
         )
-        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
+        message("-- windeployqt found: ${TOOL_WINDEPLOYQT}")
 
         string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
 
         if (DEFINED ENV{QT_PATH})
             set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
-            message("Setting QT path from ENV")
+            message("-- Setting QT path from ENV")
         endif ()
         set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
     endfunction()   # PlatformPreSetup
