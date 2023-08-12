@@ -62,13 +62,8 @@ find_package(SQLite3 3.35 REQUIRED)
 message("include = ${SQLite3_INCLUDE_DIR}")
 message("lib = ${SQLite3_LIBRARY}")
 
-if (WIN32)
-    set(QT_PATH "C:/Qt/6.4.3/mingw_64")
-endif ()
 
 
-
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

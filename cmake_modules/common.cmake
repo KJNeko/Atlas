@@ -7,7 +7,7 @@ message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER}")
 
 include(qt)
 
-if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MINGW"))
+if ((${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MINGW"))
     include(gcc)
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     include(clang)
