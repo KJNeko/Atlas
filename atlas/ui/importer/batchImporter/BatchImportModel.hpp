@@ -5,9 +5,9 @@
 #ifndef ATLAS_BATCHIMPORTMODEL_HPP
 #define ATLAS_BATCHIMPORTMODEL_HPP
 
-#include <filesystem>
-
 #include <QAbstractTableModel>
+
+#include <filesystem>
 
 #include "core/import/GameImportData.hpp"
 

@@ -4,12 +4,13 @@
 
 #include "ImageDelegate.hpp"
 
-#include <filesystem>
 #include <moc_ImageDelegate.cpp>
 
 #include <QPainter>
 
 #include <tracy/Tracy.hpp>
+
+#include <filesystem>
 
 #include "core/config.hpp"
 #include "ui/models/FilepathModel.hpp"

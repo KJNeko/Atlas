@@ -5,9 +5,9 @@
 #ifndef ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP
 #define ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP
 
-#include <filesystem>
-
 #include <QString>
+
+#include <filesystem>
 
 #include "core/config.hpp"
 

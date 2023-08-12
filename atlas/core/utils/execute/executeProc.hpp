@@ -5,9 +5,9 @@
 #ifndef ATLAS_EXECUTEPROC_HPP
 #define ATLAS_EXECUTEPROC_HPP
 
-#include <string>
-
 #include <QFuture>
+
+#include <string>
 
 /**
  * @brief Executes the given path
