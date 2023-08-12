@@ -39,7 +39,10 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E make_directory ${NEEDED_QT_FOLDERS}
                 COMMENT "Creating necessary folders"
         )
-        if(($CMAKE_CXX_PLATFORM_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MSVC"))
+        if(
+            (${CMAKE_CXX_PLATFORM_ID} STREQUAL "GNU") 
+            OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MINGW") 
+            OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MSVC"))
         add_custom_command(TARGET Atlas POST_BUILD
                 COMMAND ${TOOL_WINDEPLOYQT} --compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw
                 $<TARGET_FILE:Atlas>
