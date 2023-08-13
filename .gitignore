@@ -23,5 +23,30 @@ build.bat
 .vscode
 *.autosave
 
+#Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+#Visual Studio Indexes
+*.vsidx
+read.lock
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+
+
+
+#
+
 /dependencies/zlib/zconf.h.included
 /dependencies/zlib/zconf.h
