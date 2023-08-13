@@ -1,6 +1,11 @@
 # .Net methods for GUI
 Add-Type -AssemblyName PresentationFramework
 
+#All paths are relative to developer_toolkit.bat. NOT the init.ps1 file.
+# keep that in mind when loading files
+$functionScript = ($pwd).Path + "\scripts\ps1\functions.ps1"
+Import-Module -Name $functionScript -Verbose
+
 $xamlFile = ($pwd).Path + "\ui\MainWindow.xaml"
 
 #create window
@@ -33,3 +38,5 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
 Get-Variable var_*
 
 $Null = $window.ShowDialog()
+
+
