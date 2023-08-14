@@ -5,44 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atlas_Dev_Toolkit"
         mc:Ignorable="d"
-        Title="Atlas Developer Toolkit" Height="700" Width="745" Background="#FF242428">
+        Title="Atlas Developer Toolkit" Height="846" Width="745" Background="#FF242428">
     <Grid>
         <TextBox x:Name="lbl_atlasdir" HorizontalAlignment="Left" Margin="134,22,0,0" TextWrapping="Wrap" Text="C:\Atlas" VerticalAlignment="Top" Width="479"/>
         <Label Content="Atlas Install Location" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
         <Button x:Name="btn_installlocation" Content="Select Folder" Margin="618,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90"/>
-        <GroupBox x:Name="r_dependencies" Header="Required Dependencies" Margin="16,86,16,0" BorderBrush="#FFD2D2D2" Foreground="#FFD2D2D2" MinHeight="200" VerticalAlignment="Top" Height="295">
-            <Grid>
-                <Label Content="7zip" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="Git" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="Sqlite3 (3.4+)" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="Cmake" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="MinGW (13.0+)" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="Qt (6.4.3)" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label Content="Winget" HorizontalAlignment="Left" Margin="10,196,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_7zip" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,10,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_git" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,41,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_sqlite3" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,72,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_cmake" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,103,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_mingw" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,134,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_qt" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,165,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Label x:Name="lbl_winget" Content="NOT INSTALLED" HorizontalAlignment="Left" Margin="118,196,0,0" VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                <Button x:Name="btn_7zip" Content="Install" HorizontalAlignment="Left" Margin="242,13,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_cmake" Content="Install" HorizontalAlignment="Left" Margin="242,106,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_git" Content="Install" HorizontalAlignment="Left" Margin="242,44,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_mingw" Content="Install" HorizontalAlignment="Left" Margin="242,137,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_qt" Content="Install" HorizontalAlignment="Left" Margin="242,168,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_winget" Content="Install" HorizontalAlignment="Left" Margin="242,199,0,0" VerticalAlignment="Top" Width="72"/>
-                <Button x:Name="btn_sqlite" Content="Install" HorizontalAlignment="Left" Margin="242,75,0,0" VerticalAlignment="Top" Width="72"/>
-                <Label x:Name="lbl_7zip_location" Content="Install Location Not Found" Margin="319,10,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_git_location" Content="Install Location Not Found" Margin="319,41,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_sqlite_location" Content="Install Location Not Found" Margin="319,72,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_cmake_location" Content="Install Location Not Found" Margin="319,103,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_mingw_location" Content="Install Location Not Found" Margin="319,134,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_qt_location" Content="Install Location Not Found" Margin="319,165,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                <Label x:Name="lbl_winget_location" Content="Install Location Not Found" Margin="319,196,10,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-            </Grid>
+        <GroupBox x:Name="r_dependencies" Header="Required Dependencies" Margin="16,86,16,0" BorderBrush="#FFD2D2D2" Foreground="#FFD2D2D2" MinHeight="200" VerticalAlignment="Top" Height="296">
+            <DockPanel>
+                <StackPanel HorizontalAlignment="Left">
+                    <Label Content="7zip" Foreground="#FFD2D2D2"/>
+                    <Label Content="Git" Foreground="#FFD2D2D2"/>
+                    <Label Content="Sqlite3 (3.4+)" Foreground="#FFD2D2D2"/>
+                    <Label Content="Cmake" Foreground="#FFD2D2D2"/>
+                    <Label Content="Msys2" Foreground="#FFD2D2D2"/>
+                    <Label Content="MinGW64 (13.0+)" Foreground="#FFD2D2D2"/>
+                    <Label Content="Qt (6.4.3) | MinGW" Foreground="#FFD2D2D2"/>
+                    <Label Content="Winget" Foreground="#FFD2D2D2"/>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Left">
+                    <Label x:Name="lbl_7zip" Content="NOT INSTALLED" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_git" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_sqlite" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_cmake" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_msys2" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_mingw" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                    <Label x:Name="lbl_qt" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D" Grid.Row="1"/>
+                    <Label x:Name="lbl_winget" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D" Grid.Row="1"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="left">
+                    <Button x:Name="btn_7zip" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_git" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_sqlite" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_cmake" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_msys2" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_mingw" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72"/>
+                    <Button x:Name="btn_qt" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72" Grid.Row="1"/>
+                    <Button x:Name="btn_winget" Content="Install" HorizontalAlignment="Left" Margin="3"  VerticalAlignment="Top" Width="72" Grid.Row="1"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label x:Name="lbl_7zip_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_git_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_sqlite_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_cmake_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_msys2_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_mingw_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                    <Label x:Name="lbl_qt_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2" Grid.Row="1"/>
+                    <Label x:Name="lbl_winget_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2" Grid.Row="1"/>
+
+                </StackPanel>
+            </DockPanel>
+
         </GroupBox>
-        <GroupBox x:Name="r_dependencies_Copy" Header="Optional Dependencies" Margin="16,392,16,0" BorderBrush="#FFD2D2D2" Foreground="#FFD2D2D2" MinHeight="200" VerticalAlignment="Top" Height="263">
+        <GroupBox x:Name="r_dependencies_Copy" Header="Optional Dependencies" Margin="16,535,16,0" BorderBrush="#FFD2D2D2" Foreground="#FFD2D2D2" MinHeight="200" VerticalAlignment="Top" Height="263">
             <Grid>
                 <Label Content="Clion" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
                 <Label Content="Visual Studio Code" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>

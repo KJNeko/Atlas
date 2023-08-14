@@ -1,14 +1,15 @@
 # .Net methods for GUI
-Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName PresentationCore, PresentationFramework
 
 #All paths are relative to developer_toolkit.bat. NOT the init.ps1 file.
 # keep that in mind when loading files
 $functionScript = ($pwd).Path + "\scripts\ps1\functions.ps1"
 Import-Module -Name $functionScript -Verbose
 
+#VARS
 $xamlFile = ($pwd).Path + "\ui\MainWindow.xaml"
 
-#create window
+#Create window
 $inputXML = Get-Content $xamlFile -Raw
 $inputXML = $inputXML -replace 'mc:Ignorable="d"', '' -replace "x:N", 'N' -replace '^<Win.*', '<Window'
 [XML]$XAML = $inputXML
@@ -36,6 +37,8 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 Get-Variable var_*
+
+CheckRequiredDependencies
 
 $Null = $window.ShowDialog()
 

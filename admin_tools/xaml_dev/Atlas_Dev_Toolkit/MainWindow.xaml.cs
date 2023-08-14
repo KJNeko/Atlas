@@ -22,7 +22,7 @@ namespace Atlas_Dev_Toolkit
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }
