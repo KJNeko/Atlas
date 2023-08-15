@@ -4,6 +4,7 @@ Add-Type -AssemblyName PresentationCore, PresentationFramework
 #All paths are relative to developer_toolkit.bat. NOT the init.ps1 file.
 # keep that in mind when loading files
 $functionScript = ($pwd).Path + "\scripts\ps1\functions.ps1"
+$buttonScript = ($pwd).Path + "\scripts\ps1\buttons.ps1"
 Import-Module -Name $functionScript -Verbose
 
 #VARS
@@ -38,7 +39,10 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
 }
 Get-Variable var_*
 
-CheckRequiredDependencies
+#Set button functions
+Import-Module -Name $buttonScript -Verbose
+
+CheckDependencies
 
 $Null = $window.ShowDialog()
 

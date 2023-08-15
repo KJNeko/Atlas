@@ -4,16 +4,15 @@ $7zip_path = "C:\Program Files\7-Zip\7z.exe"
 $git_path = "C:\Program Files\Git\git-bash.exe"
 $sqlite_path = "C:\msys64\mingw64\bin\sqlite3.exe"
 $cmake_path = "C:\Program Files\CMake\bin\cmake-gui.exe"
-$mingw_path = ""
+$mingw_path = "C:\msys64\mingw64\bin\gcc.exe"
+$msys2_path = "C:\msys64\usr\bin\bash.exe"
 $vscode_path = "$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe"
 $python_path = "C:\Python311\python.exe"
 #C:\Users\engineer\AppData\Local\Programs\Python\Python311
 $py_win_path = "$($env:LOCALAPPDATA)\Programs\Python\Python311\python.exe"
 $github_desktop_path = "$($env:LOCALAPPDATA)\GitHubDesktop\GitHubDesktop.exe"
-$mingw_path = "C:\mingw64\bin\gcc.exe"
 $qt_path = "C:\Qt\6.4.3\mingw_64\bin\designer.exe"
 $winget_path = "$($env:LOCALAPPDATA)\Microsoft\WindowsApps\winget.exe"
-
 
 function CheckInstallation($File, $Name) {
     if (Test-Path -Path $File -PathType Leaf) {
@@ -31,7 +30,7 @@ function CheckInstallation($File, $Name) {
     }
 }
 
-function CheckRequiredDependencies() {
+function CheckDependencies() {
     if (CheckInstallation $winget_path "winget" -eq $true) {
         $var_lbl_winget.Content = "INSTALLED"
         $var_lbl_winget.Foreground = "green"
@@ -74,11 +73,26 @@ function CheckRequiredDependencies() {
         $var_lbl_cmake_location.Content = $cmake_path
         $var_btn_cmake.IsEnabled = $false
     }
-    if (CheckInstallation $mingw_path "cmake" -eq $true) {
+    if (CheckInstallation $mingw_path "mingw" -eq $true) {
         $var_lbl_mingw.Content = "INSTALLED"
         $var_lbl_mingw.Foreground = "green"
         $var_lbl_mingw_location.Content = $mingw_path
         $var_btn_mingw.IsEnabled = $false
+    }
+
+    if (CheckInstallation $msys2_path "msys2" -eq $true) {
+        $var_lbl_msys2.Content = "INSTALLED"
+        $var_lbl_msys2.Foreground = "green"
+        $var_lbl_msys2_location.Content = $mingw_path
+        $var_btn_msys2.IsEnabled = $false
+    }
+    else {
+        $var_lbl_sqlite_location.Content = "Install Msys2 first"
+        $var_btn_sqlite.IsEnabled = $false
+        $var_lbl_mingw_location.Content = "Install Msys2 first"
+        $var_btn_mingw.IsEnabled = $false
+        $var_lbl_qt_location.Content = "Install Msys2 first"
+        $var_btn_qt.IsEnabled = $false
     }
 }
 function InstallWinget() {
@@ -87,4 +101,19 @@ function InstallWinget() {
     $Installer = $env:TEMP + "\" + $file + ".msixbundle"    
     Invoke-WebRequest -URI $URL -OutFile $Installer -UseBasicParsing
     &$Installer
+}
+
+function InstallQt() {
+    $URL = "https://d13lb3tujbc8s0.cloudfront.net/onlineinstallers/qt-unified-windows-x64-4.6.0-online.exe"
+    $file = ([uri]$URL).Segments[-1]
+
+    #Download File
+    $Installer = $env:TEMP + "\" + $file
+
+    $fsize = [math]::Round(((Invoke-WebRequest -URI $URL -Method Head -UseBasicParsing).Headers.'Content-Length') / (1024 * 1024), 2)
+    Write-Output "DOWNLOADING QT 6.4.3 SIZE: $fsize mb`nPLEASE WAIT......"
+    Invoke-WebRequest -URI $URL -OutFile $Installer -UseBasicParsing
+
+    Start-Process -FilePath $Installer "--root C:/Qt --accept-licenses --default-answer --confirm-command --accept-messages install qt.qt6.650.gcc_64" -Wait
+    #Set ENV
 }
