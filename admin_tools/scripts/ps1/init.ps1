@@ -43,6 +43,7 @@ Get-Variable var_*
 Import-Module -Name $buttonScript -Verbose
 
 CheckDependencies
+CreateDirectories
 
 $Null = $window.ShowDialog()
 

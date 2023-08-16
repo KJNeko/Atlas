@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
-
+        
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(common)
@@ -29,8 +29,6 @@ if (DEFINED QT_PATH)
 else()
     message("-- QT_PATH not defined.")
 endif ()
-
-
 
 add_subdirectory(dependencies/tracy)
 

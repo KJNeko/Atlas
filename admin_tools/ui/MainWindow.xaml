@@ -30,7 +30,7 @@
                         <Label Content="7zip" Foreground="#FFD2D2D2"/>
                         <Label Content="Git" Foreground="#FFD2D2D2"/>
                         <Label Content="Cmake" Foreground="#FFD2D2D2"/>
-                        <Label Content="Msys2" Foreground="#FFD2D2D2"/>
+                        <Label Content="MinGW64 (13.1)" Foreground="#FFD2D2D2"/>
                         <Label Content="Winget" Foreground="#FFD2D2D2"/>
                     </StackPanel>
 
@@ -38,21 +38,21 @@
                         <Label x:Name="lbl_7zip" Content="NOT INSTALLED" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF901D1D"/>
                         <Label x:Name="lbl_git" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
                         <Label x:Name="lbl_cmake" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                        <Label x:Name="lbl_msys2" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                        <Label x:Name="lbl_mingw" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
                         <Label x:Name="lbl_winget" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D" Grid.Row="1"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="left">
                         <Button x:Name="btn_7zip" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
                         <Button x:Name="btn_git" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
                         <Button x:Name="btn_cmake" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
-                        <Button x:Name="btn_msys2" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
+                        <Button x:Name="btn_mingw" Content="Install" HorizontalAlignment="Left"  Margin="3" VerticalAlignment="Top" Width="72"/>
                         <Button x:Name="btn_winget" Content="Install" HorizontalAlignment="Left" Margin="3"  VerticalAlignment="Top" Width="72" Grid.Row="1"/>
                     </StackPanel>
                     <StackPanel>
                         <Label x:Name="lbl_7zip_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
                         <Label x:Name="lbl_git_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
                         <Label x:Name="lbl_cmake_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                        <Label x:Name="lbl_msys2_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                        <Label x:Name="lbl_mingw_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
                         <Label x:Name="lbl_winget_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2" Grid.Row="1"/>
 
                     </StackPanel>
@@ -69,17 +69,17 @@
 
                     <StackPanel HorizontalAlignment="Left">
                         <Label x:Name="lbl_sqlite" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
-                        <Label x:Name="lbl_mingw" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
+                        <Label x:Name="lbl_mingw1" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D"/>
                         <Label x:Name="lbl_qt" Content="NOT INSTALLED" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FF901D1D" Grid.Row="1"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="left">
                         <Button x:Name="btn_sqlite" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72"/>
-                        <Button x:Name="btn_mingw" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72"/>
+                        <Button x:Name="btn_mingw1" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72"/>
                         <Button x:Name="btn_qt" Content="Install" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" Width="72" Grid.Row="1"/>
                     </StackPanel>
                     <StackPanel>
                         <Label x:Name="lbl_sqlite_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
-                        <Label x:Name="lbl_mingw_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
+                        <Label x:Name="lbl_mingw_location1" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2"/>
                         <Label x:Name="lbl_qt_location" Content="Install Location Not Found" VerticalAlignment="Top" Foreground="#FFD2D2D2" Grid.Row="1"/>
 
                     </StackPanel>

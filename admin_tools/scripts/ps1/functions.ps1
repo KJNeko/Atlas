@@ -4,7 +4,7 @@ $7zip_path = "C:\Program Files\7-Zip\7z.exe"
 $git_path = "C:\Program Files\Git\git-bash.exe"
 $sqlite_path = "C:\msys64\mingw64\bin\sqlite3.exe"
 $cmake_path = "C:\Program Files\CMake\bin\cmake-gui.exe"
-$mingw_path = "C:\msys64\mingw64\bin\gcc.exe"
+$mingw_path = "C:\mingw64\bin\gcc.exe"
 $msys2_path = "C:\msys64\usr\bin\bash.exe"
 $vscode_path = "$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe"
 $python_path = "C:\Python311\python.exe"
@@ -80,20 +80,6 @@ function CheckDependencies() {
         $var_btn_mingw.IsEnabled = $false
     }
 
-    if (CheckInstallation $msys2_path "msys2" -eq $true) {
-        $var_lbl_msys2.Content = "INSTALLED"
-        $var_lbl_msys2.Foreground = "green"
-        $var_lbl_msys2_location.Content = $mingw_path
-        $var_btn_msys2.IsEnabled = $false
-    }
-    else {
-        $var_lbl_sqlite_location.Content = "Install Msys2 first"
-        $var_btn_sqlite.IsEnabled = $false
-        $var_lbl_mingw_location.Content = "Install Msys2 first"
-        $var_btn_mingw.IsEnabled = $false
-        $var_lbl_qt_location.Content = "Install Msys2 first"
-        $var_btn_qt.IsEnabled = $false
-    }
 }
 function InstallWinget() {
     $URL = "https://aka.ms/getwinget"
@@ -114,6 +100,55 @@ function InstallQt() {
     Write-Output "DOWNLOADING QT 6.4.3 SIZE: $fsize mb`nPLEASE WAIT......"
     Invoke-WebRequest -URI $URL -OutFile $Installer -UseBasicParsing
 
-    Start-Process -FilePath $Installer "--root C:/Qt --accept-licenses --default-answer --confirm-command --accept-messages install qt.qt6.650.gcc_64" -Wait
+    Start-Process -FilePath $Installer -Wait
     #Set ENV
+}
+
+function InstallMinGW {
+    $7zip_path = "C:\Program Files\7-Zip\7z.exe"
+    $URL = "https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0-16.0.6-11.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-16.0.6-mingw-w64ucrt-11.0.0-r1.7z"
+    $file = ([uri]$URL).Segments[-1]
+    $Out = "C:\"
+
+    #Download File
+    $Installer = $env:TEMP + "\" + $file
+
+    $fsize = [math]::Round(((Invoke-WebRequest -URI $URL -Method Head -UseBasicParsing).Headers.'Content-Length') / (1024 * 1024), 2)
+    Write-Output "DOWNLOADING MinGW SIZE: $fsize mb`nPLEASE WAIT......"
+    Invoke-WebRequest -URI $URL -OutFile $Installer -UseBasicParsing
+    #Extract
+    Start-Process $7zip_path -args "x -y $Installer -o$Out"
+}
+
+function InstallSqlite3() {
+    $7zip_path = "C:\Program Files\7-Zip\7z.exe"
+    $sqlite3_include_path = "C:\Sqlite3\include"
+
+    $sqlite3_lib_path = "C:\Sqlite3\lib"
+    
+    $sqlite3_dll = "https://www.sqlite.org/2023/sqlite-dll-win64-x64-3420000.zip"
+    $sqlite3_amalgamation = "https://www.sqlite.org/2023/sqlite-amalgamation-3420000.zip"
+
+    $dll = ([uri]$sqlite3_dll).Segments[-1]    
+    #Write-Output $file
+    $file = $env:TEMP + "\" + $dll
+    $fsize = [math]::Round(((Invoke-WebRequest -URI $Sqlite3_dll -Method Head -UseBasicParsing).Headers.'Content-Length') / (1024 * 1024), 2)
+    Write-Output "DOWNLOADING Sqlite3 x64 dll SIZE: $fsize mb`nPLEASE WAIT......"
+    Invoke-WebRequest -URI $Sqlite3_dll -OutFile $file -UseBasicParsing
+    &$7zip_path x -y $file "-o$sqlite3_lib_path"
+
+    $cpp = ([uri]$sqlite3_amalgamation).Segments[-1]    
+    #Write-Output $file
+    $file = $env:TEMP + "\" + $cpp
+    $fsize = [math]::Round(((Invoke-WebRequest -URI $Sqlite3_amalgamation -Method Head -UseBasicParsing).Headers.'Content-Length') / (1024 * 1024), 2)
+    Write-Output "DOWNLOADING Sqlite3 Amalgamation SIZE: $fsize mb`nPLEASE WAIT......"
+    Invoke-WebRequest -URI $Sqlite3_amalgamation -OutFile $file -UseBasicParsing
+
+    &$7zip_path e -y $file "-o$sqlite3_include_path"
+}
+
+function CreateDirectories() {
+    New-Item -ItemType Directory -Force -Path "C:\sqlite3" | Out-Null
+    New-Item -ItemType Directory -Force -Path "C:\sqlite3\include" | Out-Null
+    New-Item -ItemType Directory -Force -Path "C:\sqlite3\lib" | Out-Null
 }
