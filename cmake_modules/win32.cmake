@@ -31,7 +31,7 @@ if (WIN32)
             set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
             message("-- Setting QT path from ENV")
         endif ()
-         set(QT_PATH "C:/Qt/6.4.3/mingw_64" )
+        
         set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
     endfunction()   # PlatformPreSetup
 
