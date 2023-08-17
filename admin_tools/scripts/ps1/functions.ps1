@@ -3,14 +3,16 @@
 $7zip_path = "C:\Program Files\7-Zip\7z.exe"
 $git_path = "C:\Program Files\Git\git-bash.exe"
 $sqlite_msys_path = "C:\msys64\mingw64\bin\sqlite3.exe"
-$sqlite_path = "C:\sqlite3\lib\sqlite3.dll"
+$gitkraken_path = "$($env:LOCALAPPDATA)\gitkraken\gitkraken.exe"
+$sqlite_path = "C:\mingw64\lib\sqlite3.dll"
 $cmake_path = "C:\Program Files\CMake\bin\cmake-gui.exe"
 $mingw_path = "C:\mingw64\bin\gcc.exe"
 $msys2_path = "C:\msys64\usr\bin\bash.exe"
 $vscode_path = "$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe"
-$python311_path = "C:\Python311\python.exe"
-$python312_path = "C:\Python312\python.exe"
-#C:\Users\engineer\AppData\Local\Programs\Python\Python311
+$python311_path = "C:\Program Files\Python311\python.exe"
+$python312_path = "C:\Program Files\Python312\python.exe"
+$dbbrowser_path = "C:\Program Files\DB Browser for SQLite\DB Browser for SQLite.exe"
+$sqlitestudio_path = "C:\Program Files\SQLiteStudio\SQLiteStudio.exe"
 $py_win_path = "$($env:LOCALAPPDATA)\Programs\Python\Python311\python.exe"
 $github_desktop_path = "$($env:LOCALAPPDATA)\GitHubDesktop\GitHubDesktop.exe"
 $qt_path = "C:\Qt\6.4.3\mingw_64\bin\designer.exe"
@@ -157,6 +159,32 @@ function CheckDependencies() {
         $var_btn_msys_mingw.IsEnabled = $false
         $var_lbl_msys_mingw_location.Content = "Install MSYS2 First"
     }
+    if (CheckInstallation $gitkraken_path "git_kraken_desktop" -eq $true) {
+        $var_lbl_gitkraken.Content = "INSTALLED"
+        $var_lbl_gitkraken.Foreground = "green"
+        $var_lbl_gitkraken_location.Content = $github_desktop_path
+        $var_btn_gitkraken.IsEnabled = $false
+    }
+    if (CheckInstallation $gitkraken_path "db_browser" -eq $true) {
+        $var_lbl_dbbrowser.Content = "INSTALLED"
+        $var_lbl_dbbrowser.Foreground = "green"
+        $var_lbl_dbbrowser_location.Content = $dbbrowser_path
+        $var_btn_dbbrowser.IsEnabled = $false
+    }
+    if (CheckInstallation $sqlitestudio_path "sqlitestudio" -eq $true) {
+        $var_lbl_sqlitestudio.Content = "INSTALLED"
+        $var_lbl_sqlitestudio.Foreground = "green"
+        $var_lbl_sqlitestudio_location.Content = $sqlitestudio_path
+        $var_btn_sqlitestudio.IsEnabled = $false
+    }
+
+    if ((CheckInstallation $python311_path "python" -eq $true) -or (CheckInstallation $python312_path "db_browser" -eq $true)) {
+        $var_lbl_python.Content = "INSTALLED"
+        $var_lbl_python.Foreground = "green"
+        $var_lbl_python_location.Content = $python311_path
+        $var_btn_python.IsEnabled = $false
+    }
+    
 }
 function InstallWinget() {
     $URL = "https://aka.ms/getwinget"
@@ -203,9 +231,9 @@ function InstallMinGW {
 
 function InstallSqlite3() {
     $7zip_path = "C:\Program Files\7-Zip\7z.exe"
-    $sqlite3_include_path = "C:\Sqlite3\include"
+    $sqlite3_include_path = "C:\mingw64\include"
 
-    $sqlite3_lib_path = "C:\Sqlite3\lib"
+    $sqlite3_lib_path = "C:\mingw64\lib"
     
     $sqlite3_dll = "https://www.sqlite.org/2023/sqlite-dll-win64-x64-3420000.zip"
     $sqlite3_amalgamation = "https://www.sqlite.org/2023/sqlite-amalgamation-3420000.zip"

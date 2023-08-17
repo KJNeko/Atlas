@@ -73,7 +73,7 @@ $var_btn_clion.Add_Click( {
         CheckDependencies
     })
 $var_btn_python.Add_Click( {
-        start-process powershell "winget install -e --id Python.Python.3.11" -Wait
+        start-process powershell "winget install -e --id Python.Python.3.11 --scope=machine" -Wait
         CheckDependencies
     })
 $var_btn_ghdesktop.Add_Click( {
