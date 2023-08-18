@@ -3,20 +3,28 @@
 
 #include <QWidget>
 
-namespace Ui {
+QT_BEGIN_NAMESPACE
+
+namespace Ui
+{
 	class FilterWidget;
 }
+
+QT_END_NAMESPACE
 
 class FilterWidget : public QWidget
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE( FilterWidget )
 
   public:
-	explicit FilterWidget(QWidget *parent = nullptr);
+
+	explicit FilterWidget( QWidget* parent = nullptr );
 	~FilterWidget();
 
   private:
-	Ui::FilterWidget *ui;
+
+	Ui::FilterWidget* ui;
 };
 
 #endif // FILTERWIDGET_H
