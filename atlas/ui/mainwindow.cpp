@@ -187,7 +187,7 @@ void MainWindow::on_actionViewFileHistory_triggered()
 	dialog.exec();
 }
 
-void MainWindow::searchTextChanged( const QString str )
+void MainWindow::searchTextChanged( [[maybe_unused]] const QString str )
 {
 	/*const auto search_type = [ & ]()
 	{
