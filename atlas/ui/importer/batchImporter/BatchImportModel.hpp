@@ -20,6 +20,7 @@ enum ImportColumns
 	EXECUTABLES,
 	SIZE,
 	FOLDER_PATH,
+	HAS_GL_LINK
 };
 
 class BatchImportModel final : public QAbstractTableModel

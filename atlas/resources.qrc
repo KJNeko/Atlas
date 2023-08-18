@@ -27,6 +27,7 @@
         <file>assets/down_arrorw_small.svg</file>
         <file>assets/up_arrorw_small.svg</file>
         <file>assets/feather_background.svg</file>
+        <file>assets/gl.png</file>
     </qresource>
     <qresource prefix="/Layouts">
         <file>assets/layouts/nav_default.svg</file>

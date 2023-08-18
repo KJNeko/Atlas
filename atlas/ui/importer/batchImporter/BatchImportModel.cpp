@@ -30,6 +30,8 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			{
 				switch ( index.column() )
 				{
+					case HAS_GL_LINK:
+						return item.atlas_id != INVALID_ATLAS_ID;
 					case FOLDER_PATH:
 						return QString::fromStdString( item.path.string() );
 					case TITLE:
