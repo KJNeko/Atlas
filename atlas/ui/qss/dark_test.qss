@@ -238,6 +238,15 @@ QTreeView {
     background-color: rgb(43, 45, 49);
 }
 
+#GameWidget {
+    background-color: transparent;
+}
+
+/*This is so the wide banner will show up in game view.*/
+#bannerFrame {
+    background-color: transparent;
+}
+
 #SearchIcon {
     background-color: rgb(56, 58, 64);
     border: none;
