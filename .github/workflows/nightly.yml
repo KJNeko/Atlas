@@ -24,7 +24,7 @@ jobs:
           build-release: true
           build-debug: false
           build-atlas: true
-          build-profile: false
+          build-profile: true
           version-string: ${{ env.ATLAS_VERSION_STR }}
 
       - name: Package
