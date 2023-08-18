@@ -1,14 +1,14 @@
-#include "filterwidget.h"
-#include "ui_filterwidget.h"
+#include "FilterWidget.h"
+#include "ui_FilterWidget.h"
 
-filterwidget::filterwidget(QWidget *parent) :
+FilterWidget::FilterWidget(QWidget *parent) :
   QWidget(parent),
-  ui(new Ui::filterwidget)
+  ui(new Ui::FilterWidget)
 {
 	ui->setupUi(this);
 }
 
-filterwidget::~filterwidget()
+FilterWidget::~FilterWidget()
 {
 	delete ui;
 }
