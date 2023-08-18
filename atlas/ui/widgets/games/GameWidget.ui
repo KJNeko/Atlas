@@ -208,9 +208,8 @@ border:none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg
-            </iconset>
+            <iconset>
+             <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -253,9 +252,8 @@ border:none;</string>
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg
-            </iconset>
+            <iconset>
+             <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg</iconset>
            </property>
           </widget>
          </item>
@@ -441,9 +439,8 @@ border-radius:none;</string>
             <string>   PLAY</string>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg
-            </iconset>
+            <iconset>
+             <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -491,9 +488,8 @@ border-radius:3px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/info.svg</normaloff>:/images/assets/info.svg
-            </iconset>
+            <iconset>
+             <normaloff>:/images/assets/info.svg</normaloff>:/images/assets/info.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -536,9 +532,8 @@ color: rgb(255, 255, 255);</string>
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg
-            </iconset>
+            <iconset>
+             <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1042,8 +1037,6 @@ border-radius: 2px;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

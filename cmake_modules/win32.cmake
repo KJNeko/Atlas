@@ -18,18 +18,20 @@ if (WIN32)
         # set(QT_PATH "C:/msys64/clang64")
         find_program(
             TOOL_WINDEPLOYQT
-                windeployqt windeployqt6
+                windeployqt windeployqt-qt6 windeployqt6
                 REQUIRED NO_CACHE
                 HINTS "${QT_PATH}/bin"
         )
-        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
+        message("-- windeployqt found: ${TOOL_WINDEPLOYQT}")
 
-        string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+        set(CMAKE_FIND_LIBRARY_SUFFIXES ";.dll" PARENT_SCOPE)
+        #string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
 
         if (DEFINED ENV{QT_PATH})
             set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
-            message("Setting QT path from ENV")
+            message("-- Setting QT path from ENV")
         endif ()
+        
         set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
     endfunction()   # PlatformPreSetup
 
