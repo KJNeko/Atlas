@@ -78,6 +78,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
 	//ui->gamesTree->model()->setHeaderData( 1, Qt::Horizontal, QString( "Games" ) );
+
+	QTimer* timer { new QTimer( this ) };
+	timer->setInterval( 2000 );
+	connect( timer, &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
+	timer->start();
 }
 
 MainWindow::~MainWindow()
@@ -244,4 +249,18 @@ void MainWindow::movePopup()
 void MainWindow::taskPopupResized()
 {
 	movePopup();
+}
+
+void MainWindow::setBottomGameCounter()
+{
+	std::uint_fast32_t unique_games { 0 };
+	std::uint_fast32_t total_versions { 0 };
+
+	// We need to filter out our testing dummy record sowe just get rid of id 1
+	RapidTransaction() << "SELECT COUNT(*) FROM games WHERE record_id != ?" << 1 >> unique_games;
+	RapidTransaction() << "SELECT COUNT(*) FROM games NATURAL JOIN versions WHERE record_id != ?" << 1
+		>> total_versions;
+
+	ui->GamesInstalled
+		->setText( QString( "%1 games installed, %2 total versions" ).arg( unique_games ).arg( total_versions ) );
 }
