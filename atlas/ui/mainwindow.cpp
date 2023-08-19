@@ -29,6 +29,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
+	connect( ui->btnAddGame, &QToolButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
@@ -139,6 +140,13 @@ void MainWindow::on_homeButton_pressed()
 {
 	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
+}
+
+void MainWindow::on_btnAddGame_pressed()
+{
+	BatchImportDialog importer { this };
+	importer.exec();
+	emit triggerReSearch();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )

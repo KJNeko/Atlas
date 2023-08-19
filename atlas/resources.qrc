@@ -30,7 +30,7 @@
         <file>assets/setting_filter.svg</file>
     </qresource>
     <qresource prefix="/Layouts">
-        <file>assets/layouts/nav_default.svg</file>
+        <file>assets/layouts/0000.svg</file>
     </qresource>
     <qresource prefix="/test">
         <file>assets/testfiles/test1.png</file>

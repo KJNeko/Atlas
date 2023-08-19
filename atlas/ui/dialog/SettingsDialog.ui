@@ -329,7 +329,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -525,6 +525,109 @@ border-right:none;
        <property name="spacing">
         <number>0</number>
        </property>
+       <item row="3" column="0">
+        <widget class="QWidget" name="FONTS" native="true">
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="1" column="7">
+           <widget class="QLabel" name="lbSampleText">
+            <property name="text">
+             <string>Sample Text : 123456 : ^&amp;*(!</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QSpinBox" name="sbAppFontSize"/>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLabel" name="label_41">
+            <property name="text">
+             <string>Font Size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="8">
+           <spacer name="horizontalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="cbAppFont">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" rowspan="2" colspan="2">
+           <widget class="QLabel" name="label_40">
+            <property name="text">
+             <string>Application Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="6">
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <spacer name="bottom_spacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0">
+        <widget class="QWidget" name="MENU_LAYOUT" native="true">
+         <layout class="QGridLayout" name="gridLayout_11"/>
+        </widget>
+       </item>
        <item row="4" column="0">
         <widget class="QWidget" name="MENU_UI" native="true">
          <layout class="QGridLayout" name="gridLayout_9">
@@ -715,19 +818,6 @@ border-right:none;
          </layout>
         </widget>
        </item>
-       <item row="6" column="0">
-        <spacer name="bottom_spacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="2" column="0">
         <widget class="QWidget" name="THEMES" native="true">
          <layout class="QGridLayout" name="gridLayout_10">
@@ -783,92 +873,34 @@ border-right:none;
          </layout>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QWidget" name="MENU_LAYOUT" native="true">
-         <layout class="QGridLayout" name="gridLayout_11"/>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QWidget" name="FONTS" native="true">
-         <layout class="QGridLayout" name="gridLayout_12">
-          <item row="1" column="7">
-           <widget class="QLabel" name="lbSampleText">
-            <property name="text">
-             <string>Sample Text : 123456 : ^&amp;*(!</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QSpinBox" name="sbAppFontSize"/>
-          </item>
-          <item row="1" column="4">
-           <widget class="QLabel" name="label_41">
-            <property name="text">
-             <string>Font Size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="8">
-           <spacer name="horizontalSpacer_12">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="2">
-           <widget class="QComboBox" name="cbAppFont">
+       <item row="6" column="0">
+        <widget class="QWidget" name="widget_4" native="true">
+         <layout class="QGridLayout" name="gridLayout_14">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="toolButton">
             <property name="minimumSize">
              <size>
-              <width>200</width>
-              <height>0</height>
+              <width>400</width>
+              <height>400</height>
              </size>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="0" rowspan="2" colspan="2">
-           <widget class="QLabel" name="label_40">
+            <property name="styleSheet">
+             <string notr="true">background-color:transparent;</string>
+            </property>
             <property name="text">
-             <string>Application Font</string>
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/Layouts/assets/layouts/0000.svg</normaloff>:/Layouts/assets/layouts/0000.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>800</width>
+              <height>400</height>
+             </size>
             </property>
            </widget>
-          </item>
-          <item row="1" column="3">
-           <spacer name="horizontalSpacer_13">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="6">
-           <spacer name="horizontalSpacer_14">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -2288,7 +2320,9 @@ padding:10x;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

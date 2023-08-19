@@ -146,7 +146,7 @@ margin-left: 2px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../resources.qrc">
               <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
             </property>
             <property name="iconSize">
@@ -227,7 +227,13 @@ border-top-left-radius:0px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>:/images/assets/setting_filter.svg</pixmap>
+             <pixmap resource="../resources.qrc">:/images/assets/setting_filter.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="margin">
+             <number>3</number>
             </property>
            </widget>
           </item>
@@ -268,7 +274,7 @@ border-bottom-left-radius:5px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>:/images/assets/search.svg</pixmap>
+             <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -286,9 +292,12 @@ border-bottom-left-radius:5px;</string>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
+              <width>5</width>
               <height>20</height>
              </size>
             </property>
@@ -341,7 +350,7 @@ border-bottom-left-radius:5px;</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QToolButton" name="AddGame">
+        <widget class="QToolButton" name="btnAddGame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -364,7 +373,7 @@ border-bottom-left-radius:5px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
          </property>
          <property name="toolButtonStyle">
@@ -476,7 +485,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
@@ -537,7 +546,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>:/images/assets/search.svg</pixmap>
+          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -663,8 +672,8 @@ margin-right:5px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>791</width>
-             <height>660</height>
+             <width>98</width>
+             <height>28</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
@@ -707,7 +716,7 @@ margin-right:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -867,7 +876,9 @@ margin-right:5px;</string>
    <header>ui/views/RecordListView.hpp</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

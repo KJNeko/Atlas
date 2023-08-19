@@ -9,7 +9,8 @@
     <Grid>
         <TabControl TabStripPlacement="Left" Background="#FF242428">
             <TabItem Header="Dev Setup" Height="26">
-                <StackPanel>
+                <DockPanel>
+                    <StackPanel>
                     <Label Content="NOTE: Only one of the two MinGW64 installs are needed" Foreground="#FFD2D2D2" Margin="5,0,0,0"></Label>
 
                     <GroupBox x:Name="r_dependencies" Header="Required Programs" BorderBrush="#FFD2D2D2" Margin="3" Foreground="#FFD2D2D2">
@@ -141,6 +142,12 @@
                         </DockPanel>
                     </GroupBox>
                 </StackPanel>
+                    <StackPanel>
+                        <GroupBox>
+                            <Label Content="test"></Label>
+                        </GroupBox>
+                    </StackPanel>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Image Audit" Height="26">
                 <StackPanel>
