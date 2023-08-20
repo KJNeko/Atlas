@@ -430,14 +430,12 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 {
 	//get current directory
 	bool isEngine = false;
-	std::string engine_path =
-		std::filesystem::current_path().string() + "\\data\\engine\\types\\Engine." + engine + ".txt";
-	spdlog::info( scanner.path().string() );
-	spdlog::info( engine_path );
+	std::filesystem::path engine_path =
+		std::filesystem::current_path() / "data" / "engine" / "types" / ( "Engine." + engine + ".txt" );
 
 	if ( std::ifstream ifs( engine_path ); ifs )
 	{
-		//read in each line a store in array
+		//Read in each line a store in array
 		std::string line = "";
 
 		while ( getline( ifs, line ) )
@@ -445,7 +443,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 			//Check if first item in string is a period for a file type
 			std::vector< char > charArry;
 			std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
-			if ( charArry[ 0 ] == '.' ) //file type
+			if ( charArry[ 0 ] == '.' ) //file type check
 			{
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
@@ -453,28 +451,28 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 					if ( file.ext == line )
 					{
 						isEngine = true;
+						break;
 					}
 				}
 			}
 			else
 			{
-				//file.replace( '/', '\\' );
 				//Check if there is a \ at begining of string. add if missing
 				if ( charArry[ 0 ] != '/' )
 				{
-					line = "/" + line;
+					line = "\\" + line;
 				}
 				//Check if path is valid
 				if ( std::filesystem::is_directory( scanner.path().string() + line ) )
 				{
-					//spdlog::info( file );
 					isEngine = true;
+					break;
 				}
 				//Check if file is valid
 				if ( std::ifstream path( scanner.path().string() + line ); path )
 				{
-					//spdlog::info( file );
 					isEngine = true;
+					break;
 				}
 			}
 		};
