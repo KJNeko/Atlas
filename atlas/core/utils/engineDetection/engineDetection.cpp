@@ -208,13 +208,15 @@ template <>
 bool isEngineT< RenPy >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< RenPy >" );
+	/*
 	for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
 
 		if ( file.filename == "renpy" && std::filesystem::is_directory( file.path ) ) return true;
 	}
-	return false;
+	*/
+	return checkEngineTye( "RenPy", scanner );
 }
 
 template <>
@@ -424,4 +426,17 @@ template <>
 QString engineNameT< Sukai2 >()
 {
 	return "Sukai2";
+}
+
+//Pass engine name for verifying type
+bool checkEngineTye( std::string engine, atlas::utils::FileScanner& scanner )
+{
+	//get current directory
+	for ( const auto& file : scanner )
+	{
+		if ( file.depth > 1 ) return false;
+
+		if ( file.filename == "renpy" && std::filesystem::is_directory( file.path ) ) return true;
+	}
+	return false;
 }

@@ -68,6 +68,11 @@ if (WIN32)
                 ${CMAKE_BINARY_DIR}/bin/qt.conf
                 COMMENT "Copying qt.conf for Window DPI override")
 
+        add_custom_command(TARGET Atlas POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/3rdparty/FileDetectionRuleSets/tests/types
+                ${CMAKE_BINARY_DIR}/bin/data/engine/types
+                COMMENT "Copying Engine Types")
+
     endfunction()   # PlatformPostSetup
 
 endif ()    # if (WIN32)

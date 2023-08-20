@@ -38,6 +38,7 @@ enum Engine : int
 template < Engine engine >
 bool isEngineT( atlas::utils::FileScanner& scanner );
 
+bool checkEngineTye( std::string engine, atlas::utils::FileScanner& scanner );
 //! String name of the engine.
 template < Engine engine >
 QString engineNameT();
