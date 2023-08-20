@@ -12,6 +12,8 @@
 
 #include <algorithm>
 #include <array>
+#include <filesystem>
+#include <fstream>
 #include <string>
 
 #include "../../system.hpp"
@@ -208,14 +210,6 @@ template <>
 bool isEngineT< RenPy >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< RenPy >" );
-	/*
-	for ( const auto& file : scanner )
-	{
-		if ( file.depth > 1 ) return false;
-
-		if ( file.filename == "renpy" && std::filesystem::is_directory( file.path ) ) return true;
-	}
-	*/
 	return checkEngineTye( "RenPy", scanner );
 }
 
@@ -229,7 +223,7 @@ template <>
 bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< Unity >" );
-	for ( const auto& file : scanner )
+	/*for ( const auto& file : scanner )
 	{
 		if ( file.depth > 1 ) return false;
 
@@ -238,9 +232,9 @@ bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 			//Check deeper
 			return std::filesystem::exists( scanner.path() / "Data" / "Managed" / "Assembly-CSharp.dll" );
 		}
-	}
+	}*/
 
-	return false;
+	return checkEngineTye( "Unity", scanner );
 }
 
 template <>
@@ -252,7 +246,7 @@ QString engineNameT< Unity >()
 template <>
 bool isEngineT< Unreal >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "Unreal", scanner );
 }
 
 template <>
@@ -264,7 +258,7 @@ QString engineNameT< Unreal >()
 template <>
 bool isEngineT< RPGM >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "RPGMaker", scanner );
 }
 
 template <>
@@ -276,7 +270,7 @@ QString engineNameT< RPGM >()
 template <>
 bool isEngineT< WolfRPG >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "WolfRPGEditor", scanner );
 }
 
 template <>
@@ -311,7 +305,7 @@ QString engineNameT< HTML >()
 template <>
 bool isEngineT< VisualNovelMaker >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "VisualNovelMaker", scanner );
 }
 
 template <>
@@ -324,18 +318,7 @@ template <>
 bool isEngineT< TyanoBuilder >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< TyanoBuilder >" );
-	for ( const auto& file : scanner )
-	{
-		if ( file.depth > 1 ) return false;
-
-		if ( file.filename == "resources" && std::filesystem::is_directory( file.path ) )
-		{
-			//Search deeper
-			return std::filesystem::exists( scanner.path() / "resources" / "app" / "tyrano" );
-		}
-	}
-
-	return false;
+	return checkEngineTye( "TyranoBuilder", scanner );
 }
 
 template <>
@@ -347,7 +330,7 @@ QString engineNameT< TyanoBuilder >()
 template <>
 bool isEngineT< Java >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "Java", scanner );
 }
 
 template <>
@@ -359,7 +342,7 @@ QString engineNameT< Java >()
 template <>
 bool isEngineT< Flash >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "Flash", scanner );
 }
 
 template <>
@@ -371,7 +354,7 @@ QString engineNameT< Flash >()
 template <>
 bool isEngineT< RAGS >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "RAGS", scanner );
 }
 
 template <>
@@ -383,7 +366,7 @@ QString engineNameT< RAGS >()
 template <>
 bool isEngineT< KiriKiri >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "KiriKiri", scanner );
 }
 
 template <>
@@ -395,7 +378,7 @@ QString engineNameT< KiriKiri >()
 template <>
 bool isEngineT< NScripter >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineTye( "NScripter", scanner );
 }
 
 template <>
@@ -432,11 +415,32 @@ QString engineNameT< Sukai2 >()
 bool checkEngineTye( std::string engine, atlas::utils::FileScanner& scanner )
 {
 	//get current directory
-	for ( const auto& file : scanner )
-	{
-		if ( file.depth > 1 ) return false;
+	bool isEngine = false;
+	std::string engine_type =
+		std::filesystem::current_path().string() + "\\data\\engine\\types\\Engine." + engine + ".txt";
+	spdlog::info( engine_type );
 
-		if ( file.filename == "renpy" && std::filesystem::is_directory( file.path ) ) return true;
+	if ( std::ifstream ifs( engine_type ); ifs )
+	{
+		//read in each line a store in array
+		std::string file = "";
+
+		while ( getline( ifs, file ) )
+		{
+			//Check if path is valid
+			if ( std::filesystem::is_directory( scanner.path().string() + file ) )
+			{
+				spdlog::info( file );
+				isEngine = true;
+			}
+			//Check if file is valid
+			if ( std::ifstream path( scanner.path().string() + file ); path )
+			{
+				isEngine = true;
+			}
+		};
+		ifs.close();
 	}
-	return false;
+
+	return isEngine;
 }
