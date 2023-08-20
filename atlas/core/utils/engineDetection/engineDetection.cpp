@@ -210,7 +210,7 @@ template <>
 bool isEngineT< RenPy >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< RenPy >" );
-	return checkEngineTye( "RenPy", scanner );
+	return checkEngineType( "RenPy", scanner );
 }
 
 template <>
@@ -234,7 +234,7 @@ bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 		}
 	}*/
 
-	return checkEngineTye( "Unity", scanner );
+	return checkEngineType( "Unity", scanner );
 }
 
 template <>
@@ -246,7 +246,7 @@ QString engineNameT< Unity >()
 template <>
 bool isEngineT< Unreal >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "Unreal", scanner );
+	return checkEngineType( "Unreal", scanner );
 }
 
 template <>
@@ -258,7 +258,7 @@ QString engineNameT< Unreal >()
 template <>
 bool isEngineT< RPGM >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "RPGMaker", scanner );
+	return checkEngineType( "RPGMaker", scanner );
 }
 
 template <>
@@ -270,7 +270,7 @@ QString engineNameT< RPGM >()
 template <>
 bool isEngineT< WolfRPG >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "WolfRPGEditor", scanner );
+	return checkEngineType( "WolfRPGEditor", scanner );
 }
 
 template <>
@@ -283,17 +283,7 @@ template <>
 bool isEngineT< HTML >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< HTML >" );
-	bool html_found { false };
-
-	for ( const auto& file : scanner )
-	{
-		if ( file.depth > 1 ) return false;
-
-		if ( file.ext == ".exe" ) return false;
-		if ( file.ext == ".html" ) html_found = true;
-	}
-
-	return html_found;
+	return checkEngineType( "Html", scanner );
 }
 
 template <>
@@ -305,7 +295,7 @@ QString engineNameT< HTML >()
 template <>
 bool isEngineT< VisualNovelMaker >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "VisualNovelMaker", scanner );
+	return checkEngineType( "VisualNovelMaker", scanner );
 }
 
 template <>
@@ -318,7 +308,7 @@ template <>
 bool isEngineT< TyanoBuilder >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< TyanoBuilder >" );
-	return checkEngineTye( "TyranoBuilder", scanner );
+	return checkEngineType( "TyranoBuilder", scanner );
 }
 
 template <>
@@ -330,7 +320,7 @@ QString engineNameT< TyanoBuilder >()
 template <>
 bool isEngineT< Java >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "Java", scanner );
+	return checkEngineType( "Java", scanner );
 }
 
 template <>
@@ -342,7 +332,7 @@ QString engineNameT< Java >()
 template <>
 bool isEngineT< Flash >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "Flash", scanner );
+	return checkEngineType( "Flash", scanner );
 }
 
 template <>
@@ -354,7 +344,7 @@ QString engineNameT< Flash >()
 template <>
 bool isEngineT< RAGS >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "RAGS", scanner );
+	return checkEngineType( "RAGS", scanner );
 }
 
 template <>
@@ -366,7 +356,7 @@ QString engineNameT< RAGS >()
 template <>
 bool isEngineT< KiriKiri >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "KiriKiri", scanner );
+	return checkEngineType( "KiriKiri", scanner );
 }
 
 template <>
@@ -378,7 +368,7 @@ QString engineNameT< KiriKiri >()
 template <>
 bool isEngineT< NScripter >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineTye( "NScripter", scanner );
+	return checkEngineType( "NScripter", scanner );
 }
 
 template <>
@@ -390,7 +380,7 @@ QString engineNameT< NScripter >()
 template <>
 bool isEngineT< NVList >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineType( "NVList", scanner );
 }
 
 template <>
@@ -402,7 +392,7 @@ QString engineNameT< NVList >()
 template <>
 bool isEngineT< Sukai2 >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return false;
+	return checkEngineType( "Sukai2", scanner );
 }
 
 template <>
@@ -411,32 +401,81 @@ QString engineNameT< Sukai2 >()
 	return "Sukai2";
 }
 
+template <>
+bool isEngineT< MonoGame >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "MonoGame", scanner );
+}
+
+template <>
+QString engineNameT< MonoGame >()
+{
+	return "Mono Game";
+}
+
+template <>
+bool isEngineT< GamesforLive >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "GamesforLive", scanner );
+}
+
+template <>
+QString engineNameT< GamesforLive >()
+{
+	return "Games for Live";
+}
+
 //Pass engine name for verifying type
-bool checkEngineTye( std::string engine, atlas::utils::FileScanner& scanner )
+bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 {
 	//get current directory
 	bool isEngine = false;
-	std::string engine_type =
+	std::string engine_path =
 		std::filesystem::current_path().string() + "\\data\\engine\\types\\Engine." + engine + ".txt";
-	spdlog::info( engine_type );
+	spdlog::info( scanner.path().string() );
+	spdlog::info( engine_path );
 
-	if ( std::ifstream ifs( engine_type ); ifs )
+	if ( std::ifstream ifs( engine_path ); ifs )
 	{
 		//read in each line a store in array
-		std::string file = "";
+		std::string line = "";
 
-		while ( getline( ifs, file ) )
+		while ( getline( ifs, line ) )
 		{
-			//Check if path is valid
-			if ( std::filesystem::is_directory( scanner.path().string() + file ) )
+			//Check if first item in string is a period for a file type
+			std::vector< char > charArry;
+			std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
+			if ( charArry[ 0 ] == '.' ) //file type
 			{
-				spdlog::info( file );
-				isEngine = true;
+				//Go through all files and check if extention exist
+				for ( const auto& file : scanner )
+				{
+					if ( file.ext == line )
+					{
+						isEngine = true;
+					}
+				}
 			}
-			//Check if file is valid
-			if ( std::ifstream path( scanner.path().string() + file ); path )
+			else
 			{
-				isEngine = true;
+				//file.replace( '/', '\\' );
+				//Check if there is a \ at begining of string. add if missing
+				if ( charArry[ 0 ] != '/' )
+				{
+					line = "/" + line;
+				}
+				//Check if path is valid
+				if ( std::filesystem::is_directory( scanner.path().string() + line ) )
+				{
+					//spdlog::info( file );
+					isEngine = true;
+				}
+				//Check if file is valid
+				if ( std::ifstream path( scanner.path().string() + line ); path )
+				{
+					//spdlog::info( file );
+					isEngine = true;
+				}
 			}
 		};
 		ifs.close();

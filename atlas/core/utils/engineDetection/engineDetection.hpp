@@ -31,6 +31,8 @@ enum Engine : int
 	Sukai2,
 	HTML,
 	ENGINES_END,
+	MonoGame,
+	GamesforLive,
 	UNKNOWN
 };
 
