@@ -202,6 +202,7 @@ QString engineName( const Engine engine )
 }
 
 //Define all specializations of isEngine and engineNameT here
+//Use formats for fileSets to verify if it is that specific engine type
 
 template <>
 bool isEngineT< RenPy >( atlas::utils::FileScanner& scanner )

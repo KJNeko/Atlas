@@ -22,3 +22,6 @@
 [submodule "dependencies/lz4"]
 	path = dependencies/lz4
 	url = https://github.com/lz4/lz4.git
+[submodule "3rdparty/FileDetectionRuleSets"]
+	path = 3rdparty/FileDetectionRuleSets
+	url = https://github.com/SteamDatabase/FileDetectionRuleSets.git
