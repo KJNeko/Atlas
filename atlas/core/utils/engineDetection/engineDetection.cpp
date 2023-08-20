@@ -457,7 +457,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 			}
 			else
 			{
-				//Check if there is a \ at begining of string. add if missing
+				//Check if there is a / at begining of string. add if missing
 				if ( charArry[ 0 ] != '/' )
 				{
 					line = "\\" + line;
@@ -469,7 +469,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 					break;
 				}
 				//Check if file is valid
-				if ( std::ifstream path( scanner.path().string() + line ); path )
+				if ( std::filesystem::exists( scanner.path().string() + line ) )
 				{
 					isEngine = true;
 					break;
