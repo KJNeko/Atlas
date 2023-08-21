@@ -208,7 +208,7 @@ border:none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg</iconset>
            </property>
            <property name="iconSize">
@@ -243,6 +243,12 @@ border:none;</string>
              <height>30</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background: rgba( 255, 255, 255, 50 );
              border-radius:3px;
@@ -252,7 +258,7 @@ border:none;</string>
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg</iconset>
            </property>
           </widget>
@@ -439,7 +445,7 @@ border-radius:none;</string>
             <string>   PLAY</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg</iconset>
            </property>
            <property name="iconSize">
@@ -480,6 +486,12 @@ border-radius:none;</string>
              <height>30</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background: rgba( 255, 255, 255, 50 );
 border-radius:3px;</string>
@@ -488,7 +500,7 @@ border-radius:3px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/info.svg</normaloff>:/images/assets/info.svg</iconset>
            </property>
            <property name="iconSize">
@@ -532,7 +544,7 @@ color: rgb(255, 255, 255);</string>
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../../../resources.qrc">
              <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1037,6 +1049,8 @@ border-radius: 2px;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
