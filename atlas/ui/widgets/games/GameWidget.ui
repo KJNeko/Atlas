@@ -450,8 +450,8 @@ border-radius:none;</string>
            </property>
            <property name="iconSize">
             <size>
-             <width>61</width>
-             <height>28</height>
+             <width>75</width>
+             <height>30</height>
             </size>
            </property>
            <property name="toolButtonStyle">

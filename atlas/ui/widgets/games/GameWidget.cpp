@@ -23,6 +23,8 @@ GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameW
 	ui->setupUi( this );
 	ui->previewList->setItemDelegate( new ImageDelegate() );
 	ui->previewList->setModel( new FilepathModel() );
+
+	//Check how many versions there are
 }
 
 GameWidget::~GameWidget()
@@ -70,6 +72,7 @@ void GameWidget::reloadRecord()
 	{
 		ui->lbLastPlayed->setText( "Never" );
 	}
+
 	else
 	{
 		//Convert UNIX timestamp to QDateTime
@@ -77,6 +80,13 @@ void GameWidget::reloadRecord()
 			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->m_last_played ), Qt::LocalTime )
 		};
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
+	}
+
+	//Hide versions icon if there is only 1
+	spdlog::info( "versions: {}", record->m_versions.size() );
+	if ( record->m_versions.size() == 1 )
+	{
+		ui->tbSelectVersion->hide();
 	}
 
 	//Sum up all the file sizes in the game's folder across multiple versions
@@ -150,8 +160,8 @@ void GameWidget::reloadRecord()
 	//Set Description
 	ui->teDescription->setText( description );
 	ui->teDetails->setText(
-		"<html><b>Description: </b>" + description + "<br><b>Developer: </b>" + developer + "<br><b>Publisher: </b>"
-		+ publisher + "<br><b>Original Name: </b>" + original_name );
+		"<html><b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine + "<br><b>Version: </b>"
+		+ versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
 
 	const QPixmap cover { image_future.result() };
 
@@ -297,6 +307,10 @@ void GameWidget::on_btnPlay_pressed()
 {
 	if ( auto version = selectedVersion(); version.has_value() )
 	{
+		QIcon icon { ":/images/assets/stop_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
 		version.value().playGame();
 	}
 	else
