@@ -305,6 +305,19 @@ namespace atlas::records
 		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
 	}
 
+	Version& Game::operator[]( const QString str ) const
+	{
+		auto ver_itter { std::find_if(
+			ptr->m_versions.begin(),
+			ptr->m_versions.end(),
+			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
+
+		if ( ver_itter != ptr->m_versions.end() )
+			return *ver_itter;
+		else
+			throw std::runtime_error( "No version of that name in game" );
+	}
+
 	//! imports a new record and returns it. Will return an existing record if the record already exists
 	Game importRecord( QString title, QString creator, QString engine )
 	{
