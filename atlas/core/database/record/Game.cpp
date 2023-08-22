@@ -346,7 +346,7 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	QString Game::fingAtlasData( std::string title, std::string developer )
+	QString Game::findAtlasData( std::string title, std::string developer )
 	{
 		spdlog::info( "{}{}", title, developer );
 		return "";

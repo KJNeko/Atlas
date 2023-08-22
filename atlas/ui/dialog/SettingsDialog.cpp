@@ -353,6 +353,11 @@ void SettingsDialog::on_btnThreading_pressed()
 	ui->stackedWidget->setCurrentIndex( 4 );
 }
 
+void SettingsDialog::on_btnTestFeatures_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 5 );
+}
+
 void SettingsDialog::on_applySettings_pressed()
 {
 	savePathsSettings();
