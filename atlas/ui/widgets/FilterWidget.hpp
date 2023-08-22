@@ -12,7 +12,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class FilterWidget : public QWidget
+class FilterWidget final : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( FilterWidget )
