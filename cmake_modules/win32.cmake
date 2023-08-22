@@ -1,6 +1,8 @@
 # /cmake_modules/win32.cmake
 
 if (WIN32)
+    set(which_program "where")
+    set(os_path_separator "\\")
 
     set(
         NEEDED_QT_FOLDERS
@@ -12,7 +14,6 @@ if (WIN32)
             "${CMAKE_BINARY_DIR}/bin/styles"
             "${CMAKE_BINARY_DIR}/bin/tls"
     )
-
     function(PlatformPreSetup)
         # set(QT_PATH "C:/Qt/6.4.3/mingw_64" )
         # set(QT_PATH "C:/msys64/clang64")
