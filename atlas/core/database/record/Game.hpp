@@ -62,6 +62,9 @@ namespace atlas::records
 		void setDescription( QString description );
 		bool versionExists( const QString& str );
 
+		//!Test Function.
+		QString fingAtlasData( std::string title, std::string developer );
+
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.

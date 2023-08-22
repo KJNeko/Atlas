@@ -162,7 +162,7 @@ void GameWidget::reloadRecord()
 	//Set Description
 	ui->teDescription->setText( description );
 	ui->teDetails->setText(
-		"<html><b>Title: </b>" + title + "<b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine
+		"<html><b>Title: </b>" + title + "<br><b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine
 		+ "<br><b>Version: </b>" + versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
 
 	const QPixmap cover { image_future.result() };
@@ -257,11 +257,11 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		QPixmap logo { logo_future.result() };
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
-		const QString& title { record->m_title };
+		//const QString& title { record->m_title };
 		QFontMetrics fm( font );
 		painter.setFont( font );
-		int font_width = fm.horizontalAdvance( title );
-		int font_height = fm.height();
+		//int font_width = fm.horizontalAdvance( title );
+		//int font_height = fm.height();
 
 		//We need to do some magic for logo sizes
 		//634 is min size banner width can be
@@ -276,11 +276,11 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			                      logo.height() };
 
 		QRect boundingRect;
-		const QRect font_rectangle = QRect(
+		/*const QRect font_rectangle = QRect(
 			static_cast< int >( ui->bannerFrame->width() * logo_offset ),
 			( image_height / 2 ) - ( font_height / 2 ),
 			font_width,
-			font_height );
+			font_height );*/
 
 		painter.drawPixmap( pixmap_rect, banner );
 
@@ -333,7 +333,7 @@ void GameWidget::on_btnManageRecord_pressed()
 	editor.exec();
 }
 
-void GameWidget::on_copyRecordToClip_pressed()
+/*void GameWidget::on_copyRecordToClip_pressed()
 {
 	const auto record_data { atlas::logging::dev::serialize( this->m_record.value() ) };
 
@@ -341,7 +341,7 @@ void GameWidget::on_copyRecordToClip_pressed()
 	doc.setObject( record_data );
 
 	QGuiApplication::clipboard()->setText( doc.toJson() );
-}
+}*/
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {

@@ -344,4 +344,12 @@ namespace atlas::records
 	  RecordException( ( "Invalid record id = " + std::to_string( in_id ) ).c_str() ),
 	  id( in_id )
 	{}
+
+	//Test functions
+	QString Game::fingAtlasData( std::string title, std::string developer )
+	{
+		spdlog::info( "{}{}", title, developer );
+		return "";
+		//RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> new_id;
+	}
 } // namespace atlas::records
