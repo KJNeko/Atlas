@@ -349,8 +349,9 @@ namespace atlas::records
 	std::string Game::findAtlasData( std::string title, std::string developer )
 	{
 		std::string data = "";
-		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << title << developer >> data;
-		spdlog::info( "{}{}", title, developer );
+		/*std::string tmp = "";
+		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name = ?" << title << developer >> data;
+		spdlog::info( "{}{}", title, developer );*/
 		return data;
 	}
 } // namespace atlas::records
