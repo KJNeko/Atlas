@@ -35,6 +35,7 @@ GameWidget::~GameWidget()
 void GameWidget::setRecord( const atlas::records::Game record )
 {
 	m_record = record;
+
 	reloadRecord();
 }
 
@@ -44,6 +45,7 @@ void GameWidget::reloadRecord()
 	auto& record { *m_record };
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
+	const QString& title = record->m_title;
 	const QString& description = record->m_description;
 	const QString& developer = record->m_creator;
 	[[maybe_unused]] const QString& engine = record->m_engine;
@@ -160,8 +162,8 @@ void GameWidget::reloadRecord()
 	//Set Description
 	ui->teDescription->setText( description );
 	ui->teDetails->setText(
-		"<html><b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine + "<br><b>Version: </b>"
-		+ versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
+		"<html><b>Title: </b>" + title + "<b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine
+		+ "<br><b>Version: </b>" + versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
 
 	const QPixmap cover { image_future.result() };
 
@@ -284,8 +286,9 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		//check if logo is null, if it is then draw text instead
 
-		logo.isNull() ? painter.drawText( font_rectangle, 0, title, &boundingRect ) :
-						painter.drawPixmap( pixmap_logo, logo );
+		//logo.isNull() ? painter.drawText( font_rectangle, 0, title, &boundingRect ) :
+		//Draw logo if available
+		painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}
 }
