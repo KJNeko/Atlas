@@ -353,7 +353,7 @@ void SettingsDialog::on_btnThreading_pressed()
 	ui->stackedWidget->setCurrentIndex( 4 );
 }
 
-void SettingsDialog::on_btnTestFeatures_pressed()
+void SettingsDialog::on_btnExpFeatures_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 5 );
 }
