@@ -2333,14 +2333,14 @@ padding:10x;</string>
       <layout class="QGridLayout" name="gridLayout_16">
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_15">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QCheckBox" name="checkBox_5">
            <property name="text">
-            <string>CheckBox</string>
+            <string>Try to find game metadata based on title and developer (This will only be shown in the Game Details screen)</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="5" column="0">
           <spacer name="verticalSpacer_8">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -2352,6 +2352,43 @@ padding:10x;</string>
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_42">
+           <property name="text">
+            <string>Images</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <spacer name="verticalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>5</width>
+             <height>5</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_39">
+           <property name="text">
+            <string>UI Features</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="checkBox_6">
+           <property name="text">
+            <string>Download images for games (Python 3.1x must be installed)</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
