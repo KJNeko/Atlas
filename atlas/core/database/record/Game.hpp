@@ -63,7 +63,7 @@ namespace atlas::records
 		bool versionExists( const QString& str );
 
 		//!Test Function.
-		std::string findAtlasData( std::string title, std::string developer );
+		std::vector< std::string > findAtlasData( std::string title, std::string developer );
 
 		//! Adds a new version. Will throw if version of same name exists.
 		/**

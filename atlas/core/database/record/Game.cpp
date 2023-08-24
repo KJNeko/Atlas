@@ -8,6 +8,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include <cstring>
+
 #include "GameData.hpp"
 #include "core/imageManager.hpp"
 
@@ -346,13 +348,12 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::string Game::findAtlasData( std::string title, std::string developer )
+	std::vector< std::string > Game::findAtlasData( std::string title, std::string developer )
 	{
-		std::string data = "";
-		spdlog::info( "{}{}", title, developer );
-		/*std::string tmp = "";
-		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name = ?" << title << developer >> data;
-		*/
+		std::vector< std::string > data;
+		/*RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
+						   << developer
+			>> data;*/
 		return data;
 	}
 } // namespace atlas::records

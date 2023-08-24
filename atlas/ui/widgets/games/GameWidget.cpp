@@ -170,6 +170,9 @@ void GameWidget::reloadRecord()
 	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
+
+	//Experimental Functions
+	spdlog::info( "{}", record.findAtlasData( title.toStdString(), developer.toStdString() )[ 0 ] );
 }
 
 void GameWidget::clearRecord()
