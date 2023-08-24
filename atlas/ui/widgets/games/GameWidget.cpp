@@ -11,12 +11,14 @@
 
 #include "core/database/record/Version.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "core/utils/execute/executeProc.hpp"
 #include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
 #include "ui/delegates/ImageDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui_GameWidget.h"
+
 
 GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameWidget )
 {
@@ -172,7 +174,7 @@ void GameWidget::reloadRecord()
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
 
 	//Experimental Functions
-	spdlog::info( "{}", record.findAtlasData( title.toStdString(), developer.toStdString() )[ 0 ] );
+	//spdlog::info( "{}", record.findAtlasData( title.toStdString(), developer.toStdString() )[ 0 ] );
 }
 
 void GameWidget::clearRecord()
@@ -317,7 +319,7 @@ void GameWidget::on_btnPlay_pressed()
 		ui->btnPlay->setIcon( icon );
 		ui->btnPlay->setStyleSheet(
 			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
-		version.value().playGame();
+		//version.value().playGame();
 	}
 	else
 	{
