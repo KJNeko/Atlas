@@ -174,6 +174,7 @@ namespace atlas::records
 		const std::filesystem::path path )
 	{
 		ZoneScoped;
+		QRect bannerRect { 0, 0, target_size.width(), target_size.height() };
 		if ( promise.isCanceled() ) return;
 
 		if ( path.empty() || !std::filesystem::exists( path ) )
@@ -212,7 +213,10 @@ namespace atlas::records
 			}
 
 			if ( promise.isCanceled() ) return;
-			//pixmap = pixmap.scaled( size, Qt::AspectRatioMode( scale_type ) );
+			//Temp fix for image fill
+			spdlog::
+				info( "target_size h:{}, w:{}, scale_type:{}", target_size.height(), target_size.width(), scale_type );
+			pixmap = pixmap.copy( bannerRect ); //Crop banner image. Mainly used for Fill scale option
 			internal::insert( key, pixmap );
 			promise.addResult( std::move( pixmap ) );
 		}
