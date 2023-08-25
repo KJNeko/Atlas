@@ -42,6 +42,7 @@ class GameWidget final : public QWidget
 	void setRecord( const atlas::records::Game record );
 	void clearRecord();
 	void paintEvent( QPaintEvent* event ) override;
+	void updateGameState();
 
 	//Button handling
 	void on_btnPlay_pressed();
@@ -53,6 +54,7 @@ class GameWidget final : public QWidget
 
 	Ui::GameWidget* ui;
 	void resizeEvent( QResizeEvent* event ) override;
+	bool lastState { false };
 };
 
 #endif // GAMEVIEW_H

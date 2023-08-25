@@ -351,6 +351,7 @@ namespace atlas::records
 	std::vector< std::string > Game::findAtlasData( std::string title, std::string developer )
 	{
 		std::vector< std::string > data;
+		spdlog::info( "{}{}", title, developer );
 		/*RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
 						   << developer
 			>> data;*/

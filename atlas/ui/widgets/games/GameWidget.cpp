@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QTimer>
 
 #include "core/database/record/Version.hpp"
 #include "core/utils/QImageBlur.hpp"
@@ -19,12 +20,15 @@
 #include "ui/models/FilepathModel.hpp"
 #include "ui_GameWidget.h"
 
-
 GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameWidget )
 {
 	ui->setupUi( this );
 	ui->previewList->setItemDelegate( new ImageDelegate() );
 	ui->previewList->setModel( new FilepathModel() );
+	//Used to detect when game has exited. Check every 2 seconds
+	QTimer* timer = new QTimer( this );
+	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
+	timer->start( 2000 );
 
 	//Check how many versions there are
 }
@@ -315,11 +319,12 @@ void GameWidget::on_btnPlay_pressed()
 {
 	if ( auto version = selectedVersion(); version.has_value() )
 	{
-		QIcon icon { ":/images/assets/stop_selected.svg" };
-		ui->btnPlay->setIcon( icon );
-		ui->btnPlay->setStyleSheet(
-			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
-		//version.value().playGame();
+		//atlas::records::Game& record { *m_record };
+		version.value().playGame();
+		//Reload record to change button and to update time played.
+		reloadRecord();
+		//executeProc(
+		//	record->m_game_id, version->getVersionName(), QString::fromStdString( version->getExecPath().string() ) );
 	}
 	else
 	{
@@ -356,4 +361,31 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
 		//		* ui->previewList->sizeHintForRow( 1 ) );
 	}
+}
+
+void GameWidget::updateGameState()
+{
+	if ( lastState != processIsRunning() )
+	{
+		spdlog::info( "Reload Record" );
+		reloadRecord();
+	}
+	//Check if game is already running. Update Status
+	if ( processIsRunning() == true )
+	{
+		QIcon icon { ":/images/assets/stop_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
+	}
+	else
+	{
+		QIcon icon { ":/images/assets/play_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(43, 185, 67, 255), stop:1 rgba(111, 204, 0, 255));" );
+	}
+
+	lastState = processIsRunning();
+	//Check last state. If changed, update playtime.
 }
