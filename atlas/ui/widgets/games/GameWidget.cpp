@@ -319,12 +319,15 @@ void GameWidget::on_btnPlay_pressed()
 {
 	if ( auto version = selectedVersion(); version.has_value() )
 	{
-		//atlas::records::Game& record { *m_record };
+		if(processIsRunning())
+		{
+			softTerminateProcess();
+		}
+		else{
 		version.value().playGame();
-		//Reload record to change button and to update time played.
+		}
+
 		reloadRecord();
-		//executeProc(
-		//	record->m_game_id, version->getVersionName(), QString::fromStdString( version->getExecPath().string() ) );
 	}
 	else
 	{
