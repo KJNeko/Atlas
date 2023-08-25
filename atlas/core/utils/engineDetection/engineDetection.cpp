@@ -448,7 +448,6 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
 				{
-					if ( file.depth > 1 ) break;
 					if ( file.ext == line )
 					{
 						isEngine = true;
