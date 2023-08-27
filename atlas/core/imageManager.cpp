@@ -126,12 +126,13 @@ namespace imageManager
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
 		QByteArray webp_byteArray;
 		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, image_type.c_str(), 90 );
+		temp_image.save( &webp_buffer, "webp", 90 );
 		TracyCZoneEnd( tracy_SaveImage );
 
 		//Which is bigger?
 		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
 		{
+			spdlog::debug( "byteArray is smaller: {} <= {}", byteArray.size(), webp_buffer.size() );
 			return useQImage();
 		}
 
