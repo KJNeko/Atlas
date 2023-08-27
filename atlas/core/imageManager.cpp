@@ -85,6 +85,12 @@ namespace imageManager
 			return hash.result();
 		};
 
+		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
+		QByteArray webp_byteArray;
+		QBuffer webp_buffer( &webp_byteArray );
+		temp_image.save( &webp_buffer, "webp", 90 );
+		TracyCZoneEnd( tracy_SaveImage );
+
 		auto getDestFilePath = [ &byteArray, &path, &hashData, &dest_root ] // Use the image hash + ext as its filename
 		{
 			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
@@ -122,12 +128,6 @@ namespace imageManager
 			spdlog::error( "Image too big for webp" );
 			return useQImage(); // Don't use WebP
 		}
-
-		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
-		QByteArray webp_byteArray;
-		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, "webp", 90 );
-		TracyCZoneEnd( tracy_SaveImage );
 
 		//Which is bigger?
 		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
