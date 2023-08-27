@@ -67,7 +67,7 @@ target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
-add_custom_target(TARGET Atlas POST_BUILD   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/data)
+add_custom_target(TARGET Atlas POST_BUILD   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/data)
 
 PlatformPostSetup()
 CompilerPostSetup()
