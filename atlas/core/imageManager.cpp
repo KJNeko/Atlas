@@ -46,7 +46,7 @@ namespace imageManager
 
 	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		//spdlog::debug( path );
+		spdlog::debug( "Importing Image" );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
@@ -119,6 +119,7 @@ namespace imageManager
 		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
+			spdlog::error( "Image too big for webp" );
 			return useQImage(); // Don't use WebP
 		}
 
