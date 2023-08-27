@@ -71,18 +71,21 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
+	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
 		ZoneScopedN( "Process file" );
+
 		if ( depth > 1 ) break;
 
 		if ( std::filesystem::is_regular_file( path ) )
 		{
 			if ( isBlacklist( filename ) ) continue;
 
-			if ( path.extension() == ".exe" || path.extension() == ".html" || path.extension() == ".sh" )
+			if ( std::find( extensions.begin(), extensions.end(), path.extension().string() ) != extensions.end() )
+
 			{
 				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
 				QMimeDatabase mime_db;
@@ -102,6 +105,11 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					continue;
 				}
 				else if ( type.inherits( "text/plain" ) && ext == ".html" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".swf" )
 				{
 					potential_executables.emplace_back( relative );
 					continue;
@@ -143,6 +151,8 @@ std::vector< std::filesystem::path >
 		if ( path.extension() == ".exe" || path.extension() == ".EXE" )
 			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 		if ( path.extension() == ".html" || path.extension() == ".HTML" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( path.extension() == ".swf" || path.extension() == ".SWF" )
 			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
@@ -448,6 +458,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
 				{
+					if ( file.depth > 1 ) break;
 					if ( file.ext == line )
 					{
 						isEngine = true;
