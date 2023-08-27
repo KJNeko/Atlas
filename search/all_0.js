@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['readme_0',['README',['../md_README.html',1,'']]],
-  ['readme_2emd_1',['README.md',['../README_8md.html',1,'']]]
+  ['_242_20a_0',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue $2&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]]
 ];
