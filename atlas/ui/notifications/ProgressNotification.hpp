@@ -49,7 +49,19 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 	ProgressSignaler( QString str );
 
 	void setMax( int i );
-	void setProgress( int i );
+
+	template < typename T >
+		requires std::is_integral_v< T >
+	void setProgress( T i )
+	{
+		if constexpr ( std::is_same_v< T, int > )
+		{
+			emit progressChanged( i );
+		}
+		else
+			emit progressChanged( static_cast< int >( i ) );
+	}
+
 	void setSubMessage( const QString str );
 	void setMessage( const QString str );
 

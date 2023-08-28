@@ -18,6 +18,7 @@
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"
 #include "core/gamelist/utils.hpp"
+#include "core/pools.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/foldersize.hpp"
 #include "core/utils/regex/regex.hpp"
@@ -198,13 +199,14 @@ try
 			{
 				++directories_left;
 				//The regex was a match. We can now process this directory further
-				futures.emplace_back( QtConcurrent::run( &m_thread_pool, runner, pattern, itter->path(), base )
-				                          .then(
-											  [ this ]( const GameImportData data )
-											  {
-												  emit foundGame( data );
-												  --directories_left;
-											  } ) );
+				futures.emplace_back( QtConcurrent::
+				                          run( &globalPools().pre_importers, runner, pattern, itter->path(), base )
+				                              .then(
+												  [ this ]( const GameImportData data )
+												  {
+													  emit foundGame( data );
+													  --directories_left;
+												  } ) );
 
 				if ( promise.isCanceled() ) break;
 				itter.pop();
@@ -252,9 +254,8 @@ catch ( ... )
 void GameScanner::start( const std::filesystem::path path, const QString regex )
 {
 	ZoneScoped;
-	m_thread_pool.setMaxThreadCount( 5 );
 
-	m_runner_future = QtConcurrent::run( &m_thread_pool, &GameScanner::mainRunner, this, path, regex );
+	m_runner_future = QtConcurrent::run( &globalPools().pre_importers, &GameScanner::mainRunner, this, path, regex );
 	if ( m_runner_future.isFinished() ) // Optimistic checking if we finished instantly.
 		emitComplete();
 	else
@@ -293,6 +294,4 @@ GameScanner::~GameScanner()
 {
 	ZoneScoped;
 	if ( m_runner_future.isRunning() ) m_runner_future.cancel();
-
-	m_thread_pool.waitForDone();
 }

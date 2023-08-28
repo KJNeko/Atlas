@@ -15,7 +15,6 @@ class GameScanner final : public QObject
 {
 	Q_OBJECT
 
-	QThreadPool m_thread_pool {};
 	QFuture< void > m_runner_future {};
 	QFutureWatcher< void > m_watcher {};
 

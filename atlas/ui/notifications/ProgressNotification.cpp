@@ -42,11 +42,6 @@ void ProgressSignaler::setMax( int i )
 	emit maxChanged( i );
 }
 
-void ProgressSignaler::setProgress( int i )
-{
-	emit progressChanged( i );
-}
-
 void ProgressSignaler::setSubMessage( const QString str )
 {
 	emit subMessageChanged( str );
