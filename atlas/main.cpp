@@ -101,9 +101,7 @@ int main( int argc, char** argv )
 	QApplication app { argc, argv };
 	//Fix for windeployqt not adding the bin directory to itself for some reason
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
-	qDebug() << QApplication::libraryPaths();
-	StartupWidget startupWidget;
-	startupWidget.show();
+	qDebug() << QApplication::libraryPaths();	
 	const int code { app.exec() };
 
 	clear_lock();
