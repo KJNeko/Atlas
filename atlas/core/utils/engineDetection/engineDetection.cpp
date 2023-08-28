@@ -72,7 +72,7 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
-	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv" };
+	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
@@ -128,6 +128,16 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					potential_executables.emplace_back( relative );
 					continue;
 				}
+				else if ( ext == ".bat" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".rag" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
 				if constexpr ( sys::is_linux )
 				{
 					if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
@@ -168,6 +178,8 @@ std::vector< std::filesystem::path >
 		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 		if ( extension == ".qsp" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 		if ( extension == ".jar" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".bat" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".rag" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
