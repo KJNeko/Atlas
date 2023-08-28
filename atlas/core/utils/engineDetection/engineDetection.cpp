@@ -123,7 +123,11 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					potential_executables.emplace_back( relative );
 					continue;
 				}
-
+				else if ( ext == ".qsp" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
 				if constexpr ( sys::is_linux )
 				{
 					if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
@@ -162,6 +166,8 @@ std::vector< std::filesystem::path >
 		if ( extension == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 		if ( extension == ".html" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".qsp" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".jar" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
