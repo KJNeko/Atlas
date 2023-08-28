@@ -43,6 +43,9 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( ProgressSignaler )
 
+	std::uint64_t counter { 0 };
+	std::uint64_t max { 0 };
+
   public:
 
 	ProgressSignaler();
@@ -60,6 +63,11 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 		}
 		else
 			emit progressChanged( static_cast< int >( i ) );
+
+		if constexpr ( std::is_same_v< T, decltype( counter ) > )
+			counter = i;
+		else
+			counter = static_cast< decltype( counter ) >( i );
 	}
 
 	void setSubMessage( const QString str );
@@ -73,7 +81,10 @@ class ProgressSignaler final : public atlas::notifications::NotificationSignaler
 
   public slots:
 
-	void triggerSelfClose() { emit selfClose(); }
+	void triggerSelfClose()
+	{
+		if ( counter == max ) emit selfClose();
+	}
 
   signals:
 	void progressChanged( int i );

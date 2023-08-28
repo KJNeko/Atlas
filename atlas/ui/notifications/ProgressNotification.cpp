@@ -39,6 +39,7 @@ void ProgressSignaler::hookSignaler( ProgressNotification* notif )
 
 void ProgressSignaler::setMax( int i )
 {
+	max = static_cast< decltype( max ) >( i );
 	emit maxChanged( i );
 }
 
