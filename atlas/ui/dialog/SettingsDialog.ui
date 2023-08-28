@@ -342,7 +342,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -2329,12 +2329,12 @@ padding:10x;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="settingsTest">
+     <widget class="QWidget" name="settingsExperimental">
       <layout class="QGridLayout" name="gridLayout_16">
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_15">
          <item row="1" column="0">
-          <widget class="QCheckBox" name="checkBox_5">
+          <widget class="QCheckBox" name="cbExpFindAtlData">
            <property name="text">
             <string>Try to find game metadata based on title and developer (This will only be shown in the Game Details screen)</string>
            </property>
@@ -2384,9 +2384,12 @@ padding:10x;</string>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QCheckBox" name="checkBox_6">
+          <widget class="QCheckBox" name="cbExpBannerDownload">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
-            <string>Download images for games (Python 3.1x must be installed)</string>
+            <string>Download banner images for games (During Import)</string>
            </property>
           </widget>
          </item>

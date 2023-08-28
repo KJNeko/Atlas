@@ -296,6 +296,8 @@ SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(
 	remote, check_rate, int, std::chrono::duration_cast< std::chrono::seconds >( std::chrono::hours( 24 ) ).count() )
 
+SETTINGS_D( experimental, local_match, bool, false )
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
