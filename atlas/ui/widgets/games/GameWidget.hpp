@@ -47,7 +47,7 @@ class GameWidget final : public QWidget
 	void on_btnPlay_pressed();
 	void on_tbSelectVersion_pressed();
 	void on_btnManageRecord_pressed();
-	void on_copyRecordToClip_pressed();
+	//void on_copyRecordToClip_pressed();
 
   private:
 
