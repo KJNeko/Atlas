@@ -16,7 +16,6 @@
 #include "core/database/Database.hpp"
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
-#include "ui/widgets/startupwidget.h"
 
 // clang-format off
 #ifdef _WIN32
