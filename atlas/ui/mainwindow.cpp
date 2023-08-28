@@ -81,6 +81,16 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
 	//ui->gamesTree->model()->setHeaderData( 1, Qt::Horizontal, QString( "Games" ) );
+
+	//DISABLE FEATURES NOT USED IN .5beta
+	ui->actionArrangeBy->setVisible( false );
+	ui->actionCoverView->setVisible( false );
+	ui->actionListView->setVisible( false );
+	ui->actionManage->setVisible( false );
+	ui->actionSimpleImporter->setVisible( false );
+	ui->actionSingleImporter->setVisible( false );
+	ui->actionDownload->setVisible( false );
+	ui->actionUpdates->setEnabled( false );
 }
 
 MainWindow::~MainWindow()

@@ -747,7 +747,7 @@ margin-right:5px;</string>
      <addaction name="actionSingleImporter"/>
     </widget>
     <addaction name="menuImport"/>
-    <addaction name="actionMange"/>
+    <addaction name="actionManage"/>
     <addaction name="actionDownload"/>
     <addaction name="actionOptions"/>
    </widget>
@@ -768,7 +768,7 @@ margin-right:5px;</string>
    <addaction name="menuGames"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionMange">
+  <action name="actionManage">
    <property name="text">
     <string>Mange</string>
    </property>
