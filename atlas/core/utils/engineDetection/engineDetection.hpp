@@ -30,13 +30,13 @@ enum Engine : int
 	NVList,
 	Sukai2,
 	HTML,
+	QSP,
+	BAT,
 	ENGINES_END,
 	MonoGame,
 	GamesforLive,
 	UNKNOWN
 };
-
-
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >

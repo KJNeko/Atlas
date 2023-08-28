@@ -260,17 +260,6 @@ template <>
 bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< Unity >" );
-	/*for ( const auto& file : scanner )
-	{
-		if ( file.depth > 1 ) return false;
-
-		if ( file.filename == "Data" && std::filesystem::is_directory( file.path ) )
-		{
-			//Check deeper
-			return std::filesystem::exists( scanner.path() / "Data" / "Managed" / "Assembly-CSharp.dll" );
-		}
-	}*/
-
 	return checkEngineType( "Unity", scanner );
 }
 
@@ -460,6 +449,30 @@ template <>
 QString engineNameT< GamesforLive >()
 {
 	return "Games for Live";
+}
+
+template <>
+bool isEngineT< QSP >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "QSP", scanner );
+}
+
+template <>
+QString engineNameT< QSP >()
+{
+	return "QSP";
+}
+
+template <>
+bool isEngineT< BAT >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "BAT", scanner );
+}
+
+template <>
+QString engineNameT< BAT >()
+{
+	return "Windows";
 }
 
 //Pass engine name for verifying type
