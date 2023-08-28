@@ -5,16 +5,14 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
-
-#include <QFuture>		// Keep the Qt #includes up here to appease the AutoMoc.
+#include <QFuture> // Keep the Qt #includes up here to appease the AutoMoc.
 #include <QPixmap>
 
 #include <filesystem>
+#include <filesystem> // Keep this down here for the same reason.
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-
-#include <filesystem>	// Keep this down here for the same reason.
 
 namespace atlas::records
 {
@@ -51,6 +49,8 @@ namespace atlas::records
 
 		Game( const Game& other ) : QObject( other.parent() ), ptr( other.ptr ), m_id( other.m_id )
 		{
+			if ( other.m_id == INVALID_RECORD_ID )
+				throw std::runtime_error( "Attempted to copy an object with an invalid record id" );
 			this->moveToThread( other.thread() );
 		}
 
@@ -118,7 +118,7 @@ namespace atlas::records
 		sizedBannerLoaded( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const QPixmap pixmap );
 	 */
 		void dataChanged();
-	};	// class Game
+	}; // class Game
 
 	//! Imports a record into the database
 	/**
