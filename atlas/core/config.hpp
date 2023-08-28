@@ -295,7 +295,7 @@ SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(
 	remote, check_rate, int, std::chrono::duration_cast< std::chrono::seconds >( std::chrono::hours( 24 ) ).count() )
 
-SETTINGS_D( threads, import_threads, int, 1 )
+SETTINGS_D( threads, import_threads, int, 2 )
 SETTINGS_D( threads, image_import_threads, int, 4 )
 SETTINGS_D( threads, image_loader_threads, int, 2 )
 SETTINGS_D( threads, import_pre_loader_threads, int, 4 )
