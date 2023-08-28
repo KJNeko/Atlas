@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QMimeDatabase>
+#include <QString>
 
 #include <tracy/TracyC.h>
 
@@ -84,7 +85,11 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 		{
 			if ( isBlacklist( filename ) ) continue;
 
-			if ( std::find( extensions.begin(), extensions.end(), path.extension().string() ) != extensions.end() )
+			if ( std::find(
+					 extensions.begin(),
+					 extensions.end(),
+					 QString::fromStdString( path.extension().string() ).toLower().toStdString() )
+			     != extensions.end() )
 
 			{
 				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
@@ -92,18 +97,17 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 				const auto type { mime_db.mimeTypeForFile( QString::fromStdString( path.string() ) ) };
 				TracyCZoneEnd( mimeInfo_Tracy );
 
-				//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
 				//General executables
+				//.exe
 				if ( type.inherits( "application/x-ms-dos-executable" ) )
 				{
-					//potential_executables.insert( potential_executables.begin(), relative );
 					//prioritize AMD64
 					path.string().find( "32" ) ?
 						potential_executables.insert( potential_executables.begin(), relative ) :
 						potential_executables.insert( potential_executables.end(), relative );
-					//potential_executables.emplace_back( relative );
 					continue;
 				}
+				//.html
 				else if ( type.inherits( "text/plain" ) && ext == ".html" )
 				{
 					potential_executables.emplace_back( relative );
