@@ -118,6 +118,11 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					potential_executables.emplace_back( relative );
 					continue;
 				}
+				else if ( ext == ".jar" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
 
 				if constexpr ( sys::is_linux )
 				{
@@ -149,15 +154,14 @@ std::vector< std::filesystem::path >
 
 	for ( auto& path : paths )
 	{
-		if constexpr ( sys::is_linux )
-			if ( path.extension() == ".sh" ) execs.emplace_back( std::move( path ), 20 );
+		std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
 
-		if ( path.extension() == ".exe" || path.extension() == ".EXE" )
-			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( path.extension() == ".html" || path.extension() == ".HTML" )
-			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( path.extension() == ".swf" || path.extension() == ".SWF" )
-			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if constexpr ( sys::is_linux )
+			if ( extension == ".sh" ) execs.emplace_back( std::move( path ), 20 );
+
+		if ( extension == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".html" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
@@ -174,7 +178,8 @@ std::vector< std::filesystem::path >
 template <>
 QString engineNameT< UNKNOWN >()
 {
-	return "Unknown";
+	//Return other instead of unknown
+	return "Other";
 }
 
 template < Engine engine >
