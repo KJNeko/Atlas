@@ -79,6 +79,7 @@ namespace atlas
 		const QString path { REMOTE "api/updates" };
 		spdlog::info( "Checking remote for updates at {}", path.toStdString() );
 		QNetworkRequest request { QUrl { path } };
+		request.setTransferTimeout( 2000 );
 		auto* reply { m_manager.get( request ) };
 
 		connect(
@@ -87,11 +88,18 @@ namespace atlas
 			this,
 			[ =, this ]() { handleJsonResponse( reply ); },
 			Qt::SingleShotConnection );
+
+		connect(
+			reply,
+			&QNetworkReply::errorOccurred,
+			this,
+			[ =, this ]() { handleManifestError( reply ); },
+			Qt::SingleShotConnection );
 	}
 
 	void AtlasRemote::handleDownloader( QNetworkReply* reply )
 	{
-		spdlog::debug( "Handling downloader from {}", reply->url().path().toStdString() );
+		spdlog::debug( "Handling download from {}", reply->url().path().toStdString() );
 		ZoneScoped;
 
 		if ( reply->error() != QNetworkReply::NoError )
@@ -136,6 +144,13 @@ namespace atlas
 			&QNetworkReply::finished,
 			this,
 			[ =, this ]() { handleDownloader( reply ); },
+			Qt::SingleShotConnection );
+
+		connect(
+			reply,
+			&QNetworkReply::errorOccurred,
+			this,
+			[ =, this ]() { handleDownloadError( reply ); },
 			Qt::SingleShotConnection );
 	}
 
@@ -383,6 +398,160 @@ namespace atlas
 		                   .count() :
 		               0 )
 			<< update_time;
+	}
+
+	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error )
+	{
+		spdlog::error( "Failed to download manifest from remote: {}", static_cast< int >( error ) );
+		switch ( error )
+		{
+			case QNetworkReply::NoError:
+				break;
+			case QNetworkReply::ConnectionRefusedError:
+				break;
+			case QNetworkReply::RemoteHostClosedError:
+				break;
+			case QNetworkReply::HostNotFoundError:
+				break;
+			case QNetworkReply::TimeoutError:
+				spdlog::error( "Timed out" );
+				break;
+			case QNetworkReply::OperationCanceledError:
+				break;
+			case QNetworkReply::SslHandshakeFailedError:
+				break;
+			case QNetworkReply::TemporaryNetworkFailureError:
+				break;
+			case QNetworkReply::NetworkSessionFailedError:
+				break;
+			case QNetworkReply::BackgroundRequestNotAllowedError:
+				break;
+			case QNetworkReply::TooManyRedirectsError:
+				break;
+			case QNetworkReply::InsecureRedirectError:
+				break;
+			case QNetworkReply::UnknownNetworkError:
+				break;
+			case QNetworkReply::ProxyConnectionRefusedError:
+				break;
+			case QNetworkReply::ProxyConnectionClosedError:
+				break;
+			case QNetworkReply::ProxyNotFoundError:
+				break;
+			case QNetworkReply::ProxyTimeoutError:
+				break;
+			case QNetworkReply::ProxyAuthenticationRequiredError:
+				break;
+			case QNetworkReply::UnknownProxyError:
+				break;
+			case QNetworkReply::ContentAccessDenied:
+				break;
+			case QNetworkReply::ContentOperationNotPermittedError:
+				break;
+			case QNetworkReply::ContentNotFoundError:
+				break;
+			case QNetworkReply::AuthenticationRequiredError:
+				break;
+			case QNetworkReply::ContentReSendError:
+				break;
+			case QNetworkReply::ContentConflictError:
+				break;
+			case QNetworkReply::ContentGoneError:
+				break;
+			case QNetworkReply::UnknownContentError:
+				break;
+			case QNetworkReply::ProtocolUnknownError:
+				break;
+			case QNetworkReply::ProtocolInvalidOperationError:
+				break;
+			case QNetworkReply::ProtocolFailure:
+				break;
+			case QNetworkReply::InternalServerError:
+				break;
+			case QNetworkReply::OperationNotImplementedError:
+				break;
+			case QNetworkReply::ServiceUnavailableError:
+				break;
+			case QNetworkReply::UnknownServerError:
+				break;
+		}
+	}
+
+	void AtlasRemote::handleDownloadError( QNetworkReply::NetworkError error )
+	{
+		spdlog::error( "Failed to download file from remote: {}", static_cast< int >( error ) );
+		switch ( error )
+		{
+			case QNetworkReply::NoError:
+				break;
+			case QNetworkReply::ConnectionRefusedError:
+				break;
+			case QNetworkReply::RemoteHostClosedError:
+				break;
+			case QNetworkReply::HostNotFoundError:
+				break;
+			case QNetworkReply::TimeoutError:
+				spdlog::error( "Timed out" );
+				break;
+			case QNetworkReply::OperationCanceledError:
+				break;
+			case QNetworkReply::SslHandshakeFailedError:
+				break;
+			case QNetworkReply::TemporaryNetworkFailureError:
+				break;
+			case QNetworkReply::NetworkSessionFailedError:
+				break;
+			case QNetworkReply::BackgroundRequestNotAllowedError:
+				break;
+			case QNetworkReply::TooManyRedirectsError:
+				break;
+			case QNetworkReply::InsecureRedirectError:
+				break;
+			case QNetworkReply::UnknownNetworkError:
+				break;
+			case QNetworkReply::ProxyConnectionRefusedError:
+				break;
+			case QNetworkReply::ProxyConnectionClosedError:
+				break;
+			case QNetworkReply::ProxyNotFoundError:
+				break;
+			case QNetworkReply::ProxyTimeoutError:
+				break;
+			case QNetworkReply::ProxyAuthenticationRequiredError:
+				break;
+			case QNetworkReply::UnknownProxyError:
+				break;
+			case QNetworkReply::ContentAccessDenied:
+				break;
+			case QNetworkReply::ContentOperationNotPermittedError:
+				break;
+			case QNetworkReply::ContentNotFoundError:
+				break;
+			case QNetworkReply::AuthenticationRequiredError:
+				break;
+			case QNetworkReply::ContentReSendError:
+				break;
+			case QNetworkReply::ContentConflictError:
+				break;
+			case QNetworkReply::ContentGoneError:
+				break;
+			case QNetworkReply::UnknownContentError:
+				break;
+			case QNetworkReply::ProtocolUnknownError:
+				break;
+			case QNetworkReply::ProtocolInvalidOperationError:
+				break;
+			case QNetworkReply::ProtocolFailure:
+				break;
+			case QNetworkReply::InternalServerError:
+				break;
+			case QNetworkReply::OperationNotImplementedError:
+				break;
+			case QNetworkReply::ServiceUnavailableError:
+				break;
+			case QNetworkReply::UnknownServerError:
+				break;
+		}
 	}
 
 } // namespace atlas
