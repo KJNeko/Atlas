@@ -40,6 +40,7 @@ int main( int argc, char** argv )
 	//initLogging();
 	QApplication app { argc, argv };
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
+
 	QSplashScreen splash(splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ));
 	splash.show();
     app.processEvents();
