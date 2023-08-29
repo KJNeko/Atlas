@@ -5,6 +5,7 @@
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
+#include "./dialog/AboutAtlas.hpp"
 #include "./ui_mainwindow.h"
 #include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
@@ -207,6 +208,12 @@ void MainWindow::on_actionAboutQt_triggered()
 	aboutQtDialog.setModal( true );
 	aboutQtDialog.exec();
 }
+void MainWindow::on_actionAboutAtlas_triggered(){
+	AboutAtlas aboutAtlas { this };
+	aboutAtlas.setModal( true );
+	aboutAtlas.exec();
+}
+
 
 void MainWindow::on_actionViewFileHistory_triggered()
 {
