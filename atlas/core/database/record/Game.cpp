@@ -363,13 +363,14 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::vector< std::string > Game::findAtlasData( std::string title, std::string developer )
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
 	{
-		std::vector< std::string > data;
+		//std::vector< std::string > data;
+		std::optional< atlas::remote::AtlasRemoteData > data;
 		spdlog::info( "{}{}", title, developer );
-		/*RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
+		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
 						   << developer
-			>> data;*/
+			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 		return data;
 	}
 } // namespace atlas::records

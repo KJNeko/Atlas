@@ -13,6 +13,7 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
+#include "core/database/remote/AtlasData.hpp"
 
 namespace atlas::records
 {
@@ -65,8 +66,7 @@ namespace atlas::records
 		bool versionExists( const QString& str );
 
 		//!Test Function.
-		std::vector< std::string > findAtlasData( std::string title, std::string developer );
-
+		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( std::string title, std::string developer );
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.

@@ -103,10 +103,11 @@ namespace atlas::records
 		ZoneScoped;
 		if ( const auto executable = getExecPath(); std::filesystem::exists( executable ) )
 		{
-			const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
+			//const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
 			executeProc( m_parent_id, m_version, QString::fromStdString( executable.string() ) );
 
+			/*
 			const auto duration {
 				std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )
 			};
@@ -115,6 +116,7 @@ namespace atlas::records
 			setLastPlayed( static_cast<
 						   uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( now.time_since_epoch() )
 			                               .count() ) );
+			*/
 
 			return;
 		}

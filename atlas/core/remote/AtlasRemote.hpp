@@ -29,6 +29,8 @@ namespace atlas
 
 		//! Returns a list of all updates.
 		std::vector< std::pair< std::uint64_t, std::uint64_t > > getUpdatesList() const;
+
+		//! Returns the next update to process. Returns 0 if no updates to process.
 		std::uint64_t getNextUpdateTime() const;
 
 	  public:
@@ -47,14 +49,21 @@ namespace atlas
 	  private slots:
 		//! Updates the local DB with the updates available
 		void processUpdateFile( const std::uint64_t update_time );
+
 		void downloadUpdate( const std::uint64_t update_time );
+
+		void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
+
+		void handleDownloadError( QNetworkReply::NetworkError error, QNetworkReply* reply );
+
 		//! Handles manifest requests from the server.
 		void handleJsonResponse( QNetworkReply* reply );
+
 		//! Handles download responses from the remote
 		void handleDownloader( QNetworkReply* reply );
+
 		//! Causes the remote to go through a full check. Asking for new updates and processing them.
 		void check();
-		void handleNetworkError( QNetworkReply::NetworkError );
 	};
 
 	void initRemoteHandler();
