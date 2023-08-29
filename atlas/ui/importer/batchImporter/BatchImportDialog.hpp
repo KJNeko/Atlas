@@ -56,6 +56,7 @@ class BatchImportDialog final : public QDialog
 	void startImportingGames(
 		const std::vector< GameImportData > data, const std::filesystem::path source, const bool move_after_import );
 	void importComplete( std::vector< RecordID > records );
+	void importComplete(); //Easier to use since we dont need to pass anything to main ui
 	void unpauseImport();
 };
 

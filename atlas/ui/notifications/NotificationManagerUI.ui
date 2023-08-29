@@ -14,9 +14,7 @@
    <string>NotificationManagerUI</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#NotificationManagerUI{
- border: 1px solid gray;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>

@@ -63,23 +63,7 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="1">
-       <spacer name="verticalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>300</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="0" colspan="2">
+      <item row="2" column="0" colspan="2">
        <widget class="QFrame" name="bannerDetailFrame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -88,71 +72,52 @@
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color:rgba(0, 0, 0, 150);
-border:none;</string>
+         <string notr="true"/>
         </property>
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="1" column="1">
-          <spacer name="verticalSpacer_8">
+         <item row="2" column="0">
+          <spacer name="bottomSpaceer_DNR">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
+            <enum>QSizePolicy::MinimumExpanding</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>12</height>
+             <height>20</height>
             </size>
            </property>
           </spacer>
          </item>
-         <item row="0" column="1">
-          <widget class="QToolButton" name="btnPlay">
-           <property name="minimumSize">
-            <size>
-             <width>140</width>
-             <height>38</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
+         <item row="1" column="0" colspan="2">
+          <widget class="QListView" name="previewList">
            <property name="styleSheet">
-            <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(43, 185, 67, 255), stop:1 rgba(111, 204, 0, 255));
-border-radius:none;</string>
+            <string notr="true">background-color: rgba(50,50, 50, 100);
+border-radius: 2px;</string>
            </property>
-           <property name="text">
-            <string>   PLAY</string>
+           <property name="flow">
+            <enum>QListView::LeftToRight</enum>
            </property>
-           <property name="icon">
-            <iconset resource="../../../resources.qrc">
-             <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg</iconset>
+           <property name="isWrapping" stdset="0">
+            <bool>true</bool>
            </property>
-           <property name="iconSize">
-            <size>
-             <width>75</width>
-             <height>30</height>
-            </size>
+           <property name="resizeMode">
+            <enum>QListView::Adjust</enum>
            </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonIconOnly</enum>
+           <property name="viewMode">
+            <enum>QListView::ListMode</enum>
            </property>
-           <property name="autoRaise">
-            <bool>false</bool>
+           <property name="uniformItemSizes">
+            <bool>true</bool>
            </property>
-           <property name="arrowType">
-            <enum>Qt::NoArrow</enum>
+           <property name="itemAlignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
-         <item row="2" column="1" colspan="12">
+         <item row="0" column="0" colspan="2">
           <widget class="QWidget" name="InfoPanel" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -528,7 +493,143 @@ color: rgb(255, 255, 255);</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="4">
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>300</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QFrame" name="frame">
+        <property name="styleSheet">
+         <string notr="true">background-color:rgba(0, 0, 0, 150);
+border:none;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0" rowspan="2">
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1" rowspan="2">
+          <widget class="QToolButton" name="btnPlay">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(43, 185, 67, 255), stop:1 rgba(111, 204, 0, 255));
+border-radius:none;</string>
+           </property>
+           <property name="text">
+            <string>   PLAY</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../resources.qrc">
+             <normaloff>:/images/assets/play_normal.svg</normaloff>:/images/assets/play_normal.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>75</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>false</bool>
+           </property>
+           <property name="arrowType">
+            <enum>Qt::NoArrow</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2" rowspan="2">
+          <widget class="QToolButton" name="tbSelectVersion">
+           <property name="minimumSize">
+            <size>
+             <width>20</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(43, 185, 67, 255);
+border-radius:none;
+color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../resources.qrc">
+             <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>12</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" rowspan="2">
+          <spacer name="horizontalSpacer_22">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4" rowspan="2">
           <widget class="QWidget" name="LastPlayed" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -602,7 +703,7 @@ color: rgb(255, 255, 255);</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="5">
+         <item row="0" column="5" rowspan="2">
           <spacer name="horizontalSpacer_14">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -618,184 +719,7 @@ color: rgb(255, 255, 255);</string>
            </property>
           </spacer>
          </item>
-         <item row="0" column="9">
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>517</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="2">
-          <widget class="QToolButton" name="tbSelectVersion">
-           <property name="minimumSize">
-            <size>
-             <width>20</width>
-             <height>38</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgba(43, 185, 67, 255);
-border-radius:none;
-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../resources.qrc">
-             <normaloff>:/images/assets/dropdownicon.svg</normaloff>:/images/assets/dropdownicon.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>16</width>
-             <height>12</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <spacer name="horizontalSpacer_22">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="3" column="1" colspan="12">
-          <widget class="QListView" name="previewList">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgba(50,50, 50, 100);
-border-radius: 2px;</string>
-           </property>
-           <property name="flow">
-            <enum>QListView::LeftToRight</enum>
-           </property>
-           <property name="isWrapping" stdset="0">
-            <bool>true</bool>
-           </property>
-           <property name="resizeMode">
-            <enum>QListView::Adjust</enum>
-           </property>
-           <property name="viewMode">
-            <enum>QListView::ListMode</enum>
-           </property>
-           <property name="uniformItemSizes">
-            <bool>true</bool>
-           </property>
-           <property name="itemAlignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="12">
-          <widget class="QToolButton" name="btnFavorite">
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: rgba( 255, 255, 255, 50 );
-             border-radius:3px;
-            </string>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../resources.qrc">
-             <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <spacer name="bottomSpaceer_DNR">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::MinimumExpanding</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="10">
-          <widget class="QPushButton" name="btnManageRecord">
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: rgba( 255, 255, 255, 55);
-             border-radius:3px;
-            </string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../resources.qrc">
-             <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="7">
-          <spacer name="horizontalSpacer_16">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>5</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="6">
+         <item row="0" column="6" rowspan="2">
           <widget class="QWidget" name="Playtime" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -875,7 +799,23 @@ border-radius: 2px;</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="8">
+         <item row="0" column="7" rowspan="2">
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>5</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="8" rowspan="2">
           <widget class="QWidget" name="StorageUsed" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -955,7 +895,20 @@ border-radius: 2px;</string>
            </layout>
           </widget>
          </item>
-         <item row="0" column="13">
+         <item row="0" column="9" rowspan="2" colspan="4">
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>505</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="13" rowspan="2">
           <spacer name="horizontalSpacer_17">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -971,23 +924,41 @@ border-radius: 2px;</string>
            </property>
           </spacer>
          </item>
-         <item row="0" column="0">
-          <spacer name="horizontalSpacer_15">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+         <item row="1" column="10">
+          <widget class="QPushButton" name="btnManageRecord">
+           <property name="minimumSize">
             <size>
-             <width>10</width>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: rgba( 255, 255, 255, 55);
+             border-radius:3px;
+            </string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../resources.qrc">
+             <normaloff>:/images/assets/settings.svg</normaloff>:/images/assets/settings.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
              <height>20</height>
             </size>
            </property>
-          </spacer>
+          </widget>
          </item>
-         <item row="0" column="11">
+         <item row="1" column="11">
           <widget class="QPushButton" name="btnInfo">
            <property name="minimumSize">
             <size>
@@ -1019,6 +990,50 @@ border-radius:3px;</string>
             </size>
            </property>
           </widget>
+         </item>
+         <item row="1" column="12">
+          <widget class="QToolButton" name="btnFavorite">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: rgba( 255, 255, 255, 50 );
+             border-radius:3px;
+            </string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../resources.qrc">
+             <normaloff>:/images/assets/rating_icon.svg</normaloff>:/images/assets/rating_icon.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <spacer name="verticalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>12</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>

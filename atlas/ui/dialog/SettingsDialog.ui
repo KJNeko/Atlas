@@ -47,13 +47,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#SettingsMenu{border-style: outset;
-border-width: 1px;
-border-color: rgb(0, 0, 0);
-border-left:none;
-border-bottom:none;
-background-color: rgb(202, 202, 202);}
-</string>
+      <string notr="true"/>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <property name="leftMargin">

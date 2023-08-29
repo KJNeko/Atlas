@@ -78,9 +78,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">#NavFrame{
-border-top: 1px solid gray;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -307,12 +305,7 @@ border-top-left-radius:0px;</string>
        <item row="4" column="0" colspan="3">
         <widget class="QTreeView" name="gamesTree">
          <property name="styleSheet">
-          <string notr="true">    border: 0px;
-    border-bottom: 1px solid gray;
-    border-top: 1px solid lightgray;
-    background-color: rgb(202, 202, 202);
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5x;</string>
+          <string notr="true"/>
          </property>
         </widget>
        </item>
@@ -628,10 +621,7 @@ margin-right:5px;</string>
         <item row="0" column="0">
          <widget class="RecordListView" name="recordView">
           <property name="styleSheet">
-           <string notr="true">    border: 0px;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;</string>
+           <string notr="true"/>
           </property>
           <property name="movement">
            <enum>QListView::Free</enum>
