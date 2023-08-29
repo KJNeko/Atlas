@@ -13,6 +13,7 @@
 
 #include "core/Types.hpp"
 #include "core/database/record/Game.hpp"
+#include "core/utils/FileScanner.hpp"
 
 /**
  *
@@ -36,9 +37,10 @@ QFuture< RecordID > importGame(
 	QString version,
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
-	bool owning = false,
-	bool scan_filesize = false,
-	AtlasID atlas_id = INVALID_ATLAS_ID );
+	const std::uint64_t folder_size,
+	const std::uint64_t file_count,
+	bool owning,
+	AtlasID atlas_id );
 
 struct GameImportData;
 
@@ -49,7 +51,6 @@ struct GameImportData;
  * @param owning see `importGame`
  * @return
  */
-QFuture< RecordID >
-	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize );
+QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning );
 
 #endif //ATLASGAMEMANAGER_IMPORTER_HPP

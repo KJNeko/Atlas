@@ -111,7 +111,7 @@ void BatchImportDialog::processFiles()
 
 	spdlog::debug( "Scanning {} for games", base );
 
-	scanner.start( base, cleaned_regex );
+	scanner.start( base, cleaned_regex, ui->cbScanFilesize->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }
@@ -133,16 +133,15 @@ void BatchImportDialog::importFiles()
 	ui->btnBack->setDisabled( true );
 
 	const bool owning { ui->cbMoveImported->isChecked() };
-	const bool scan_filesize { ui->cbScanFilesize->isChecked() };
 	const std::filesystem::path root { ui->tbPath->text().toStdString() };
 
 	(void)QtConcurrent::run(
-		[ games, owning, root, scan_filesize ]()
+		[ games, owning, root ]()
 		{
 			for ( auto game : games )
 			{
 				spdlog::debug( "Triggering import game for {}", game.title );
-				(void)importGame( std::move( game ), root, owning, scan_filesize );
+				(void)importGame( std::move( game ), root, owning );
 			}
 			spdlog::debug( "Finished queueing imports" );
 		} );

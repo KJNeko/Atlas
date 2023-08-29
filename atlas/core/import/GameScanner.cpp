@@ -27,7 +27,8 @@ void runner(
 	QPromise< GameImportData >& promise,
 	const QString regex,
 	const std::filesystem::path folder,
-	const std::filesystem::path base )
+	const std::filesystem::path base,
+	const bool size_files )
 {
 	ZoneScoped;
 	try
@@ -134,13 +135,27 @@ void runner(
 				}
 			}
 
+			std::uint64_t file_size { 0 };
+			std::uint64_t file_count { 0 };
+
+			if ( size_files )
+			{
+				//Size up files
+				for ( const auto& file : scanner )
+				{
+					++file_count;
+					file_size += file.size;
+				}
+			}
+
 			if ( promise.isCanceled() ) return;
 			GameImportData data { std::filesystem::relative( folder, base ),
 				                  std::move( title ),
 				                  std::move( creator ),
 				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
 				                  version.isEmpty() ? "0.0" : std::move( version ),
-				                  0,
+				                  file_size,
+				                  file_count,
 				                  potential_executables,
 				                  potential_executables.at( 0 ),
 				                  std::move( banners ),
@@ -169,7 +184,8 @@ void runner(
 	}
 }
 
-void GameScanner::mainRunner( QPromise< void >& promise, const std::filesystem::path base, QString pattern )
+void GameScanner::
+	mainRunner( QPromise< void >& promise, const std::filesystem::path base, QString pattern, const bool size_folder )
 try
 {
 	ZoneScoped;
@@ -200,7 +216,12 @@ try
 				++directories_left;
 				//The regex was a match. We can now process this directory further
 				futures.emplace_back( QtConcurrent::
-				                          run( &globalPools().pre_importers, runner, pattern, itter->path(), base )
+				                          run( &globalPools().pre_importers,
+				                               runner,
+				                               pattern,
+				                               itter->path(),
+				                               base,
+				                               size_folder )
 				                              .then(
 												  [ this ]( const GameImportData data )
 												  {
@@ -251,11 +272,12 @@ catch ( ... )
 	spdlog::error( "Ate error before entering Qt space!" );
 }
 
-void GameScanner::start( const std::filesystem::path path, const QString regex )
+void GameScanner::start( const std::filesystem::path path, const QString regex, const bool size_folders )
 {
 	ZoneScoped;
 
-	m_runner_future = QtConcurrent::run( &globalPools().pre_importers, &GameScanner::mainRunner, this, path, regex );
+	m_runner_future =
+		QtConcurrent::run( &globalPools().pre_importers, &GameScanner::mainRunner, this, path, regex, size_folders );
 	if ( m_runner_future.isFinished() ) // Optimistic checking if we finished instantly.
 		emitComplete();
 	else

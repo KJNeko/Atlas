@@ -13,16 +13,17 @@
 
 struct GameImportData
 {
-	std::filesystem::path path {};
-	QString title { "SOMETHING WENT WRONG" };
-	QString creator { "SOMETHING WENT WRONG" };
-	QString engine { "SOMETHING WENT WRONG" };
-	QString version { "SOMETHING WENT WRONG" };
-	std::size_t size {};
-	std::vector< std::filesystem::path > executables {};
-	std::filesystem::path executable {};
-	std::array< QString, BannerType::SENTINEL > banners {};
-	std::vector< QString > previews {};
+	std::filesystem::path path;
+	QString title;
+	QString creator;
+	QString engine;
+	QString version;
+	std::size_t size;
+	std::uint64_t file_count;
+	std::vector< std::filesystem::path > executables;
+	std::filesystem::path executable;
+	std::array< QString, BannerType::SENTINEL > banners;
+	std::vector< QString > previews;
 
 	//Remote information
 	AtlasID atlas_id { INVALID_ATLAS_ID };
@@ -33,7 +34,8 @@ struct GameImportData
 		QString creator_in,
 		QString engine_in,
 		QString version_in,
-		std::size_t size_in,
+		const std::size_t size_in,
+		const std::uint64_t file_count_in,
 		std::vector< std::filesystem::path > executables_in,
 		std::filesystem::path executable_in,
 		std::array< QString, BannerType::SENTINEL > banners_in,
@@ -43,7 +45,8 @@ struct GameImportData
 	  creator( std::move( creator_in ) ),
 	  engine( std::move( engine_in ) ),
 	  version( std::move( version_in ) ),
-	  size( std::move( size_in ) ),
+	  size( size_in ),
+	  file_count( file_count_in ),
 	  executables( std::move( executables_in ) ),
 	  executable( std::move( executable_in ) ),
 	  banners( std::move( banners_in ) ),

@@ -32,8 +32,9 @@ namespace internal
 		const QString& version,
 		const std::array< QString, BannerType::SENTINEL >& banners,
 		const std::vector< QString >& previews,
+		std::uint64_t game_size,
+		const std::uint64_t file_count,
 		const bool owning,
-		const bool scan_filesize,
 		const AtlasID atlas_id )
 	try
 	{
@@ -55,29 +56,30 @@ namespace internal
 		TracyCZoneEnd( tracy_checkZone );
 
 		TracyCZoneN( tracy_FileScanner, "File scan", true );
-		atlas::utils::FileScanner scanner { root };
 
 		//Get the size of the folder
 		signaler.setProgress( 1 );
 		signaler.setMax( 4 );
 		signaler.setSubMessage( "Calculating folder size: 0B" );
-		std::size_t folder_size { 0 };
-		std::size_t file_count { 0 };
 		QLocale locale;
-		if ( scan_filesize )
+		atlas::utils::FileScanner scanner { root };
+
+		spdlog::info( "Game size: {}", game_size );
+
+		if ( game_size == 0 )
 		{
 			for ( const auto& file : scanner )
 			{
-				++file_count;
-				folder_size += file.size;
+				game_size += file.size;
 
-				if ( folder_size % 1024 == 0 )
+				if ( game_size % 1024 == 0 )
 				{
 					signaler
 						.setSubMessage( QString( "Calculating folder size: %1" )
-					                        .arg( locale.formattedDataSize( static_cast< qint64 >( folder_size ) ) ) );
+					                        .arg( locale.formattedDataSize( static_cast< qint64 >( game_size ) ) ) );
 				}
 			}
+			spdlog::info( "Calculated size as: {}", game_size );
 		}
 		TracyCZoneEnd( tracy_FileScanner );
 
@@ -126,7 +128,8 @@ namespace internal
 			const auto path { banners[ i ] };
 			if ( !path.isEmpty() )
 			{
-				banner_futures[ i ] = imageManager::importImage( { path.toStdString() }, record->m_game_id );
+				const std::filesystem::path banner_path { path.toStdString() };
+				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -134,9 +137,10 @@ namespace internal
 			//If the game is going into our directory then we should clean up the banners
 			if ( owning )
 			{
-				// Remove the image file from the moved files.
-				std::filesystem::
-					remove( dest_root / std::filesystem::relative( { banners[ i ].toStdString() }, root ) );
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdString() }, root ) };
+				game_size -= std ::filesystem::file_size( r_path );
+				// Remove the image file from the moved files
+				std::filesystem::remove( r_path );
 			}
 		}
 
@@ -150,14 +154,16 @@ namespace internal
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdString() }, root ) };
+				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
-				std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
+				std::filesystem::remove( r_path );
 			}
 		}
 
 		signaler.setSubMessage( QString( "Importing banners: 0/%1" ).arg( BannerType::SENTINEL - 1 ) );
 
-		signaler.setMax( preview_futures.size() + BannerType::SENTINEL - 1 );
+		signaler.setMax( static_cast< int >( preview_futures.size() + BannerType::SENTINEL - 1 ) );
 
 		for ( int i = 0; i < BannerType::SENTINEL; i++ )
 		{
@@ -227,8 +233,9 @@ QFuture< RecordID > importGame(
 	QString version,
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
+	const std::uint64_t folder_size,
+	const std::uint64_t file_count,
 	const bool owning,
-	const bool scan_filesize,
 	const AtlasID atlas_id )
 {
 	ZoneScoped;
@@ -243,28 +250,40 @@ QFuture< RecordID > importGame(
 	         std::move( version ),
 	         std::move( banners ),
 	         std::move( previews ),
+	         folder_size,
+	         file_count,
 	         owning,
-	         scan_filesize,
 	         atlas_id );
 }
 
-QFuture< RecordID >
-	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize )
+QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
 {
 	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews, atlas_id ] =
-		std::move( data );
+	auto
+		[ path,
+	      title,
+	      creator,
+	      engine,
+	      version,
+	      size,
+	      file_count,
+	      executables,
+	      executable,
+	      banners,
+	      previews,
+	      atlas_id ] = std::move( data );
 
 	return importGame(
 		root / path,
 		root / path / executable,
 		std::move( title ),
 		std::move( creator ),
-		"",
+		std::move( engine ),
 		std::move( version ),
 		std::move( banners ),
 		std::move( previews ),
+		size,
+		file_count,
 		owning,
-		scan_filesize,
 		atlas_id );
 }
