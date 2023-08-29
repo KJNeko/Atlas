@@ -52,9 +52,9 @@ namespace atlas
 
 		void downloadUpdate( const std::uint64_t update_time );
 
-		void handleManifestError( QNetworkReply::NetworkError error );
+		void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
 
-		void handleDownloadError( QNetworkReply::NetworkError error );
+		void handleDownloadError( QNetworkReply::NetworkError error, QNetworkReply* reply );
 
 		//! Handles manifest requests from the server.
 		void handleJsonResponse( QNetworkReply* reply );
@@ -64,7 +64,6 @@ namespace atlas
 
 		//! Causes the remote to go through a full check. Asking for new updates and processing them.
 		void check();
-		void handleNetworkError( QNetworkReply::NetworkError );
 	};
 
 	void initRemoteHandler();

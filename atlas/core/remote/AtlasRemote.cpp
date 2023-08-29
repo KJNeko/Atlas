@@ -93,7 +93,7 @@ namespace atlas
 			reply,
 			&QNetworkReply::errorOccurred,
 			this,
-			[ =, this ]() { handleManifestError( reply ); },
+			[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
 			Qt::SingleShotConnection );
 	}
 
@@ -150,7 +150,7 @@ namespace atlas
 			reply,
 			&QNetworkReply::errorOccurred,
 			this,
-			[ =, this ]() { handleDownloadError( reply ); },
+			[ =, this ]( const QNetworkReply::NetworkError error ) { handleDownloadError( error, reply ); },
 			Qt::SingleShotConnection );
 	}
 
@@ -400,11 +400,14 @@ namespace atlas
 			<< update_time;
 	}
 
-	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error )
+	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
 	{
+		reply->deleteLater();
 		spdlog::error( "Failed to download manifest from remote: {}", static_cast< int >( error ) );
 		switch ( error )
 		{
+			default:
+				[[fallthrough]];
 			case QNetworkReply::NoError:
 				break;
 			case QNetworkReply::ConnectionRefusedError:
@@ -477,11 +480,14 @@ namespace atlas
 		}
 	}
 
-	void AtlasRemote::handleDownloadError( QNetworkReply::NetworkError error )
+	void AtlasRemote::handleDownloadError( QNetworkReply::NetworkError error, QNetworkReply* reply )
 	{
+		reply->deleteLater();
 		spdlog::error( "Failed to download file from remote: {}", static_cast< int >( error ) );
 		switch ( error )
 		{
+			default:
+				[[fallthrough]];
 			case QNetworkReply::NoError:
 				break;
 			case QNetworkReply::ConnectionRefusedError:
