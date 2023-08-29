@@ -65,3 +65,7 @@
 #previewList {
     background-color: gray;
 }
+
+#InfoPanel {
+    background-color: gray;
+}
