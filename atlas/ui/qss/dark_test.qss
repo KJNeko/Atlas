@@ -75,6 +75,12 @@ QLabel {
     color: rgb(210, 210, 210);
 }
 
+/*QTextEdit*/
+QTextEdit {
+    background-color: none;
+    color: rgb(210, 210, 210);
+}
+
 /*QToolButton*/
 QToolButton {
     border: none;

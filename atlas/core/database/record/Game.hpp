@@ -5,16 +5,15 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
-
-#include <QFuture>		// Keep the Qt #includes up here to appease the AutoMoc.
+#include <QFuture> // Keep the Qt #includes up here to appease the AutoMoc.
 #include <QPixmap>
 
 #include <filesystem>
+#include <filesystem> // Keep this down here for the same reason.
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-
-#include <filesystem>	// Keep this down here for the same reason.
+#include "core/database/remote/AtlasData.hpp"
 
 namespace atlas::records
 {
@@ -64,6 +63,8 @@ namespace atlas::records
 		void setDescription( QString description );
 		bool versionExists( const QString& str );
 
+		//!Test Function.
+		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( std::string title, std::string developer );
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
@@ -75,6 +76,13 @@ namespace atlas::records
 
 		//! Adds playtime to the playtime counter
 		void addPlaytime( const std::uint64_t );
+
+		template < class Rep, class Period >
+		void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
+		{
+			addPlaytime( std::chrono::duration_cast< std::chrono::seconds >( time_diff ).count() );
+		}
+
 		//! Sets the last played timestamp
 		void setLastPlayed( const std::uint64_t );
 
@@ -109,6 +117,8 @@ namespace atlas::records
 		// Used to accessing internal data
 		const GameData* operator->() const { return ptr.get(); }
 
+		Version& operator[]( const QString str ) const;
+
 	  public:
 
 	  signals:
@@ -118,7 +128,7 @@ namespace atlas::records
 		sizedBannerLoaded( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const QPixmap pixmap );
 	 */
 		void dataChanged();
-	};	// class Game
+	}; // class Game
 
 	//! Imports a record into the database
 	/**

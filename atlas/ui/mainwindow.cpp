@@ -6,6 +6,7 @@
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
+#include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
 #include "core/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
@@ -29,6 +30,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
+	connect( ui->btnAddGame, &QToolButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
@@ -64,7 +67,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	//ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
 	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( true );
@@ -78,6 +81,17 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
 	//ui->gamesTree->model()->setHeaderData( 1, Qt::Horizontal, QString( "Games" ) );
+
+	//DISABLE FEATURES NOT USED IN .5BETA
+	ui->actionArrangeBy->setVisible( false );
+	ui->actionCoverView->setVisible( false );
+	ui->actionListView->setVisible( false );
+	ui->actionManage->setVisible( false );
+	ui->actionSimpleImporter->setVisible( false );
+	ui->actionSingleImporter->setVisible( false );
+	ui->actionGameListImporter->setVisible( false );
+	ui->actionDownload->setVisible( false );
+	ui->actionUpdates->setEnabled( false );
 }
 
 MainWindow::~MainWindow()
@@ -118,6 +132,12 @@ void MainWindow::on_actionBulkImporter_triggered()
 	emit triggerReSearch();
 }
 
+void MainWindow::on_btnFilter_pressed()
+{
+	FilterWidget filterWIdget { this };
+	filterWIdget.show();
+}
+
 void MainWindow::on_actionOptions_triggered()
 {
 	SettingsDialog settingsDialog { this };
@@ -139,6 +159,13 @@ void MainWindow::on_homeButton_pressed()
 {
 	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
+}
+
+void MainWindow::on_btnAddGame_pressed()
+{
+	BatchImportDialog importer { this };
+	importer.exec();
+	emit triggerReSearch();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )

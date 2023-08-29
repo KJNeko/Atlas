@@ -64,6 +64,7 @@ namespace atlas
 
 		//! Causes the remote to go through a full check. Asking for new updates and processing them.
 		void check();
+		void handleNetworkError( QNetworkReply::NetworkError );
 	};
 
 	void initRemoteHandler();

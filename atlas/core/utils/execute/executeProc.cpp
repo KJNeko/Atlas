@@ -9,9 +9,14 @@
 #include <QUrl>
 #include <QtCore>
 
+#include "core/database/record/Game.hpp"
+#include "core/database/record/Version.hpp"
 #include "core/logging.hpp"
 
-QFuture< int > executeProc( const QString& path )
+inline static QProcess* running_process { nullptr };
+inline static bool terminating { false };
+
+void executeProc( const RecordID game_id, const QString version, const QString& path )
 {
 	spdlog::debug( "Running {}", path.toStdString() );
 	//temp fix to test html games
@@ -21,26 +26,49 @@ QFuture< int > executeProc( const QString& path )
 		//const QUrl uri { path };
 		QDesktopServices::openUrl( QUrl::fromLocalFile( path ) );
 	}
-	QProcess* process { new QProcess() };
 
-	process->start( path );
+	const auto start_time { std::chrono::steady_clock::now() };
+	;
 
-	if ( !process->waitForStarted() ) spdlog::error( "Failed to start executable at {}", path );
+	running_process = new QProcess();
+	running_process->start( path );
 
-	//Wait for finished signal emitted from QProcess
-	QPromise< int >* promise { new QPromise< int > {} };
-	QFuture< int > future { promise->future() };
+	if ( !running_process->waitForStarted() ) spdlog::error( "Failed to start executable at {}", path );
 
 	QProcess::connect(
-		process,
+		running_process,
 		&QProcess::finished,
-		[ promise, process ]()
+		[ = ]()
 		{
-			promise->addResult( process->exitCode() );
-			promise->finish();
-			process->deleteLater();
-			spdlog::debug( "Process finished" );
+			atlas::records::Game game { game_id };
+			atlas::records::Version& g_version { game[ version ] };
+
+			const auto stop_time { std::chrono::steady_clock::now() };
+			const auto time_diff { stop_time - start_time };
+
+			g_version.addPlaytime( time_diff );
+
+			running_process->deleteLater();
+			running_process = nullptr;
+			terminating = false;
 		} );
 
-	return future;
+	return;
+}
+
+bool processIsRunning()
+{
+	return running_process != nullptr;
+}
+
+void softTerminateProcess()
+{
+	running_process->terminate();
+	running_process->waitForFinished( 15000 );
+}
+
+void hardTerminateProcess()
+{
+	running_process->kill();
+	running_process->waitForFinished( 15000 );
 }

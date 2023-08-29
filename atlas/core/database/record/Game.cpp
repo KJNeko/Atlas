@@ -8,6 +8,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include <cstring>
+
 #include "GameData.hpp"
 #include "core/imageManager.hpp"
 
@@ -305,6 +307,19 @@ namespace atlas::records
 		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
 	}
 
+	Version& Game::operator[]( const QString str ) const
+	{
+		auto ver_itter { std::find_if(
+			ptr->m_versions.begin(),
+			ptr->m_versions.end(),
+			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
+
+		if ( ver_itter != ptr->m_versions.end() )
+			return *ver_itter;
+		else
+			throw std::runtime_error( "No version of that name in game" );
+	}
+
 	//! imports a new record and returns it. Will return an existing record if the record already exists
 	Game importRecord( QString title, QString creator, QString engine )
 	{
@@ -331,4 +346,16 @@ namespace atlas::records
 	  RecordException( ( "Invalid record id = " + std::to_string( in_id ) ).c_str() ),
 	  id( in_id )
 	{}
+
+	//Test functions
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
+	{
+		//std::vector< std::string > data;
+		std::optional< atlas::remote::AtlasRemoteData > data;
+		spdlog::info( "{}{}", title, developer );
+		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
+						   << developer
+			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+		return data;
+	}
 } // namespace atlas::records

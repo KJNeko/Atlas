@@ -57,6 +57,14 @@ namespace atlas::records
 		//Setters
 		//! Adds playtime to this and it's parent record
 		void addPlaytime( const std::uint32_t playtime );
+
+		template < class Rep, class Period >
+		void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
+		{
+			addPlaytime( static_cast< std::uint32_t >( std::chrono::duration_cast< std::chrono::seconds >( time_diff )
+			                                               .count() ) );
+		}
+
 		//! Sets the last played timestamp for this and it's parent record
 		void setLastPlayed( const std::uint64_t last_played );
 		//! Executes the game for this record.
