@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QMimeDatabase>
+#include <QString>
 
 #include <tracy/TracyC.h>
 
@@ -71,42 +72,72 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
+	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
 		ZoneScopedN( "Process file" );
+
 		if ( depth > 1 ) break;
 
 		if ( std::filesystem::is_regular_file( path ) )
 		{
 			if ( isBlacklist( filename ) ) continue;
 
-			if ( path.extension() == ".exe" || path.extension() == ".html" || path.extension() == ".sh" )
+			if ( std::find(
+					 extensions.begin(),
+					 extensions.end(),
+					 QString::fromStdString( path.extension().string() ).toLower().toStdString() )
+			     != extensions.end() )
+
 			{
 				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
 				QMimeDatabase mime_db;
 				const auto type { mime_db.mimeTypeForFile( QString::fromStdString( path.string() ) ) };
 				TracyCZoneEnd( mimeInfo_Tracy );
 
-				//std::transform( ext.begin(), ext.end(), ext.begin(), ::toupper );
 				//General executables
+				//.exe
 				if ( type.inherits( "application/x-ms-dos-executable" ) )
 				{
-					//potential_executables.insert( potential_executables.begin(), relative );
 					//prioritize AMD64
 					path.string().find( "32" ) ?
 						potential_executables.insert( potential_executables.begin(), relative ) :
 						potential_executables.insert( potential_executables.end(), relative );
-					//potential_executables.emplace_back( relative );
 					continue;
 				}
+				//.html
 				else if ( type.inherits( "text/plain" ) && ext == ".html" )
 				{
 					potential_executables.emplace_back( relative );
 					continue;
 				}
-
+				else if ( ext == ".swf" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".jar" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".qsp" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".bat" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
+				else if ( ext == ".rag" )
+				{
+					potential_executables.emplace_back( relative );
+					continue;
+				}
 				if constexpr ( sys::is_linux )
 				{
 					if ( type.inherits( "application/x-shellscript" ) && ext == ".sh" )
@@ -137,13 +168,18 @@ std::vector< std::filesystem::path >
 
 	for ( auto& path : paths )
 	{
-		if constexpr ( sys::is_linux )
-			if ( path.extension() == ".sh" ) execs.emplace_back( std::move( path ), 20 );
+		std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
 
-		if ( path.extension() == ".exe" || path.extension() == ".EXE" )
-			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( path.extension() == ".html" || path.extension() == ".HTML" )
-			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if constexpr ( sys::is_linux )
+			if ( extension == ".sh" ) execs.emplace_back( std::move( path ), 20 );
+
+		if ( extension == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".html" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".qsp" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".jar" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".bat" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".rag" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
 	}
 
 	std::sort(
@@ -160,7 +196,8 @@ std::vector< std::filesystem::path >
 template <>
 QString engineNameT< UNKNOWN >()
 {
-	return "Unknown";
+	//Return other instead of unknown
+	return "Other";
 }
 
 template < Engine engine >
@@ -425,6 +462,30 @@ QString engineNameT< GamesforLive >()
 	return "Games for Live";
 }
 
+template <>
+bool isEngineT< QSP >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "QSP", scanner );
+}
+
+template <>
+QString engineNameT< QSP >()
+{
+	return "QSP";
+}
+
+template <>
+bool isEngineT< BAT >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "BAT", scanner );
+}
+
+template <>
+QString engineNameT< BAT >()
+{
+	return "Windows";
+}
+
 //Pass engine name for verifying type
 bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 {
@@ -448,6 +509,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
 				{
+					if ( file.depth > 1 ) break;
 					if ( file.ext == line )
 					{
 						isEngine = true;

@@ -8,9 +8,13 @@
 #include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QTimeZone>
+#include <QTimer>
 
 #include "core/database/record/Version.hpp"
+#include "core/database/remote/AtlasData.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "core/utils/execute/executeProc.hpp"
 #include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -23,6 +27,10 @@ GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameW
 	ui->setupUi( this );
 	ui->previewList->setItemDelegate( new ImageDelegate() );
 	ui->previewList->setModel( new FilepathModel() );
+	//Used to detect when game has exited. Check every 2 seconds
+	QTimer* timer = new QTimer( this );
+	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
+	timer->start( 2000 );
 
 	//Check how many versions there are
 }
@@ -45,21 +53,19 @@ void GameWidget::reloadRecord()
 	auto& record { *m_record };
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
-	const QString& title = record->m_title;
-	const QString& description = record->m_description;
-	const QString& developer = record->m_creator;
-	[[maybe_unused]] const QString& engine = record->m_engine;
-	QString publisher = "";
-	QString original_name = "";
-	QString censored = "";
-	QString language = "";
-	QString translations = "";
-	QString voice = "";
-	QString platform = "";
-	QString release_date = "";
-	QString genre = "";
-	QString tags = "";
-	QString current_version = "";
+	QString title = record->m_title;
+	QString developer = record->m_creator;
+	QString engine = record->m_engine;
+	QString overview { "" };
+	QString category { "" };
+	QString censored { "" };
+	QString status { "" };
+	QString language { "" };
+	QString release_date { "" };
+	QString os { "" };
+	QString genre { "" };
+	QString tags { "" };
+	QString current_version { "" };
 	//END PLACEHOLDERS
 
 	//Get cover image
@@ -85,7 +91,7 @@ void GameWidget::reloadRecord()
 	}
 
 	//Hide versions icon if there is only 1
-	spdlog::info( "versions: {}", record->m_versions.size() );
+	//spdlog::info( "versions: {}", record->m_versions.size() );
 	if ( record->m_versions.size() == 1 )
 	{
 		ui->tbSelectVersion->hide();
@@ -159,17 +165,44 @@ void GameWidget::reloadRecord()
 		ui->previewList->hide();
 	}
 
+	std::optional< atlas::remote::AtlasRemoteData > atlas_data =
+		record.findAtlasData( title.toStdString(), developer.toStdString() );
+
+	//Fill vars with data if available, Check if cb is enabled from settings menu
+	if ( atlas_data.has_value() && config::experimental::local_match::get() )
+	{
+		//QDateTime::fromMSecsSinceEpoch( &atlas_data.value()->release_date, QTimeZone::utc );
+		overview = atlas_data.value()->overview;
+		status = "<b>Status: </b>" + atlas_data.value()->status + "<br>";
+		current_version = atlas_data.value()->version;
+		censored = "<b>Censored: </b>" + atlas_data.value()->censored + "<br>";
+		language = "<b>Language: </b>" + atlas_data.value()->language + "<br>";
+		os = "<b>OS: </b>" + atlas_data.value()->os + "<br>";
+		category = "<b>Category: </b>" + atlas_data.value()->category + "<br>";
+		release_date = "<b>Release Date: </b>" + release_date + "<br>";
+	}
 	//Set Description
-	ui->teDescription->setText( description );
+
+	ui->teDescription->setText( overview );
+	title = "<b>Title: </b>" + title + "<br>";
+	developer = "<b>Developer: </b>" + developer + "<br>";
+	engine = "<b>Engine: </b>" + engine + "<br>";
+	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() + " (Remote: " + current_version
+		              + " ) <br>" };
+
 	ui->teDetails->setText(
-		"<html><b>Title: </b>" + title + "<br><b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine
-		+ "<br><b>Version: </b>" + versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
+		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date
+		+ "</html>" );
 
 	const QPixmap cover { image_future.result() };
 
 	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
+
+	//Experimental Functions
+
+	//spdlog::info( "{}", record.findAtlasData( title.toStdString(), developer.toStdString() ) );
 }
 
 void GameWidget::clearRecord()
@@ -180,7 +213,7 @@ void GameWidget::clearRecord()
 void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
 	ZoneScoped;
-	spdlog::info( "Painting Detail ui" );
+	//spdlog::info( "Painting Detail ui" );
 
 	if ( m_record->valid() )
 	{
@@ -266,7 +299,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		//We need to do some magic for logo sizes
 		//634 is min size banner width can be
 		double logo_offset = 1.0 - ( 634.0 / ui->bannerFrame->width() );
-		spdlog::info( logo_offset );
+		//spdlog::info( logo_offset );
 		logo_offset = logo_offset <= .01 ? .01 : logo_offset >= .1 ? .1 : logo_offset;
 		const auto banner { banner_future.result() };
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
@@ -310,11 +343,16 @@ void GameWidget::on_btnPlay_pressed()
 {
 	if ( auto version = selectedVersion(); version.has_value() )
 	{
-		QIcon icon { ":/images/assets/stop_selected.svg" };
-		ui->btnPlay->setIcon( icon );
-		ui->btnPlay->setStyleSheet(
-			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
-		version.value().playGame();
+		if ( processIsRunning() )
+		{
+			softTerminateProcess();
+		}
+		else
+		{
+			version.value().playGame();
+		}
+
+		reloadRecord();
 	}
 	else
 	{
@@ -351,4 +389,31 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
 		//		* ui->previewList->sizeHintForRow( 1 ) );
 	}
+}
+
+void GameWidget::updateGameState()
+{
+	if ( lastState != processIsRunning() )
+	{
+		spdlog::info( "Reload Record" );
+		reloadRecord();
+	}
+	//Check if game is already running. Update Status
+	if ( processIsRunning() == true )
+	{
+		QIcon icon { ":/images/assets/stop_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
+	}
+	else
+	{
+		QIcon icon { ":/images/assets/play_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(43, 185, 67, 255), stop:1 rgba(111, 204, 0, 255));" );
+	}
+
+	lastState = processIsRunning();
+	//Check last state. If changed, update playtime.
 }
