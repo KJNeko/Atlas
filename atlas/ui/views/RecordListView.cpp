@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "core/database/record/Version.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
@@ -89,6 +91,12 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
 		version_submenu->addSeparator();
 		version_submenu->addAction( "Delete version" );
+		version_submenu->addAction(
+			"Open Game Folder",
+			[ &version ]() {
+				QDesktopServices::openUrl( QUrl::fromLocalFile( QString::fromStdString( version.getExecPath().parent_path()
+			                                                                                .string() ) ) );
+			} );
 	}
 
 	version_menu->addSeparator();
@@ -156,6 +164,8 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 			dialog.show();
 			dialog.exec();
 		} );
+	
+
 
 	menu.exec();
 }
