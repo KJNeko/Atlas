@@ -143,6 +143,9 @@ namespace imageManager
 	void saveImage( QByteArray byteArray, std::filesystem::path dest )
 	{
 		const QImage img { QImage::fromData( byteArray ) };
-		img.save( QString::fromStdString( dest.string() ) );
-	};
+		if ( !img.save( QString::fromStdString( dest.string() ) ) )
+		{
+			throw std::runtime_error( fmt::format( "Failed to save image to location: {}", std::move( dest ) ) );
+		}
+	}
 } // namespace imageManager
