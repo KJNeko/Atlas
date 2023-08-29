@@ -6,7 +6,7 @@
 
 #include "core/database/Transaction.hpp"
 #include "core/database/record/tags.hpp"
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
 
 namespace remote::parsers::v0

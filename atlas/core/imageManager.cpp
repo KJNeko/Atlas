@@ -19,8 +19,8 @@
 
 #include "config.hpp"
 #include "core/database/Transaction.hpp"
-#include "pools.hpp"
-#include "system.hpp"
+#include "core/system.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace imageManager
 {
@@ -65,12 +65,6 @@ namespace imageManager
 		TracyCZoneEnd( tracy_ImageLoad );
 		file.close();
 
-		//Store image inside of QImage
-		QImage temp_image;
-		const bool load_success { temp_image.loadFromData( byteArray ) };
-		if ( !load_success )
-			throw std::runtime_error( fmt::format( "Failed to store image from byte array: {}", path.filename() ) );
-
 		const std::string ext { path.extension().string().substr( 1 ) };
 		const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( dest_root );
@@ -85,31 +79,44 @@ namespace imageManager
 			return hash.result();
 		};
 
-		auto getDestFilePath = [ &byteArray, &path, &hashData, &dest_root ] // Use the image hash + ext as its filename
+		auto getDestFilePath = [ &byteArray,
+		                         &hashData,
+		                         &dest_root ]( const std::string extention ) // Use the image hash + ext as its filename
 		{
 			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
-			const auto dest { dest_root / ( hash.toHex().toStdString() + path.extension().string() ) };
+			const auto dest { dest_root / ( hash.toHex().toStdString() + extention ) };
 			return dest;
 		};
 
 		//If GIF then store, do not convert
 		if ( ext == "gif" )
 		{
-			const auto dest { getDestFilePath() };
+			const auto dest { getDestFilePath( ".gif" ) };
 
 			//Qt is stupid and will not save gifs...  so we have to copy it
-			const bool file_copied { std::filesystem::copy_file( path, dest ) };
-			if ( !file_copied )
+			//const bool file_copied { std::filesystem::copy_file( path, dest ) };
+			if ( std::ofstream ofs( dest, std::ios::binary ); ofs )
+			{
+				ofs.write( byteArray.data(), byteArray.size() );
+			}
+			else
 				throw std::runtime_error( fmt::format( "Unable to save gif to images folder: {}", path.filename() ) );
 
 			return dest;
 		}
 
+		//Store image inside of QImage
+		QImage temp_image;
+		const bool load_success { temp_image.loadFromData( byteArray ) };
+		if ( !load_success )
+			throw std::runtime_error( fmt::format( "Failed to store image from byte array: {}", path.filename() ) );
+
 		const std::string image_type { config::images::image_type::get().toStdString() };
 
-		auto useQImage = [ &byteArray, &getDestFilePath ] // Use QImage instead of WebP format
+		auto useQImage =
+			[ &byteArray, &getDestFilePath, &ext ]() -> std::filesystem::path // Use QImage instead of WebP format
 		{
-			auto dest = getDestFilePath();
+			const auto dest { getDestFilePath( "." + ext ) };
 			const QImage img { QImage::fromData( byteArray ) };
 			img.save( QString::fromStdString( dest.string() ) );
 
@@ -125,7 +132,7 @@ namespace imageManager
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
 		QByteArray webp_byteArray;
 		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, image_type.c_str(), 90 );
+		temp_image.save( &webp_buffer, image_type.c_str(), 98 );
 		TracyCZoneEnd( tracy_SaveImage );
 
 		//Which is bigger?
@@ -135,7 +142,7 @@ namespace imageManager
 		}
 
 		//Buffer is smaller. Meaning webp is smaller. Use it
-		const auto dest { getDestFilePath().string() };
+		const auto dest { getDestFilePath( "webp" ).string() };
 		// We shouldn't need to make a new image since we already have it? (tmp_image)
 		// const QImage img { QImage::fromData( webp_byteArray ) };
 		temp_image.save( QString::fromStdString( dest ) );

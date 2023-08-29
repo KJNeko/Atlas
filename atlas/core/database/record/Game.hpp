@@ -70,7 +70,12 @@ namespace atlas::records
 	 * @param dir
 	 * @param executable Must be a relative path sourced from dir.
 	 */
-		void addVersion( QString version_name, std::filesystem::path dir, std::filesystem::path executable );
+		void addVersion(
+			QString version_name,
+			std::filesystem::path dir,
+			std::filesystem::path executable,
+			const std::uint64_t folder_size );
+
 		void removeVersion( Version& info );
 
 		//! Adds playtime to the playtime counter

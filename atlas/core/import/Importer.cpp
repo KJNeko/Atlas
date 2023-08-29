@@ -11,14 +11,12 @@
 #include <tracy/TracyC.h>
 
 #include "GameImportData.hpp"
-#include "core/database/Database.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/imageManager.hpp"
-#include "core/notifications.hpp"
-#include "core/pools.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
-#include "core/utils/foldersize.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace internal
 {
@@ -64,8 +62,6 @@ namespace internal
 		QLocale locale;
 		atlas::utils::FileScanner scanner { root };
 
-		spdlog::info( "Game size: {}", game_size );
-
 		if ( game_size == 0 )
 		{
 			for ( const auto& file : scanner )
@@ -79,7 +75,6 @@ namespace internal
 					                        .arg( locale.formattedDataSize( static_cast< qint64 >( game_size ) ) ) );
 				}
 			}
-			spdlog::info( "Calculated size as: {}", game_size );
 		}
 		TracyCZoneEnd( tracy_FileScanner );
 
@@ -114,10 +109,10 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable );
+			record.addVersion( version, dest_root, relative_executable, game_size );
 		}
 		else
-			record.addVersion( version, root, relative_executable );
+			record.addVersion( version, root, relative_executable, game_size );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 
@@ -183,6 +178,9 @@ namespace internal
 				catch ( std::exception& e )
 				{
 					spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+					atlas::notifications::createDevMessage(
+						fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
+						e );
 				}
 			}
 		}

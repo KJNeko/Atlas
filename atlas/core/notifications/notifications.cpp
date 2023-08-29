@@ -39,4 +39,12 @@ namespace atlas::notifications
 			} );
 	}
 
+	namespace internal
+	{
+		void createDevMessage( std::string body, QJsonDocument doc )
+		{
+			spdlog::info( "{}: {}", body, doc.toJson().toStdString() );
+		}
+	} // namespace internal
+
 } // namespace atlas::notifications

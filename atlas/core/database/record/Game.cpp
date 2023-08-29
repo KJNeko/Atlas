@@ -97,19 +97,21 @@ namespace atlas::records
 		RapidTransaction() << "UPDATE games SET description = ? WHERE record_id = ?" << description << m_id;
 	}
 
-	void Game::addVersion( QString version_name, std::filesystem::path dir, std::filesystem::path executable )
+	void Game::addVersion(
+		QString version_name, std::filesystem::path dir, std::filesystem::path executable, std::uint64_t folder_size )
 	{
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
 		{
 			//Version not found. Safe to add
 			RapidTransaction()
-				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added) VALUES (?, ?, ?, ?, ?, ?)"
+				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?)"
 				<< m_id << version_name << dir << executable
 				<< dir.string().starts_with( config::paths::games::getPath().string() )
-				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::steady_clock::now()
+				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now()
 			                                                               .time_since_epoch() )
-					   .count();
+					   .count()
+				<< folder_size;
 
 			versions.emplace_back( Version( m_id, version_name ) );
 			emit dataChanged();

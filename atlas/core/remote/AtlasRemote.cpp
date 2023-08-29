@@ -16,7 +16,7 @@
 
 #include "core/database/Transaction.hpp"
 #include "core/logging.hpp"
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "extract.hpp"

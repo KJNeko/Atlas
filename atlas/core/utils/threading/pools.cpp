@@ -4,7 +4,7 @@
 
 #include "pools.hpp"
 
-#include "config.hpp"
+#include "core/config.hpp"
 
 namespace internal
 {

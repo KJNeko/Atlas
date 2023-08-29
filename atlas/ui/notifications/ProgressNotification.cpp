@@ -10,7 +10,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui_ProgressNotification.h"
 

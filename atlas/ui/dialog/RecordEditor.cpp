@@ -15,6 +15,7 @@
 #include <QMimeData>
 #include <QtConcurrent>
 
+#include "core/import/Importer.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui_RecordEditor.h"
@@ -222,52 +223,22 @@ void RecordEditor::on_btnAddVersion_pressed()
 
 	const auto& title { m_record->m_title };
 	const auto& creator { m_record->m_creator };
+	//TODO: Populate with engine from user or auto determine
+	const auto engine { "" };
 
-	ProgressBarDialog* dialog { new ProgressBarDialog( this ) };
-	dialog->show();
-	dialog->showSubProgress( true );
-	dialog->setText( "Importing game" );
-	dialog->setMax( 3 );
-
-	dialog->setSubMax( 0 );
-	dialog->setSubText( "Scanning files..." );
-	std::vector< std::filesystem::path > files;
-	for ( auto file : std::filesystem::recursive_directory_iterator( source ) )
-		if ( file.is_regular_file() ) files.push_back( std::filesystem::relative( file, source ) );
-
-	dialog->setValue( 1 );
-	dialog->setSubMax( static_cast< int >( files.size() ) );
-
-	int counter { 0 };
-
-	if ( should_move )
-	{
-		dialog->setSubText( "Copying files..." );
-		const std::filesystem::path dest_root { config::paths::games::getPath() };
-		const std::filesystem::path dest_path { dest_root / creator.toStdString() / title.toStdString()
-			                                    / version_name.toStdString() };
-
-		for ( auto file : files )
-		{
-			const auto source_path { source / file };
-			const auto dest { dest_path / file };
-
-			if ( !std::filesystem::exists( dest.parent_path() ) )
-				std::filesystem::create_directories( dest.parent_path() );
-
-			std::filesystem::copy_file( source_path, dest );
-
-			dialog->setValue( ++counter );
-		}
-
-		m_record.addVersion( version_name, dest_path, relative );
-	}
-	else
-	{
-		m_record.addVersion( version_name, source, relative );
-	}
-
-	delete dialog;
+	(void)importGame(
+		path.toStdString(),
+		executable.toStdString(),
+		title,
+		creator,
+		engine,
+		version_name,
+		{},
+		{},
+		0,
+		0,
+		should_move,
+		INVALID_ATLAS_ID );
 
 	QMessageBox::information( this, "Import complete", "Import complete!" );
 }

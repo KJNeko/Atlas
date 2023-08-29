@@ -10,6 +10,15 @@
 namespace atlas::logging::dev
 {
 	template <>
+	QJsonObject internalSerializer< std::exception >( const std::exception& e )
+	{
+		QJsonObject obj;
+		obj[ "error" ] = QString::fromUtf8( e.what() );
+
+		return obj;
+	}
+
+	template <>
 	QJsonObject internalSerializer< std::string_view >( const std::string_view& str )
 	{
 		QJsonObject obj;

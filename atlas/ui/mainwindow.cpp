@@ -7,7 +7,7 @@
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
 #include "core/config.hpp"
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"

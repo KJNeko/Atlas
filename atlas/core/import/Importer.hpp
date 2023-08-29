@@ -13,7 +13,6 @@
 
 #include "core/Types.hpp"
 #include "core/database/record/Game.hpp"
-#include "core/utils/FileScanner.hpp"
 
 /**
  *
