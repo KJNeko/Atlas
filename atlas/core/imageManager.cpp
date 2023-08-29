@@ -64,6 +64,7 @@ namespace imageManager
 		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
+		const QImage temp_image { QImage::fromData( byteArray ) };
 		TracyCZoneEnd( tracy_ImageLoad );
 		file.close();
 
@@ -76,8 +77,6 @@ namespace imageManager
 		QBuffer webp_buffer( &webp_byteArray );
 		temp_image.save( &webp_buffer, "webp", 90 );
 		TracyCZoneEnd( tracy_SaveImage );
-
-		const std::string image_type { config::images::image_type::get().toStdString() };
 
 		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
