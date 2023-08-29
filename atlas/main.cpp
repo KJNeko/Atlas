@@ -8,6 +8,7 @@
 #include <QImageWriter>
 #include <QMessageBox>
 #include <QPixmapCache>
+#include <QSplashScreen>
 
 #include <filesystem>
 #include <fstream>
@@ -34,6 +35,16 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
+
+	spdlog::info( "EntryPoint" );
+	//initLogging();
+	QApplication app { argc, argv };
+	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
+
+	QSplashScreen splash(splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ));
+	splash.show();
+    app.processEvents();
+
 #ifdef _WIN32
 	setlocale( LC_ALL, ".UTF8" );
 #endif
@@ -96,9 +107,6 @@ int main( int argc, char** argv )
 		return EXIT_FAILURE;
 	}
 #endif
-	spdlog::info( "EntryPoint" );
-		//initLogging();
-	QApplication app { argc, argv };
 	//Fix for windeployqt not adding the bin directory to itself for some reason
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
 
@@ -133,8 +141,9 @@ int main( int argc, char** argv )
 
 	QPixmapCache::setCacheLimit( 1024 * 512 );
 
-	MainWindow w;
-	w.show();
+	MainWindow window;
+	window.show();
+	splash.finish(&window);
 	const int code { app.exec() };
 	Database::deinit();
 	clear_lock();
