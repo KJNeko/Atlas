@@ -31,13 +31,18 @@ enum Engine : int
 	Sukai2,
 	HTML,
 	ENGINES_END,
+	MonoGame,
+	GamesforLive,
 	UNKNOWN
 };
+
+
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
 bool isEngineT( atlas::utils::FileScanner& scanner );
 
+bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner );
 //! String name of the engine.
 template < Engine engine >
 QString engineNameT();

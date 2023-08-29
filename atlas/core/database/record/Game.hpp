@@ -64,6 +64,9 @@ namespace atlas::records
 		void setDescription( QString description );
 		bool versionExists( const QString& str );
 
+		//!Test Function.
+		std::vector< std::string > findAtlasData( std::string title, std::string developer );
+
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
@@ -80,6 +83,13 @@ namespace atlas::records
 
 		//! Adds playtime to the playtime counter
 		void addPlaytime( const std::uint64_t );
+
+		template < class Rep, class Period >
+		void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
+		{
+			addPlaytime( std::chrono::duration_cast< std::chrono::seconds >( time_diff ).count() );
+		}
+
 		//! Sets the last played timestamp
 		void setLastPlayed( const std::uint64_t );
 
@@ -113,6 +123,8 @@ namespace atlas::records
 
 		// Used to accessing internal data
 		const GameData* operator->() const { return ptr.get(); }
+
+		Version& operator[]( const QString str ) const;
 
 	  public:
 

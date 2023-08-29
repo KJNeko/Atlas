@@ -4,7 +4,8 @@ message(DEBUG "Entering ${CMAKE_CURRENT_LIST_FILE}")
 message(DEBUG "Platform: ${CMAKE_CXX_PLATFORM_ID}")
 message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 message(DEBUG "Compiler: ${CMAKE_CXX_COMPILER}")
-
+set(BINARY_FOLDER "${CMAKE_BINARY_DIR}/bin")
+include(utils)
 include(qt)
 
 if ((${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU") OR (${CMAKE_CXX_PLATFORM_ID} STREQUAL "MinGW"))

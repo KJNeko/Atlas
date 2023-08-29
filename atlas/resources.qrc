@@ -27,10 +27,12 @@
         <file>assets/down_arrorw_small.svg</file>
         <file>assets/up_arrorw_small.svg</file>
         <file>assets/feather_background.svg</file>
+        <file>assets/setting_filter.svg</file>
+        <file>assets/stop_selected.svg</file>
         <file>assets/gl.png</file>
     </qresource>
     <qresource prefix="/Layouts">
-        <file>assets/layouts/nav_default.svg</file>
+        <file>assets/layouts/0000.svg</file>
     </qresource>
     <qresource prefix="/test">
         <file>assets/testfiles/test1.png</file>

@@ -8,9 +8,11 @@
 #include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QTimer>
 
 #include "core/database/record/Version.hpp"
 #include "core/utils/QImageBlur.hpp"
+#include "core/utils/execute/executeProc.hpp"
 #include "core/utils/foldersize.hpp"
 #include "moc_GameWidget.cpp"
 #include "ui/delegates/ImageDelegate.hpp"
@@ -23,6 +25,12 @@ GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameW
 	ui->setupUi( this );
 	ui->previewList->setItemDelegate( new ImageDelegate() );
 	ui->previewList->setModel( new FilepathModel() );
+	//Used to detect when game has exited. Check every 2 seconds
+	QTimer* timer = new QTimer( this );
+	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
+	timer->start( 2000 );
+
+	//Check how many versions there are
 }
 
 GameWidget::~GameWidget()
@@ -33,6 +41,7 @@ GameWidget::~GameWidget()
 void GameWidget::setRecord( const atlas::records::Game record )
 {
 	m_record = record;
+
 	reloadRecord();
 }
 
@@ -42,6 +51,7 @@ void GameWidget::reloadRecord()
 	auto& record { *m_record };
 
 	//PLACEHOLDERS FOR DATA UNTIL WE ADD TO DB
+	const QString& title = record->m_title;
 	const QString& description = record->m_description;
 	const QString& developer = record->m_creator;
 	[[maybe_unused]] const QString& engine = record->m_engine;
@@ -70,6 +80,7 @@ void GameWidget::reloadRecord()
 	{
 		ui->lbLastPlayed->setText( "Never" );
 	}
+
 	else
 	{
 		//Convert UNIX timestamp to QDateTime
@@ -77,6 +88,13 @@ void GameWidget::reloadRecord()
 			QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( record->m_last_played ), Qt::LocalTime )
 		};
 		ui->lbLastPlayed->setText( QString( "%1" ).arg( date.toString() ) );
+	}
+
+	//Hide versions icon if there is only 1
+	spdlog::info( "versions: {}", record->m_versions.size() );
+	if ( record->m_versions.size() == 1 )
+	{
+		ui->tbSelectVersion->hide();
 	}
 
 	//Sum up all the file sizes in the game's folder across multiple versions
@@ -150,14 +168,17 @@ void GameWidget::reloadRecord()
 	//Set Description
 	ui->teDescription->setText( description );
 	ui->teDetails->setText(
-		"<html><b>Description: </b>" + description + "<br><b>Developer: </b>" + developer + "<br><b>Publisher: </b>"
-		+ publisher + "<br><b>Original Name: </b>" + original_name );
+		"<html><b>Title: </b>" + title + "<br><b>Developer: </b>" + developer + "<br><b>Engine: </b>" + engine
+		+ "<br><b>Version: </b>" + versions[ 0 ].getVersionName() + "<br><b>Release Date: </b>" + release_date );
 
 	const QPixmap cover { image_future.result() };
 
 	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
 	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
+
+	//Experimental Functions
+	//spdlog::info( "{}", record.findAtlasData( title.toStdString(), developer.toStdString() )[ 0 ] );
 }
 
 void GameWidget::clearRecord()
@@ -245,11 +266,11 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		QPixmap logo { logo_future.result() };
 		//Used if logo does not work
 		QFont font { painter.font().toString(), font_size };
-		const QString& title { record->m_title };
+		//const QString& title { record->m_title };
 		QFontMetrics fm( font );
 		painter.setFont( font );
-		int font_width = fm.horizontalAdvance( title );
-		int font_height = fm.height();
+		//int font_width = fm.horizontalAdvance( title );
+		//int font_height = fm.height();
 
 		//We need to do some magic for logo sizes
 		//634 is min size banner width can be
@@ -264,18 +285,19 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			                      logo.height() };
 
 		QRect boundingRect;
-		const QRect font_rectangle = QRect(
+		/*const QRect font_rectangle = QRect(
 			static_cast< int >( ui->bannerFrame->width() * logo_offset ),
 			( image_height / 2 ) - ( font_height / 2 ),
 			font_width,
-			font_height );
+			font_height );*/
 
 		painter.drawPixmap( pixmap_rect, banner );
 
 		//check if logo is null, if it is then draw text instead
 
-		logo.isNull() ? painter.drawText( font_rectangle, 0, title, &boundingRect ) :
-						painter.drawPixmap( pixmap_logo, logo );
+		//logo.isNull() ? painter.drawText( font_rectangle, 0, title, &boundingRect ) :
+		//Draw logo if available
+		painter.drawPixmap( pixmap_logo, logo );
 		painter.restore();
 	}
 }
@@ -297,7 +319,15 @@ void GameWidget::on_btnPlay_pressed()
 {
 	if ( auto version = selectedVersion(); version.has_value() )
 	{
+		if(processIsRunning())
+		{
+			softTerminateProcess();
+		}
+		else{
 		version.value().playGame();
+		}
+
+		reloadRecord();
 	}
 	else
 	{
@@ -316,7 +346,7 @@ void GameWidget::on_btnManageRecord_pressed()
 	editor.exec();
 }
 
-void GameWidget::on_copyRecordToClip_pressed()
+/*void GameWidget::on_copyRecordToClip_pressed()
 {
 	const auto record_data { atlas::logging::dev::serialize( this->m_record.value() ) };
 
@@ -324,7 +354,7 @@ void GameWidget::on_copyRecordToClip_pressed()
 	doc.setObject( record_data );
 
 	QGuiApplication::clipboard()->setText( doc.toJson() );
-}
+}*/
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {
@@ -334,4 +364,31 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
 		//		* ui->previewList->sizeHintForRow( 1 ) );
 	}
+}
+
+void GameWidget::updateGameState()
+{
+	if ( lastState != processIsRunning() )
+	{
+		spdlog::info( "Reload Record" );
+		reloadRecord();
+	}
+	//Check if game is already running. Update Status
+	if ( processIsRunning() == true )
+	{
+		QIcon icon { ":/images/assets/stop_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(65, 159, 238, 255), stop:1 rgba(41, 99, 210, 255));" );
+	}
+	else
+	{
+		QIcon icon { ":/images/assets/play_selected.svg" };
+		ui->btnPlay->setIcon( icon );
+		ui->btnPlay->setStyleSheet(
+			"background-color: qlineargradient(spread:pad, x1:1, y1:0.46, x2:0, y2:0.539636, stop:0 rgba(43, 185, 67, 255), stop:1 rgba(111, 204, 0, 255));" );
+	}
+
+	lastState = processIsRunning();
+	//Check last state. If changed, update playtime.
 }

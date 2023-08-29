@@ -290,6 +290,7 @@ SETTINGS_D( images, image_type, QString, "webp" )
 
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )
+SETTINGS_D( application, theme_folder, QString, "./data/themes" )
 
 SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(

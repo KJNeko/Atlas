@@ -50,6 +50,7 @@ class SettingsDialog final : public QDialog
 	void on_btnInterface_pressed();
 	void on_btnUilayout_pressed();
 	void on_btnPaths_pressed();
+	void on_btnExpFeatures_pressed();
 	void on_btnThreading_pressed();
 	void on_applySettings_pressed();
 	void on_cancelSettings_pressed();

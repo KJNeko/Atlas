@@ -23,27 +23,26 @@ class bcolors:
     UNDERLINE = "\033[4m"
 
 
-dbName = "atlas.db"
-dbPath = ""
-
-con = sl.connect(dbName)
-cursor = con.cursor()
+#dbPath = "C:/Users/tower/source/repos/Atlas/build/bin/data/atlas.db"
+dbPath = "C:/Users/bgibson/Source/Atlas/build/bin/data/atlas.db"
 
 # Format is /developer/name/version
 # Put this py file in the same folder as your "Atlas" directory
 # Make sure Atlas.db is also in the same folder
 # Change the path below to where you games directory is
-base_dir = "C:/Users/tower/OneDrive/Documents/Game Tester/games"
+base_dir = "C:/games"
 
 
-def checkDataBase(dbName):
-    path = os.path.join(Path(os.getcwd()).parent.absolute(), dbName)
-    print(path)
-    print("DATABASE FOUND: " + str(os.path.isfile(path)))
-    return os.path.isfile(path)
+def checkDataBase(dbPath):
+    #path = os.path.join(Path(os.getcwd()).parent.absolute(), dbName)
+    print(dbPath)
+    print("DATABASE FOUND: " + str(os.path.isfile(dbPath)))
+    return os.path.isfile(dbPath)
 
 
 def getAtlasId(title):
+    con = sl.connect(dbPath)
+    cursor = con.cursor()
     short_name = re.sub("[\W_]+", "", title.strip().replace(" ", "")).upper()
     query = (
         "Select atlas_id, title, creator, LENGTH(short_name) - LENGTH('"
@@ -132,18 +131,7 @@ def downloadImage(dir, url):
     seconds = random.uniform(0.2, 1)
     ext = os.path.splitext(os.path.basename(urlparse(url).path))[1]
     image_path = os.path.join(dir, "banner" + ext)
-    # TEMP FIX
-    if ext != ".jpg" and os.path.exists(os.path.join(dir, "banner.jpg")):
-        print(
-            bcolors.HEADER
-            + str(datetime.now())
-            + " : DEBUG   [REMOVING INCORRECT IMAGE] -> "
-            + bcolors.ENDC
-            + "banner.jpg for "
-            + "banner"
-            + ext
-        )
-        os.remove(os.path.join(dir, "banner.jpg"))
+
     if not os.path.exists(image_path):
         print(
             bcolors.HEADER
@@ -177,9 +165,82 @@ def downloadPreviewImage(dir, url):
         if image.status_code == 200:
             with open(image_path, "wb") as f:
                 shutil.copyfileobj(image.raw, f)
+#OVERIDE
+def print_c(color, type, message, title, developer, version):
+        print(
+        color
+        + str(datetime.now())
+        + " : ["+type +"] "+
+        + bcolors.ENDC
+        + message + " "
+        + "Developer: "
+        + developer
+        + " | Title: "
+        + title
+        + " | Version: "
+        + version
+    )
+        
+def print_c(color, type, message):
+        print(
+        color
+        + str(datetime.now())
+        + " : ["+type +"] "+
+        + bcolors.ENDC
+        + message
+    )
+        
+def downloadData(title):
+    atlas_id = getAtlasId(title)
+    if atlas_id == None:
+        print(
+            bcolors.WARNING
+            + str(datetime.now())
+            + " : WARNING [  ENTRY NOT IN DATABASE ] -> "
+            + bcolors.ENDC
+            + "Developer: "
+            + developer
+            + " | Title: "
+            + title
+            + " | Version: "
+            + version
+        )
+    else:
+        try:
+            getBannerImage(atlas_id, version_folder)
+        except:
+            print(
+                bcolors.FAIL
+                + str(datetime.now())
+                + " : ERROR   [ ERROR GETTING BANNER IMAGE  ] -> "
+                + bcolors.ENDC
+                + "Developer: "
+                + developer
+                + " | Title: "
+                + title
+                + " | Version: "
+                + version
+            )
+        try:
+            getPreviews(atlas_id, previews_folder)
+        except:
+            print(
+                bcolors.FAIL
+                + str(datetime.now())
+                + " : ERROR   [ ERROR GETTING PREVIEW IMAGES  ] -> "
+                + bcolors.ENDC
+                + "Developer: "
+                + developer
+                + " | Title: "
+                + title
+                + " | Version: "
+                + version
+            )
 
 
-if checkDataBase(dbName):
+# MAIN ENTRY POINT FOR PROGRAM
+if checkDataBase(dbPath):
+    # Use nomal path type Createor/Title/Version
     # Get a list of folders from games path
     for developer in os.listdir(base_dir):
         dev_folder = os.path.join(base_dir, developer)
@@ -193,52 +254,13 @@ if checkDataBase(dbName):
                         # createCSV(title, developer, version)
                         if os.path.isdir(version_folder):
                             previews_folder = os.path.join(version_folder, "previews")
+                            # Create previews folder if it does not exist
                             if not os.path.exists(previews_folder):
                                 os.mkdir(previews_folder)
-                            print(
-                                bcolors.HEADER
-                                + str(datetime.now())
-                                + " : DEBUG   [ CHECKING DATABASE FOR MATCH  ] -> "
-                                + bcolors.ENDC
-                                + "Developer: "
-                                + developer
-                                + " | Title: "
-                                + title
-                                + " | Version: "
-                                + version
-                            )
-                            atlas_id = getAtlasId(title)
-                            if atlas_id == None:
-                                print(
-                                    bcolors.WARNING
-                                    + str(datetime.now())
-                                    + " : WARNING [  ENTRY NOT IN DATABASE ] -> "
-                                    + bcolors.ENDC
-                                    + "Developer: "
-                                    + developer
-                                    + " | Title: "
-                                    + title
-                                    + " | Version: "
-                                    + version
-                                )
-                            else:
-                                try:
-                                    getBannerImage(atlas_id, version_folder)
-                                    getPreviews(atlas_id, previews_folder)
-                                except:
-                                    print(
-                                        bcolors.FAIL
-                                        + str(datetime.now())
-                                        + " : ERROR   [ DATABASE PARSER ERROR  ] -> "
-                                        + bcolors.ENDC
-                                        + "Developer: "
-                                        + developer
-                                        + " | Title: "
-                                        + title
-                                        + " | Version: "
-                                        + version
-                                    )
+                            print_c(bcolors.HEADER, "INFO", "CHECKING DATABASE FOR MATCH", title, developer, version)
+                            
 else:
+    print_c(bcolors.HEADER, "INFO", "CHECKING DATABASE FOR MATCH", title, developer, version)
     print(
         bcolors.FAIL
         + str(datetime.now())

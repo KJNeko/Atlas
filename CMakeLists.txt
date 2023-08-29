@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
+        
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/data)
 
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -20,15 +22,7 @@ string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
 
 PlatformPreSetup()
 CompilerPreSetup()
-message("FGL_FLAGS: ${FGL_FLAGS}")
-if (WIN32)
-    string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
-
-    if (DEFINED ENV{QT_PATH})
-        set(QT_PATH $ENV{QT_PATH})
-        message("-- Setting QT path from ENV")
-    endif ()
-endif ()
+message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 #Verify after setting QT_PATH
 if (DEFINED QT_PATH)
@@ -37,8 +31,6 @@ if (DEFINED QT_PATH)
 else()
     message("-- QT_PATH not defined.")
 endif ()
-
-
 
 add_subdirectory(dependencies/tracy)
 
@@ -52,12 +44,9 @@ include(dependencies/lz4_build.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
-find_package(SQLite3 3.35 REQUIRED)
+find_package(SQLite3 3.31.1 REQUIRED)
 message("-- include = ${SQLite3_INCLUDE_DIR}")
 message("-- lib = ${SQLite3_LIBRARY}")
-
-
-
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
@@ -83,7 +72,7 @@ set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 PlatformPostSetup()
 CompilerPostSetup()
 
-add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/qss $<TARGET_FILE_DIR:Atlas>/data/themes COMMENT "Adding qss files")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/data/themes COMMENT "Adding qss files to ./data/themes")
 
 #file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 

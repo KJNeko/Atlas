@@ -23,6 +23,9 @@ namespace imageManager
 
 	//! Stores the image located at `path` in the data folder
 	QFuture< std::filesystem::path > importImage( const std::filesystem::path& path, const RecordID game_id );
+	QByteArray hashData( const char* data_ptr, const int size );
+	std::filesystem::path getDestFilePath( QByteArray byteArray, std::filesystem::path dest_root, std::string ext );
+	void saveImage( QByteArray byteArray, std::filesystem::path dest );
 
 } // namespace imageManager
 

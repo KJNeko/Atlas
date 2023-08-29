@@ -341,6 +341,8 @@ void SettingsDialog::on_btnInterface_pressed()
 void SettingsDialog::on_btnUilayout_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 2 );
+	//repaint banner view Do not remove
+	qlv->repaint();
 }
 
 void SettingsDialog::on_btnPaths_pressed()
@@ -351,6 +353,11 @@ void SettingsDialog::on_btnPaths_pressed()
 void SettingsDialog::on_btnThreading_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 4 );
+}
+
+void SettingsDialog::on_btnExpFeatures_pressed()
+{
+	ui->stackedWidget->setCurrentIndex( 5 );
 }
 
 void SettingsDialog::on_applySettings_pressed()
@@ -466,10 +473,12 @@ void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
 	ui->cbBlurType->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
-
+	qlv->repaint();
+	spdlog::info( "{}", static_cast< SCALE_TYPE >( idx ) );
 	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
 	///config::grid_ui::gridImageLayout::set(idx);
 	qlv->repaint();
+	qlv->setFocus(); //force view to repaint widget
 }
 
 void SettingsDialog::on_sbBlurRadius_valueChanged( int num )

@@ -45,7 +45,7 @@ namespace imageManager
 
 	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		//spdlog::debug( path );
+		spdlog::debug( path );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
@@ -71,30 +71,24 @@ namespace imageManager
 		const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( dest_root );
 
-		const auto hashData = []( const char* data_ptr, const int size ) -> QByteArray // Hash data with Sha256
+		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
+		QByteArray webp_byteArray;
+		QBuffer webp_buffer( &webp_byteArray );
+		temp_image.save( &webp_buffer, "webp", 90 );
+		TracyCZoneEnd( tracy_SaveImage );
+
+		const std::string image_type { config::images::image_type::get().toStdString() };
+
+		constexpr std::uint16_t webp_max { 16383 };
+		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
-			ZoneScopedN( "Hash" );
-			QCryptographicHash hash { QCryptographicHash::Sha256 };
-
-			hash.addData( { data_ptr, size } );
-
-			return hash.result();
-		};
-
-		auto getDestFilePath = [ &byteArray,
-		                         &hashData,
-		                         &dest_root ]( const std::string extention ) // Use the image hash + ext as its filename
-		{
-			const auto hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
-			const auto dest { dest_root / ( hash.toHex().toStdString() + extention ) };
-			return dest;
-		};
+			spdlog::error( "File is too big for webp" );
+		}
 
 		//If GIF then store, do not convert
 		if ( ext == "gif" )
 		{
-			const auto dest { getDestFilePath( ".gif" ) };
-
+			auto dest { getDestFilePath( byteArray, dest_root, path.extension().string() ) };
 			//Qt is stupid and will not save gifs...  so we have to copy it
 			//const bool file_copied { std::filesystem::copy_file( path, dest ) };
 			if ( std::ofstream ofs( dest, std::ios::binary ); ofs )
@@ -103,57 +97,23 @@ namespace imageManager
 			}
 			else
 				throw std::runtime_error( fmt::format( "Unable to save gif to images folder: {}", path.filename() ) );
-
-			return dest;
 		}
 
-		//Store image inside of QImage
-		QImage temp_image;
-		const bool load_success { temp_image.loadFromData( byteArray ) };
-		if ( !load_success )
-			throw std::runtime_error( fmt::format( "Failed to store image from byte array: {}", path.filename() ) );
-
-		const std::string image_type { config::images::image_type::get().toStdString() };
-
-		auto useQImage =
-			[ &byteArray, &getDestFilePath, &ext ]() -> std::filesystem::path // Use QImage instead of WebP format
-		{
-			const auto dest { getDestFilePath( "." + ext ) };
-			const QImage img { QImage::fromData( byteArray ) };
-			img.save( QString::fromStdString( dest.string() ) );
-
-			return dest;
-		};
-
-		constexpr std::uint16_t webp_max { 16383 };
-		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
-		{
-			return useQImage(); // Don't use WebP
-		}
-
-		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
-		QByteArray webp_byteArray;
-		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, image_type.c_str(), 98 );
-		TracyCZoneEnd( tracy_SaveImage );
-
-		//Which is bigger?
+		//if webp conversion is bigger then save original image
 		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
 		{
-			return useQImage();
+			auto dest { getDestFilePath( byteArray, dest_root, path.extension().string() ) };
+			saveImage( byteArray, dest );
+			return dest;
 		}
-
-		//Buffer is smaller. Meaning webp is smaller. Use it
-		const auto dest { getDestFilePath( ".webp" ).string() };
-		// We shouldn't need to make a new image since we already have it? (tmp_image)
-		// const QImage img { QImage::fromData( webp_byteArray ) };
-		if ( !temp_image.save( QString::fromStdString( dest ) ) )
+		else
 		{
-			spdlog::warn( "importImage: Qt failed to save image to {}", dest );
-			throw std::runtime_error( fmt::format( "importImage: Qt failed to save image to {}", dest ) );
+			auto dest { getDestFilePath( webp_byteArray, dest_root, ".webp" ) };
+			saveImage( webp_byteArray, dest );
+			return dest;
 		}
 
-		return dest;
+		//return dest;
 	}
 
 	QFuture< std::filesystem::path > importImage( const std::filesystem::path& path, const RecordID game_id )
@@ -161,4 +121,29 @@ namespace imageManager
 		return QtConcurrent::run( &( globalPools().image_importers ), &internalImportImage, path, game_id );
 	}
 
+	QByteArray hashData( const char* data_ptr, const int size ) // Hash data with Sha256
+	{
+		ZoneScopedN( "Hash" );
+		QCryptographicHash hash { QCryptographicHash::Sha256 };
+
+		hash.addData( { data_ptr, size } );
+
+		return hash.result();
+	}
+
+	std::filesystem::path getDestFilePath(
+		QByteArray byteArray,
+		std::filesystem::path dest_root,
+		std::string ext ) // Use the image hash + ext as its filename
+	{
+		QByteArray hash { hashData( byteArray, static_cast< int >( byteArray.size() ) ) };
+		std::filesystem::path dest { dest_root / ( hash.toHex().toStdString() + ext ) };
+		return dest;
+	}
+
+	void saveImage( QByteArray byteArray, std::filesystem::path dest )
+	{
+		const QImage img { QImage::fromData( byteArray ) };
+		img.save( QString::fromStdString( dest.string() ) );
+	};
 } // namespace imageManager

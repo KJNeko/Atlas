@@ -1,6 +1,8 @@
 # /cmake_modules/win32.cmake
 
 if (WIN32)
+    set(which_program "where")
+    set(os_path_separator "\\")
 
     set(
         NEEDED_QT_FOLDERS
@@ -12,24 +14,25 @@ if (WIN32)
             "${CMAKE_BINARY_DIR}/bin/styles"
             "${CMAKE_BINARY_DIR}/bin/tls"
     )
-
     function(PlatformPreSetup)
         # set(QT_PATH "C:/Qt/6.4.3/mingw_64" )
         # set(QT_PATH "C:/msys64/clang64")
         find_program(
             TOOL_WINDEPLOYQT
-                windeployqt windeployqt6
+                windeployqt windeployqt-qt6 windeployqt6
                 REQUIRED NO_CACHE
                 HINTS "${QT_PATH}/bin"
         )
-        message("windeployqt found: ${TOOL_WINDEPLOYQT}")
+        message("-- windeployqt found: ${TOOL_WINDEPLOYQT}")
 
-        string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
+        set(CMAKE_FIND_LIBRARY_SUFFIXES ";.dll" PARENT_SCOPE)
+        #string(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ";.dll")
 
         if (DEFINED ENV{QT_PATH})
             set(QT_PATH $ENV{QT_PATH} PARENT_SCOPE)
-            message("Setting QT path from ENV")
+            message("-- Setting QT path from ENV")
         endif ()
+        
         set(TOOL_WINDEPLOYQT ${TOOL_WINDEPLOYQT} PARENT_SCOPE)
     endfunction()   # PlatformPreSetup
 
@@ -60,6 +63,16 @@ if (WIN32)
                 COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qwebp.dll
                 ${CMAKE_BINARY_DIR}/bin/imageformats/qwebp.dll
                 COMMENT "Copying pre-compiled qwebp.dll for Qt 6.4.3")
+
+        add_custom_command(TARGET Atlas POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qt.conf
+                ${CMAKE_BINARY_DIR}/bin/qt.conf
+                COMMENT "Copying qt.conf for Window DPI override")
+
+        add_custom_command(TARGET Atlas POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/3rdparty/engines/types
+                ${CMAKE_BINARY_DIR}/bin/data/engine/types
+                COMMENT "Copying Engine Types")
 
     endfunction()   # PlatformPostSetup
 

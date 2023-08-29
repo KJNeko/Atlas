@@ -105,7 +105,7 @@ namespace atlas::records
 		{
 			const std::chrono::time_point< std::chrono::system_clock > now { std::chrono::system_clock::now() };
 
-			executeProc( QString::fromStdString( executable.string() ) );
+			executeProc( m_parent_id, m_version, QString::fromStdString( executable.string() ) );
 
 			const auto duration {
 				std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now() - now )
@@ -115,13 +115,11 @@ namespace atlas::records
 			setLastPlayed( static_cast<
 						   uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( now.time_since_epoch() )
 			                               .count() ) );
+
 			return;
 		}
 		else
 			spdlog::error( "Failed to launch game with executable {}", executable.string() );
-		//TODO: Need to make a hookable static object or something
-		// in order to indicate to it to launch the game
-		// that way we can eventually add in the ability to prevent other games from being launched and such.
 	}
 
 	void Version::addPlaytime( const std::uint32_t playtime )

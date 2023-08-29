@@ -6,6 +6,7 @@
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
 #include "./ui_mainwindow.h"
+#include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
@@ -29,6 +30,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
+	connect( ui->btnAddGame, &QToolButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
@@ -64,7 +67,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	//ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
 	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( true );
@@ -124,6 +127,12 @@ void MainWindow::on_actionBulkImporter_triggered()
 	emit triggerReSearch();
 }
 
+void MainWindow::on_btnFilter_pressed()
+{
+	FilterWidget filterWIdget { this };
+	filterWIdget.show();
+}
+
 void MainWindow::on_actionOptions_triggered()
 {
 	SettingsDialog settingsDialog { this };
@@ -145,6 +154,13 @@ void MainWindow::on_homeButton_pressed()
 {
 	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
+}
+
+void MainWindow::on_btnAddGame_pressed()
+{
+	BatchImportDialog importer { this };
+	importer.exec();
+	emit triggerReSearch();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )
@@ -193,9 +209,9 @@ void MainWindow::on_actionViewFileHistory_triggered()
 	dialog.exec();
 }
 
-void MainWindow::searchTextChanged( const QString str )
+void MainWindow::searchTextChanged( [[maybe_unused]] const QString str )
 {
-	const auto search_type = [ & ]()
+	/*const auto search_type = [ & ]()
 	{
 		switch ( ui->sortSelection->currentIndex() )
 		{
@@ -209,26 +225,26 @@ void MainWindow::searchTextChanged( const QString str )
 				return SortOrder::Engine;
 			case 3:
 				return SortOrder::Time;
-		}
-	}();
+		
+	}();}*/
 
-	emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+	//emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
 }
 
-void MainWindow::on_sortOrderButton_clicked()
+/*void MainWindow::on_sortOrderButton_clicked()
 {
 	if ( ui->sortOrderButton->text() == "ASC" )
 		ui->sortOrderButton->setText( "DESC" );
 	else
 		ui->sortOrderButton->setText( "ASC" );
 
-	searchTextChanged( ui->SearchBox->text() );
-}
+	searchTextChanged( ui->SearchBox->text() );8
+}*/
 
-void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
+/*void MainWindow::on_sortSelection_currentIndexChanged( [[maybe_unused]] int index )
 {
 	searchTextChanged( ui->SearchBox->text() );
-}
+}*/
 
 void MainWindow::moveEvent( QMoveEvent* event )
 {

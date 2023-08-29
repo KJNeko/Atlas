@@ -87,6 +87,13 @@ namespace atlas
 			this,
 			[ =, this ]() { handleJsonResponse( reply ); },
 			Qt::SingleShotConnection );
+
+		connect(
+			reply,
+			&QNetworkReply::errorOccurred,
+			this,
+			[ this ]( QNetworkReply::NetworkError error ) { handleNetworkError( error ); },
+			Qt::SingleShotConnection );
 	}
 
 	void AtlasRemote::handleDownloader( QNetworkReply* reply )
@@ -136,6 +143,13 @@ namespace atlas
 			&QNetworkReply::finished,
 			this,
 			[ =, this ]() { handleDownloader( reply ); },
+			Qt::SingleShotConnection );
+
+		connect(
+			reply,
+			&QNetworkReply::errorOccurred,
+			this,
+			[ this ]( const QNetworkReply::NetworkError error ) { handleNetworkError( error ); },
 			Qt::SingleShotConnection );
 	}
 
@@ -383,6 +397,11 @@ namespace atlas
 		                   .count() :
 		               0 )
 			<< update_time;
+	}
+
+	void AtlasRemote::handleNetworkError( QNetworkReply::NetworkError error )
+	{
+		spdlog::error( "Network error! {}", static_cast< uint32_t >( error ) );
 	}
 
 } // namespace atlas
