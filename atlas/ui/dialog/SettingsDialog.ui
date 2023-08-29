@@ -47,13 +47,13 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget#SettingsMenu{
-border-style: outset;
+      <string notr="true">#SettingsMenu{border-style: outset;
 border-width: 1px;
 border-color: rgb(0, 0, 0);
 border-left:none;
 border-bottom:none;
-}</string>
+background-color: rgb(202, 202, 202);}
+</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <property name="leftMargin">
@@ -88,7 +88,7 @@ border-bottom:none;
        </spacer>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_28">
+       <widget class="QLabel" name="lblSettings">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
