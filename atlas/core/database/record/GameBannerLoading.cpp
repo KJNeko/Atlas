@@ -217,9 +217,6 @@ namespace atlas::records
 			}
 
 			if ( promise.isCanceled() ) return;
-			//Temp fix for image fill
-			spdlog::
-				info( "target_size h:{}, w:{}, scale_type:{}", target_size.height(), target_size.width(), scale_type );
 
 			internal::insert( key, pixmap );
 			promise.addResult( std::move( pixmap ) );
