@@ -106,7 +106,6 @@ int main( int argc, char** argv )
 		return EXIT_FAILURE;
 	}
 #endif
-
 	//Fix for windeployqt not adding the bin directory to itself for some reason
 	QApplication::addLibraryPath( QString::fromStdString( std::filesystem::canonical( "." ).string() ) );
 
