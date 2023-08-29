@@ -24,7 +24,7 @@ jobs:
       - uses: ./.github/actions/build
         with:
           build-release: true
-          build-debug: true
+          build-debug: false
           build-atlas: true
           version-string: ${{ env.version }}
 
