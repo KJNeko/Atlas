@@ -35,7 +35,7 @@ runs:
       run: |
         sudo apt update
         sudo apt upgrade -y
-        sudo apt install build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev qt6-charts-dev -y
+        sudo apt install build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev libqt6charts6-dev -y
 
     - name: CMake Release
       shell: bash
