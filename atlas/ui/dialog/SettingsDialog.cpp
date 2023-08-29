@@ -321,6 +321,26 @@ void SettingsDialog::savePathsSettings()
 	}
 }
 
+void SettingsDialog::prepareThreadSettings()
+{
+	using namespace config::threads;
+
+	ui->sbImageImportThreads->setValue( image_import_threads::get() );
+	ui->sbImageLoadingThreads->setValue( image_loader_threads::get() );
+	ui->sbImportPreProcessorThreads->setValue( import_pre_loader_threads::get() );
+	ui->sbImportThreads->setValue( import_threads::get() );
+}
+
+void SettingsDialog::saveThreadSettings()
+{
+	using namespace config::threads;
+
+	image_import_threads::set( ui->sbImageImportThreads->value() );
+	image_loader_threads::set( ui->sbImageLoadingThreads->value() );
+	import_pre_loader_threads::set( ui->sbImportPreProcessorThreads->value() );
+	import_threads::set( ui->sbImportThreads->value() );
+}
+
 void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 {
 	ui->stackedWidget->setCurrentIndex( idx );
