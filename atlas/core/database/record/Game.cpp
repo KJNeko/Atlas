@@ -191,6 +191,13 @@ namespace atlas::records
 		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 		{
 			path = imageManager::importImage( path, m_id ).result();
+
+			if ( !std::filesystem::exists( path ) )
+				throw std::runtime_error( "addPreview: invalid path from importImage" );
+		}
+		else
+		{
+			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to addPreview." );
 		}
 
 		//Get the highest position
@@ -271,6 +278,12 @@ namespace atlas::records
 		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 		{
 			path = imageManager::importImage( path, m_id ).result();
+			if ( !std::filesystem::exists( path ) )
+				throw std::runtime_error( "Failed to set banner. importImage returned a invalid path!" );
+		}
+		else
+		{
+			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to setBanner." );
 		}
 
 		RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id

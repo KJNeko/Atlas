@@ -29,6 +29,8 @@ class NotificationManagerUI final : public QDialog
 
   public:
 
+	QSize sizeHint() const override;
+
 	void addNotification( Notification* notif );
 
 	void resizeEvent( QResizeEvent* ) override;

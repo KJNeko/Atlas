@@ -175,12 +175,19 @@ namespace internal
 					                            .arg( i )
 					                            .arg( BannerType::SENTINEL - 1 ) );
 				}
-				catch ( std::exception& e )
+				catch ( const QUnhandledException& qt_e )
 				{
-					spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
-					atlas::notifications::createDevMessage(
-						fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
-						e );
+					try
+					{
+						if ( qt_e.exception() ) std::rethrow_exception( qt_e.exception() );
+					}
+					catch ( std::exception& e )
+					{
+						spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+						atlas::notifications::createDevMessage(
+							fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
+							e );
+					}
 				}
 			}
 		}
@@ -199,6 +206,24 @@ namespace internal
 				                            .arg( preview_counter++ )
 				                            .arg( preview_futures.size() ) );
 				signaler.setProgress( BannerType::SENTINEL - 1 + preview_counter );
+			}
+			catch ( const QUnhandledException& e )
+			{
+				//Qt is fucking stupid.
+				try
+				{
+					if ( e.exception() ) std::rethrow_exception( e.exception() );
+				}
+				catch ( std::exception& e_n )
+				{
+					atlas::notifications::createMessage( QString::fromStdString(
+						fmt::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
+					spdlog::warn( "Failed to add preview from future: {}", e_n.what() );
+				}
+			}
+			catch ( std::runtime_error& e )
+			{
+				spdlog::warn( "Failed to add preview from future: {}", e.what() );
 			}
 			catch ( std::exception& e )
 			{

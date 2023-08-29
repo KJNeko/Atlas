@@ -19,7 +19,6 @@
 
 #include "config.hpp"
 #include "core/database/Transaction.hpp"
-#include "core/system.hpp"
 #include "core/utils/threading/pools.hpp"
 
 namespace imageManager
@@ -59,7 +58,10 @@ namespace imageManager
 		//Load file so we have direct access to the bytearray
 		QFile file( path );
 		if ( !file.open( QFile::ReadOnly ) )
+		{
+			spdlog::error( "Failed to open image file located at: {}", path );
 			throw std::runtime_error( fmt::format( "Failed to load image from file: {}", path ) );
+		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
 		TracyCZoneEnd( tracy_ImageLoad );
@@ -142,10 +144,15 @@ namespace imageManager
 		}
 
 		//Buffer is smaller. Meaning webp is smaller. Use it
-		const auto dest { getDestFilePath( "webp" ).string() };
+		const auto dest { getDestFilePath( ".webp" ).string() };
 		// We shouldn't need to make a new image since we already have it? (tmp_image)
 		// const QImage img { QImage::fromData( webp_byteArray ) };
-		temp_image.save( QString::fromStdString( dest ) );
+		if ( !temp_image.save( QString::fromStdString( dest ) ) )
+		{
+			spdlog::warn( "importImage: Qt failed to save image to {}", dest );
+			throw std::runtime_error( fmt::format( "importImage: Qt failed to save image to {}", dest ) );
+		}
+
 		return dest;
 	}
 

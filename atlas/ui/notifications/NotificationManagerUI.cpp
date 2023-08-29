@@ -26,6 +26,12 @@ NotificationManagerUI::~NotificationManagerUI()
 	delete ui;
 }
 
+QSize NotificationManagerUI::sizeHint() const
+{
+	const auto min_size { minimumSize() };
+	QSize size { min_size.width(), 0 };
+}
+
 void NotificationManagerUI::addNotification( Notification* notif )
 {
 	connect( notif, &Notification::selfClosePtr, this, &NotificationManagerUI::deleteNotification );
