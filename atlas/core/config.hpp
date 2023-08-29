@@ -292,6 +292,7 @@ SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )
 SETTINGS_D( application, theme_folder, QString, "./data/themes" )
 
+SETTINGS_D( remote, allow_checks, bool, false )
 SETTINGS_D( remote, last_check, int, 0 )
 SETTINGS_D(
 	remote, check_rate, int, std::chrono::duration_cast< std::chrono::seconds >( std::chrono::hours( 24 ) ).count() )
