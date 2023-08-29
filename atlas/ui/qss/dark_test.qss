@@ -242,10 +242,6 @@ QTreeView {
     background-color: rgb(43, 45, 49);
 }
 
-#GameWidget {
-    background-color: transparent;
-}
-
 /*This is so the wide banner will show up in game view.*/
 #bannerFrame {
     background-color: transparent;
@@ -296,6 +292,23 @@ QTreeView {
     border: 1px solid rgb(0, 0, 0);
 }
 
+/*GAME DETAIL VEIW*/
+#bannerDetailFrame {
+    background-color: rgb(49, 51, 56);
+}
+
+#InfoPanel {
+    background-color: rgb(35, 36, 40);
+}
+
+#previewList {
+    background-color: rgb(35, 36, 40);
+}
+
+#recordView {
+    background-color: rgb(49, 51, 56);
+}
+
 /*END CUSTOM COLORS*/
 QScrollBar:vertical {
     border-style: none;
@@ -332,10 +345,6 @@ QScrollBar::sub-line:vertical {
 }
 
 QStackedWidget>QWidget {
-    background-color: rgb(49, 51, 56);
-}
-
-#recordView {
     background-color: rgb(49, 51, 56);
 }
 
