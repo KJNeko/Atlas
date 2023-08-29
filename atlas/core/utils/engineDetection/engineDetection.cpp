@@ -260,6 +260,17 @@ template <>
 bool isEngineT< Unity >( atlas::utils::FileScanner& scanner )
 {
 	ZoneScopedN( "isEngine< Unity >" );
+	/*for ( const auto& file : scanner )
+	{
+		if ( file.depth > 1 ) return false;
+
+		if ( file.filename == "Data" && std::filesystem::is_directory( file.path ) )
+		{
+			//Check deeper
+			return std::filesystem::exists( scanner.path() / "Data" / "Managed" / "Assembly-CSharp.dll" );
+		}
+	}*/
+
 	return checkEngineType( "Unity", scanner );
 }
 
