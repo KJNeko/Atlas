@@ -351,7 +351,7 @@ bool isEngineT< TyanoBuilder >( [[maybe_unused]] atlas::utils::FileScanner& scan
 template <>
 QString engineNameT< TyanoBuilder >()
 {
-	return "TyanoBuilder Visual Novel Software";
+	return "TyanoBuilder";
 }
 
 template <>
