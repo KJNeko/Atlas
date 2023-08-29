@@ -451,16 +451,29 @@ QString engineNameT< MonoGame >()
 }
 
 template <>
-bool isEngineT< GamesforLive >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+bool isEngineT< XNA >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
-	return checkEngineType( "GamesforLive", scanner );
+	return checkEngineType( "XNA", scanner );
 }
 
 template <>
-QString engineNameT< GamesforLive >()
+QString engineNameT< XNA >()
 {
-	return "Games for Live";
+	return "XNA";
 }
+
+template <>
+bool isEngineT< Adobe_AIR >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return checkEngineType( "Adobe_AIR", scanner );
+}
+
+template <>
+QString engineNameT< Adobe_AIR >()
+{
+	return "Adobe AIR";
+}
+
 
 template <>
 bool isEngineT< QSP >( [[maybe_unused]] atlas::utils::FileScanner& scanner )

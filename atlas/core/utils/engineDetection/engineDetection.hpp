@@ -35,6 +35,8 @@ enum Engine : int
 	ENGINES_END,
 	MonoGame,
 	GamesforLive,
+	XNA,
+	Adobe_AIR,
 	UNKNOWN
 };
 
