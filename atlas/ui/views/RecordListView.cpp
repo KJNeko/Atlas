@@ -83,36 +83,20 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 
 	std::vector< atlas::records::Version > versions { record->m_versions };
 
-	auto version_menu { menu.addMenu( QString( "%1 versions" ).arg( versions.size() ) ) };
-
-	for ( auto& version : versions )
-	{
-		auto version_submenu { version_menu->addMenu( version->m_version ) };
-		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
-		version_submenu->addSeparator();
-		version_submenu->addAction( "Delete version" );
-		version_submenu->addAction(
-			"Open Game Folder",
-			[ &version ]() {
-				QDesktopServices::openUrl( QUrl::fromLocalFile( QString::fromStdString( version.getExecPath().parent_path()
-			                                                                                .string() ) ) );
-			} );
-	}
-
-	version_menu->addSeparator();
-	version_menu->addAction( "Add version" );
-	version_menu->addAction(
-		"Manage versions",
-		[ record, this ]()
+	QMenu* play_menu { menu.addMenu( QString( "PLAY" ).arg( versions.size() ) ) };
+	play_menu->setStyleSheet( "text-align:center;" );
+	menu.addAction(
+		"Open Directory",
+		[versions, this]()
 		{
-			RecordEditor dialog { record->m_game_id, this };
-			dialog.show();
-			dialog.switchTabs( 2 );
-			dialog.exec();
+			QDesktopServices::openUrl( QUrl::fromLocalFile( QString::fromStdString( versions[ 0 ]
+		                                                                                .getExecPath()
+		                                                                                .parent_path()
+		                                                                                .string() ) ) );
 		} );
+	menu.addMenu( "Open URL" );
 
-	//Image stuff
-	auto image_menu { menu.addMenu( "Banner/Previews" ) };
+	auto image_menu { menu.addMenu( "Record" ) };
 
 	const auto banner { record.requestBanner( Normal ).result() };
 	if ( banner.isNull() )
@@ -147,7 +131,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 			if ( !path.isEmpty() ) game.addPreview( path.toStdString() );
 		} );
 	image_menu->addAction(
-		"Manage images",
+		"Manage Record",
 		[ record, this ]()
 		{
 			RecordEditor dialog { record->m_game_id, this };
@@ -156,14 +140,54 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 			dialog.exec();
 		} );
 
-	menu.addAction(
-		"Manage record",
+	/*menu.addAction(
+		"Edid Record",
 		[ record, this ]()
 		{
 			RecordEditor dialog { record->m_game_id, this };
 			dialog.show();
 			dialog.exec();
-		} );
+		} );*/
+
+	QMenu* delete_menu { menu.addMenu( QString( "DELETE" ).arg( versions.size() ) ) };
+	
+
+	for ( auto& version : versions )
+	{
+		play_menu->addAction( "Versions" );
+		play_menu->addSeparator();
+		play_menu->addAction( version->m_version, [ &version ]() { version.playGame(); } );
+
+		delete_menu->addAction( "Versions" );
+		delete_menu->addSeparator();
+		delete_menu->addAction(  version->m_version );
+		/*auto version_submenu { version_menu->addMenu( version->m_version ) };
+		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
+		version_submenu->addSeparator();
+		version_submenu->addAction( "Delete version" );
+		version_submenu->addAction(
+			"Open Game Folder",
+			[ &version ]() {
+				QDesktopServices::openUrl( QUrl::fromLocalFile( QString::fromStdString( version.getExecPath().parent_path()
+			                                                                                .string() ) ) );
+			} );*/
+	}
+
+	//version_menu->addSeparator();
+	//version_menu->addAction( "Add version" );
+	/*version_menu->addAction(
+		"Manage versions",
+		[ record, this ]()
+		{
+			RecordEditor dialog { record->m_game_id, this };
+			dialog.show();
+			dialog.switchTabs( 2 );
+			dialog.exec();
+		} );*/
+
+	//Image stuff
+	
+	
 	
 
 
