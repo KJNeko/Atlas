@@ -78,7 +78,7 @@ namespace imageManager
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
 		QByteArray webp_byteArray;
 		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, "webp", 90 );
+		temp_image.save( &webp_buffer, "webp", 95 );
 		TracyCZoneEnd( tracy_SaveImage );
 
 		const std::string image_type { config::images::image_type::get().toStdString() };
