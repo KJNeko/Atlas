@@ -198,12 +198,15 @@ try
 	QRegularExpression regex { pattern };
 
 	for ( auto itter = std::filesystem::recursive_directory_iterator( base );
-	      itter != std::filesystem::recursive_directory_iterator(); )
+	      itter != std::filesystem::recursive_directory_iterator();
+	      ++itter )
 	{
 		ZoneScopedN( "Process directory" );
 
 		promise.suspendIfRequested();
 		if ( promise.isCanceled() ) return;
+
+		spdlog::info( "Scanning {}", itter->path() );
 
 		if ( itter->is_directory() )
 		{
@@ -230,14 +233,10 @@ try
 												  } ) );
 
 				if ( promise.isCanceled() ) break;
-				itter.pop();
+				itter.disable_recursion_pending();
 				//Directory should NOT be added to found_paths to be processed later since we shouldn't continue needing to look deeper.
 			}
-			else
-				++itter;
 		}
-		else
-			++itter;
 	}
 
 	spdlog::info( "Waiting for futures to finish" );
