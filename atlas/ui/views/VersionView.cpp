@@ -77,7 +77,7 @@ void VersionView::on_btnChangeVersion_pressed()
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM game_metadata WHERE version = ? AND record_id = ?" << output.toStdString()
+		trans << "SELECT COUNT(*) FROM game_metadata WHERE version = ? AND record_id = ?" << output
 			  << m_metadata->getParentID()
 			>> count;
 

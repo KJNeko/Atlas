@@ -123,10 +123,10 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable );
+			record.addVersion( version, dest_root, relative_executable, owning );
 		}
 		else
-			record.addVersion( version, root, relative_executable );
+			record.addVersion( version, root, relative_executable, owning );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 

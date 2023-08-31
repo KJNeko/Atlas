@@ -99,7 +99,8 @@ namespace atlas::records
 		RapidTransaction() << "UPDATE games SET description = ? WHERE record_id = ?" << description << m_id;
 	}
 
-	void Game::addVersion( QString version_name, std::filesystem::path dir, std::filesystem::path executable )
+	void Game::addVersion(
+		QString version_name, std::filesystem::path dir, std::filesystem::path executable, const bool in_place )
 	{
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
@@ -107,8 +108,7 @@ namespace atlas::records
 			//Version not found. Safe to add
 			RapidTransaction()
 				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added) VALUES (?, ?, ?, ?, ?, ?)"
-				<< m_id << version_name << dir << executable
-				<< dir.string().starts_with( config::paths::games::getPath().string() )
+				<< m_id << version_name << dir << executable << in_place
 				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::steady_clock::now()
 			                                                               .time_since_epoch() )
 					   .count();
@@ -268,7 +268,7 @@ namespace atlas::records
 		ZoneScoped;
 		int count { 0 };
 
-		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
+		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
 			path = imageManager::importImage( path, m_id ).result();
 		}
@@ -348,7 +348,7 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( QString title, QString developer )
 	{
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::AtlasRemoteData > data;

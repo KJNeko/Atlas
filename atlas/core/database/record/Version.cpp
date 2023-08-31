@@ -9,6 +9,7 @@
 #include "core/database/record/GameData.hpp"
 #include "core/logging.hpp"
 #include "core/utils/execute/executeProc.hpp"
+#include "core/utils/operators.hpp"
 
 namespace atlas::records
 {
@@ -24,7 +25,7 @@ namespace atlas::records
 		bool in_place { false };
 		RapidTransaction transaction;
 		transaction << "SELECT in_place FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-					<< m_version.toStdString()
+					<< m_version
 			>> in_place;
 
 		return in_place;
@@ -47,7 +48,7 @@ namespace atlas::records
 		std::uint32_t total_playtime { 0 };
 
 		transaction << "SELECT version_playtime FROM versions WHERE record_id = ? AND version = ?"
-					<< parent()->m_game_id << m_version.toStdString()
+					<< parent()->m_game_id << m_version
 			>> total_playtime;
 
 		return total_playtime;
@@ -60,7 +61,7 @@ namespace atlas::records
 		std::uint64_t last_played { 0 };
 
 		transaction << "SELECT last_played FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-					<< m_version.toStdString()
+					<< m_version
 			>> last_played;
 
 		return last_played;
@@ -70,26 +71,26 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		std::string path;
+		QString path;
 		transaction << "SELECT game_path FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-					<< m_version.toStdString()
+					<< m_version
 			>> path;
 
 		if ( isInPlace() )
-			return { path };
+			return { path.toStdWString() };
 		else
-			return config::paths::games::getPath() / std::filesystem::path( path );
+			return config::paths::games::getPath() / path;
 	}
 
 	std::filesystem::path Version::getRelativeExecPath() const
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		std::string str;
+		QString str;
 		transaction << "SELECT exec_path FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-					<< m_version.toStdString()
+					<< m_version
 			>> str;
-		return { str };
+		return { str.toStdWString() };
 	}
 
 	std::filesystem::path Version::getExecPath() const
@@ -129,7 +130,7 @@ namespace atlas::records
 		ZoneScoped;
 		RapidTransaction transaction;
 		transaction << "UPDATE versions SET version_playtime = ? WHERE record_id = ? AND version = ?"
-					<< playtime + getPlaytime() << parent()->m_game_id << m_version.toStdString();
+					<< playtime + getPlaytime() << parent()->m_game_id << m_version;
 
 		parent().addPlaytime( playtime );
 	}
@@ -139,7 +140,7 @@ namespace atlas::records
 		ZoneScoped;
 		RapidTransaction transaction;
 		transaction << "UPDATE versions SET last_played = ? WHERE record_id = ? AND version = ?" << last_played
-					<< parent()->m_game_id << m_version.toStdString();
+					<< parent()->m_game_id << m_version;
 
 		parent().setLastPlayed( last_played );
 	}
@@ -150,7 +151,7 @@ namespace atlas::records
 		RapidTransaction transaction;
 		std::size_t folder_size { 0 };
 		transaction << "SELECT folder_size FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-					<< m_version.toStdString()
+					<< m_version
 			>> folder_size;
 		return folder_size;
 	}
@@ -164,8 +165,8 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		transaction << "UPDATE versions SET version = ? WHERE record_id = ? AND version = ?" << str.toStdString()
-					<< parent()->m_game_id << m_version.toStdString();
+		transaction << "UPDATE versions SET version = ? WHERE record_id = ? AND version = ?" << str
+					<< parent()->m_game_id << m_version;
 		m_version = str;
 	}
 
@@ -173,8 +174,8 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		transaction << "UPDATE versions SET exec_path = ? WHERE record_id = ? AND version = ?" << path.string()
-					<< parent()->m_game_id << m_version.toStdString();
+		transaction << "UPDATE versions SET exec_path = ? WHERE record_id = ? AND version = ?" << path.u8string()
+					<< parent()->m_game_id << m_version;
 	}
 
 	std::uint64_t Version::getImportTime() const
@@ -183,7 +184,7 @@ namespace atlas::records
 		RapidTransaction trans;
 		std::uint64_t import_time { 0 };
 		trans << "SELECT date_added FROM versions WHERE record_id = ? AND version = ?" << parent()->m_game_id
-			  << m_version.toStdString()
+			  << m_version
 			>> import_time;
 
 		return import_time;
