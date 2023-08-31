@@ -206,8 +206,6 @@ try
 		promise.suspendIfRequested();
 		if ( promise.isCanceled() ) return;
 
-		spdlog::info( "Scanning {}", itter->path() );
-
 		if ( itter->is_directory() )
 		{
 			TracyCZoneN( regex_Tracy, "Regex", true );
