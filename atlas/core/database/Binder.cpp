@@ -48,7 +48,8 @@ int bindParameter( sqlite3_stmt* stmt, const QString val, const int idx ) noexce
 template <>
 int bindParameter( sqlite3_stmt* stmt, const std::u8string val, const int idx ) noexcept
 {
-	return sqlite3_bind_text( stmt, idx, reinterpret_cast< const char* >( val.c_str() ), idx, SQLITE_TRANSIENT );
+	return sqlite3_bind_text(
+		stmt, idx, reinterpret_cast< const char* >( val.c_str() ), static_cast< int >( val.size() ), SQLITE_TRANSIENT );
 }
 
 template <>
