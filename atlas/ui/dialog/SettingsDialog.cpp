@@ -168,6 +168,11 @@ void SettingsDialog::prepareGridViewerSettings()
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
 
+	//Experimental Settings
+	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
+	ui->cbExpThumb->setChecked( config::experimental::loading_preview::get() );
+	ui->spExpThumbRadius->setValue( config::experimental::loading_preview_blur::get() );
+
 	//ui->cbCenterItems->setEnabled( false );
 	//ui->leFont->setEnabled( false );
 }
@@ -199,6 +204,11 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engineLocation::set( static_cast< LOCATION >( ui->cbEngine->currentIndex() ) );
 	config::grid_ui::versionLocation::set( static_cast< LOCATION >( ui->cbVersion->currentIndex() ) );
 	config::grid_ui::creatorLocation::set( static_cast< LOCATION >( ui->cbCreator->currentIndex() ) );
+
+	//Save experimental settings
+	config::experimental::local_match::set(	ui->cbExpFindAtlData->checkState());
+	config::experimental::loading_preview::set(ui->cbExpThumb->checkState());
+	config::experimental::loading_preview_blur::set(ui->spExpThumbRadius->value());
 
 	config::notify();
 }

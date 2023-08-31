@@ -64,24 +64,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 		if ( record.bannerPath( Normal ).extension() == ".gif" )
 		{
-			/*QLabel label;
-			QMovie* movie = new QMovie( QString::fromStdString( record.bannerPath( Normal ).string() ) );
-			label.setMovie( movie );
-			movie->start();
-
-			if ( !movie )
-			{
-				//recordlist
-				//QAbstractItemView::setIndexWidget( index, label );
-				//auto view = qobject_cast< NyView* >( parent() );
-				//view_.setIndexWidget( index, NULL );
-			}*/
+			//NOT IMPLEMENTED
 		}
 
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
-		/*QPixmap thumb { QString::fromStdString(record.bannerPath( Normal ).parent_path().string() + "//"
-			                + record.bannerPath( Normal ).stem().string() + "_thumb"
-			                + record.bannerPath( Normal ).extension().string())};*/
 
 		QPixmap pixmap;
 
@@ -99,28 +85,23 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			}
 			else{
 			//Add experimental feature
-			pixmap = QPixmap( QString::fromStdString(
-								  record.bannerPath( Normal ).parent_path().string() + "//"
-								  + record.bannerPath( Normal ).stem().string() + "_thumb"
-								  + record.bannerPath( Normal ).extension().string() ) )
-				         .scaled( banner_size, Qt::IgnoreAspectRatio );
-			QImage srcImg { pixmap.toImage() };
-			pixmap.fill( Qt::transparent );
-			{
-				QPainter paintert( &pixmap );
-				qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius: 2px
-  }
+				if(config::experimental::loading_preview::get())
+				{
+					pixmap = record.requestThumbnail( banner_size, Normal );
+					QImage srcImg { pixmap.toImage() };
+					pixmap.fill( Qt::transparent );
+					{
+						QPainter paintert( &pixmap );
+						qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius
+					}
+				}
 			}
-			//banner.result();
 		}
 		else
 		{
 			ZoneScopedN( "Get image from variant" );
-			//We got the banner and should continue as normal
-			
+			//We got the banner and should continue as normal			
 			pixmap = banner.result();
-			
-
 
 			//Check if we need to add blur background. Draw behind original image
 			if ( aspect_ratio == FIT_BLUR_EXPANDING )
@@ -136,10 +117,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
 		const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
 
-		//Draw Shadow
-		//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
-		//painter->drawRect( shadow_rect );
-		//Draw Image
 		painter->drawPixmap( pixmap_rect, pixmap );
 	}
 

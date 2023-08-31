@@ -63,6 +63,9 @@ namespace atlas::records
 		void setDescription( QString description );
 		bool versionExists( const QString& str );
 
+		//Get tumbnail from image
+		QPixmap requestThumbnail( const QSize size, const BannerType type );
+
 		//!Test Function.
 		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( std::string title, std::string developer );
 		//! Adds a new version. Will throw if version of same name exists.

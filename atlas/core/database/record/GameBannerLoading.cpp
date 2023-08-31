@@ -261,6 +261,20 @@ namespace atlas::records
 			return QtConcurrent::run( &globalPools().image_loaders, scaleImage, size, scale_type, path );
 	}
 
+	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){
+		const auto path { bannerPath( type ) };
+		spdlog::info(
+			"{}",
+			QString::fromStdString(
+				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );
+		QPixmap pixmap { QPixmap( QString::fromStdString(
+								  path.parent_path().string() + "//"
+								  + path.stem().string() + "_thumb"
+								  + path.extension().string() ) )
+				         .scaled( size, Qt::IgnoreAspectRatio )};
+		return pixmap;
+	}
+
 	//! Simple passthrough to same function but with combined size via QSize instead of seperate ints
 	QFuture< QPixmap > Game::
 		requestBanner( const int width, const int height, const SCALE_TYPE scale_type, const BannerType type )
