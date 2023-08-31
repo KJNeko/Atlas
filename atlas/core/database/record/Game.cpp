@@ -268,7 +268,7 @@ namespace atlas::records
 		ZoneScoped;
 		int count { 0 };
 
-		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
+		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
 			path = imageManager::importImage( path, m_id ).result();
 		}
@@ -348,7 +348,7 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( QString title, QString developer )
 	{
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::AtlasRemoteData > data;
