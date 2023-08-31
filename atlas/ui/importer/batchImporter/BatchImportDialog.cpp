@@ -27,6 +27,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 	ui->twGames->setEditTriggers( QAbstractItemView::AllEditTriggers );
+	ui->twGames->setSortingEnabled( true );
 
 	connect( &scanner, &GameScanner::scanComplete, this, &BatchImportDialog::finishedPreProcessing );
 	connect( &scanner, &GameScanner::foundGame, this, &BatchImportDialog::processFinishedDirectory );

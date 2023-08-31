@@ -56,6 +56,7 @@ struct GameImportData
 	GameImportData() = delete;
 	GameImportData( GameImportData&& other ) = default;
 	GameImportData( const GameImportData& other ) = default;
+	GameImportData& operator=( const GameImportData& other ) = default;
 };
 
 #endif //ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP
