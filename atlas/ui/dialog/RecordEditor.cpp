@@ -240,6 +240,7 @@ void RecordEditor::on_btnAddVersion_pressed()
 	dialog->setSubMax( static_cast< int >( files.size() ) );
 
 	int counter { 0 };
+	std::uint64_t file_size { 0 };
 
 	if ( should_move )
 	{
@@ -258,13 +259,14 @@ void RecordEditor::on_btnAddVersion_pressed()
 			std::filesystem::copy_file( source_path, dest );
 
 			dialog->setValue( ++counter );
+			file_size += std::filesystem::file_size( file );
 		}
 
-		m_record.addVersion( version_name, dest_path, relative, should_move );
+		m_record.addVersion( version_name, dest_path, relative, file_size, should_move );
 	}
 	else
 	{
-		m_record.addVersion( version_name, source, relative, should_move );
+		m_record.addVersion( version_name, source, relative, file_size, should_move );
 	}
 
 	delete dialog;
