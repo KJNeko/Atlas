@@ -259,11 +259,11 @@ void RecordEditor::on_btnAddVersion_pressed()
 			dialog->setValue( ++counter );
 		}
 
-		m_record.addVersion( version_name, dest_path, relative );
+		m_record.addVersion( version_name, dest_path, relative, should_move );
 	}
 	else
 	{
-		m_record.addVersion( version_name, source, relative );
+		m_record.addVersion( version_name, source, relative, should_move );
 	}
 
 	delete dialog;

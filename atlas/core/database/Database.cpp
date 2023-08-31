@@ -109,7 +109,7 @@ void Database::initalize( const std::filesystem::path init_path )
 	{
 		atlas::records::Game game { atlas::records::importRecord( test_name, test_creator, test_engine ) };
 		game.addVersion(
-			"Chapter: 1", "C:/Atlas Games/Galaxy Crossing First Conquest", "Galaxy Crossing First Conquest.exe" );
+			"Chapter: 1", "C:/Atlas Games/Galaxy Crossing First Conquest", "Galaxy Crossing First Conquest.exe", true );
 
 		QImage banner_image { ":/images/assets/Grid_Capsule_Default.webp" };
 		if ( banner_image.isNull() ) throw std::runtime_error( "Failed to open image asset for Grid Capsule Default" );
