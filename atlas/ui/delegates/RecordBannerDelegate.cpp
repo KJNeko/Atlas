@@ -20,6 +20,10 @@
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
 
+QT_BEGIN_NAMESPACE
+  extern Q_WIDGETS_EXPORT void qt_blurImage( QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
+QT_END_NAMESPACE
+
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
@@ -75,6 +79,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		}
 
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
+		/*QPixmap thumb { QString::fromStdString(record.bannerPath( Normal ).parent_path().string() + "//"
+			                + record.bannerPath( Normal ).stem().string() + "_thumb"
+			                + record.bannerPath( Normal ).extension().string())};*/
 
 		QPixmap pixmap;
 
@@ -84,14 +91,36 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
 			if ( m_model != nullptr )
 				this->m_model->refreshOnFuture( index, std::move( banner ) );
-			else
+			
+			//Specific case. Do not load thumb for settings images
+			if(record->m_game_id == 1)
+			{
 				pixmap = banner.result();
+			}
+			else{
+			//Add experimental feature
+			pixmap = QPixmap( QString::fromStdString(
+								  record.bannerPath( Normal ).parent_path().string() + "//"
+								  + record.bannerPath( Normal ).stem().string() + "_thumb"
+								  + record.bannerPath( Normal ).extension().string() ) )
+				         .scaled( banner_size, Qt::IgnoreAspectRatio );
+			QImage srcImg { pixmap.toImage() };
+			pixmap.fill( Qt::transparent );
+			{
+				QPainter paintert( &pixmap );
+				qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius: 2px
+  }
+			}
+			//banner.result();
 		}
 		else
 		{
 			ZoneScopedN( "Get image from variant" );
 			//We got the banner and should continue as normal
+			
 			pixmap = banner.result();
+			
+
 
 			//Check if we need to add blur background. Draw behind original image
 			if ( aspect_ratio == FIT_BLUR_EXPANDING )

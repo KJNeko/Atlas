@@ -109,7 +109,7 @@ namespace imageManager
 		else
 		{
 			auto dest { getDestFilePath( webp_byteArray, dest_root, ".webp" ) };
-			saveImage( webp_byteArray, dest );
+			saveImage( webp_byteArray, dest );			
 			return dest;
 		}
 
@@ -144,6 +144,12 @@ namespace imageManager
 	void saveImage( QByteArray byteArray, std::filesystem::path dest )
 	{
 		const QImage img { QImage::fromData( byteArray ) };
+		const QImage thumb = img.scaled( 200, 94, Qt::KeepAspectRatio );
+		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"+  dest.extension().string() };
 		img.save( QString::fromStdString( dest.string() ) );
+		thumb.save( QString::fromStdString( thumb_file) );
+
+		//Try to save thumbnail
+
 	};
 } // namespace imageManager
