@@ -65,8 +65,8 @@ namespace atlas::records
 		ZoneScoped;
 		RapidTransaction transaction;
 		RecordID record_id { 0 };
-		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?"
-					<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
+		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title_in
+					<< creator_in << engine_in
 			>> [ & ]( const RecordID id ) noexcept { record_id = id; };
 
 		if ( record_id != 0 )
@@ -77,7 +77,7 @@ namespace atlas::records
 
 		transaction
 				<< "INSERT INTO games (title, creator, engine, last_played_r, total_playtime) VALUES (?, ?, ?, 0, 0) RETURNING record_id"
-				<< title_in.toStdString() << creator_in.toStdString() << engine_in.toStdString()
+				<< title_in << creator_in << engine_in
 			>> [ & ]( const RecordID id ) noexcept { m_game_id = id; };
 	}
 
@@ -94,7 +94,7 @@ namespace atlas::records
 		ZoneScoped;
 		RapidTransaction transaction;
 		std::size_t id { 0 };
-		transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str.toStdString() >> id;
+		transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str >> id;
 		return id;
 	}
 
@@ -104,8 +104,8 @@ namespace atlas::records
 		RecordID record_id { INVALID_RECORD_ID };
 
 		RapidTransaction transaction;
-		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?"
-					<< title.toStdString() << creator.toStdString() << engine.toStdString()
+		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title << creator
+					<< engine
 			>> [ &record_id ]( [[maybe_unused]] const RecordID id ) noexcept { record_id = id; };
 
 		return record_id;

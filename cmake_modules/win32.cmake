@@ -37,7 +37,7 @@ if (WIN32)
     endfunction()   # PlatformPreSetup
 
     function(PlatformPostSetup)
-        target_compile_definitions(Atlas PRIVATE UNICODE=1)
+        #target_compile_definitions(Atlas PRIVATE UNICODE=1)
         add_custom_target(build-time-make-directory ALL
             COMMAND ${CMAKE_COMMAND} -E make_directory ${NEEDED_QT_FOLDERS}
                 COMMENT "Creating necessary folders"

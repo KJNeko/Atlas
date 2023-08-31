@@ -36,7 +36,7 @@ namespace imageManager
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
-						<< std::filesystem::relative( path, config::paths::images::getPath() ).string()
+						<< std::filesystem::relative( path, config::paths::images::getPath() ).u8string()
 				>> [ & ]( [[maybe_unused]] int count ) noexcept { found = true; };
 
 			if ( !found ) std::filesystem::remove( path );

@@ -109,11 +109,12 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable, game_size );
+
+			record.addVersion( version, dest_root, relative_executable, game_size, owning );
 		}
 		else
-			record.addVersion( version, root, relative_executable, game_size );
-
+			record.addVersion( version, root, relative_executable, game_size, owning );
+    
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};

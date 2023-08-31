@@ -30,16 +30,32 @@ Binder::~Binder()
 	sqlite3_finalize( stmt );
 }
 
+/*
 template <>
 int bindParameter( sqlite3_stmt* stmt, const std::string val, const int idx ) noexcept
 {
 	return sqlite3_bind_text( stmt, idx, val.c_str(), static_cast< int >( val.size() ), SQLITE_TRANSIENT );
 }
+*/
+
+template <>
+int bindParameter( sqlite3_stmt* stmt, const QString val, const int idx ) noexcept
+{
+	const QByteArray utf8_text { val.toUtf8() };
+	return sqlite3_bind_text( stmt, idx, utf8_text.data(), static_cast< int >( utf8_text.size() ), SQLITE_TRANSIENT );
+}
+
+template <>
+int bindParameter( sqlite3_stmt* stmt, const std::u8string val, const int idx ) noexcept
+{
+	return sqlite3_bind_text(
+		stmt, idx, reinterpret_cast< const char* >( val.c_str() ), static_cast< int >( val.size() ), SQLITE_TRANSIENT );
+}
 
 template <>
 int bindParameter( sqlite3_stmt* stmt, const std::filesystem::path val, const int idx ) noexcept
 {
-	return bindParameter< std::string >( stmt, val.string(), idx );
+	return bindParameter< std::u8string >( stmt, val.u8string(), idx );
 }
 
 template <>
@@ -52,12 +68,6 @@ template <>
 int bindParameter( sqlite3_stmt* stmt, [[maybe_unused]] const std::nullopt_t nullopt, const int idx ) noexcept
 {
 	return sqlite3_bind_null( stmt, idx );
-}
-
-template <>
-int bindParameter( sqlite3_stmt* stmt, const QString val, const int idx ) noexcept
-{
-	return bindParameter( stmt, val.toStdString(), idx );
 }
 
 template <>

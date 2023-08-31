@@ -100,19 +100,18 @@ namespace atlas::records
 	}
 
 	void Game::addVersion(
-		QString version_name, std::filesystem::path dir, std::filesystem::path executable, std::uint64_t folder_size )
+		QString version_name, std::filesystem::path dir, std::filesystem::path executable, std::uint64_t folder_size, const bool in_place )
 	{
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
 		{
 			//Version not found. Safe to add
 			RapidTransaction()
+        
 				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?)"
 				<< m_id << version_name << dir << executable
-				<< dir.string().starts_with( config::paths::games::getPath().string() )
-				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now()
-			                                                               .time_since_epoch() )
-					   .count()
+				<< in_place
+				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() ).count()
 				<< folder_size;
 
 			versions.emplace_back( Version( m_id, version_name ) );
@@ -277,7 +276,7 @@ namespace atlas::records
 		ZoneScoped;
 		int count { 0 };
 
-		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
+		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
 			path = imageManager::importImage( path, m_id ).result();
 			if ( !std::filesystem::exists( path ) )
@@ -363,7 +362,7 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( QString title, QString developer )
 	{
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::AtlasRemoteData > data;

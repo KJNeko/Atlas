@@ -66,7 +66,7 @@ namespace atlas::records
 		bool versionExists( const QString& str );
 
 		//!Test Function.
-		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( std::string title, std::string developer );
+		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
@@ -77,8 +77,8 @@ namespace atlas::records
 			QString version_name,
 			std::filesystem::path dir,
 			std::filesystem::path executable,
-			const std::uint64_t folder_size );
-
+			const std::uint64_t folder_size,
+      const bool in_place );
 		void removeVersion( Version& info );
 
 		//! Adds playtime to the playtime counter
