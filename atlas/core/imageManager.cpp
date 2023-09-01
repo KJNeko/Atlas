@@ -45,7 +45,7 @@ namespace imageManager
 
 	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		spdlog::debug( path );
+		//spdlog::debug( path );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{

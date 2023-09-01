@@ -36,7 +36,7 @@ void clear_lock()
 int main( int argc, char** argv )
 {
 
-	spdlog::info( "EntryPoint" );
+	//spdlog::info( "EntryPoint" );
 	//initLogging();
 	QApplication app { argc, argv };
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );

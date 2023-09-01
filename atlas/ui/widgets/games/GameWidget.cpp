@@ -106,7 +106,7 @@ void GameWidget::reloadRecord()
 
 	const std::size_t latest_size { versions.front().getFolderSize() };
 
-	spdlog::info( "Latest size: {}, Total size: {}", latest_size, total_size );
+	//spdlog::info( "Latest size: {}, Total size: {}", latest_size, total_size );
 
 	const auto& locale { this->locale() };
 

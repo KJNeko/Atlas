@@ -276,10 +276,10 @@ namespace atlas::records
 
 	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){
 		const auto path { bannerPath( type ) };
-		spdlog::info(
+		/*spdlog::info(
 			"{}",
 			QString::fromStdString(
-				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );
+				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );*/
 		QPixmap pixmap { QPixmap( QString::fromStdString(
 								  path.parent_path().string() + "//"
 								  + path.stem().string() + "_thumb"
