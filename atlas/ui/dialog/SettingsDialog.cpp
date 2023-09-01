@@ -116,7 +116,7 @@ void SettingsDialog::saveApplicationSettings()
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
 
 	//Set exp features
-	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
+	//config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
 
 	reloadTheme();
 }
