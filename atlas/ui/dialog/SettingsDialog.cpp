@@ -409,26 +409,26 @@ void SettingsDialog::reject()
 
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
-	spdlog::debug( "Theme changed to {}", text );
-
 	reloadTheme();
 
 	if ( ui->cbUseSystemTheme->isChecked() )
 	{
+		spdlog::debug( "Using system theme" );
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
 		ensurePolished();
 		return;
 	}
 	else
 	{
+		spdlog::debug( "Theme changed to {}", text );
 		QFile file { "./data/themes/" + text };
 		file.open( QFile::ReadOnly );
-
 		QString style { file.readAll() };
 
-		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( std::move( style ) );
 
 		ensurePolished();
+		return;
 	}
 }
 
