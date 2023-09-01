@@ -109,12 +109,11 @@ namespace internal
 				}
 			}
 
-
 			record.addVersion( version, dest_root, relative_executable, game_size, owning );
 		}
 		else
 			record.addVersion( version, root, relative_executable, game_size, owning );
-    
+
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
@@ -124,7 +123,7 @@ namespace internal
 			const auto path { banners[ i ] };
 			if ( !path.isEmpty() )
 			{
-				const std::filesystem::path banner_path { path.toStdString() };
+				const std::filesystem::path banner_path { path.toStdWString() };
 				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
 			}
 			else
@@ -133,7 +132,7 @@ namespace internal
 			//If the game is going into our directory then we should clean up the banners
 			if ( owning )
 			{
-				const auto r_path { dest_root / std::filesystem::relative( { path.toStdString() }, root ) };
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
 				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
 				std::filesystem::remove( r_path );
@@ -145,12 +144,12 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler.setSubMessage( QString( "Importing preview %1" ).arg( path ) );
-			preview_futures.emplace_back( imageManager::importImage( { path.toStdString() }, record->m_game_id ) );
+			preview_futures.emplace_back( imageManager::importImage( { path.toStdWString() }, record->m_game_id ) );
 			//record.addPreview( { path.toStdString() } );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
-				const auto r_path { dest_root / std::filesystem::relative( { path.toStdString() }, root ) };
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
 				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
 				std::filesystem::remove( r_path );
