@@ -20,6 +20,10 @@
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
 
+QT_BEGIN_NAMESPACE
+  extern Q_WIDGETS_EXPORT void qt_blurImage( QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
+QT_END_NAMESPACE
+
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
 {
@@ -60,18 +64,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 		if ( record.bannerPath( Normal ).extension() == ".gif" )
 		{
-			/*QLabel label;
-			QMovie* movie = new QMovie( QString::fromStdString( record.bannerPath( Normal ).string() ) );
-			label.setMovie( movie );
-			movie->start();
-
-			if ( !movie )
-			{
-				//recordlist
-				//QAbstractItemView::setIndexWidget( index, label );
-				//auto view = qobject_cast< NyView* >( parent() );
-				//view_.setIndexWidget( index, NULL );
-			}*/
+			//NOT IMPLEMENTED
 		}
 
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
@@ -84,13 +77,30 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
 			if ( m_model != nullptr )
 				this->m_model->refreshOnFuture( index, std::move( banner ) );
-			else
+			
+			//Specific case. Do not load thumb for settings images
+			if(record->m_game_id == 1)
+			{
 				pixmap = banner.result();
+			}
+			else{
+			//Add experimental feature
+				if(config::experimental::loading_preview::get())
+				{
+					pixmap = record.requestThumbnail( banner_size, Normal );
+					QImage srcImg { pixmap.toImage() };
+					pixmap.fill( Qt::transparent );
+					{
+						QPainter paintert( &pixmap );
+						qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius
+					}
+				}
+			}
 		}
 		else
 		{
 			ZoneScopedN( "Get image from variant" );
-			//We got the banner and should continue as normal
+			//We got the banner and should continue as normal			
 			pixmap = banner.result();
 
 			//Check if we need to add blur background. Draw behind original image
@@ -107,10 +117,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( banner_size.height() - pixmap.height() ) / 2 : 0 };
 		const QRect pixmap_rect { options_rect.x() + x_m, options_rect.y() + y_m, pixmap.width(), pixmap.height() };
 
-		//Draw Shadow
-		//painter->fillRect( shadow_rect, QColor( 255, 255, 255, 10 ) );
-		//painter->drawRect( shadow_rect );
-		//Draw Image
 		painter->drawPixmap( pixmap_rect, pixmap );
 	}
 

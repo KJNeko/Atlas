@@ -43,6 +43,7 @@ class GameWidget final : public QWidget
 	void clearRecord();
 	void paintEvent( QPaintEvent* event ) override;
 	void updateGameState();
+	std::string getEngineLogo( std::string engine );
 
 	//Button handling
 	void on_btnPlay_pressed();

@@ -65,6 +65,9 @@ namespace atlas::records
 		void setDescription( QString description );
 		bool versionExists( const QString& str );
 
+		//Get tumbnail from image
+		QPixmap requestThumbnail( const QSize size, const BannerType type );
+
 		//!Test Function.
 		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
 		//! Adds a new version. Will throw if version of same name exists.
@@ -97,7 +100,7 @@ namespace atlas::records
 
 		//! Returns a future for the banner to be loaded.
 
-		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const std::uint64_t index ) const;
+		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const int index ) const;
 
 		void reorderPreviews( std::vector< std::filesystem::path > paths );
 		//! If index is zero then it will place it at the highest possible postion (starting at 1)

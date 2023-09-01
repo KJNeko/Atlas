@@ -117,9 +117,9 @@ namespace atlas::records
 			setLastPlayed( static_cast<
 						   uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( now.time_since_epoch() )
 			                               .count() ) );
-			*/
+			
 
-			return;
+			return;*/
 		}
 		else
 			spdlog::error( "Failed to launch game with executable {}", executable.string() );

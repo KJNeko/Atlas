@@ -61,3 +61,11 @@
 #SettingsMenu {
     background-color: rgb(202, 202, 202);
 }
+
+#previewList {
+    background-color: gray;
+}
+
+#InfoPanel {
+    background-color: gray;
+}

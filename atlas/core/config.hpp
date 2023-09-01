@@ -303,6 +303,8 @@ SETTINGS_D( threads, image_loader_threads, int, 2 )
 SETTINGS_D( threads, import_pre_loader_threads, int, 4 )
 
 SETTINGS_D( experimental, local_match, bool, false )
+SETTINGS_D( experimental, loading_preview, bool, false )
+SETTINGS_D( experimental, loading_preview_blur, int, 0 )
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

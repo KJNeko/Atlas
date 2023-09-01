@@ -170,6 +170,11 @@ void SettingsDialog::prepareGridViewerSettings()
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
 
+	//Experimental Settings
+	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
+	ui->cbExpThumb->setChecked( config::experimental::loading_preview::get() );
+	ui->spExpThumbRadius->setValue( config::experimental::loading_preview_blur::get() );
+
 	//ui->cbCenterItems->setEnabled( false );
 	//ui->leFont->setEnabled( false );
 }
@@ -201,6 +206,11 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engineLocation::set( static_cast< LOCATION >( ui->cbEngine->currentIndex() ) );
 	config::grid_ui::versionLocation::set( static_cast< LOCATION >( ui->cbVersion->currentIndex() ) );
 	config::grid_ui::creatorLocation::set( static_cast< LOCATION >( ui->cbCreator->currentIndex() ) );
+
+	//Save experimental settings
+	config::experimental::local_match::set(	ui->cbExpFindAtlData->checkState());
+	config::experimental::loading_preview::set(ui->cbExpThumb->checkState());
+	config::experimental::loading_preview_blur::set(ui->spExpThumbRadius->value());
 
 	config::notify();
 }
@@ -366,33 +376,39 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 void SettingsDialog::on_btnGeneral_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 0 );
+	ui->lblSettingsHeader->setText( "GENERAL" );
 }
 
 void SettingsDialog::on_btnInterface_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 1 );
+	ui->lblSettingsHeader->setText( "INTERFACE" );
 }
 
 void SettingsDialog::on_btnUilayout_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 2 );
+	ui->stackedWidget->setCurrentIndex( 2 );	
+	ui->lblSettingsHeader->setText( "UI LAYOUT" );
 	//repaint banner view Do not remove
 	qlv->repaint();
 }
 
 void SettingsDialog::on_btnPaths_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 3 );
+	ui->stackedWidget->setCurrentIndex( 3 );	
+	ui->lblSettingsHeader->setText( "PATHS" );
 }
 
 void SettingsDialog::on_btnThreading_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 4 );
+	ui->stackedWidget->setCurrentIndex( 4 );	
+	ui->lblSettingsHeader->setText( "THREADING" );
 }
 
 void SettingsDialog::on_btnExpFeatures_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 5 );
+	ui->lblSettingsHeader->setText( "EXPERIMENTAL FEATURES" );
 }
 
 void SettingsDialog::on_applySettings_pressed()

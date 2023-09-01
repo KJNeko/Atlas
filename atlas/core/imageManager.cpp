@@ -45,7 +45,7 @@ namespace imageManager
 
 	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		spdlog::debug( path );
+		//spdlog::debug( path );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
@@ -76,7 +76,7 @@ namespace imageManager
 		TracyCZoneN( tracy_SaveImage, "Image save to buffer as WEBP", true );
 		QByteArray webp_byteArray;
 		QBuffer webp_buffer( &webp_byteArray );
-		temp_image.save( &webp_buffer, "webp", 90 );
+		temp_image.save( &webp_buffer, "webp", 95 );
 		TracyCZoneEnd( tracy_SaveImage );
 
 		constexpr std::uint16_t webp_max { 16383 };
@@ -109,7 +109,7 @@ namespace imageManager
 		else
 		{
 			auto dest { getDestFilePath( webp_byteArray, dest_root, ".webp" ) };
-			saveImage( webp_byteArray, dest );
+			saveImage( webp_byteArray, dest );			
 			return dest;
 		}
 
@@ -144,9 +144,16 @@ namespace imageManager
 	void saveImage( QByteArray byteArray, std::filesystem::path dest )
 	{
 		const QImage img { QImage::fromData( byteArray ) };
+		const QImage thumb = img.scaled( 200, 94, Qt::KeepAspectRatio );
+		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"+  dest.extension().string() };
+		//img.save( QString::fromStdString( dest.string() ) );
+		thumb.save( QString::fromStdString( thumb_file) );
 		if ( !img.save( QString::fromStdString( dest.string() ) ) )
 		{
 			throw std::runtime_error( fmt::format( "Failed to save image to location: {}", std::move( dest ) ) );
 		}
+		//Try to save thumbnail
+
 	}
+		
 } // namespace imageManager
