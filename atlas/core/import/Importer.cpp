@@ -16,6 +16,7 @@
 #include "core/imageManager.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
+#include "core/utils/operators.hpp"
 #include "core/utils/threading/pools.hpp"
 
 namespace internal
@@ -81,8 +82,7 @@ namespace internal
 		auto record { atlas::records::importRecord( title, creator, engine ) };
 
 		// Used for when we move files to a directory we 'own'
-		const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
-			                                    / title.toStdString() / version.toStdString() };
+		const std::filesystem::path dest_root { config::paths::games::getPath() / creator / title / version };
 
 		if ( owning )
 		{
