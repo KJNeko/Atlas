@@ -15,17 +15,17 @@ class GameScanner final : public QObject
 {
 	Q_OBJECT
 
-	QThreadPool m_thread_pool {};
 	QFuture< void > m_runner_future {};
 	QFutureWatcher< void > m_watcher {};
 
-	void mainRunner( QPromise< void >& promise, const std::filesystem::path base, const QString regex );
+	void mainRunner(
+		QPromise< void >& promise, const std::filesystem::path base, const QString regex, const bool size_folder );
 
   public:
 
 	std::atomic< uint64_t > directories_left { 0 };
 
-	void start( const std::filesystem::path path, const QString regex );
+	void start( const std::filesystem::path path, const QString regex, const bool size_folders );
 	void wait();
 
 	~GameScanner() override;

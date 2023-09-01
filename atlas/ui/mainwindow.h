@@ -66,6 +66,7 @@ class MainWindow final : public QMainWindow
 	//void on_sortSelection_currentIndexChanged( int index );
 	void movePopup();
 	void taskPopupResized();
+	void setBottomGameCounter();
 };
 
 #endif // MAINWINDOW_H

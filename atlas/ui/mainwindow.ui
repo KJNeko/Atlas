@@ -675,8 +675,8 @@ margin-right:5px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>28</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
@@ -719,7 +719,7 @@ margin-right:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>21</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="autoFillBackground">

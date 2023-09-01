@@ -99,19 +99,25 @@ namespace atlas::records
 		RapidTransaction() << "UPDATE games SET description = ? WHERE record_id = ?" << description << m_id;
 	}
 
-	void Game::addVersion( QString version_name, std::filesystem::path dir, std::filesystem::path executable )
+	void Game::addVersion(
+		QString version_name,
+		std::filesystem::path dir,
+		std::filesystem::path executable,
+		std::uint64_t folder_size,
+		const bool in_place )
 	{
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
 		{
 			//Version not found. Safe to add
 			RapidTransaction()
-				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added) VALUES (?, ?, ?, ?, ?, ?)"
-				<< m_id << version_name << dir << executable
-				<< dir.string().starts_with( config::paths::games::getPath().string() )
-				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::steady_clock::now()
+
+				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?)"
+				<< m_id << version_name << dir << executable << in_place
+				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now()
 			                                                               .time_since_epoch() )
-					   .count();
+					   .count()
+				<< folder_size;
 
 			versions.emplace_back( Version( m_id, version_name ) );
 			emit dataChanged();
@@ -191,12 +197,20 @@ namespace atlas::records
 		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 		{
 			path = imageManager::importImage( path, m_id ).result();
+
+			if ( !std::filesystem::exists( path ) )
+				throw std::runtime_error( "addPreview: invalid path from importImage" );
+		}
+		else
+		{
+			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to addPreview." );
 		}
 
 		//Get the highest position
 		if ( index == 0 )
 		{
 			RapidTransaction() << "SELECT position FROM previews WHERE record_id = ? ORDER BY position DESC LIMIT 1"
+							   << m_id
 				>> index;
 		}
 
@@ -268,9 +282,15 @@ namespace atlas::records
 		ZoneScoped;
 		int count { 0 };
 
-		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
+		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
 			path = imageManager::importImage( path, m_id ).result();
+			if ( !std::filesystem::exists( path ) )
+				throw std::runtime_error( "Failed to set banner. importImage returned a invalid path!" );
+		}
+		else
+		{
+			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to setBanner." );
 		}
 
 		RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
@@ -348,7 +368,7 @@ namespace atlas::records
 	{}
 
 	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( std::string title, std::string developer )
+	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( QString title, QString developer )
 	{
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::AtlasRemoteData > data;

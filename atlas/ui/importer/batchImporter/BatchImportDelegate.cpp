@@ -20,10 +20,24 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 
 	switch ( index.column() )
 	{
+		case TITLE:
+			{
+				const auto has_gl_link { index.data( ImportColumns::HAS_GL_LINK ).value< bool >() };
+				if ( has_gl_link )
+				{
+					QPixmap pixmap { ":/images/assets/gl.png" };
+					pixmap = pixmap.scaledToHeight( options.rect.height() );
+
+					const QPoint draw_point { QPoint( options.rect.width() - pixmap.width(), 0 ) };
+					auto draw_rect { options.rect.translated( draw_point ) };
+					draw_rect.setSize( pixmap.size() );
+
+					painter->drawPixmap( draw_rect, pixmap );
+				}
+			}
+			[[fallthrough]]; //print title
 		case FOLDER_PATH:
 			[[fallthrough]]; //print path
-		case TITLE:
-			[[fallthrough]]; //print title
 		case CREATOR:
 			[[fallthrough]]; //print creator
 		case VERSION:

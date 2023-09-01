@@ -22,24 +22,6 @@ void extract( sqlite3_stmt* stmt, T& t ) noexcept
 }
 
 template < std::uint64_t index, typename T >
-	requires std::is_same_v< T, std::string >
-void extract( sqlite3_stmt* stmt, std::string& t ) noexcept
-{
-	const unsigned char* txt { sqlite3_column_text( stmt, index ) };
-
-	if ( txt == nullptr )
-	{
-		t = {};
-		return;
-	}
-	else
-	{
-		t = std::string( reinterpret_cast< const char* >( txt ) );
-		return;
-	}
-}
-
-template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, QString >
 void extract( sqlite3_stmt* stmt, QString& t ) noexcept
 {
@@ -52,9 +34,7 @@ void extract( sqlite3_stmt* stmt, QString& t ) noexcept
 	}
 	else
 	{
-		t = QString::fromLocal8Bit(
-			reinterpret_cast< const char* >( txt ),
-			static_cast< qsizetype >( strlen( reinterpret_cast< const char* >( txt ) ) ) );
+		t = QString::fromUtf8( txt );
 		return;
 	}
 }
@@ -63,9 +43,9 @@ template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::filesystem::path >
 void extract( sqlite3_stmt* stmt, std::filesystem::path& t ) noexcept
 {
-	std::string str;
-	extract< index, std::string >( stmt, str );
-	t = { std::move( str ) };
+	QString str;
+	extract< index, QString >( stmt, str );
+	t = { std::move( str.toStdWString() ) };
 }
 
 template < std::uint64_t index, typename T >
@@ -102,7 +82,6 @@ int bindParameter( sqlite3_stmt* stmt, const T val, const int idx ) noexcept
 class Binder
 {
 	sqlite3_stmt* stmt { nullptr };
-	bool done { false };
 	int param_counter { 0 };
 	int max_param_count { 0 };
 	bool ran { false };
@@ -116,6 +95,7 @@ class Binder
 	Binder( const std::string_view sql );
 
 	template < typename T >
+		requires( !std::is_same_v< T, std::string > )
 	Binder& operator<<( T t )
 	{
 		if ( param_counter > max_param_count )
@@ -148,6 +128,13 @@ class Binder
 	{
 		ran = true;
 		const auto step_ret { sqlite3_step( stmt ) };
+
+		if ( param_counter != max_param_count )
+			throw std::runtime_error( fmt::format(
+				"param_counter != max_param_count = {} != {} for query \"{}\"",
+				param_counter,
+				max_param_count,
+				std::string( sqlite3_sql( stmt ) ) ) );
 
 		if ( step_ret == SQLITE_ROW ) [[likely]]
 		{

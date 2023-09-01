@@ -19,8 +19,7 @@
 
 #include "config.hpp"
 #include "core/database/Transaction.hpp"
-#include "pools.hpp"
-#include "system.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace imageManager
 {
@@ -37,7 +36,7 @@ namespace imageManager
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
-						<< std::filesystem::relative( path, config::paths::images::getPath() ).string()
+						<< std::filesystem::relative( path, config::paths::images::getPath() ).u8string()
 				>> [ & ]( [[maybe_unused]] int count ) noexcept { found = true; };
 
 			if ( !found ) std::filesystem::remove( path );
@@ -46,7 +45,7 @@ namespace imageManager
 
 	std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		//spdlog::debug( path );
+		spdlog::debug( path );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
@@ -57,19 +56,18 @@ namespace imageManager
 		}
 
 		//Load file so we have direct access to the bytearray
-		QFile file( path );
+		const QString qstr_file_path { QString::fromStdWString( path.wstring() ) };
+		QFile file( qstr_file_path );
 		if ( !file.open( QFile::ReadOnly ) )
+		{
+			spdlog::error( "Failed to open image file located at: {}", path );
 			throw std::runtime_error( fmt::format( "Failed to load image from file: {}", path ) );
+		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
+		const QImage temp_image { QImage::fromData( byteArray ) };
 		TracyCZoneEnd( tracy_ImageLoad );
 		file.close();
-
-		//Store image inside of QImage
-		QImage temp_image;
-		const bool load_success { temp_image.loadFromData( byteArray ) };
-		if ( !load_success )
-			throw std::runtime_error( fmt::format( "Failed to store image from byte array: {}", path.filename() ) );
 
 		const std::string ext { path.extension().string().substr( 1 ) };
 		const auto dest_root { config::paths::images::getPath() / std::to_string( game_id ) };
@@ -80,8 +78,6 @@ namespace imageManager
 		QBuffer webp_buffer( &webp_byteArray );
 		temp_image.save( &webp_buffer, "webp", 95 );
 		TracyCZoneEnd( tracy_SaveImage );
-
-		const std::string image_type { config::images::image_type::get().toStdString() };
 
 		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
@@ -94,8 +90,12 @@ namespace imageManager
 		{
 			auto dest { getDestFilePath( byteArray, dest_root, path.extension().string() ) };
 			//Qt is stupid and will not save gifs...  so we have to copy it
-			const bool file_copied { std::filesystem::copy_file( path, dest ) };
-			if ( !file_copied )
+			//const bool file_copied { std::filesystem::copy_file( path, dest ) };
+			if ( std::ofstream ofs( dest, std::ios::binary ); ofs )
+			{
+				ofs.write( byteArray.data(), byteArray.size() );
+			}
+			else
 				throw std::runtime_error( fmt::format( "Unable to save gif to images folder: {}", path.filename() ) );
 		}
 
@@ -146,10 +146,14 @@ namespace imageManager
 		const QImage img { QImage::fromData( byteArray ) };
 		const QImage thumb = img.scaled( 200, 94, Qt::KeepAspectRatio );
 		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"+  dest.extension().string() };
-		img.save( QString::fromStdString( dest.string() ) );
+		//img.save( QString::fromStdString( dest.string() ) );
 		thumb.save( QString::fromStdString( thumb_file) );
-
+		if ( !img.save( QString::fromStdString( dest.string() ) ) )
+		{
+			throw std::runtime_error( fmt::format( "Failed to save image to location: {}", std::move( dest ) ) );
+		}
 		//Try to save thumbnail
 
-	};
+	}
+		
 } // namespace imageManager

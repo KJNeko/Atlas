@@ -50,6 +50,8 @@ namespace atlas::records
 
 		Game( const Game& other ) : QObject( other.parent() ), ptr( other.ptr ), m_id( other.m_id )
 		{
+			if ( other.m_id == INVALID_RECORD_ID )
+				throw std::runtime_error( "Attempted to copy an object with an invalid record id" );
 			this->moveToThread( other.thread() );
 		}
 
@@ -67,14 +69,19 @@ namespace atlas::records
 		QPixmap requestThumbnail( const QSize size, const BannerType type );
 
 		//!Test Function.
-		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( std::string title, std::string developer );
+		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
 	 * @param dir
 	 * @param executable Must be a relative path sourced from dir.
 	 */
-		void addVersion( QString version_name, std::filesystem::path dir, std::filesystem::path executable );
+		void addVersion(
+			QString version_name,
+			std::filesystem::path dir,
+			std::filesystem::path executable,
+			const std::uint64_t folder_size,
+      const bool in_place );
 		void removeVersion( Version& info );
 
 		//! Adds playtime to the playtime counter

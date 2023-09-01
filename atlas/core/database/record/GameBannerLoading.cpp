@@ -8,7 +8,7 @@
 
 #include "Game.hpp"
 #include "GameData.hpp"
-#include "core/pools.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace atlas::records
 {
@@ -127,6 +127,8 @@ namespace atlas::records
 			cache.insert( { key, std::move( item ) } );
 
 			if ( current_size > max_size ) prune();
+			TracyPlot( "image cache size", static_cast< int64_t >( current_size ) );
+			TracyPlotConfig( "image cache size", tracy::PlotFormatType::Memory, false, true, 0 );
 		}
 
 		std::optional< QPixmap > find( std::string key )
@@ -175,10 +177,15 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		QRect bannerRect { 0, 0, target_size.width(), target_size.height() };
-		if ( promise.isCanceled() ) return;
+		if ( promise.isCanceled() )
+		{
+			TracyMessageLC( "Canceled", 0xFF0000 );
+			return;
+		}
 
 		if ( path.empty() || !std::filesystem::exists( path ) )
 		{
+			TracyMessageLC( "Failed to get path or image doesn't exist", 0xFF0000 );
 			promise.addResult( QPixmap() );
 			return;
 		}
@@ -250,6 +257,9 @@ namespace atlas::records
 		ZoneScopedN( "requestBannerSized" );
 
 		const auto path { bannerPath( type ) };
+
+		TracyMessage( path.string().c_str(), path.string().size() );
+
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() );
 
@@ -258,7 +268,10 @@ namespace atlas::records
 		if ( auto opt = internal::find( key ); opt.has_value() )
 			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
 		else
+		{
+			TracyMessageL( "cache miss" );
 			return QtConcurrent::run( &globalPools().image_loaders, scaleImage, size, scale_type, path );
+		}
 	}
 
 	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){

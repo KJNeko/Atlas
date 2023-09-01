@@ -15,6 +15,8 @@
 #include <QMimeData>
 #include <QtConcurrent>
 
+#include "core/import/Importer.hpp"
+#include "core/utils/operators.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui/models/FilepathModel.hpp"
 #include "ui_RecordEditor.h"
@@ -101,8 +103,7 @@ void RecordEditor::on_btnSetBanner_pressed()
 	file_dialog.setNameFilter( "Images (*.png *.jpg *.jpeg *.bmp *.webp)" );
 	file_dialog.setViewMode( QFileDialog::Detail );
 
-	if ( file_dialog.exec() )
-		m_record.setBanner( std::filesystem::path( file_dialog.selectedFiles().first().toStdString() ), Normal );
+	if ( file_dialog.exec() ) m_record.setBanner( { file_dialog.selectedFiles().first().toStdWString() }, Normal );
 }
 
 void RecordEditor::on_btnAddPreviews_pressed()
@@ -115,7 +116,7 @@ void RecordEditor::on_btnAddPreviews_pressed()
 
 	if ( file_dialog.exec() )
 	{
-		for ( const auto& path : file_dialog.selectedFiles() ) m_record.addPreview( { path.toStdString() } );
+		for ( const auto& path : file_dialog.selectedFiles() ) m_record.addPreview( { path.toStdWString() } );
 	}
 }
 
@@ -211,9 +212,9 @@ void RecordEditor::on_btnAddVersion_pressed()
 		return;
 	}
 
-	const std::filesystem::path source { path.toStdString() };
+	const std::filesystem::path source { path.toStdWString() };
 
-	const std::filesystem::path relative { std::filesystem::relative( executable.toStdString(), source ) };
+	const std::filesystem::path relative { std::filesystem::relative( executable.toStdWString(), source ) };
 
 	const bool should_move {
 		QMessageBox::question( this, "Move Files?", "Would you like to move the files to the atlas import location?" )
@@ -239,13 +240,13 @@ void RecordEditor::on_btnAddVersion_pressed()
 	dialog->setSubMax( static_cast< int >( files.size() ) );
 
 	int counter { 0 };
+	std::uint64_t file_size { 0 };
 
 	if ( should_move )
 	{
 		dialog->setSubText( "Copying files..." );
 		const std::filesystem::path dest_root { config::paths::games::getPath() };
-		const std::filesystem::path dest_path { dest_root / creator.toStdString() / title.toStdString()
-			                                    / version_name.toStdString() };
+		const std::filesystem::path dest_path { dest_root / creator / title / version_name };
 
 		for ( auto file : files )
 		{
@@ -258,13 +259,14 @@ void RecordEditor::on_btnAddVersion_pressed()
 			std::filesystem::copy_file( source_path, dest );
 
 			dialog->setValue( ++counter );
+			file_size += std::filesystem::file_size( file );
 		}
 
-		m_record.addVersion( version_name, dest_path, relative );
+		m_record.addVersion( version_name, dest_path, relative, file_size, should_move );
 	}
 	else
 	{
-		m_record.addVersion( version_name, source, relative );
+		m_record.addVersion( version_name, source, relative, file_size, should_move );
 	}
 
 	delete dialog;
@@ -285,8 +287,8 @@ void RecordEditor::on_btnChangeTitle_pressed()
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ?;" << output.toStdString()
-			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ?;" << output << m_record->m_creator
+			  << m_record->m_engine
 			>> count;
 
 		if ( count != 0 )
@@ -308,8 +310,8 @@ void RecordEditor::on_btnChangeCreator_pressed()
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output
+			  << m_record->m_creator << m_record->m_engine
 			>> count;
 
 		if ( count != 0 )
@@ -334,8 +336,8 @@ void RecordEditor::on_btnChangeEngine_pressed()
 	{
 		Transaction trans {};
 		std::size_t count { 0 };
-		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output.toStdString()
-			  << m_record->m_creator.toStdString() << m_record->m_engine.toStdString()
+		trans << "SELECT COUNT(*) FROM games WHERE title = ? AND creator = ? AND engine = ?;" << output
+			  << m_record->m_creator << m_record->m_engine
 			>> count;
 
 		if ( count != 0 )
