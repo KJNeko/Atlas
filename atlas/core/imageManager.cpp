@@ -56,7 +56,8 @@ namespace imageManager
 		}
 
 		//Load file so we have direct access to the bytearray
-		QFile file( path );
+		const QString qstr_file_path { QString::fromStdWString( path.wstring() ) };
+		QFile file( qstr_file_path );
 		if ( !file.open( QFile::ReadOnly ) )
 		{
 			spdlog::error( "Failed to open image file located at: {}", path );
