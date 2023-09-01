@@ -30,6 +30,8 @@ namespace atlas::notifications
 
 	void createMessage( QString message )
 	{
+		if ( internal::notification_manager == nullptr )
+			throw std::runtime_error( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
 			[ &message ]()
 			{
@@ -43,6 +45,8 @@ namespace atlas::notifications
 	{
 		void createDevMessage( std::string body, QJsonDocument doc )
 		{
+			if ( internal::notification_manager == nullptr )
+				throw std::runtime_error( "Notification manage not initalized before notification!" );
 			spdlog::info( "{}: {}", body, doc.toJson().toStdString() );
 		}
 	} // namespace internal
