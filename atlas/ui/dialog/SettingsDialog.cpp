@@ -70,6 +70,8 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	prepareThemeSettings();
 	preparePathsSettings();
 	prepareGridViewerSettings();
+	prepareThreadSettings();
+	prepareExperimentalSettings();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -344,6 +346,16 @@ void SettingsDialog::saveThreadSettings()
 	import_threads::set( ui->sbImportThreads->value() );
 }
 
+void SettingsDialog::prepareExperimentalSettings()
+{
+	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
+}
+
+void SettingsDialog::saveExperimentalSettings()
+{
+	config::experimental::local_match::set( ui->cbExpFindAtlData->isChecked() );
+}
+
 void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 {
 	ui->stackedWidget->setCurrentIndex( idx );
@@ -388,6 +400,8 @@ void SettingsDialog::on_applySettings_pressed()
 	savePathsSettings();
 	saveBannerViewerSettings();
 	saveApplicationSettings();
+	saveThreadSettings();
+	saveExperimentalSettings();
 	this->accept();
 }
 
