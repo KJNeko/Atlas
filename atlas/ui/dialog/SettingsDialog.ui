@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1169</width>
+    <width>1298</width>
     <height>700</height>
    </rect>
   </property>
@@ -47,12 +47,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#SettingsMenu{border-style: outset;
-border-width: 1px;
-border-color: rgb(0, 0, 0);
-border-left:none;
-border-bottom:none;
-background-color: rgb(202, 202, 202);}
+      <string notr="true">
 </string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
@@ -2557,6 +2552,7 @@ padding:10x;</string>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>
