@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1169</width>
-    <height>700</height>
+    <height>730</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>730</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
@@ -336,7 +342,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -2521,7 +2527,7 @@ padding:10x;</string>
          </font>
         </property>
         <property name="text">
-         <string>General</string>
+         <string>GENERAL</string>
         </property>
        </widget>
       </item>

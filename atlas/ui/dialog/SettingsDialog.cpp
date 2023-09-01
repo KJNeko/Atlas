@@ -344,33 +344,39 @@ void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 void SettingsDialog::on_btnGeneral_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 0 );
+	ui->lblSettingsHeader->setText( "GENERAL" );
 }
 
 void SettingsDialog::on_btnInterface_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 1 );
+	ui->lblSettingsHeader->setText( "INTERFACE" );
 }
 
 void SettingsDialog::on_btnUilayout_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 2 );
+	ui->stackedWidget->setCurrentIndex( 2 );	
+	ui->lblSettingsHeader->setText( "UI LAYOUT" );
 	//repaint banner view Do not remove
 	qlv->repaint();
 }
 
 void SettingsDialog::on_btnPaths_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 3 );
+	ui->stackedWidget->setCurrentIndex( 3 );	
+	ui->lblSettingsHeader->setText( "PATHS" );
 }
 
 void SettingsDialog::on_btnThreading_pressed()
 {
-	ui->stackedWidget->setCurrentIndex( 4 );
+	ui->stackedWidget->setCurrentIndex( 4 );	
+	ui->lblSettingsHeader->setText( "THREADING" );
 }
 
 void SettingsDialog::on_btnExpFeatures_pressed()
 {
 	ui->stackedWidget->setCurrentIndex( 5 );
+	ui->lblSettingsHeader->setText( "EXPERIMENTAL FEATURES" );
 }
 
 void SettingsDialog::on_applySettings_pressed()
