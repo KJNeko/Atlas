@@ -10,7 +10,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui_ProgressNotification.h"
 
@@ -39,12 +39,8 @@ void ProgressSignaler::hookSignaler( ProgressNotification* notif )
 
 void ProgressSignaler::setMax( int i )
 {
+	max = static_cast< decltype( max ) >( i );
 	emit maxChanged( i );
-}
-
-void ProgressSignaler::setProgress( int i )
-{
-	emit progressChanged( i );
 }
 
 void ProgressSignaler::setSubMessage( const QString str )

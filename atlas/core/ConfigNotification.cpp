@@ -7,6 +7,7 @@
 #include <moc_ConfigNotification.cpp>
 
 #include "config.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace config
 {
@@ -32,6 +33,7 @@ namespace config
 	{
 		spdlog::info( "Notifying of config change" );
 		emit notification();
+		globalPools().reloadConfig();
 	}
 
 } // namespace config

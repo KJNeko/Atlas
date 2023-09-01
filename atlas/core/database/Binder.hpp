@@ -82,7 +82,6 @@ int bindParameter( sqlite3_stmt* stmt, const T val, const int idx ) noexcept
 class Binder
 {
 	sqlite3_stmt* stmt { nullptr };
-	bool done { false };
 	int param_counter { 0 };
 	int max_param_count { 0 };
 	bool ran { false };
@@ -129,6 +128,13 @@ class Binder
 	{
 		ran = true;
 		const auto step_ret { sqlite3_step( stmt ) };
+
+		if ( param_counter != max_param_count )
+			throw std::runtime_error( fmt::format(
+				"param_counter != max_param_count = {} != {} for query \"{}\"",
+				param_counter,
+				max_param_count,
+				std::string( sqlite3_sql( stmt ) ) ) );
 
 		if ( step_ret == SQLITE_ROW ) [[likely]]
 		{

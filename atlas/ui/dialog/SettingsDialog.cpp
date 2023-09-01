@@ -70,6 +70,8 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	prepareThemeSettings();
 	preparePathsSettings();
 	prepareGridViewerSettings();
+	prepareThreadSettings();
+	prepareExperimentalSettings();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -114,7 +116,7 @@ void SettingsDialog::saveApplicationSettings()
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
 
 	//Set exp features
-	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
+	//config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
 
 	reloadTheme();
 }
@@ -324,6 +326,36 @@ void SettingsDialog::savePathsSettings()
 	}
 }
 
+void SettingsDialog::prepareThreadSettings()
+{
+	using namespace config::threads;
+
+	ui->sbImageImportThreads->setValue( image_import_threads::get() );
+	ui->sbImageLoadingThreads->setValue( image_loader_threads::get() );
+	ui->sbImportPreProcessorThreads->setValue( import_pre_loader_threads::get() );
+	ui->sbImportThreads->setValue( import_threads::get() );
+}
+
+void SettingsDialog::saveThreadSettings()
+{
+	using namespace config::threads;
+
+	image_import_threads::set( ui->sbImageImportThreads->value() );
+	image_loader_threads::set( ui->sbImageLoadingThreads->value() );
+	import_pre_loader_threads::set( ui->sbImportPreProcessorThreads->value() );
+	import_threads::set( ui->sbImportThreads->value() );
+}
+
+void SettingsDialog::prepareExperimentalSettings()
+{
+	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
+}
+
+void SettingsDialog::saveExperimentalSettings()
+{
+	config::experimental::local_match::set( ui->cbExpFindAtlData->isChecked() );
+}
+
 void SettingsDialog::on_settingsList_currentRowChanged( int idx )
 {
 	ui->stackedWidget->setCurrentIndex( idx );
@@ -368,6 +400,8 @@ void SettingsDialog::on_applySettings_pressed()
 	savePathsSettings();
 	saveBannerViewerSettings();
 	saveApplicationSettings();
+	saveThreadSettings();
+	saveExperimentalSettings();
 	this->accept();
 }
 
@@ -389,26 +423,26 @@ void SettingsDialog::reject()
 
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
-	spdlog::debug( "Theme changed to {}", text );
-
 	reloadTheme();
 
 	if ( ui->cbUseSystemTheme->isChecked() )
 	{
+		spdlog::debug( "Using system theme" );
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
 		ensurePolished();
 		return;
 	}
 	else
 	{
+		spdlog::debug( "Theme changed to {}", text );
 		QFile file { "./data/themes/" + text };
 		file.open( QFile::ReadOnly );
-
 		QString style { file.readAll() };
 
-		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( style );
+		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( std::move( style ) );
 
 		ensurePolished();
+		return;
 	}
 }
 

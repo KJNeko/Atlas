@@ -50,6 +50,8 @@ namespace atlas::records
 
 		Game( const Game& other ) : QObject( other.parent() ), ptr( other.ptr ), m_id( other.m_id )
 		{
+			if ( other.m_id == INVALID_RECORD_ID )
+				throw std::runtime_error( "Attempted to copy an object with an invalid record id" );
 			this->moveToThread( other.thread() );
 		}
 
@@ -72,7 +74,11 @@ namespace atlas::records
 	 * @param executable Must be a relative path sourced from dir.
 	 */
 		void addVersion(
-			QString version_name, std::filesystem::path dir, std::filesystem::path executable, const bool in_place );
+			QString version_name,
+			std::filesystem::path dir,
+			std::filesystem::path executable,
+			const std::uint64_t folder_size,
+      const bool in_place );
 		void removeVersion( Version& info );
 
 		//! Adds playtime to the playtime counter

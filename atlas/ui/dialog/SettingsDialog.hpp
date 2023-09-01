@@ -38,6 +38,13 @@ class SettingsDialog final : public QDialog
 
 	void preparePathsSettings();
 	void savePathsSettings();
+
+	void prepareThreadSettings();
+	void saveThreadSettings();
+
+	void prepareExperimentalSettings();
+	void saveExperimentalSettings();
+
 	QListView* qlv { nullptr };
 	QAbstractItemModel* gridPreviewModel { nullptr };
 	RecordBannerDelegate* gridPreviewDelegate { nullptr };

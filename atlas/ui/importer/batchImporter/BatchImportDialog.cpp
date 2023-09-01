@@ -27,6 +27,7 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 	ui->twGames->setModel( new BatchImportModel() );
 	ui->twGames->setItemDelegate( new BatchImportDelegate() );
 	ui->twGames->setEditTriggers( QAbstractItemView::AllEditTriggers );
+	ui->twGames->setSortingEnabled( true );
 
 	connect( &scanner, &GameScanner::scanComplete, this, &BatchImportDialog::finishedPreProcessing );
 	connect( &scanner, &GameScanner::foundGame, this, &BatchImportDialog::processFinishedDirectory );
@@ -111,7 +112,7 @@ void BatchImportDialog::processFiles()
 
 	spdlog::debug( "Scanning {} for games", base );
 
-	scanner.start( base, cleaned_regex );
+	scanner.start( base, cleaned_regex, ui->cbScanFilesize->isChecked() );
 
 	ui->twGames->resizeColumnsToContents();
 }
@@ -133,25 +134,18 @@ void BatchImportDialog::importFiles()
 	ui->btnBack->setDisabled( true );
 
 	const bool owning { ui->cbMoveImported->isChecked() };
-	const bool scan_filesize { ui->cbScanFilesize->isChecked() };
 	const std::filesystem::path root { ui->tbPath->text().toStdString() };
 
 	(void)QtConcurrent::run(
-		[ games, owning, root, scan_filesize ]()
+		[ games, owning, root ]()
 		{
-			QThreadPool import_pool;
-			import_pool.setMaxThreadCount( 4 );
-
 			for ( auto game : games )
 			{
 				spdlog::debug( "Triggering import game for {}", game.title );
-				(void)importGame( std::move( game ), root, owning, scan_filesize, import_pool );
+				(void)importGame( std::move( game ), root, owning );
 			}
-
-			import_pool.waitForDone();
+			spdlog::debug( "Finished queueing imports" );
 		} );
-
-	spdlog::debug( "Finished queueing imports" );
 
 	accept();
 }

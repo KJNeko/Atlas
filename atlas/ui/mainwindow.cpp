@@ -8,7 +8,7 @@
 #include "./ui_mainwindow.h"
 #include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
@@ -76,6 +76,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Init remote system
 	atlas::initRemoteHandler();
+
 	atlas::notifications::createMessage( "Welcome to atlas!" );
 
 	//Make sure mouse tracking is enabled for view
@@ -92,6 +93,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
+
+	QTimer* timer { new QTimer( this ) };
+	timer->setInterval( 2000 );
+	connect( timer, &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
+	timer->start();
 }
 
 MainWindow::~MainWindow()
@@ -271,4 +277,18 @@ void MainWindow::movePopup()
 void MainWindow::taskPopupResized()
 {
 	movePopup();
+}
+
+void MainWindow::setBottomGameCounter()
+{
+	std::uint_fast32_t unique_games { 0 };
+	std::uint_fast32_t total_versions { 0 };
+
+	// We need to filter out our testing dummy record sowe just get rid of id 1
+	RapidTransaction() << "SELECT COUNT(*) FROM games WHERE record_id != ?" << 1 >> unique_games;
+	RapidTransaction() << "SELECT COUNT(*) FROM games NATURAL JOIN versions WHERE record_id != ?" << 1
+		>> total_versions;
+
+	ui->GamesInstalled
+		->setText( QString( "%1 games installed, %2 total versions" ).arg( unique_games ).arg( total_versions ) );
 }

@@ -40,6 +40,8 @@ enum Engine : int
 	UNKNOWN
 };
 
+
+
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
 bool isEngineT( atlas::utils::FileScanner& scanner );

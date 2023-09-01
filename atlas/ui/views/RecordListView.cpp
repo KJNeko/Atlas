@@ -74,6 +74,9 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	QMenu menu { this };
 	menu.move( mapToGlobal( pos ) );
 
+	// Model is empty so we just return and do fuck all
+	if ( this->model()->rowCount() == 0 ) return;
+
 	atlas::records::Game record { selectionModel()->currentIndex().data().value< atlas::records::Game >() };
 
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );

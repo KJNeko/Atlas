@@ -11,26 +11,16 @@
 #include <tracy/TracyC.h>
 
 #include "GameImportData.hpp"
-#include "core/database/Database.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/imageManager.hpp"
-#include "core/notifications.hpp"
+#include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
-#include "core/utils/foldersize.hpp"
+#include "core/utils/operators.hpp"
+#include "core/utils/threading/pools.hpp"
 
 namespace internal
 {
-	enum Progress
-	{
-		ImportRecordData,
-		CollectingFileInformation,
-		VersionData,
-		Banners,
-		Previews,
-		Complete,
-	};
-
 	void importGame(
 		QPromise< RecordID >& promise,
 		const std::filesystem::path& root,
@@ -41,8 +31,9 @@ namespace internal
 		const QString& version,
 		const std::array< QString, BannerType::SENTINEL >& banners,
 		const std::vector< QString >& previews,
+		std::uint64_t game_size,
+		const std::uint64_t file_count,
 		const bool owning,
-		const bool scan_filesize,
 		const AtlasID atlas_id )
 	try
 	{
@@ -64,40 +55,34 @@ namespace internal
 		TracyCZoneEnd( tracy_checkZone );
 
 		TracyCZoneN( tracy_FileScanner, "File scan", true );
-		atlas::utils::FileScanner scanner { root };
 
 		//Get the size of the folder
-		signaler.setProgress( Progress::CollectingFileInformation );
-		signaler.setMessage( "Calculating folder size: 0B" );
-		std::size_t folder_size { 0 };
-		std::size_t file_count { 0 };
+		signaler.setProgress( 1 );
+		signaler.setMax( 4 );
+		signaler.setSubMessage( "Calculating folder size: 0B" );
 		QLocale locale;
-		if ( scan_filesize )
+		atlas::utils::FileScanner scanner { root };
+
+		if ( game_size == 0 )
 		{
 			for ( const auto& file : scanner )
 			{
-				++file_count;
-				folder_size += file.size;
+				game_size += file.size;
 
-				if ( folder_size % 1024 == 0 )
+				if ( game_size % 1024 == 0 )
 				{
-					signaler.setMessage( QString( "Calculating folder size: %1" )
-					                         .arg( locale.formattedDataSize( static_cast< qint64 >( folder_size ) ) ) );
+					signaler
+						.setSubMessage( QString( "Calculating folder size: %1" )
+					                        .arg( locale.formattedDataSize( static_cast< qint64 >( game_size ) ) ) );
 				}
 			}
 		}
 		TracyCZoneEnd( tracy_FileScanner );
 
-		signaler.setProgress( Progress::ImportRecordData );
-		signaler.setMessage( "Importing record data" );
 		auto record { atlas::records::importRecord( title, creator, engine ) };
 
-		signaler.setProgress( Progress::VersionData );
-		signaler.setMessage( "Importing version data" );
-
 		// Used for when we move files to a directory we 'own'
-		const std::filesystem::path dest_root { config::paths::games::getPath() / creator.toStdString()
-			                                    / title.toStdString() / version.toStdString() };
+		const std::filesystem::path dest_root { config::paths::games::getPath() / creator / title / version };
 
 		if ( owning )
 		{
@@ -110,7 +95,8 @@ namespace internal
 				++i;
 				const QString r_path_name { QString::fromStdString( file.relative.string() ) };
 				signaler.setProgress( static_cast< int >( i ) );
-				signaler.setMessage( QString( "Copying file %1 %2/%3" ).arg( r_path_name ).arg( i ).arg( file_count ) );
+				signaler
+					.setSubMessage( QString( "Copying file %1 %2/%3" ).arg( r_path_name ).arg( i ).arg( file_count ) );
 
 				const auto source { root / file.relative };
 				const auto dest { dest_root / file.relative };
@@ -123,16 +109,12 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable, owning );
+			record.addVersion( version, dest_root, relative_executable, game_size, owning );
 		}
 		else
-			record.addVersion( version, root, relative_executable, owning );
+			record.addVersion( version, root, relative_executable, game_size, owning );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
-
-		signaler.setMax( Progress::Complete );
-		signaler.setProgress( Progress::Banners );
-		signaler.setMessage( "Importing banners" );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
 
@@ -141,7 +123,8 @@ namespace internal
 			const auto path { banners[ i ] };
 			if ( !path.isEmpty() )
 			{
-				banner_futures[ i ] = imageManager::importImage( { path.toStdString() }, record->m_game_id );
+				const std::filesystem::path banner_path { path.toStdWString() };
+				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -149,31 +132,33 @@ namespace internal
 			//If the game is going into our directory then we should clean up the banners
 			if ( owning )
 			{
-				// Remove the image file from the moved files.
-				std::filesystem::
-					remove( dest_root / std::filesystem::relative( { banners[ i ].toStdString() }, root ) );
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
+				game_size -= std ::filesystem::file_size( r_path );
+				// Remove the image file from the moved files
+				std::filesystem::remove( r_path );
 			}
 		}
-
-		signaler.setMessage( "Importing previews" );
-		signaler.setProgress( Progress::Previews );
 
 		std::vector< QFuture< std::filesystem::path > > preview_futures;
 
 		for ( const auto& path : previews )
 		{
-			signaler.setMessage( QString( "Importing preview %1" ).arg( path ) );
-			preview_futures.emplace_back( imageManager::importImage( { path.toStdString() }, record->m_game_id ) );
+			signaler.setSubMessage( QString( "Importing preview %1" ).arg( path ) );
+			preview_futures.emplace_back( imageManager::importImage( { path.toStdWString() }, record->m_game_id ) );
 			//record.addPreview( { path.toStdString() } );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
+				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
-				std::filesystem::remove( dest_root / std::filesystem::relative( { path.toStdString() }, root ) );
+				std::filesystem::remove( r_path );
 			}
 		}
 
-		signaler.setMessage( "Waiting on image futures" );
+		signaler.setSubMessage( QString( "Importing banners: 0/%1" ).arg( BannerType::SENTINEL - 1 ) );
+
+		signaler.setMax( static_cast< int >( preview_futures.size() + BannerType::SENTINEL - 1 ) );
 
 		for ( int i = 0; i < BannerType::SENTINEL; i++ )
 		{
@@ -185,13 +170,31 @@ namespace internal
 				{
 					const std::filesystem::path path { opt.value().result() };
 					record.setBanner( path, static_cast< BannerType >( i ) );
+
+					signaler.setSubMessage( QString( "Importing banners: %1/%2" )
+					                            .arg( i )
+					                            .arg( BannerType::SENTINEL - 1 ) );
 				}
-				catch ( std::exception& e )
+				catch ( const QUnhandledException& qt_e )
 				{
-					spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+					try
+					{
+						if ( qt_e.exception() ) std::rethrow_exception( qt_e.exception() );
+					}
+					catch ( std::exception& e )
+					{
+						spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+						atlas::notifications::createDevMessage(
+							fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
+							e );
+					}
 				}
 			}
 		}
+
+		signaler.setSubMessage( QString( "Importing previews: %1/%2" ).arg( 0 ).arg( preview_futures.size() ) );
+
+		std::size_t preview_counter { 0 };
 
 		for ( auto& future : preview_futures )
 		{
@@ -199,15 +202,34 @@ namespace internal
 			{
 				future.waitForFinished();
 				record.addPreview( future.result() );
+				signaler.setSubMessage( QString( "Importing previews: %1/%2" )
+				                            .arg( preview_counter++ )
+				                            .arg( preview_futures.size() ) );
+				signaler.setProgress( BannerType::SENTINEL - 1 + preview_counter );
+			}
+			catch ( const QUnhandledException& e )
+			{
+				//Qt is fucking stupid.
+				try
+				{
+					if ( e.exception() ) std::rethrow_exception( e.exception() );
+				}
+				catch ( std::exception& e_n )
+				{
+					atlas::notifications::createMessage( QString::fromStdString(
+						fmt::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
+					spdlog::warn( "Failed to add preview from future: {}", e_n.what() );
+				}
+			}
+			catch ( std::runtime_error& e )
+			{
+				spdlog::warn( "Failed to add preview from future: {}", e.what() );
 			}
 			catch ( std::exception& e )
 			{
 				spdlog::warn( "Failed to add preview from future: {}", e.what() );
 			}
 		}
-
-		signaler.setProgress( Progress::Complete );
-		signaler.setMessage( "Complete" );
 
 		promise.addResult( record->m_game_id );
 		promise.finish();
@@ -234,14 +256,14 @@ QFuture< RecordID > importGame(
 	QString version,
 	std::array< QString, BannerType::SENTINEL > banners,
 	std::vector< QString > previews,
+	const std::uint64_t folder_size,
+	const std::uint64_t file_count,
 	const bool owning,
-	const bool scan_filesize,
-	const AtlasID atlas_id,
-	QThreadPool& pool )
+	const AtlasID atlas_id )
 {
 	ZoneScoped;
 	return QtConcurrent::
-		run( &pool,
+		run( &globalPools().importers,
 	         internal::importGame,
 	         std::move( root ),
 	         std::move( relative_executable ),
@@ -251,17 +273,28 @@ QFuture< RecordID > importGame(
 	         std::move( version ),
 	         std::move( banners ),
 	         std::move( previews ),
+	         folder_size,
+	         file_count,
 	         owning,
-	         scan_filesize,
 	         atlas_id );
 }
 
-QFuture< RecordID >
-	importGame( GameImportData data, const std::filesystem::path root, const bool owning, const bool scan_filesize )
+QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
 {
 	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews, atlas_id ] =
-		std::move( data );
+	auto
+		[ path,
+	      title,
+	      creator,
+	      engine,
+	      version,
+	      size,
+	      file_count,
+	      executables,
+	      executable,
+	      banners,
+	      previews,
+	      atlas_id ] = std::move( data );
 
 	return importGame(
 		root / path,
@@ -272,34 +305,8 @@ QFuture< RecordID >
 		std::move( version ),
 		std::move( banners ),
 		std::move( previews ),
+		size,
+		file_count,
 		owning,
-		scan_filesize,
-		atlas_id,
-		*QThreadPool::globalInstance() );
-}
-
-QFuture< RecordID > importGame(
-	GameImportData data,
-	const std::filesystem::path root,
-	const bool owning,
-	const bool scan_filesize,
-	QThreadPool& pool )
-{
-	ZoneScoped;
-	auto [ path, title, creator, engine, version, size, executables, executable, banners, previews, atlas_id ] =
-		std::move( data );
-
-	return importGame(
-		root / path,
-		root / path / executable,
-		std::move( title ),
-		std::move( creator ),
-		std::move( engine ),
-		std::move( version ),
-		std::move( banners ),
-		std::move( previews ),
-		owning,
-		scan_filesize,
-		atlas_id,
-		pool );
+		atlas_id );
 }

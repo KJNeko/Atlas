@@ -30,6 +30,8 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			{
 				switch ( index.column() )
 				{
+					case HAS_GL_LINK:
+						return item.atlas_id != INVALID_ATLAS_ID;
 					case FOLDER_PATH:
 						return QString::fromStdString( item.path.string() );
 					case TITLE:
@@ -181,5 +183,94 @@ void BatchImportModel::clearData()
 {
 	beginResetModel();
 	m_data.clear();
+	endResetModel();
+}
+
+void BatchImportModel::sort( int idx, Qt::SortOrder order )
+{
+	beginResetModel();
+
+	switch ( static_cast< ImportColumns >( idx ) )
+	{
+		default:
+			[[fallthrough]];
+		case HAS_GL_LINK:
+			[[fallthrough]];
+		case TITLE:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.title < right.title :
+					                                                    left.title > right.title;
+					} );
+			}
+			break;
+		case CREATOR:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.creator < right.creator :
+					                                                    left.creator > right.creator;
+					} );
+			}
+			break;
+		case ENGINE:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.engine < right.engine :
+					                                                    left.engine > right.engine;
+					} );
+			}
+			break;
+		case VERSION:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.version < right.version :
+					                                                    left.version > right.version;
+					} );
+			}
+			break;
+		case EXECUTABLES:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right )
+					{
+						return order == Qt::SortOrder::AscendingOrder ? left.executable < right.executable :
+					                                                    left.executable > right.executable;
+					} );
+			}
+			break;
+		case SIZE:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.size < right.size : left.size > right.size;
+					} );
+			}
+			break;
+		case FOLDER_PATH:
+			{
+				std::sort(
+					m_data.begin(),
+					m_data.end(),
+					[ order ]( const GameImportData& left, const GameImportData& right ) {
+						return order == Qt::SortOrder::AscendingOrder ? left.path < right.path : left.path > right.path;
+					} );
+			}
+	}
 	endResetModel();
 }
