@@ -100,18 +100,23 @@ namespace atlas::records
 	}
 
 	void Game::addVersion(
-		QString version_name, std::filesystem::path dir, std::filesystem::path executable, std::uint64_t folder_size, const bool in_place )
+		QString version_name,
+		std::filesystem::path dir,
+		std::filesystem::path executable,
+		std::uint64_t folder_size,
+		const bool in_place )
 	{
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
 		{
 			//Version not found. Safe to add
 			RapidTransaction()
-        
+
 				<< "INSERT INTO versions (record_id, version, game_path, exec_path, in_place, date_added, last_played, version_playtime, folder_size) VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?)"
-				<< m_id << version_name << dir << executable
-				<< in_place
-				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() ).count()
+				<< m_id << version_name << dir << executable << in_place
+				<< std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now()
+			                                                               .time_since_epoch() )
+					   .count()
 				<< folder_size;
 
 			versions.emplace_back( Version( m_id, version_name ) );
@@ -205,6 +210,7 @@ namespace atlas::records
 		if ( index == 0 )
 		{
 			RapidTransaction() << "SELECT position FROM previews WHERE record_id = ? ORDER BY position DESC LIMIT 1"
+							   << m_id
 				>> index;
 		}
 
