@@ -779,7 +779,7 @@ border-radius:none;</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:none;</string>
+                 <string notr="true"/>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_13">
                  <item row="0" column="0">
@@ -792,8 +792,7 @@ border-color: rgba(120, 120, 120, 100);
 border-top:none;
 border-right: none;
 border-left:none;
-padding-bottom:5px;
-color: rgb(255, 255, 255);</string>
+padding-bottom:5px;</string>
                    </property>
                    <property name="text">
                     <string>Links</string>
@@ -803,8 +802,7 @@ color: rgb(255, 255, 255);</string>
                  <item row="1" column="0">
                   <widget class="QTextEdit" name="teLinks">
                    <property name="styleSheet">
-                    <string notr="true">background-color:transparent;
-color: rgb(255, 255, 255);</string>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -830,7 +828,7 @@ color: rgb(255, 255, 255);</string>
               <item row="4" column="5">
                <widget class="QWidget" name="Info" native="true">
                 <property name="styleSheet">
-                 <string notr="true">background:none;</string>
+                 <string notr="true"/>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
                  <property name="leftMargin">
@@ -851,8 +849,7 @@ color: rgb(255, 255, 255);</string>
                  <item row="1" column="0">
                   <widget class="QTextEdit" name="teDetails">
                    <property name="styleSheet">
-                    <string notr="true">background-color:transparent;
-color: rgb(255, 255, 255);</string>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -888,7 +885,7 @@ border-top:none;
 border-right: none;
 border-left:none;
 padding-bottom:5px;
-color: rgb(255, 255, 255);</string>
+</string>
                       </property>
                       <property name="text">
                        <string>Details</string>
@@ -948,7 +945,7 @@ color: rgb(255, 255, 255);</string>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:none;</string>
+                 <string notr="true"/>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_10">
                  <item row="0" column="0">
@@ -966,8 +963,7 @@ border-color: rgba(120, 120, 120, 100);
 border-top:none;
 border-right: none;
 border-left:none;
-padding-bottom:5px;
-color: rgb(255, 255, 255);</string>
+padding-bottom:5px;</string>
                    </property>
                    <property name="text">
                     <string>Description</string>
@@ -992,8 +988,7 @@ color: rgb(255, 255, 255);</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background:transparent;
-color: rgb(255, 255, 255);</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
