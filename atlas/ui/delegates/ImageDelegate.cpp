@@ -26,9 +26,6 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
 
-	
-		QPixmap pixmap;
-
 
 	if ( std::filesystem::exists( path ) )
 	{
