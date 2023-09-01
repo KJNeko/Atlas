@@ -21,7 +21,7 @@
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	atlas::records::Game record { index.data().value< atlas::records::Game >() };
+	//atlas::records::Game record { index.data().value< atlas::records::Game >() };
 
 	
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };

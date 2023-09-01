@@ -157,7 +157,7 @@ void GameWidget::reloadRecord()
 	//Set height of PreviewList
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
-		
+		ui->previewList->show();
 		//spdlog::info( "items{}", ui->previewList->model()->rowCount() );
 		//spdlog::info( "item size{}", ui->previewList->sizeHint().width() );
 		//spdlog::info( "preview width{}", ui->previewList->width() );
@@ -166,11 +166,11 @@ void GameWidget::reloadRecord()
 		//ui->previewList->setFixedSize(ui->bannerDetailFrame->width(), ui->previewList->sizeHintForRow(0) * ui->previewList->model()->rowCount() + 2 * ui->previewList->frameWidth());
 		
 		//need to fix. row count is not updating
-		//ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
+		ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
 	}
 	else
 	{
-		//ui->previewList->hide();
+		ui->previewList->hide();
 	}
 
 	std::optional< atlas::remote::AtlasRemoteData > atlas_data = record.findAtlasData( title, developer );
