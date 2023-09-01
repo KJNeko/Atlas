@@ -23,57 +23,13 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	ZoneScoped;
 	atlas::records::Game record { index.data().value< atlas::records::Game >() };
 
-	spdlog::info( "col:{}",index.column() );
-	spdlog::info( "row:{}", index.row() );
-	//const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
+	
+	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
 
-	QtFuture::makeReadyFuture( record.requestPreviewIndex( index.row()) );
-	//QFuture< QPixmap > preview{ record.requestPreviewIndex( index.row())};
-	//QFuture< QPixmap > banner { record.requestBanner( item.rect.size(), Qt::KeepAspectRatio, Normal ) };
-
+	
 		QPixmap pixmap;
 
-		/*if ( !banner.isFinished() )
-		{
-			//We got the future
-			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
-			if ( m_model != nullptr )
-				this->m_model->refreshOnFuture( index, std::move( banner ) );
-			
-			//Specific case. Do not load thumb for settings images
-			if(record->m_game_id == 1)
-			{
-				pixmap = banner.result();
-			}
-			else{
-			//Add experimental feature
-				if(config::experimental::loading_preview::get())
-				{
-					pixmap = record.requestThumbnail( banner_size, Normal );
-					QImage srcImg { pixmap.toImage() };
-					pixmap.fill( Qt::transparent );
-					{
-						QPainter paintert( &pixmap );
-						qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius
-					}
-				}
-			}
-		}
-		else
-		{
-			ZoneScopedN( "Get image from variant" );
-			//We got the banner and should continue as normal			
-			pixmap = banner.result();
 
-			//Check if we need to add blur background. Draw behind original image
-			if ( aspect_ratio == FIT_BLUR_EXPANDING )
-			{
-				ZoneScopedN( "Blur image" );
-				pixmap = blurToSize(
-					pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
-			}
-		}*/
-/*
 	if ( std::filesystem::exists( path ) )
 	{
 		QPixmap pixmap { QString::fromStdString( path.string() ) };
@@ -102,7 +58,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	}
 
 	painter->drawRect( item.rect );
-	*/
+	
 }
 
 QSize ImageDelegate::
