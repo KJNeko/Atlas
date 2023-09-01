@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QTimeZone>
 #include <QTimer>
+#include <QFontMetrics>
 
 #include "core/database/record/Version.hpp"
 #include "core/database/remote/AtlasData.hpp"
@@ -214,6 +215,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
 	ZoneScoped;
 	//spdlog::info( "Painting Detail ui" );
+	QRect bannerFrame { ui->bannerFrame->x() , ui->bannerFrame->y(), ui->bannerFrame->width(), ui->bannerFrame->height() };
 
 	if ( m_record->valid() )
 	{
@@ -225,7 +227,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int image_height { 360 };
 		const int image_feather { 60 };
 		const int image_blur { 75 };
-		const int font_size { static_cast< int >( static_cast< float >( image_height ) * 0.1f ) };
+		//const int font_size { static_cast< int >( static_cast< float >( image_height ) * 0.1f ) };
 
 		//Math for showing logo
 		//150 is min width for lofo heigh and 280 is max height
@@ -289,7 +291,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		QPixmap logo { logo_future.result() };
 		//Used if logo does not work
-		QFont font { painter.font().toString(), font_size };
+		QFont font { config::grid_ui::font::get(), 10 };
 		//const QString& title { record->m_title };
 		QFontMetrics fm( font );
 		painter.setFont( font );
@@ -299,7 +301,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		//We need to do some magic for logo sizes
 		//634 is min size banner width can be
 		double logo_offset = 1.0 - ( 634.0 / ui->bannerFrame->width() );
-		//spdlog::info( logo_offset );
+		//NEEDS TO BE REFACTORED
 		logo_offset = logo_offset <= .01 ? .01 : logo_offset >= .1 ? .1 : logo_offset;
 		const auto banner { banner_future.result() };
 		const QRect pixmap_rect { 0, 0, banner.width(), banner.height() };
@@ -308,20 +310,21 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			                      logo.width(),
 			                      logo.height() };
 
+		const QRect pixmap_engine_rect { pixmap_rect.width() -100 ,  pixmap_rect.height() -100, 30, 30 };
+
+		//Engine Stuff
+		const QPixmap engine_logo { QString::fromStdString(getEngineLogo(record->m_engine.toStdString())) };
+		const QString engine_text { record->m_engine };
+		QFontMetrics font_metrics(font);
+		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };
+
 		QRect boundingRect;
-		/*const QRect font_rectangle = QRect(
-			static_cast< int >( ui->bannerFrame->width() * logo_offset ),
-			( image_height / 2 ) - ( font_height / 2 ),
-			font_width,
-			font_height );*/
+
 
 		painter.drawPixmap( pixmap_rect, banner );
-
-		//check if logo is null, if it is then draw text instead
-
-		//logo.isNull() ? painter.drawText( font_rectangle, 0, title, &boundingRect ) :
-		//Draw logo if available
 		painter.drawPixmap( pixmap_logo, logo );
+
+		painter.drawPixmap(pixmap_engine_rect, engine_logo.scaled(30,30,Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 		painter.restore();
 	}
 }
@@ -416,4 +419,19 @@ void GameWidget::updateGameState()
 
 	lastState = processIsRunning();
 	//Check last state. If changed, update playtime.
+}
+
+std::string GameWidget::getEngineLogo(std::string engine){
+
+//":/images/assets/Atlas_logo_v2.svg"
+//:/engines/assets/engine/3dsmax_icon.svg
+	if(engine == "Ren'Py"){
+		return ":/engines/assets/engine/renpy_icon.svg";
+	}
+	else if(engine == "Unity"){
+		return ":/engines/assets/engine/unity_icon.svg";
+	}
+	else{
+		return "";
+	}
 }
