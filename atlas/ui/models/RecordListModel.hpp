@@ -55,7 +55,7 @@ class RecordListModel final : public QAbstractListModel
 	};
 
 	RecordListModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) { loading_thread.start(); }
-
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 	int rowCount( const QModelIndex& index = QModelIndex() ) const override;
 	QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const override;
 

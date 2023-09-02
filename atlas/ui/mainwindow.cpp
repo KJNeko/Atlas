@@ -68,10 +68,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
-	ui->gamesTree->setModel( ui->recordView->model() );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal,  "Games" , 2 );
+	
+	ui->gamesTree->setModel(ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
-	ui->gamesTree->setHeaderHidden( true );
+	ui->gamesTree->setHeaderHidden( false );
 
 	emit triggerSearch( "", SortOrder::Name, true );
 
@@ -298,4 +299,6 @@ void MainWindow::setBottomGameCounter()
 
 	ui->GamesInstalled
 		->setText( QString( "%1 games installed, %2 total versions" ).arg( unique_games ).arg( total_versions ) );
+
+	//repaint if new games are added
 }
