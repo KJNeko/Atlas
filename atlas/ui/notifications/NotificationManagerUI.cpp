@@ -22,7 +22,7 @@ NotificationManagerUI::NotificationManagerUI( QWidget* parent ) :
 	//Max height of window is 600;
 	this->setMaximumHeight( 550 );
 	ui->scrollArea->setMaximumHeight( 550 );
-	spdlog::info( "Max size: {}", NotificationManagerUI::maximumHeight() );
+	//spdlog::info( "Max size: {}", NotificationManagerUI::maximumHeight() );
 }
 
 NotificationManagerUI::~NotificationManagerUI()
@@ -66,7 +66,7 @@ void NotificationManagerUI::moveEvent( QMoveEvent* event )
 void NotificationManagerUI::deleteNotification( Notification* ptr )
 {
 	notificationWidgetHeight -= ptr->height();
-	spdlog::info("TOTAL height{}", notificationWidgetHeight);
+	//spdlog::info("TOTAL height{}", notificationWidgetHeight);
 	//ui->scrollArea->setMinimumHeight( notificationWidgetHeight );
 	
 	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);

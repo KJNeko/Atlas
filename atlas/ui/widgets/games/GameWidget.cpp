@@ -170,7 +170,7 @@ void GameWidget::reloadRecord()
 	}
 	else
 	{
-		ui->previewList->hide();
+		//ui->previewList->hide();
 	}
 
 	std::optional< atlas::remote::AtlasRemoteData > atlas_data = record.findAtlasData( title, developer );
