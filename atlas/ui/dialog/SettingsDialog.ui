@@ -2379,6 +2379,18 @@ padding:10x;</string>
              </item>
              <item row="0" column="2">
               <widget class="QSpinBox" name="sbImportThreads">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -2403,19 +2415,6 @@ padding:10x;</string>
                </property>
               </spacer>
              </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_24">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
             </layout>
            </widget>
           </item>
@@ -2424,6 +2423,18 @@ padding:10x;</string>
             <layout class="QGridLayout" name="gridLayout_21">
              <item row="0" column="2">
               <widget class="QSpinBox" name="sbImageImportThreads">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -2455,19 +2466,6 @@ padding:10x;</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_26">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
             </layout>
            </widget>
           </item>
@@ -2492,6 +2490,18 @@ padding:10x;</string>
              </item>
              <item row="0" column="2">
               <widget class="QSpinBox" name="sbImportPreProcessorThreads">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -2506,19 +2516,6 @@ padding:10x;</string>
                 <string>Import pre-processor:</string>
                </property>
               </widget>
-             </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_22">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
@@ -2551,6 +2548,18 @@ padding:10x;</string>
              </item>
              <item row="0" column="2">
               <widget class="QSpinBox" name="sbImageLoadingThreads">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -2558,19 +2567,6 @@ padding:10x;</string>
                 <number>32</number>
                </property>
               </widget>
-             </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_21">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
@@ -2597,7 +2593,10 @@ padding:10x;</string>
           <item row="0" column="0">
            <widget class="QLabel" name="label_47">
             <property name="text">
-             <string>All the settings below are specific to importing. This will modify how fast the importer will work. You can reset to system defaults if you run into any issues while importing. </string>
+             <string>All the settings below are specific to loading images and importing. This will modify how fast games are imported and how fast images diplay while using banner view. You can reset to system defaults if you run into any issues while importing. </string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
