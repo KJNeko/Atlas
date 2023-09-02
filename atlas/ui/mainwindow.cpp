@@ -97,12 +97,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
-	MainWindow::layout()->invalidate();
-	MainWindow::layout()->activate();
-	ui->recordView->setFocus();
-	ui->recordView->updateGeometry();
-	ui->recordView->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-
 	QTimer* timer { new QTimer( this ) };
 	timer->setInterval( 2000 );
 	connect( timer, &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
@@ -206,6 +200,8 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
 {
 	QWidget::showEvent( event );
+
+	
 	movePopup();
 }
 
@@ -282,10 +278,11 @@ void MainWindow::movePopup()
 	auto& task_popup { atlas::notifications::handle() };
 	const auto [ x, y ] = task_popup.size();
 
-	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }
-		               - QPoint( 5, 5 ) };
+	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }};
 
 	task_popup.move( point );
+	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
+	//task_popup.setMaximumHeight( ui->recordView->height() );
 }
 
 void MainWindow::taskPopupResized()

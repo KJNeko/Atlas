@@ -41,6 +41,8 @@ class NotificationManagerUI final : public QDialog
 
 	void reorderChildren();
 
+	int notificationWidgetHeight {0};
+
 	Ui::NotificationManagerUI* ui;
 
   private slots:

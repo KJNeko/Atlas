@@ -11,6 +11,7 @@
 #include "core/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"
+#include "core/config.hpp"
 
 NotificationManagerUI::NotificationManagerUI( QWidget* parent ) :
   QDialog( parent, Qt::Dialog | Qt::FramelessWindowHint ),
@@ -18,7 +19,10 @@ NotificationManagerUI::NotificationManagerUI( QWidget* parent ) :
 {
 	ui->setupUi( this );
 	this->resize( this->minimumSize() );
-	this->updateGeometry();
+	//Max height of window is 600;
+	this->setMaximumHeight( 550 );
+	ui->scrollArea->setMaximumHeight( 550 );
+	spdlog::info( "Max size: {}", NotificationManagerUI::maximumHeight() );
 }
 
 NotificationManagerUI::~NotificationManagerUI()
@@ -28,10 +32,23 @@ NotificationManagerUI::~NotificationManagerUI()
 
 void NotificationManagerUI::addNotification( Notification* notif )
 {
+	//Get current count of notifications
+
+	notificationWidgetHeight += notificationWidgetHeight == 0 ? notif->height() + ui->notifications->height() : notif->height();
+	//spdlog::info("TOTAL height{}", notificationWidgetHeight);
+	//int count { ui->notifications->layout()->count() };
+	//int height { notif->height() };
+	//spdlog::info( "ADD Notification Height :{}", notif->height() );
+	//spdlog::info( "ADD total items:{} item_height:{}", count, (notif->height() * (count) ) );
 	connect( notif, &Notification::selfClosePtr, this, &NotificationManagerUI::deleteNotification );
 	ui->notifications->layout()->addWidget( notif );
-	this->resize( this->minimumSize() );
-	this->updateGeometry();
+
+	//ui->scrollArea->setMinimumHeight( notificationWidgetHeight );
+	//ui->scrollArea->setFixedSize(ui->scrollArea->width(), notificationWidgetHeight);	
+	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
+	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
+	this->resize( this->width(),  notificationWidgetHeight);
+
 	ui->label->setText( QString( "%1 notifications" ).arg( ++active_notifications ) );
 }
 
@@ -48,10 +65,22 @@ void NotificationManagerUI::moveEvent( QMoveEvent* event )
 
 void NotificationManagerUI::deleteNotification( Notification* ptr )
 {
+	notificationWidgetHeight -= ptr->height();
+	spdlog::info("TOTAL height{}", notificationWidgetHeight);
+	//ui->scrollArea->setMinimumHeight( notificationWidgetHeight );
+	
+	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
+	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
+	if(ui->notifications->layout()->count() <= 2){
+		this->resize( this->minimumSize() );
+	}
+	else{
+		this->resize( this->width(), notificationWidgetHeight);
+	}
+
 	ptr->setParent( nullptr );
 	ptr->close();
 	ptr->deleteLater();
-	this->resize( this->minimumSize() );
 
 	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
 }
