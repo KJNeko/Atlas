@@ -67,6 +67,7 @@ class MainWindow final : public QMainWindow
 	void movePopup();
 	void taskPopupResized();
 	void setBottomGameCounter();
+	//bool event( QEvent* event ) override;
 };
 
 #endif // MAINWINDOW_H

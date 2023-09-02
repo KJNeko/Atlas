@@ -20,6 +20,7 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
+	
 	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
@@ -96,10 +97,17 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
+	MainWindow::layout()->invalidate();
+	MainWindow::layout()->activate();
+	ui->recordView->setFocus();
+	ui->recordView->updateGeometry();
+	ui->recordView->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+
 	QTimer* timer { new QTimer( this ) };
 	timer->setInterval( 2000 );
 	connect( timer, &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
 	timer->start();
+
 }
 
 MainWindow::~MainWindow()
@@ -187,7 +195,6 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 	config::grid_ui::windowWidth::
 		set( config::grid_ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
 	                                                                      config::grid_ui::windowWidth::get() );
-
 	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
 	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
@@ -198,10 +205,8 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
 {
-	//Store Banner View Dims
-	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
-	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
-	//ui->recordView->reloadConfig();
+	QWidget::showEvent( event );
+	movePopup();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -273,6 +278,7 @@ void MainWindow::moveEvent( QMoveEvent* event )
 
 void MainWindow::movePopup()
 {
+
 	auto& task_popup { atlas::notifications::handle() };
 	const auto [ x, y ] = task_popup.size();
 
@@ -302,3 +308,12 @@ void MainWindow::setBottomGameCounter()
 
 	//repaint if new games are added
 }
+
+/*bool MainWindow::event(QEvent *event) {
+	if(event->type() == QEvent::UpdateRequest)
+	{
+		movePopup();
+		spdlog::info( "refresh" );
+	}
+	return QWidget::event( event );
+}*/
