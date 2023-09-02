@@ -84,3 +84,12 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 
 	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
 }
+
+//Buttons
+void NotificationManagerUI::on_btnClose_pressed(){
+
+}
+void NotificationManagerUI::on_btnHideShow_pressed(){
+	//Set to inverse
+	this->setVisible( !this->isVisible() );
+}
