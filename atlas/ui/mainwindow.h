@@ -4,6 +4,7 @@
 
 #include <QMainWindow>
 #include <QThread>
+#include <QTimer>
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
@@ -23,6 +24,7 @@ class MainWindow final : public QMainWindow
 
 	QThread search_thread {};
 	Search record_search {};
+	std::unique_ptr< QTimer > heartbeat_timer { new QTimer( this ) };
 
   public:
 
@@ -39,8 +41,8 @@ class MainWindow final : public QMainWindow
 	void moveEvent( QMoveEvent* event ) override;
 
   signals:
-	void triggerSearch( QString text, const SortOrder order, const bool asc );
-	void triggerReSearch();
+	//void triggerSearch( QString text, const SortOrder order, const bool asc );
+	void triggerSearch( QString title );
 
   private slots:
 	void on_actionSimpleImporter_triggered();
@@ -67,7 +69,7 @@ class MainWindow final : public QMainWindow
 	void movePopup();
 	void taskPopupResized();
 	void setBottomGameCounter();
-	//bool event( QEvent* event ) override;
+	void refreshSearch();
 };
 
 #endif // MAINWINDOW_H

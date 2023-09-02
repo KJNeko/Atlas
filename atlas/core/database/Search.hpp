@@ -26,8 +26,7 @@ class Search final : public QObject
 
   public slots:
 	//! Submits a text to get autocompleted.
-	void searchTextChanged( QString text, const SortOrder order, const bool asc );
-	void runQuery();
+	void searchTextChanged( QString text ); //, const SortOrder order, const bool asc );
 };
 
 #endif //ATLAS_SEARCH_HPP
