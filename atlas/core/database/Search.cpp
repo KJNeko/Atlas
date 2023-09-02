@@ -27,7 +27,8 @@ void Search::searchTextChanged( const QString text ) //, const SortOrder order, 
 
 		std::vector< atlas::records::Game > records;
 
-		RapidTransaction() << "SELECT DISTINCT record_id FROM games WHERE title LIKE ? ORDER BY title" << ( text + "%" )
+		RapidTransaction() << "SELECT DISTINCT record_id FROM games WHERE LOWER(title) LIKE LOWER(?) ORDER BY title"
+						   << ( text + "%" )
 			>> [ &records ]( const RecordID id )
 		{
 			if ( id > TESTING_RECORD_ID ) records.emplace_back( id );
