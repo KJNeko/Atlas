@@ -31,7 +31,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
-	connect( ui->btnAddGame, &QToolButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
 	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
