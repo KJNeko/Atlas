@@ -393,12 +393,6 @@ border-top-left-radius:0px;</string>
        </item>
        <item>
         <widget class="QLabel" name="GamesInstalled">
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
           <string>0 Games Installed</string>
          </property>
