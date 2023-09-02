@@ -100,7 +100,7 @@ namespace atlas::records
 
 		//! Returns a future for the banner to be loaded.
 
-		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const int index ) const;
+		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const std::uint64_t index ) const;
 
 		void reorderPreviews( std::vector< std::filesystem::path > paths );
 		//! If index is zero then it will place it at the highest possible postion (starting at 1)
