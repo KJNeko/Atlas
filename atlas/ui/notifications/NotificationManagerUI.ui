@@ -37,6 +37,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
@@ -52,7 +58,7 @@
         <x>0</x>
         <y>0</y>
         <width>300</width>
-        <height>16</height>
+        <height>18</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -94,6 +100,19 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>Close all messages</string>
@@ -101,7 +120,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="btnHideShow">
+       <widget class="QPushButton" name="btnHideShow">
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -112,8 +137,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>22</width>
-          <height>22</height>
+          <width>18</width>
+          <height>18</height>
          </size>
         </property>
         <property name="checkable">
