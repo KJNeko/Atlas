@@ -11,40 +11,32 @@
 #include "Transaction.hpp"
 #include "core/search/QueryBuilder.hpp"
 
-void Search::searchTextChanged( const QString text, const SortOrder order, const bool asc )
+void Search::searchTextChanged( const QString text ) //, const SortOrder order, const bool asc )
 {
 	ZoneScoped;
+
 	try
 	{
+		/*
 		if ( !text.isEmpty() )
 			query = generateQuery( text.toStdString(), order, asc );
 		else
 			query = "SELECT DISTINCT record_id FROM games NATURAL JOIN last_import_times ORDER BY "
 			      + orderToStr( order ) + std::string( asc ? " ASC" : " DESC" );
+	  */
 
-		runQuery();
+		std::vector< atlas::records::Game > records;
+
+		RapidTransaction() << "SELECT DISTINCT record_id FROM games WHERE title LIKE ? ORDER BY title" << ( text + "%" )
+			>> [ &records ]( const RecordID id )
+		{
+			if ( id > TESTING_RECORD_ID ) records.emplace_back( id );
+		};
+
+		emit searchCompleted( std::move( records ) );
 	}
 	catch ( std::exception& e )
 	{
 		spdlog::error( "Search failed with query \"{}\": {}", query, e.what() );
 	}
-}
-
-void Search::runQuery()
-{
-	if ( query.empty() )
-	{
-		query = "SELECT DISTINCT record_id FROM games NATURAL JOIN last_import_times ORDER BY "
-		      + orderToStr( SortOrder::Name ) + std::string( " ASC" );
-	}
-
-	std::vector< atlas::records::Game > records;
-
-	RapidTransaction transaction {};
-	transaction << query >> [ & ]( const RecordID id )
-	{
-		if ( id > 1 ) records.emplace_back( id );
-	};
-
-	emit searchCompleted( std::move( records ) );
 }

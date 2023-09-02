@@ -25,7 +25,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//default
 	connect( ui->SearchBox, &QLineEdit::textChanged, this, &MainWindow::searchTextChanged );
 	connect( this, &MainWindow::triggerSearch, &record_search, &Search::searchTextChanged );
-	connect( this, &MainWindow::triggerReSearch, &record_search, &Search::runQuery );
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
@@ -72,7 +71,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( true );
 
-	emit triggerSearch( "", SortOrder::Name, true );
+	emit triggerSearch( "" ); //, SortOrder::Name, true );
 
 	//Init remote system
 	atlas::initRemoteHandler();
@@ -94,10 +93,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
-	QTimer* timer { new QTimer( this ) };
-	timer->setInterval( 2000 );
-	connect( timer, &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
-	timer->start();
+	heartbeat_timer->setInterval( 2000 );
+	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
+	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::refreshSearch );
+	heartbeat_timer->start();
 }
 
 MainWindow::~MainWindow()
@@ -118,7 +117,6 @@ void MainWindow::on_actionSimpleImporter_triggered()
 		importer.setRoot( dir );
 		importer.exec();
 		//Trigger search
-		emit triggerReSearch();
 	}
 	else
 		QMessageBox::information( this, "Error", "No directory provided." );
@@ -128,14 +126,12 @@ void MainWindow::on_actionSingleImporter_triggered()
 {
 	SingleImporter importer { this };
 	importer.exec();
-	emit triggerReSearch();
 }
 
 void MainWindow::on_actionBulkImporter_triggered()
 {
 	BatchImportDialog importer { this };
 	importer.exec();
-	emit triggerReSearch();
 }
 
 void MainWindow::on_btnFilter_pressed()
@@ -171,7 +167,6 @@ void MainWindow::on_btnAddGame_pressed()
 {
 	BatchImportDialog importer { this };
 	importer.exec();
-	emit triggerReSearch();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )
@@ -240,6 +235,7 @@ void MainWindow::searchTextChanged( [[maybe_unused]] const QString str )
 	}();}*/
 
 	//emit triggerSearch( str, search_type, ui->sortOrderButton->text() == "ASC" );
+	emit triggerSearch( std::move( str ) );
 }
 
 /*void MainWindow::on_sortOrderButton_clicked()
@@ -291,4 +287,9 @@ void MainWindow::setBottomGameCounter()
 
 	ui->GamesInstalled
 		->setText( QString( "%1 games installed, %2 total versions" ).arg( unique_games ).arg( total_versions ) );
+}
+
+void MainWindow::refreshSearch()
+{
+	searchTextChanged( ui->SearchBox->text() );
 }
