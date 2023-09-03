@@ -19,7 +19,7 @@ jobs:
           echo "ATLAS_VERSION_STR=$(date +%Y-%m-%d)-nightly-${{github.head_ref}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
-      - uses: ./.github/actions/build
+      - uses: ./.github/actions/build-windows
         with:
           build-release: true
           build-debug: false
