@@ -2,16 +2,17 @@
 
 #include <moc_mainwindow.cpp>
 
+#include "./dialog/AboutAtlas.hpp"
 #include "./dialog/SettingsDialog.hpp"
 #include "./dialog/StatsDialog.hpp"
 #include "./dialog/aboutqtdialog.h"
-#include "./dialog/AboutAtlas.hpp"
 #include "./ui_mainwindow.h"
 #include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
+#include "core/version.hpp"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
@@ -77,7 +78,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 
-	atlas::notifications::createMessage( "Welcome to atlas!" );
+	atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" ).arg( utils::version_string_qt() ) );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -209,12 +210,13 @@ void MainWindow::on_actionAboutQt_triggered()
 	aboutQtDialog.setModal( true );
 	aboutQtDialog.exec();
 }
-void MainWindow::on_actionAboutAtlas_triggered(){
+
+void MainWindow::on_actionAboutAtlas_triggered()
+{
 	AboutAtlas aboutAtlas { this };
 	aboutAtlas.setModal( true );
 	aboutAtlas.exec();
 }
-
 
 void MainWindow::on_actionViewFileHistory_triggered()
 {

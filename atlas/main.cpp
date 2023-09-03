@@ -35,21 +35,20 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-
 	//spdlog::info( "EntryPoint" );
 	//initLogging();
 	QApplication app { argc, argv };
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
 
-	QSplashScreen splash(splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ));
+	QSplashScreen splash( splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ) );
 	splash.show();
-    app.processEvents();
+	app.processEvents();
 
 #ifdef _WIN32
 	setlocale( LC_ALL, ".UTF8" );
 #endif
 
-	spdlog::info( "Booting Atlas version {}", ATLAS_VERSION_STR );
+	spdlog::info( "Booting Atlas version {}", utils::version_string );
 
 #ifdef _WIN32
 	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
@@ -143,7 +142,7 @@ int main( int argc, char** argv )
 
 	MainWindow window;
 	window.show();
-	splash.finish(&window);
+	splash.finish( &window );
 	const int code { app.exec() };
 	Database::deinit();
 	clear_lock();
