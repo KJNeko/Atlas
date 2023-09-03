@@ -25,7 +25,8 @@ jobs:
   #         apt_pckgs: build-essential qt6-base-dev libsqlite3-dev libgl1-mesa-dev libglx-dev qt6-charts-dev qt6-charts-dev
 
   build-windows:
-    if: ${{github.triggering_actor}} != 'KJNeko' && ${{github.triggering_actor}} != 'towerwatchman'
+# This doesn't seem to work. I need to research more into how this even can prevent this from running.
+    #    if: ${{github.triggering_actor}} != 'KJNeko' && ${{github.triggering_actor}} != 'towerwatchman'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -47,31 +48,31 @@ jobs:
           path: ${{github.workspace}}\builds\build-r\bin
           retention-days: 1
 
-  build-windows-self:
-    if: ${{github.triggering_actor}} == 'KJNeko' || ${{github.triggering_actor}} == 'towerwatchman'
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: 'true'
-      - uses: ./.github/actions/build-windows
-        with:
-          build-release: true
-          build-debug: false
-          # Swap build-atlas and build-tests once tests are runnable
-          build-atlas: true
-          # build-tests: true
-          version-string: 'pr-test'
-
-      #Murder the other one
-      #TODO: Figure out how to do this
-
-      - name: Upload release
-        uses: actions/upload-artifact@v2
-        with:
-          name: Atlas-staging-test-windows
-          path: ${{github.workspace}}\builds\build-r\bin
-          retention-days: 1
+  #  build-windows-self:
+  #    if: ${{github.triggering_actor}} == 'KJNeko' || ${{github.triggering_actor}} == 'towerwatchman'
+  #    runs-on: self-hosted
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #        with:
+  #          submodules: 'true'
+  #      - uses: ./.github/actions/build-windows
+  #        with:
+  #          build-release: true
+  #          build-debug: false
+  #          # Swap build-atlas and build-tests once tests are runnable
+  #          build-atlas: true
+  #          # build-tests: true
+  #          version-string: 'pr-test'
+  #
+  #      #Murder the other one
+  #      #TODO: Figure out how to do this
+  #
+  #      - name: Upload release
+  #        uses: actions/upload-artifact@v2
+  #        with:
+  #          name: Atlas-staging-test-windows
+  #          path: ${{github.workspace}}\builds\build-r\bin
+  #          retention-days: 1
 
   build-linux:
     runs-on: ubuntu-22.04
