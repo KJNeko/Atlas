@@ -99,6 +99,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
 	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::refreshSearch );
 	heartbeat_timer->start();
+
+	ui->lbAtlasVersion->setText( utils::version_string_qt() );
 }
 
 MainWindow::~MainWindow()
