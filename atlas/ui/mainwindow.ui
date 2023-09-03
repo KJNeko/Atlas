@@ -420,6 +420,13 @@ border-top-left-radius:0px;</string>
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QLabel" name="lbAtlasVersion">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

@@ -13,13 +13,11 @@ jobs:
         with:
           submodules: 'true'
 
-
       - name: Extract version
         id: meta
         run: |
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
-
 
       - uses: ./.github/actions/build
         with:

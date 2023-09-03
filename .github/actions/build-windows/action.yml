@@ -10,18 +10,10 @@ inputs:
     description: "Build debug"
     required: false
     default: 'false'
-  build-tests:
-    description: "Build tests"
-    required: false
-    default: 'false'
   build-atlas:
     description: "Build atlas"
     required: false
     default: 'true'
-  build-profile:
-    description: "Builds profiling tool and atlas in profiling mode"
-    required: false
-    default: 'false'
   version-string:
     description: "Version string"
     required: false
@@ -95,17 +87,6 @@ runs:
       if: ${{inputs.build-debug == 'true'}}
       run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
 
-    - name: CMake Debug Release
-      shell: powershell
-      if: ${{inputs.build-release == 'true' && inputs.build-profile == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-rp -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles" -DATLAS_PROFILE_ENABLE=ON
-
-    - name: Build Target Atlas Release-Profile
-      shell: powershell
-      if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true' && inputs.build-profile == 'true'}}
-      run: |
-        cmake --build ${{github.workspace}}\builds\build-rp -j8 --target Atlas
-
     - name: Build Target Atlas Release
       shell: powershell
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true'}}
@@ -117,15 +98,3 @@ runs:
       if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
       run: |
         cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
-
-    - name: Build Target AtlasTESTS Release
-      shell: powershell
-      if: ${{inputs.build-release == 'true' && inputs.build-tests == 'true'}}
-      run: |
-        cmake --build ${{github.workspace}}\builds\build-r -j8 --target AtlasTESTS
-
-    - name: Build Target AtlasTESTS Debug
-      shell: powershell
-      if: ${{inputs.build-debug == 'true' && inputs.build-tests == 'true'}}
-      run: |
-        cmake --build ${{github.workspace}}\builds\build-d -j8 --target AtlasTESTS
