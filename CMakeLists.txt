@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
-        
+
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/data)
 
 #Enable cmake_modules
@@ -28,7 +28,7 @@ message("-- FGL_FLAGS: ${FGL_FLAGS}")
 if (DEFINED QT_PATH)
     message("-- QT_PATH defined as ${QT_PATH}.")
     list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
-else()
+else ()
     message("-- QT_PATH not defined.")
 endif ()
 
@@ -68,6 +68,13 @@ add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+
+if (DEFINED ATLASVERSION)
+    target_compile_definitions(Atlas PRIVATE ATLASVERSION=${ATLASVERSION})
+    message("Set compile version to ${ATLASVERSION}")
+elseif (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
+    message("You MUST provide -DALTASVERSION if not building debug")
+endif ()
 
 PlatformPostSetup()
 CompilerPostSetup()
