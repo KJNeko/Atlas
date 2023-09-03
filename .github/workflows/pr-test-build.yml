@@ -34,8 +34,8 @@ jobs:
           submodules: 'true'
       - uses: ./.github/actions/build-windows
         with:
-          build-release: false
-          build-debug: true
+          build-release: true
+          build-debug: false
           # Swap build-atlas and build-tests once tests are runnable
           build-atlas: true
           # build-tests: true
@@ -83,8 +83,8 @@ jobs:
 
       - uses: ./.github/actions/build-linux
         with:
-          build-release: false
-          build-debug: true
+          build-release: true
+          build-debug: false
           build-atlas: true
           # To activate once tests are made
           # build-tests: true
