@@ -16,7 +16,7 @@ jobs:
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=Nightly-$(date +%Y-%m-%d)-${GITHUB_REF#refs/heads/}-$(git rev-parse --short \"$GITHUB_SHA\")" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build
@@ -24,7 +24,6 @@ jobs:
           build-release: true
           build-debug: false
           build-atlas: true
-          build-profile: true
           version-string: ${{ env.ATLAS_VERSION_STR }}
 
       - name: Package
