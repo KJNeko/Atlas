@@ -67,13 +67,6 @@ class Database
 	friend class Binder;
 };
 
-struct TransactionInvalid : public std::runtime_error
-{
-	TransactionInvalid( std::string m_sql_string ) :
-	  std::runtime_error( fmt::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
-	{}
-};
-
 struct DbResults
 {
 	int rows_returned { 0 };

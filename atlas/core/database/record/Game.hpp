@@ -14,6 +14,7 @@
 #include "core/Types.hpp"
 #include "core/config.hpp"
 #include "core/database/remote/AtlasData.hpp"
+#include "core/logging/dev.hpp"
 
 namespace atlas::records
 {

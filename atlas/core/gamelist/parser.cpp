@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/4/23.
 //
 
+#include <QRegularExpression>
 #include <QSettings>
 
 #include "core/logging.hpp"
