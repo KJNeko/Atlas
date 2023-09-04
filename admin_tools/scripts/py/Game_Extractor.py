@@ -103,15 +103,23 @@ def print_c(color, type, message):
         + bcolors.ENDC
         + message
     )
-         
+
+def checkForCommonNames(str):
+    str = str.lower()
+    arr = ["pc","linux","win","windows"]
+    return any(str == c for c in arr)
+
+
 def parseFileName():
     #CREATE FOLDER TO STORE ALL GAMES AFTER THEY ARE EXTRACTED. WE ARE NOT DELETING THEM AT THE MOMENT
     if not os.path.exists(os.path.join(rootdir, "_complete_")):
         os.makedirs(os.path.join(rootdir, "_complete_"))
+    myfile = open('files.txt', 'w')
     for subdir, dirs, files in os.walk(rootdir):
         for file in files:
             #os.system('cls') #clear console
             #print("-----------------------------")
+            myfile.write(file + "\n");
             ext = os.path.splitext(file)[1]
             if(ext.lower() == ".zip" or ext.lower() == ".7z" or ext.lower() == ".rar"):    
                 #REMOVE Extension
@@ -138,7 +146,7 @@ def parseFileName():
                             if tmp[i].lower() == "season" or tmp[i].lower() == "episode" or tmp[i].lower() == "chapter":
                                 version += tmp[i] + " "
                                 hasWord = True
-                            if(tmp[i].lower() != "pc" and tmp[i].lower() != "linux" and tmp[i].lower() != "win" and hasNum == False and hasWord == False):
+                            if( not checkForCommonNames(tmp[i]) and hasNum == False and hasWord == False):
                                 #At this point we need to check for a few things, 
                                 #1) Check if season or episode is in the name
                                 #2) Check if Chapter or CHX is in the title
@@ -152,6 +160,7 @@ def parseFileName():
                 #print_c(bcolors.HEADER,"INFO", ("Looking for title " + title))
                     #getAtlasId(title)
             #print("-----------------------------")
+    myfile.close()
                 
 
 

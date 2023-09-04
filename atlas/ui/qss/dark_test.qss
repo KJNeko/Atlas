@@ -75,7 +75,7 @@ QLabel {
 
 /*QTextEdit*/
 QTextEdit {
-    background-color: none;
+    background-color: transparent;
     color: rgb(210, 210, 210);
 }
 
@@ -247,6 +247,10 @@ QTreeView {
     background-color: transparent;
 }
 
+#GameWidget {
+    background-color: rgb(49, 51, 56);
+}
+
 #SearchIcon {
     background-color: rgb(56, 58, 64);
     border: none;
@@ -307,6 +311,23 @@ QTreeView {
 
 #recordView {
     background-color: rgb(49, 51, 56);
+}
+
+#Description {
+    background: none;
+}
+
+#Info {
+    background: none;
+}
+
+#Links {
+    background: none;
+}
+
+#btnHideShow {
+    height: 30;
+    width: 30;
 }
 
 /*END CUSTOM COLORS*/
