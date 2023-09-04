@@ -83,6 +83,13 @@ namespace atlas::database::migrations
 				"Failed to apply migration. Currently at {}: {}",
 				config::database::migration_version::get(),
 				e.what() );
+			std::abort();
+		}
+		catch ( ... )
+		{
+			spdlog::
+				error( "Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() );
+			std::abort();
 		}
 	}
 } // namespace atlas::database::migrations
