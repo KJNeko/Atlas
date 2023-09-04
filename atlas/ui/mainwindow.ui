@@ -102,6 +102,22 @@
        <property name="spacing">
         <number>0</number>
        </property>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>4</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="2" column="1">
         <widget class="QFrame" name="HomeFrame">
          <property name="styleSheet">
@@ -308,22 +324,6 @@ border-top-left-radius:0px;</string>
           <string notr="true"/>
          </property>
         </widget>
-       </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>4</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

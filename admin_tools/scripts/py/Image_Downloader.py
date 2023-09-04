@@ -24,7 +24,7 @@ class bcolors:
 
 
 #dbPath = "C:/Users/tower/source/repos/Atlas/build/bin/data/atlas.db"
-dbPath = "C:/Users/bgibson/Source/Atlas/build/bin/data/atlas.db"
+dbPath = "C:/Users/tower/Source/Atlas/build/bin/data/atlas.db"
 
 # Format is /developer/name/version
 # Put this py file in the same folder as your "Atlas" directory
