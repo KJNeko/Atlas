@@ -16,7 +16,7 @@ jobs:
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=$(date +%Y-%m-%d)-nightly-${{github.head_ref}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=$(date +%Y-%m-%d)-nightly-${GITHUB_REF##*/}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
