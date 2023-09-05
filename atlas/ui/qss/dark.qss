@@ -283,7 +283,8 @@ QTreeView {
 }
 
 #GameWidget {
-    background-color: rgb(49, 51, 56);
+    background-color: rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(0, 0, 0);
 }
 
 #SearchIcon {
@@ -376,6 +377,14 @@ QTreeView {
     padding-bottom: 5px;
 }
 
+#StatusFrame {
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+#gamesTree {
+    border: none;
+}
+
 /*END CUSTOM COLORS*/
 QScrollBar:vertical {
     border-style: none;
@@ -432,6 +441,10 @@ QFrame>QLabel {
 
 #settingsButtons>QPushButton {
     background-color: none;
+}
+
+#settingsButtons>QPushButton:checked {
+    background-color: rgb(64, 66, 73);
 }
 
 #settingsButtons>QPushButton:hover {

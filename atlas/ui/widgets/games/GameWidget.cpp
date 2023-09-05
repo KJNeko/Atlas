@@ -319,10 +319,10 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const QRect pixmap_engine_rect { pixmap_rect.width() -100 ,  pixmap_rect.height() -100, 30, 30 };
 
 		//Engine Stuff
-		const QPixmap engine_logo { QString::fromStdString(getEngineLogo(record->m_engine.toStdString())) };
+		/*const QPixmap engine_logo { QString::fromStdString(getEngineLogo(record->m_engine.toStdString())) };
 		const QString engine_text { record->m_engine };
 		QFontMetrics font_metrics(font);
-		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };
+		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };*/
 
 		QRect boundingRect;
 
@@ -330,7 +330,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		painter.drawPixmap( pixmap_rect, banner );
 		painter.drawPixmap( pixmap_logo, logo );
 
-		painter.drawPixmap(pixmap_engine_rect, engine_logo.scaled(30,30,Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+		//painter.drawPixmap(pixmap_engine_rect, engine_logo.scaled(30,30,Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 		painter.restore();
 	}
 }
