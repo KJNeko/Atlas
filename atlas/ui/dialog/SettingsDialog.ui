@@ -342,7 +342,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -364,6 +364,9 @@ border-right:none;
           </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="checkBox_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Minimize Atlas to system tray when the application is closed</string>
             </property>
