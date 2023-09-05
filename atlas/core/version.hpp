@@ -7,7 +7,7 @@
 
 #ifdef NDEBUG
 #ifndef ATLASVERSION
-#error "No version specified. Define with -DATLASVERSION during config (-DATLASVERSION=\"test\" "
+#error "No version specified. Define with -DATLASVERSION during config (-DATLASVERSION=\"test\") "
 #endif
 #else
 #ifndef ATLASVERSION
@@ -15,13 +15,20 @@
 #endif
 #endif
 
+#define VAL( str ) #str
+#define TOSTRING( str ) VAL( str )
+
+#ifdef ATLASVERSION
+#define ATLASVERSION_STR TOSTRING( ATLASVERSION )
+#endif
+
 namespace utils
 {
-	constexpr std::string_view version_string { ATLASVERSION };
+	constexpr std::string_view version_string { ATLASVERSION_STR };
 
 	inline const QString version_string_qt()
 	{
-		return QString::fromLocal8Bit( version_string.data(), version_string.size() );
+		return QString::fromLocal8Bit( version_string.data(), static_cast< qsizetype >( version_string.size() ) );
 	}
 } // namespace utils
 
