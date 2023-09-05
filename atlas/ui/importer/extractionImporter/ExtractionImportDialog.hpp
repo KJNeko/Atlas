@@ -9,7 +9,7 @@ class ExtractionImportDialog;
 
 class ExtractionImportDialog : public QDialog
 {
-    Q_DISABLE_COPY_MOVE( BatchImportDialog )
+    Q_DISABLE_COPY_MOVE( ExtractionImportDialog )
     Q_OBJECT
 
 public:
