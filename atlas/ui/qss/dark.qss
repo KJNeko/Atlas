@@ -140,6 +140,10 @@ QPushButton {
     height: 30px;
 }
 
+QPushButton:hover {
+    background-color: rgb(64, 66, 73);
+}
+
 QPushButton:hover:pressed {
     background-color: rgb(64, 66, 73);
 }
@@ -156,6 +160,10 @@ QComboBox {
     color: rgb(210, 210, 210);
 }
 
+QComboBox:disabled {
+    color: rgb(210, 210, 210, 50);
+}
+
 /* ToolButtons */
 QToolButton {
     background-color: transparent;
@@ -169,6 +177,10 @@ QCheckBox {
     border: none;
     border-radius: 5px;
 
+}
+
+QCheckBox:disabled {
+    color: rgb(210, 210, 210, 50);
 }
 
 /* MENU BAR*/
@@ -221,6 +233,7 @@ QStackedWidget {
     border-style: outset;
     border-right: none;
     border-top: none;
+    border-bottom: none;
 }
 
 QTreeView {
@@ -330,6 +343,17 @@ QTreeView {
     width: 30;
 }
 
+#Header {
+    background-color: rgb(49, 51, 56);
+    border-left: 2px solid rgb(0, 0, 0);
+}
+
+#lblSettingsHeader {
+    border-bottom: 1px solid rgba(120, 120, 120, 100);
+    border-style: outset;
+    padding-bottom: 5px;
+}
+
 /*END CUSTOM COLORS*/
 QScrollBar:vertical {
     border-style: none;
@@ -382,4 +406,12 @@ QStackedWidget>QWidget>QWidget {
 QFrame>QLabel {
     background-color: none;
     border: none;
+}
+
+#settingsButtons>QPushButton {
+    background-color: none;
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgb(64, 66, 73);
 }

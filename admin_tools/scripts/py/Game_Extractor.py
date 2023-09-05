@@ -105,7 +105,8 @@ def print_c(color, type, message):
     )
 
 def checkForCommonNames(str):
-    str = str.lower()
+    #convert to lower and remove "_"
+    str = str.lower().replace('_', "")
     arr = ["pc","linux","win","windows"]
     return any(str == c for c in arr)
 
@@ -128,6 +129,7 @@ def parseFileName():
                 version = ""
                 hasNum = False
                 hasWord = False
+                verArr = ["season", "episode", "chapter"]
                 #Check for "-" This is the first test case
                 if('-' in file_name):
                     tmp = file_name.split('-')
@@ -150,7 +152,32 @@ def parseFileName():
                                 #At this point we need to check for a few things, 
                                 #1) Check if season or episode is in the name
                                 #2) Check if Chapter or CHX is in the title
-                                title += tmp[i]
+                                if("episode" in tmp[i].lower()):
+                                    ep = tmp[i].lower().split('episode')
+                                    if(len(ep) > 1):
+                                        version += "Episode" + ep[1]
+                                        title += ep[0]
+                                    else:
+                                        version += "Episode"
+                                        title += ep[0]
+                                if("season" in tmp[i].lower()):
+                                    se = tmp[i].lower().split('season')
+                                    if(len(se) > 1):
+                                        version += "season" + se[1]
+                                        title += se[0]
+                                    else:
+                                        version += "season"
+                                        title += se[0]
+                                if("final" in tmp[i].lower()):
+                                    fi = tmp[i].lower().split('final')
+                                    if(len(fi) > 1):
+                                        version += "final" + fi[1]
+                                        title += fi[0]
+                                    else:
+                                        version += "final"
+                                        title += fi[0]
+                                else:    
+                                    title += tmp[i]
                                
                     print_c(bcolors.HEADER,"DEBUG", ("FILE -> " + file))
                     print_c(bcolors.OKGREEN,"INFO", ("TITLE -> " + title))

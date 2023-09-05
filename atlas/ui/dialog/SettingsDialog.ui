@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -107,7 +107,7 @@ border:none;</string>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QWidget" name="widget_3" native="true">
+       <widget class="QWidget" name="settingsButtons" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -2760,6 +2760,18 @@ padding:10x;</string>
    </item>
    <item row="2" column="2">
     <widget class="QWidget" name="Header" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -2769,6 +2781,18 @@ padding:10x;</string>
      <layout class="QGridLayout" name="gridLayout_17">
       <item row="0" column="0">
        <widget class="QLabel" name="lblSettingsHeader">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>15</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
