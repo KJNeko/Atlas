@@ -30,8 +30,8 @@ jobs:
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          ren ${{github.workspace}}\builds\build-r\bin ${{github.workspace}}\Atlas-GameManager-Nightly-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\builds\build-r\Atlas-GameManager-Nightly-Release
+          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\builds\build-r\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
