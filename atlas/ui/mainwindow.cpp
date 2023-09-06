@@ -16,6 +16,7 @@
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
+#include "ui/importer/extractionImporter/ExtractionImportDialog.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
@@ -131,6 +132,11 @@ void MainWindow::on_actionSimpleImporter_triggered()
 void MainWindow::on_actionSingleImporter_triggered()
 {
 	SingleImporter importer { this };
+	importer.exec();
+}
+
+void MainWindow::on_actionExtractionImporter_triggered(){
+	ExtractionImportDialog importer { this };
 	importer.exec();
 }
 

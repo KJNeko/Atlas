@@ -2,6 +2,9 @@
 #define EXTRACTIONIMPORTDIALOG_HPP
 
 #include <QDialog>
+#include <QThreadPool>
+
+#include "core/Types.hpp"
 
 namespace Ui {
 class ExtractionImportDialog;
@@ -15,8 +18,14 @@ class ExtractionImportDialog : public QDialog
 public:
     explicit ExtractionImportDialog(QWidget *parent = nullptr);
     ~ExtractionImportDialog();
+	void parseFiles(std::string path);
 
-private:
+  private slots:
+	void on_btnSetRoot_pressed();
+	void on_btnSetExtPath_pressed();
+	void on_btnNext_pressed();
+
+  private:
     Ui::ExtractionImportDialog *ui;
 };
 

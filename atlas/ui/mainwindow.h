@@ -48,6 +48,7 @@ class MainWindow final : public QMainWindow
 	void on_actionSimpleImporter_triggered();
 	void on_actionBulkImporter_triggered();
 	void on_actionSingleImporter_triggered();
+	void on_actionExtractionImporter_triggered();
 	//void on_actionImport_triggered();
 	void on_actionOptions_triggered();
 	void on_actionExit_triggered();

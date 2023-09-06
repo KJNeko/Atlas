@@ -118,8 +118,6 @@ def parseFileName():
     myfile = open('files.txt', 'w')
     for subdir, dirs, files in os.walk(rootdir):
         for file in files:
-            #os.system('cls') #clear console
-            #print("-----------------------------")
             myfile.write(file + "\n");
             ext = os.path.splitext(file)[1]
             if(ext.lower() == ".zip" or ext.lower() == ".7z" or ext.lower() == ".rar"):    
@@ -129,7 +127,6 @@ def parseFileName():
                 version = ""
                 hasNum = False
                 hasWord = False
-                verArr = ["season", "episode", "chapter"]
                 #Check for "-" This is the first test case
                 if('-' in file_name):
                     tmp = file_name.split('-')
@@ -163,21 +160,23 @@ def parseFileName():
                                 if("season" in tmp[i].lower()):
                                     se = tmp[i].lower().split('season')
                                     if(len(se) > 1):
-                                        version += "season" + se[1]
+                                        version += "Season" + se[1]
                                         title += se[0]
                                     else:
-                                        version += "season"
+                                        version += "Season"
                                         title += se[0]
                                 if("final" in tmp[i].lower()):
                                     fi = tmp[i].lower().split('final')
                                     if(len(fi) > 1):
-                                        version += "final" + fi[1]
+                                        version += "Final" + fi[1]
                                         title += fi[0]
                                     else:
-                                        version += "final"
+                                        version += "Final"
                                         title += fi[0]
                                 else:    
                                     title += tmp[i]
+                    if(version == ""):
+                        version = "0.0" 
                                
                     print_c(bcolors.HEADER,"DEBUG", ("FILE -> " + file))
                     print_c(bcolors.OKGREEN,"INFO", ("TITLE -> " + title))
