@@ -149,6 +149,12 @@ QPushButton {
     height: 30px;
 }
 
+QPushButton:disabled {
+    background-color: rgb(43, 45, 49, 50);
+    color: rgb(210, 210, 210, 50);
+    border: 1px solid rgb(210, 210, 210, 50);
+}
+
 QPushButton:hover {
     background-color: rgb(64, 66, 73);
 }
