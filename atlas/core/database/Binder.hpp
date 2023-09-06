@@ -13,6 +13,7 @@
 
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
+#include "core/logging/dev.hpp"
 
 template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
