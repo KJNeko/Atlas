@@ -170,7 +170,7 @@ void GameWidget::reloadRecord()
 	}
 	else
 	{
-		ui->previewList->hide();
+		//ui->previewList->hide();
 	}
 
 	std::optional< atlas::remote::AtlasRemoteData > atlas_data = record.findAtlasData( title, developer );
@@ -322,8 +322,8 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		/*const QPixmap engine_logo { QString::fromStdString(getEngineLogo(record->m_engine.toStdString())) };
 		const QString engine_text { record->m_engine };
 		QFontMetrics font_metrics(font);
-		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };
-*/
+		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };*/
+
 		QRect boundingRect;
 
 

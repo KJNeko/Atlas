@@ -21,8 +21,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>0</height>
+    <width>820</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -102,6 +102,22 @@
        <property name="spacing">
         <number>0</number>
        </property>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>4</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="2" column="1">
         <widget class="QFrame" name="HomeFrame">
          <property name="styleSheet">
@@ -195,7 +211,7 @@ border-bottom-left-radius:5px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+             <pixmap>:/images/assets/search.svg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -238,7 +254,7 @@ margin-left: 2px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
+             <iconset>
               <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
             </property>
             <property name="iconSize">
@@ -272,7 +288,7 @@ border-top-left-radius:0px;</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
+             <iconset>
               <normaloff>:/images/assets/setting_filter.svg</normaloff>:/images/assets/setting_filter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -309,22 +325,6 @@ border-top-left-radius:0px;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>4</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
     </item>
@@ -350,7 +350,7 @@ border-top-left-radius:0px;</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QToolButton" name="btnAddGame">
+        <widget class="QPushButton" name="btnAddGame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -373,11 +373,8 @@ border-top-left-radius:0px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextBesideIcon</enum>
          </property>
         </widget>
        </item>
@@ -396,12 +393,6 @@ border-top-left-radius:0px;</string>
        </item>
        <item>
         <widget class="QLabel" name="GamesInstalled">
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
           <string>0 Games Installed</string>
          </property>
@@ -492,7 +483,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
@@ -553,7 +544,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+          <pixmap>:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -682,8 +673,8 @@ margin-right:5px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>96</width>
-             <height>26</height>
+             <width>98</width>
+             <height>28</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
@@ -726,7 +717,7 @@ margin-right:5px;</string>
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>35</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -766,6 +757,7 @@ margin-right:5px;</string>
      <addaction name="actionBulkImporter"/>
      <addaction name="actionGameListImporter"/>
      <addaction name="actionSingleImporter"/>
+     <addaction name="actionExtraction_Wizard"/>
     </widget>
     <addaction name="menuImport"/>
     <addaction name="actionManage"/>
@@ -859,7 +851,7 @@ margin-right:5px;</string>
   </action>
   <action name="actionBulkImporter">
    <property name="text">
-    <string>Bulk</string>
+    <string>Bulk Wizard</string>
    </property>
   </action>
   <action name="actionGameListImporter">
@@ -870,6 +862,11 @@ margin-right:5px;</string>
   <action name="actionSingleImporter">
    <property name="text">
     <string>Single</string>
+   </property>
+  </action>
+  <action name="actionExtraction_Wizard">
+   <property name="text">
+    <string>Extraction Wizard</string>
    </property>
   </action>
  </widget>
@@ -886,9 +883,7 @@ margin-right:5px;</string>
    <header>ui/views/RecordListView.hpp</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

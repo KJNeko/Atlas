@@ -75,7 +75,7 @@ QLabel {
 
 /*QTextEdit*/
 QTextEdit {
-    background-color: none;
+    background-color: transparent;
     color: rgb(210, 210, 210);
 }
 
@@ -96,6 +96,8 @@ QStackedWidget>QWidget>QFrame {
     border: none;
 }
 
+
+
 /* Line Edit*/
 QLineEdit {
     background-color: rgb(81, 83, 90);
@@ -103,11 +105,18 @@ QLineEdit {
     border-radius: 5px;
     margin-right: 5px;
     color: #3097D1;
-    /*color: rgb(210, 100, 210);*/
 }
 
-QLineEdit::Text {
-    color: rgb(81, 83, 90);
+#settingsPaths>QLineEdit {
+    background-color: rgb(81, 83, 90);
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    color: #3097D1;
+}
+
+#ThreadingWidget>QWidget {
+    background-color: none;
 }
 
 /*GroupBox*/
@@ -140,6 +149,10 @@ QPushButton {
     height: 30px;
 }
 
+QPushButton:hover {
+    background-color: rgb(64, 66, 73);
+}
+
 QPushButton:hover:pressed {
     background-color: rgb(64, 66, 73);
 }
@@ -156,6 +169,23 @@ QComboBox {
     color: rgb(210, 210, 210);
 }
 
+QComboBox QAbstractItemView {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QComboBox::item {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::item:selected {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox:disabled {
+    color: rgb(210, 210, 210, 50);
+}
+
 /* ToolButtons */
 QToolButton {
     background-color: transparent;
@@ -169,6 +199,10 @@ QCheckBox {
     border: none;
     border-radius: 5px;
 
+}
+
+QCheckBox:disabled {
+    color: rgb(210, 210, 210, 50);
 }
 
 /* MENU BAR*/
@@ -221,6 +255,7 @@ QStackedWidget {
     border-style: outset;
     border-right: none;
     border-top: none;
+    border-bottom: none;
 }
 
 QTreeView {
@@ -245,6 +280,11 @@ QTreeView {
 /*This is so the wide banner will show up in game view.*/
 #bannerFrame {
     background-color: transparent;
+}
+
+#GameWidget {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(0, 0, 0);
 }
 
 #SearchIcon {
@@ -309,6 +349,42 @@ QTreeView {
     background-color: rgb(49, 51, 56);
 }
 
+#Description {
+    background: none;
+}
+
+#Info {
+    background: none;
+}
+
+#Links {
+    background: none;
+}
+
+#btnHideShow {
+    height: 30;
+    width: 30;
+}
+
+#Header {
+    background-color: rgb(49, 51, 56);
+    border-left: 2px solid rgb(0, 0, 0);
+}
+
+#lblSettingsHeader {
+    border-bottom: 1px solid rgba(120, 120, 120, 100);
+    border-style: outset;
+    padding-bottom: 5px;
+}
+
+#StatusFrame {
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+#gamesTree {
+    border: none;
+}
+
 /*END CUSTOM COLORS*/
 QScrollBar:vertical {
     border-style: none;
@@ -361,4 +437,16 @@ QStackedWidget>QWidget>QWidget {
 QFrame>QLabel {
     background-color: none;
     border: none;
+}
+
+#settingsButtons>QPushButton {
+    background-color: none;
+}
+
+#settingsButtons>QPushButton:focus {
+    background-color: rgb(64, 66, 73);
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgb(64, 66, 73);
 }

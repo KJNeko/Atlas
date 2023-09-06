@@ -295,7 +295,7 @@ namespace atlas::records
 		return requestBanner( { width, height }, scale_type, type );
 	}
 
-	QFuture< QPixmap > Game::requestPreviewIndex( const int index ) const
+	QFuture< QPixmap > Game::requestPreviewIndex( const std::uint64_t index ) const
 	{
 		ZoneScoped;
 		const auto& previews { this->ptr->m_preview_paths };

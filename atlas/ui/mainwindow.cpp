@@ -21,6 +21,7 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
+	
 	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
@@ -31,7 +32,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
 	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
-	connect( ui->btnAddGame, &QToolButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
 	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
@@ -68,10 +69,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, tr( "Games" ) );
-	ui->gamesTree->setModel( ui->recordView->model() );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal,  "Games" , 2 );
+	
+	ui->gamesTree->setModel(ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
-	ui->gamesTree->setHeaderHidden( true );
+	ui->gamesTree->setHeaderHidden( false );
 
 	emit triggerSearch( "" ); //, SortOrder::Name, true );
 
@@ -184,7 +186,6 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 	config::grid_ui::windowWidth::
 		set( config::grid_ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
 	                                                                      config::grid_ui::windowWidth::get() );
-
 	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
 	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
@@ -195,10 +196,10 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 
 void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
 {
-	//Store Banner View Dims
-	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
-	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
-	//ui->recordView->reloadConfig();
+	QWidget::showEvent( event );
+
+	
+	movePopup();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -272,13 +273,15 @@ void MainWindow::moveEvent( QMoveEvent* event )
 
 void MainWindow::movePopup()
 {
+
 	auto& task_popup { atlas::notifications::handle() };
 	const auto [ x, y ] = task_popup.size();
 
-	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }
-		               - QPoint( 5, 5 ) };
+	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }};
 
 	task_popup.move( point );
+	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
+	//task_popup.setMaximumHeight( ui->recordView->height() );
 }
 
 void MainWindow::taskPopupResized()
@@ -298,6 +301,8 @@ void MainWindow::setBottomGameCounter()
 
 	ui->GamesInstalled
 		->setText( QString( "%1 games installed, %2 total versions" ).arg( unique_games ).arg( total_versions ) );
+
+	//repaint if new games are added
 }
 
 void MainWindow::refreshSearch()

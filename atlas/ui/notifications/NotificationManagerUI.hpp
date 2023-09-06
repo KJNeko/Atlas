@@ -41,10 +41,14 @@ class NotificationManagerUI final : public QDialog
 
 	void reorderChildren();
 
+	int notificationWidgetHeight {0};
+
 	Ui::NotificationManagerUI* ui;
 
   private slots:
 	void deleteNotification( Notification* ptr );
+	void on_btnClose_pressed();
+	void on_btnHideShow_pressed();
 
   signals:
 	void requestMove();
