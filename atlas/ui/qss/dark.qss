@@ -443,7 +443,7 @@ QFrame>QLabel {
     background-color: none;
 }
 
-#settingsButtons>QPushButton:checked {
+#settingsButtons>QPushButton:focus {
     background-color: rgb(64, 66, 73);
 }
 
