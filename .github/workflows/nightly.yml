@@ -30,8 +30,8 @@ jobs:
         run: |
           env
           cd ${{github.workspace}}
-          move ${{github.workspace}}\builds\build-r\bin\* ${{github.workspace}}\Atlas-GameManager-Nightly-Release\
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-Windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release
+          move ${{github.workspace}}\builds\build-r\bin\ ${{github.workspace}}\Atlas-GameManager-Nightly-Release\
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\builds\build-r\bin
 
       - name: Create release
         uses: softprops/action-gh-release@v1
