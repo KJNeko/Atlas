@@ -19,6 +19,10 @@ public:
     explicit ExtractionImportDialog(QWidget *parent = nullptr);
     ~ExtractionImportDialog();
 	void parseFiles(std::string path);
+	QString parseTitle( QString title );
+	QString parseVersion( QString version );
+	bool isDigit( QString &s );
+	bool checkOsNames( QString s );
 
   private slots:
 	void on_btnSetRoot_pressed();

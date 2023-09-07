@@ -102,16 +102,61 @@ void ExtractionImportDialog::parseFiles(std::string path)
         {
 			QString file_name = QString::fromStdString(p.path().filename().string());
             QString file_path = QString::fromStdString(p.path().string());
+			QString title = parseTitle( QString::fromStdString( p.path().stem().string() ) );
+			QTableWidgetItem* item1 {new QTableWidgetItem( title )};
 			QTableWidgetItem* item3 {new QTableWidgetItem( file_name )};
             QTableWidgetItem* item4 {new QTableWidgetItem( file_path )};
 
+			ui->exGames->setItem( row, 1, item1 );
 			ui->exGames->setItem( row, 3, item3 );
             ui->exGames->setItem( row, 4, item4 );
-
-			spdlog::info("{}", p.path().stem().string());
             row++;
         }
 
 	} 
 
+}
+
+QString ExtractionImportDialog::parseTitle(QString title)
+{
+	//Convert to lower case to make parsing easier
+	QString tmp { title };
+	//reset title
+	title = "";
+	if(tmp.contains('-'))
+	{
+		QStringList slist = tmp.split( "-" );
+
+		for ( int i = 0; i < slist.length();  i++)
+		{
+			if(!isDigit(slist[i]) && !checkOsNames(slist[i]))
+			{
+				title += slist[i];
+			}
+		}
+	}
+
+	return title;
+}
+
+QString ExtractionImportDialog::parseVersion(QString version)
+{
+	return version;
+}
+
+bool ExtractionImportDialog::isDigit(QString &s)
+{
+	bool isNum {false};
+	foreach(QChar c, s) {
+        if (c.isDigit()) {
+			isNum = true;
+			break;
+		}
+    }
+	return isNum;
+}
+
+bool ExtractionImportDialog::checkOsNames(QString s){
+	std::string arr[ 4 ] = { "pc", "win", "linux", "windows" };
+	return std::find(std::begin(arr), std::end(arr), s.toLower().toStdString()) != std::end(arr);
 }
