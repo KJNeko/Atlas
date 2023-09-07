@@ -53,6 +53,17 @@ int bindParameter( sqlite3_stmt* stmt, const std::u8string val, const int idx ) 
 }
 
 template <>
+int bindParameter( sqlite3_stmt* stmt, const std::string_view val, const int idx ) noexcept
+{
+#ifdef __linux__
+	return sqlite3_bind_text( stmt, idx, val.data(), static_cast< int >( val.size() ), SQLITE_TRANSIENT );
+#else
+	QString str { QString::fromLocal8Bit( val.data(), static_cast< qsizetype >( val.size() ) ) };
+	return bindParameter( stmt, std::move( str ), idx );
+#endif
+}
+
+template <>
 int bindParameter( sqlite3_stmt* stmt, const std::filesystem::path val, const int idx ) noexcept
 {
 	return bindParameter< std::u8string >( stmt, val.u8string(), idx );
