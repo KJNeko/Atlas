@@ -1,25 +1,25 @@
 #include "ExtractionImportDialog.hpp"
-#include "ui_ExtractionImportDialog.h"
 
 #include <QAbstractItemView>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMimeDatabase>
-#include <QtConcurrent>
 #include <QStringList>
 #include <QTableWidgetItem>
+#include <QtConcurrent>
 
 #include <tracy/Tracy.hpp>
 
 #include "core/database/record/Game.hpp"
 #include "core/logging.hpp"
+#include "ui_ExtractionImportDialog.h"
 
-ExtractionImportDialog::ExtractionImportDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ExtractionImportDialog)
+ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
+  QDialog( parent ),
+  ui( new Ui::ExtractionImportDialog )
 {
-    ui->setupUi(this);
-    ui->btnBack->setHidden( true );
+	ui->setupUi( this );
+	ui->btnBack->setHidden( true );
 
 	ui->exGames->setColumnCount( 5 );
 	QStringList headers { "Title", "Version", "Found in DB", "File", "Path" };
@@ -28,7 +28,7 @@ ExtractionImportDialog::ExtractionImportDialog(QWidget *parent) :
 
 ExtractionImportDialog::~ExtractionImportDialog()
 {
-    delete ui;
+	delete ui;
 }
 
 void ExtractionImportDialog::on_btnSetRoot_pressed()
@@ -77,7 +77,8 @@ void ExtractionImportDialog::on_btnNext_pressed()
 			ui->statusLabel->setText( "Path not set or invalid. Please check" );
 			return;
 		}
-        else{
+		else
+		{
 			ui->statusLabel->setText( "" );
 		}
 
@@ -91,47 +92,49 @@ void ExtractionImportDialog::on_btnNext_pressed()
 	}
 }
 
-void ExtractionImportDialog::parseFiles(std::string path)
+void ExtractionImportDialog::parseFiles( std::string path )
 {
 	std::string ext[ 3 ] = { ".zip", ".rar", ".7z" };
-    int row = 0;
-    ui->exGames->setRowCount( 50 );
-	for ( auto& p : std::filesystem::recursive_directory_iterator(path))
-    {
-        if(std::find(std::begin(ext), std::end(ext), p.path().extension().string()) != std::end(ext))
-        {
-			QString file_name = QString::fromStdString(p.path().filename().string());
-            QString file_path = QString::fromStdString(p.path().string());
+	int row = 0;
+	ui->exGames->setRowCount( 50 );
+	for ( auto& p : std::filesystem::recursive_directory_iterator( path ) )
+	{
+		if ( std::find( std::begin( ext ), std::end( ext ), p.path().extension().string() ) != std::end( ext ) )
+		{
+			QString file_name = QString::fromStdString( p.path().filename().string() );
+			QString file_path = QString::fromStdString( p.path().string() );
 			QString title = parseTitle( QString::fromStdString( p.path().stem().string() ) );
-			QTableWidgetItem* item1 {new QTableWidgetItem( title )};
-			QTableWidgetItem* item3 {new QTableWidgetItem( file_name )};
-            QTableWidgetItem* item4 {new QTableWidgetItem( file_path )};
+			QTableWidgetItem* item0 { new QTableWidgetItem( title ) };
+			QTableWidgetItem* item3 { new QTableWidgetItem( file_name ) };
+			QTableWidgetItem* item4 { new QTableWidgetItem( file_path ) };
 
-			ui->exGames->setItem( row, 1, item1 );
+			ui->exGames->setItem( row, 0, item0 );
 			ui->exGames->setItem( row, 3, item3 );
-            ui->exGames->setItem( row, 4, item4 );
-            row++;
-        }
-
-	} 
-
+			ui->exGames->setItem( row, 4, item4 );
+			row++;
+		}
+	}
 }
 
-QString ExtractionImportDialog::parseTitle(QString title)
+QString ExtractionImportDialog::parseTitle( QString title )
 {
 	//Convert to lower case to make parsing easier
 	QString tmp { title };
-	//reset title
+	//Reset title
 	title = "";
-	if(tmp.contains('-'))
+	//First check "-"
+	if ( tmp.contains( '-' ) )
 	{
+		//Split strings by -
 		QStringList slist = tmp.split( "-" );
-
-		for ( int i = 0; i < slist.length();  i++)
+		//Itterate through list
+		for ( int i = 0; i < slist.length(); i++ )
 		{
-			if(!isDigit(slist[i]) && !checkOsNames(slist[i]))
+			//Assume first item will always be a part of the title.
+			//Check if it has a number or has an OS name
+			if ( !( i > 0 && isDigit( slist[ i ] ) ) && !checkOsNames( slist[ i ] ) )
 			{
-				title += slist[i];
+				title += slist[ i ];
 			}
 		}
 	}
@@ -139,24 +142,27 @@ QString ExtractionImportDialog::parseTitle(QString title)
 	return title;
 }
 
-QString ExtractionImportDialog::parseVersion(QString version)
+QString ExtractionImportDialog::parseVersion( QString version )
 {
 	return version;
 }
 
-bool ExtractionImportDialog::isDigit(QString &s)
+bool ExtractionImportDialog::isDigit( QString& s )
 {
-	bool isNum {false};
-	foreach(QChar c, s) {
-        if (c.isDigit()) {
+	bool isNum { false };
+	foreach ( QChar c, s )
+	{
+		if ( c.isDigit() )
+		{
 			isNum = true;
 			break;
 		}
-    }
+	}
 	return isNum;
 }
 
-bool ExtractionImportDialog::checkOsNames(QString s){
+bool ExtractionImportDialog::checkOsNames( QString s )
+{
 	std::string arr[ 4 ] = { "pc", "win", "linux", "windows" };
-	return std::find(std::begin(arr), std::end(arr), s.toLower().toStdString()) != std::end(arr);
+	return std::find( std::begin( arr ), std::end( arr ), s.toLower().toStdString() ) != std::end( arr );
 }
