@@ -189,7 +189,7 @@ bool ExtractionImportDialog::isDigit( QString& s )
 
 bool ExtractionImportDialog::checkOsNames( QString s )
 {
-	std::string arr[ 5 ] = { "pc", "win", "linux", "windows", "unc" };
+	std::string arr[ 6 ] = { "pc", "win", "linux", "windows", "unc", "win64" };
 	return std::find( std::begin( arr ), std::end( arr ), s.toLower().toStdString() ) != std::end( arr );
 }
 
