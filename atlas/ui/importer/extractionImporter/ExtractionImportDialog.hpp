@@ -10,7 +10,7 @@ namespace Ui {
 class ExtractionImportDialog;
 }
 
-class ExtractionImportDialog : public QDialog
+class ExtractionImportDialog final : public QDialog
 {
     Q_DISABLE_COPY_MOVE( ExtractionImportDialog )
     Q_OBJECT
