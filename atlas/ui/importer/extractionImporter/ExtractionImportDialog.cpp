@@ -214,7 +214,7 @@ QStringList ExtractionImportDialog::findVersionType(QString s){
 	for(QString delimiter : delimiters)
 	{
 		if(s.toLower().contains(delimiter.toLower()))
-		{	QStringList slist = s.split(delimiter.toLower());
+		{	QStringList slist = s.toLower().split(delimiter.toLower());
 
 			if(slist.length() > 1)
 			{
