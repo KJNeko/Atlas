@@ -13,13 +13,7 @@
 #include <sqlite3.h>
 
 template < typename T >
-[[nodiscard]] int bindParameter( sqlite3_stmt*, const T, const int ) noexcept
-{
-	static_assert( false, "bindParameter<T> must be specialized for T" );
-
-	// return makes compiler happy
-	return 0;
-}
+[[nodiscard]] int bindParameter( sqlite3_stmt*, const T, const int ) noexcept = delete;
 
 template < typename T >
 	requires std::is_integral_v< T >

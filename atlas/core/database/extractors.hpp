@@ -10,10 +10,7 @@
 #include <sqlite3.h>
 
 template < std::uint64_t, typename T >
-void extract( sqlite3_stmt*, T& )
-{
-	static_assert( false, "extract<std::uint64, T> requires specialization for type T" );
-}
+void extract( sqlite3_stmt*, T& ) = delete;
 
 template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
