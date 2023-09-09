@@ -27,7 +27,11 @@ class NotificationManagerUI final : public QDialog
 
 	std::uint64_t active_notifications { 0 };
 
+	std::vector< Notification* > notifications() const;
+
   public:
+
+	void setHeight();
 
 	void addNotification( Notification* notif );
 
@@ -38,10 +42,6 @@ class NotificationManagerUI final : public QDialog
 	~NotificationManagerUI() override;
 
   private:
-
-	void reorderChildren();
-
-	int notificationWidgetHeight {0};
 
 	Ui::NotificationManagerUI* ui;
 
