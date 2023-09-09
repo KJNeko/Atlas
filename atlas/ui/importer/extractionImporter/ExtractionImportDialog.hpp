@@ -24,6 +24,8 @@ public:
 	bool checkOsNames( QString s );
 	QString addSpaces( QString s );
 	QStringList findVersionType( QString s );
+	QStringList parseStringByDelimiter( QString s, QString delimiter );
+	bool checkLanguages( QString s );
 
   private slots:
 	void on_btnSetRoot_pressed();

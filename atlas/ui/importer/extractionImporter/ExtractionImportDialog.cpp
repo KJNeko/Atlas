@@ -121,43 +121,55 @@ void ExtractionImportDialog::parseFiles( std::string path )
 
 QStringList ExtractionImportDialog::parseFileName( QString s )
 {
-	//Convert to lower case to make parsing easier
-	QString tmp { s };
-	//Reset title
-	QString title {""};
-	QString version { "" };
-	//First check "-"
-	if ( tmp.contains( '-' ) )
+	//Set Defaults
+	QStringList file_data {"",""};
+	if ( s.contains( '-' ) )
 	{
-		//Split strings by -
-		QStringList slist = tmp.split( "-" );
-		bool isVersion = false;
-		//Itterate through list
-		for ( int i = 0; i < slist.length(); i++ )
+		file_data = parseStringByDelimiter( s, "-" );
+	}
+	else if ( s.contains( '_' ) )
+	{
+		file_data = parseStringByDelimiter( s, "_" );
+	}
+	else if ( s.contains( " " ) )
+	{
+		file_data = parseStringByDelimiter( s, " " );
+	}
+	
+
+	return QStringList{file_data[0],file_data[1]};
+}
+
+QStringList ExtractionImportDialog::parseStringByDelimiter(QString s, QString delimiter)
+{
+	QString title = { "" };
+	QString version = { "" };
+	QStringList slist = s.split( delimiter );
+	bool isVersion = false;
+	//Itterate through list
+	for ( int i = 0; i < slist.length(); i++ )
+	{
+		//Assume first item will always be a part of the title.
+		//Check if it has a number or has an OS name
+		if(!checkOsNames( slist[ i ] ) && !checkLanguages(slist[i]))
 		{
-			//Assume first item will always be a part of the title.
-			//Check if it has a number or has an OS name
-			if(!checkOsNames( slist[ i ] ))
+			if ( !( i > 0 && isDigit( slist[ i ] ) ) && isVersion == false)
 			{
-				if ( !( i > 0 && isDigit( slist[ i ] ) ) && isVersion == false)
-				{
-					//Check if string contaings a version type
+				//Check if string contaings a version type
 
-					title += findVersionType(slist[ i ])[0];
-					version += findVersionType(slist[ i ])[1];
-					//Check for version chapter or season
+				title += findVersionType(slist[ i ])[0];
+				version += findVersionType(slist[ i ])[1];
+				//Check for version chapter or season
 
-				}
-				else{
-					isVersion = true;
-					version += slist[ i ];
-				}
+			}
+			else{
+				isVersion = true;
+				version += slist[ i ];
 			}
 		}
-		//Add Spaces between Capital Letters
-		title = addSpaces( title );
 	}
-
+	//Add Spaces between Capital Letters
+	title = addSpaces( title );
 	return QStringList{title,version};
 }
 
@@ -181,7 +193,11 @@ bool ExtractionImportDialog::checkOsNames( QString s )
 	return std::find( std::begin( arr ), std::end( arr ), s.toLower().toStdString() ) != std::end( arr );
 }
 
-
+bool ExtractionImportDialog::checkLanguages( QString s )
+{
+	std::string arr[ 2 ] = { "japanese", "english"};
+	return std::find( std::begin( arr ), std::end( arr ), s.toLower().toStdString() ) != std::end( arr );
+}
 
 QString ExtractionImportDialog::addSpaces(QString s)
 {
@@ -214,17 +230,17 @@ QStringList ExtractionImportDialog::findVersionType(QString s){
 	for(QString delimiter : delimiters)
 	{
 		if(s.toLower().contains(delimiter.toLower()))
-		{	QStringList slist = s.toLower().split(delimiter.toLower());
+		{	QStringList slist = s.split(delimiter.toLower(),Qt::KeepEmptyParts,Qt::CaseInsensitive);
 
 			if(slist.length() > 1)
 			{
-							spdlog::info( "{}, {}", slist[0], slist[1] );
+				spdlog::info( "{}, {}", slist[0], slist[1] );
 				version += delimiter + slist[ 1 ];
 				title += slist[ 0 ];
 			}
 			else
 			{
-							spdlog::info( "{}", slist[0] );
+				spdlog::info( "{}", slist[0] );
 				version += delimiter;
 				title += slist[ 0 ];
 			}
@@ -234,7 +250,7 @@ QStringList ExtractionImportDialog::findVersionType(QString s){
 
 	if(!versionFound)
 	{
-		//title += s;
+		title += s;
 	}
 
 	return QStringList{title,version};
