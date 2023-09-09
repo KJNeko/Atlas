@@ -105,7 +105,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #3097D1;
+    color: #0280c9;
 }
 
 #settingsPaths>QLineEdit {
@@ -113,7 +113,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #3097D1;
+    color: #0280c9;
 }
 
 #ThreadingWidget>QWidget {
@@ -397,6 +397,8 @@ QTreeView {
 }
 
 /*END CUSTOM COLORS*/
+
+/*SCROLL VERTICLE*/
 QScrollBar:vertical {
     border-style: none;
     background-color: rgb(30, 31, 34);
@@ -464,6 +466,8 @@ QFrame>QLabel {
 
 QChartView {
     background-color: rgb(64, 66, 73);
+    background: rgb(64, 66, 73);
+    color: rgb(64, 66, 73);
 }
 
 QTabBar::tab {
@@ -530,4 +534,17 @@ QListWidget::item:selected {
     /* Used on Windows */
     color: rgb(210, 210, 210);
     border: 0px solid black;
+}
+
+QTableView {
+    alternate-background-color: rgb(43, 45, 49);
+    color: rgb(210, 210, 210);
+}
+
+QTableCornerButton::section {
+    background-color: rgb(35, 36, 40);
+}
+
+QDialog>QWidget {
+    border: none;
 }
