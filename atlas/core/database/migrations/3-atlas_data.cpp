@@ -8,9 +8,9 @@
 namespace atlas::database::migrations
 {
 	template <>
-	void up< 3 >( Transaction& transaction )
+	std::string_view migration< 3 >()
 	{
-		transaction <<
+		return
 			R"(
 			CREATE TABLE IF NOT EXISTS atlas_data
 			(

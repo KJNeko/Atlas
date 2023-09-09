@@ -7,13 +7,21 @@
 #include "core/logging.hpp"
 #include "templates.hpp"
 
-#define MIGRATE( idx )                                                                                                 \
-	case idx:                                                                                                          \
-		up< idx >( trans );                                                                                            \
-		break;
-
 namespace atlas::database::migrations
 {
+	template < std::uint64_t id >
+	void runUp( Transaction& trans )
+	{
+		const auto sql { migration< id >() };
+		trans << sql;
+		trans << "INSERT INTO migrations (migration_id, sql) VALUES (?,?)" << id << sql;
+	}
+
+#define MIGRATE( idx )                                                                                                 \
+	case idx:                                                                                                          \
+		runUp< idx >( trans );                                                                                         \
+		break;
+
 	//! Int to represent what the highest migration is at (Starting at migration 0 we run until we are N <= MIGRATIONS_VERSION)
 	inline static constexpr int MIGRATIONS_VERSION { 16 };
 
@@ -30,13 +38,30 @@ namespace atlas::database::migrations
 	{
 		spdlog::info( "Running migrations - UP" );
 
+		//Check to see if the migration table exists
+		int count { 0 };
+		RapidTransaction() << "SELECT COUNT(name) FROM sqlite_master WHERE type='table' AND name ='migrations'"
+			>> count;
+
+		if ( count == 0 )
+		{
+			//Table we are looking for doesn't exist. We should make it.
+			Transaction trans;
+			trans << "CREATE TABLE migrations (migration_id INTEGER PRIMARY KEY, sql TEXT)";
+			trans.commit();
+		}
+
+		int current_migration { -1 };
+		RapidTransaction() << "SELECT migration_id FROM migrations ORDER BY migration_id DESC limit 1"
+			>> current_migration;
+
 		try
 		{
-			while ( config::database::migration_version::get() <= MIGRATIONS_VERSION )
+			while ( current_migration <= MIGRATIONS_VERSION )
 			{
-				int migration { config::database::migration_version::get() };
-
-				if ( MIGRATIONS_VERSION == migration )
+				//Increment the migration to see if the next migration can be done
+				current_migration += 1;
+				if ( MIGRATIONS_VERSION == current_migration )
 				{
 					spdlog::info( "All migrations processed." );
 					return;
@@ -44,9 +69,9 @@ namespace atlas::database::migrations
 
 				Transaction trans;
 
-				spdlog::info( "Running migration {}", migration );
+				spdlog::info( "Running migration {}", current_migration );
 
-				switch ( migration )
+				switch ( current_migration )
 				{
 					MIGRATE( 0 )
 					MIGRATE( 1 )
@@ -71,8 +96,6 @@ namespace atlas::database::migrations
 							MIGRATIONS_VERSION );
 						return;
 				}
-
-				config::database::migration_version::set( migration + 1 );
 
 				trans.commit();
 			}

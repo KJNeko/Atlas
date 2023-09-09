@@ -11,7 +11,7 @@ namespace atlas::database::migrations
 {
 	//! Up must be defined to create/modify the tables that are required.
 	template < std::uint64_t id >
-	void up( Transaction& trans );
+	[[nodiscard]] std::string_view migration();
 
 	void runUp();
 

@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/23/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP
 #define ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP
 
