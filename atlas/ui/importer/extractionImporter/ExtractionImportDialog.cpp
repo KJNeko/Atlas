@@ -22,7 +22,7 @@ ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
 	ui->btnBack->setHidden( true );
 
 	ui->exGames->setColumnCount( 5 );
-	QStringList headers { "Title", "Version", "Found in DB", "File", "Path" };
+	QStringList headers { "Title", "Version", "Creator", "File", "Path","Found in DB" };
 	ui->exGames->setHorizontalHeaderLabels( headers );
 }
 
@@ -103,12 +103,15 @@ void ExtractionImportDialog::parseFiles( std::string path )
 		{
 			QString file_name = QString::fromStdString( p.path().filename().string() );
 			QString file_path = QString::fromStdString( p.path().string() );
-			QString title = parseTitle( QString::fromStdString( p.path().stem().string() ) );
-			QTableWidgetItem* item0 { new QTableWidgetItem( title ) };
+			QStringList qlist = parseFileName( QString::fromStdString( p.path().stem().string() ) );
+			//"Title", "Version", "Creator", "File", "Path","Found in DB"
+			QTableWidgetItem* item0 { new QTableWidgetItem( qlist[0] ) };
+			QTableWidgetItem* item1 { new QTableWidgetItem( qlist[1] ) };
 			QTableWidgetItem* item3 { new QTableWidgetItem( file_name ) };
 			QTableWidgetItem* item4 { new QTableWidgetItem( file_path ) };
 
 			ui->exGames->setItem( row, 0, item0 );
+			ui->exGames->setItem( row, 1, item1 );
 			ui->exGames->setItem( row, 3, item3 );
 			ui->exGames->setItem( row, 4, item4 );
 			row++;
@@ -116,35 +119,46 @@ void ExtractionImportDialog::parseFiles( std::string path )
 	}
 }
 
-QString ExtractionImportDialog::parseTitle( QString title )
+QStringList ExtractionImportDialog::parseFileName( QString s )
 {
 	//Convert to lower case to make parsing easier
-	QString tmp { title };
+	QString tmp { s };
 	//Reset title
-	title = "";
+	QString title {""};
+	QString version { "" };
 	//First check "-"
 	if ( tmp.contains( '-' ) )
 	{
 		//Split strings by -
 		QStringList slist = tmp.split( "-" );
+		bool isVersion = false;
 		//Itterate through list
 		for ( int i = 0; i < slist.length(); i++ )
 		{
 			//Assume first item will always be a part of the title.
 			//Check if it has a number or has an OS name
-			if ( !( i > 0 && isDigit( slist[ i ] ) ) && !checkOsNames( slist[ i ] ) )
+			if(!checkOsNames( slist[ i ] ))
 			{
-				title += slist[ i ];
+				if ( !( i > 0 && isDigit( slist[ i ] ) ) && isVersion == false)
+				{
+					//Check if string contaings a version type
+
+					title += findVersionType(slist[ i ])[0];
+					version += findVersionType(slist[ i ])[1];
+					//Check for version chapter or season
+
+				}
+				else{
+					isVersion = true;
+					version += slist[ i ];
+				}
 			}
 		}
+		//Add Spaces between Capital Letters
+		title = addSpaces( title );
 	}
 
-	return title;
-}
-
-QString ExtractionImportDialog::parseVersion( QString version )
-{
-	return version;
+	return QStringList{title,version};
 }
 
 bool ExtractionImportDialog::isDigit( QString& s )
@@ -163,6 +177,65 @@ bool ExtractionImportDialog::isDigit( QString& s )
 
 bool ExtractionImportDialog::checkOsNames( QString s )
 {
-	std::string arr[ 4 ] = { "pc", "win", "linux", "windows" };
+	std::string arr[ 5 ] = { "pc", "win", "linux", "windows", "unc" };
 	return std::find( std::begin( arr ), std::end( arr ), s.toLower().toStdString() ) != std::end( arr );
+}
+
+
+
+QString ExtractionImportDialog::addSpaces(QString s)
+{
+	QString tmp { "" };
+    // Traverse the string
+    for(int i=0; i < s.length(); i++)
+    {
+		
+		if (s[i]>='A' && s[i]<='Z')
+        {
+			if ( i != 0 ) tmp += " ";
+			tmp += s[ i ];
+		} 
+        else
+		{
+            tmp += s[ i ];
+		}
+    }
+
+	//Remove Underscore
+	tmp.replace( '_', "" );
+	return tmp;
+}
+
+QStringList ExtractionImportDialog::findVersionType(QString s){
+	QString title {""};
+	QString version { "" };
+	QStringList delimiters { "Final", "Episode", "Chapter", "Version", "Season" };
+	bool versionFound { false };
+	for(QString delimiter : delimiters)
+	{
+		if(s.toLower().contains(delimiter.toLower()))
+		{	QStringList slist = s.split(delimiter.toLower());
+
+			if(slist.length() > 1)
+			{
+							spdlog::info( "{}, {}", slist[0], slist[1] );
+				version += delimiter + slist[ 1 ];
+				title += slist[ 0 ];
+			}
+			else
+			{
+							spdlog::info( "{}", slist[0] );
+				version += delimiter;
+				title += slist[ 0 ];
+			}
+			versionFound = true;
+		}		
+	}
+
+	if(!versionFound)
+	{
+		//title += s;
+	}
+
+	return QStringList{title,version};
 }
