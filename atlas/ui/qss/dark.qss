@@ -40,11 +40,13 @@ QTreeView {
 
 QHeaderView::section {
     background-color: rgb(35, 36, 40);
+    background: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid black;
     border-bottom: none;
     border-right: none;
     border-left: none;
+
 }
 
 QTreeView::item {
@@ -537,12 +539,25 @@ QListWidget::item:selected {
 }
 
 QTableView {
-    alternate-background-color: rgb(43, 45, 49);
+    color: rgb(210, 210, 210);
+    alternate-background-color: rgb(64, 66, 73);
+    border: 0px solid rgb(0, 0, 0);
+    gridline-color: rgb(0, 0, 0);
+
+}
+
+QTableView::item {
+    background-color: rgb(43, 45, 49);
+    alternate-background-color: rgb(64, 66, 73);
+    border: 0px solid rgb(0, 0, 0);
     color: rgb(210, 210, 210);
 }
 
 QTableCornerButton::section {
     background-color: rgb(35, 36, 40);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
 }
 
 QDialog>QWidget {

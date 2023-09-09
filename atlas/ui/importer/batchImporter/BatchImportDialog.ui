@@ -303,7 +303,7 @@ Hover over the column headers for help text</string>
           <item>
            <widget class="QTableView" name="twGames">
             <property name="alternatingRowColors">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
