@@ -113,6 +113,9 @@
    </item>
    <item row="3" column="1" colspan="2">
     <widget class="QLineEdit" name="lePlaytime">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:transparent;</string>
      </property>
@@ -120,6 +123,9 @@
    </item>
    <item row="4" column="1" colspan="2">
     <widget class="QLineEdit" name="leLastPlayed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:transparent;</string>
      </property>
@@ -127,6 +133,9 @@
    </item>
    <item row="5" column="1" colspan="2">
     <widget class="QLineEdit" name="leFolderSize">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:transparent;</string>
      </property>

@@ -391,6 +391,10 @@ QTreeView {
     border: none;
 }
 
+#gameText {
+    background-color: rgb(81, 83, 90);
+}
+
 /*END CUSTOM COLORS*/
 QScrollBar:vertical {
     border-style: none;
@@ -455,4 +459,64 @@ QFrame>QLabel {
 
 #settingsButtons>QPushButton:hover {
     background-color: rgb(64, 66, 73);
+}
+
+QChartView {
+    background-color: rgb(64, 66, 73);
+}
+
+QTabBar::tab {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:selected:hover {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:hover {
+    background-color: rgb(64, 66, 73)
+}
+
+QTabWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QTabWidget::pane {
+    border: none
+}
+
+QTabWidget>QWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QWidget>QListWidget {
+    background-color: rgb(81, 83, 90);
+    background: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QListWidget::item {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+QListWidget::item:hover {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
+}
+
+QListWidget::item:selected {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
 }

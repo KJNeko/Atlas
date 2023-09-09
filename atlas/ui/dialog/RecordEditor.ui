@@ -20,7 +20,10 @@
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="recordTab">
       <attribute name="title">
@@ -89,7 +92,7 @@
              <widget class="QLineEdit" name="titleLineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
+                <horstretch>10</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
@@ -100,6 +103,12 @@
             </item>
             <item row="0" column="2">
              <widget class="QPushButton" name="btnChangeTitle">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Change Title</string>
               </property>
@@ -107,6 +116,12 @@
             </item>
             <item row="1" column="2">
              <widget class="QPushButton" name="btnChangeCreator">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Change Creator</string>
               </property>
@@ -114,6 +129,12 @@
             </item>
             <item row="2" column="2">
              <widget class="QPushButton" name="btnChangeEngine">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Change Engine</string>
               </property>
