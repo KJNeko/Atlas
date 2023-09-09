@@ -7,9 +7,9 @@
 namespace atlas::database::migrations
 {
 	template <>
-	void up< 10 >( Transaction& transaction )
+	std::string_view migration< 10 >()
 	{
-		transaction <<
+		return
 			R"(
 				CREATE TABLE IF NOT EXISTS tag_mappings
 				(

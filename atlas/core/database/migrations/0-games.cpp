@@ -8,9 +8,9 @@
 namespace atlas::database::migrations
 {
 	template <>
-	void up< 0 >( Transaction& transaction )
+	std::string_view migration< 0 >()
 	{
-		transaction <<
+		return
 			R"(
 			CREATE TABLE IF NOT EXISTS games
 		   	(
@@ -23,6 +23,7 @@ namespace atlas::database::migrations
 				description    TEXT,
 				UNIQUE (title, creator, engine)
 		    );
-			)";
+		)";
 	}
+
 } // namespace atlas::database::migrations
