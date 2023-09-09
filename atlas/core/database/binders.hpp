@@ -46,7 +46,7 @@ template < typename T >
 	return sqlite3_bind_text( stmt, idx, val.data(), static_cast< int >( val.size() ), SQLITE_TRANSIENT );
 #else
 	QString str { QString::fromLocal8Bit( val.data(), static_cast< qsizetype >( val.size() ) ) };
-	return bindParameter( stmt, std::move( str ), idx );
+	return bindParameter< QString >( stmt, std::move( str ), idx );
 #endif
 }
 
