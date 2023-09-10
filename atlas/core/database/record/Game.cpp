@@ -6,11 +6,12 @@
 
 #include <moc_Game.cpp>
 
+#include <QFuture>
+
 #include <tracy/Tracy.hpp>
 
-#include <cstring>
-
 #include "GameData.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/imageManager.hpp"
 
 namespace atlas::records

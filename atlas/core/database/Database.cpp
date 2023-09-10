@@ -4,9 +4,11 @@
 
 #include "Database.hpp"
 
+#include <QImage>
+
 #include <sqlite3.h>
 
-#include "Transaction.hpp"
+#include "RapidTransaction.hpp"
 #include "core/config.hpp"
 #include "core/database/migrations/templates.hpp"
 #include "core/database/record/Game.hpp"
@@ -23,7 +25,7 @@ namespace internal
 	//static std::mutex db_mtx {};
 } // namespace internal
 
-sqlite3& Database::ref()
+[[nodiscard]] sqlite3& Database::ref()
 {
 	if ( internal::db_handle != nullptr )
 		return *internal::db_handle;
@@ -31,7 +33,7 @@ sqlite3& Database::ref()
 		throw std::runtime_error( "ref: Database was not initalized!" );
 }
 
-internal::MtxType& Database::lock()
+[[nodiscard]] internal::MtxType& Database::lock()
 {
 	return internal::db_mtx;
 }

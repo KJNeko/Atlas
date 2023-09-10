@@ -16,7 +16,7 @@ namespace atlas::logging::dev
 {
 	//To implement for each class
 	template < typename T >
-	QJsonObject internalSerializer( const T& t );
+	[[nodiscard]] QJsonObject internalSerializer( const T& t );
 
 	//! Injects information from T into the json
 	template < typename T >
@@ -27,7 +27,7 @@ namespace atlas::logging::dev
 	}
 
 	template < typename T >
-	inline QJsonObject serialize( const T& t )
+	[[nodiscard]] inline QJsonObject serialize( const T& t )
 	{
 		QJsonObject obj { internalSerializer< T >( t ) };
 		injectData< T >( t, obj );

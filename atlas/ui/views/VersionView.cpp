@@ -13,6 +13,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include "core/database/Transaction.hpp"
 #include "ui_VersionView.h"
 
 VersionView::VersionView( QWidget* parent ) : QWidget( parent ), ui( new Ui::VersionView )

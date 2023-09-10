@@ -8,7 +8,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "Transaction.hpp"
+#include "RapidTransaction.hpp"
 #include "core/search/QueryBuilder.hpp"
 
 void Search::searchTextChanged( const QString text ) //, const SortOrder order, const bool asc )

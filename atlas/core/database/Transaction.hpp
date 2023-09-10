@@ -38,7 +38,7 @@ namespace atlas::database
 		std::mutex self_mtx {};
 		std::lock_guard< std::mutex > guard;
 
-		Binder operator<<( std::string_view sql )
+		inline Binder operator<<( std::string_view sql )
 		{
 			if constexpr ( is_commitable )
 				sqlite3_exec( &Database::ref(), "BEGIN TRANSACTION;", nullptr, nullptr, nullptr );
@@ -47,39 +47,14 @@ namespace atlas::database
 		}
 
 		template < std::uint64_t size >
-		Binder operator<<( const char ( &raw_str )[ size - 1 ] )
+		inline Binder operator<<( const char ( &raw_str )[ size - 1 ] )
 		{
 			const std::string_view str_view { std::string_view( raw_str, size - 1 ) };
 			return *this << str_view;
 		}
 
-		void commit()
-		{
-			if constexpr ( is_commitable )
-			{
-				if ( !m_finished )
-				{
-					sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
-					m_finished = true;
-				}
-				else
-					throw TransactionInvalid( "Attempted to commit a finished transaction" );
-			}
-		}
-
-		void abort()
-		{
-			if constexpr ( is_commitable )
-			{
-				if ( !m_finished )
-				{
-					sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
-					m_finished = true;
-				}
-				else
-					throw TransactionInvalid( "Attempted to abort a finished transaction" );
-			}
-		}
+		void commit();
+		void abort();
 
 		~TransactionBase() noexcept( false );
 	};
@@ -87,6 +62,6 @@ namespace atlas::database
 } // namespace atlas::database
 
 using Transaction = atlas::database::TransactionBase< true >;
-using RapidTransaction = atlas::database::TransactionBase< false >;
+//using RapidTransaction = atlas::database::TransactionBase< false >;
 
 #endif //ATLASGAMEMANAGER_TRANSACTION_HPP

@@ -18,6 +18,7 @@
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"
 #include "core/gamelist/utils.hpp"
+#include "core/utils/FileScanner.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/foldersize.hpp"
 #include "core/utils/regex/regex.hpp"

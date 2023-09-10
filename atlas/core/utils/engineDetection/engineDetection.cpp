@@ -17,8 +17,9 @@
 #include <fstream>
 #include <string>
 
-#include "../../system.hpp"
 #include "core/logging.hpp"
+#include "core/system.hpp"
+#include "core/utils/FileScanner.hpp"
 
 template <>
 bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
@@ -473,7 +474,6 @@ QString engineNameT< Adobe_AIR >()
 {
 	return "Adobe AIR";
 }
-
 
 template <>
 bool isEngineT< QSP >( [[maybe_unused]] atlas::utils::FileScanner& scanner )

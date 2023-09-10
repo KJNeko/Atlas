@@ -2,26 +2,27 @@
 
 #include <moc_mainwindow.cpp>
 
-#include "./dialog/AboutAtlas.hpp"
-#include "./dialog/SettingsDialog.hpp"
-#include "./dialog/StatsDialog.hpp"
-#include "./dialog/aboutqtdialog.h"
-#include "./ui_mainwindow.h"
-#include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "core/version.hpp"
+#include "ui/dialog/AboutAtlas.hpp"
+#include "ui/dialog/SettingsDialog.hpp"
+#include "ui/dialog/StatsDialog.hpp"
+#include "ui/dialog/aboutqtdialog.h"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
+#include "ui_mainwindow.h"
+#include "widgets/FilterWidget.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
-	
+
 	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
@@ -69,9 +70,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal,  "Games" , 2 );
-	
-	ui->gamesTree->setModel(ui->recordView->model() );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, "Games", 2 );
+
+	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( false );
 

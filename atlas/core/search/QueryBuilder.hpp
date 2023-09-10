@@ -5,11 +5,7 @@
 #ifndef ATLAS_QUERYBUILDER_HPP
 #define ATLAS_QUERYBUILDER_HPP
 
-#include <array>
-#include <exception>
-#include <stdexcept>
 #include <string>
-#include <vector>
 
 #include "core/logging.hpp"
 #include "core/system.hpp"
@@ -45,7 +41,6 @@
  * | \| | Or | title:Haremon \| creator:TsunAmie | Searches for all records with the title Haremon OR creator TsunAmie |
  * | ! | Not | !title:Haremon | Searches for all records with the title NOT being Haremon |
  * | () | Group | system:filesize > 5G & (title:FirstGame \| title:SecondGame) | Searches for all titles with the name `FirstGame` or `SecondGame` that also have a filesize above 5GB
- *
  */
 
 enum SortOrder

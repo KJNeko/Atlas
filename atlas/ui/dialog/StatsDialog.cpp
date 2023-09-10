@@ -13,7 +13,7 @@
 #include <QDateTimeAxis>
 #include <QValueAxis>
 
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/database/record/Game.hpp"
 #include "ui_StatsDialog.h"
 

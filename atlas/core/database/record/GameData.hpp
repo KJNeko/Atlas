@@ -5,15 +5,9 @@
 #ifndef ATLAS_RECORD_HPP
 #define ATLAS_RECORD_HPP
 
-#include <QPixmap>
-
 #include "Version.hpp"
 #include "core/Types.hpp"
-#include "core/config.hpp"
-#include "core/database/Column.hpp"
-#include "core/database/Database.hpp"
 #include "core/database/remote/AtlasData.hpp"
-#include "core/fgl/string_literal.hpp"
 
 namespace atlas::records
 {

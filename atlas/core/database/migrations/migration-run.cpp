@@ -3,7 +3,7 @@
 //
 
 #include "core/config.hpp"
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/logging.hpp"
 #include "templates.hpp"
 

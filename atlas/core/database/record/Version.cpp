@@ -5,7 +5,7 @@
 #include "Version.hpp"
 
 #include "core/config.hpp"
-#include "core/database/Database.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/logging.hpp"
 #include "core/utils/execute/executeProc.hpp"

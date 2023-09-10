@@ -73,8 +73,8 @@ template < typename T >
 }
 
 template < typename T >
-	requires std::is_same_v< T, double >
-[[nodiscard]] int bindParameter( sqlite3_stmt* stmt, const double val, const int idx ) noexcept
+	requires std::is_floating_point_v< T >
+[[nodiscard]] int bindParameter( sqlite3_stmt* stmt, const T val, const int idx ) noexcept
 {
 	return sqlite3_bind_double( stmt, idx, val );
 }

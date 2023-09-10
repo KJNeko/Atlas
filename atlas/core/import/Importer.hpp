@@ -27,7 +27,7 @@
  * @param owning If true. The game will be moved to Atlas' game data directory.
  * @return
  */
-QFuture< RecordID > importGame(
+[[nodiscard]] QFuture< RecordID > importGame(
 	std::filesystem::path root,
 	std::filesystem::path relative_executable,
 	QString title,
@@ -50,6 +50,7 @@ struct GameImportData;
  * @param owning see `importGame`
  * @return
  */
-QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning );
+[[nodiscard]] QFuture< RecordID >
+	importGame( GameImportData data, const std::filesystem::path root, const bool owning );
 
 #endif //ATLASGAMEMANAGER_IMPORTER_HPP

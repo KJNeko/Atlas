@@ -4,7 +4,7 @@
 
 #include "AtlasData.hpp"
 
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 
 namespace atlas::remote
 {

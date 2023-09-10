@@ -34,7 +34,7 @@ class Binder
 	Binder( const std::string_view sql );
 
 	template < typename T >
-		requires( !std::is_same_v< T, std::string > )
+		requires( !std::is_same_v< std::remove_reference_t< T >, std::string > )
 	Binder& operator<<( T t )
 	{
 		if ( param_counter > max_param_count )
@@ -46,7 +46,7 @@ class Binder
 				std::string( sqlite3_sql( stmt ) ) ) );
 		}
 
-		switch ( bindParameter< T >( stmt, std::move( t ), ++param_counter ) )
+		switch ( bindParameter< std::remove_reference_t< T > >( stmt, std::move( t ), ++param_counter ) )
 		{
 			case SQLITE_OK:
 				break;

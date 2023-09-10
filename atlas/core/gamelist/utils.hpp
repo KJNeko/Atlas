@@ -13,7 +13,7 @@
 namespace gl
 {
 	//! Searches the given directory for games with the GL_Infos.ini file
-	std::vector< std::filesystem::path > searchGames( const std::filesystem::path );
+	[[nodiscard]] std::vector< std::filesystem::path > searchGames( const std::filesystem::path );
 
 	struct GameListInfos
 	{
@@ -28,9 +28,9 @@ namespace gl
 
 #define GL_INFO_FILENAME "GL_Infos.ini"
 
-	GameListInfos parse( const std::filesystem::path& path );
+	[[nodiscard]] GameListInfos parse( const std::filesystem::path& path );
 
-	inline bool dirHasGLInfo( const std::filesystem::path& path )
+	[[nodiscard]] inline bool dirHasGLInfo( const std::filesystem::path& path )
 	{
 		return std::filesystem::exists( path / GL_INFO_FILENAME );
 	}

@@ -5,16 +5,17 @@
 #ifndef ATLASGAMEMANAGER_GAME_HPP
 #define ATLASGAMEMANAGER_GAME_HPP
 
-#include <QFuture> // Keep the Qt #includes up here to appease the AutoMoc.
 #include <QPixmap>
 
-#include <filesystem>
 #include <filesystem> // Keep this down here for the same reason.
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
 #include "core/database/remote/AtlasData.hpp"
 #include "core/logging/dev.hpp"
+
+template < typename T >
+class QFuture;
 
 namespace atlas::records
 {
@@ -82,7 +83,7 @@ namespace atlas::records
 			std::filesystem::path dir,
 			std::filesystem::path executable,
 			const std::uint64_t folder_size,
-      const bool in_place );
+			const bool in_place );
 		void removeVersion( Version& info );
 
 		//! Adds playtime to the playtime counter

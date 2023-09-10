@@ -49,7 +49,7 @@ namespace internal
 class Database
 {
 	//! Returns a ref to the global DB lock
-	static internal::MtxType& lock();
+	[[nodiscard]] static internal::MtxType& lock();
 
   public:
 
