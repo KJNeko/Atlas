@@ -15,11 +15,7 @@ colorD - rgb(255, 255, 255): Selected text color
 */
 
 /* BASE WIDGETS */
-QWidget {
-    background-color: rgb(25, 25, 28);
-    border: none;
-}
-
+QWidget,
 QFrame {
     background-color: rgb(25, 25, 28);
     border: none;
@@ -107,7 +103,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #0280c9;
+    color: #70ff88;
 }
 
 #settingsPaths>QLineEdit {
@@ -115,7 +111,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #0280c9;
+    color: #70ff88;
 }
 
 #ThreadingWidget>QWidget {
@@ -540,7 +536,7 @@ QListWidget::item:selected {
 
 QTableView {
     color: rgb(210, 210, 210);
-    alternate-background-color: rgb(64, 66, 73);
+    background-color: rgb(64, 66, 73);
     border: 0px solid rgb(0, 0, 0);
     gridline-color: rgb(0, 0, 0);
 
@@ -548,9 +544,13 @@ QTableView {
 
 QTableView::item {
     background-color: rgb(43, 45, 49);
-    alternate-background-color: rgb(64, 66, 73);
+
     border: 0px solid rgb(0, 0, 0);
     color: rgb(210, 210, 210);
+}
+
+QTableView::item:alternate {
+    background-color: rgb(64, 66, 73);
 }
 
 QTableCornerButton::section {
