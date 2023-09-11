@@ -19,7 +19,6 @@ namespace atlas::records
 	}
 
 	bool Version::isInPlace() const
-	try
 	{
 		ZoneScoped;
 		bool in_place { false };
