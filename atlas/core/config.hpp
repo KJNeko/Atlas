@@ -13,6 +13,7 @@
 
 #include "ConfigNotification.hpp"
 #include "logging.hpp"
+#include "logging/formatters.hpp"
 
 /**
  *

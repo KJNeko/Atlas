@@ -160,7 +160,7 @@ namespace atlas::records
 		if ( promise.isCanceled() ) return;
 		if ( !pixmap.load( QString::fromStdString( path.string() ) ) )
 		{
-			atlas::logging::userwarn( fmt::format( "Qt Failed to load image {}", path ) );
+			atlas::logging::warn( fmt::format( "Qt Failed to load image {}", path ) );
 			promise.addResult( pixmap );
 		}
 		if ( promise.isCanceled() ) return;
@@ -218,8 +218,8 @@ namespace atlas::records
 
 			if ( pixmap.isNull() )
 			{
-				atlas::logging::userwarn(
-					fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
+				atlas::logging::
+					warn( fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
 				promise.addResult( pixmap );
 			}
 
@@ -274,17 +274,17 @@ namespace atlas::records
 		}
 	}
 
-	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){
+	QPixmap Game::requestThumbnail( const QSize size, const BannerType type )
+	{
 		const auto path { bannerPath( type ) };
 		/*spdlog::info(
 			"{}",
 			QString::fromStdString(
 				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );*/
 		QPixmap pixmap { QPixmap( QString::fromStdString(
-								  path.parent_path().string() + "//"
-								  + path.stem().string() + "_thumb"
-								  + path.extension().string() ) )
-				         .scaled( size, Qt::IgnoreAspectRatio )};
+									  path.parent_path().string() + "//" + path.stem().string() + "_thumb"
+									  + path.extension().string() ) )
+			                 .scaled( size, Qt::IgnoreAspectRatio ) };
 		return pixmap;
 	}
 

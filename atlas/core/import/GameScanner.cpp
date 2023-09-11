@@ -262,11 +262,7 @@ try
 }
 catch ( std::exception& e )
 {
-	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "Ate error before entering Qt space!" );
+	atlas::logging::error( fmt::format( "Main runner ate error before entering Qt space! {}", e.what() ) );
 }
 
 void GameScanner::start( const std::filesystem::path path, const QString regex, const bool size_folders )

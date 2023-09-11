@@ -11,7 +11,6 @@
 #include "core/logging.hpp"
 #include "core/logging/dev.hpp"
 #include "ui/notifications/DevNotification.hpp"
-#include "ui/notifications/GroupedProgressNotification.hpp"
 #include "ui/notifications/MessageNotification.hpp"
 #include "ui/notifications/NotificationManagerUI.hpp"
 #include "ui/notifications/NotificationSignalers.hpp"
