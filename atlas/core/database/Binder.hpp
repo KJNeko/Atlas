@@ -12,7 +12,7 @@
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
 #include "binders.hpp"
-#include "core/logging/dev.hpp"
+#include "core/logging.hpp"
 #include "extractors.hpp"
 
 class Binder
