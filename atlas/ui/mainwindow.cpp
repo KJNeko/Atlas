@@ -21,7 +21,8 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
-	
+	readSettings();
+
 	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
@@ -69,9 +70,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal,  "Games" , 2 );
-	
-	ui->gamesTree->setModel(ui->recordView->model() );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, "Games", 2 );
+
+	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( false );
 
@@ -110,6 +111,19 @@ MainWindow::~MainWindow()
 	search_thread.exit();
 	config::geometry::main_window::set( saveGeometry() );
 	delete ui;
+}
+
+void MainWindow::closeEvent( QCloseEvent* event )
+{
+	config::geometry::main_window::set( saveGeometry() );
+	config::state::main_window::set( saveState() );
+	QMainWindow::closeEvent( event );
+}
+
+void MainWindow::readSettings()
+{
+	restoreGeometry( config::geometry::main_window::get() );
+	restoreState( config::state::main_window::get() );
 }
 
 void MainWindow::on_actionSimpleImporter_triggered()
