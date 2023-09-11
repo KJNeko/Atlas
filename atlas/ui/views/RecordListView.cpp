@@ -6,10 +6,10 @@
 
 #include <moc_RecordListView.cpp>
 
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMenu>
 #include <QMouseEvent>
-#include <QDesktopServices>
 #include <QUrl>
 
 #include "core/database/record/Version.hpp"
@@ -90,7 +90,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	play_menu->setStyleSheet( "text-align:center;" );
 	menu.addAction(
 		"Open Directory",
-		[versions, this]()
+		[ versions, this ]()
 		{
 			QDesktopServices::openUrl( QUrl::fromLocalFile( QString::fromStdString( versions[ 0 ]
 		                                                                                .getExecPath()
@@ -153,7 +153,6 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		} );*/
 
 	QMenu* delete_menu { menu.addMenu( QString( "DELETE" ).arg( versions.size() ) ) };
-	
 
 	for ( auto& version : versions )
 	{
@@ -163,7 +162,7 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 
 		delete_menu->addAction( "Versions" );
 		delete_menu->addSeparator();
-		delete_menu->addAction(  version->m_version );
+		delete_menu->addAction( version->m_version );
 		/*auto version_submenu { version_menu->addMenu( version->m_version ) };
 		version_submenu->addAction( "Launch", [ &version ]() { version.playGame(); } );
 		version_submenu->addSeparator();
@@ -189,10 +188,6 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 		} );*/
 
 	//Image stuff
-	
-	
-	
-
 
 	menu.exec();
 }
