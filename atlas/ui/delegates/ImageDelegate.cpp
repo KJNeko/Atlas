@@ -6,8 +6,8 @@
 
 #include <moc_ImageDelegate.cpp>
 
-#include <QPainter>
 #include <QFuture>
+#include <QPainter>
 
 #include <tracy/Tracy.hpp>
 
@@ -20,9 +20,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	ZoneScoped;
 	//atlas::records::Game record { index.data().value< atlas::records::Game >() };
 
-	
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
-
 
 	if ( std::filesystem::exists( path ) )
 	{
@@ -52,7 +50,6 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	}
 
 	painter->drawRect( item.rect );
-	
 }
 
 QSize ImageDelegate::

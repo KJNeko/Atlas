@@ -136,19 +136,20 @@ void ImageLoader::triggerReady()
 	emit imageReady( m_index );
 }
 
-QVariant RecordListModel::headerData(int i, Qt::Orientation orientation, int role) const
+QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int role ) const
 {
-    if (role == Qt::DisplayRole && i == 0)
-    {
-        switch (orientation)
-        {
-            case Qt::Horizontal:
-                return QVariant("Horizontal"); // no column header, it's already in the tree
+	if ( role == Qt::DisplayRole && i == 0 )
+	{
+		switch ( orientation )
+		{
+			case Qt::Horizontal:
+				return QVariant( "Horizontal" ); // no column header, it's already in the tree
 			default:
 				return QVariant( "Verticle" );
 		}
 	}
-	else{
+	else
+	{
 		return QVariant( "Error" );
 	}
 }

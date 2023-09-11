@@ -21,10 +21,10 @@ namespace atlas::notifications
 
 	template < typename T >
 	concept has_get_signaler = requires( T t ) {
-								   {
-									   t.getSignaler()
-								   } -> std::same_as< std::unique_ptr< typename T::Signaler > >;
-							   };
+		{
+			t.getSignaler()
+		} -> std::same_as< std::unique_ptr< typename T::Signaler > >;
+	};
 
 	template < typename T >
 	concept has_valid_signaler = std::is_base_of_v< NotificationSignaler, typename T::Signaler >;

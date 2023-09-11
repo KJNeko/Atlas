@@ -3,25 +3,29 @@
 
 #include <QDialog>
 
-namespace Ui {
-class AboutAtlas;
+namespace Ui
+{
+	class AboutAtlas;
 }
 
 class AboutAtlas final : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( AboutAtlas )
 
-public:
-    explicit AboutAtlas(QWidget *parent = nullptr);
+  public:
+
+	explicit AboutAtlas( QWidget* parent = nullptr );
 
 	~AboutAtlas();
 
-private slots:
-    void on_btnGithub_pressed();
-    void on_btnDiscord_pressed();
-private:
-    Ui::AboutAtlas *ui;
+  private slots:
+	void on_btnGithub_pressed();
+	void on_btnDiscord_pressed();
+
+  private:
+
+	Ui::AboutAtlas* ui;
 };
 
 #endif // ABOUTATLAS_HPP

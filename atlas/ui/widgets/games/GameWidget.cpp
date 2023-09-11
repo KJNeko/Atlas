@@ -2,6 +2,7 @@
 
 #include <QClipboard>
 #include <QDateTime>
+#include <QFontMetrics>
 #include <QGraphicsBlurEffect>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsView>
@@ -9,7 +10,6 @@
 #include <QPainter>
 #include <QTimeZone>
 #include <QTimer>
-#include <QFontMetrics>
 
 #include "core/database/record/Version.hpp"
 #include "core/database/remote/AtlasData.hpp"
@@ -163,7 +163,7 @@ void GameWidget::reloadRecord()
 		//spdlog::info( "cols{}", ui->previewList->width() / ui->previewList->sizeHint().width());
 
 		//ui->previewList->setFixedSize(ui->bannerDetailFrame->width(), ui->previewList->sizeHintForRow(0) * ui->previewList->model()->rowCount() + 2 * ui->previewList->frameWidth());
-		
+
 		//need to fix. row count is not updating
 		ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
 	}
@@ -220,7 +220,9 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 {
 	ZoneScoped;
 	//spdlog::info( "Painting Detail ui" );
-	QRect bannerFrame { ui->bannerFrame->x() , ui->bannerFrame->y(), ui->bannerFrame->width(), ui->bannerFrame->height() };
+	QRect bannerFrame {
+		ui->bannerFrame->x(), ui->bannerFrame->y(), ui->bannerFrame->width(), ui->bannerFrame->height()
+	};
 
 	if ( m_record->valid() )
 	{
@@ -315,7 +317,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 			                      logo.width(),
 			                      logo.height() };
 
-		const QRect pixmap_engine_rect { pixmap_rect.width() -100 ,  pixmap_rect.height() -100, 30, 30 };
+		const QRect pixmap_engine_rect { pixmap_rect.width() - 100, pixmap_rect.height() - 100, 30, 30 };
 
 		//Engine Stuff
 		/*const QPixmap engine_logo { QString::fromStdString(getEngineLogo(record->m_engine.toStdString())) };
@@ -324,7 +326,6 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int engine_text_width { font_metrics.horizontalAdvance( engine_text ) };*/
 
 		QRect boundingRect;
-
 
 		painter.drawPixmap( pixmap_rect, banner );
 		painter.drawPixmap( pixmap_logo, logo );
@@ -429,17 +430,20 @@ void GameWidget::updateGameState()
 	//Check last state. If changed, update playtime.
 }
 
-std::string GameWidget::getEngineLogo(std::string engine){
-
-//":/images/assets/Atlas_logo_v2.svg"
-//:/engines/assets/engine/3dsmax_icon.svg
-	if(engine == "Ren'Py"){
+std::string GameWidget::getEngineLogo( std::string engine )
+{
+	//":/images/assets/Atlas_logo_v2.svg"
+	//:/engines/assets/engine/3dsmax_icon.svg
+	if ( engine == "Ren'Py" )
+	{
 		return ":/engines/assets/engine/renpy_icon.svg";
 	}
-	else if(engine == "Unity"){
+	else if ( engine == "Unity" )
+	{
 		return ":/engines/assets/engine/unity_icon.svg";
 	}
-	else{
+	else
+	{
 		return "";
 	}
 }

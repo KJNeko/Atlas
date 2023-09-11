@@ -1,14 +1,15 @@
 #include "ExtractionImportDialog.hpp"
+
 #include "ui_ExtractionImportDialog.h"
 
-ExtractionImportDialog::ExtractionImportDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ExtractionImportDialog)
+ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
+  QDialog( parent ),
+  ui( new Ui::ExtractionImportDialog )
 {
-    ui->setupUi(this);
+	ui->setupUi( this );
 }
 
 ExtractionImportDialog::~ExtractionImportDialog()
 {
-    delete ui;
+	delete ui;
 }
