@@ -40,6 +40,9 @@ class MainWindow final : public QMainWindow
 	void showEvent( QShowEvent* event ) override;
 	void moveEvent( QMoveEvent* event ) override;
 
+	void closeEvent( QCloseEvent* event ) override;
+	void readSettings();
+
   signals:
 	//void triggerSearch( QString text, const SortOrder order, const bool asc );
 	void triggerSearch( QString title );

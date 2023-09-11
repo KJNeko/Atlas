@@ -18,7 +18,6 @@
 #pragma GCC diagnostic ignored "-Wsuggest-final-methods"
 #endif
 
-#include <fmt/ranges.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -97,56 +96,4 @@ void initLogging()
 	spdlog::debug( "Default logger set" );
 }
 
-//fmt stuff
 
-auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::path& path, format_context& ctx ) const
-	-> decltype( ctx.out() )
-{
-	if ( print_canonical && std::filesystem::exists( path ) )
-	{
-		if ( print_exists )
-			return fmt::format_to(
-				ctx.out(),
-				"[\"{}\", (Canonical: \"{}\") Exists: \"{}\"]",
-				path.string(),
-				std::filesystem::canonical( path ).string(),
-				std::filesystem::exists( path ) ? "True" : "False" );
-		else
-			return fmt::format_to(
-				ctx.out(), "[\"{}\" (Canonical: \"{}\")]", path.string(), std::filesystem::canonical( path ).string() );
-	}
-	else
-	{
-		if ( print_exists )
-			return fmt::
-				format_to( ctx.out(), "[\"{}\"]", path.string(), std::filesystem::exists( path ) ? "True" : "False" );
-		else
-			return fmt::format_to( ctx.out(), "[\"{}\"]", path.string() );
-	}
-}
-
-/*
-auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )
-{
-	return format_to(
-		ctx.out(),
-		"RecordID: {}, Title: \"{}\", Creator: \"{}\", Engine: \"{}\", Versions: {}, Banner: {}, Previews: {}",
-		my->m_id,
-		my->m_title,
-		my->m_creator,
-		my->m_engine,
-		my->m_versions,
-		my->m_banner,
-		my->m_previews );
-}
-
-auto fmt::formatter< GameMetadata >::format( const GameMetadata& my, fmt::format_context& ctx ) const
-	-> decltype( ctx.out() )
-{
-	return format_to(
-		ctx.out(),
-		"Version: {}, GamePath: {}, ExecPath: {}",
-		my.m_version,
-		my.m_game_path,
-		my.m_exec_path );
-}*/

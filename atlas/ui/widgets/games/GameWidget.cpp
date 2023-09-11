@@ -365,7 +365,7 @@ void GameWidget::on_btnPlay_pressed()
 	}
 	else
 	{
-		atlas::logging::userwarn( "No version select. Or game has no versions" );
+		atlas::logging::warn( "No version select. Or game has no versions" );
 	}
 }
 

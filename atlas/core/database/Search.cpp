@@ -37,6 +37,6 @@ void Search::searchTextChanged( const QString& text ) //, const SortOrder order,
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "Search failed with query \"{}\": {}", query, e.what() );
+		atlas::logging::error( fmt::format( "Search failed with query \"{}\": {}", query, e.what() ) );
 	}
 }

@@ -69,7 +69,7 @@ namespace imageManager
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
-			atlas::logging::userwarn( fmt::format(
+			atlas::logging::warn( fmt::format(
 				"importImage failed. Attempted to open file {} which doesn't exist anymore. Wrong permissions?",
 				path ) );
 			throw std::runtime_error( fmt::format( "Filepath {} does not exist. Unable to add as image", path ) );
@@ -80,7 +80,7 @@ namespace imageManager
 		QFile file( qstr_file_path );
 		if ( !file.open( QFile::ReadOnly ) )
 		{
-			spdlog::error( "Failed to open image file located at: {}", path );
+			atlas::logging::error( fmt::format( "Failed to open image file located at: {}", path ) );
 			throw std::runtime_error( fmt::format( "Failed to load image from file: {}", path ) );
 		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );

@@ -92,7 +92,7 @@ class Binder
 				[[fallthrough]];
 			case SQLITE_ERROR:
 				{
-					atlas::logging::dev::error( fmt::format(
+					atlas::logging::error( fmt::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );
@@ -130,7 +130,7 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::dev::error(
+						atlas::logging::error(
 							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
@@ -161,7 +161,8 @@ class Binder
 					return;
 				default:
 					{
-						spdlog::error( "Unhandled error in sqlite!" );
+						atlas::logging::
+							error( fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}

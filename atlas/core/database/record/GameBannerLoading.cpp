@@ -162,7 +162,7 @@ namespace atlas::records
 		if ( promise.isCanceled() ) return;
 		if ( !pixmap.load( QString::fromStdString( path.string() ) ) )
 		{
-			atlas::logging::userwarn( fmt::format( "Qt Failed to load image {}", path ) );
+			atlas::logging::warn( fmt::format( "Qt Failed to load image {}", path ) );
 			promise.addResult( pixmap );
 		}
 		if ( promise.isCanceled() ) return;
@@ -220,8 +220,8 @@ namespace atlas::records
 
 			if ( pixmap.isNull() )
 			{
-				atlas::logging::userwarn(
-					fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
+				atlas::logging::
+					warn( fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
 				promise.addResult( pixmap );
 			}
 

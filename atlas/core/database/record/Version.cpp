@@ -30,16 +30,6 @@ namespace atlas::records
 
 		return in_place;
 	}
-	catch ( const std::exception& e )
-	{
-		spdlog::error( "({},{})->GameMetadata::isInPlace: {}", parent()->m_game_id, this->m_version, e.what() );
-		std::rethrow_exception( std::current_exception() );
-	}
-	catch ( ... )
-	{
-		spdlog::error( "({},{})->GameMetadata::isInPlace: Unknown exception", parent()->m_game_id, this->m_version );
-		std::rethrow_exception( std::current_exception() );
-	}
 
 	std::uint32_t Version::getPlaytime() const
 	{

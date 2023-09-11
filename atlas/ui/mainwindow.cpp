@@ -22,6 +22,7 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
+	readSettings();
 
 	utils::setMainThread( this->thread() );
 
@@ -81,7 +82,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 
-	atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" ).arg( utils::version_string_qt() ) );
+		atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" )
+		                                         .arg( utils::version_string_qt() ) );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -111,6 +113,19 @@ MainWindow::~MainWindow()
 	search_thread.exit();
 	config::geometry::main_window::set( saveGeometry() );
 	delete ui;
+}
+
+void MainWindow::closeEvent( QCloseEvent* event )
+{
+	config::geometry::main_window::set( saveGeometry() );
+	config::state::main_window::set( saveState() );
+	QMainWindow::closeEvent( event );
+}
+
+void MainWindow::readSettings()
+{
+	restoreGeometry( config::geometry::main_window::get() );
+	restoreState( config::state::main_window::get() );
 }
 
 void MainWindow::on_actionSimpleImporter_triggered()

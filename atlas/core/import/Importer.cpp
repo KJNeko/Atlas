@@ -104,7 +104,8 @@ namespace internal
 
 				if ( !std::filesystem::copy_file( source, dest, std::filesystem::copy_options::overwrite_existing ) )
 				{
-					spdlog::error( "importGame: Failed to copy file {} to {}", source.string(), dest.string() );
+					atlas::logging::error(
+						fmt::format( "importGame: Failed to copy file {} to {}", source.string(), dest.string() ) );
 					throw std::runtime_error( "Failed to copy file" );
 				}
 			}
