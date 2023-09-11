@@ -11,7 +11,6 @@
 #include "Game.hpp"
 #include "Version.hpp"
 #include "core/database/RapidTransaction.hpp"
-#include "core/imageManager.hpp"
 
 namespace atlas::records
 {

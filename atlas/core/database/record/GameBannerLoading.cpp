@@ -2,9 +2,11 @@
 // Created by kj16609 on 7/15/23.
 //
 
+#include <QFuture>
 #include <QImageReader>
-#include <QPixmapCache>
-#include <QtConcurrent>
+#include <QPixmap>
+#include <QPromise>
+#include <QtConcurrentRun>
 
 #include "Game.hpp"
 #include "GameData.hpp"
@@ -274,17 +276,17 @@ namespace atlas::records
 		}
 	}
 
-	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){
+	QPixmap Game::requestThumbnail( const QSize size, const BannerType type )
+	{
 		const auto path { bannerPath( type ) };
 		/*spdlog::info(
 			"{}",
 			QString::fromStdString(
 				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );*/
 		QPixmap pixmap { QPixmap( QString::fromStdString(
-								  path.parent_path().string() + "//"
-								  + path.stem().string() + "_thumb"
-								  + path.extension().string() ) )
-				         .scaled( size, Qt::IgnoreAspectRatio )};
+									  path.parent_path().string() + "//" + path.stem().string() + "_thumb"
+									  + path.extension().string() ) )
+			                 .scaled( size, Qt::IgnoreAspectRatio ) };
 		return pixmap;
 	}
 

@@ -8,7 +8,6 @@
 
 #include <moc_NotificationManagerUI.cpp>
 
-#include "core/config.hpp"
 #include "core/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"

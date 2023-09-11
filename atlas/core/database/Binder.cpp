@@ -4,6 +4,8 @@
 
 #include "Binder.hpp"
 
+#include "core/database/Database.hpp"
+
 Binder::Binder( const std::string_view sql )
 {
 	const auto prepare_ret {

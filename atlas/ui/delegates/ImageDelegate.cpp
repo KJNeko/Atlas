@@ -12,11 +12,8 @@
 #include <tracy/Tracy.hpp>
 
 #include <filesystem>
-#include "core/database/record/Game.hpp"
-#include "core/database/record/GameData.hpp"
 
 #include "core/config.hpp"
-#include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {

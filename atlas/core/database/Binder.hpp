@@ -6,11 +6,8 @@
 #ifndef ATLASGAMEMANAGER_BINDER_HPP
 #define ATLASGAMEMANAGER_BINDER_HPP
 
-#include <tracy/TracyC.h>
-
 #include <sqlite3.h>
 #include <string>
-#include <vector>
 
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"

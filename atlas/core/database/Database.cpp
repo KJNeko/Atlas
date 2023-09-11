@@ -16,13 +16,7 @@
 namespace internal
 {
 	static sqlite3* db_handle { nullptr };
-#ifdef TRACY_ENABLE
-	static TracyLockableN( std::mutex, db_mtx, "Database lock" );
-#else
 	static std::mutex db_mtx;
-#endif
-
-	//static std::mutex db_mtx {};
 } // namespace internal
 
 [[nodiscard]] sqlite3& Database::ref()

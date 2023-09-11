@@ -7,7 +7,7 @@
 
 #include <QDialog>
 
-#include "ProgressNotification.hpp"
+class Notification;
 
 QT_BEGIN_NAMESPACE
 

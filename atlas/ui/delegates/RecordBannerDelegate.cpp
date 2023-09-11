@@ -6,12 +6,7 @@
 
 #include <moc_RecordBannerDelegate.cpp>
 
-#include <QGraphicsDropShadowEffect>
-#include <QLabel>
-#include <QMenu>
-#include <QMovie>
 #include <QPainter>
-#include <QPixmapCache>
 
 #include "core/config.hpp"
 #include "core/database/record/Game.hpp"
@@ -21,7 +16,8 @@
 #include "ui/models/RecordListModel.hpp"
 
 QT_BEGIN_NAMESPACE
-  extern Q_WIDGETS_EXPORT void qt_blurImage( QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
+extern Q_WIDGETS_EXPORT void
+	qt_blurImage( QPainter* p, QImage& blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
 QT_END_NAMESPACE
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
@@ -75,17 +71,17 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		{
 			//We got the future
 			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
-			if ( m_model != nullptr )
-				this->m_model->refreshOnFuture( index, std::move( banner ) );
-			
+			if ( m_model != nullptr ) this->m_model->refreshOnFuture( index, std::move( banner ) );
+
 			//Specific case. Do not load thumb for settings images
-			if(record->m_game_id == 1)
+			if ( record->m_game_id == 1 )
 			{
 				pixmap = banner.result();
 			}
-			else{
-			//Add experimental feature
-				if(config::experimental::loading_preview::get())
+			else
+			{
+				//Add experimental feature
+				if ( config::experimental::loading_preview::get() )
 				{
 					pixmap = record.requestThumbnail( banner_size, Normal );
 					QImage srcImg { pixmap.toImage() };
@@ -100,7 +96,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		else
 		{
 			ZoneScopedN( "Get image from variant" );
-			//We got the banner and should continue as normal			
+			//We got the banner and should continue as normal
 			pixmap = banner.result();
 
 			//Check if we need to add blur background. Draw behind original image

@@ -5,12 +5,11 @@
 #ifndef ATLAS_SEARCH_HPP
 #define ATLAS_SEARCH_HPP
 
-#include <QString>
-
 #include <vector>
 
 #include "core/database/record/Game.hpp"
-#include "core/search/QueryBuilder.hpp"
+
+class QString;
 
 class Search final : public QObject
 {
@@ -26,7 +25,7 @@ class Search final : public QObject
 
   public slots:
 	//! Submits a text to get autocompleted.
-	void searchTextChanged( QString text ); //, const SortOrder order, const bool asc );
+	void searchTextChanged( const QString& text ); //, const SortOrder order, const bool asc );
 };
 
 #endif //ATLAS_SEARCH_HPP

@@ -11,11 +11,15 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-#include "core/database/remote/AtlasData.hpp"
 #include "core/logging/dev.hpp"
 
 template < typename T >
 class QFuture;
+
+namespace atlas::remote
+{
+	class AtlasRemoteData;
+}
 
 namespace atlas::records
 {

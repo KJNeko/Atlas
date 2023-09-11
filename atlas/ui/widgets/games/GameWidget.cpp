@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QGraphicsBlurEffect>
 #include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPaintEvent>
 #include <QPainter>

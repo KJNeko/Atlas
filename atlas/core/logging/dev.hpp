@@ -11,6 +11,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "core/logging.hpp"
+
 //! Dev namespace is used for allowing data serialization in order to have the user be able to copy application state to the clipboard and send.
 namespace atlas::logging::dev
 {
