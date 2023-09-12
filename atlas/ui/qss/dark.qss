@@ -15,11 +15,7 @@ colorD - rgb(255, 255, 255): Selected text color
 */
 
 /* BASE WIDGETS */
-QWidget {
-    background-color: rgb(25, 25, 28);
-    border: none;
-}
-
+QWidget,
 QFrame {
     background-color: rgb(25, 25, 28);
     border: none;
@@ -40,11 +36,13 @@ QTreeView {
 
 QHeaderView::section {
     background-color: rgb(35, 36, 40);
+    background: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid black;
     border-bottom: none;
     border-right: none;
     border-left: none;
+
 }
 
 QTreeView::item {
@@ -99,12 +97,13 @@ QStackedWidget>QWidget>QFrame {
 
 
 /* Line Edit*/
-QLineEdit {
+QLineEdit,
+#tagEdit {
     background-color: rgb(81, 83, 90);
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #3097D1;
+    color: #70ff88;
 }
 
 #settingsPaths>QLineEdit {
@@ -112,7 +111,7 @@ QLineEdit {
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #3097D1;
+    color: #70ff88;
 }
 
 #ThreadingWidget>QWidget {
@@ -141,12 +140,18 @@ QGroupBox::title {
 
 /* Buttons */
 QPushButton {
-    background-color: rgb(43, 45, 49);
+    background-color: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid;
     border-color: rgb(81, 83, 90);
     width: 75px;
     height: 30px;
+}
+
+QPushButton:disabled {
+    background-color: rgb(43, 45, 49, 50);
+    color: rgb(210, 210, 210, 50);
+    border: 1px solid rgb(210, 210, 210, 50);
 }
 
 QPushButton:hover {
@@ -385,7 +390,13 @@ QTreeView {
     border: none;
 }
 
+#gameText {
+    background-color: rgb(81, 83, 90);
+}
+
 /*END CUSTOM COLORS*/
+
+/*SCROLL VERTICLE*/
 QScrollBar:vertical {
     border-style: none;
     background-color: rgb(30, 31, 34);
@@ -449,4 +460,106 @@ QFrame>QLabel {
 
 #settingsButtons>QPushButton:hover {
     background-color: rgb(64, 66, 73);
+}
+
+QChartView {
+    background-color: rgb(64, 66, 73);
+    background: rgb(64, 66, 73);
+    color: rgb(64, 66, 73);
+}
+
+QTabBar::tab {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:selected:hover {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:hover {
+    background-color: rgb(64, 66, 73)
+}
+
+QTabWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QTabWidget::pane {
+    border: none
+}
+
+QTabWidget>QWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QListWidget,
+#versionList,
+#processedTagsList,
+#userTagsList {
+    /*border-top-left-radius: 5px;*/
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    selection-background-color: rgb(64, 66, 73);
+    /* Used on Mac */
+    selection-color: white;
+    /* Used on Mac */
+    show-decoration-selected: 1;
+}
+
+QListWidget::item {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    color: rgb(210, 210, 210);
+}
+
+QListWidget::item:hover {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(210, 210, 210);
+}
+
+QListWidget::item:selected {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(210, 210, 210);
+    border: 0px solid black;
+}
+
+QTableView {
+    color: rgb(210, 210, 210);
+    background-color: rgb(64, 66, 73);
+    border: 0px solid rgb(0, 0, 0);
+    gridline-color: rgb(0, 0, 0);
+
+}
+
+QTableView::item {
+    background-color: rgb(43, 45, 49);
+
+    border: 0px solid rgb(0, 0, 0);
+    color: rgb(210, 210, 210);
+}
+
+QTableView::item:alternate {
+    background-color: rgb(64, 66, 73);
+}
+
+QTableCornerButton::section {
+    background-color: rgb(35, 36, 40);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
+}
+
+QDialog>QWidget {
+    border: none;
 }

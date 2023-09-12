@@ -211,7 +211,7 @@ border-bottom-left-radius:5px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>:/images/assets/search.svg</pixmap>
+             <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -254,7 +254,7 @@ margin-left: 2px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../resources.qrc">
               <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
             </property>
             <property name="iconSize">
@@ -288,7 +288,7 @@ border-top-left-radius:0px;</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../resources.qrc">
               <normaloff>:/images/assets/setting_filter.svg</normaloff>:/images/assets/setting_filter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -373,7 +373,7 @@ border-top-left-radius:0px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
          </property>
         </widget>
@@ -483,7 +483,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
@@ -544,7 +544,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>:/images/assets/search.svg</pixmap>
+          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -757,7 +757,7 @@ margin-right:5px;</string>
      <addaction name="actionBulkImporter"/>
      <addaction name="actionGameListImporter"/>
      <addaction name="actionSingleImporter"/>
-     <addaction name="actionExtraction_Wizard"/>
+     <addaction name="actionExtractionImporter"/>
     </widget>
     <addaction name="menuImport"/>
     <addaction name="actionManage"/>
@@ -864,7 +864,7 @@ margin-right:5px;</string>
     <string>Single</string>
    </property>
   </action>
-  <action name="actionExtraction_Wizard">
+  <action name="actionExtractionImporter">
    <property name="text">
     <string>Extraction Wizard</string>
    </property>
@@ -883,7 +883,9 @@ margin-right:5px;</string>
    <header>ui/views/RecordListView.hpp</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">
