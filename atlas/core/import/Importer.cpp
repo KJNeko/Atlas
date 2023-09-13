@@ -11,6 +11,7 @@
 #include <tracy/TracyC.h>
 
 #include "GameImportData.hpp"
+#include "ImportNotifier.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/imageManager.hpp"
@@ -234,6 +235,7 @@ namespace internal
 
 		promise.addResult( record->m_game_id );
 		promise.finish();
+		atlas::import::notifyImportComplete();
 	}
 	catch ( std::exception& e )
 	{

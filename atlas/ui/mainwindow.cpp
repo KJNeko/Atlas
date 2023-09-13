@@ -4,6 +4,7 @@
 
 #include "core/config.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
@@ -82,8 +83,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 
-		atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" )
-		                                         .arg( utils::version_string_qt() ) );
+	atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" ).arg( utils::version_string_qt() ) );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -100,10 +100,19 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
-	heartbeat_timer->setInterval( 2000 );
-	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
-	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::refreshSearch );
-	heartbeat_timer->start();
+	connect(
+		&atlas::import::internal::getNotifier(),
+		&atlas::import::ImportNotifier::notification,
+		this,
+		&MainWindow::setBottomGameCounter );
+	connect(
+		&atlas::import::internal::getNotifier(),
+		&atlas::import::ImportNotifier::notification,
+		this,
+		&MainWindow::refreshSearch );
+
+	setBottomGameCounter();
+	refreshSearch();
 
 	ui->lbAtlasVersion->setText( utils::version_string_qt() );
 }

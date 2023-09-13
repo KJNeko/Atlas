@@ -24,7 +24,6 @@ class MainWindow final : public QMainWindow
 
 	QThread search_thread {};
 	Search record_search {};
-	std::unique_ptr< QTimer > heartbeat_timer { new QTimer( this ) };
 
   public:
 
