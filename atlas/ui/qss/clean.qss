@@ -90,7 +90,7 @@ QMenu {
 QMenuBar::item:selected,
 QMenu::item:selected {
     background-color: rgb(54, 55, 61);
-    color: rgb(255, 255, 255);
+    color: rgb(210, 210, 210);
 }
 
 QSizeGrip {
@@ -114,7 +114,7 @@ QPushButton {
 
 QPushButton:disabled {
     background-color: rgb(43, 45, 49, 50);
-    color: rgb(210, 210, 210, 50);
+    color: rgba(210, 210, 210, 50);
     border: 1px solid rgb(210, 210, 210, 50);
 }
 
@@ -267,9 +267,25 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: #70ff88;
+    color: rgb(112, 255, 136);
 }
 
+/*
+QCheckBox::indicator:checked {
+    background-color: #70ff88;
+    border-radius: 2px;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(210, 210, 210);
+    border-radius: 2px;
+}
+
+QCheckBox::indicator {
+    color: rgb(210, 210, 210);
+    background-color: rgb(210, 210, 210);
+}
+*/
 QGroupBox {
     background-color: none;
     border: 1px solid rgb(181, 186, 193);
