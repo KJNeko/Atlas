@@ -250,7 +250,6 @@ QTabWidget>QWidget {
     border: 0px solid black;
 }
 
-QTextEdit,
 #gameText,
 #versionList,
 #processedTagsList,
