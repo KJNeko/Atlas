@@ -42,7 +42,6 @@ QHeaderView::section {
     border-bottom: none;
     border-right: none;
     border-left: none;
-
 }
 
 QTreeView::item {
@@ -388,6 +387,7 @@ QTreeView {
 
 #gamesTree {
     border: none;
+    border-top-right-radius: 10px;
 }
 
 #gameText {
