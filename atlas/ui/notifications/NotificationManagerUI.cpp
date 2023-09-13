@@ -89,7 +89,6 @@ void NotificationManagerUI::setHeight()
 
 		//Clamp it down
 		height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
-		spdlog::info( "Total height: {}", height );
 
 		this->setHidden( notifications().size() == 0 );
 		setFixedHeight( height );
