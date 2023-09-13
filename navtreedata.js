@@ -25,15 +25,7 @@
 var NAVTREE =
 [
   [ "Atlas Game Manager", "index.html", [
-    [ "README", "md_README.html", [
-      [ "Atlas", "md_README.html#autotoc_md0", [
-        [ "Features:", "md_README.html#autotoc_md1", [
-          [ "F95Zone integration <a href=\"https://github.com/KJNeko/Atlas/issues/2\" >Issue $2</a>", "md_README.html#autotoc_md2", null ],
-          [ "DLSite integration <a href=\"https://github.com/KJNeko/Atlas/issues/3\" >Issue #3</a>", "md_README.html#autotoc_md3", null ],
-          [ "Steam/SteamCMD integration <a href=\"https://github.com/KJNeko/Atlas/issues/4\" >Issue #4</a>", "md_README.html#autotoc_md4", null ]
-        ] ]
-      ] ]
-    ] ]
+    [ "README", "md_README.html", null ]
   ] ]
 ];
 
