@@ -8,13 +8,13 @@
 
 #include <moc_NotificationManagerUI.cpp>
 
+#include "core/config.hpp"
 #include "core/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"
-#include "core/config.hpp"
 
 NotificationManagerUI::NotificationManagerUI( QWidget* parent ) :
-  QDialog( parent, Qt::Dialog | Qt::FramelessWindowHint ),
+  QDialog( parent, Qt::Tool | Qt::FramelessWindowHint ),
   ui( new Ui::NotificationManagerUI )
 {
 	ui->setupUi( this );
@@ -30,11 +30,25 @@ NotificationManagerUI::~NotificationManagerUI()
 	delete ui;
 }
 
+std::vector< Notification* > NotificationManagerUI::notifications() const
+{
+	std::vector< Notification* > ptrs;
+
+	for ( auto* ptr : ui->notifications->children() )
+	{
+		if ( ptr->objectName() != "verticalLayout" )
+		{
+			ptrs.emplace_back( dynamic_cast< Notification* >( ptr ) );
+		}
+	}
+
+	return ptrs;
+}
+
 void NotificationManagerUI::addNotification( Notification* notif )
 {
 	//Get current count of notifications
 
-	notificationWidgetHeight += notificationWidgetHeight == 0 ? notif->height() + ui->notifications->height() : notif->height();
 	//spdlog::info("TOTAL height{}", notificationWidgetHeight);
 	//int count { ui->notifications->layout()->count() };
 	//int height { notif->height() };
@@ -44,12 +58,30 @@ void NotificationManagerUI::addNotification( Notification* notif )
 	ui->notifications->layout()->addWidget( notif );
 
 	//ui->scrollArea->setMinimumHeight( notificationWidgetHeight );
-	//ui->scrollArea->setFixedSize(ui->scrollArea->width(), notificationWidgetHeight);	
+	//ui->scrollArea->setFixedSize(ui->scrollArea->width(), notificationWidgetHeight);
 	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
 	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
-	this->resize( this->width(),  notificationWidgetHeight);
-
 	ui->label->setText( QString( "%1 notifications" ).arg( ++active_notifications ) );
+	setHeight();
+}
+
+void NotificationManagerUI::setHeight()
+{
+	//Accumulate child size
+	int height { 0 };
+	height += ui->frame->height();
+	//height += ui->notifications->contentsMargins().bottom();
+
+	for ( auto* notif : notifications() ) height += notif->size().height() + ui->notifications->layout()->spacing();
+
+	constexpr int MAX_HEIGHT { 500 };
+	constexpr int MIN_HEIGHT { 70 };
+
+	//Clamp it down
+	height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
+
+	this->setHidden( notifications().size() == 0 );
+	setFixedHeight( height );
 }
 
 void NotificationManagerUI::resizeEvent( QResizeEvent* event )
@@ -65,31 +97,34 @@ void NotificationManagerUI::moveEvent( QMoveEvent* event )
 
 void NotificationManagerUI::deleteNotification( Notification* ptr )
 {
-	notificationWidgetHeight -= ptr->height();
-	//spdlog::info("TOTAL height{}", notificationWidgetHeight);
-	//ui->scrollArea->setMinimumHeight( notificationWidgetHeight );
-	
-	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
-	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
-	if(ui->notifications->layout()->count() <= 2){
-		this->resize( this->minimumSize() );
-	}
-	else{
-		this->resize( this->width(), notificationWidgetHeight);
-	}
-
 	ptr->setParent( nullptr );
 	ptr->close();
 	ptr->deleteLater();
 
 	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
+	this->setHidden( notifications().size() == 0 );
+	setHeight();
 }
 
 //Buttons
-void NotificationManagerUI::on_btnClose_pressed(){
+void NotificationManagerUI::on_btnClose_pressed()
+{
+	// Close anything that ***CAN*** be closed.
 
+	auto children { ui->notifications->children() };
+	spdlog::info( "Attempting to close {} notifications", children.size() - 1 );
+	for ( auto* child : children )
+	{
+		if ( child->objectName() != "verticalLayout" )
+		{
+			Notification* notif { dynamic_cast< Notification* >( child ) };
+			notif->selfCloseTrigger();
+		}
+	}
 }
-void NotificationManagerUI::on_btnHideShow_pressed(){
+
+void NotificationManagerUI::on_btnHideShow_pressed()
+{
 	//Set to inverse
-	this->setVisible( !this->isVisible() );
+	ui->scrollArea->setVisible( !ui->scrollArea->isVisible() );
 }

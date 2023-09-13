@@ -8,15 +8,15 @@
 namespace atlas::database::migrations
 {
 	template <>
-	void up< 2 >( Transaction& transaction )
+	std::string_view migration< 2 >()
 	{
-		transaction <<
+		return
 			R"(
-		CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS
-		SELECT DISTINCT record_id, versions.date_added
-		FROM games
-		NATURAL JOIN versions
-		ORDER BY versions.date_added DESC;
+			CREATE VIEW IF NOT EXISTS last_import_times (record_id, last_import) AS
+			SELECT DISTINCT record_id, versions.date_added
+			FROM games
+			NATURAL JOIN versions
+			ORDER BY versions.date_added DESC;
 		)";
 	}
 } // namespace atlas::database::migrations

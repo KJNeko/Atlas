@@ -7,9 +7,9 @@
 namespace atlas::database::migrations
 {
 	template <>
-	void up< 7 >( Transaction& transaction )
+	std::string_view migration< 7 >()
 	{
-		transaction <<
+		return
 			R"(
 				CREATE TABLE IF NOT EXISTS f95_zone_screens
 				(

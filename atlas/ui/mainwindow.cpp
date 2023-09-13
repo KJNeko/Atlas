@@ -204,7 +204,6 @@ void MainWindow::showEvent( [[maybe_unused]] QShowEvent* event )
 {
 	QWidget::showEvent( event );
 
-	
 	movePopup();
 }
 
@@ -279,11 +278,10 @@ void MainWindow::moveEvent( QMoveEvent* event )
 
 void MainWindow::movePopup()
 {
-
 	auto& task_popup { atlas::notifications::handle() };
 	const auto [ x, y ] = task_popup.size();
 
-	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y }};
+	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y } };
 
 	task_popup.move( point );
 	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
