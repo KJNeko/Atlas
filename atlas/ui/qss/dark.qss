@@ -113,9 +113,9 @@ QPushButton {
 }
 
 QPushButton:disabled {
-    background-color: rgb(43, 45, 49, 50);
+    background-color: rgba(43, 45, 49, 50);
     color: rgba(210, 210, 210, 50);
-    border: 1px solid rgb(210, 210, 210, 50);
+    border: 1px solid rgba(210, 210, 210, 50);
 }
 
 QPushButton:hover {
@@ -147,7 +147,7 @@ QComboBox::item:selected {
 }
 
 QComboBox:disabled {
-    color: rgb(210, 210, 210, 50);
+    color: rgba(210, 210, 210, 50);
 }
 
 QLabel,
