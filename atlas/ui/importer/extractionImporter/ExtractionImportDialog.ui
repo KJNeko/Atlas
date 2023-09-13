@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -52,7 +52,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>60</height>
+       <height>40</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -135,7 +135,7 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <widget class="QWidget" name="page1" native="true">
+     <widget class="QWidget" name="page1">
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="frame">
