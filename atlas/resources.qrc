@@ -29,7 +29,7 @@
         <file>assets/feather_background.svg</file>
         <file>assets/setting_filter.svg</file>
         <file>assets/stop_selected.svg</file>
-        <file>assets/gl.png</file>
+        <file>assets/gamelist.svg</file>
     </qresource>
     <qresource prefix="/Layouts">
         <file>assets/layouts/0000.svg</file>

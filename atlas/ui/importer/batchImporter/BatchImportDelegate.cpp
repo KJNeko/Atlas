@@ -25,7 +25,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				const auto has_gl_link { index.data( ImportColumns::HAS_GL_LINK ).value< bool >() };
 				if ( has_gl_link )
 				{
-					QPixmap pixmap { ":/images/assets/gl.png" };
+					spdlog::info( "Rendering GL link status" );
+					QPixmap pixmap { ":/images/assets/gamelist.svg" };
 					pixmap = pixmap.scaledToHeight( options.rect.height() );
 
 					const QPoint draw_point { QPoint( options.rect.width() - pixmap.width(), 0 ) };
