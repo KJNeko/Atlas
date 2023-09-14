@@ -38,6 +38,12 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		static_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
 
+	connect(
+		static_cast< BatchImportModel* >( ui->twGames->model() ),
+		&BatchImportModel::dataChanged,
+		this,
+		&BatchImportDialog::modelChanged );
+
 	loadConfig();
 }
 
@@ -224,6 +230,10 @@ void BatchImportDialog::modelChanged(
 {
 	ZoneScoped;
 	ui->twGames->resizeColumnsToContents();
+
+	const auto* model { static_cast< BatchImportModel* >( ui->twGames->model() ) };
+
+	ui->btnNext->setEnabled( model->isGood() );
 }
 
 void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
