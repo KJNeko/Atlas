@@ -20,7 +20,7 @@ namespace gl
 		std::uint64_t gl_id { 0 };
 		QString name {};
 		QString thread_url {};
-		std::uint64_t f95_thread_id { INVALID_F95_ID };
+		F95ID f95_thread_id { INVALID_F95_ID };
 	};
 
 #define GL_INFO_FILENAME "GL_Infos.ini"
