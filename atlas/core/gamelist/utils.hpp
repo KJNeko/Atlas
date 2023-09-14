@@ -12,9 +12,6 @@
 
 namespace gl
 {
-	//! Searches the given directory for games with the GL_Infos.ini file
-	[[nodiscard]] std::vector< std::filesystem::path > searchGames( const std::filesystem::path );
-
 	struct GameListInfos
 	{
 		QString version {};

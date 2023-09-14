@@ -11,26 +11,6 @@
 namespace gl
 {
 
-	std::vector< std::filesystem::path > searchGames( const std::filesystem::path root )
-	{
-		std::vector< std::filesystem::path > games;
-
-		auto itter = std::filesystem::recursive_directory_iterator( root );
-
-		while ( itter != std::filesystem::recursive_directory_iterator() )
-		{
-			if ( itter->is_regular_file() && itter->path().filename() == "GL_Infos.ini" )
-			{
-				games.emplace_back( itter->path().parent_path() );
-				itter.pop();
-			}
-
-			++itter;
-		}
-
-		return games;
-	}
-
 	/**
 	 Example INI file from GL
 	 [GameList]
