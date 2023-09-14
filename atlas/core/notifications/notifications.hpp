@@ -8,7 +8,6 @@
 #include <QJsonArray>
 #include <QString>
 
-#include "core/logging.hpp"
 #include "core/logging/dev.hpp"
 #include "ui/notifications/DevNotification.hpp"
 #include "ui/notifications/MessageNotification.hpp"

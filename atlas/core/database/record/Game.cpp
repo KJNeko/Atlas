@@ -12,6 +12,7 @@
 
 #include "GameData.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/database/remote/F95Data.hpp"
 #include "core/imageManager.hpp"
 
 namespace atlas::records
@@ -325,7 +326,25 @@ namespace atlas::records
 
 		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, game_id) VALUES (?,?)" << atlas_id << m_id;
 
-		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
+		ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
+	}
+
+	void Game::connectF95Data( const F95ID f95_id )
+	{
+		if ( f95_id == INVALID_F95_ID ) throw std::runtime_error( "Invalid F95 ID" );
+
+		F95ID new_id { INVALID_ATLAS_ID };
+		RapidTransaction() << "SELECT new_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> new_id;
+
+		if ( new_id == INVALID_F95_ID )
+		{
+			atlas::remote::createDummyF95Record( f95_id );
+			new_id = f95_id;
+		}
+
+		RapidTransaction() << "INSERT INTO f95_zone_mappings (game_id, f95_id) VALUES (?,?)" << m_id << new_id;
+
+		ptr->f95_data = remote::F95RemoteData( f95_id );
 	}
 
 	bool Game::hasVersion( const QString str ) const

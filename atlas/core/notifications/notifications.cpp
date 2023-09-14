@@ -6,6 +6,7 @@
 
 #include <QPromise>
 
+#include "core/logging.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 
 namespace atlas::notifications

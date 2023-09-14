@@ -216,6 +216,7 @@ void SingleImporter::triggerImport()
 	banners[ BannerType::Cover ] = ui->leBannerCover->text();
 	banners[ BannerType::Logo ] = ui->leBannerLogo->text();
 
+	/*
 	(void)importGame(
 		root_path,
 		std::filesystem::relative( root_path, exec_path ),
@@ -230,6 +231,7 @@ void SingleImporter::triggerImport()
 		ui->cbMoveDir->isChecked(),
 		INVALID_ATLAS_ID,
 		INVALID_RECORD_ID );
+	 */
 
 	close();
 }

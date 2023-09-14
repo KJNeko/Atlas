@@ -23,34 +23,41 @@
 namespace internal
 {
 	void importGame(
-		QPromise< RecordID >& promise,
-		const std::filesystem::path& root,
-		const std::filesystem::path& relative_executable,
-		const QString& title,
-		const QString& creator,
-		const QString& engine,
-		const QString& version,
-		const std::array< QString, BannerType::SENTINEL >& banners,
-		const std::vector< QString >& previews,
-		std::uint64_t game_size,
-		const std::uint64_t file_count,
-		const bool owning,
-		const AtlasID atlas_id,
-		const RecordID game_id )
+		QPromise< RecordID >& promise, GameImportData data, const std::filesystem::path import_root, const bool owning )
 	try
 	{
 		ZoneScoped;
+
+		auto
+			[ relative_path,
+		      title,
+		      creator,
+		      engine,
+		      version,
+		      game_size,
+		      file_count,
+		      executables,
+		      relative_executable,
+		      banners,
+		      previews,
+		      gl_infos,
+		      game_id,
+		      atlas_id,
+		      has_version_conflict ] = std::move( data );
 
 		ProgressSignaler signaler { QString( "Importing game %1" ).arg( title ) };
 
 		promise.start();
 
+		const auto game_root { import_root / relative_path };
+		const auto executable_path { game_root / relative_executable };
+
 		TracyCZoneN( tracy_checkZone, "Check", true );
 		//Verify that everything is valid
-		if ( !std::filesystem::exists( root ) )
-			throw std::runtime_error( fmt::format( "Root path {:ce} does not exist", root ) );
-		if ( !std::filesystem::exists( root / relative_executable ) )
-			throw std::runtime_error( fmt::format( "Executable {:ce} does not exist", root / relative_executable ) );
+		if ( !std::filesystem::exists( game_root ) )
+			throw std::runtime_error( fmt::format( "Root path {:ce} does not exist", game_root ) );
+		if ( !std::filesystem::exists( executable_path ) )
+			throw std::runtime_error( fmt::format( "Executable {:ce} does not exist", executable_path ) );
 		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
 		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
 		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
@@ -63,7 +70,7 @@ namespace internal
 		signaler.setMax( 4 );
 		signaler.setSubMessage( "Calculating folder size: 0B" );
 		QLocale locale;
-		atlas::utils::FileScanner scanner { root };
+		atlas::utils::FileScanner scanner { game_root };
 
 		if ( game_size == 0 )
 		{
@@ -106,7 +113,7 @@ namespace internal
 				signaler
 					.setSubMessage( QString( "Copying file %1 %2/%3" ).arg( r_path_name ).arg( i ).arg( file_count ) );
 
-				const auto source { root / file.relative };
+				const auto source { game_root / file.relative };
 				const auto dest { dest_root / file.relative };
 				std::filesystem::create_directories( dest.parent_path() );
 
@@ -121,9 +128,10 @@ namespace internal
 			record.addVersion( version, dest_root, relative_executable, game_size, owning );
 		}
 		else
-			record.addVersion( version, root, relative_executable, game_size, owning );
+			record.addVersion( version, game_root, relative_executable, game_size, owning );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
+		if ( gl_infos.f95_thread_id != INVALID_F95_ID ) record.connectF95Data( gl_infos.f95_thread_id );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
 
@@ -141,7 +149,7 @@ namespace internal
 			//If the game is going into our directory then we should clean up the banners
 			if ( owning )
 			{
-				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, game_root ) };
 				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
 				std::filesystem::remove( r_path );
@@ -158,7 +166,7 @@ namespace internal
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
-				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, root ) };
+				const auto r_path { dest_root / std::filesystem::relative( { path.toStdWString() }, game_root ) };
 				game_size -= std ::filesystem::file_size( r_path );
 				// Remove the image file from the moved files
 				std::filesystem::remove( r_path );
@@ -257,72 +265,9 @@ namespace internal
 
 } // namespace internal
 
-QFuture< RecordID > importGame(
-	std::filesystem::path root,
-	std::filesystem::path relative_executable,
-	QString title,
-	QString creator,
-	QString engine,
-	QString version,
-	std::array< QString, BannerType::SENTINEL > banners,
-	std::vector< QString > previews,
-	const std::uint64_t folder_size,
-	const std::uint64_t file_count,
-	const bool owning,
-	const AtlasID atlas_id,
-	const RecordID game_id )
-{
-	ZoneScoped;
-	return QtConcurrent::
-		run( &globalPools().importers,
-	         internal::importGame,
-	         std::move( root ),
-	         std::move( relative_executable ),
-	         std::move( title ),
-	         std::move( creator ),
-	         std::move( engine ),
-	         std::move( version ),
-	         std::move( banners ),
-	         std::move( previews ),
-	         folder_size,
-	         file_count,
-	         owning,
-	         atlas_id,
-	         game_id );
-}
-
 QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
 {
 	ZoneScoped;
-	[[maybe_unused]] auto
-		[ path,
-	      title,
-	      creator,
-	      engine,
-	      version,
-	      size,
-	      file_count,
-	      executables,
-	      executable,
-	      banners,
-	      previews,
-	      gl_infos,
-	      game_id,
-	      atlas_id,
-	      has_version_conflict ] = std::move( data );
 
-	return importGame(
-		root / path,
-		root / path / executable,
-		std::move( title ),
-		std::move( creator ),
-		std::move( engine ),
-		std::move( version ),
-		std::move( banners ),
-		std::move( previews ),
-		size,
-		file_count,
-		owning,
-		atlas_id,
-		game_id );
+	return QtConcurrent::run( &globalPools().importers, internal::importGame, std::move( data ), root, owning );
 }

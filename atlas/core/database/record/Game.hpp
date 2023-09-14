@@ -130,6 +130,8 @@ namespace atlas::records
 		//! Connects this record to a atlas_data mapping
 		void connectAtlasData( const AtlasID id );
 
+		void connectF95Data( const F95ID id );
+
 		// Used to accessing internal data
 		const GameData* operator->() const { return ptr.get(); }
 

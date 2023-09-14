@@ -37,6 +37,7 @@
 #endif
 
 #include "Types.hpp"
+#include "core/notifications/notifications.hpp"
 #include "logging/dev.hpp"
 #include "logging/formatters.hpp"
 
@@ -56,9 +57,10 @@ namespace atlas::logging
 	}
 
 	//! Notifies the user of a warning.
-	inline void warn( [[maybe_unused]] std::string message )
+	inline void warn( std::string message )
 	{
 		spdlog::warn( "userwarn: {}", message );
+		atlas::notifications::createMessage( QString::fromStdString( message ) );
 	}
 
 	template < typename... Ts >

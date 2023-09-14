@@ -12,7 +12,7 @@
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
-	return 7;
+	return COLUMNS_MAX;
 }
 
 int BatchImportModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
@@ -28,7 +28,7 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 	{
 		case Qt::DisplayRole:
 			{
-				switch ( index.column() )
+				switch ( static_cast< ImportColumns >( index.column() ) )
 				{
 					case FOLDER_PATH:
 						return QString::fromStdString( item.relative_path.string() );
@@ -47,26 +47,20 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						}
 					case EXECUTABLE:
 						return QString::fromStdString( item.executable.string() );
+					case HAS_GL_LINK:
+						return item.infos.f95_thread_id != INVALID_F95_ID;
+					case IS_EXISTING_GAME:
+						return item.game_id != INVALID_F95_ID;
+					case IS_CONFLICTING:
+						return item.conflicting_version;
 					default:
-						return QString( "wtf?" );
+						return QString( "INVALID DATA IN SWITCH!" );
 				}
 			}
 		case ExecutablesEditRole:
 			{
 				return QVariant::fromStdVariant( std::variant<
 												 std::vector< std::filesystem::path > >( item.executables ) );
-			}
-		case HasGLLinkRole:
-			{
-				return item.atlas_id != INVALID_ATLAS_ID;
-			}
-		case ExistingGameRole:
-			{
-				return item.game_id != INVALID_RECORD_ID;
-			}
-		case ConflictingVersionRole:
-			{
-				return item.conflicting_version;
 			}
 		default:
 			return {};
@@ -91,12 +85,19 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 {
 	if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
 	{
-		switch ( section )
+		switch ( static_cast< ImportColumns >( section ) )
+
 		{
 			case FOLDER_PATH:
 				return QString( "Folder" );
 			case TITLE:
 				return QString( "Title" );
+			case HAS_GL_LINK:
+				return QString( "GL" );
+			case IS_EXISTING_GAME:
+				return QString( "Exists" );
+			case IS_CONFLICTING:
+				return QString( "Conflicting" );
 			case CREATOR:
 				return QString( "Creator" );
 			case ENGINE:
@@ -108,7 +109,7 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 			case EXECUTABLE:
 				return QString( "Executable" );
 			default:
-				return QString( "Oh fuck?" );
+				return QString( "MISSING HEADER IN SWITCH" );
 		}
 	}
 	else
@@ -117,7 +118,7 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 
 Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 {
-	switch ( index.column() )
+	switch ( static_cast< ImportColumns >( index.column() ) )
 	{
 		case TITLE:
 			[[fallthrough]];
@@ -133,6 +134,12 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 			[[fallthrough]];
 		case FOLDER_PATH:
 			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
+		case HAS_GL_LINK:
+			[[fallthrough]];
+		case IS_EXISTING_GAME:
+			[[fallthrough]];
 		default:
 			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 	}
@@ -141,39 +148,70 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 
 bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value, int role )
 {
+	auto& data { m_data.at( static_cast< std::size_t >( index.row() ) ) };
+
+	auto recheckData = [ &data ]()
+	{
+		data.game_id = atlas::records::recordID( data.title, data.creator, data.engine );
+		if ( data.game_id != INVALID_ATLAS_ID )
+		{
+			//Check if the version we have is a conflict
+			const atlas::records::Game game { data.game_id };
+			data.conflicting_version = game.hasVersion( data.version );
+		}
+	};
+
 	switch ( index.column() )
 	{
 		case EXECUTABLE:
 			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).executable =
-					value.value< QString >().toStdString();
+				data.executable = value.value< QString >().toStdString();
 				emit dataChanged( index, index );
 				return true;
 			}
 		case TITLE:
 			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).title = value.value< QString >();
+				data.title = value.value< QString >();
+
+				recheckData();
+
 				emit dataChanged( index, index );
 				return true;
 			}
 		case CREATOR:
 			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).creator = value.value< QString >();
+				data.creator = value.value< QString >();
+
+				recheckData();
+
 				emit dataChanged( index, index );
 				return true;
 			}
 		case ENGINE:
 			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).engine = value.value< QString >();
+				data.engine = value.value< QString >();
+
+				recheckData();
+
 				emit dataChanged( index, index );
 				return true;
 			}
 		case VERSION:
 			{
-				m_data.at( static_cast< std::size_t >( index.row() ) ).version = value.value< QString >();
+				data.version = value.value< QString >();
+
+				recheckData();
+
 				emit dataChanged( index, index );
+
 				return true;
 			}
+		case IS_CONFLICTING:
+			[[fallthrough]];
+		case IS_EXISTING_GAME:
+			[[fallthrough]];
+		case HAS_GL_LINK:
+			[[fallthrough]];
 		default:
 			return QAbstractItemModel::setData( index, value, role );
 	}
@@ -193,6 +231,12 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 	switch ( static_cast< ImportColumns >( idx ) )
 	{
 		default:
+			[[fallthrough]];
+		case HAS_GL_LINK:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
+		case IS_EXISTING_GAME:
 			[[fallthrough]];
 		case TITLE:
 			{
@@ -273,4 +317,14 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 			}
 	}
 	endResetModel();
+}
+
+bool BatchImportModel::isGood() const
+{
+	for ( int i = 0; i < rowCount(); ++i )
+	{
+		if ( data( createIndex( i, IS_CONFLICTING ) ).value< bool >() ) return false;
+	}
+
+	return true;
 }
