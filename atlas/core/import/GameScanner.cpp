@@ -150,7 +150,8 @@ void runner(
 			}
 
 			if ( promise.isCanceled() ) return;
-			GameImportData data { std::filesystem::relative( folder, base ),
+			GameImportData data { base,
+				                  std::filesystem::relative( folder, base ),
 				                  std::move( title ),
 				                  std::move( creator ),
 				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),

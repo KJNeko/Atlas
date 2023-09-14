@@ -5,6 +5,8 @@
 #include <QRegularExpression>
 #include <QSettings>
 
+#include "core/database/RapidTransaction.hpp"
+#include "core/database/remote/F95Data.hpp"
 #include "core/logging.hpp"
 #include "utils.hpp"
 
@@ -36,7 +38,7 @@ namespace gl
 		if ( !infos.thread_url.isEmpty() )
 		{
 			//We have a thread we can parse!
-			const auto regex_str { "^.*/f95zone.(to|com)\\/threads\\/(?P<f95_id>[0-9]*)(\\/$|$)" };
+			constexpr auto regex_str { R"(^.*\/f95zone.(to|com)\/threads\/(?P<f95_id>[0-9]*)(\/$|$))" };
 			QRegularExpression regex { regex_str };
 			assert( regex.isValid() );
 			const auto match { regex.match( infos.thread_url ) };
@@ -55,20 +57,31 @@ namespace gl
 				infos.f95_thread_id = ( match.captured( "f95_id" ).toULongLong() );
 			}
 		}
-		else
-			spdlog::warn( "{} did not have a thread url!", path );
 
 		return infos;
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::warn( "Failed to parse GL_Infos.ini at {}. Reason: {}", path, e.what() );
+		spdlog::error( "Failed to parse GL_Infos.ini at {}. Reason: {}", path, e.what() );
 		return {};
 	}
-	catch ( ... )
+
+	[[nodiscard]] AtlasID parseAtlas( const std::filesystem::path& path )
+	try
 	{
-		spdlog::warn( "Failed to parse GL_Infos.ini at {}. Reason: Unknown", path );
-		return {}; //Parse failed. Return empty struct
+		const GameListInfos data { parse( path ) };
+		if ( data.f95_thread_id == INVALID_F95_ID || data.thread_url.isEmpty() ) return INVALID_ATLAS_ID;
+
+		AtlasID id { INVALID_ATLAS_ID };
+
+		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << data.f95_thread_id >> id;
+
+		return id;
+	}
+	catch ( std::exception& e )
+	{
+		spdlog::warn( "Failed to parse f95 data! {}", e.what() );
+		return INVALID_ATLAS_ID;
 	}
 
 } // namespace gl

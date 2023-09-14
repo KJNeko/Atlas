@@ -30,10 +30,8 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			{
 				switch ( index.column() )
 				{
-					case HAS_GL_LINK:
-						return item.atlas_id != INVALID_ATLAS_ID;
 					case FOLDER_PATH:
-						return QString::fromStdString( item.path.string() );
+						return QString::fromStdString( item.relative_path.string() );
 					case TITLE:
 						return item.title;
 					case CREATOR:
@@ -44,29 +42,31 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						return item.version;
 					case SIZE:
 						{
-							QLocale locale { QLocale::system() };
+							const QLocale locale { QLocale::system() };
 							return locale.formattedDataSize( static_cast< qint64 >( item.size ) );
 						}
-					case EXECUTABLES:
+					case EXECUTABLE:
 						return QString::fromStdString( item.executable.string() );
 					default:
 						return QString( "wtf?" );
 				}
 			}
-		case Qt::EditRole:
+		case ExecutablesEditRole:
 			{
-				if ( index.column() == EXECUTABLES )
-					return QVariant::fromStdVariant( std::variant<
-													 std::vector< std::filesystem::path > >( item.executables ) );
-				else
-					return {};
+				return QVariant::fromStdVariant( std::variant<
+												 std::vector< std::filesystem::path > >( item.executables ) );
 			}
-		case Qt::BackgroundRole:
+		case HasGLLinkRole:
 			{
-				if ( atlas::records::recordExists( item.title, item.creator, item.engine ) )
-					return QColor( 255, 0, 0 );
-				else
-					return {};
+				return item.atlas_id != INVALID_ATLAS_ID;
+			}
+		case ExistingGameRole:
+			{
+				return item.game_id != INVALID_RECORD_ID;
+			}
+		case ConflictingVersionRole:
+			{
+				return item.conflicting_version;
 			}
 		default:
 			return {};
@@ -105,7 +105,7 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 				return QString( "Version" );
 			case SIZE:
 				return QString( "Size" );
-			case EXECUTABLES:
+			case EXECUTABLE:
 				return QString( "Executable" );
 			default:
 				return QString( "Oh fuck?" );
@@ -127,7 +127,7 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 			[[fallthrough]];
 		case ENGINE:
 			[[fallthrough]];
-		case EXECUTABLES:
+		case EXECUTABLE:
 			return Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 		case SIZE:
 			[[fallthrough]];
@@ -143,7 +143,7 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 {
 	switch ( index.column() )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				m_data.at( static_cast< std::size_t >( index.row() ) ).executable =
 					value.value< QString >().toStdString();
@@ -194,8 +194,6 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 	{
 		default:
 			[[fallthrough]];
-		case HAS_GL_LINK:
-			[[fallthrough]];
 		case TITLE:
 			{
 				std::sort(
@@ -240,7 +238,7 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 					} );
 			}
 			break;
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				std::sort(
 					m_data.begin(),
@@ -267,8 +265,10 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 				std::sort(
 					m_data.begin(),
 					m_data.end(),
-					[ order ]( const GameImportData& left, const GameImportData& right ) {
-						return order == Qt::SortOrder::AscendingOrder ? left.path < right.path : left.path > right.path;
+					[ order ]( const GameImportData& left, const GameImportData& right )
+					{
+						return order == Qt::SortOrder::AscendingOrder ? left.relative_path < right.relative_path :
+					                                                    left.relative_path > right.relative_path;
 					} );
 			}
 	}

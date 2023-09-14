@@ -35,7 +35,8 @@ namespace internal
 		std::uint64_t game_size,
 		const std::uint64_t file_count,
 		const bool owning,
-		const AtlasID atlas_id )
+		const AtlasID atlas_id,
+		const RecordID game_id )
 	try
 	{
 		ZoneScoped;
@@ -80,7 +81,13 @@ namespace internal
 		}
 		TracyCZoneEnd( tracy_FileScanner );
 
-		auto record { atlas::records::importRecord( title, creator, engine ) };
+		auto record { [ & ]() -> atlas::records::Game
+			          {
+						  if ( game_id == INVALID_RECORD_ID )
+							  return atlas::records::importRecord( title, creator, engine );
+						  else
+							  return atlas::records::Game( game_id );
+					  }() };
 
 		// Used for when we move files to a directory we 'own'
 		const std::filesystem::path dest_root { config::paths::games::getPath() / creator / title / version };
@@ -262,7 +269,8 @@ QFuture< RecordID > importGame(
 	const std::uint64_t folder_size,
 	const std::uint64_t file_count,
 	const bool owning,
-	const AtlasID atlas_id )
+	const AtlasID atlas_id,
+	const RecordID game_id )
 {
 	ZoneScoped;
 	return QtConcurrent::
@@ -279,13 +287,14 @@ QFuture< RecordID > importGame(
 	         folder_size,
 	         file_count,
 	         owning,
-	         atlas_id );
+	         atlas_id,
+	         game_id );
 }
 
 QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path root, const bool owning )
 {
 	ZoneScoped;
-	auto
+	[[maybe_unused]] auto
 		[ path,
 	      title,
 	      creator,
@@ -297,7 +306,10 @@ QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path
 	      executable,
 	      banners,
 	      previews,
-	      atlas_id ] = std::move( data );
+	      gl_infos,
+	      game_id,
+	      atlas_id,
+	      has_version_conflict ] = std::move( data );
 
 	return importGame(
 		root / path,
@@ -311,5 +323,6 @@ QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path
 		size,
 		file_count,
 		owning,
-		atlas_id );
+		atlas_id,
+		game_id );
 }

@@ -17,10 +17,9 @@ enum ImportColumns
 	CREATOR,
 	ENGINE,
 	VERSION,
-	EXECUTABLES,
+	EXECUTABLE,
 	SIZE,
-	FOLDER_PATH,
-	HAS_GL_LINK
+	FOLDER_PATH
 };
 
 class BatchImportModel final : public QAbstractTableModel
@@ -28,6 +27,14 @@ class BatchImportModel final : public QAbstractTableModel
 	std::vector< GameImportData > m_data {};
 
   public:
+
+	enum Roles
+	{
+		ExecutablesEditRole = Qt::UserRole + 1,
+		HasGLLinkRole,
+		ExistingGameRole,
+		ConflictingVersionRole
+	};
 
 	const std::vector< GameImportData >& getData() const { return m_data; }
 

@@ -89,6 +89,7 @@ namespace atlas::database::migrations
 					MIGRATE( 13 )
 					MIGRATE( 14 )
 					MIGRATE( 15 )
+					MIGRATE( 16 )
 					default:
 						spdlog::critical(
 							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",

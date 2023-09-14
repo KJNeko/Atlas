@@ -38,8 +38,9 @@
 	std::vector< QString > previews,
 	const std::uint64_t folder_size,
 	const std::uint64_t file_count,
-	bool owning,
-	AtlasID atlas_id );
+	const bool owning,
+	const AtlasID atlas_id,
+	const RecordID game_id );
 
 struct GameImportData;
 

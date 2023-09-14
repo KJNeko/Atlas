@@ -22,7 +22,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 	{
 		case TITLE:
 			{
-				const auto has_gl_link { index.data( ImportColumns::HAS_GL_LINK ).value< bool >() };
+				const auto has_gl_link { index.data( BatchImportModel::HasGLLinkRole ).value< bool >() };
 				if ( has_gl_link )
 				{
 					spdlog::info( "Rendering GL link status" );
@@ -35,6 +35,18 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 
 					painter->drawPixmap( draw_rect, pixmap );
 				}
+
+				const RecordID existing_game_id {
+					index.data( BatchImportModel::ExistingGameRole ).value< RecordID >()
+				};
+				if ( existing_game_id != INVALID_RECORD_ID )
+				{}
+
+				const bool conflicting_version {
+					index.data( BatchImportModel::ConflictingVersionRole ).value< bool >()
+				};
+				if ( conflicting_version )
+				{}
 			}
 			[[fallthrough]]; //print title
 		case FOLDER_PATH:
@@ -52,12 +64,14 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				break;
 			}
 			//print size
-		case EXECUTABLES: //print executables
+		case EXECUTABLE: //print executables
 			{
 				const auto data { index.data().value< QString >() };
+
 				const auto file_options {
-					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+					index.data( BatchImportModel::ExecutablesEditRole ).value< std::vector< std::filesystem::path > >()
 				};
+
 				if ( file_options.size() > 1 )
 				{
 					constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
@@ -68,7 +82,6 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				}
 				else
 					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
-
 				break;
 			}
 		default:
@@ -85,7 +98,7 @@ QSize BatchImportDelegate::
 
 	switch ( index.column() )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				const auto text { index.data().value< QString >() };
 				const auto file_options {
@@ -112,7 +125,7 @@ QWidget* BatchImportDelegate::
 {
 	switch ( index.column() )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				const auto data {
 					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
@@ -159,7 +172,7 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 {
 	switch ( index.column() )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				auto box { dynamic_cast< QComboBox* >( editor ) };
 
@@ -188,7 +201,7 @@ void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& ind
 {
 	switch ( index.column() )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				auto box { dynamic_cast< QComboBox* >( editor ) };
 

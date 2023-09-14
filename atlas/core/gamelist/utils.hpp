@@ -27,6 +27,8 @@ namespace gl
 
 	[[nodiscard]] GameListInfos parse( const std::filesystem::path& path );
 
+	[[nodiscard]] AtlasID parseAtlas( const std::filesystem::path& path );
+
 	[[nodiscard]] inline bool dirHasGLInfo( const std::filesystem::path& path )
 	{
 		return std::filesystem::exists( path / GL_INFO_FILENAME );

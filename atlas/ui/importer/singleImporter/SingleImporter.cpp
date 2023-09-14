@@ -228,7 +228,8 @@ void SingleImporter::triggerImport()
 		0,
 		0,
 		ui->cbMoveDir->isChecked(),
-		INVALID_ATLAS_ID );
+		INVALID_ATLAS_ID,
+		INVALID_RECORD_ID );
 
 	close();
 }
