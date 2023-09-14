@@ -133,6 +133,7 @@ namespace atlas::records
 		// Used to accessing internal data
 		const GameData* operator->() const { return ptr.get(); }
 
+		bool hasVersion( const QString str ) const;
 		Version& operator[]( const QString str ) const;
 
 	  public:
@@ -158,6 +159,7 @@ namespace atlas::records
  */
 	[[nodiscard]] Game importRecord( QString title, QString creator, QString engine );
 	[[nodiscard]] bool recordExists( QString title, QString creator, QString engine );
+	[[nodiscard]] RecordID fetchRecord( QString title, QString creator, QString engine );
 
 	struct RecordException : public std::runtime_error
 	{

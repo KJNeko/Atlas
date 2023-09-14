@@ -328,9 +328,20 @@ namespace atlas::records
 		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
 	}
 
+	bool Game::hasVersion( const QString str ) const
+	{
+		const auto ver_itter { std::find_if(
+			ptr->m_versions.begin(),
+			ptr->m_versions.end(),
+			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
+
+		//If the game exists return true. Else return false
+		return ver_itter != ptr->m_versions.end();
+	}
+
 	Version& Game::operator[]( const QString str ) const
 	{
-		auto ver_itter { std::find_if(
+		const auto ver_itter { std::find_if(
 			ptr->m_versions.begin(),
 			ptr->m_versions.end(),
 			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
@@ -356,6 +367,11 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		return recordID( title, creator, engine ) != 0;
+	}
+
+	RecordID fetchRecord( QString title, QString creator, QString engine )
+	{
+		return recordID( title, creator, engine );
 	}
 
 	RecordAlreadyExists::RecordAlreadyExists( Game& record_in ) :
