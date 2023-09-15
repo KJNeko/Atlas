@@ -51,9 +51,11 @@ namespace atlas::records
 
 				// If size is zero then we emit a super high score to get this item removed as soon as we can. Since it's likely fucked.
 				if ( size_score == 0 ) return std::numeric_limits< std::uint64_t >::max();
-				if ( time_diff == 0 )
-					return size_score; //Prevents multiply by 0 which for some reason caused SIGILL to be yeeted by the CPU.
 
+				// Prevent multiply by 0
+				if ( time_diff == 0 ) return size_score;
+
+				// Take the size score and multiplty it by the time diff. Making it higher the more time has ellapsed depending on the ratio.
 				const auto val { static_cast< uint64_t >(
 					static_cast< double >( size_score ) * ( static_cast< double >( time_diff ) * time_score_ratio ) ) };
 

@@ -67,28 +67,36 @@ namespace atlas::records
 		void setCreator( QString creator );
 		//! Sets the engine for the game
 		void setEngine( QString engine );
-		//!
+		//! Sets a description to be used
 		void setDescription( QString description );
+
 		bool versionExists( const QString& str );
 
-		//Get tumbnail from image
+		//! Get thumbnail from image. BLOCKING
 		QPixmap requestThumbnail( const QSize size, const BannerType type );
 
 		//!Test Function.
 		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
+
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
-	 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
-	 * @param dir
-	 * @param executable Must be a relative path sourced from dir.
-	 */
+		 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
+		 * @param dir
+		 * @param executable Must be a relative path sourced from dir.
+		 */
 		void addVersion(
 			QString version_name,
 			std::filesystem::path dir,
 			std::filesystem::path executable,
 			const std::uint64_t folder_size,
 			const bool in_place );
-		void removeVersion( Version& info );
+
+		//! Removes a version from Atlas.
+		/**
+		 * @warning THIS WILL LEAVE FILES BEHIND. YOU MUST DELETE THEM YOURSELF
+		 * @param info
+		 */
+		void removeVersion( const Version& info );
 
 		//! Adds playtime to the playtime counter
 		void addPlaytime( const std::uint64_t );
@@ -133,10 +141,10 @@ namespace atlas::records
 		void connectF95Data( const F95ID id );
 
 		// Used to accessing internal data
-		const GameData* operator->() const { return ptr.get(); }
+		[[nodiscard]] const GameData* operator->() const { return ptr.get(); }
 
-		bool hasVersion( const QString str ) const;
-		Version& operator[]( const QString str ) const;
+		[[nodiscard]] bool hasVersion( const QString str ) const;
+		[[nodiscard]] Version& operator[]( const QString str ) const;
 
 	  public:
 
@@ -151,14 +159,14 @@ namespace atlas::records
 
 	//! Imports a record into the database
 	/**
- *
- * @param title
- * @param creator
- * @param engine
- * @param transaction
- * @throws RecordAlreadyExists
- * @return
- */
+	 *
+	 * @param title
+	 * @param creator
+	 * @param engine
+	 * @param transaction
+	 * @throws RecordAlreadyExists
+	 * @return
+	 */
 	[[nodiscard]] Game importRecord( QString title, QString creator, QString engine );
 	[[nodiscard]] bool recordExists( QString title, QString creator, QString engine );
 	[[nodiscard]] RecordID fetchRecord( QString title, QString creator, QString engine );

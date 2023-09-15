@@ -140,7 +140,7 @@ namespace atlas::records
 		    == versions.end();
 	}
 
-	void Game::removeVersion( Version& info )
+	void Game::removeVersion( const Version& info )
 	{
 		auto& versions { ptr->m_versions };
 		const auto& version_name { info->m_version };
