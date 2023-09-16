@@ -95,5 +95,3 @@ void initLogging()
 
 	spdlog::debug( "Default logger set" );
 }
-
-

@@ -49,8 +49,7 @@ void VersionView::reloadData()
 	ui->versionEdit->setText( mdata.getVersionName() );
 	ui->executableEdit->setText( QString::fromStdString( mdata.getRelativeExecPath().string() ) );
 
-	ui->leCanonicalPath
-		->setText( QString( "%1" ).arg( QString::fromStdString( mdata.getPath().string() ) ) );
+	ui->leCanonicalPath->setText( QString( "%1" ).arg( QString::fromStdString( mdata.getPath().string() ) ) );
 
 	const auto date_time { QDateTime::fromSecsSinceEpoch( mdata.getPlaytime() ).toString( "hh:mm:ss" ) };
 

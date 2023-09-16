@@ -14,9 +14,9 @@
 #include "ui/dialog/StatsDialog.hpp"
 #include "ui/dialog/aboutqtdialog.h"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
+#include "ui/importer/extractionImporter/ExtractionImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
-#include "ui/importer/extractionImporter/ExtractionImportDialog.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
 #include "ui_mainwindow.h"
 #include "widgets/FilterWidget.hpp"
@@ -160,7 +160,8 @@ void MainWindow::on_actionSingleImporter_triggered()
 	importer.exec();
 }
 
-void MainWindow::on_actionExtractionImporter_triggered(){
+void MainWindow::on_actionExtractionImporter_triggered()
+{
 	ExtractionImportDialog importer { this };
 	importer.exec();
 }
