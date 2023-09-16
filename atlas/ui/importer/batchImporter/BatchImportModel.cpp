@@ -26,6 +26,42 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 
 	switch ( role )
 	{
+		case Qt::ToolTipRole:
+			{
+				switch ( static_cast< ImportColumns >( index.column() ) )
+				{
+					case TITLE:
+						{
+							auto str { data( index, Qt::DisplayRole ).value< QString >() };
+							if ( item.game_id != INVALID_RECORD_ID ) str += "\nRecord exists. Will append as version";
+							return str;
+						}
+					case VERSION:
+						{
+							auto str { data( index, Qt::DisplayRole ).value< QString >() };
+							if ( item.conflicting_version ) str += "\nConflicting version. Change the version name";
+							return str;
+						}
+					case CREATOR:
+						[[fallthrough]];
+					case ENGINE:
+						[[fallthrough]];
+					case EXECUTABLE:
+						[[fallthrough]];
+					case SIZE:
+						[[fallthrough]];
+					case FOLDER_PATH:
+						{
+							return data( index, Qt::DisplayRole );
+						}
+					case COLUMNS_MAX:
+						[[fallthrough]];
+					case IS_CONFLICTING:
+						[[fallthrough]];
+					default:
+						return "BatchImportModel::data: Switch statement for role ToolTipRole missing case";
+				}
+			}
 		case Qt::DisplayRole:
 			{
 				switch ( static_cast< ImportColumns >( index.column() ) )
@@ -74,18 +110,21 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 							if ( item.game_id != INVALID_RECORD_ID )
 								icons.emplace_back( QPixmap( ":/images/assets/versionico.svg" ) );
 
+							return QVariant::fromStdVariant( std::variant< decltype( icons ) >( std::move( icons ) ) );
+						}
+					case VERSION:
+						{
+							std::vector< QPixmap > icons;
+
 							//Add conflicting icon
 							if ( item.conflicting_version )
 								icons.emplace_back( QPixmap( ":/images/assets/warnico.svg" ) );
 
 							return QVariant::fromStdVariant( std::variant< decltype( icons ) >( std::move( icons ) ) );
 						}
-						break;
 					case CREATOR:
 						[[fallthrough]];
 					case ENGINE:
-						[[fallthrough]];
-					case VERSION:
 						[[fallthrough]];
 					case EXECUTABLE:
 						[[fallthrough]];

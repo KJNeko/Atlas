@@ -22,6 +22,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 
 	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
+		case VERSION:
+			[[fallthrough]];
 		case TITLE:
 			{
 				//Print out icons for title first.
@@ -55,8 +57,7 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 			[[fallthrough]]; //print path
 		case CREATOR:
 			[[fallthrough]]; //print creator
-		case VERSION:
-			[[fallthrough]]; // print version
+
 		case ENGINE:
 			[[fallthrough]];
 		case SIZE:
@@ -130,11 +131,23 @@ QSize BatchImportDelegate::
 				const auto text { index.data().value< QString >() };
 				return font_info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 ) + QSize( img_accum, 0 );
 			}
+		case VERSION:
+			{
+				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
+				const auto text_height { font_info.height() };
+				int img_accum { 0 };
+				for ( const auto& ico : icons )
+				{
+					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
+					img_accum += img.width();
+				}
+
+				const auto text { index.data().value< QString >() };
+				return font_info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 ) + QSize( img_accum, 0 );
+			}
 		case CREATOR:
 			[[fallthrough]];
 		case ENGINE:
-			[[fallthrough]];
-		case VERSION:
 			[[fallthrough]];
 		case SIZE:
 			[[fallthrough]];
