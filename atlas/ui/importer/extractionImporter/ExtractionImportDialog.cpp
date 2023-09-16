@@ -96,7 +96,7 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 void ExtractionImportDialog::parseFiles( const QString& path )
 {
-	std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
+	constexpr std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
 	int row { 0 };
 	ui->exGames->setRowCount( 50 );
 	for ( const auto& p : std::filesystem::recursive_directory_iterator( path.toStdWString() ) )
@@ -127,13 +127,13 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 
 bool checkOsNames( QString s )
 {
-	std::array< std::string_view, 6 > arr { "pc", "win", "linux", "windows", "unc", "win64" };
+	constexpr std::array< std::string_view, 6 > arr { "pc", "win", "linux", "windows", "unc", "win64" };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
 bool checkLanguages( QString s )
 {
-	std::array< std::string_view, 2 > arr { "japanese", "english" };
+	constexpr std::array< std::string_view, 2 > arr { "japanese", "english" };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
