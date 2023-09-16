@@ -29,20 +29,24 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				painter->drawText( options.rect, data );
 
 				//Shift rect over by size of text
-				auto top_right { options.rect.topRight() };
+				auto top_right { options.rect.bottomRight() };
 
 				//Text info
 				const auto text_height { painter->fontMetrics().height() };
 
 				//Drop top_right down to match the height of text.
-				top_right -= QPoint( 0, options.rect.height() - ( text_height / 2 ) );
+				const auto diff { options.rect.height() - text_height };
+
+				top_right -= QPoint( 0, options.rect.height() - ( diff / 2 ) );
 
 				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
 				for ( const auto& ico : icons )
 				{
 					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
 					top_right -= QPoint( img.width(), 0 );
-					painter->drawPixmap( { top_right, img.size() }, img );
+
+					const QRect rect { top_right, img.size() };
+					painter->drawPixmap( rect, img );
 				}
 
 				break;
