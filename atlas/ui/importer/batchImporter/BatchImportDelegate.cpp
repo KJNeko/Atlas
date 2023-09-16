@@ -39,7 +39,9 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				//Drop top_right down to match the height of text.
 				const auto diff { options.rect.height() - text_height };
 
-				top_right -= QPoint( 0, options.rect.height() - ( diff / 2 ) );
+				//Horizontal shift from the right side. Gives icons a little extra space and not hugging the line for the next col
+				constexpr int hor_shift { 10 };
+				top_right -= QPoint( hor_shift, options.rect.height() - ( diff / 2 ) );
 
 				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
 				for ( const auto& ico : icons )
