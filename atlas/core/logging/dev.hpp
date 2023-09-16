@@ -16,7 +16,7 @@ namespace atlas::logging::dev
 {
 	//To implement for each class
 	template < typename T >
-	QJsonObject internalSerializer( const T& t );
+	[[nodiscard]] QJsonObject internalSerializer( const T& t );
 
 	//! Injects information from T into the json
 	template < typename T >
@@ -27,7 +27,7 @@ namespace atlas::logging::dev
 	}
 
 	template < typename T >
-	inline QJsonObject serialize( const T& t )
+	[[nodiscard]] inline QJsonObject serialize( const T& t )
 	{
 		QJsonObject obj { internalSerializer< T >( t ) };
 		injectData< T >( t, obj );
@@ -54,6 +54,7 @@ namespace atlas::logging::dev
 	}
 
 	template < typename... Ts >
+		requires( sizeof...( Ts ) > 0 )
 	inline QJsonDocument serializeObjects( const Ts&... items )
 	{
 		QJsonArray array;
@@ -63,18 +64,6 @@ namespace atlas::logging::dev
 		QJsonDocument doc;
 		doc.setArray( std::move( array ) );
 		return doc;
-	}
-
-	template < typename... Ts >
-	inline void error( std::string msg, const Ts&... ts )
-	{
-		spdlog::error( "{}: {}", msg, serializeObjects( ts... ).toJson().toStdString() );
-	}
-
-	template <>
-	inline void error<>( std::string msg )
-	{
-		spdlog::error( "{}", msg );
 	}
 
 } // namespace atlas::logging::dev

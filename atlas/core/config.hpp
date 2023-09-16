@@ -13,6 +13,7 @@
 
 #include "ConfigNotification.hpp"
 #include "logging.hpp"
+#include "logging/formatters.hpp"
 
 /**
  *
@@ -167,6 +168,44 @@ inline QSettings getSettingsObject()
 		}                                                                                                              \
 	}
 
+#define SETTINGS_GEO( name )                                                                                           \
+	namespace config::geometry::name                                                                                   \
+	{                                                                                                                  \
+		inline bool hasValue()                                                                                         \
+		{                                                                                                              \
+			return getSettingsObject().contains( KEY_VALUE( geometry, name ) );                                        \
+		}                                                                                                              \
+                                                                                                                       \
+		inline QByteArray get()                                                                                        \
+		{                                                                                                              \
+			return { getSettingsObject().value( KEY_VALUE( geometry, name ) ).toByteArray() };                         \
+		}                                                                                                              \
+                                                                                                                       \
+		inline void set( const QByteArray val )                                                                        \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( geometry, name ), val );                                          \
+		}                                                                                                              \
+	}
+
+#define SETTINGS_STATE( name )                                                                                         \
+	namespace config::state::name                                                                                      \
+	{                                                                                                                  \
+		inline bool hasValue()                                                                                         \
+		{                                                                                                              \
+			return getSettingsObject().contains( KEY_VALUE( state, name ) );                                           \
+		}                                                                                                              \
+                                                                                                                       \
+		inline QByteArray get()                                                                                        \
+		{                                                                                                              \
+			return getSettingsObject().value( KEY_VALUE( state, name ) ).toByteArray();                                \
+		}                                                                                                              \
+                                                                                                                       \
+		inline void set( const QByteArray val )                                                                        \
+		{                                                                                                              \
+			getSettingsObject().setValue( KEY_VALUE( state, name ), val );                                             \
+		}                                                                                                              \
+	}
+
 #define CONFIG_ATTACH_THIS                                                                                             \
 	connect(                                                                                                           \
 		&( config::internal::getNotifier() ),                                                                          \
@@ -189,8 +228,10 @@ SETTINGS_D( importer, moveImported, bool, true )
 SETTINGS_D( db, first_start, bool, true )
 SETTINGS_D( logging, level, int, 2 )
 
-SETTINGS( geometry, main_window, QByteArray )
-SETTINGS( geometry, batch_import_dialog, QByteArray )
+SETTINGS_GEO( main_window )
+SETTINGS_GEO( batch_import_dialog )
+
+SETTINGS_STATE( main_window )
 
 SETTINGS_D( ui, use_system_theme, bool, true )
 

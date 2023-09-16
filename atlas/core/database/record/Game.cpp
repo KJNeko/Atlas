@@ -6,11 +6,13 @@
 
 #include <moc_Game.cpp>
 
+#include <QFuture>
+
 #include <tracy/Tracy.hpp>
 
-#include <cstring>
-
 #include "GameData.hpp"
+#include "core/database/RapidTransaction.hpp"
+#include "core/database/remote/F95Data.hpp"
 #include "core/imageManager.hpp"
 
 namespace atlas::records
@@ -138,7 +140,7 @@ namespace atlas::records
 		    == versions.end();
 	}
 
-	void Game::removeVersion( Version& info )
+	void Game::removeVersion( const Version& info )
 	{
 		auto& versions { ptr->m_versions };
 		const auto& version_name { info->m_version };
@@ -324,12 +326,41 @@ namespace atlas::records
 
 		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, game_id) VALUES (?,?)" << atlas_id << m_id;
 
-		this->ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
+		ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
+	}
+
+	void Game::connectF95Data( const F95ID f95_id )
+	{
+		if ( f95_id == INVALID_F95_ID ) throw std::runtime_error( "Invalid F95 ID" );
+
+		F95ID new_id { INVALID_ATLAS_ID };
+		RapidTransaction() << "SELECT new_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> new_id;
+
+		if ( new_id == INVALID_F95_ID )
+		{
+			atlas::remote::createDummyF95Record( f95_id );
+			new_id = f95_id;
+		}
+
+		RapidTransaction() << "INSERT INTO f95_zone_mappings (game_id, f95_id) VALUES (?,?)" << m_id << new_id;
+
+		ptr->f95_data = remote::F95RemoteData( f95_id );
+	}
+
+	bool Game::hasVersion( const QString str ) const
+	{
+		const auto ver_itter { std::find_if(
+			ptr->m_versions.begin(),
+			ptr->m_versions.end(),
+			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
+
+		//If the game exists return true. Else return false
+		return ver_itter != ptr->m_versions.end();
 	}
 
 	Version& Game::operator[]( const QString str ) const
 	{
-		auto ver_itter { std::find_if(
+		const auto ver_itter { std::find_if(
 			ptr->m_versions.begin(),
 			ptr->m_versions.end(),
 			[ &str ]( const Version& ver ) { return ver->m_version == str; } ) };
@@ -355,6 +386,11 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		return recordID( title, creator, engine ) != 0;
+	}
+
+	RecordID fetchRecord( QString title, QString creator, QString engine )
+	{
+		return recordID( title, creator, engine );
 	}
 
 	RecordAlreadyExists::RecordAlreadyExists( Game& record_in ) :

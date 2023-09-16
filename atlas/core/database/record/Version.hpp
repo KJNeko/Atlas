@@ -10,7 +10,6 @@
 #include <filesystem>
 
 #include "core/Types.hpp"
-#include "core/database/Database.hpp"
 #include "core/database/record/Game.hpp"
 
 namespace atlas::records

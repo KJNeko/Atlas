@@ -6,6 +6,8 @@
 
 #include "MessageNotification.hpp"
 
+#include <moc_MessageNotification.cpp>
+
 #include "ui_MessageNotification.h"
 
 MessageNotification::MessageNotification( QString str, QWidget* parent ) :

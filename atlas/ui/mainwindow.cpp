@@ -2,27 +2,30 @@
 
 #include <moc_mainwindow.cpp>
 
-#include "./dialog/AboutAtlas.hpp"
-#include "./dialog/SettingsDialog.hpp"
-#include "./dialog/StatsDialog.hpp"
-#include "./dialog/aboutqtdialog.h"
-#include "./ui_mainwindow.h"
-#include "./widgets/FilterWidget.hpp"
 #include "core/config.hpp"
+#include "core/database/RapidTransaction.hpp"
+#include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 #include "core/version.hpp"
+#include "ui/dialog/AboutAtlas.hpp"
+#include "ui/dialog/SettingsDialog.hpp"
+#include "ui/dialog/StatsDialog.hpp"
+#include "ui/dialog/aboutqtdialog.h"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
+#include "ui/importer/extractionImporter/ExtractionImportDialog.hpp"
 #include "ui/importer/simpleImporter/SimpleImporter.hpp"
 #include "ui/importer/singleImporter/SingleImporter.hpp"
-#include "ui/importer/extractionImporter/ExtractionImportDialog.hpp"
 #include "ui/views/gamelist/GameListDelegate.hpp"
+#include "ui_mainwindow.h"
+#include "widgets/FilterWidget.hpp"
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow )
 {
 	ui->setupUi( this );
-	
+	readSettings();
+
 	utils::setMainThread( this->thread() );
 
 	//Check db first, if nothing is there add default
@@ -70,9 +73,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
-	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal,  "Games" , 2 );
-	
-	ui->gamesTree->setModel(ui->recordView->model() );
+	ui->recordView->model()->setHeaderData( 0, Qt::Horizontal, "Games", 2 );
+
+	ui->gamesTree->setModel( ui->recordView->model() );
 	ui->gamesTree->setItemDelegate( new GameListDelegate() );
 	ui->gamesTree->setHeaderHidden( false );
 
@@ -98,10 +101,19 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
-	heartbeat_timer->setInterval( 2000 );
-	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::setBottomGameCounter );
-	connect( heartbeat_timer.get(), &QTimer::timeout, this, &MainWindow::refreshSearch );
-	heartbeat_timer->start();
+	connect(
+		&atlas::import::internal::getNotifier(),
+		&atlas::import::ImportNotifier::notification,
+		this,
+		&MainWindow::setBottomGameCounter );
+	connect(
+		&atlas::import::internal::getNotifier(),
+		&atlas::import::ImportNotifier::notification,
+		this,
+		&MainWindow::refreshSearch );
+
+	setBottomGameCounter();
+	refreshSearch();
 
 	ui->lbAtlasVersion->setText( utils::version_string_qt() );
 }
@@ -111,6 +123,19 @@ MainWindow::~MainWindow()
 	search_thread.exit();
 	config::geometry::main_window::set( saveGeometry() );
 	delete ui;
+}
+
+void MainWindow::closeEvent( QCloseEvent* event )
+{
+	config::geometry::main_window::set( saveGeometry() );
+	config::state::main_window::set( saveState() );
+	QMainWindow::closeEvent( event );
+}
+
+void MainWindow::readSettings()
+{
+	restoreGeometry( config::geometry::main_window::get() );
+	restoreState( config::state::main_window::get() );
 }
 
 void MainWindow::on_actionSimpleImporter_triggered()
@@ -135,7 +160,8 @@ void MainWindow::on_actionSingleImporter_triggered()
 	importer.exec();
 }
 
-void MainWindow::on_actionExtractionImporter_triggered(){
+void MainWindow::on_actionExtractionImporter_triggered()
+{
 	ExtractionImportDialog importer { this };
 	importer.exec();
 }
@@ -171,7 +197,6 @@ void MainWindow::switchToDetailed( const atlas::records::Game record )
 
 void MainWindow::on_homeButton_pressed()
 {
-	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
 }
 
@@ -276,6 +301,13 @@ void MainWindow::moveEvent( QMoveEvent* event )
 	movePopup();
 }
 
+void MainWindow::keyPressEvent( QKeyEvent* event )
+{
+	if ( ui->stackedWidget->currentIndex() == 1 ) ui->stackedWidget->setCurrentIndex( 0 );
+
+	return QMainWindow::keyPressEvent( event );
+}
+
 void MainWindow::movePopup()
 {
 	auto& task_popup { atlas::notifications::handle() };
@@ -312,4 +344,9 @@ void MainWindow::setBottomGameCounter()
 void MainWindow::refreshSearch()
 {
 	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::on_stackedWidget_currentChanged( const int idx )
+{
+	if ( idx == 0 ) ui->detailedRecordView->clearRecord();
 }

@@ -18,6 +18,7 @@
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"
 #include "core/gamelist/utils.hpp"
+#include "core/utils/FileScanner.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
 #include "core/utils/foldersize.hpp"
 #include "core/utils/regex/regex.hpp"
@@ -149,7 +150,8 @@ void runner(
 			}
 
 			if ( promise.isCanceled() ) return;
-			GameImportData data { std::filesystem::relative( folder, base ),
+			GameImportData data { base,
+				                  std::filesystem::relative( folder, base ),
 				                  std::move( title ),
 				                  std::move( creator ),
 				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
@@ -262,11 +264,7 @@ try
 }
 catch ( std::exception& e )
 {
-	spdlog::error( "Ate error before entering Qt space! {}", e.what() );
-}
-catch ( ... )
-{
-	spdlog::error( "Ate error before entering Qt space!" );
+	atlas::logging::error( fmt::format( "Main runner ate error before entering Qt space! {}", e.what() ) );
 }
 
 void GameScanner::start( const std::filesystem::path path, const QString regex, const bool size_folders )

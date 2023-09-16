@@ -20,6 +20,7 @@ class ExtractionImportDialog final : public QDialog
 
 	explicit ExtractionImportDialog( QWidget* parent = nullptr );
 	~ExtractionImportDialog();
+
 	void parseFiles( const QString& path );
 	QStringList parseFileName( const QString& s );
 

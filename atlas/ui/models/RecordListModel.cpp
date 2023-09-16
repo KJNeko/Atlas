@@ -59,8 +59,14 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 			return QVariant::fromStdVariant( std::variant<
 											 atlas::records::Game >( m_records.at( static_cast<
 																				   std::size_t >( index.row() ) ) ) );
+		case Qt::ToolTipRole:
+			[[fallthrough]];
+		case Qt::StatusTipRole:
+			{
+				return QString( "Game: %1" ).arg( m_records.at( static_cast< std::size_t >( index.row() ) )->m_title );
+			}
 		default:
-			return { "You fucked something up" };
+			return { "UNHANDLED ROLE IN RecordListModel::data" };
 	}
 }
 
@@ -136,19 +142,20 @@ void ImageLoader::triggerReady()
 	emit imageReady( m_index );
 }
 
-QVariant RecordListModel::headerData(int i, Qt::Orientation orientation, int role) const
+QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int role ) const
 {
-    if (role == Qt::DisplayRole && i == 0)
-    {
-        switch (orientation)
-        {
-            case Qt::Horizontal:
-                return QVariant("Horizontal"); // no column header, it's already in the tree
+	if ( role == Qt::DisplayRole && i == 0 )
+	{
+		switch ( orientation )
+		{
+			case Qt::Horizontal:
+				return QVariant( "Horizontal" ); // no column header, it's already in the tree
 			default:
 				return QVariant( "Verticle" );
 		}
 	}
-	else{
+	else
+	{
 		return QVariant( "Error" );
 	}
 }

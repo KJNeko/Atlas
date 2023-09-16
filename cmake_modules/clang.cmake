@@ -2,9 +2,9 @@ function(CompilerPreSetup)
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         #These two flags added with older gcc versions and Qt causes a compiler segfault -Wmismatched-tags -Wredundant-tags
         # STL has some warnings that prevent -Werror level compilation "-Wnull-dereference"
-        set(FGL_WARNINGS "-Wall -Wundef -Wextra -Wpessimizing-move -Wpedantic -Weffc++ -pedantic-errors -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wextra-semi -Wsuggest-override -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wno-virtual-move-assign -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2")
+        set(FGL_WARNINGS "-Wall -Wundef -Wextra -Wpessimizing-move -Wpedantic -Weffc++ -pedantic-errors -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wextra-semi -Wsuggest-override -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow -Walloca -Wsign-promo -Wconversion -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wwrite-strings -Wunused-const-variable -Wdouble-promotion -Wpointer-arith -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wswitch-default")
 
-        set(FGL_CONFIG "-std=c++20 -fmax-errors=3")
+        set(FGL_CONFIG "-std=c++20")
         set(FGL_DEBUG "-Og -g -fstrict-aliasing -fno-omit-frame-pointer -fstack-check -ftrapv -fverbose-asm")
         #Generates system specific stuff (IE requires AVX)
         set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")

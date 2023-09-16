@@ -4,6 +4,8 @@
 
 #include "Binder.hpp"
 
+#include "core/database/Database.hpp"
+
 Binder::Binder( const std::string_view sql )
 {
 	const auto prepare_ret {
@@ -12,7 +14,7 @@ Binder::Binder( const std::string_view sql )
 
 	if ( prepare_ret != SQLITE_OK )
 	{
-		atlas::logging::dev::error( fmt::format( "Failed to prepare statement: \n\t{}", sql ) );
+		atlas::logging::error( fmt::format( "Failed to prepare statement: \n\t{}", sql ) );
 		throw std::runtime_error( fmt::format(
 			"DB: Failed to prepare statement: \"{}\", Reason: \"{}\"", sql, sqlite3_errmsg( &Database::ref() ) ) );
 	}

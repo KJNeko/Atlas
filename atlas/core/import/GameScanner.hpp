@@ -26,7 +26,6 @@ class GameScanner final : public QObject
 	std::atomic< uint64_t > directories_left { 0 };
 
 	void start( const std::filesystem::path path, const QString regex, const bool size_folders );
-	void wait();
 
 	~GameScanner() override;
 

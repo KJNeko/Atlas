@@ -24,7 +24,6 @@ class MainWindow final : public QMainWindow
 
 	QThread search_thread {};
 	Search record_search {};
-	std::unique_ptr< QTimer > heartbeat_timer { new QTimer( this ) };
 
   public:
 
@@ -35,10 +34,13 @@ class MainWindow final : public QMainWindow
 
 	Ui::MainWindow* ui;
 
-	void openBatchImportDialog();
 	void resizeEvent( QResizeEvent* event ) override;
 	void showEvent( QShowEvent* event ) override;
 	void moveEvent( QMoveEvent* event ) override;
+	void keyPressEvent( QKeyEvent* event ) override;
+
+	void closeEvent( QCloseEvent* event ) override;
+	void readSettings();
 
   signals:
 	//void triggerSearch( QString text, const SortOrder order, const bool asc );
@@ -71,6 +73,7 @@ class MainWindow final : public QMainWindow
 	void taskPopupResized();
 	void setBottomGameCounter();
 	void refreshSearch();
+	void on_stackedWidget_currentChanged( const int idx );
 };
 
 #endif // MAINWINDOW_H

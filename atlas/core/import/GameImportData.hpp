@@ -10,10 +10,13 @@
 #include <filesystem>
 
 #include "core/config.hpp"
+#include "core/database/record/Game.hpp"
+#include "core/database/record/GameData.hpp"
+#include "core/gamelist/utils.hpp"
 
 struct GameImportData
 {
-	std::filesystem::path path;
+	std::filesystem::path relative_path;
 	QString title;
 	QString creator;
 	QString engine;
@@ -25,10 +28,16 @@ struct GameImportData
 	std::array< QString, BannerType::SENTINEL > banners;
 	std::vector< QString > previews;
 
+	//GL Info
+	gl::GameListInfos infos;
+
 	//Remote information
-	AtlasID atlas_id { INVALID_ATLAS_ID };
+	RecordID game_id;
+	AtlasID atlas_id;
+	bool conflicting_version;
 
 	GameImportData(
+		std::filesystem::path root_path,
 		std::filesystem::path path_in,
 		QString title_in,
 		QString creator_in,
@@ -40,7 +49,7 @@ struct GameImportData
 		std::filesystem::path executable_in,
 		std::array< QString, BannerType::SENTINEL > banners_in,
 		std::vector< QString > previews_in ) :
-	  path( std::move( path_in ) ),
+	  relative_path( std::move( path_in ) ),
 	  title( std::move( title_in ) ),
 	  creator( std::move( creator_in ) ),
 	  engine( std::move( engine_in ) ),
@@ -50,7 +59,15 @@ struct GameImportData
 	  executables( std::move( executables_in ) ),
 	  executable( std::move( executable_in ) ),
 	  banners( std::move( banners_in ) ),
-	  previews( std::move( previews_in ) )
+	  previews( std::move( previews_in ) ),
+	  infos(
+		  gl::dirHasGLInfo( root_path / relative_path ) ? gl::parse( root_path / relative_path ) :
+														  gl::GameListInfos() ),
+	  game_id( atlas::records::fetchRecord( title, creator, engine ) ),
+	  atlas_id(
+		  infos.f95_thread_id != INVALID_F95_ID ? atlas::remote::atlasIDFromF95Thread( infos.f95_thread_id ) :
+												  INVALID_ATLAS_ID ),
+	  conflicting_version( game_id != INVALID_RECORD_ID && atlas::records::Game( game_id ).hasVersion( version ) )
 	{}
 
 	GameImportData() = delete;

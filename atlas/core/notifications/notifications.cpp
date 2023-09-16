@@ -6,6 +6,7 @@
 
 #include <QPromise>
 
+#include "core/logging.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 
 namespace atlas::notifications
@@ -48,6 +49,14 @@ namespace atlas::notifications
 			if ( internal::notification_manager == nullptr )
 				throw std::runtime_error( "Notification manage not initalized before notification!" );
 			spdlog::info( "{}: {}", body, doc.toJson().toStdString() );
+
+			utils::executeOnMain(
+				[ & ]()
+				{
+					auto* ptr { new DevNotification( std::move( body ), doc.toJson() ) };
+					ptr->show();
+					internal::notification_manager->addNotification( ptr );
+				} );
 		}
 	} // namespace internal
 

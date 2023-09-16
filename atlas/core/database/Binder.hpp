@@ -6,16 +6,13 @@
 #ifndef ATLASGAMEMANAGER_BINDER_HPP
 #define ATLASGAMEMANAGER_BINDER_HPP
 
-#include <tracy/TracyC.h>
-
 #include <sqlite3.h>
 #include <string>
-#include <vector>
 
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
 #include "binders.hpp"
-#include "core/logging/dev.hpp"
+#include "core/logging.hpp"
 #include "extractors.hpp"
 
 class Binder
@@ -34,7 +31,7 @@ class Binder
 	Binder( const std::string_view sql );
 
 	template < typename T >
-		requires( !std::is_same_v< T, std::string > )
+		requires( !std::is_same_v< std::remove_reference_t< T >, std::string > )
 	Binder& operator<<( T t )
 	{
 		if ( param_counter > max_param_count )
@@ -46,7 +43,7 @@ class Binder
 				std::string( sqlite3_sql( stmt ) ) ) );
 		}
 
-		switch ( bindParameter< T >( stmt, std::move( t ), ++param_counter ) )
+		switch ( bindParameter< std::remove_reference_t< T > >( stmt, std::move( t ), ++param_counter ) )
 		{
 			case SQLITE_OK:
 				break;
@@ -95,7 +92,7 @@ class Binder
 				[[fallthrough]];
 			case SQLITE_ERROR:
 				{
-					atlas::logging::dev::error( fmt::format(
+					atlas::logging::error( fmt::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );
@@ -133,7 +130,7 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::dev::error(
+						atlas::logging::error(
 							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
@@ -164,7 +161,8 @@ class Binder
 					return;
 				default:
 					{
-						spdlog::error( "Unhandled error in sqlite!" );
+						atlas::logging::
+							error( fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}

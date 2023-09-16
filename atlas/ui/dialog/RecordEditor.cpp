@@ -15,6 +15,7 @@
 #include <QMimeData>
 #include <QtConcurrent>
 
+#include "core/database/Transaction.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/operators.hpp"
 #include "ui/dialog/ProgressBarDialog.hpp"

@@ -10,7 +10,10 @@
 #include <filesystem>
 #include <vector>
 
-#include "core/utils/FileScanner.hpp"
+namespace atlas::utils
+{
+	class FileScanner;
+}
 
 enum Engine : int
 {
@@ -39,8 +42,6 @@ enum Engine : int
 	Adobe_AIR,
 	UNKNOWN
 };
-
-
 
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >

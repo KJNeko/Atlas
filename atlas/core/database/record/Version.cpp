@@ -5,7 +5,7 @@
 #include "Version.hpp"
 
 #include "core/config.hpp"
-#include "core/database/Database.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/logging.hpp"
 #include "core/utils/execute/executeProc.hpp"
@@ -19,7 +19,6 @@ namespace atlas::records
 	}
 
 	bool Version::isInPlace() const
-	try
 	{
 		ZoneScoped;
 		bool in_place { false };
@@ -29,16 +28,6 @@ namespace atlas::records
 			>> in_place;
 
 		return in_place;
-	}
-	catch ( const std::exception& e )
-	{
-		spdlog::error( "({},{})->GameMetadata::isInPlace: {}", parent()->m_game_id, this->m_version, e.what() );
-		std::rethrow_exception( std::current_exception() );
-	}
-	catch ( ... )
-	{
-		spdlog::error( "({},{})->GameMetadata::isInPlace: Unknown exception", parent()->m_game_id, this->m_version );
-		std::rethrow_exception( std::current_exception() );
 	}
 
 	std::uint32_t Version::getPlaytime() const

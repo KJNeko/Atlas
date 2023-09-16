@@ -5,15 +5,10 @@
 #ifndef ATLAS_RECORD_HPP
 #define ATLAS_RECORD_HPP
 
-#include <QPixmap>
-
 #include "Version.hpp"
 #include "core/Types.hpp"
-#include "core/config.hpp"
-#include "core/database/Column.hpp"
-#include "core/database/Database.hpp"
 #include "core/database/remote/AtlasData.hpp"
-#include "core/fgl/string_literal.hpp"
+#include "core/database/remote/F95Data.hpp"
 
 namespace atlas::records
 {
@@ -36,6 +31,7 @@ namespace atlas::records
 		std::vector< std::filesystem::path > m_preview_paths {};
 
 		std::optional< remote::AtlasRemoteData > atlas_data { std::nullopt };
+		std::optional< remote::F95RemoteData > f95_data { std::nullopt };
 
 		//Some helpers for commonly used data sets.
 		const Version& getVersion( const QString ) const;

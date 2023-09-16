@@ -5,9 +5,9 @@
 #ifndef ATLASGAMEMANAGER_TAGS_HPP
 #define ATLASGAMEMANAGER_TAGS_HPP
 
-#include <QString>
-
 #include <cstdint>
+
+class QString;
 
 using TagID = std::uint64_t;
 [[maybe_unused]] constexpr TagID INVALID_TAG_ID { 0 };
@@ -15,7 +15,7 @@ using TagID = std::uint64_t;
 namespace atlas::tags
 {
 	//! Creates a new tag (or returns an existing ID)
-	TagID createTag( QString str );
+	TagID createTag( const QString& str );
 
 } // namespace atlas::tags
 

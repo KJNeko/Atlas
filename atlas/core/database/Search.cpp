@@ -8,10 +8,9 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "Transaction.hpp"
-#include "core/search/QueryBuilder.hpp"
+#include "RapidTransaction.hpp"
 
-void Search::searchTextChanged( const QString text ) //, const SortOrder order, const bool asc )
+void Search::searchTextChanged( const QString& text ) //, const SortOrder order, const bool asc )
 {
 	ZoneScoped;
 
@@ -28,7 +27,7 @@ void Search::searchTextChanged( const QString text ) //, const SortOrder order, 
 		std::vector< atlas::records::Game > records;
 
 		RapidTransaction() << "SELECT DISTINCT record_id FROM games WHERE LOWER(title) LIKE LOWER(?) ORDER BY title"
-						   << ( text + "%" )
+						   << ( "%" + text + "%" )
 			>> [ &records ]( const RecordID id )
 		{
 			if ( id > TESTING_RECORD_ID ) records.emplace_back( id );
@@ -38,6 +37,6 @@ void Search::searchTextChanged( const QString text ) //, const SortOrder order, 
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "Search failed with query \"{}\": {}", query, e.what() );
+		atlas::logging::error( fmt::format( "Search failed with query \"{}\": {}", query, e.what() ) );
 	}
 }

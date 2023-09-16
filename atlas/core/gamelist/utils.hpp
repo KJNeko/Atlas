@@ -12,9 +12,6 @@
 
 namespace gl
 {
-	//! Searches the given directory for games with the GL_Infos.ini file
-	std::vector< std::filesystem::path > searchGames( const std::filesystem::path );
-
 	struct GameListInfos
 	{
 		QString version {};
@@ -23,14 +20,16 @@ namespace gl
 		std::uint64_t gl_id { 0 };
 		QString name {};
 		QString thread_url {};
-		std::uint64_t f95_thread_id { INVALID_F95_ID };
+		F95ID f95_thread_id { INVALID_F95_ID };
 	};
 
 #define GL_INFO_FILENAME "GL_Infos.ini"
 
-	GameListInfos parse( const std::filesystem::path& path );
+	[[nodiscard]] GameListInfos parse( const std::filesystem::path& path );
 
-	inline bool dirHasGLInfo( const std::filesystem::path& path )
+	[[nodiscard]] AtlasID parseAtlas( const std::filesystem::path& path );
+
+	[[nodiscard]] inline bool dirHasGLInfo( const std::filesystem::path& path )
 	{
 		return std::filesystem::exists( path / GL_INFO_FILENAME );
 	}

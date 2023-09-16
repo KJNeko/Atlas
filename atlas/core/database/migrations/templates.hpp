@@ -6,6 +6,7 @@
 #define ATLASGAMEMANAGER_TEMPLATES_HPP
 
 #include <cstdint>
+#include <string_view>
 
 namespace atlas::database::migrations
 {

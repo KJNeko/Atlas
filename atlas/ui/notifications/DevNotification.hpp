@@ -23,12 +23,15 @@ class DevNotification final : public Notification
 
   public:
 
-	explicit DevNotification( QWidget* parent = nullptr );
+	explicit DevNotification( std::string msg, QString info, QWidget* parent = nullptr );
 	~DevNotification() override;
 
   private:
 
 	Ui::DevNotification* ui;
+
+  private slots:
+	void on_copyError_pressed();
 };
 
 #endif //ATLASGAMEMANAGER_DEVNOTIFICATION_HPP

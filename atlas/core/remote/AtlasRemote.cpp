@@ -14,7 +14,7 @@
 
 #include <fstream>
 
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/logging.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"

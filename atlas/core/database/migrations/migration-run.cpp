@@ -3,7 +3,7 @@
 //
 
 #include "core/config.hpp"
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/logging.hpp"
 #include "templates.hpp"
 
@@ -23,7 +23,7 @@ namespace atlas::database::migrations
 		break;
 
 	//! Int to represent what the highest migration is at (Starting at migration 0 we run until we are N <= MIGRATIONS_VERSION)
-	inline static constexpr int MIGRATIONS_VERSION { 16 };
+	inline static constexpr int MIGRATIONS_VERSION { 17 };
 
 	template < std::uint64_t idx >
 	void runUpRecurse()
@@ -89,6 +89,7 @@ namespace atlas::database::migrations
 					MIGRATE( 13 )
 					MIGRATE( 14 )
 					MIGRATE( 15 )
+					MIGRATE( 16 )
 					default:
 						spdlog::critical(
 							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",

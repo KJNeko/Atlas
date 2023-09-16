@@ -18,45 +18,65 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 {
 	painter->save();
 
-	switch ( index.column() )
+	using enum BatchImportModel::ImportColumns;
+
+	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
+		case VERSION:
+			[[fallthrough]];
 		case TITLE:
 			{
-				const auto has_gl_link { index.data( ImportColumns::HAS_GL_LINK ).value< bool >() };
-				if ( has_gl_link )
+				//Print out icons for title first.
+				const auto data { index.data().value< QString >() };
+				painter->drawText( options.rect, data );
+
+				//Shift rect over by size of text
+				auto top_right { options.rect.bottomRight() };
+
+				//Text info
+				const auto text_height { painter->fontMetrics().height() };
+
+				//Drop top_right down to match the height of text.
+				const auto diff { options.rect.height() - text_height };
+
+				//Horizontal shift from the right side. Gives icons a little extra space and not hugging the line for the next col
+				constexpr int hor_shift { 10 };
+				top_right -= QPoint( hor_shift, options.rect.height() - ( diff / 2 ) );
+
+				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
+				for ( const auto& ico : icons )
 				{
-					QPixmap pixmap { ":/images/assets/gl.png" };
-					pixmap = pixmap.scaledToHeight( options.rect.height() );
+					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
+					top_right -= QPoint( img.width(), 0 );
 
-					const QPoint draw_point { QPoint( options.rect.width() - pixmap.width(), 0 ) };
-					auto draw_rect { options.rect.translated( draw_point ) };
-					draw_rect.setSize( pixmap.size() );
-
-					painter->drawPixmap( draw_rect, pixmap );
+					const QRect rect { top_right, img.size() };
+					painter->drawPixmap( rect, img );
 				}
+
+				break;
 			}
-			[[fallthrough]]; //print title
 		case FOLDER_PATH:
 			[[fallthrough]]; //print path
 		case CREATOR:
 			[[fallthrough]]; //print creator
-		case VERSION:
-			[[fallthrough]]; // print version
+
 		case ENGINE:
 			[[fallthrough]];
 		case SIZE:
 			{
 				const auto data { index.data().value< QString >() };
-				painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
+				painter->drawText( options.rect, data );
 				break;
 			}
 			//print size
-		case EXECUTABLES: //print executables
+		case EXECUTABLE: //print executables
 			{
 				const auto data { index.data().value< QString >() };
+
 				const auto file_options {
-					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+					index.data( BatchImportModel::ExecutablesEditRole ).value< std::vector< std::filesystem::path > >()
 				};
+
 				if ( file_options.size() > 1 )
 				{
 					constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
@@ -67,7 +87,6 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 				}
 				else
 					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
-
 				break;
 			}
 		default:
@@ -80,15 +99,17 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 QSize BatchImportDelegate::
 	sizeHint( [[maybe_unused]] const QStyleOptionViewItem& item, [[maybe_unused]] const QModelIndex& index ) const
 {
-	const auto info { item.fontMetrics };
+	using enum BatchImportModel::ImportColumns;
 
-	switch ( index.column() )
+	const auto font_info { item.fontMetrics };
+
+	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				const auto text { index.data().value< QString >() };
 				const auto file_options {
-					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+					index.data( BatchImportModel::ExecutablesEditRole ).value< std::vector< std::filesystem::path > >()
 				};
 				constexpr int black_medium_down_pointing_triangle_unicode { 0x23F7 }; //U+23F7 (⏷)
 
@@ -96,12 +117,52 @@ QSize BatchImportDelegate::
 					                              text + ' ' + QChar( black_medium_down_pointing_triangle_unicode ) :
 					                              text };
 
-				return info.size( Qt::TextSingleLine, text_modified ) + QSize( 15, 0 );
+				return font_info.size( Qt::TextSingleLine, text_modified ) + QSize( 15, 0 );
 			}
+		case TITLE:
+			{
+				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
+				const auto text_height { font_info.height() };
+				int img_accum { 0 };
+				for ( const auto& ico : icons )
+				{
+					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
+					img_accum += img.width();
+				}
+
+				const auto text { index.data().value< QString >() };
+				return font_info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 ) + QSize( img_accum, 0 );
+			}
+		case VERSION:
+			{
+				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
+				const auto text_height { font_info.height() };
+				int img_accum { 0 };
+				for ( const auto& ico : icons )
+				{
+					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
+					img_accum += img.width();
+				}
+
+				const auto text { index.data().value< QString >() };
+				return font_info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 ) + QSize( img_accum, 0 );
+			}
+		case CREATOR:
+			[[fallthrough]];
+		case ENGINE:
+			[[fallthrough]];
+		case SIZE:
+			[[fallthrough]];
+		case FOLDER_PATH:
+			[[fallthrough]];
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
 		default:
 			{
 				const auto text { index.data().value< QString >() };
-				return info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 );
+				return font_info.size( Qt::TextSingleLine, text ) + QSize( 15, 0 );
 			}
 	}
 }
@@ -109,12 +170,14 @@ QSize BatchImportDelegate::
 QWidget* BatchImportDelegate::
 	createEditor( QWidget* parent, const QStyleOptionViewItem& options, const QModelIndex& index ) const
 {
-	switch ( index.column() )
+	using enum BatchImportModel::ImportColumns;
+
+	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				const auto data {
-					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+					index.data( BatchImportModel::ExecutablesEditRole ).value< std::vector< std::filesystem::path > >()
 				};
 
 				if ( data.size() > 1 )
@@ -130,9 +193,9 @@ QWidget* BatchImportDelegate::
 
 					return box;
 				}
+
 				break;
 			}
-
 		case TITLE:
 			[[fallthrough]];
 		case CREATOR:
@@ -156,9 +219,11 @@ QWidget* BatchImportDelegate::
 
 void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
 {
-	switch ( index.column() )
+	using enum BatchImportModel::ImportColumns;
+
+	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				auto box { dynamic_cast< QComboBox* >( editor ) };
 
@@ -185,14 +250,16 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 
 void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) const
 {
-	switch ( index.column() )
+	using enum BatchImportModel::ImportColumns;
+
+	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
-		case EXECUTABLES:
+		case EXECUTABLE:
 			{
 				auto box { dynamic_cast< QComboBox* >( editor ) };
 
 				const auto data {
-					index.data( Qt::ItemDataRole::EditRole ).value< std::vector< std::filesystem::path > >()
+					index.data( BatchImportModel::ExecutablesEditRole ).value< std::vector< std::filesystem::path > >()
 				};
 				QStringList executables;
 				for ( const auto& path : data ) executables << QString::fromStdString( path.string() );

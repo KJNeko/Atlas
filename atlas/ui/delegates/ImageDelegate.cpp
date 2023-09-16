@@ -6,26 +6,21 @@
 
 #include <moc_ImageDelegate.cpp>
 
-#include <QPainter>
 #include <QFuture>
+#include <QPainter>
 
 #include <tracy/Tracy.hpp>
 
 #include <filesystem>
-#include "core/database/record/Game.hpp"
-#include "core/database/record/GameData.hpp"
 
 #include "core/config.hpp"
-#include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
 	ZoneScoped;
 	//atlas::records::Game record { index.data().value< atlas::records::Game >() };
 
-	
 	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
-
 
 	if ( std::filesystem::exists( path ) )
 	{
@@ -55,7 +50,6 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	}
 
 	painter->drawRect( item.rect );
-	
 }
 
 QSize ImageDelegate::

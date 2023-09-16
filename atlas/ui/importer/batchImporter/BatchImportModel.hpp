@@ -11,23 +11,30 @@
 
 #include "core/import/GameImportData.hpp"
 
-enum ImportColumns
-{
-	TITLE,
-	CREATOR,
-	ENGINE,
-	VERSION,
-	EXECUTABLES,
-	SIZE,
-	FOLDER_PATH,
-	HAS_GL_LINK
-};
-
 class BatchImportModel final : public QAbstractTableModel
 {
 	std::vector< GameImportData > m_data {};
 
   public:
+
+	enum ImportColumns
+	{
+		TITLE,
+		CREATOR,
+		ENGINE,
+		VERSION,
+		EXECUTABLE,
+		SIZE,
+		FOLDER_PATH,
+		COLUMNS_MAX,
+		IS_CONFLICTING
+	};
+
+	enum Roles
+	{
+		ExecutablesEditRole = Qt::UserRole + 1,
+		TitleIcons
+	};
 
 	const std::vector< GameImportData >& getData() const { return m_data; }
 
@@ -40,6 +47,9 @@ class BatchImportModel final : public QAbstractTableModel
 	void sort( int idx, Qt::SortOrder order = Qt::AscendingOrder ) override;
 
 	void clearData();
+
+	//! Returns true if we are okay to import.
+	bool isGood() const;
 
   public slots:
 	void addGame( GameImportData data );

@@ -52,6 +52,8 @@ namespace atlas::remote
 
 	} // namespace internal
 
+	[[nodiscard]] AtlasID atlasIDFromF95Thread( const F95ID thread_id );
+
 	class AtlasRemoteData
 	{
 		std::shared_ptr< internal::AtlasData > data_ptr;

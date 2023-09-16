@@ -2,9 +2,11 @@
 // Created by kj16609 on 7/15/23.
 //
 
+#include <QFuture>
 #include <QImageReader>
-#include <QPixmapCache>
-#include <QtConcurrent>
+#include <QPixmap>
+#include <QPromise>
+#include <QtConcurrentRun>
 
 #include "Game.hpp"
 #include "GameData.hpp"
@@ -49,9 +51,11 @@ namespace atlas::records
 
 				// If size is zero then we emit a super high score to get this item removed as soon as we can. Since it's likely fucked.
 				if ( size_score == 0 ) return std::numeric_limits< std::uint64_t >::max();
-				if ( time_diff == 0 )
-					return size_score; //Prevents multiply by 0 which for some reason caused SIGILL to be yeeted by the CPU.
 
+				// Prevent multiply by 0
+				if ( time_diff == 0 ) return size_score;
+
+				// Take the size score and multiplty it by the time diff. Making it higher the more time has ellapsed depending on the ratio.
 				const auto val { static_cast< uint64_t >(
 					static_cast< double >( size_score ) * ( static_cast< double >( time_diff ) * time_score_ratio ) ) };
 
@@ -65,7 +69,7 @@ namespace atlas::records
 
 		inline static std::recursive_mutex mtx;
 		inline static std::multimap< std::string, PixmapItem > cache;
-		inline static std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
+		inline static constexpr std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
 		inline static std::uint64_t current_size { 0 };
 
 		void prune()
@@ -74,6 +78,7 @@ namespace atlas::records
 			std::lock_guard guard { mtx };
 			//Timepoint at which we declare data as 'stale' and can probably safely remove it
 			using namespace std::chrono_literals;
+			//Time at which a image can be declared 'old' and can safely be removed if it's not been accessed in this timeframe.
 			const auto stale_timepoint { Clock::now() - 10s };
 
 			int offset { 0 };
@@ -160,7 +165,7 @@ namespace atlas::records
 		if ( promise.isCanceled() ) return;
 		if ( !pixmap.load( QString::fromStdString( path.string() ) ) )
 		{
-			atlas::logging::userwarn( fmt::format( "Qt Failed to load image {}", path ) );
+			atlas::logging::warn( fmt::format( "Qt Failed to load image {}", path ) );
 			promise.addResult( pixmap );
 		}
 		if ( promise.isCanceled() ) return;
@@ -218,8 +223,8 @@ namespace atlas::records
 
 			if ( pixmap.isNull() )
 			{
-				atlas::logging::userwarn(
-					fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
+				atlas::logging::
+					warn( fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
 				promise.addResult( pixmap );
 			}
 
@@ -274,17 +279,13 @@ namespace atlas::records
 		}
 	}
 
-	QPixmap Game::requestThumbnail(const QSize size, const BannerType type){
-		const auto path { bannerPath( type ) };
-		/*spdlog::info(
-			"{}",
-			QString::fromStdString(
-				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );*/
-		QPixmap pixmap { QPixmap( QString::fromStdString(
-								  path.parent_path().string() + "//"
-								  + path.stem().string() + "_thumb"
-								  + path.extension().string() ) )
-				         .scaled( size, Qt::IgnoreAspectRatio )};
+	QPixmap Game::requestThumbnail( const QSize size, const BannerType type )
+	{
+		const auto& path { bannerPath( type ) };
+		const QPixmap pixmap { QPixmap( QString::fromStdString(
+											path.parent_path().string() + "//" + path.stem().string() + "_thumb"
+											+ path.extension().string() ) )
+			                       .scaled( size, Qt::IgnoreAspectRatio ) };
 		return pixmap;
 	}
 
@@ -299,7 +300,7 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		const auto& previews { this->ptr->m_preview_paths };
-		const auto path { previews.at( index ) };
+		const auto& path { previews.at( index ) };
 
 		return QtConcurrent::run( &globalPools().image_loaders, loadImage, path );
 	}

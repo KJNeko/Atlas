@@ -8,7 +8,6 @@
 
 #include <moc_NotificationManagerUI.cpp>
 
-#include "core/config.hpp"
 #include "core/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"
@@ -67,21 +66,34 @@ void NotificationManagerUI::addNotification( Notification* notif )
 
 void NotificationManagerUI::setHeight()
 {
-	//Accumulate child size
-	int height { 0 };
-	height += ui->frame->height();
-	//height += ui->notifications->contentsMargins().bottom();
+	if ( ui->scrollArea->isHidden() )
+	{
+		setFixedHeight( ui->frame->height() );
+		emit requestMove();
+		return;
+	}
+	else
+	{
+		//Accumulate child size
+		int height { 0 };
+		height += ui->frame->height();
+		height += ui->notifications->layout()->contentsMargins().bottom();
 
-	for ( auto* notif : notifications() ) height += notif->size().height() + ui->notifications->layout()->spacing();
+		for ( auto* notif : notifications() )
+		{
+			height += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+		}
 
-	constexpr int MAX_HEIGHT { 500 };
-	constexpr int MIN_HEIGHT { 70 };
+		constexpr int MAX_HEIGHT { 500 };
+		constexpr int MIN_HEIGHT { 0 };
 
-	//Clamp it down
-	height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
+		//Clamp it down
+		height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
 
-	this->setHidden( notifications().size() == 0 );
-	setFixedHeight( height );
+		this->setHidden( notifications().size() == 0 );
+		setFixedHeight( height );
+		emit requestMove();
+	}
 }
 
 void NotificationManagerUI::resizeEvent( QResizeEvent* event )
@@ -127,4 +139,5 @@ void NotificationManagerUI::on_btnHideShow_pressed()
 {
 	//Set to inverse
 	ui->scrollArea->setVisible( !ui->scrollArea->isVisible() );
+	setHeight();
 }

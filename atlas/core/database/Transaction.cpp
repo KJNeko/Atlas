@@ -42,10 +42,26 @@ namespace atlas::database
 	}
 
 	template <>
-	TransactionBase< false >::TransactionBase() : guard( self_mtx )
-	{}
+	void TransactionBase< true >::commit()
+	{
+		if ( !m_finished )
+		{
+			sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
+			m_finished = true;
+		}
+		else
+			throw TransactionInvalid( "Attempted to commit a finished transaction" );
+	}
 
 	template <>
-	TransactionBase< false >::~TransactionBase() noexcept( false )
-	{}
+	void TransactionBase< true >::abort()
+	{
+		if ( !m_finished )
+		{
+			sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
+			m_finished = true;
+		}
+		else
+			throw TransactionInvalid( "Attempted to abort a finished transaction" );
+	}
 } // namespace atlas::database

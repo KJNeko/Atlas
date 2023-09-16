@@ -6,6 +6,7 @@
 #define ATLAS_BATCHIMPORTDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
+#include <QStyledItemDelegate>
 
 class BatchImportDelegate final : public QAbstractItemDelegate
 {

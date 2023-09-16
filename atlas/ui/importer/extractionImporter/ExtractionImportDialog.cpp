@@ -1,5 +1,7 @@
 #include "ExtractionImportDialog.hpp"
 
+#include <moc_ExtractionImportDialog.cpp>
+
 #include <QAbstractItemView>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -94,9 +96,8 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 void ExtractionImportDialog::parseFiles( const QString& path )
 {
-	std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
+	constexpr std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
 	int row { 0 };
-	ui->exGames->setRowCount( 50 );
 	for ( const auto& p : std::filesystem::recursive_directory_iterator( path.toStdWString() ) )
 	{
 		const auto path_ext { p.path().extension().string() };
@@ -108,15 +109,16 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 				const QString file_path { QString::fromStdString( p.path().string() ) };
 				const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
 				//"Title", "Version", "Creator", "File", "Path","Found in DB"
-				QTableWidgetItem* const item0 { new QTableWidgetItem( qlist[ 0 ] ) };
-				QTableWidgetItem* const item1 { new QTableWidgetItem( qlist[ 1 ] ) };
-				QTableWidgetItem* const item3 { new QTableWidgetItem( file_name ) };
-				QTableWidgetItem* const item4 { new QTableWidgetItem( file_path ) };
+				QTableWidgetItem* const title_item { new QTableWidgetItem( qlist[ 0 ] ) };
+				QTableWidgetItem* const version_item { new QTableWidgetItem( qlist[ 1 ] ) };
+				QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
+				QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
 
-				ui->exGames->setItem( row, 0, item0 );
-				ui->exGames->setItem( row, 1, item1 );
-				ui->exGames->setItem( row, 3, item3 );
-				ui->exGames->setItem( row, 4, item4 );
+				ui->exGames->insertRow( row );
+				ui->exGames->setItem( row, 0, title_item );
+				ui->exGames->setItem( row, 1, version_item );
+				ui->exGames->setItem( row, 3, file_name_item );
+				ui->exGames->setItem( row, 4, file_path_item );
 				row++;
 			}
 		}
@@ -125,13 +127,13 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 
 bool checkOsNames( QString s )
 {
-	std::array< std::string_view, 6 > arr { "pc", "win", "linux", "windows", "unc", "win64" };
+	constexpr std::array< std::string_view, 6 > arr { "pc", "win", "linux", "windows", "unc", "win64" };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
 bool checkLanguages( QString s )
 {
-	std::array< std::string_view, 2 > arr { "japanese", "english" };
+	constexpr std::array< std::string_view, 2 > arr { "japanese", "english" };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
@@ -224,7 +226,7 @@ QStringList parseStringByDelimiter( const QString& s, const QString& delimiter )
 			{
 				//Check if string contaings a version type
 
-				auto version_result { findVersionType( item ) };
+				QList< QString > version_result { findVersionType( item ) };
 
 				title += std::move( version_result[ 0 ] );
 				version += std::move( version_result[ 1 ] );

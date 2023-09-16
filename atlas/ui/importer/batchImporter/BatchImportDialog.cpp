@@ -38,6 +38,12 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		static_cast< BatchImportModel* >( ui->twGames->model() ),
 		&BatchImportModel::addGame );
 
+	connect(
+		static_cast< BatchImportModel* >( ui->twGames->model() ),
+		&BatchImportModel::dataChanged,
+		this,
+		&BatchImportDialog::modelChanged );
+
 	loadConfig();
 }
 
@@ -197,6 +203,8 @@ void BatchImportDialog::on_btnNext_pressed()
 		ui->btnBack->setEnabled( true );
 		ui->btnNext->setDisabled( true );
 
+		if ( !ui->cbScanFilesize->isChecked() ) ui->twGames->hideColumn( BatchImportModel::SIZE );
+
 		processFiles();
 	}
 }
@@ -224,6 +232,10 @@ void BatchImportDialog::modelChanged(
 {
 	ZoneScoped;
 	ui->twGames->resizeColumnsToContents();
+
+	const auto* model { static_cast< BatchImportModel* >( ui->twGames->model() ) };
+
+	ui->btnNext->setEnabled( model->isGood() );
 }
 
 void BatchImportDialog::processFinishedDirectory( const GameImportData game_data )
@@ -251,7 +263,8 @@ void BatchImportDialog::finishedPreProcessing()
 	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
 	                              .arg( ui->twGames->model()->rowCount() ) );
 	ui->twGames->resizeColumnsToContents();
-	ui->btnNext->setEnabled( true );
+
+	if ( static_cast< BatchImportModel* >( ui->twGames->model() )->isGood() ) ui->btnNext->setEnabled( true );
 }
 
 void BatchImportDialog::on_btnCancel_pressed()

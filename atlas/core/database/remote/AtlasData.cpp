@@ -4,7 +4,7 @@
 
 #include "AtlasData.hpp"
 
-#include "core/database/Transaction.hpp"
+#include "core/database/RapidTransaction.hpp"
 
 namespace atlas::remote
 {
@@ -115,5 +115,12 @@ namespace atlas::remote
 
 	AtlasRemoteData::AtlasRemoteData( AtlasID id ) : data_ptr( internal::get( id ) )
 	{}
+
+	[[nodiscard]] AtlasID atlasIDFromF95Thread( const F95ID thread_id )
+	{
+		AtlasID id { INVALID_ATLAS_ID };
+		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << thread_id >> id;
+		return id;
+	}
 
 } // namespace atlas::remote
