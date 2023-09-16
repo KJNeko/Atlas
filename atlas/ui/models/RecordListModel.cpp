@@ -59,8 +59,12 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 			return QVariant::fromStdVariant( std::variant<
 											 atlas::records::Game >( m_records.at( static_cast<
 																				   std::size_t >( index.row() ) ) ) );
+		case Qt::StatusTipRole:
+			{
+				return QString( "Game: %1" ).arg( m_records.at( static_cast< std::size_t >( index.row() ) )->m_title );
+			}
 		default:
-			return { "You fucked something up" };
+			return { "UNHANDLED ROLE IN RecordListModel::data" };
 	}
 }
 
