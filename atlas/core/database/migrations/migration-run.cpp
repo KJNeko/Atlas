@@ -23,7 +23,7 @@ namespace atlas::database::migrations
 		break;
 
 	//! Int to represent what the highest migration is at (Starting at migration 0 we run until we are N <= MIGRATIONS_VERSION)
-	inline static constexpr int MIGRATIONS_VERSION { 16 };
+	inline static constexpr int MIGRATIONS_VERSION { 17 };
 
 	template < std::uint64_t idx >
 	void runUpRecurse()
