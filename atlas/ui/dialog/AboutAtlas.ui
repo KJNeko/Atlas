@@ -70,6 +70,13 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QLabel" name="versionLabel">
+        <property name="text">
+         <string>EMPTY VERSION LABEL</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
