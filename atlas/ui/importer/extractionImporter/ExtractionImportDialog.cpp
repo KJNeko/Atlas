@@ -226,7 +226,7 @@ QStringList parseStringByDelimiter( const QString& s, const QString& delimiter )
 			{
 				//Check if string contaings a version type
 
-				auto version_result { findVersionType( item ) };
+				QList< QString > version_result { findVersionType( item ) };
 
 				title += std::move( version_result[ 0 ] );
 				version += std::move( version_result[ 1 ] );
