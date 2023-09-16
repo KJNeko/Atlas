@@ -50,7 +50,7 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 					case IS_CONFLICTING:
 						return item.conflicting_version;
 					default:
-						return QString( "INVALID DATA IN SWITCH!" );
+						return QString( "Missing handler for Qt::DisplayRole for this column in BatchImportModel.cpp" );
 				}
 			}
 		case ExecutablesEditRole:
