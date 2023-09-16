@@ -2,7 +2,7 @@
 
 #include <QDesktopServices>
 #include <QUrl>
-#include <QtVersion>
+#include <QtGlobal>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
