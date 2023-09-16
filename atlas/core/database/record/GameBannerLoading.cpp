@@ -69,7 +69,7 @@ namespace atlas::records
 
 		inline static std::recursive_mutex mtx;
 		inline static std::multimap< std::string, PixmapItem > cache;
-		inline static std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
+		inline static constexpr std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
 		inline static std::uint64_t current_size { 0 };
 
 		void prune()
@@ -78,6 +78,7 @@ namespace atlas::records
 			std::lock_guard guard { mtx };
 			//Timepoint at which we declare data as 'stale' and can probably safely remove it
 			using namespace std::chrono_literals;
+			//Time at which a image can be declared 'old' and can safely be removed if it's not been accessed in this timeframe.
 			const auto stale_timepoint { Clock::now() - 10s };
 
 			int offset { 0 };
@@ -280,15 +281,11 @@ namespace atlas::records
 
 	QPixmap Game::requestThumbnail( const QSize size, const BannerType type )
 	{
-		const auto path { bannerPath( type ) };
-		/*spdlog::info(
-			"{}",
-			QString::fromStdString(
-				path.parent_path().string() + "//" + path.stem().string() + "_thumb" + path.extension().string() ) );*/
-		QPixmap pixmap { QPixmap( QString::fromStdString(
-									  path.parent_path().string() + "//" + path.stem().string() + "_thumb"
-									  + path.extension().string() ) )
-			                 .scaled( size, Qt::IgnoreAspectRatio ) };
+		const auto& path { bannerPath( type ) };
+		const QPixmap pixmap { QPixmap( QString::fromStdString(
+											path.parent_path().string() + "//" + path.stem().string() + "_thumb"
+											+ path.extension().string() ) )
+			                       .scaled( size, Qt::IgnoreAspectRatio ) };
 		return pixmap;
 	}
 
@@ -303,7 +300,7 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		const auto& previews { this->ptr->m_preview_paths };
-		const auto path { previews.at( index ) };
+		const auto& path { previews.at( index ) };
 
 		return QtConcurrent::run( &globalPools().image_loaders, loadImage, path );
 	}
