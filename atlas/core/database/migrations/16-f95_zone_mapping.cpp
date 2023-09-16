@@ -13,7 +13,7 @@ namespace atlas::database::migrations
 			R"(
 				CREATE TABLE IF NOT EXISTS f95_zone_mappings
 				(
-					game_id INTEGER REFERENCES games(game_id),
+					record_id INTEGER REFERENCES games(record_id),
 					f95_id INTEGER REFERENCES f95_zone_data(f95_id)
 				);
 			)";
