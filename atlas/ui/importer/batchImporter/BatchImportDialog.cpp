@@ -203,6 +203,8 @@ void BatchImportDialog::on_btnNext_pressed()
 		ui->btnBack->setEnabled( true );
 		ui->btnNext->setDisabled( true );
 
+		if ( !ui->cbScanFilesize->isChecked() ) ui->twGames->hideColumn( BatchImportModel::SIZE );
+
 		processFiles();
 	}
 }
