@@ -6,6 +6,8 @@
 
 #include "DevNotification.hpp"
 
+#include <moc_DevNotification.cpp>
+
 #include <QClipboard>
 #include <QGuiApplication>
 

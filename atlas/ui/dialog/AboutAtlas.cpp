@@ -1,5 +1,7 @@
 #include "AboutAtlas.hpp"
 
+#include <moc_AboutAtlas.cpp>
+
 #include <QDesktopServices>
 #include <QUrl>
 #include <QtGlobal>

@@ -1,5 +1,7 @@
 #include "ExtractionImportDialog.hpp"
 
+#include <moc_ExtractionImportDialog.cpp>
+
 #include <QAbstractItemView>
 #include <QFileDialog>
 #include <QMessageBox>

@@ -4,6 +4,8 @@
 
 #include "ImportNotifier.hpp"
 
+#include <moc_ImportNotifier.cpp>
+
 namespace atlas::import
 {
 
