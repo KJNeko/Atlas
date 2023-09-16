@@ -48,6 +48,10 @@ namespace atlas::records
 		RapidTransaction() << "SELECT atlas_id FROM atlas_mappings WHERE record_id = ? " << m_game_id >> atlas_id;
 		if ( atlas_id != INVALID_ATLAS_ID ) atlas_data = { atlas_id };
 
+		F95ID f95_id { INVALID_F95_ID };
+		RapidTransaction() << "SELECT f95_id FROM f95_zone_mappings WHERE record_id = ?" << m_game_id >> f95_id;
+		if ( f95_id != INVALID_F95_ID ) f95_data = { f95_id };
+
 		RapidTransaction() << "SELECT version FROM versions WHERE record_id = ?" << m_game_id >>
 			[ & ]( const QString version ) { m_versions.emplace_back( Version( this->m_game_id, version ) ); };
 
