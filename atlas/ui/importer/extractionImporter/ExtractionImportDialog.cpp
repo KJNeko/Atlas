@@ -110,15 +110,15 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 				const QString file_path { QString::fromStdString( p.path().string() ) };
 				const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
 				//"Title", "Version", "Creator", "File", "Path","Found in DB"
-				QTableWidgetItem* const item0 { new QTableWidgetItem( qlist[ 0 ] ) };
-				QTableWidgetItem* const item1 { new QTableWidgetItem( qlist[ 1 ] ) };
-				QTableWidgetItem* const item3 { new QTableWidgetItem( file_name ) };
-				QTableWidgetItem* const item4 { new QTableWidgetItem( file_path ) };
+				QTableWidgetItem* const title_item { new QTableWidgetItem( qlist[ 0 ] ) };
+				QTableWidgetItem* const version_item { new QTableWidgetItem( qlist[ 1 ] ) };
+				QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
+				QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
 
-				ui->exGames->setItem( row, 0, item0 );
-				ui->exGames->setItem( row, 1, item1 );
-				ui->exGames->setItem( row, 3, item3 );
-				ui->exGames->setItem( row, 4, item4 );
+				ui->exGames->setItem( row, 0, title_item );
+				ui->exGames->setItem( row, 1, version_item );
+				ui->exGames->setItem( row, 3, file_name_item );
+				ui->exGames->setItem( row, 4, file_path_item );
 				row++;
 			}
 		}
