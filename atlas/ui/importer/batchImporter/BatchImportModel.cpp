@@ -68,21 +68,15 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 
 							// Add GL Icon
 							if ( item.infos.f95_thread_id != INVALID_F95_ID )
-							{
 								icons.emplace_back( QPixmap( ":/images/assets/gamelist.svg" ) );
-							}
 
 							// Add existing icon
 							if ( item.game_id != INVALID_RECORD_ID )
-							{
 								icons.emplace_back( QPixmap( ":/images/assets/versionico.svg" ) );
-							}
 
 							//Add conflicting icon
 							if ( item.conflicting_version )
-							{
 								icons.emplace_back( QPixmap( ":/images/assets/warnico.svg" ) );
-							}
 
 							return QVariant::fromStdVariant( std::variant< decltype( icons ) >( std::move( icons ) ) );
 						}
@@ -178,9 +172,9 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 						return QString( "MISSING HEADER IN SWITCH!" );
 				}
 			}
+		default:
+			return QAbstractItemModel::headerData( section, orientation, role );
 	}
-
-	return QAbstractItemModel::headerData( section, orientation, role );
 }
 
 Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
@@ -213,12 +207,23 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 	auto recheckData = [ &data ]()
 	{
+		spdlog::info( "Checking that {} doesn't have in valid data anymore", data.title );
 		data.game_id = atlas::records::recordID( data.title, data.creator, data.engine );
 		if ( data.game_id != INVALID_ATLAS_ID )
 		{
-			//Check if the version we have is a conflict
 			const atlas::records::Game game { data.game_id };
+			spdlog::debug( "Found existing record: {}", game->m_title );
+			//Record exists. Set if the version still exists
+
 			data.conflicting_version = game.hasVersion( data.version );
+
+			spdlog::debug( "Data conflicting: {}", data.conflicting_version ? "Yes" : "No" );
+		}
+		else
+		{
+			spdlog::debug( "Data doesn't match any existing record" );
+			//Can't possibly conflict now.
+			data.conflicting_version = false;
 		}
 	};
 
@@ -236,7 +241,8 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 				recheckData();
 
-				emit dataChanged( index, index );
+				emit dataChanged(
+					createIndex( index.row(), 0 ), createIndex( index.row(), BatchImportModel::COLUMNS_MAX ) );
 				return true;
 			}
 		case CREATOR:
@@ -245,7 +251,8 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 				recheckData();
 
-				emit dataChanged( index, index );
+				emit dataChanged(
+					createIndex( index.row(), 0 ), createIndex( index.row(), BatchImportModel::COLUMNS_MAX ) );
 				return true;
 			}
 		case ENGINE:
@@ -254,7 +261,8 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 				recheckData();
 
-				emit dataChanged( index, index );
+				emit dataChanged(
+					createIndex( index.row(), 0 ), createIndex( index.row(), BatchImportModel::COLUMNS_MAX ) );
 				return true;
 			}
 		case VERSION:
@@ -263,7 +271,8 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 				recheckData();
 
-				emit dataChanged( index, index );
+				emit dataChanged(
+					createIndex( index.row(), 0 ), createIndex( index.row(), BatchImportModel::COLUMNS_MAX ) );
 
 				return true;
 			}
