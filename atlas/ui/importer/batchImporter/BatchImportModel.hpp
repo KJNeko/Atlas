@@ -20,21 +20,20 @@ class BatchImportModel final : public QAbstractTableModel
 	enum ImportColumns
 	{
 		TITLE,
-		HAS_GL_LINK,
-		IS_EXISTING_GAME,
-		IS_CONFLICTING,
 		CREATOR,
 		ENGINE,
 		VERSION,
 		EXECUTABLE,
 		SIZE,
 		FOLDER_PATH,
-		COLUMNS_MAX
+		COLUMNS_MAX,
+		IS_CONFLICTING
 	};
 
 	enum Roles
 	{
 		ExecutablesEditRole = Qt::UserRole + 1,
+		TitleIcons
 	};
 
 	const std::vector< GameImportData >& getData() const { return m_data; }

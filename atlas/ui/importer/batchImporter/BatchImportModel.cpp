@@ -47,10 +47,6 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						}
 					case EXECUTABLE:
 						return QString::fromStdString( item.executable.string() );
-					case HAS_GL_LINK:
-						return item.infos.f95_thread_id != INVALID_F95_ID;
-					case IS_EXISTING_GAME:
-						return item.game_id != INVALID_F95_ID;
 					case IS_CONFLICTING:
 						return item.conflicting_version;
 					default:
@@ -61,6 +57,53 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 			{
 				return QVariant::fromStdVariant( std::variant<
 												 std::vector< std::filesystem::path > >( item.executables ) );
+			}
+		case TitleIcons:
+			{
+				switch ( static_cast< ImportColumns >( index.column() ) )
+				{
+					case TITLE:
+						{
+							std::vector< QPixmap > icons;
+
+							// Add GL Icon
+							if ( item.infos.f95_thread_id != INVALID_F95_ID )
+							{
+								icons.emplace_back( QPixmap( ":/images/assets/gamelist.svg" ) );
+							}
+
+							// Add existing icon
+							if ( item.game_id != INVALID_RECORD_ID )
+							{
+								icons.emplace_back( QPixmap( ":/images/assets/versionico.svg" ) );
+							}
+
+							//Add conflicting icon
+							if ( item.conflicting_version )
+							{
+								icons.emplace_back( QPixmap( ":/images/assets/warnico.svg" ) );
+							}
+
+							return QVariant::fromStdVariant( std::variant< decltype( icons ) >( std::move( icons ) ) );
+						}
+						break;
+					case CREATOR:
+						[[fallthrough]];
+					case ENGINE:
+						[[fallthrough]];
+					case VERSION:
+						[[fallthrough]];
+					case EXECUTABLE:
+						[[fallthrough]];
+					case SIZE:
+						[[fallthrough]];
+					case FOLDER_PATH:
+						[[fallthrough]];
+					case COLUMNS_MAX:
+						[[fallthrough]];
+					default:
+						return {};
+				}
 			}
 		default:
 			return {};
@@ -83,37 +126,61 @@ void BatchImportModel::addGames( std::vector< GameImportData > data )
 
 QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
-	if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
-	{
-		switch ( static_cast< ImportColumns >( section ) )
+	if ( orientation == Qt::Vertical ) return QAbstractItemModel::headerData( section, orientation, role );
 
-		{
-			case FOLDER_PATH:
-				return QString( "Folder" );
-			case TITLE:
-				return QString( "Title" );
-			case HAS_GL_LINK:
-				return QString( "GL" );
-			case IS_EXISTING_GAME:
-				return QString( "Exists" );
-			case IS_CONFLICTING:
-				return QString( "Conflicting" );
-			case CREATOR:
-				return QString( "Creator" );
-			case ENGINE:
-				return QString( "Engine" );
-			case VERSION:
-				return QString( "Version" );
-			case SIZE:
-				return QString( "Size" );
-			case EXECUTABLE:
-				return QString( "Executable" );
-			default:
-				return QString( "MISSING HEADER IN SWITCH" );
-		}
+	switch ( role )
+	{
+		case Qt::DisplayRole:
+			{
+				switch ( static_cast< ImportColumns >( section ) )
+				{
+					case FOLDER_PATH:
+						return QString( "Folder" );
+					case TITLE:
+						return QString( "Title" );
+					case CREATOR:
+						return QString( "Creator" );
+					case ENGINE:
+						return QString( "Engine" );
+					case VERSION:
+						return QString( "Version" );
+					case SIZE:
+						return QString( "Size" );
+					case EXECUTABLE:
+						return QString( "Executable" );
+					default:
+						return QString( "MISSING HEADER IN SWITCH" );
+				}
+			}
+		case Qt::ToolTipRole:
+			{
+				switch ( static_cast< ImportColumns >( section ) )
+				{
+					case TITLE:
+						return QString( "Title of the game. REQUIRED" );
+					case CREATOR:
+						return QString( "Creator/Developer of the game. REQUIRED" );
+					case ENGINE:
+						return QString( "Engine of the game. OPTIONAL" );
+					case VERSION:
+						return QString( "Version of the game being imported. REQUIRED. Must be unique" );
+					case EXECUTABLE:
+						return QString( "Executable. Use Drop down menu to change." );
+					case SIZE:
+						return QString( "Size of the game. Will be 0 if told not to scan during this process" );
+					case FOLDER_PATH:
+						return QString( "Folder path of executable. Is RELATIVE to the inital directory" );
+					case COLUMNS_MAX:
+						[[fallthrough]];
+					case IS_CONFLICTING:
+						[[fallthrough]];
+					default:
+						return QString( "MISSING HEADER IN SWITCH!" );
+				}
+			}
 	}
-	else
-		return QAbstractItemModel::headerData( section, orientation, role );
+
+	return QAbstractItemModel::headerData( section, orientation, role );
 }
 
 Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
@@ -133,12 +200,6 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 		case SIZE:
 			[[fallthrough]];
 		case FOLDER_PATH:
-			[[fallthrough]];
-		case IS_CONFLICTING:
-			[[fallthrough]];
-		case HAS_GL_LINK:
-			[[fallthrough]];
-		case IS_EXISTING_GAME:
 			[[fallthrough]];
 		default:
 			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
@@ -206,12 +267,6 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 				return true;
 			}
-		case IS_CONFLICTING:
-			[[fallthrough]];
-		case IS_EXISTING_GAME:
-			[[fallthrough]];
-		case HAS_GL_LINK:
-			[[fallthrough]];
 		default:
 			return QAbstractItemModel::setData( index, value, role );
 	}
@@ -231,12 +286,6 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 	switch ( static_cast< ImportColumns >( idx ) )
 	{
 		default:
-			[[fallthrough]];
-		case HAS_GL_LINK:
-			[[fallthrough]];
-		case IS_CONFLICTING:
-			[[fallthrough]];
-		case IS_EXISTING_GAME:
 			[[fallthrough]];
 		case TITLE:
 			{

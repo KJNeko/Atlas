@@ -261,7 +261,8 @@ void BatchImportDialog::finishedPreProcessing()
 	ui->statusLabel->setText( QString( "Finished processing all games (Found %1 games)" )
 	                              .arg( ui->twGames->model()->rowCount() ) );
 	ui->twGames->resizeColumnsToContents();
-	ui->btnNext->setEnabled( true );
+
+	if ( static_cast< BatchImportModel* >( ui->twGames->model() )->isGood() ) ui->btnNext->setEnabled( true );
 }
 
 void BatchImportDialog::on_btnCancel_pressed()

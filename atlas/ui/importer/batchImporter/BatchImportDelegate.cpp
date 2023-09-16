@@ -23,13 +23,30 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 	switch ( static_cast< BatchImportModel::ImportColumns >( index.column() ) )
 	{
 		case TITLE:
-			[[fallthrough]]; //print title
-		case HAS_GL_LINK:
-			[[fallthrough]];
-		case IS_CONFLICTING:
-			[[fallthrough]];
-		case IS_EXISTING_GAME:
-			[[fallthrough]];
+			{
+				//Print out icons for title first.
+				const auto data { index.data().value< QString >() };
+				painter->drawText( options.rect, data );
+
+				//Shift rect over by size of text
+				auto top_right { options.rect.topRight() };
+
+				//Text info
+				const auto text_height { painter->fontMetrics().height() };
+
+				//Drop top_right down to match the height of text.
+				top_right -= QPoint( 0, options.rect.height() - ( text_height / 2 ) );
+
+				const auto icons { index.data( BatchImportModel::TitleIcons ).value< std::vector< QPixmap > >() };
+				for ( const auto& ico : icons )
+				{
+					auto img { ico.scaledToHeight( text_height, Qt::FastTransformation ) };
+					top_right -= QPoint( img.width(), 0 );
+					painter->drawPixmap( { top_right, img.size() }, img );
+				}
+
+				break;
+			}
 		case FOLDER_PATH:
 			[[fallthrough]]; //print path
 		case CREATOR:
