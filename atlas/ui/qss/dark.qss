@@ -130,7 +130,44 @@ QPushButton:hover:pressed {
 QComboBox,
 QSpinBox {
     background-color: rgb(81, 83, 90);
+    border: 1px solid rgba(64, 66, 73, 50);
     color: rgb(210, 210, 210);
+    padding: 1px;
+    border-radius: 2px;
+}
+
+QComboBox::drop-down,
+QSpinBox::down-button,
+QSpinBox::up-button {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::down-arrow,
+QSpinBox::down-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropdownicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::up-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropupicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::down-arrow:hover,
+QSpinBox::up-arrow:hover {
+    background-color: rgb(64, 66, 73);
 }
 
 QComboBox QAbstractItemView {

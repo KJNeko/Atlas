@@ -32,6 +32,7 @@
         <file>assets/gamelist.svg</file>
         <file>assets/versionico.svg</file>
         <file>assets/warnico.svg</file>
+        <file>assets/dropupicon.svg</file>
     </qresource>
     <qresource prefix="/Layouts">
         <file>assets/layouts/0000.svg</file>
