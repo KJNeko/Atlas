@@ -98,7 +98,6 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 {
 	constexpr std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
 	int row { 0 };
-	ui->exGames->setRowCount( 50 );
 	for ( const auto& p : std::filesystem::recursive_directory_iterator( path.toStdWString() ) )
 	{
 		const auto path_ext { p.path().extension().string() };
@@ -115,6 +114,7 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 				QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
 				QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
 
+				ui->exGames->insertRow( row );
 				ui->exGames->setItem( row, 0, title_item );
 				ui->exGames->setItem( row, 1, version_item );
 				ui->exGames->setItem( row, 3, file_name_item );
