@@ -190,7 +190,6 @@ void MainWindow::switchToDetailed( const atlas::records::Game record )
 
 void MainWindow::on_homeButton_pressed()
 {
-	//ui->detailedRecordView->clearRecord();
 	ui->stackedWidget->setCurrentIndex( 0 );
 }
 
@@ -295,6 +294,13 @@ void MainWindow::moveEvent( QMoveEvent* event )
 	movePopup();
 }
 
+void MainWindow::keyPressEvent( QKeyEvent* event )
+{
+	if ( ui->stackedWidget->currentIndex() == 1 ) ui->stackedWidget->setCurrentIndex( 0 );
+
+	return QMainWindow::keyPressEvent( event );
+}
+
 void MainWindow::movePopup()
 {
 	auto& task_popup { atlas::notifications::handle() };
@@ -331,4 +337,9 @@ void MainWindow::setBottomGameCounter()
 void MainWindow::refreshSearch()
 {
 	searchTextChanged( ui->SearchBox->text() );
+}
+
+void MainWindow::on_stackedWidget_currentChanged( const int idx )
+{
+	if ( idx == 0 ) ui->detailedRecordView->clearRecord();
 }
