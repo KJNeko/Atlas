@@ -14,37 +14,38 @@ colorC - rgb(210,210,210): Default text color
 colorD - rgb(255, 255, 255): Selected text color
 */
 
-/* BASE WIDGETS */
+/* BASE WIDGETS !!DO NOT ADD QFRAME*/
 QWidget {
     background-color: rgb(25, 25, 28);
     border: none;
+    color: rgb(210, 210, 210);
 }
 
-QFrame {
-    background-color: rgb(25, 25, 28);
+QStackedWidget,
+RecordListView,
+QStackedWidget>QWidget,
+QStackedWidget>QWidget>QWidget,
+QStackedWidget>QWidget>QFrame>QFrame,
+#bannerDetailFrame {
+    background-color: rgb(49, 51, 56);
     border: none;
 }
 
 /*QTreeView*/
-QTreeView {
-    border-top-right-radius: 10px;
-    /*border-top-left-radius: 5px;*/
+QTreeView,
+QListWidget,
+#SettingsMenu,
+#settingsButtons,
+#InfoPanel,
+#InfoPanel>QWidget,
+#InfoPanel>QWidget>QWidget,
+#previewList {
     background-color: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
-    selection-background-color: rgb(64, 66, 73);
-    /* Used on Mac */
     selection-color: white;
     /* Used on Mac */
     show-decoration-selected: 1;
-}
-
-QHeaderView::section {
-    background-color: rgb(35, 36, 40);
-    color: rgb(210, 210, 210);
-    border: 1px solid black;
-    border-bottom: none;
-    border-right: none;
-    border-left: none;
+    border: none;
 }
 
 QTreeView::item {
@@ -53,100 +54,68 @@ QTreeView::item {
 }
 
 QTreeView::item:hover {
-    /*background-color: rgb(56, 58, 64);*/
     background-color: rgb(64, 66, 73);
     /* Used on Windows */
     color: rgb(64, 66, 73)
 }
 
 QTreeView::item:selected {
-    /*background-color: rgb(56, 58, 64);*/
     background-color: rgb(64, 66, 73);
     /* Used on Windows */
     color: rgb(64, 66, 73)
 }
 
-/*QLabel*/
-QLabel {
-    border: none;
-    background-color: none;
+QHeaderView::section {
+    background-color: rgb(35, 36, 40);
+    background: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    border: 1px solid black;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+}
+
+/* MENU BAR*/
+QMenuBar,
+QStatusBar,
+QMenu {
+    background-color: rgb(25, 25, 28);
+    color: rgb(210, 210, 210);
+    border-style: outset;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+QMenuBar::item:selected,
+QMenu::item:selected {
+    background-color: rgb(54, 55, 61);
     color: rgb(210, 210, 210);
 }
 
-/*QTextEdit*/
-QTextEdit {
+QSizeGrip {
     background-color: transparent;
-    color: rgb(210, 210, 210);
-}
-
-/*QToolButton*/
-QToolButton {
     border: none;
-    color: rgb(210, 210, 210);
-}
-
-/*QStackedWidget*/
-QStackedWidget {
-    border: none;
-    /*Specific case for main window*/
-}
-
-QStackedWidget>QWidget>QFrame {
-    background-color: rgb(49, 51, 56);
-    border: none;
-}
-
-
-
-/* Line Edit*/
-QLineEdit {
-    background-color: rgb(81, 83, 90);
-    border: none;
-    border-radius: 5px;
-    margin-right: 5px;
-    color: #3097D1;
-}
-
-#settingsPaths>QLineEdit {
-    background-color: rgb(81, 83, 90);
-    border: none;
-    border-radius: 5px;
-    margin-right: 5px;
-    color: #3097D1;
-}
-
-#ThreadingWidget>QWidget {
-    background-color: none;
-}
-
-/*GroupBox*/
-QGroupBox {
-    background-color: none;
-    border: 2px solid gray;
-    border-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    margin-top: 1ex;
-}
-
-QGroupBox>QLabel {
-    background-color: none;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    color: rgb(255, 255, 255);
-    left: 7px;
-    padding: 0px 5px 0px 5px;
+    image: url(:/images/assets/sizegrip.svg);
+    width: 24;
+    height: 24;
 }
 
 /* Buttons */
 QPushButton {
-    background-color: rgb(43, 45, 49);
+    background-color: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid;
     border-color: rgb(81, 83, 90);
     width: 75px;
     height: 30px;
+    border-radius: 5px;
+}
+
+QPushButton:disabled {
+    background-color: rgba(43, 45, 49, 50);
+    color: rgba(210, 210, 210, 50);
+    border: 1px solid rgba(210, 210, 210, 50);
 }
 
 QPushButton:hover {
@@ -157,14 +126,9 @@ QPushButton:hover:pressed {
     background-color: rgb(64, 66, 73);
 }
 
-/*QSpingBox*/
-QSpinBox {
-    background-color: rgb(81, 83, 90);
-    color: rgb(210, 210, 210);
-}
-
 /*QComboBox*/
-QComboBox {
+QComboBox,
+QSpinBox {
     background-color: rgb(81, 83, 90);
     color: rgb(210, 210, 210);
 }
@@ -183,98 +147,184 @@ QComboBox::item:selected {
 }
 
 QComboBox:disabled {
-    color: rgb(210, 210, 210, 50);
+    color: rgba(210, 210, 210, 50);
 }
 
-/* ToolButtons */
-QToolButton {
-    background-color: transparent;
+QLabel,
+QCheckBox,
+#ThreadingWidget>QWidget {
+    border: none;
+    background-color: none;
     color: rgb(210, 210, 210);
 }
 
-/* Checkbox */
-QCheckBox {
-    background-color: transparent;
+QCheckBox:disabled,
+QLabel:disabled,
+QComboBox:disabled {
+    color: rgba(210, 210, 210, 50);
+}
+
+/*SCROLL VERTICLE*/
+QScrollBar:vertical {
+    border-style: none;
+    background-color: rgb(30, 31, 34);
+    width: 15px;
+}
+
+QScrollBar:horizontal {
+    border-style: none;
+    background-color: rgb(30, 31, 34);
+    height: 15px;
+}
+
+QScrollBar::sub-page:vertical,
+QScrollBar::sub-page:horizontal {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::add-page:horizontal {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgb(81, 83, 90);
+    min-height: 100px;
+    width: 5px;
+    max-width: 5px;
+    border-radius: 7px;
+    border: 7px solid;
+    border-color: transparent;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: rgb(81, 83, 90);
+    min-width: 100px;
+    height: 5px;
+    max-height: 5px;
+    border-radius: 7px;
+    border: 7px solid;
+    border-color: transparent;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::add-line:horizontal {
+    width: 0px;
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical,
+QScrollBar::sub-line:horizontal {
+    width: 0px;
+    height: 0px;
+}
+
+QTabBar::tab {
+    background-color: rgb(81, 83, 90);
     color: rgb(210, 210, 210);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:selected:hover {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:hover {
+    background-color: rgb(64, 66, 73)
+}
+
+QTabWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QTabWidget::pane {
+    border: none
+}
+
+QTabWidget>QWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+#gameText,
+#versionList,
+#processedTagsList,
+#userTagsList,
+#tagEdit {
+    color: rgb(210, 210, 210);
+    background-color: rgb(81, 83, 90);
+    border-radius: 5px;
+}
+
+QLineEdit,
+#settingsPaths>QLineEdit {
+    background-color: rgb(81, 83, 90);
     border: none;
     border-radius: 5px;
-
+    margin-right: 5px;
+    color: rgb(112, 255, 136);
 }
 
-QCheckBox:disabled {
-    color: rgb(210, 210, 210, 50);
+/*
+QCheckBox::indicator:checked {
+    background-color: #70ff88;
+    border-radius: 2px;
 }
 
-/* MENU BAR*/
-QMenuBar {
-    background-color: rgb(25, 25, 28);
+QCheckBox::indicator:unchecked {
+    background-color: rgb(210, 210, 210);
+    border-radius: 2px;
+}
+
+QCheckBox::indicator {
     color: rgb(210, 210, 210);
-    border-color: rgb(0, 0, 0);
-    border-width: 1px;
-    border-style: outset;
-    border-top: none;
-    border-right: none;
-    border-left: none;
+    background-color: rgb(210, 210, 210);
+}
+*/
+QGroupBox {
+    background-color: none;
+    border: 1px solid rgb(181, 186, 193);
+    border-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-top: 1ex;
 }
 
-QMenuBar::item:selected {
+QGroupBox>QLabel {
+    background-color: none;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    color: rgb(255, 255, 255);
+    left: 7px;
+    padding: 0px 5px 0px 5px;
+}
+
+QTableView::item:alternate {
+    background-color: rgb(64, 66, 73);
+}
+
+QTableCornerButton::section {
     background-color: rgb(35, 36, 40);
-    color: rgb(255, 255, 255);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
 }
 
-QMenu {
-    background-color: rgb(35, 36, 40);
-    color: rgb(255, 255, 255);
-}
+/*UI SPECIFIC*/
 
-QMenu::item:selected {
-    background-color: rgb(56, 58, 64);
-    color: rgb(255, 255, 255);
-}
-
-/* STATUS BAR*/
-
-QStatusBar {
-    background-color: rgb(25, 25, 28);
-    color: rgb(210, 210, 210);
-    border: none;
-}
-
-QSizeGrip {
-    background-color: transparent;
-    border: none;
-    image: url(:/images/assets/sizegrip.svg);
-    width: 24;
-    height: 24;
-}
-
-/*UI SPECIFIC FOR BORDERS*/
-QStackedWidget {
-    border-color: rgb(0, 0, 0);
-    border-width: 2px;
-    border-style: outset;
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-}
-
-QTreeView {
-    border-color: rgb(0, 0, 0);
-    border-width: 2px;
-    border-style: outset;
-    border-right: none;
-    border-top: none;
-    border-left: none;
-}
-
-/*UI SPECIFIC FOR COLORS*/
+#NavFrame,
 #HomeFrame {
     background-color: rgb(43, 45, 49);
-    border: none;
 }
 
-#NavFrame {
-    background-color: rgb(43, 45, 49);
+#StatusFrame {
+    border-style: outset;
+    border-top: 2px solid rgb(0, 0, 0);
 }
 
 /*This is so the wide banner will show up in game view.*/
@@ -282,11 +332,33 @@ QTreeView {
     background-color: transparent;
 }
 
-#GameWidget {
-    background-color: rgb(255, 255, 255);
-    border-bottom: 2px solid rgb(0, 0, 0);
+#settingsButtons>QPushButton,
+#swImportGames,
+#exImportGames {
+    background-color: none;
+    border: none;
+    border-radius: 0px;
 }
 
+#settingsButtons>QPushButton:focus,
+#settingsButtons>QPushButton:hover,
+#settingsButtons>QPushButton:focus:active {
+    background-color: rgb(64, 66, 73);
+}
+
+QStackedWidget,
+#Header {
+    background-color: rgb(49, 51, 56);
+    border-left: 2px solid rgb(0, 0, 0);
+}
+
+#lblSettingsHeader {
+    border-bottom: 1px solid rgba(120, 120, 120, 100);
+    border-style: outset;
+    padding-bottom: 5px;
+}
+
+/*Search Box*/
 #SearchIcon {
     background-color: rgb(56, 58, 64);
     border: none;
@@ -306,147 +378,7 @@ QTreeView {
     color: rgb(210, 210, 210);
 }
 
-#AddGame {
-    background-color: transparent;
-    color: rgb(210, 210, 210);
-}
-
-#AddGame::hover {
-    background-color: transparent;
-    color: rgb(255, 255, 255);
-}
-
-#SettingsMenu {
-    background-color: rgb(35, 36, 40);
-}
-
-#SettingsMenu>QWidget {
-    background-color: rgb(35, 36, 40);
-}
-
-#SettingsMenu>QWidget>QPushButton {
-    border: none;
-}
-
-#NotificationManagerUI {
-    border: 1px solid rgb(0, 0, 0);
-}
-
-/*GAME DETAIL VEIW*/
-#bannerDetailFrame {
-    background-color: rgb(49, 51, 56);
-}
-
-#InfoPanel {
-    background-color: rgb(35, 36, 40);
-}
-
-#previewList {
-    background-color: rgb(35, 36, 40);
-}
-
-#recordView {
-    background-color: rgb(49, 51, 56);
-}
-
-#Description {
-    background: none;
-}
-
-#Info {
-    background: none;
-}
-
-#Links {
-    background: none;
-}
-
-#btnHideShow {
-    height: 30;
-    width: 30;
-}
-
-#Header {
-    background-color: rgb(49, 51, 56);
-    border-left: 2px solid rgb(0, 0, 0);
-}
-
-#lblSettingsHeader {
-    border-bottom: 1px solid rgba(120, 120, 120, 100);
-    border-style: outset;
-    padding-bottom: 5px;
-}
-
-#StatusFrame {
-    border-top: 2px solid rgb(0, 0, 0);
-}
-
 #gamesTree {
     border: none;
-}
-
-/*END CUSTOM COLORS*/
-QScrollBar:vertical {
-    border-style: none;
-    background-color: rgb(30, 31, 34);
-    width: 15px;
-}
-
-QScrollBar::sub-page:vertical {
-    background: rgb(30, 31, 34);
-}
-
-QScrollBar::add-page:vertical {
-    background: rgb(30, 31, 34);
-}
-
-QScrollBar::handle:vertical {
-    background-color: rgb(81, 83, 90);
-    min-height: 100px;
-    width: 5px;
-    max-width: 5px;
-    border-radius: 7px;
-    border: 7px solid;
-    border-color: transparent;
-}
-
-QScrollBar::add-line:vertical {
-    width: 0px;
-    height: 0px;
-}
-
-QScrollBar::sub-line:vertical {
-    width: 0px;
-    height: 0px;
-}
-
-QStackedWidget>QWidget {
-    background-color: rgb(49, 51, 56);
-}
-
-/*Dialog Specific DO NOT CHANGE THESE SETTINGS*/
-QStackedWidget>QWidget>QFrame>QFrame {
-    background-color: none;
-    border: none;
-}
-
-QStackedWidget>QWidget>QWidget {
-    background-color: none;
-}
-
-QFrame>QLabel {
-    background-color: none;
-    border: none;
-}
-
-#settingsButtons>QPushButton {
-    background-color: none;
-}
-
-#settingsButtons>QPushButton:focus {
-    background-color: rgb(64, 66, 73);
-}
-
-#settingsButtons>QPushButton:hover {
-    background-color: rgb(64, 66, 73);
+    border-top-right-radius: 10px;
 }

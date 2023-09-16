@@ -2,13 +2,16 @@
 #define EXTRACTIONIMPORTDIALOG_HPP
 
 #include <QDialog>
+#include <QThreadPool>
+
+#include "core/Types.hpp"
 
 namespace Ui
 {
 	class ExtractionImportDialog;
 }
 
-class ExtractionImportDialog : public QDialog
+class ExtractionImportDialog final : public QDialog
 {
 	Q_DISABLE_COPY_MOVE( ExtractionImportDialog )
 	Q_OBJECT
@@ -17,6 +20,14 @@ class ExtractionImportDialog : public QDialog
 
 	explicit ExtractionImportDialog( QWidget* parent = nullptr );
 	~ExtractionImportDialog();
+
+	void parseFiles( const QString& path );
+	QStringList parseFileName( const QString& s );
+
+  private slots:
+	void on_btnSetRoot_pressed();
+	void on_btnSetExtPath_pressed();
+	void on_btnNext_pressed();
 
   private:
 

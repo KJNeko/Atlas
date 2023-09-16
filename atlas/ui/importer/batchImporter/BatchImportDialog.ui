@@ -325,7 +325,7 @@ Hover over the column headers for help text</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>60</height>
+       <height>40</height>
       </size>
      </property>
      <property name="maximumSize">

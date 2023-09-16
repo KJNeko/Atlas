@@ -1,197 +1,489 @@
-import os
-import sqlite3 as sl
-import re
-from datetime import datetime
-import time
+/*
+color1 - rgb(0, 0, 0): Background Color. This will be the darkest
+color2 - rgb(25, 25, 28): Default color for all Widgets
+color3 - rgb(30, 31, 34):
+color4 - rgb(35, 36, 40): 
+color5 - rgb(43, 45, 49): Tree Widget, Button Main
+color6 - rgb(49, 51, 56): ListView
+color7 - rgb(56, 58, 64): Selected item color
+color8 - rgb(64, 66, 73): Button Selected
+color9 - rgb(81, 83, 90): Button Border
+colorA - rgb(97, 99, 105):
+colorB - TBD
+colorC - rgb(210,210,210): Default text color
+colorD - rgb(255, 255, 255): Selected text color
+*/
 
-#OUTPUT COLORS
-class bcolors:
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKCYAN = "\033[96m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
+/* BASE WIDGETS */
+QWidget {
+    background-color: rgb(25, 25, 28);
+    border: none;
+}
 
-#USE / for folder delimiter
-rootdir = "F:/_tmp_Games"
-extractdir = "E:/atlas_extraction_test"
-dbPath = "C:/Users/tower/source/repos/Atlas/build/bin/data/atlas.db"
+QFrame {
+    background-color: rgb(25, 25, 28);
+    border: none;
+}
 
-#GLOBAL VARS
-enableCreatorDirs = False
+/*QTreeView*/
+QTreeView {
+    border-top-right-radius: 10px;
+    /*border-top-left-radius: 5px;*/
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    selection-background-color: rgb(64, 66, 73);
+    /* Used on Mac */
+    selection-color: white;
+    /* Used on Mac */
+    show-decoration-selected: 1;
+}
 
-def checkDataBase(dbPath):
-    #path = os.path.join(Path(os.getcwd()).parent.absolute(), dbName)
-    print(dbPath)
-    print("DATABASE FOUND: " + str(os.path.isfile(dbPath)))
-    return os.path.isfile(dbPath)
+QHeaderView::section {
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    border: 1px solid black;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+}
 
-def getAtlasId(title):
-    con = sl.connect(dbPath)
-    cursor = con.cursor()
-    short_name = re.sub("[\W_]+", "", title.strip().replace(" ", "")).upper()
-    query = (
-        "Select atlas_id, title, creator, LENGTH(short_name) - LENGTH('"
-        + short_name
-        + "') as Difference from atlas_data WHERE short_name like '%"
-        + short_name
-        + "%' Order By LENGTH(short_name) - LENGTH('"
-        + short_name
-        + "')"
-    )
-    # print(query)
-    # query = "SELECT atlas_id FROM atlas_data WHERE short_name='" + short_name + "'"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    # print(len(data))
-    if len(data) > 0:
-        if len(data) > 1:
-            print_c(bcolors.HEADER, "DEBUG", "FOUND MUTIPLE DATABASE ENTIRES")
-            
-            print(
-                "\nFound "
-                + str(len(data))
-                + " possible matches. Enter number from list below or Custom Name and press enter:"
-            )
-            for index, item in enumerate(data):
-                #if int(item[3]) <= 10:
-                print(str(index) + " : " + str(item))
-            id = input()
-            if id.isnumeric():
-                atlas_id = data[int(id)][0]
-                return atlas_id
-            else:
-                return id;
-        else:
-            print_c(bcolors.HEADER, "DEBUG", "FOUND SINGLE DATABASE ENTRY")
-            print_c(bcolors.HEADER, "INFO", data[0][1])
-            if(data[0][3] < 2):
-                atlas_id = data[0][0]
-                return atlas_id
-            else:
-                print("If the above title is correct, PRESS ENTER. If it is not correct, enter new title")
-                name = input()           
+QTreeView::item {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
 
-    else:
-        return None
+QTreeView::item:hover {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
+}
 
-#OVERIDE
-def print_c(color, type, message, title, developer, version):
-        print(
-        color
-        + str(datetime.now())
-        + " : ["+type +"] "+
-        + bcolors.ENDC
-        + message + " "
-        + "Developer: "
-        + developer
-        + " | Title: "
-        + title
-        + " | Version: "
-        + version
-    )
-        
-def print_c(color, type, message):
-        print(
-        color
-        + str(datetime.now())
-        + " : ["+type +"] "
-        + bcolors.ENDC
-        + message
-    )
+QTreeView::item:selected {
+    /*background-color: rgb(56, 58, 64);*/
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
+}
 
-def checkForCommonNames(str):
-    #convert to lower and remove "_"
-    str = str.lower().replace('_', "")
-    arr = ["pc","linux","win","windows"]
-    return any(str == c for c in arr)
+/*QLabel*/
+QLabel {
+    border: none;
+    background-color: none;
+    color: rgb(210, 210, 210);
+}
+
+/*QTextEdit*/
+QTextEdit {
+    background-color: transparent;
+    color: rgb(210, 210, 210);
+}
+
+/*QToolButton*/
+QToolButton {
+    border: none;
+    color: rgb(210, 210, 210);
+}
+
+/*QStackedWidget*/
+QStackedWidget {
+    border: none;
+    /*Specific case for main window*/
+}
+
+QStackedWidget>QWidget>QFrame {
+    background-color: rgb(49, 51, 56);
+    border: none;
+}
 
 
-def parseFileName():
-    #CREATE FOLDER TO STORE ALL GAMES AFTER THEY ARE EXTRACTED. WE ARE NOT DELETING THEM AT THE MOMENT
-    if not os.path.exists(os.path.join(rootdir, "_complete_")):
-        os.makedirs(os.path.join(rootdir, "_complete_"))
-    myfile = open('files.txt', 'w')
-    for subdir, dirs, files in os.walk(rootdir):
-        for file in files:
-            #os.system('cls') #clear console
-            #print("-----------------------------")
-            myfile.write(file + "\n");
-            ext = os.path.splitext(file)[1]
-            if(ext.lower() == ".zip" or ext.lower() == ".7z" or ext.lower() == ".rar"):    
-                #REMOVE Extension
-                file_name = os.path.splitext(file)[0]       
-                title = ""
-                version = ""
-                hasNum = False
-                hasWord = False
-                verArr = ["season", "episode", "chapter"]
-                #Check for "-" This is the first test case
-                if('-' in file_name):
-                    tmp = file_name.split('-')
-                    #Construct title
-                    #Skip the first item
-                    for i in range(0, len(tmp)):
-                        #We have to assume the first entry will always be the game name.
-                        #Check for numbers
-                        if i > 0 and (any(chr.isdigit() for chr in tmp[i])):  
-                            version += tmp[i]
-                            #if we found numbers then we should try and skip everything else.
-                            hasNum = True
-                        else:
-                            #specific cases towards the end of the the filename that need to be skipped
-                            #Check for episode or season after and store in version
-                            if tmp[i].lower() == "season" or tmp[i].lower() == "episode" or tmp[i].lower() == "chapter":
-                                version += tmp[i] + " "
-                                hasWord = True
-                            if( not checkForCommonNames(tmp[i]) and hasNum == False and hasWord == False):
-                                #At this point we need to check for a few things, 
-                                #1) Check if season or episode is in the name
-                                #2) Check if Chapter or CHX is in the title
-                                if("episode" in tmp[i].lower()):
-                                    ep = tmp[i].lower().split('episode')
-                                    if(len(ep) > 1):
-                                        version += "Episode" + ep[1]
-                                        title += ep[0]
-                                    else:
-                                        version += "Episode"
-                                        title += ep[0]
-                                if("season" in tmp[i].lower()):
-                                    se = tmp[i].lower().split('season')
-                                    if(len(se) > 1):
-                                        version += "season" + se[1]
-                                        title += se[0]
-                                    else:
-                                        version += "season"
-                                        title += se[0]
-                                if("final" in tmp[i].lower()):
-                                    fi = tmp[i].lower().split('final')
-                                    if(len(fi) > 1):
-                                        version += "final" + fi[1]
-                                        title += fi[0]
-                                    else:
-                                        version += "final"
-                                        title += fi[0]
-                                else:    
-                                    title += tmp[i]
-                               
-                    print_c(bcolors.HEADER,"DEBUG", ("FILE -> " + file))
-                    print_c(bcolors.OKGREEN,"INFO", ("TITLE -> " + title))
-                    print_c(bcolors.OKGREEN,"INFO", ("VERSION -> " + version))
-                #else:
-                #    print_c(bcolors.WARNING,"WARNING", ("FILE -> " + file))
-                #print_c(bcolors.HEADER,"INFO", ("Looking for title " + title))
-                    #getAtlasId(title)
-            #print("-----------------------------")
-    myfile.close()
-                
 
+/* Line Edit*/
+QLineEdit {
+    background-color: rgb(81, 83, 90);
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    color: #3097D1;
+}
 
-#PROGRAM ENTRY POINT
-if checkDataBase(dbPath):
-    parseFileName()
-    #extractGames()
+#settingsPaths>QLineEdit {
+    background-color: rgb(81, 83, 90);
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    color: #3097D1;
+}
+
+#ThreadingWidget>QWidget {
+    background-color: none;
+}
+
+/*GroupBox*/
+QGroupBox {
+    background-color: none;
+    border: 2px solid gray;
+    border-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-top: 1ex;
+}
+
+QGroupBox>QLabel {
+    background-color: none;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    color: rgb(255, 255, 255);
+    left: 7px;
+    padding: 0px 5px 0px 5px;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    border: 1px solid;
+    border-color: rgb(81, 83, 90);
+    width: 75px;
+    height: 30px;
+}
+
+QPushButton:disabled {
+    background-color: rgb(43, 45, 49, 50);
+    color: rgb(210, 210, 210, 50);
+    border: 1px solid rgb(210, 210, 210, 50);
+}
+
+QPushButton:hover {
+    background-color: rgb(64, 66, 73);
+}
+
+QPushButton:hover:pressed {
+    background-color: rgb(64, 66, 73);
+}
+
+/*QSpingBox*/
+QSpinBox {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+/*QComboBox*/
+QComboBox {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QComboBox QAbstractItemView {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QComboBox::item {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::item:selected {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox:disabled {
+    color: rgb(210, 210, 210, 50);
+}
+
+/* ToolButtons */
+QToolButton {
+    background-color: transparent;
+    color: rgb(210, 210, 210);
+}
+
+/* Checkbox */
+QCheckBox {
+    background-color: transparent;
+    color: rgb(210, 210, 210);
+    border: none;
+    border-radius: 5px;
+
+}
+
+QCheckBox:disabled {
+    color: rgb(210, 210, 210, 50);
+}
+
+/* MENU BAR*/
+QMenuBar {
+    background-color: rgb(25, 25, 28);
+    color: rgb(210, 210, 210);
+    border-color: rgb(0, 0, 0);
+    border-width: 1px;
+    border-style: outset;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+QMenuBar::item:selected {
+    background-color: rgb(35, 36, 40);
+    color: rgb(255, 255, 255);
+}
+
+QMenu {
+    background-color: rgb(35, 36, 40);
+    color: rgb(255, 255, 255);
+}
+
+QMenu::item:selected {
+    background-color: rgb(56, 58, 64);
+    color: rgb(255, 255, 255);
+}
+
+/* STATUS BAR*/
+
+QStatusBar {
+    background-color: rgb(25, 25, 28);
+    color: rgb(210, 210, 210);
+    border: none;
+}
+
+QSizeGrip {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/sizegrip.svg);
+    width: 24;
+    height: 24;
+}
+
+/*UI SPECIFIC FOR BORDERS*/
+QStackedWidget {
+    border-color: rgb(0, 0, 0);
+    border-width: 2px;
+    border-style: outset;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+}
+
+QTreeView {
+    border-color: rgb(0, 0, 0);
+    border-width: 2px;
+    border-style: outset;
+    border-right: none;
+    border-top: none;
+    border-left: none;
+}
+
+/*UI SPECIFIC FOR COLORS*/
+#HomeFrame {
+    background-color: rgb(43, 45, 49);
+    border: none;
+}
+
+#NavFrame {
+    background-color: rgb(43, 45, 49);
+}
+
+/*This is so the wide banner will show up in game view.*/
+#bannerFrame {
+    background-color: transparent;
+}
+
+#GameWidget {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+#SearchIcon {
+    background-color: rgb(56, 58, 64);
+    border: none;
+    margin-left: 4px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#SearchBox {
+    background-color: rgb(56, 58, 64);
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    margin-right: 0px;
+    color: rgb(210, 210, 210);
+}
+
+#AddGame {
+    background-color: transparent;
+    color: rgb(210, 210, 210);
+}
+
+#AddGame::hover {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+}
+
+#SettingsMenu {
+    background-color: rgb(35, 36, 40);
+}
+
+#SettingsMenu>QWidget {
+    background-color: rgb(35, 36, 40);
+}
+
+#SettingsMenu>QWidget>QPushButton {
+    border: none;
+}
+
+#NotificationManagerUI {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+/*GAME DETAIL VEIW*/
+#bannerDetailFrame {
+    background-color: rgb(49, 51, 56);
+}
+
+#InfoPanel {
+    background-color: rgb(35, 36, 40);
+}
+
+#previewList {
+    background-color: rgb(35, 36, 40);
+}
+
+#recordView {
+    background-color: rgb(49, 51, 56);
+}
+
+#Description {
+    background: none;
+}
+
+#Info {
+    background: none;
+}
+
+#Links {
+    background: none;
+}
+
+#btnHideShow {
+    height: 30;
+    width: 30;
+}
+
+#Header {
+    background-color: rgb(49, 51, 56);
+    border-left: 2px solid rgb(0, 0, 0);
+}
+
+#lblSettingsHeader {
+    border-bottom: 1px solid rgba(120, 120, 120, 100);
+    border-style: outset;
+    padding-bottom: 5px;
+}
+
+#StatusFrame {
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+#gamesTree {
+    border: none;
+}
+
+#gameText {
+    background-color: rgb(81, 83, 90);
+}
+
+/*END CUSTOM COLORS*/
+QScrollBar:vertical {
+    border-style: none;
+    background-color: rgb(30, 31, 34);
+    width: 15px;
+}
+
+QScrollBar::sub-page:vertical {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::add-page:vertical {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgb(81, 83, 90);
+    min-height: 100px;
+    width: 5px;
+    max-width: 5px;
+    border-radius: 7px;
+    border: 7px solid;
+    border-color: transparent;
+}
+
+QScrollBar::add-line:vertical {
+    width: 0px;
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical {
+    width: 0px;
+    height: 0px;
+}
+
+QStackedWidget>QWidget {
+    background-color: rgb(49, 51, 56);
+}
+
+/*Dialog Specific DO NOT CHANGE THESE SETTINGS*/
+QStackedWidget>QWidget>QFrame>QFrame {
+    background-color: none;
+    border: none;
+}
+
+QStackedWidget>QWidget>QWidget {
+    background-color: none;
+}
+
+QFrame>QLabel {
+    background-color: none;
+    border: none;
+}
+
+#settingsButtons>QPushButton {
+    background-color: none;
+}
+
+#settingsButtons>QPushButton:focus {
+    background-color: rgb(64, 66, 73);
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgb(64, 66, 73);
+}
+
+QChartView {
+    background-color: rgb(64, 66, 73);
+}
+
+QTabBar::tab {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabWidget {
+    background-color: rgb(81, 83, 90);
+}
+
+QTabWidget>QWidget {
+    background-color: rgb(81, 83, 90);
+    border: none;
+}
+
+QListWidget {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}

@@ -49,23 +49,23 @@ void VersionView::reloadData()
 	ui->versionEdit->setText( mdata.getVersionName() );
 	ui->executableEdit->setText( QString::fromStdString( mdata.getRelativeExecPath().string() ) );
 
-	ui->canonicalPathLabel
-		->setText( QString( "Canonical path: %1" ).arg( QString::fromStdString( mdata.getPath().string() ) ) );
+	ui->leCanonicalPath
+		->setText( QString( "%1" ).arg( QString::fromStdString( mdata.getPath().string() ) ) );
 
 	const auto date_time { QDateTime::fromSecsSinceEpoch( mdata.getPlaytime() ).toString( "hh:mm:ss" ) };
 
-	ui->playtimeLabel->setText( QString( "Playtime: %1" ).arg( date_time ) );
+	ui->lePlaytime->setText( QString( "%1" ).arg( date_time ) );
 
 	if ( const auto last_playtime = mdata.getLastPlayed(); last_playtime > 0 )
 	{
 		const auto str { QDateTime::fromSecsSinceEpoch( static_cast< qint64 >( last_playtime ) ).toString() };
-		ui->lastPlayedLabel->setText( QString( "Last Played: %1" ).arg( str ) );
+		ui->leLastPlayed->setText( QString( "L%1" ).arg( str ) );
 	}
 	else
-		ui->lastPlayedLabel->setText( "Last Played: Never" );
+		ui->leLastPlayed->setText( "Never" );
 
-	ui->folderSizeLabel
-		->setText( QString( "Folder Size: %1" )
+	ui->leFolderSize
+		->setText( QString( "%1" )
 	                   .arg( this->locale().formattedDataSize( static_cast< qint64 >( mdata.getFolderSize() ) ) ) );
 }
 
