@@ -39,7 +39,6 @@ jobs:
           # Swap build-atlas and build-tests once tests are runnable
           build-atlas: true
           # build-tests: true
-          version-string: 'pr-test'
 
       - name: Upload release
         uses: actions/upload-artifact@v2

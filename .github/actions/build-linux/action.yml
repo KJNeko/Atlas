@@ -14,10 +14,6 @@ inputs:
     description: "Build atlas"
     required: false
     default: 'true'
-  version-string:
-    description: "Version string"
-    required: false
-    default: '0.0.0'
 
 runs:
   using: "composite"
@@ -32,17 +28,17 @@ runs:
     - name: CMake Release
       shell: bash
       if: ${{inputs.build-release == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}'
+      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug
 
     - name: CMake Debug
       shell: bash
       if: ${{inputs.build-debug == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}'
+      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug
 
     - name: CMake Debug Release
       shell: bash
       if: ${{inputs.build-release == 'true' && inputs.build-profile == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-rp -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DATLAS_PROFILE_ENABLE=ON
+      run: cmake -S . -B ${{github.workspace}}\builds\build-rp -DCMAKE_BUILD_TYPE=Debug -DATLAS_PROFILE_ENABLE=ON
 
     - name: Build Target Atlas Release
       shell: bash
