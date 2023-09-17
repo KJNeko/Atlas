@@ -102,7 +102,8 @@ QSizeGrip {
 }
 
 /* Buttons */
-QPushButton {
+QPushButton,
+#settingsPaths>QPushButton {
     background-color: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid;
@@ -112,17 +113,20 @@ QPushButton {
     border-radius: 5px;
 }
 
-QPushButton:disabled {
+QPushButton:disabled,
+#settingsPaths>QPushButton:disabled {
     background-color: rgba(43, 45, 49, 50);
     color: rgba(210, 210, 210, 50);
     border: 1px solid rgba(210, 210, 210, 50);
 }
 
-QPushButton:hover {
+QPushButton:hover,
+#settingsPaths>QPushButton:hover {
     background-color: rgb(64, 66, 73);
 }
 
-QPushButton:hover:pressed {
+QPushButton:hover:pressed,
+#settingsPaths>QPushButton:pressed {
     background-color: rgb(64, 66, 73);
 }
 
@@ -303,7 +307,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: rgb(112, 255, 136);
+    color: rgb(95, 172, 255);
 }
 
 /*
@@ -352,6 +356,18 @@ QTableCornerButton::section {
     border-right: 1px solid rgb(0, 0, 0);
 }
 
+QProgressBar {
+    border-radius: 5px;
+    background-color: rgb(64, 66, 73);
+    color: rgb(210, 210, 210);
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(95, 172, 255);
+    border-radius: 5px;
+}
+
 /*UI SPECIFIC*/
 
 #NavFrame,
@@ -377,9 +393,15 @@ QTableCornerButton::section {
     border-radius: 0px;
 }
 
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
+}
+
 #settingsButtons>QPushButton:focus,
-#settingsButtons>QPushButton:hover,
-#settingsButtons>QPushButton:focus:active {
+#settingsButtons>QPushButton:focus:active,
+#settingsButtons>QPushButton:checked,
+#settingsButtons>QPushButton:selected,
+#settingsButtons>QPushButton:selected:active {
     background-color: rgb(64, 66, 73);
 }
 
@@ -418,4 +440,14 @@ QStackedWidget,
 #gamesTree {
     border: none;
     border-top-right-radius: 10px;
+}
+
+#NotificationManagerUI {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+#NotificationFrame {
+    border-top: 1px solid rgb(49, 51, 56);
+    padding-top: 4px;
 }
