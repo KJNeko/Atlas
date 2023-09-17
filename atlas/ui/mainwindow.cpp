@@ -116,6 +116,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	refreshSearch();
 
 	ui->lbAtlasVersion->setText( utils::version_string_qt() );
+
+	//MainWindow::setWindowTitle( QString::fromStdString("Atlas" + utils::version_string_qt() ));
 }
 
 MainWindow::~MainWindow()
