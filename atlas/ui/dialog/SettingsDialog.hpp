@@ -50,7 +50,6 @@ class SettingsDialog final : public QDialog
 	RecordBannerDelegate* gridPreviewDelegate { nullptr };
 
   private slots:
-	void on_settingsList_currentRowChanged( int idx );
 	void on_cbImageLayout_currentIndexChanged( int idx );
 	void on_cbBlurType_currentIndexChanged( int idx );
 	void on_btnGeneral_pressed();
