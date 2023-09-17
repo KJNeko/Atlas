@@ -342,8 +342,13 @@ QTableCornerButton::section {
 
 #settingsButtons>QPushButton:focus,
 #settingsButtons>QPushButton:hover,
-#settingsButtons>QPushButton:focus:active {
+#settingsButtons>QPushButton:focus:active,
+#settingsButtons>QPushButton:checked {
     background-color: rgb(64, 66, 73);
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
 }
 
 QStackedWidget,

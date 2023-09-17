@@ -144,6 +144,9 @@ border:none;</string>
            <property name="text">
             <string>General</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -156,6 +159,9 @@ border:none;</string>
            </property>
            <property name="text">
             <string>Interface</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -173,6 +179,9 @@ border:none;</string>
            <property name="text">
             <string>UI Layout</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -185,6 +194,9 @@ border:none;</string>
            </property>
            <property name="text">
             <string>Paths</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -199,6 +211,9 @@ border:none;</string>
            <property name="text">
             <string>Threading</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -211,6 +226,9 @@ border:none;</string>
            </property>
            <property name="text">
             <string>Experimental Features</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
