@@ -36,7 +36,7 @@
 AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::AboutAtlas )
 {
 	ui->setupUi( this );
-	ui->versionLabel->setText( ATLASVERSION_STR );
+	ui->versionLabel->setText( ATLAS_VERSION_STRING );
 
 	ui->lbQt6Ver->setText( QString( "Qt6 Version: %1" ).arg( QT_VERSION_STR ) );
 	ui->lbSqlite3Ver->setText( QString( "SQLite3 Version: %1" ).arg( SQLITE_VERSION ) );
