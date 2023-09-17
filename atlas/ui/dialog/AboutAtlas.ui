@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>364</height>
+    <height>347</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,14 +86,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="versionLabel">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
+       <widget class="QPushButton" name="btnClose">
         <property name="text">
-         <string>EMPTY VERSION LABEL</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>
@@ -115,6 +110,81 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="1" rowspan="5">
+       <widget class="QFrame" name="frame_3">
+        <property name="minimumSize">
+         <size>
+          <width>37</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="2" column="1">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>186</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1" rowspan="2">
+          <widget class="QToolButton" name="toolButton">
+           <property name="styleSheet">
+            <string notr="true">background-color:none; border:none;</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources.qrc">
+             <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="1" column="2">
        <widget class="QFrame" name="frame">
         <property name="minimumSize">
@@ -130,44 +200,10 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Branch:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Revision:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Atlas Game Manager</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <property name="verticalSpacing">
+          <number>0</number>
+         </property>
+         <item row="1" column="0" colspan="5">
           <widget class="QTextEdit" name="textEdit">
            <property name="styleSheet">
             <string notr="true">border:none;
@@ -198,7 +234,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="4" column="0" colspan="5">
           <widget class="QFrame" name="frame_4">
            <property name="minimumSize">
             <size>
@@ -325,69 +361,160 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </layout>
           </widget>
          </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="1" rowspan="5">
-       <widget class="QFrame" name="frame_3">
-        <property name="minimumSize">
-         <size>
-          <width>37</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item row="2" column="1">
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+         <item row="3" column="0" colspan="5">
+          <widget class="QFrame" name="frame_5">
+           <property name="minimumSize">
             <size>
-             <width>20</width>
-             <height>186</height>
+             <width>0</width>
+             <height>23</height>
             </size>
            </property>
-          </spacer>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Revision:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="lblGitRev">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
-         <item row="0" column="1" rowspan="2">
-          <widget class="QToolButton" name="toolButton">
-           <property name="styleSheet">
-            <string notr="true">background-color:none; border:none;</string>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <bold>false</bold>
+            </font>
            </property>
            <property name="text">
-            <string>...</string>
+            <string>Atlas Game Manager</string>
            </property>
-           <property name="icon">
-            <iconset resource="../../resources.qrc">
-             <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
-           </property>
-           <property name="iconSize">
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="5">
+          <widget class="QFrame" name="frame_6">
+           <property name="minimumSize">
             <size>
-             <width>100</width>
-             <height>100</height>
+             <width>0</width>
+             <height>23</height>
             </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Branch:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="lblGitBranch">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="lblGitVersion">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
            </property>
           </widget>
          </item>

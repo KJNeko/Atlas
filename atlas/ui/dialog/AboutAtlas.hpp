@@ -22,6 +22,7 @@ class AboutAtlas final : public QDialog
   private slots:
 	void on_btnGithub_pressed();
 	void on_btnDiscord_pressed();
+	void on_btnClose_pressed();
 
   private:
 

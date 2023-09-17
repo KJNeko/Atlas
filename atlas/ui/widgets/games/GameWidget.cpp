@@ -180,7 +180,7 @@ void GameWidget::reloadRecord()
 		//QDateTime::fromMSecsSinceEpoch( &atlas_data.value()->release_date, QTimeZone::utc );
 		overview = atlas_data.value()->overview;
 		status = "<b>Status: </b>" + atlas_data.value()->status + "<br>";
-		current_version = atlas_data.value()->version;
+		current_version = " (Remote" + atlas_data.value()->version + ")";
 		censored = "<b>Censored: </b>" + atlas_data.value()->censored + "<br>";
 		language = "<b>Language: </b>" + atlas_data.value()->language + "<br>";
 		os = "<b>OS: </b>" + atlas_data.value()->os + "<br>";
@@ -193,8 +193,8 @@ void GameWidget::reloadRecord()
 	title = "<b>Title: </b>" + title + "<br>";
 	developer = "<b>Developer: </b>" + developer + "<br>";
 	engine = "<b>Engine: </b>" + engine + "<br>";
-	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() + " (Remote: " + current_version
-		              + " ) <br>" };
+	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() +  current_version
+		              + "<br>" };
 
 	ui->teDetails->setText(
 		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date

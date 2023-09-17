@@ -88,7 +88,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 					pixmap.fill( Qt::transparent );
 					{
 						QPainter paintert( &pixmap );
-						qt_blurImage( &paintert, srcImg, 100, true, false ); //blur radius
+						qt_blurImage( &paintert, srcImg, config::experimental::loading_preview_blur::get() , true, false ); //blur radius
 					}
 				}
 			}

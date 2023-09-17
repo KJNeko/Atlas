@@ -100,6 +100,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
+	ui->actionUpdates->setVisible( false );
 
 	//Used to keep games list centered
 	ui->dummy_button->setHidden( true );

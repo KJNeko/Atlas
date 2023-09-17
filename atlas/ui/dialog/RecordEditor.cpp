@@ -407,3 +407,7 @@ void RecordEditor::on_previewList_reordered()
 {
 	m_record.reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
 }
+
+void RecordEditor::on_btnClose_pressed(){
+	this->close();
+}

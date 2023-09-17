@@ -36,7 +36,10 @@
 AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::AboutAtlas )
 {
 	ui->setupUi( this );
-	ui->versionLabel->setText( ATLAS_VERSION_STRING );
+	//ui->versionLabel->setText( ATLAS_VERSION_STRING );
+	ui->lblGitBranch->setText( QString::fromLocal8Bit(utils::git_branch) );
+	ui->lblGitVersion->setText( QString::fromLocal8Bit(utils::git_tag ));
+	ui->lblGitRev->setText( QString::fromLocal8Bit( utils::git_revision ) );
 
 	ui->lbQt6Ver->setText( QString( "Qt6 Version: %1" ).arg( QT_VERSION_STR ) );
 	ui->lbSqlite3Ver->setText( QString( "SQLite3 Version: %1" ).arg( SQLITE_VERSION ) );
@@ -60,4 +63,8 @@ void AboutAtlas::on_btnGithub_pressed()
 void AboutAtlas::on_btnDiscord_pressed()
 {
 	QDesktopServices::openUrl( QUrl( "https://discord.gg/f3ee3Mzm" ) );
+}
+
+void AboutAtlas::on_btnClose_pressed(){
+	this->close();
 }
