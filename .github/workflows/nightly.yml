@@ -37,7 +37,6 @@ jobs:
         with:
           draft: false
           prerelease: true
-          tag_name: ${{ env.ATLAS_VERSION_STR }}
           name: ${{ env.ATLAS_VERSION_STR }}
           body: Nightly build of ${{ env.ATLAS_VERSION_STR }}
           fail_on_unmatched_files: true
