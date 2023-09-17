@@ -69,19 +69,46 @@ target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 
-if (DEFINED ATLASVERSION)
-    target_compile_definitions(Atlas PRIVATE ATLASVERSION=${ATLASVERSION})
-    message("Set compile version to ${ATLASVERSION}")
-elseif (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
-    message("You MUST provide -DALTASVERSION if not building debug")
+if (DEFINED ATLAS_GIT_BRANCH)
+    message("-- Set git branch string to ${ATLAS_GIT_BRANCH}")
+else ()
+    #Get the git branch us currently
+    execute_process(COMMAND git rev-parse --abbrev-ref HEAD WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message("-- Set git branch string to: ${ATLAS_GIT_BRANCH}")
 endif ()
+
+if (DEFINED ATLAS_GIT_REVISION)
+    message("-- Set git revision to: ${ATLAS_GIT_REVISION}")
+else ()
+    execute_process(COMMAND git log -1 --format=%H WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_REVISION OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message("-- Set git revision to ${ATLAS_GIT_REVISION}")
+endif ()
+
+if (DEFINED ATLAS_GIT_TAG)
+    message("-- Git tag set to: ${ATLAS_GIT_TAG}")
+else ()
+    execute_process(COMMAND git describe --abbrev=0 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_TAG OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message("-- Git tag set to: ${ATLAS_GIT_TAG}")
+endif ()
+
+if (DEFINED ATLAS_GIT_REVISION_BRIEF)
+    message("-- Set git revision to: ${ATLAS_GIT_REVISION_BRIEF}")
+else ()
+    execute_process(COMMAND git log -1 --format=%h WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_REVISION_BRIEF OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message("-- Set git revision to ${ATLAS_GIT_REVISION_BRIEF}")
+endif ()
+
+target_compile_definitions(Atlas PRIVATE ATLAS_GIT_BRANCH=${ATLAS_GIT_BRANCH})
+target_compile_definitions(Atlas PRIVATE ATLAS_GIT_TAG=${ATLAS_GIT_TAG})
+target_compile_definitions(Atlas PRIVATE ATLAS_GIT_REVISION=${ATLAS_GIT_REVISION})
+target_compile_definitions(Atlas PRIVATE ATLAS_GIT_REVISION_BRIEF=${ATLAS_GIT_REVISION_BRIEF})
 
 PlatformPostSetup()
 CompilerPostSetup()
 
-add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/data/themes COMMENT "Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/data/themes")
+add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/data/themes COMMENT " Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/data/themes")
 
-#file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+#file(GLOB_RECURSE TESTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp ")
 
 #add_executable(AtlasTests ${TESTS} ${SOURCES} ${UI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 #target_include_directories(AtlasTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)

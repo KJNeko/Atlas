@@ -14,10 +14,6 @@ inputs:
     description: "Build atlas"
     required: false
     default: 'true'
-  version-string:
-    description: "Version string"
-    required: false
-    default: '0.0.0'
 
 runs:
   using: "composite"
