@@ -113,7 +113,7 @@ QPushButton,
     border: 1px solid;
     border-color: rgb(81, 83, 90);
     width: 75px;
-    height: 30px;
+    height: 24px;
     border-radius: 5px;
 }
 
@@ -206,7 +206,7 @@ QCheckBox,
 QCheckBox:disabled,
 QLabel:disabled,
 QComboBox:disabled,
-QLineEdit {
+QLineEdit:disabled {
     color: rgba(210, 210, 210, 50);
 }
 
