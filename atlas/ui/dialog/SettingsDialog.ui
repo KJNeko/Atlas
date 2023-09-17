@@ -342,7 +342,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -965,77 +965,25 @@ border-right:none;
         <number>2</number>
        </property>
        <property name="spacing">
-        <number>2</number>
+        <number>6</number>
        </property>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_17">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>The default Banner Image size is 537px x 251px. All setting  below will be used for each Grid Capsule Layout. </string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <spacer name="horizontalSpacer_3">
+       <item row="5" column="1">
+        <spacer name="verticalSpacer_4">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Maximum</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>10</width>
-           <height>20</height>
+           <width>20</width>
+           <height>5</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="4" column="1">
-        <widget class="QListView" name="grid_preview">
-         <property name="minimumSize">
-          <size>
-           <width>620</width>
-           <height>300</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>620</width>
-           <height>300</height>
-          </size>
-         </property>
-         <property name="mouseTracking">
-          <bool>true</bool>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">border:none;
-background-color: rgb(180,180,180);
-padding:10x;</string>
-         </property>
-         <property name="verticalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="flow">
-          <enum>QListView::LeftToRight</enum>
-         </property>
-         <property name="isWrapping" stdset="0">
-          <bool>true</bool>
-         </property>
-         <property name="itemAlignment">
-          <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignJustify|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="10">
+       <item row="3" column="10">
         <widget class="QGroupBox" name="gridCapsuleSettings">
          <property name="minimumSize">
           <size>
@@ -1443,7 +1391,431 @@ padding:10x;</string>
          </widget>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="3" column="0">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>5</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="10">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Overlay Settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_29">
+          <property name="topMargin">
+           <number>15</number>
+          </property>
+          <item row="2" column="1">
+           <spacer name="horizontalSpacer_21">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_24">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="cbTopOverlay">
+               <property name="text">
+                <string>Top Overaly</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="cbBottomOverlay">
+               <property name="text">
+                <string>Bottom Overlay</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_26">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QFrame" name="frame_3">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_26">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0" rowspan="2" colspan="2">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Overlay Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="leOverlayColor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>1</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_27">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QFrame" name="frame_5">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_28">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Font Size</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QSpinBox" name="sbFontSize">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximum">
+                <number>30</number>
+               </property>
+               <property name="value">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <spacer name="horizontalSpacer_22">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_29">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_27">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="2">
+              <widget class="QComboBox" name="cbFont">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>1</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_32">
+               <property name="text">
+                <string>Font</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_28">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QFrame" name="frame_2">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_25">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Height</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Opacity</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="sbOverlayHeight">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximum">
+                <number>5000</number>
+               </property>
+               <property name="value">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QSpinBox" name="sbOverlayOpacity">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximum">
+                <number>5000</number>
+               </property>
+               <property name="value">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_24">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <spacer name="verticalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_17">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>The default Banner Image size is 537px x 251px. All setting  below will be used for each Grid Capsule Layout. </string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="minimumSize">
           <size>
@@ -1929,210 +2301,53 @@ padding:10x;</string>
         </widget>
        </item>
        <item row="3" column="1">
-        <spacer name="verticalSpacer_4">
+        <widget class="QListView" name="grid_preview">
+         <property name="minimumSize">
+          <size>
+           <width>620</width>
+           <height>300</height>
+          </size>
+         </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:none;
+background-color: rgb(180,180,180);
+padding:10x;</string>
+         </property>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="flow">
+          <enum>QListView::LeftToRight</enum>
+         </property>
+         <property name="isWrapping" stdset="0">
+          <bool>true</bool>
+         </property>
+         <property name="itemAlignment">
+          <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignJustify|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="11">
+        <spacer name="horizontalSpacer_30">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Maximum</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
-           <height>10</height>
+           <width>5</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="5" column="10">
-        <widget class="QGroupBox" name="groupBox">
-         <property name="minimumSize">
-          <size>
-           <width>280</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Overlay Settings</string>
-         </property>
-         <widget class="QCheckBox" name="cbTopOverlay">
-          <property name="geometry">
-           <rect>
-            <x>13</x>
-            <y>25</y>
-            <width>86</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Top Overaly</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="leOverlayColor">
-          <property name="geometry">
-           <rect>
-            <x>152</x>
-            <y>80</y>
-            <width>116</width>
-            <height>24</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="cbBottomOverlay">
-          <property name="geometry">
-           <rect>
-            <x>115</x>
-            <y>25</y>
-            <width>106</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Bottom Overlay</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_20">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>80</y>
-            <width>131</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Overlay Color</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_23">
-          <property name="geometry">
-           <rect>
-            <x>13</x>
-            <y>50</y>
-            <width>46</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Height</string>
-          </property>
-         </widget>
-         <widget class="QSpinBox" name="sbOverlayHeight">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>50</y>
-            <width>51</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximum">
-           <number>5000</number>
-          </property>
-          <property name="value">
-           <number>2</number>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_24">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>50</y>
-            <width>86</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Opacity</string>
-          </property>
-         </widget>
-         <widget class="QSpinBox" name="sbOverlayOpacity">
-          <property name="geometry">
-           <rect>
-            <x>215</x>
-            <y>50</y>
-            <width>51</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximum">
-           <number>5000</number>
-          </property>
-          <property name="value">
-           <number>2</number>
-          </property>
-         </widget>
-         <widget class="QSpinBox" name="sbFontSize">
-          <property name="geometry">
-           <rect>
-            <x>75</x>
-            <y>140</y>
-            <width>51</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="value">
-           <number>2</number>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_22">
-          <property name="geometry">
-           <rect>
-            <x>15</x>
-            <y>140</y>
-            <width>56</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Size</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_32">
-          <property name="geometry">
-           <rect>
-            <x>15</x>
-            <y>110</y>
-            <width>46</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="cbFont">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>110</y>
-            <width>216</width>
-            <height>24</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
        </item>
       </layout>
      </widget>

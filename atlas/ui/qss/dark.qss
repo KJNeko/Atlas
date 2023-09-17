@@ -31,6 +31,10 @@ QStackedWidget>QWidget>QFrame>QFrame,
     border: none;
 }
 
+QStackedWidget>QWidget>QGroupBox>QFrame {
+    background-color: none;
+}
+
 /*QTreeView*/
 QTreeView,
 QListWidget,
@@ -201,7 +205,8 @@ QCheckBox,
 
 QCheckBox:disabled,
 QLabel:disabled,
-QComboBox:disabled {
+QComboBox:disabled,
+QLineEdit {
     color: rgba(210, 210, 210, 50);
 }
 
@@ -326,19 +331,18 @@ QCheckBox::indicator {
     background-color: rgb(210, 210, 210);
 }
 */
-QGroupBox {
+QStackedWidget>QWidget>QGroupBox {
     background-color: none;
-    border: 1px solid rgb(181, 186, 193);
-    border-color: rgb(255, 255, 255);
+    border: 1px solid rgb(81, 83, 90);
     border-radius: 10px;
-    margin-top: 1ex;
+    margin-top: 2ex;
 }
 
-QGroupBox>QLabel {
+QStackedWidget>QWidget>QGroupBox>QLabel {
     background-color: none;
 }
 
-QGroupBox::title {
+QStackedWidget>QWidget>QGroupBox::title {
     subcontrol-origin: margin;
     color: rgb(255, 255, 255);
     left: 7px;
@@ -450,4 +454,8 @@ QStackedWidget,
 #NotificationFrame {
     border-top: 1px solid rgb(49, 51, 56);
     padding-top: 4px;
+}
+
+#grid_preview {
+    border-radius: 10px;
 }
