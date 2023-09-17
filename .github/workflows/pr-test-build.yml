@@ -1,8 +1,6 @@
 name: Staging
 on:
   pull_request:
-  push:
-    branches: staging
 
 jobs:
   # format-check:
