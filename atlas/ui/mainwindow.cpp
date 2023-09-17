@@ -101,6 +101,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionDownload->setVisible( false );
 	ui->actionUpdates->setEnabled( false );
 
+	//Used to keep games list centered
+	ui->dummy_button->setHidden( true );
 	connect(
 		&atlas::import::internal::getNotifier(),
 		&atlas::import::ImportNotifier::notification,
@@ -115,9 +117,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	setBottomGameCounter();
 	refreshSearch();
 
-	ui->lbAtlasVersion->setText( utils::version_string_qt() );
-
-	//MainWindow::setWindowTitle( QString::fromStdString("Atlas" + utils::version_string_qt() ));
+	const QString windowTitle = QString::fromStdString("ATLAS ") + utils::version_string_qt() ;
+	MainWindow::setWindowTitle(windowTitle);
 }
 
 MainWindow::~MainWindow()
