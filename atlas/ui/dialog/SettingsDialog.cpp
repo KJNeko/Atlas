@@ -373,9 +373,12 @@ void SettingsDialog::saveExperimentalSettings()
 
 void SettingsDialog::on_btnGeneral_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( true );
+	ui->btnExpFeatures->setChecked( false );
+	ui->btnInterface->setChecked( false );
+	ui->btnPaths->setChecked( false );
+	ui->btnThreading->setChecked( false );
+	ui->btnUilayout->setChecked( false );
 
 	ui->stackedWidget->setCurrentIndex( 0 );
 	ui->lblSettingsHeader->setText( "GENERAL" );
@@ -383,9 +386,12 @@ void SettingsDialog::on_btnGeneral_pressed()
 
 void SettingsDialog::on_btnInterface_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( false );
+	ui->btnExpFeatures->setChecked( false );
+	ui->btnInterface->setChecked( true );
+	ui->btnPaths->setChecked( false );
+	ui->btnThreading->setChecked( false );
+	ui->btnUilayout->setChecked( false );
 
 	ui->stackedWidget->setCurrentIndex( 1 );
 	ui->lblSettingsHeader->setText( "INTERFACE" );
@@ -393,9 +399,12 @@ void SettingsDialog::on_btnInterface_pressed()
 
 void SettingsDialog::on_btnUilayout_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( false );
+	ui->btnExpFeatures->setChecked( false );
+	ui->btnInterface->setChecked( false );
+	ui->btnPaths->setChecked( false );
+	ui->btnThreading->setChecked( false );
+	ui->btnUilayout->setChecked( true );
 
 	ui->stackedWidget->setCurrentIndex( 2 );
 	ui->lblSettingsHeader->setText( "UI LAYOUT" );
@@ -406,9 +415,12 @@ void SettingsDialog::on_btnUilayout_pressed()
 
 void SettingsDialog::on_btnPaths_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( false );
+	ui->btnExpFeatures->setChecked( false );
+	ui->btnInterface->setChecked( false );
+	ui->btnPaths->setChecked( true );
+	ui->btnThreading->setChecked( false );
+	ui->btnUilayout->setChecked( false );
 
 	ui->stackedWidget->setCurrentIndex( 3 );
 	ui->lblSettingsHeader->setText( "PATHS" );
@@ -416,9 +428,12 @@ void SettingsDialog::on_btnPaths_pressed()
 
 void SettingsDialog::on_btnThreading_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( false );
+	ui->btnExpFeatures->setChecked( false );
+	ui->btnInterface->setChecked( false );
+	ui->btnPaths->setChecked( false );
+	ui->btnThreading->setChecked( true );
+	ui->btnUilayout->setChecked( false );
 
 	ui->stackedWidget->setCurrentIndex( 4 );
 	ui->lblSettingsHeader->setText( "THREADING" );
@@ -426,9 +441,12 @@ void SettingsDialog::on_btnThreading_pressed()
 
 void SettingsDialog::on_btnExpFeatures_pressed()
 {
-	QString normal = "QPushButton{background-color: none;}"
-					 "QPushButton:hover{background-color: rgb(64, 66, 73);}";
-	QString pressed = "background-color: rgb(64, 66, 73);";
+	ui->btnGeneral->setChecked( false );
+	ui->btnExpFeatures->setChecked( true );
+	ui->btnInterface->setChecked( false );
+	ui->btnPaths->setChecked( false );
+	ui->btnThreading->setChecked( false );
+	ui->btnUilayout->setChecked( false );
 
 	ui->stackedWidget->setCurrentIndex( 5 );
 	ui->lblSettingsHeader->setText( "EXPERIMENTAL FEATURES" );
