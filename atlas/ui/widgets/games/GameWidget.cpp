@@ -165,7 +165,7 @@ void GameWidget::reloadRecord()
 		//ui->previewList->setFixedSize(ui->bannerDetailFrame->width(), ui->previewList->sizeHintForRow(0) * ui->previewList->model()->rowCount() + 2 * ui->previewList->frameWidth());
 
 		//need to fix. row count is not updating
-		ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
+		//ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
 	}
 	else
 	{
@@ -392,15 +392,20 @@ void GameWidget::on_btnManageRecord_pressed()
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {
-	//spdlog::info( "resize event" );
-	reloadRecord();
 
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
-		//ui->previewList->setFixedHeight(
-		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
-		//		* ui->previewList->sizeHintForRow( 1 ) );
+		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		//If the item has not fully loaded use show event
+		if(cols != 0)
+		{
+			const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };
+			//+5 padding at top and bottom of each image
+			const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+			ui->previewList->setMinimumHeight( previewListHeight );
+		}
 	}
+		reloadRecord();
 }
 
 void GameWidget::updateGameState()
@@ -445,5 +450,21 @@ std::string GameWidget::getEngineLogo( std::string engine )
 	else
 	{
 		return "";
+	}
+}
+
+void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
+{
+	QWidget::showEvent( event );
+	if ( ui->previewList->model()->rowCount() > 0 )
+	{
+		ui->previewList->show();
+		//Calculate Rows and Columns
+		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };		
+		//Each preview has +5 padding at top and bottom. 
+		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+		//Set min height
+		ui->previewList->setMinimumHeight( previewListHeight );
 	}
 }
