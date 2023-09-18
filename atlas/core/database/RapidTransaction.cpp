@@ -25,4 +25,5 @@ namespace atlas::database
 	{
 		throw TransactionInvalid( "Attempted to abort a non-transaction" );
 	}
+
 } // namespace atlas::database

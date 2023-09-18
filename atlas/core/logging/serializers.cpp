@@ -5,7 +5,7 @@
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
-#include "core/logging.hpp"
+#include "logging.hpp"
 
 namespace atlas::logging::dev
 {

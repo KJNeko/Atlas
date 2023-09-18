@@ -7,7 +7,7 @@
 #include "core/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/utils/execute/executeProc.hpp"
 #include "core/utils/operators.hpp"
 
@@ -111,7 +111,9 @@ namespace atlas::records
 			return;*/
 		}
 		else
-			spdlog::error( "Failed to launch game with executable {}", executable.string() );
+		{
+			logging::error( fmt::format( "Failed to launch game with executable: {}", executable.string() ) );
+		}
 	}
 
 	void Version::addPlaytime( const std::uint32_t playtime )

@@ -29,6 +29,8 @@ namespace atlas::notifications
 		if constexpr ( sizeof...( Ts ) > 0 ) serializeInto< idx + 1, Ts... >( array, ts... );
 	}
 
+	bool isNotificationsReady();
+
 	namespace internal
 	{
 		void createDevMessage( std::string body, QJsonDocument doc );

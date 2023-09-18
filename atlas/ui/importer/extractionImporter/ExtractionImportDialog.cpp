@@ -13,7 +13,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "core/database/record/Game.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
 
 ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
@@ -61,7 +61,6 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 	//if ( import_triggered ) return;
 
-	spdlog::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
 		//import_triggered = true;
@@ -171,13 +170,13 @@ QStringList findVersionType( QString s )
 
 			if ( slist.length() > 1 )
 			{
-				spdlog::info( "{}, {}", slist[ 0 ], slist[ 1 ] );
+				atlas::logging::debug( fmt::format( "{}, {}", slist[ 0 ], slist[ 1 ] ) );
 				version += delimiter + slist[ 1 ];
 				title += slist[ 0 ];
 			}
 			else
 			{
-				spdlog::info( "{}", slist[ 0 ] );
+				atlas::logging::debug( fmt::format( "{}", slist[ 0 ] ) );
 				version += delimiter;
 				title += slist[ 0 ];
 			}

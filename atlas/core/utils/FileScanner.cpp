@@ -8,7 +8,7 @@
 
 #include <queue>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::utils
 {
@@ -36,7 +36,7 @@ namespace atlas::utils
 	{
 		if ( !std::filesystem::exists( path ) )
 		{
-			spdlog::error( "scan_files: Path {} does not exist.", path.string() );
+			atlas::logging::error( fmt::format( "Expected path does not exist", path.string() ) );
 			throw std::runtime_error( "Path does not exist." );
 		}
 
@@ -100,7 +100,7 @@ namespace atlas::utils
 			}
 		}
 
-		spdlog::error( "Managed to escape loop in coroutine scan_files" );
+		logging::error( "Managed to escape loop in coroutine scan_files" );
 		throw std::runtime_error( "Managed to escape loop in coroutine scan_files" );
 	}
 

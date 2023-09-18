@@ -12,8 +12,8 @@
 #include <filesystem>
 
 #include "ConfigNotification.hpp"
-#include "logging.hpp"
 #include "logging/formatters.hpp"
+#include "logging/logging.hpp"
 
 /**
  *
@@ -46,7 +46,8 @@ inline QSettings getSettingsObject()
 	return { "./data/config.ini", QSettings::IniFormat };
 }
 
-#define KEY_VALUE( group, name ) QString( #group ) + "/" + #name
+#define STR( val ) #val
+#define KEY_VALUE( group, name ) STR( group ) "/" STR( name )
 
 #define SETTINGS_D( group, name, type, default_value )                                                                 \
 	namespace config::group::name                                                                                      \
@@ -69,8 +70,7 @@ inline QSettings getSettingsObject()
 			     settings_obj.canConvert< type >() )                                                                   \
 				return settings_obj.value< type >();                                                                   \
 			else                                                                                                       \
-				throw std::runtime_error(                                                                              \
-					fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );             \
+				throw std::runtime_error( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );      \
 		}                                                                                                              \
 	}
 
@@ -150,8 +150,7 @@ inline QSettings getSettingsObject()
 				     settings_obj.canConvert< int >() )                                                                \
 					return settings_obj.value< int >();                                                                \
 				else                                                                                                   \
-					throw std::runtime_error(                                                                          \
-						fmt::format( "Failed to convert key {} to desired type", KEY_VALUE( group, name ) ) );         \
+					throw std::runtime_error( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );  \
 			}                                                                                                          \
                                                                                                                        \
 			SETTINGS_D( group, name, int, default_value )                                                              \

@@ -8,7 +8,7 @@
 #include <QLocale>
 
 #include "core/database/record/Game.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
@@ -246,21 +246,16 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 	auto recheckData = [ &data ]()
 	{
-		spdlog::info( "Checking that {} doesn't have in valid data anymore", data.title );
 		data.game_id = atlas::records::recordID( data.title, data.creator, data.engine );
 		if ( data.game_id != INVALID_ATLAS_ID )
 		{
 			const atlas::records::Game game { data.game_id };
-			spdlog::debug( "Found existing record: {}", game->m_title );
 			//Record exists. Set if the version still exists
 
 			data.conflicting_version = game.hasVersion( data.version );
-
-			spdlog::debug( "Data conflicting: {}", data.conflicting_version ? "Yes" : "No" );
 		}
 		else
 		{
-			spdlog::debug( "Data doesn't match any existing record" );
 			//Can't possibly conflict now.
 			data.conflicting_version = false;
 		}

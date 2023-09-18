@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/system.hpp"
 
 /**

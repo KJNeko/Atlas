@@ -45,7 +45,7 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	if ( ret_code != SQLITE_OK )
 	{
-		spdlog::critical( "Failed to load sqlite!" );
+		atlas::logging::critical( "Failed to load sqlite!" );
 		std::abort();
 	}
 

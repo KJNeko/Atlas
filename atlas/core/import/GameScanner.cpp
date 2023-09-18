@@ -76,7 +76,7 @@ void runner(
 						}
 						catch ( std::exception& e )
 						{
-							spdlog::warn( "Failed to get remote data in scanner: {}", e.what() );
+							atlas::logging::warn( fmt::format( "Failed to get remote data in scanner: {}", e.what() ) );
 							return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 						}
 					}
@@ -167,7 +167,7 @@ void runner(
 		}
 		else
 		{
-			spdlog::warn( "No executables found for path {}", folder );
+			atlas::logging::warn( fmt::format( "No executables found for path {}", folder ) );
 			throw std::runtime_error( fmt::format( "Failed to find executables for path {}", folder ) );
 		}
 
@@ -176,7 +176,7 @@ void runner(
 
 	catch ( const std::exception& e )
 	{
-		spdlog::error( "GameScanner::runner: {}", e.what() );
+		atlas::logging::error( e.what() );
 		promise.setException( std::current_exception() );
 	}
 
@@ -239,7 +239,7 @@ try
 		}
 	}
 
-	spdlog::info( "Waiting for futures to finish" );
+	atlas::logging::info( "Waiting for futures to finish" );
 
 	emit prescanWaiting();
 

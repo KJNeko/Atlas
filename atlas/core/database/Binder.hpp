@@ -12,7 +12,7 @@
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
 #include "binders.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "extractors.hpp"
 
 class Binder
@@ -92,10 +92,12 @@ class Binder
 				[[fallthrough]];
 			case SQLITE_ERROR:
 				{
-					atlas::logging::error( fmt::format(
-						"DB: Query error: \"{}\", Query: \"{}\"",
-						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ) ) );
+					atlas::logging::error(
+						fmt::format(
+							"DB: Query error: \"{}\", Query: \"{}\"",
+							sqlite3_errmsg( &Database::ref() ),
+							sqlite3_expanded_sql( stmt ) ),
+						std::source_location::current() );
 					throw std::runtime_error( fmt::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
@@ -131,7 +133,8 @@ class Binder
 				default:
 					{
 						atlas::logging::error(
-							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ) );
+							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ),
+							std::source_location::current() );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}
@@ -161,8 +164,9 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::
-							error( fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ) );
+						atlas::logging::error(
+							fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ),
+							std::source_location::current() );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}

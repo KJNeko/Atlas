@@ -14,7 +14,7 @@
 
 #include "Binder.hpp"
 #include "Database.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::database
 {

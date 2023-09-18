@@ -103,7 +103,7 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 		}
 		else
 		{
-			spdlog::warn( "Future is invalid" );
+			atlas::logging::warn( "Future is invalid" );
 		}
 	}
 

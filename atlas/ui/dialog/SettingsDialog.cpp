@@ -14,7 +14,7 @@
 
 #include "ProgressBarDialog.hpp"
 #include "core/config.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/utils/foldersize.hpp"
 #include "ui_SettingsDialog.h"
 
@@ -471,14 +471,14 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 
 	if ( ui->cbUseSystemTheme->isChecked() )
 	{
-		spdlog::debug( "Using system theme" );
+		atlas::logging::debug( "Using system theme" );
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
 		ensurePolished();
 		return;
 	}
 	else
 	{
-		spdlog::debug( "Theme changed to {}", text );
+		atlas::logging::debug( fmt::format( "Theme changed to {}", text ) );
 		QFile file { "./data/themes/" + text };
 		file.open( QFile::ReadOnly );
 		QString style { file.readAll() };
@@ -555,7 +555,7 @@ void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
 	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	qlv->repaint();
-	spdlog::info( "{}", static_cast< SCALE_TYPE >( idx ) );
+	atlas::logging::info( fmt::format( "{}", static_cast< int >( idx ) ) );
 	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
 	///config::grid_ui::gridImageLayout::set(idx);
 	qlv->repaint();

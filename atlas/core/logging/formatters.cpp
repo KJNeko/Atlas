@@ -32,6 +32,12 @@ auto fmt::formatter< std::filesystem::path >::format( const std::filesystem::pat
 	}
 }
 
+auto fmt::formatter< std::source_location >::format( const std::source_location& loc, format_context& ctx ) const
+	-> decltype( ctx.out() )
+{
+	return fmt::format_to( ctx.out(), "{}:{} {}", loc.file_name(), loc.line(), loc.function_name() );
+}
+
 /*
 auto fmt::formatter< Record >::format( const Record& my, fmt::format_context& ctx ) const -> decltype( ctx.out() )
 {

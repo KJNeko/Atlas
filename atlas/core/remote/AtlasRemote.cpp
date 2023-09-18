@@ -15,7 +15,7 @@
 #include <fstream>
 
 #include "core/database/RapidTransaction.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/parsers/parser.hpp"
 #include "core/utils/regex/regex.hpp"
@@ -77,7 +77,7 @@ namespace atlas
 	{
 		ZoneScoped;
 		const QString path { REMOTE "api/updates" };
-		spdlog::info( "Checking remote for updates at {}", path.toStdString() );
+		atlas::logging::info( fmt::format( "Checking remote for updates at {}", path.toStdString() ) );
 		QNetworkRequest request { QUrl { path } };
 		request.setTransferTimeout( 2000 );
 		auto* reply { m_manager.get( request ) };
@@ -99,15 +99,15 @@ namespace atlas
 
 	void AtlasRemote::handleDownloader( QNetworkReply* reply )
 	{
-		spdlog::debug( "Handling download from {}", reply->url().path().toStdString() );
+		atlas::logging::debug( fmt::format( "Handling download from {}", reply->url().path().toStdString() ) );
 		ZoneScoped;
 
 		if ( reply->error() != QNetworkReply::NoError )
 		{
-			spdlog::warn(
+			atlas::logging::warn( fmt::format(
 				"Failed to handle downloader from {}. Server returned code {}",
 				reply->url().path().toStdString(),
-				reply->errorString().toStdString() );
+				reply->errorString().toStdString() ) );
 			return;
 		}
 
@@ -158,15 +158,15 @@ namespace atlas
 	try
 	{
 		ZoneScoped;
-		spdlog::debug( "Handling json response from {}", reply->url().path().toStdString() );
+		atlas::logging::debug( fmt::format( "Handling json response from {}", reply->url().path().toStdString() ) );
 		//Read the json
 
 		if ( reply->error() != QNetworkReply::NoError )
 		{
-			spdlog::warn(
+			logging::warn( fmt::format(
 				"Failed to handle json response from {}. Server returned code {}",
 				reply->url().path().toStdString(),
-				reply->errorString().toStdString() );
+				reply->errorString().toStdString() ) );
 			return;
 		}
 
@@ -174,10 +174,10 @@ namespace atlas
 		const QJsonDocument doc { QJsonDocument::fromJson( response_data ) };
 		if ( !doc.isArray() )
 		{
-			spdlog::warn(
+			logging::warn( fmt::format(
 				"Failed to handle json response from {}. The json response was not an array!",
-				reply->url().path().toStdString() );
-			spdlog::warn( "{}", response_data.toStdString() );
+				reply->url().path().toStdString() ) );
+			logging::warn( fmt::format( "{}", response_data.toStdString() ) );
 		}
 		const QJsonArray& array = doc.array();
 
@@ -187,9 +187,9 @@ namespace atlas
 			const auto& obj { data.toObject() };
 			if ( !obj.contains( "date" ) || !obj.contains( "name" ) || !obj.contains( "md5" ) )
 			{
-				spdlog::warn(
+				logging::warn( fmt::format(
 					"Failed to handle json response from {}. Json object possibly malformed!",
-					reply->url().path().toStdString() );
+					reply->url().path().toStdString() ) );
 				delete reply;
 				return;
 			}
@@ -214,7 +214,7 @@ namespace atlas
 			RapidTransaction t {};
 			if ( it == updates.end() )
 			{
-				spdlog::debug( "Adding update {} to database", update_time );
+				atlas::logging::debug( fmt::format( "Adding update {} to database", update_time ) );
 				//Add it to the database
 				t << "INSERT INTO updates (update_time, processed_time, md5) VALUES (?, ?, ?)" << update_time << 0
 				  << md5_data_c;
@@ -227,8 +227,8 @@ namespace atlas
 	}
 	catch ( const std::exception& e )
 	{
-		spdlog::error(
-			"Failed to handle json response from {}. Exception: {}", reply->url().path().toStdString(), e.what() );
+		atlas::logging::error( fmt::format(
+			"Failed to handle json response from {}. Exception: {}", reply->url().path().toStdString(), e.what() ) );
 	}
 
 	std::vector< std::pair< std::uint64_t, std::uint64_t > > AtlasRemote::getUpdatesList() const
@@ -265,7 +265,7 @@ namespace atlas
 
 		if ( !json.contains( "min_ver" ) )
 		{
-			spdlog::error( "Failed to parse update file. Missing min_ver" );
+			atlas::logging::error( "Failed to parse update file. Missing min_ver" );
 			qDebug() << json.keys();
 			throw std::runtime_error( "Failed to parse update file. Missing min_ver" );
 		}
@@ -276,7 +276,8 @@ namespace atlas
 
 		if ( version > MAX_REMOTE_VERSION )
 		{
-			spdlog::error( "Failed to parse update file! Version was {}. Our max is {}", version, MAX_REMOTE_VERSION );
+			atlas::logging::error( fmt::format(
+				"Failed to parse update file! Version was {}. Our max is {}", version, MAX_REMOTE_VERSION ) );
 			return;
 		}
 
@@ -284,8 +285,8 @@ namespace atlas
 		{
 			default:
 				{
-					spdlog::error(
-						"Failed to parse update file! Version was {}. Our max is {}!", version, MAX_REMOTE_VERSION );
+					atlas::logging::error( fmt::format(
+						"Failed to parse update file! Version was {}. Our max is {}!", version, MAX_REMOTE_VERSION ) );
 					return;
 				}
 			case 0:
@@ -299,7 +300,7 @@ namespace atlas
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
 	{
 		ZoneScoped;
-		spdlog::info( "Processing update for time {}", update_time );
+		atlas::logging::info( fmt::format( "Processing update for time {}", update_time ) );
 		//Check if the file exists
 		const std::filesystem::path local_update_archive_path {
 			fmt::format( "./data/updates/{}.update", update_time )
@@ -307,7 +308,7 @@ namespace atlas
 
 		if ( !std::filesystem::exists( local_update_archive_path ) )
 		{
-			spdlog::warn( "Update {} doesn't exist. Can't process.", update_time );
+			atlas::logging::warn( fmt::format( "Update {} doesn't exist. Can't process.", update_time ) );
 			return;
 		}
 
@@ -324,7 +325,7 @@ namespace atlas
 
 		if ( processed_time != 0 )
 		{
-			spdlog::warn( "Update {} is already processed.", update_time );
+			atlas::logging::warn( fmt::format( "Update {} is already processed.", update_time ) );
 			return;
 		}
 
@@ -333,7 +334,7 @@ namespace atlas
 		//getNextUpdateTime() can return 0 but.....If it returns zero then i've VERY concerned how we got here?
 		if ( next_update == 0 )
 		{
-			spdlog::critical( "What the fuck? HOW are you zero?!?" );
+			atlas::logging::critical( "What the fuck? HOW are you zero?!?" );
 			std::abort(); //Just abort the entire program at this point.
 		}
 
@@ -343,7 +344,7 @@ namespace atlas
 			return;
 		}
 
-		spdlog::info( "Processing file {:ce}", local_update_archive_path );
+		atlas::logging::debug( fmt::format( "Processing file {:ce}", local_update_archive_path ) );
 		try
 		{
 			atlas::parse( atlas::extract( local_update_archive_path ) );
@@ -359,7 +360,7 @@ namespace atlas
 		}
 		catch ( const std::exception& e )
 		{
-			spdlog::error( "Failed to process update file {}: What: {}", update_time, e.what() );
+			atlas::logging::error( fmt::format( "Failed to process update file {}: What: {}", update_time, e.what() ) );
 			atlas::notifications::createMessage( QString( "Failed to process update file %1\nWhat: %2" )
 			                                         .arg( update_time )
 			                                         .arg( e.what() ) );
@@ -384,7 +385,7 @@ namespace atlas
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::warn( "Failed to process updates: {}", e.what() );
+		atlas::logging::warn( fmt::format( "Failed to process updates: {}", e.what() ) );
 	}
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
@@ -403,7 +404,8 @@ namespace atlas
 	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
 	{
 		reply->deleteLater();
-		spdlog::error( "Failed to download manifest from remote: {}", static_cast< int >( error ) );
+		atlas::logging::
+			error( fmt::format( "Failed to download manifest from remote: {}", static_cast< int >( error ) ) );
 		switch ( error )
 		{
 			default:
@@ -417,7 +419,7 @@ namespace atlas
 			case QNetworkReply::HostNotFoundError:
 				break;
 			case QNetworkReply::TimeoutError:
-				spdlog::error( "Timed out" );
+				atlas::logging::error( "Timed out" );
 				break;
 			case QNetworkReply::OperationCanceledError:
 				break;
@@ -483,7 +485,7 @@ namespace atlas
 	void AtlasRemote::handleDownloadError( QNetworkReply::NetworkError error, QNetworkReply* reply )
 	{
 		reply->deleteLater();
-		spdlog::error( "Failed to download file from remote: {}", static_cast< int >( error ) );
+		logging::error( fmt::format( "Failed to download file from remote: {}", static_cast< int >( error ) ) );
 		switch ( error )
 		{
 			default:
@@ -497,7 +499,7 @@ namespace atlas
 			case QNetworkReply::HostNotFoundError:
 				break;
 			case QNetworkReply::TimeoutError:
-				spdlog::error( "Timed out" );
+				logging::error( "Timed out" );
 				break;
 			case QNetworkReply::OperationCanceledError:
 				break;

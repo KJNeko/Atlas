@@ -63,7 +63,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	}
 	catch ( int num )
 	{
-		spdlog::error( "Unable to load default font. Verify system font available" );
+		atlas::logging::error( "Unable to load default font. Verify system font available" );
 	}
 
 	config::notify();

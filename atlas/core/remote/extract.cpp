@@ -8,7 +8,7 @@
 #include <fstream>
 #include <lz4frame.h>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas
 {
@@ -35,7 +35,6 @@ namespace atlas
 	std::vector< char > extract( const std::filesystem::path path )
 	{
 		ZoneScoped;
-		spdlog::info( "Extracting {}", path );
 		LZ4F_dctx* dctx { nullptr };
 		if ( const auto status = LZ4F_createDecompressionContext( &dctx, LZ4F_VERSION ); LZ4F_isError( status ) )
 		{
@@ -66,7 +65,6 @@ namespace atlas
 			char* const decompression_buffer = new char[ block_size ];
 			std::memset( decompression_buffer, 0, block_size );
 
-			spdlog::info( "Header ate {} bytes", processed_bytes );
 			//Rewind file
 			ifs.seekg( static_cast< long long >( processed_bytes ), std::ios::beg );
 
@@ -97,7 +95,7 @@ namespace atlas
 
 				if ( LZ4F_isError( ret ) )
 				{
-					spdlog::error( "Failed to decompress: {}", LZ4F_getErrorName( ret ) );
+					logging::error( fmt::format( "Failed to decompress LZ4 archive: {}", LZ4F_getErrorName( ret ) ) );
 					throw std::runtime_error( fmt::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
 				}
 				//Shift buffer over by ready_bytes (bytes read by LZ4F_decompress)
@@ -115,11 +113,7 @@ namespace atlas
 			throw std::runtime_error( fmt::format( "Failed to open file: {}", path.string() ) );
 
 		LZ4F_freeDecompressionContext( dctx );
-		const auto file_size { std::filesystem::file_size( path ) };
-		const auto data_size { out_data.size() };
-		const float percent { static_cast< float >( data_size ) / static_cast< float >( file_size ) };
-		spdlog::info(
-			"Finished extracting file {} -> {}: {}%", std::filesystem::file_size( path ), out_data.size(), percent );
+
 		return out_data;
 	}
 

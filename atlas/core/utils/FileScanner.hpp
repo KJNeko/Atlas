@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::utils
 {
@@ -59,27 +59,7 @@ namespace atlas::utils
 
 			std::suspend_always final_suspend() noexcept { return {}; }
 
-			void unhandled_exception()
-			{
-				if ( exception )
-				{
-					try
-					{
-						std::rethrow_exception( exception );
-					}
-					catch ( std::exception& e )
-					{
-						spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! {}", e.what() );
-					}
-					catch ( ... )
-					{
-						spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! FUCK!" );
-					}
-				}
-				else
-					spdlog::critical( "FileScannerGenerator: Unhandled exception but no value!" );
-				std::terminate();
-			}
+			void unhandled_exception() { std::rethrow_exception( exception ); }
 
 			void return_value( FileInfo&& from )
 			{

@@ -9,7 +9,6 @@
 #include <QFile>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QMessageBox>
 #include <QPixmap>
 #include <QtConcurrentRun>
 
@@ -26,7 +25,7 @@ namespace imageManager
 	void cleanOrphans()
 	{
 		ZoneScoped;
-		spdlog::debug( "Clearing orphan previews/banners" );
+		atlas::logging::debug( "Clearing orphan previews/banners" );
 		//Grab all images from the database
 		RapidTransaction transaction {};
 
@@ -64,6 +63,8 @@ namespace imageManager
 	}
 
 	[[nodiscard]] std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
+	try
+
 	{
 		//spdlog::debug( path );
 		ZoneScoped;
@@ -102,7 +103,7 @@ namespace imageManager
 		constexpr std::uint16_t webp_max { 16383 };
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
-			spdlog::error( "File is too big for webp" );
+			atlas::logging::error( "File is too big for webp" );
 		}
 
 		//If GIF then store, do not convert
@@ -125,16 +126,22 @@ namespace imageManager
 		{
 			auto dest { getDestFilePath( byteArray, dest_root, path.extension().string() ) };
 			saveImage( byteArray, dest );
+
 			return dest;
 		}
 		else
 		{
 			auto dest { getDestFilePath( webp_byteArray, dest_root, ".webp" ) };
 			saveImage( webp_byteArray, dest );
+
 			return dest;
 		}
 
 		//return dest;
+	}
+	catch ( ImageSaveError& e )
+	{
+		atlas::logging::error( "Failed to save image" );
 	}
 
 	[[nodiscard]] QFuture< std::filesystem::path >

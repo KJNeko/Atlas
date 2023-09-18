@@ -48,7 +48,8 @@ int main( int argc, char** argv )
 	setlocale( LC_ALL, ".UTF8" );
 #endif
 
-	spdlog::info( "Booting Atlas version {}", utils::version_string );
+	atlas::logging::
+		info( fmt::format( "Booting Atlas version {}", utils::version_string ), atlas::logging::NOSHOW_USER );
 
 #ifdef _WIN32
 	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
@@ -71,7 +72,8 @@ int main( int argc, char** argv )
 			if ( kill( pid, 0 ) == -1 && errno == ESRCH )
 			{
 				//Process doesn't exist
-				spdlog::info( "App is dead but didn't clean up it's own lock, removing lock" );
+				atlas::logging::
+					info( "App is dead but didn't clean up it's own lock, removing lock", atlas::logging::NOSHOW_USER );
 				std::filesystem::remove( "atlas_lock" );
 			}
 			else if ( stat( str.c_str(), &sts ) == 0 && errno == ENOENT )

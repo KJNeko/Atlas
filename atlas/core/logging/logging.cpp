@@ -2,9 +2,9 @@
 // Created by kj16609 on 1/27/23.
 //
 
-#include "core/logging.hpp"
+#include "logging.hpp"
 
-#include "config.hpp"
+#include "core/config.hpp"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -21,6 +21,7 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
 #pragma GCC diagnostic pop
 

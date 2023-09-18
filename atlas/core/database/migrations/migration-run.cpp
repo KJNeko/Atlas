@@ -4,7 +4,7 @@
 
 #include "core/config.hpp"
 #include "core/database/RapidTransaction.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "templates.hpp"
 
 namespace atlas::database::migrations
@@ -36,7 +36,7 @@ namespace atlas::database::migrations
 
 	void runUp()
 	{
-		spdlog::info( "Running migrations - UP" );
+		atlas::logging::info( "Running database migrations - UP", logging::NOSHOW_USER );
 
 		//Check to see if the migration table exists
 		int count { 0 };
@@ -63,13 +63,13 @@ namespace atlas::database::migrations
 				current_migration += 1;
 				if ( MIGRATIONS_VERSION == current_migration )
 				{
-					spdlog::info( "All migrations processed." );
+					logging::info( "All migrations processed." );
 					return;
 				}
 
 				Transaction trans;
 
-				spdlog::info( "Running migration {}", current_migration );
+				logging::info( "Running migration {}", current_migration );
 
 				switch ( current_migration )
 				{
@@ -91,10 +91,10 @@ namespace atlas::database::migrations
 					MIGRATE( 15 )
 					MIGRATE( 16 )
 					default:
-						spdlog::critical(
+						logging::critical( fmt::format(
 							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",
 							config::database::migration_version::get(),
-							MIGRATIONS_VERSION );
+							MIGRATIONS_VERSION ) );
 						return;
 				}
 
@@ -103,16 +103,16 @@ namespace atlas::database::migrations
 		}
 		catch ( std::exception& e )
 		{
-			spdlog::error(
+			logging::error( fmt::format(
 				"Failed to apply migration. Currently at {}: {}",
 				config::database::migration_version::get(),
-				e.what() );
+				e.what() ) );
 			std::abort();
 		}
 		catch ( ... )
 		{
-			spdlog::
-				error( "Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() );
+			logging::error( fmt::format(
+				"Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() ) );
 			std::abort();
 		}
 	}

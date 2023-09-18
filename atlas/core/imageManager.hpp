@@ -10,11 +10,21 @@
 #include <filesystem>
 
 #include "Types.hpp"
+#include "core/exceptions.hpp"
 
 class QByteArray;
 
 template < typename T >
 class QFuture;
+
+class ImageManagerException : public AtlasException
+{};
+
+class ImageImportError : public ImageManagerException
+{};
+
+class ImageSaveError : public ImageManagerException
+{};
 
 namespace imageManager
 {

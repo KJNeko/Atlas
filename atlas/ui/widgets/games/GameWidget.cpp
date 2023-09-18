@@ -407,7 +407,7 @@ void GameWidget::updateGameState()
 {
 	if ( lastState != processIsRunning() )
 	{
-		spdlog::info( "Reload Record" );
+		atlas::logging::info( "Reload Record" );
 		reloadRecord();
 	}
 	//Check if game is already running. Update Status

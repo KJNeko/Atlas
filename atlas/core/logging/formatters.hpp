@@ -19,12 +19,13 @@
 #pragma GCC diagnostic ignored "-Wsuggest-final-methods"
 #endif
 
-#include <fmt/format.h>
+#include "fmt/format.h"
 
 #pragma GCC diagnostic pop
 #endif
 
 #include <filesystem>
+#include <source_location>
 
 //! Formatter for QString in fmt::format
 template <>
@@ -67,6 +68,14 @@ struct fmt::formatter< std::filesystem::path >
 	}
 
 	format_context::iterator format( const std::filesystem::path& path, format_context& ctx ) const;
+};
+
+template <>
+struct fmt::formatter< std::source_location >
+{
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+
+	format_context::iterator format( const std::source_location& loc, format_context& ctx ) const;
 };
 
 #endif //ATLASGAMEMANAGER_FORMATTERS_HPP

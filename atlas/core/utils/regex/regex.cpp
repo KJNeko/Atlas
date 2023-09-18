@@ -9,7 +9,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace regex
 {

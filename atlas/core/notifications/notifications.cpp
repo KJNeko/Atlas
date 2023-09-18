@@ -6,7 +6,7 @@
 
 #include <QPromise>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 
 namespace atlas::notifications
@@ -42,13 +42,17 @@ namespace atlas::notifications
 			} );
 	}
 
+	bool isNotificationsReady()
+	{
+		return internal::notification_manager != nullptr;
+	}
+
 	namespace internal
 	{
 		void createDevMessage( std::string body, QJsonDocument doc )
 		{
 			if ( internal::notification_manager == nullptr )
 				throw std::runtime_error( "Notification manage not initalized before notification!" );
-			spdlog::info( "{}: {}", body, doc.toJson().toStdString() );
 
 			utils::executeOnMain(
 				[ & ]()

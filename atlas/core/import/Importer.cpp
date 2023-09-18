@@ -200,7 +200,8 @@ namespace internal
 					}
 					catch ( std::exception& e )
 					{
-						spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
+						atlas::logging::
+							warn( fmt::format( "Failed to add banner to record {}: {}", record->m_game_id, e.what() ) );
 						atlas::notifications::createDevMessage(
 							fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
 							e );
@@ -235,16 +236,16 @@ namespace internal
 				{
 					atlas::notifications::createMessage( QString::fromStdString(
 						fmt::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
-					spdlog::warn( "Failed to add preview from future: {}", e_n.what() );
+					atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e_n.what() ) );
 				}
 			}
 			catch ( std::runtime_error& e )
 			{
-				spdlog::warn( "Failed to add preview from future: {}", e.what() );
+				atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e.what() ) );
 			}
 			catch ( std::exception& e )
 			{
-				spdlog::warn( "Failed to add preview from future: {}", e.what() );
+				atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e.what() ) );
 			}
 		}
 
@@ -254,12 +255,7 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "importGame: {}", e.what() );
-		promise.setException( std::current_exception() );
-	}
-	catch ( ... )
-	{
-		spdlog::error( "importGame: {}", "Fuck" );
+		atlas::logging::error( e.what() );
 		promise.setException( std::current_exception() );
 	}
 
