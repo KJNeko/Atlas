@@ -395,6 +395,7 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
+		ui->previewList->show();
 		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
 		//If the item has not fully loaded use show event
 		if(cols != 0)
@@ -404,6 +405,10 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 			const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
 			ui->previewList->setMinimumHeight( previewListHeight );
 		}
+	}
+	else{
+		ui->previewList->setMinimumHeight( 10 );
+		ui->previewList->hide();
 	}
 		reloadRecord();
 }
@@ -466,5 +471,9 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
+	}
+		else{
+		ui->previewList->setMinimumHeight( 10 );
+		ui->previewList->hide();
 	}
 }
