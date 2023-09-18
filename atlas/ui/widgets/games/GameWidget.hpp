@@ -56,6 +56,7 @@ class GameWidget final : public QWidget
 	Ui::GameWidget* ui;
 	void resizeEvent( QResizeEvent* event ) override;
 	bool lastState { false };
+	void showEvent( [[maybe_unused]] QShowEvent* event ) override;
 };
 
 #endif // GAMEVIEW_H

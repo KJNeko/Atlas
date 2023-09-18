@@ -216,7 +216,7 @@ inline QSettings getSettingsObject()
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
-SETTINGS_FILE( paths, theme, "./data/themes/default.qss" )
+SETTINGS_FILE( paths, theme, "./data/themes/dark.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
 SETTINGS_D( importer, skipFilesize, bool, false )
@@ -233,7 +233,7 @@ SETTINGS_GEO( batch_import_dialog )
 
 SETTINGS_STATE( main_window )
 
-SETTINGS_D( ui, use_system_theme, bool, true )
+SETTINGS_D( ui, use_system_theme, bool, false )
 
 enum SCALE_TYPE : int
 {
@@ -345,7 +345,7 @@ SETTINGS_D( threads, import_pre_loader_threads, int, 4 )
 
 SETTINGS_D( experimental, local_match, bool, false )
 SETTINGS_D( experimental, loading_preview, bool, false )
-SETTINGS_D( experimental, loading_preview_blur, int, 0 )
+SETTINGS_D( experimental, loading_preview_blur, int, 90 )
 
 SETTINGS_D( database, migration_version, int, 0 )
 

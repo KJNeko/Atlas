@@ -369,11 +369,6 @@ void SettingsDialog::saveExperimentalSettings()
 	config::experimental::local_match::set( ui->cbExpFindAtlData->isChecked() );
 }
 
-void SettingsDialog::on_settingsList_currentRowChanged( int idx )
-{
-	ui->stackedWidget->setCurrentIndex( idx );
-}
-
 //USED TO CHANGE STACKED WIDGET INDEX
 
 void SettingsDialog::on_btnGeneral_pressed()

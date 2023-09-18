@@ -68,7 +68,7 @@ void NotificationManagerUI::setHeight()
 {
 	if ( ui->scrollArea->isHidden() )
 	{
-		setFixedHeight( ui->frame->height() );
+		setFixedHeight( ui->NotificationFrame->height() );
 		emit requestMove();
 		return;
 	}
@@ -76,7 +76,7 @@ void NotificationManagerUI::setHeight()
 	{
 		//Accumulate child size
 		int height { 0 };
-		height += ui->frame->height();
+		height += ui->NotificationFrame->height();
 		height += ui->notifications->layout()->contentsMargins().bottom();
 
 		for ( auto* notif : notifications() )

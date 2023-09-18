@@ -77,6 +77,9 @@ class RecordEditor final : public QDialog
 
 	//Tags
 	void on_tagEdit_returnPressed();
+
+	//Close
+	void on_btnClose_pressed();
 };
 
 #endif //ATLAS_RECORDEDITOR_HPP
