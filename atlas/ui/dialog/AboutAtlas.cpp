@@ -56,7 +56,7 @@ AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::About
 	};
 #endif
 
-	ui->lblCompiler->setText( QString( "Compiler: %1 (%2) - %3" )
+	ui->lblCompiler->setText( QString( "%1 (%2) - %3" )
 	                              .arg( ATLAS_COMPILER_ID )
 	                              .arg( ATLAS_COMPILER_VER )
 	                              .arg( ATLAS_PLATFORM_ID ) );
