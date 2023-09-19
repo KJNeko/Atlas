@@ -16,8 +16,9 @@ jobs:
       - name: Extract version
         id: meta
         run: |
-          echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          echo "version_short=${GITHUB_REF##*/v}" >> $GITHUB_ENV
+          echo "version=${GITHUB_REF##*/}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "version_short=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          env
 
       - uses: ./.github/actions/build-windows
         with:
