@@ -32,35 +32,26 @@
 
 #endif
 
-#define VAL( str ) #str
-#define TOSTRING( str ) VAL( str )
-
 #ifndef NDEBUG
 
 //Tag-Brief | Branch
-#define ATLAS_VERSION_STRING                                                                                           \
-	TOSTRING( ATLAS_GIT_TAG ) "-" TOSTRING( ATLAS_GIT_REVISION_BRIEF ) " | " TOSTRING( ATLAS_GIT_BRANCH )
+#define ATLAS_VERSION_STRING ATLAS_GIT_TAG "-" ATLAS_GIT_REVISION_BRIEF " | " ATLAS_GIT_BRANCH
 
 #else
 
-#define ATLAS_VERSION_STRING TOSTRING( ATLAS_GIT_TAG )
+#define ATLAS_VERSION_STRING ATLAS_GIT_TAG
 
 #endif
-
-#define ATLAS_GIT_BRANCH_STRING TOSTRING( ATLAS_GIT_BRANCH )
-#define ATLAS_GIT_REVISION_STRING TOSTRING( ATLAS_GIT_REVISION )
-#define ATLAS_GIT_REVISION_BRIEF_STRING TOSTRING( ATLAS_GIT_REVISION_BRIEF )
-#define ATLAS_GIT_TAG_STRING TOSTRING( ATLAS_GIT_TAG )
 
 //#define ATLAS_VERSION_STR TOSTRING( ATLASVERSION )
 
 namespace utils
 {
 	[[maybe_unused]] constexpr std::string_view version_string { ATLAS_VERSION_STRING };
-	[[maybe_unused]] constexpr std::string_view git_branch { ATLAS_GIT_BRANCH_STRING };
-	[[maybe_unused]] constexpr std::string_view git_revision { ATLAS_GIT_REVISION_STRING };
-	[[maybe_unused]] constexpr std::string_view git_rev_brief { ATLAS_GIT_REVISION_BRIEF_STRING };
-	[[maybe_unused]] constexpr std::string_view git_tag { ATLAS_GIT_TAG_STRING };
+	[[maybe_unused]] constexpr std::string_view git_branch { ATLAS_GIT_BRANCH };
+	[[maybe_unused]] constexpr std::string_view git_revision { ATLAS_GIT_REVISION };
+	[[maybe_unused]] constexpr std::string_view git_rev_brief { ATLAS_GIT_REVISION_BRIEF };
+	[[maybe_unused]] constexpr std::string_view git_tag { ATLAS_GIT_TAG };
 
 	inline const QString version_string_qt()
 	{
