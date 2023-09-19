@@ -29,14 +29,14 @@ jobs:
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}
+          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager-${{ env.version_short }}
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.version_short }}-windows.zip ${{github.workspace}}\Atlas-GameManager-${{ env.version_short }}
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
-          path: ${{github.workspace}}\Atlas-GameManager-Windows.zip
+          path: ${{github.workspace}}\Atlas-GameManager-${{ env.version_short }}-Windows.zip
           if-no-files-found: error
           retention-days: 2
 
