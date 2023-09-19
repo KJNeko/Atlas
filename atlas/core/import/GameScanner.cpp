@@ -42,7 +42,7 @@ void runner(
 		if ( promise.isCanceled() ) return;
 		if ( potential_executables.size() > 0 )
 		{
-			const auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
+			auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
 			{
 				if ( gl::dirHasGLInfo( folder ) )
 				{
@@ -150,19 +150,51 @@ void runner(
 				}
 			}
 
+			auto gl_info { [ &folder ]() -> gl::GameListInfos
+				           {
+							   //Check if we have a GL_Infos.ini file
+							   if ( gl::dirHasGLInfo( folder ) )
+								   //We have one.
+								   return gl::parse( folder );
+							   else
+								   return {};
+						   }() };
+
+			// Fetch the game_id from the DB. Will return INVALID_RECORD_ID if not found
+			const auto game_id { atlas::records::fetchRecord( title, creator, engine ) };
+
+			//If the gl_info has a f95_id then we can use that.
+			auto atlas_id { INVALID_ATLAS_ID };
+
+			if ( gl_info.f95_thread_id != INVALID_F95_ID )
+			{
+				//We can try to get the atlas_id from the f95 thread if it's valid.
+				atlas_id = atlas::remote::atlasIDFromF95Thread( gl_info.f95_thread_id );
+			}
+
+			if ( engine.isEmpty() )
+			{
+				//Set engine if it's not set already via the regex
+				engine = engineName( determineEngine( scanner ) );
+			}
+
 			if ( promise.isCanceled() ) return;
-			GameImportData data { base,
-				                  std::filesystem::relative( folder, base ),
-				                  std::move( title ),
-				                  std::move( creator ),
-				                  engine.isEmpty() ? engineName( determineEngine( scanner ) ) : std::move( engine ),
-				                  version.isEmpty() ? "0.0" : std::move( version ),
-				                  file_size,
-				                  file_count,
-				                  potential_executables,
-				                  potential_executables.at( 0 ),
-				                  std::move( banners ),
-				                  std::move( previews ) };
+			GameImportData data {
+				std::filesystem::relative( folder, base ),
+				std::move( title ),
+				std::move( creator ),
+				std::move( engine ),
+				version.isEmpty() ? "0.0" : std::move( version ),
+				file_size,
+				file_count,
+				potential_executables,
+				potential_executables.at( 0 ),
+				std::move( banners ),
+				std::move( previews ),
+				std::move( gl_info ),
+				game_id,
+				atlas_id,
+			};
 
 			promise.addResult( std::move( data ) );
 		}

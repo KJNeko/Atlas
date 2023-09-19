@@ -37,7 +37,6 @@ struct GameImportData
 	bool conflicting_version;
 
 	GameImportData(
-		std::filesystem::path root_path,
 		std::filesystem::path path_in,
 		QString title_in,
 		QString creator_in,
@@ -48,7 +47,10 @@ struct GameImportData
 		std::vector< std::filesystem::path > executables_in,
 		std::filesystem::path executable_in,
 		std::array< QString, BannerType::SENTINEL > banners_in,
-		std::vector< QString > previews_in ) :
+		std::vector< QString > previews_in,
+		gl::GameListInfos gl_info_in,
+		RecordID record_id_in,
+		AtlasID atlas_id_in ) :
 	  relative_path( std::move( path_in ) ),
 	  title( std::move( title_in ) ),
 	  creator( std::move( creator_in ) ),
@@ -60,13 +62,9 @@ struct GameImportData
 	  executable( std::move( executable_in ) ),
 	  banners( std::move( banners_in ) ),
 	  previews( std::move( previews_in ) ),
-	  infos(
-		  gl::dirHasGLInfo( root_path / relative_path ) ? gl::parse( root_path / relative_path ) :
-														  gl::GameListInfos() ),
-	  game_id( atlas::records::fetchRecord( title, creator, engine ) ),
-	  atlas_id(
-		  infos.f95_thread_id != INVALID_F95_ID ? atlas::remote::atlasIDFromF95Thread( infos.f95_thread_id ) :
-												  INVALID_ATLAS_ID ),
+	  infos( gl_info_in ),
+	  game_id( record_id_in ),
+	  atlas_id( atlas_id_in ),
 	  conflicting_version( game_id != INVALID_RECORD_ID && atlas::records::Game( game_id ).hasVersion( version ) )
 	{}
 
