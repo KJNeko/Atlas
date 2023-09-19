@@ -37,31 +37,36 @@ AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::About
 {
 	ui->setupUi( this );
 	//ui->versionLabel->setText( ATLAS_VERSION_STRING );
-	ui->lblGitBranch->setText( QString::fromLocal8Bit(utils::git_branch) );
-	ui->lblGitVersion->setText( QString::fromLocal8Bit(utils::git_tag ));
+	ui->lblGitBranch->setText( QString::fromLocal8Bit( utils::git_branch ) );
+	ui->lblGitVersion->setText( QString::fromLocal8Bit( utils::git_tag ) );
 	ui->lblGitRev->setText( QString::fromLocal8Bit( utils::git_revision ) );
 
-	ui->lbQt6Ver->setText( QString( "Qt6 Version: %1" ).arg( QT_VERSION_STR ) );
-	ui->lbSqlite3Ver->setText( QString( "SQLite3 Version: %1" ).arg( SQLITE_VERSION ) );
-	ui->lbLZ4Ver->setText( QString( "LZ4: %1" ).arg( LZ4_VERSION_STRING ) );
-	ui->lbSPDLogVer->setText( QString( "spdlog: %1.%2.%3" )
-	                              .arg( SPDLOG_VER_MAJOR )
-	                              .arg( SPDLOG_VER_MINOR )
-	                              .arg( SPDLOG_VER_PATCH ) );
+	const auto qt6_ver { QString( "Qt6 Version: %1" ).arg( QT_VERSION_STR ) };
+	const auto sqlite3_ver { QString( "SQLite3 Version: %1" ).arg( SQLITE_VERSION ) };
+	const auto lz4_ver { QString( "LZ4: %1" ).arg( LZ4_VERSION_STRING ) };
+	const auto spdlog_ver {
+		QString( "spdlog: %1.%2.%3" ).arg( SPDLOG_VER_MAJOR ).arg( SPDLOG_VER_MINOR ).arg( SPDLOG_VER_PATCH )
+	};
 
 #ifdef HAVE_STD_FORMAT
-	ui->lbFmtVersion->setText( "fmt: libc++20" );
+	const auto fmt_ver { "fmt: No (libc++20)" };
 #else
-	ui->lbFmtVersion->setText( QString( "fmt: %1.%2.%3" )
-	                               .arg( FMT_VERSION / 10000 )
-	                               .arg( FMT_VERSION % 10000 / 100 )
-	                               .arg( FMT_VERSION % 100 ) );
+	const auto fmt_ver {
+		QString( "fmt: %1.%2.%3" ).arg( FMT_VERSION / 10000 ).arg( FMT_VERSION % 10000 / 100 ).arg( FMT_VERSION % 100 )
+	};
 #endif
 
-	ui->lbCompiler->setText( QString( "Compiler: %1 (%2) - %3" )
-	                             .arg( ATLAS_COMPILER_ID )
-	                             .arg( ATLAS_COMPILER_VER )
-	                             .arg( ATLAS_PLATFORM_ID ) );
+	ui->lblCompiler->setText( QString( "Compiler: %1 (%2) - %3" )
+	                              .arg( ATLAS_COMPILER_ID )
+	                              .arg( ATLAS_COMPILER_VER )
+	                              .arg( ATLAS_PLATFORM_ID ) );
+
+	ui->lbUsingVers->setText( QString( "Using: %1 | %2 | %3 | %4 | %5" )
+	                              .arg( qt6_ver )
+	                              .arg( sqlite3_ver )
+	                              .arg( lz4_ver )
+	                              .arg( spdlog_ver )
+	                              .arg( fmt_ver ) );
 }
 
 AboutAtlas::~AboutAtlas()
@@ -79,6 +84,7 @@ void AboutAtlas::on_btnDiscord_pressed()
 	QDesktopServices::openUrl( QUrl( "https://discord.gg/f3ee3Mzm" ) );
 }
 
-void AboutAtlas::on_btnClose_pressed(){
+void AboutAtlas::on_btnClose_pressed()
+{
 	this->close();
 }
