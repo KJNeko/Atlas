@@ -15,6 +15,7 @@
 #include <queue>
 #include <ranges>
 
+#include "core/database/RapidTransaction.hpp"
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"
 #include "core/gamelist/utils.hpp"
@@ -214,8 +215,15 @@ try
 			const auto result { regex::valid( regex, QString::fromStdString( itter->path().string() ) ) };
 			TracyCZoneEnd( regex_Tracy );
 
+			//Is the directory we just found already in the database?
+			RecordID path_id { INVALID_RECORD_ID };
+			RapidTransaction() << "SELECT record_id FROM versions WHERE game_path = ?" << itter->path() >> path_id;
+			if ( path_id != INVALID_RECORD_ID ) continue;
+
 			if ( result )
 			{
+				spdlog::info( "Found game not already installed at: {}", itter->path() );
+
 				++directories_left;
 				//The regex was a match. We can now process this directory further
 				futures.emplace_back( QtConcurrent::

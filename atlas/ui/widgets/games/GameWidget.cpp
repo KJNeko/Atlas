@@ -167,7 +167,7 @@ void GameWidget::reloadRecord()
 		//ui->previewList->setFixedSize(ui->bannerDetailFrame->width(), ui->previewList->sizeHintForRow(0) * ui->previewList->model()->rowCount() + 2 * ui->previewList->frameWidth());
 
 		//need to fix. row count is not updating
-		ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
+		//ui->previewList->setFixedHeight( ui->previewList->model()->rowCount() * ui->previewList->sizeHintForRow( 1 ) );
 	}
 	else
 	{
@@ -182,7 +182,7 @@ void GameWidget::reloadRecord()
 		//QDateTime::fromMSecsSinceEpoch( &atlas_data.value()->release_date, QTimeZone::utc );
 		overview = atlas_data.value()->overview;
 		status = "<b>Status: </b>" + atlas_data.value()->status + "<br>";
-		current_version = atlas_data.value()->version;
+		current_version = " (Remote" + atlas_data.value()->version + ")";
 		censored = "<b>Censored: </b>" + atlas_data.value()->censored + "<br>";
 		language = "<b>Language: </b>" + atlas_data.value()->language + "<br>";
 		os = "<b>OS: </b>" + atlas_data.value()->os + "<br>";
@@ -195,8 +195,8 @@ void GameWidget::reloadRecord()
 	title = "<b>Title: </b>" + title + "<br>";
 	developer = "<b>Developer: </b>" + developer + "<br>";
 	engine = "<b>Engine: </b>" + engine + "<br>";
-	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() + " (Remote: " + current_version
-		              + " ) <br>" };
+	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() +  current_version
+		              + "<br>" };
 
 	ui->teDetails->setText(
 		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date
@@ -394,15 +394,25 @@ void GameWidget::on_btnManageRecord_pressed()
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {
-	//spdlog::info( "resize event" );
-	reloadRecord();
 
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
-		//ui->previewList->setFixedHeight(
-		//		( ui->previewList->model()->rowCount() / ui->previewList->model()->columnCount() )
-		//		* ui->previewList->sizeHintForRow( 1 ) );
+		ui->previewList->show();
+		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		//If the item has not fully loaded use show event
+		if(cols != 0)
+		{
+			const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };
+			//+5 padding at top and bottom of each image
+			const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+			ui->previewList->setMinimumHeight( previewListHeight );
+		}
 	}
+	else{
+		ui->previewList->setMinimumHeight( 10 );
+		ui->previewList->hide();
+	}
+		reloadRecord();
 }
 
 void GameWidget::updateGameState()
@@ -447,5 +457,25 @@ std::string GameWidget::getEngineLogo( std::string engine )
 	else
 	{
 		return "";
+	}
+}
+
+void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
+{
+	QWidget::showEvent( event );
+	if ( ui->previewList->model()->rowCount() > 0 )
+	{
+		ui->previewList->show();
+		//Calculate Rows and Columns
+		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };		
+		//Each preview has +5 padding at top and bottom. 
+		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+		//Set min height
+		ui->previewList->setMinimumHeight( previewListHeight );
+	}
+		else{
+		ui->previewList->setMinimumHeight( 10 );
+		ui->previewList->hide();
 	}
 }

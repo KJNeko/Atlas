@@ -31,6 +31,10 @@ QStackedWidget>QWidget>QFrame>QFrame,
     border: none;
 }
 
+QStackedWidget>QWidget>QGroupBox>QFrame {
+    background-color: none;
+}
+
 /*QTreeView*/
 QTreeView,
 QListWidget,
@@ -102,27 +106,31 @@ QSizeGrip {
 }
 
 /* Buttons */
-QPushButton {
+QPushButton,
+#settingsPaths>QPushButton {
     background-color: rgb(35, 36, 40);
     color: rgb(210, 210, 210);
     border: 1px solid;
     border-color: rgb(81, 83, 90);
     width: 75px;
-    height: 30px;
+    height: 24px;
     border-radius: 5px;
 }
 
-QPushButton:disabled {
+QPushButton:disabled,
+#settingsPaths>QPushButton:disabled {
     background-color: rgba(43, 45, 49, 50);
     color: rgba(210, 210, 210, 50);
     border: 1px solid rgba(210, 210, 210, 50);
 }
 
-QPushButton:hover {
+QPushButton:hover,
+#settingsPaths>QPushButton:hover {
     background-color: rgb(64, 66, 73);
 }
 
-QPushButton:hover:pressed {
+QPushButton:hover:pressed,
+#settingsPaths>QPushButton:pressed {
     background-color: rgb(64, 66, 73);
 }
 
@@ -130,7 +138,44 @@ QPushButton:hover:pressed {
 QComboBox,
 QSpinBox {
     background-color: rgb(81, 83, 90);
+    border: 1px solid rgba(64, 66, 73, 50);
     color: rgb(210, 210, 210);
+    padding: 1px;
+    border-radius: 2px;
+}
+
+QComboBox::drop-down,
+QSpinBox::down-button,
+QSpinBox::up-button {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::down-arrow,
+QSpinBox::down-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropdownicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::up-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropupicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::down-arrow:hover,
+QSpinBox::up-arrow:hover {
+    background-color: rgb(64, 66, 73);
 }
 
 QComboBox QAbstractItemView {
@@ -160,7 +205,8 @@ QCheckBox,
 
 QCheckBox:disabled,
 QLabel:disabled,
-QComboBox:disabled {
+QComboBox:disabled,
+QLineEdit:disabled {
     color: rgba(210, 210, 210, 50);
 }
 
@@ -266,7 +312,7 @@ QLineEdit,
     border: none;
     border-radius: 5px;
     margin-right: 5px;
-    color: rgb(112, 255, 136);
+    color: rgb(95, 172, 255);
 }
 
 /*
@@ -285,19 +331,18 @@ QCheckBox::indicator {
     background-color: rgb(210, 210, 210);
 }
 */
-QGroupBox {
+QStackedWidget>QWidget>QGroupBox {
     background-color: none;
-    border: 1px solid rgb(181, 186, 193);
-    border-color: rgb(255, 255, 255);
+    border: 1px solid rgb(81, 83, 90);
     border-radius: 10px;
-    margin-top: 1ex;
+    margin-top: 2ex;
 }
 
-QGroupBox>QLabel {
+QStackedWidget>QWidget>QGroupBox>QLabel {
     background-color: none;
 }
 
-QGroupBox::title {
+QStackedWidget>QWidget>QGroupBox::title {
     subcontrol-origin: margin;
     color: rgb(255, 255, 255);
     left: 7px;
@@ -313,6 +358,18 @@ QTableCornerButton::section {
     border-top: 1px solid rgb(0, 0, 0);
     border-left: 1px solid rgb(0, 0, 0);
     border-right: 1px solid rgb(0, 0, 0);
+}
+
+QProgressBar {
+    border-radius: 5px;
+    background-color: rgb(64, 66, 73);
+    color: rgb(210, 210, 210);
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(95, 172, 255);
+    border-radius: 5px;
 }
 
 /*UI SPECIFIC*/
@@ -340,10 +397,19 @@ QTableCornerButton::section {
     border-radius: 0px;
 }
 
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
+}
+
 #settingsButtons>QPushButton:focus,
 #settingsButtons>QPushButton:hover,
-#settingsButtons>QPushButton:focus:active {
+#settingsButtons>QPushButton:focus:active,
+#settingsButtons>QPushButton:checked {
     background-color: rgb(64, 66, 73);
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
 }
 
 QStackedWidget,
@@ -381,4 +447,18 @@ QStackedWidget,
 #gamesTree {
     border: none;
     border-top-right-radius: 10px;
+}
+
+#NotificationManagerUI {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+#NotificationFrame {
+    border-top: 1px solid rgb(49, 51, 56);
+    padding-top: 4px;
+}
+
+#grid_preview {
+    border-radius: 10px;
 }
