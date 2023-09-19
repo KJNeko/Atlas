@@ -168,8 +168,8 @@ void runner(
 		}
 		else
 		{
-			atlas::logging::warn( "No executables found for path {}", folder );
-			throw std::runtime_error( format_ns::format( "Failed to find executables for path {}", folder ) );
+			atlas::logging::warn( "No executables found for path {} Ignoring path", folder );
+			return;
 		}
 
 		return;
