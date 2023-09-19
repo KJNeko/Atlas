@@ -46,8 +46,6 @@ int main( int argc, char** argv )
 	splash.show();
 	app.processEvents();
 
-	atlas::exceptions::AtlasException except { "TESTING EXCEPTION" };
-
 #ifdef _WIN32
 	setlocale( LC_ALL, ".UTF8" );
 #endif
