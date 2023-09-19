@@ -45,6 +45,15 @@ AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::About
 	                              .arg( SPDLOG_VER_MAJOR )
 	                              .arg( SPDLOG_VER_MINOR )
 	                              .arg( SPDLOG_VER_PATCH ) );
+
+#ifdef HAVE_STD_FORMAT
+	ui->lbFmtVersion->setText( "fmt: libc++20" );
+#else
+	ui->lbFmtVersion->setText( QString( "fmt: %1.%2.%3" )
+	                               .arg( FMT_VERSION / 10000 )
+	                               .arg( FMT_VERSION % 10000 / 100 )
+	                               .arg( FMT_VERSION % 100 ) );
+#endif
 }
 
 AboutAtlas::~AboutAtlas()
