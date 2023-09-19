@@ -1,6 +1,6 @@
 var structGameImportData =
 [
-    [ "GameImportData", "structGameImportData.html#a0cf51d30304cbefc1c99af247f95dcd6", null ],
+    [ "GameImportData", "structGameImportData.html#a7fa60a2e8556dad3b19ab5cbd2da19af", null ],
     [ "GameImportData", "structGameImportData.html#ac894b150d9794de6848f3ff34ea8a545", null ],
     [ "GameImportData", "structGameImportData.html#a87f52810d8d80425af3bba5968975923", null ],
     [ "GameImportData", "structGameImportData.html#a2656e90ff237d96dae9ddd0a889c85ae", null ],
