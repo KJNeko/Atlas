@@ -222,8 +222,6 @@ try
 
 			if ( result )
 			{
-				atlas::logging::info( "Found game not already installed at: {}", itter->path() );
-
 				++directories_left;
 				//The regex was a match. We can now process this directory further
 				futures.emplace_back( QtConcurrent::
