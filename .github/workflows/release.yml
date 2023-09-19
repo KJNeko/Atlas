@@ -52,6 +52,13 @@ jobs:
       - name: Get artifacts
         uses: actions/download-artifact@v3
 
+      - name: Extract version
+        id: meta
+        run: |
+          echo "version=${GITHUB_REF##*/}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "version_short=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          env
+
       - name: Rename
         run: |
           mkdir windows
