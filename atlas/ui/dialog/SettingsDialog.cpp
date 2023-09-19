@@ -478,7 +478,7 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 	}
 	else
 	{
-		atlas::logging::debug( fmt::format( "Theme changed to {}", text ) );
+		atlas::logging::debug( "Theme changed to {}", text );
 		QFile file { "./data/themes/" + text };
 		file.open( QFile::ReadOnly );
 		QString style { file.readAll() };
@@ -555,7 +555,7 @@ void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
 	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	qlv->repaint();
-	atlas::logging::info( fmt::format( "{}", static_cast< int >( idx ) ) );
+	atlas::logging::info( "{}", static_cast< int >( idx ) );
 	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
 	///config::grid_ui::gridImageLayout::set(idx);
 	qlv->repaint();

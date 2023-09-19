@@ -17,6 +17,8 @@
 
 #include <string_view>
 
+#include "core/notifications/notifications.hpp"
+
 namespace atlas::logging::internal
 {
 	void logDebug( const std::string_view msg )
@@ -27,21 +29,29 @@ namespace atlas::logging::internal
 	void logInfo( const std::string_view msg )
 	{
 		spdlog::info( msg );
+		if ( notifications::isNotificationsReady() )
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
 	}
 
 	void logWarn( const std::string_view msg )
 	{
 		spdlog::warn( msg );
+		if ( notifications::isNotificationsReady() )
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
 	}
 
 	void logError( const std::string_view msg )
 	{
 		spdlog::error( msg );
+		if ( notifications::isNotificationsReady() )
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
 	}
 
 	void logCritical( const std::string_view msg )
 	{
 		spdlog::critical( msg );
+		if ( notifications::isNotificationsReady() )
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
 	}
 
 } // namespace atlas::logging::internal

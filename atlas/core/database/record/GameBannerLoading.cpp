@@ -8,6 +8,8 @@
 #include <QPromise>
 #include <QtConcurrentRun>
 
+#include <tracy/Tracy.hpp>
+
 #include "Game.hpp"
 #include "GameData.hpp"
 #include "core/utils/threading/pools.hpp"
@@ -165,12 +167,12 @@ namespace atlas::records
 		if ( promise.isCanceled() ) return;
 		if ( !pixmap.load( QString::fromStdString( path.string() ) ) )
 		{
-			atlas::logging::warn( fmt::format( "Qt Failed to load image {}", path ) );
+			atlas::logging::warn( "Qt Failed to load image {}", path );
 			promise.addResult( pixmap );
 		}
 		if ( promise.isCanceled() ) return;
 		if ( pixmap.size() == QSize( 0, 0 ) || pixmap.isNull() )
-			logging::warn( fmt::format( "Suspected failed to load banner {}", path ) );
+			logging::warn( "Suspected failed to load banner {}", path );
 		promise.addResult( pixmap );
 	}
 
@@ -196,7 +198,7 @@ namespace atlas::records
 		}
 
 		if ( promise.isCanceled() ) return;
-		const auto key { fmt::format(
+		const auto key { std::format(
 			"{}x{}:{}:{}", target_size.width(), target_size.height(), static_cast< int >( scale_type ), path ) };
 
 		if ( promise.isCanceled() ) return;
@@ -224,8 +226,7 @@ namespace atlas::records
 
 			if ( pixmap.isNull() )
 			{
-				atlas::logging::
-					warn( fmt::format( "Qt failed to load image {} Pixmap was null after attempted loading. ", path ) );
+				atlas::logging::warn( "Qt failed to load image {} Pixmap was null after attempted loading. ", path );
 				promise.addResult( pixmap );
 			}
 
@@ -250,7 +251,7 @@ namespace atlas::records
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( pixmap );
 
-		const auto key { fmt::format( "{}", path ) };
+		const auto key { std::format( "{}", path ) };
 
 		if ( auto opt = internal::find( key ); opt.has_value() )
 			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
@@ -270,7 +271,7 @@ namespace atlas::records
 			return QtFuture::makeReadyFuture( QPixmap() );
 
 		const auto key {
-			fmt::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
+			std::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
 		};
 
 		if ( auto opt = internal::find( key ); opt.has_value() )

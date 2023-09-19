@@ -36,7 +36,7 @@ namespace atlas::database::migrations
 
 	void runUp()
 	{
-		atlas::logging::info( "Running database migrations - UP", logging::NOSHOW_USER );
+		atlas::logging::info( "Running database migrations - UP" );
 
 		//Check to see if the migration table exists
 		int count { 0 };
@@ -91,10 +91,10 @@ namespace atlas::database::migrations
 					MIGRATE( 15 )
 					MIGRATE( 16 )
 					default:
-						logging::critical( fmt::format(
+						logging::critical(
 							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",
 							config::database::migration_version::get(),
-							MIGRATIONS_VERSION ) );
+							MIGRATIONS_VERSION );
 						return;
 				}
 
@@ -103,16 +103,16 @@ namespace atlas::database::migrations
 		}
 		catch ( std::exception& e )
 		{
-			logging::error( fmt::format(
+			logging::error(
 				"Failed to apply migration. Currently at {}: {}",
 				config::database::migration_version::get(),
-				e.what() ) );
+				e.what() );
 			std::abort();
 		}
 		catch ( ... )
 		{
-			logging::error( fmt::format(
-				"Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() ) );
+			logging::
+				error( "Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() );
 			std::abort();
 		}
 	}

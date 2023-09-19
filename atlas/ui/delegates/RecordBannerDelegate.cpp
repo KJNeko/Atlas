@@ -8,6 +8,8 @@
 
 #include <QPainter>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/config.hpp"
 #include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
@@ -54,7 +56,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		ZoneScopedN( "Draw banner" );
 
 		const QString key { QString::fromStdString(
-			fmt::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
+			std::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
 
 		//spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
 

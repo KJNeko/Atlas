@@ -70,10 +70,8 @@ namespace imageManager
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
-			atlas::logging::warn( fmt::format(
-				"importImage failed. Attempted to open file {} which doesn't exist anymore. Wrong permissions?",
-				path ) );
-			throw std::runtime_error( fmt::format( "Filepath {} does not exist. Unable to add as image", path ) );
+			atlas::logging::warn( "Attempted to open file {} which doesn't exist anymore. Wrong permissions?", path );
+			throw std::runtime_error( std::format( "Filepath {} does not exist. Unable to add as image", path ) );
 		}
 
 		//Load file so we have direct access to the bytearray
@@ -81,8 +79,8 @@ namespace imageManager
 		QFile file( qstr_file_path );
 		if ( !file.open( QFile::ReadOnly ) )
 		{
-			atlas::logging::error( fmt::format( "Failed to open image file located at: {}", path ) );
-			throw std::runtime_error( fmt::format( "Failed to load image from file: {}", path ) );
+			atlas::logging::error( "Failed to open image file located at: {}", path );
+			throw std::runtime_error( std::format( "Failed to load image from file: {}", path ) );
 		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
@@ -118,7 +116,7 @@ namespace imageManager
 				return dest;
 			}
 			else
-				throw std::runtime_error( fmt::format( "Unable to save gif to images folder: {}", path.filename() ) );
+				throw std::runtime_error( std::format( "Unable to save gif to images folder: {}", path.filename() ) );
 		}
 
 		//if webp conversion is bigger then save original image
@@ -142,6 +140,7 @@ namespace imageManager
 	catch ( ImageSaveError& e )
 	{
 		atlas::logging::error( "Failed to save image" );
+		std::rethrow_exception( std::current_exception() );
 	}
 
 	[[nodiscard]] QFuture< std::filesystem::path >
@@ -160,7 +159,7 @@ namespace imageManager
 		thumb.save( QString::fromStdString( thumb_file ) );
 		if ( !img.save( QString::fromStdString( dest.string() ) ) )
 		{
-			throw std::runtime_error( fmt::format( "Failed to save image to location: {}", std::move( dest ) ) );
+			throw std::runtime_error( std::format( "Failed to save image to location: {}", std::move( dest ) ) );
 		}
 		//Try to save thumbnail
 	}

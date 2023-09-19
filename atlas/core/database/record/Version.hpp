@@ -44,9 +44,6 @@ namespace atlas::records
 
 	  public:
 
-		template < typename T >
-		friend QJsonObject atlas::logging::dev::internalSerializer( const T& );
-
 		const VersionData* operator->() const
 		{
 			if ( data_ptr == nullptr ) throw std::runtime_error( "Version: Pointer was nullptr!" );

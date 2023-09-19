@@ -170,13 +170,13 @@ QStringList findVersionType( QString s )
 
 			if ( slist.length() > 1 )
 			{
-				atlas::logging::debug( fmt::format( "{}, {}", slist[ 0 ], slist[ 1 ] ) );
+				atlas::logging::debug( "{}, {}", slist[ 0 ], slist[ 1 ] );
 				version += delimiter + slist[ 1 ];
 				title += slist[ 0 ];
 			}
 			else
 			{
-				atlas::logging::debug( fmt::format( "{}", slist[ 0 ] ) );
+				atlas::logging::debug( "{}", slist[ 0 ] );
 				version += delimiter;
 				title += slist[ 0 ];
 			}

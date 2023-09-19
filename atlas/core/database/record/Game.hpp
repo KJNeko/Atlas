@@ -11,7 +11,6 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-#include "core/logging/dev.hpp"
 
 template < typename T >
 class QFuture;
@@ -35,10 +34,6 @@ namespace atlas::records
 		RecordID m_id { INVALID_RECORD_ID };
 
 	  public:
-
-		//Logging/debug
-		template < typename T >
-		friend QJsonObject atlas::logging::dev::internalSerializer( const T& );
 
 		Game() = default;
 		~Game();

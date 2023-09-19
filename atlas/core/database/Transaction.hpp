@@ -18,12 +18,6 @@
 
 namespace atlas::database
 {
-	struct TransactionInvalid : public std::runtime_error
-	{
-		TransactionInvalid( std::string m_sql_string ) :
-		  std::runtime_error( fmt::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
-		{}
-	};
 
 	template < bool is_commitable = false >
 	struct TransactionBase

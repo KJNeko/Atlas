@@ -75,10 +75,10 @@ namespace remote::parsers::v0
 		{
 			const auto& data { obj[ key ] };
 			if ( data.isString() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
+				trans << std::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
 					  << pkey;
 			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
+				trans << std::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
 					  << pkey;
 			else
 				throw std::runtime_error( "Unexpected type when parsing atlas data!" );
@@ -205,10 +205,10 @@ namespace remote::parsers::v0
 		{
 			const auto& data { obj[ key ] };
 			if ( data.isString() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
+				trans << std::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
 					  << pkey;
 			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toInteger()
+				trans << std::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toInteger()
 					  << pkey;
 			else
 				throw std::runtime_error( "Unexpected type when parsing f95zone data!" );
@@ -312,7 +312,7 @@ namespace remote::parsers::v0
 				const auto set { nameToSet( table_key ) };
 				if ( set == InvalidSet )
 				{
-					throw std::runtime_error( fmt::format( "Unexpected data in set! Key = {}", table_key ) );
+					throw std::runtime_error( std::format( "Unexpected data in set! Key = {}", table_key ) );
 				}
 
 				ZoneScopedN( "Process set" );

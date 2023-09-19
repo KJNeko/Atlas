@@ -55,9 +55,9 @@ namespace internal
 		TracyCZoneN( tracy_checkZone, "Check", true );
 		//Verify that everything is valid
 		if ( !std::filesystem::exists( game_root ) )
-			throw std::runtime_error( fmt::format( "Root path {:ce} does not exist", game_root ) );
+			throw std::runtime_error( std::format( "Root path {:ce} does not exist", game_root ) );
 		if ( !std::filesystem::exists( executable_path ) )
-			throw std::runtime_error( fmt::format( "Executable {:ce} does not exist", executable_path ) );
+			throw std::runtime_error( std::format( "Executable {:ce} does not exist", executable_path ) );
 		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
 		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
 		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
@@ -119,8 +119,7 @@ namespace internal
 
 				if ( !std::filesystem::copy_file( source, dest, std::filesystem::copy_options::overwrite_existing ) )
 				{
-					atlas::logging::error(
-						fmt::format( "importGame: Failed to copy file {} to {}", source.string(), dest.string() ) );
+					atlas::logging::error( "Failed to copy file {} to {}", source.string(), dest.string() );
 					throw std::runtime_error( "Failed to copy file" );
 				}
 			}
@@ -200,11 +199,7 @@ namespace internal
 					}
 					catch ( std::exception& e )
 					{
-						atlas::logging::
-							warn( fmt::format( "Failed to add banner to record {}: {}", record->m_game_id, e.what() ) );
-						atlas::notifications::createDevMessage(
-							fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
-							e );
+						atlas::logging::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
 					}
 				}
 			}
@@ -235,17 +230,17 @@ namespace internal
 				catch ( std::exception& e_n )
 				{
 					atlas::notifications::createMessage( QString::fromStdString(
-						fmt::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
-					atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e_n.what() ) );
+						std::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
+					atlas::logging::warn( "Failed to add preview from future: {}", e_n.what() );
 				}
 			}
 			catch ( std::runtime_error& e )
 			{
-				atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e.what() ) );
+				atlas::logging::warn( "Failed to add preview from future: {}", e.what() );
 			}
 			catch ( std::exception& e )
 			{
-				atlas::logging::warn( fmt::format( "Failed to add preview from future: {}", e.what() ) );
+				atlas::logging::warn( "Failed to add preview from future: {}", e.what() );
 			}
 		}
 
@@ -255,7 +250,7 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
-		atlas::logging::error( e.what() );
+		atlas::logging::error( "{}", e.what() );
 		promise.setException( std::current_exception() );
 	}
 

@@ -47,21 +47,4 @@ namespace atlas::notifications
 		return internal::notification_manager != nullptr;
 	}
 
-	namespace internal
-	{
-		void createDevMessage( std::string body, QJsonDocument doc )
-		{
-			if ( internal::notification_manager == nullptr )
-				throw std::runtime_error( "Notification manage not initalized before notification!" );
-
-			utils::executeOnMain(
-				[ & ]()
-				{
-					auto* ptr { new DevNotification( std::move( body ), doc.toJson() ) };
-					ptr->show();
-					internal::notification_manager->addNotification( ptr );
-				} );
-		}
-	} // namespace internal
-
 } // namespace atlas::notifications

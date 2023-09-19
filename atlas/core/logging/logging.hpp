@@ -5,20 +5,17 @@
 #ifndef ATLAS_LOGGING_HPP
 #define ATLAS_LOGGING_HPP
 
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdangling-reference"
-#endif
-
 #include <QString>
 
 #include <filesystem>
 #include <source_location>
 
+// clang-format: off
+#include "formatters.hpp"
+// clang-format: on
+
 #include "core/Types.hpp"
 #include "core/notifications/notifications.hpp"
-#include "dev.hpp"
-#include "formatters.hpp"
 
 void initLogging();
 
@@ -41,97 +38,134 @@ namespace atlas::logging
 	} // namespace internal
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) > 0 )
-	inline void
-		debug( const std::string body, Ts... ts, const std::source_location loc = std::source_location::current() )
+	struct debug
 	{
-		using namespace atlas::logging::dev;
+		debug(
+			const std::format_string< Ts... > body,
+			Ts&&... ts,
+			const std::source_location& loc = std::source_location::current() )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+			{
+				const auto location_string { std::format( "{}: ", loc ) };
+				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
 
-		internal::logDebug( fmt::format( "{}:{} {}", serialize( loc ), body, serializeObjects( std::move( ts... ) ) ) );
-	}
+				internal::logDebug( location_string + body_str );
+			}
+			else
+				internal::logDebug( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) == 0 )
-	inline void
-		debug( const std::string body, Ts... ts, const std::source_location loc = std::source_location::current() )
-	{
-		using namespace atlas::logging::dev;
-
-		internal::logDebug( fmt::format( "{}: {} ", loc, body ) );
-	}
-
-	[[maybe_unused]] constexpr bool NOSHOW_USER { false };
-	[[maybe_unused]] constexpr bool SHOW_USER { true };
-
-	inline void debug( const std::string_view msg, const std::source_location loc = std::source_location::current() )
-	{
-		internal::logDebug( fmt::format( "{}: {}", loc, msg ) );
-	}
-
-	/**
-	 * @param message
-	 * @param show_user If true then this message will be passed back to the user via a message
-	 */
-	inline void info(
-		std::string message,
-		const bool show_user = true,
-		const std::source_location loc = std::source_location::current() )
-	{
-		internal::logInfo( fmt::format( "{}: {}", loc, message ) );
-		if ( show_user && notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( message ) );
-	}
-
-	//! Notifies the user of a warning.
-	/**
-	 * @param message
-	 * @param show_user If true then the user will be shown this warning
-	 */
-	inline void warn(
-		std::string message,
-		const bool show_user = true,
-		const std::source_location loc = std::source_location::current() )
-	{
-		internal::logWarn( fmt::format( "{}: {}", loc, message ) );
-		if ( show_user && notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( message ) );
-	}
+	debug( std::format_string< Ts... >, Ts&&... ) -> debug< Ts... >;
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) >= 1 )
-	inline void error( std::string body, Ts... ts, const std::source_location loc = std::source_location::current() )
+	struct info
 	{
-		const auto serialized_info { atlas::logging::dev::serializeObjects( std::move( ts... ) ) };
-
-		internal::logError( fmt::format( "{}: \"{}\" \n{}", loc, body, serialized_info ) );
-	}
+		info(
+			const std::format_string< Ts... > body,
+			Ts&&... ts,
+			const std::source_location& loc = std::source_location::current() )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+				internal::logInfo( std::format( "{}: \"{}\"", loc, std::format( body, std::forward< Ts >( ts )... ) ) );
+			else
+				internal::logInfo( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) == 0 )
-	inline void error( std::string body, const std::source_location loc = std::source_location::current() )
-	{
-		internal::logError( fmt::format( "{}: \"{}\"", loc, body ) );
-	}
+	info( std::string_view, Ts&&... ) -> info< Ts... >;
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) >= 1 )
-	inline void critical( std::string body, Ts... ts, const std::source_location loc = std::source_location::current() )
+	struct warn
 	{
-		const auto serialized_info { atlas::logging::dev::serializeObjects( std::move( ts... ) ) };
+		warn(
+			const std::format_string< Ts... > body,
+			Ts&&... ts,
+			const std::source_location& loc = std::source_location::current() )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+			{
+				const auto location_string { std::format( "{}: ", loc ) };
+				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
 
-		internal::logCritical( fmt::format( "{}: \"{}\" \n{}", loc, body, serialized_info ) );
-	}
+				internal::logWarn( location_string + body_str );
+			}
+			else
+				internal::logWarn( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
 
 	template < typename... Ts >
-		requires( sizeof...( Ts ) == 0 )
-	inline void critical( std::string body, const std::source_location loc = std::source_location::current() )
+	warn( std::format_string< Ts... >, Ts&&... ) -> warn< Ts... >;
+
+	template < typename... Ts >
+	struct error
 	{
-		internal::logCritical( fmt::format( "{}: \"{}\"", loc, body ) );
-	}
+		error(
+			const std::format_string< Ts... > body,
+			Ts&&... ts,
+			const std::source_location& loc = std::source_location::current() )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+			{
+				const auto location_string { std::format( "{}: ", loc ) };
+				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+
+				internal::logError( location_string + body_str );
+			}
+			else
+				internal::logError( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
+
+	template < typename... Ts >
+	error( std::format_string< Ts... >, Ts&&... a ) -> error< Ts... >;
+
+	template < typename... Ts >
+	struct errorLoc
+	{
+		errorLoc( const std::format_string< Ts... > body, const std::source_location& loc, Ts&... ts )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+			{
+				const auto location_string { std::format( "{}: ", loc ) };
+				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+
+				internal::logError( location_string + body_str );
+			}
+			else
+				internal::logError( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
+
+	template < typename... Ts >
+	errorLoc( std::format_string< Ts... >, const std::source_location&, Ts&&... a ) -> errorLoc< Ts... >;
+
+	template < typename... Ts >
+	struct critical
+	{
+		critical(
+			const std::format_string< Ts... > body,
+			Ts&&... ts,
+			const std::source_location& loc = std::source_location::current() )
+		{
+			if constexpr ( sizeof...( Ts ) > 0 )
+			{
+				const auto location_string { std::format( "{}: ", loc ) };
+				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+
+				internal::logCritical( location_string + body_str );
+			}
+			else
+				internal::logCritical( std::format( "{}: \"{}\"", loc, body ) );
+		}
+	};
+
+	template < typename... Ts >
+	critical( std::format_string< Ts... >, Ts&&... ) -> critical< Ts... >;
 } // namespace atlas::logging
-
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif
 
 #endif //ATLAS_LOGGING_HPP

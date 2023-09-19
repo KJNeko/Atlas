@@ -64,4 +64,5 @@ namespace atlas::database
 		else
 			throw TransactionInvalid( "Attempted to abort a finished transaction" );
 	}
+
 } // namespace atlas::database

@@ -12,6 +12,7 @@
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
 #include "binders.hpp"
+#include "core/exceptions.hpp"
 #include "core/logging/logging.hpp"
 #include "extractors.hpp"
 
@@ -36,7 +37,12 @@ class Binder
 	{
 		if ( param_counter > max_param_count )
 		{
-			throw std::runtime_error( fmt::format(
+			atlas::logging::error(
+				"param_counter > param_count = {} > {} for query \"{}\"",
+				param_counter,
+				sqlite3_bind_parameter_count( stmt ),
+				std::string( sqlite3_sql( stmt ) ) );
+			throw std::runtime_error( std::format(
 				"param_counter > param_count = {} > {} for query \"{}\"",
 				param_counter,
 				sqlite3_bind_parameter_count( stmt ),
@@ -49,7 +55,7 @@ class Binder
 				break;
 			default:
 				{
-					throw std::runtime_error( fmt::format(
+					throw std::runtime_error( std::format(
 						"DB: Failed to bind to \"{}\": Reason: \"{}\"",
 						sqlite3_sql( stmt ),
 						sqlite3_errmsg( &Database::ref() ) ) );
@@ -66,7 +72,7 @@ class Binder
 		const auto step_ret { sqlite3_step( stmt ) };
 
 		if ( param_counter != max_param_count )
-			throw std::runtime_error( fmt::format(
+			throw AtlasException( std::format(
 				"param_counter != max_param_count = {} != {} for query \"{}\"",
 				param_counter,
 				max_param_count,
@@ -93,12 +99,11 @@ class Binder
 			case SQLITE_ERROR:
 				{
 					atlas::logging::error(
-						fmt::format(
-							"DB: Query error: \"{}\", Query: \"{}\"",
-							sqlite3_errmsg( &Database::ref() ),
-							sqlite3_expanded_sql( stmt ) ),
+						"DB: Query error: \"{}\", Query: \"{}\"",
+						sqlite3_errmsg( &Database::ref() ),
+						sqlite3_expanded_sql( stmt ),
 						std::source_location::current() );
-					throw std::runtime_error( fmt::format(
+					throw AtlasException( std::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );
@@ -132,9 +137,8 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::error(
-							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ),
-							std::source_location::current() );
+						atlas::logging::
+							error( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}
@@ -164,9 +168,7 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::error(
-							fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ),
-							std::source_location::current() );
+						atlas::logging::error( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) );
 						throw std::runtime_error( "Unhandled error in sqlite!" );
 					}
 			}

@@ -116,7 +116,7 @@ void BatchImportDialog::processFiles()
 		regex::regexify( regex::escapeStr( QString::fromStdString( ( base / search ).string() ) ) )
 	};
 
-	atlas::logging::debug( fmt::format( "Scanning {} for games", base ) );
+	atlas::logging::debug( "Scanning {} for games", base );
 
 	scanner.start( base, cleaned_regex, ui->cbScanFilesize->isChecked() );
 
@@ -147,7 +147,7 @@ void BatchImportDialog::importFiles()
 		{
 			for ( auto game : games )
 			{
-				atlas::logging::debug( fmt::format( "Triggering import game for {}", game.title ) );
+				atlas::logging::debug( "Triggering import game for {}", game.title );
 				(void)importGame( std::move( game ), root, owning );
 			}
 			atlas::logging::debug( "Finished queueing imports" );

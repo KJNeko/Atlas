@@ -112,7 +112,7 @@ namespace atlas::records
 		}
 		else
 		{
-			logging::error( fmt::format( "Failed to launch game with executable: {}", executable.string() ) );
+			logging::error( "Failed to launch game with executable: {}", executable.string() );
 		}
 	}
 

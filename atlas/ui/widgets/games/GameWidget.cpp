@@ -11,6 +11,8 @@
 #include <QTimeZone>
 #include <QTimer>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/record/Version.hpp"
 #include "core/database/remote/AtlasData.hpp"
 #include "core/utils/QImageBlur.hpp"

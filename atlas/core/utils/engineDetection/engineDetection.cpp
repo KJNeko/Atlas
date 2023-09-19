@@ -9,6 +9,7 @@
 #include <QMimeDatabase>
 #include <QString>
 
+#include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
 
 #include <algorithm>

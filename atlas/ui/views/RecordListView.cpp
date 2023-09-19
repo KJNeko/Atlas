@@ -12,6 +12,8 @@
 #include <QMouseEvent>
 #include <QUrl>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/record/Version.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"

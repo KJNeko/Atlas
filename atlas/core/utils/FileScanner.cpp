@@ -36,7 +36,7 @@ namespace atlas::utils
 	{
 		if ( !std::filesystem::exists( path ) )
 		{
-			atlas::logging::error( fmt::format( "Expected path does not exist", path.string() ) );
+			atlas::logging::error( "Expected path does not exist: {}", path.string() );
 			throw std::runtime_error( "Path does not exist." );
 		}
 
@@ -133,7 +133,7 @@ namespace atlas::utils
 
 		if ( files.size() < index )
 			throw std::runtime_error(
-				fmt::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
+				std::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
 
 		return files.at( index );
 	}

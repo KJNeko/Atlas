@@ -28,6 +28,8 @@
 #endif
 // clang-format on
 
+#include "core/exceptions.hpp"
+
 void clear_lock()
 {
 	std::filesystem::remove( "atlas_lock" );
@@ -44,12 +46,13 @@ int main( int argc, char** argv )
 	splash.show();
 	app.processEvents();
 
+	atlas::exceptions::AtlasException except { "TESTING EXCEPTION" };
+
 #ifdef _WIN32
 	setlocale( LC_ALL, ".UTF8" );
 #endif
 
-	atlas::logging::
-		info( fmt::format( "Booting Atlas version {}", utils::version_string ), atlas::logging::NOSHOW_USER );
+	atlas::logging::info( "Booting Atlas version {}", utils::version_string );
 
 #ifdef _WIN32
 	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
@@ -72,8 +75,7 @@ int main( int argc, char** argv )
 			if ( kill( pid, 0 ) == -1 && errno == ESRCH )
 			{
 				//Process doesn't exist
-				atlas::logging::
-					info( "App is dead but didn't clean up it's own lock, removing lock", atlas::logging::NOSHOW_USER );
+				atlas::logging::info( "App is dead but didn't clean up it's own lock, removing lock" );
 				std::filesystem::remove( "atlas_lock" );
 			}
 			else if ( stat( str.c_str(), &sts ) == 0 && errno == ENOENT )
