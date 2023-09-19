@@ -54,6 +54,11 @@ AboutAtlas::AboutAtlas( QWidget* parent ) : QDialog( parent ), ui( new Ui::About
 	                               .arg( FMT_VERSION % 10000 / 100 )
 	                               .arg( FMT_VERSION % 100 ) );
 #endif
+
+	ui->lbCompiler->setText( QString( "Compiler: %1 (%2) - %3" )
+	                             .arg( ATLAS_COMPILER_ID )
+	                             .arg( ATLAS_COMPILER_VER )
+	                             .arg( ATLAS_PLATFORM_ID ) );
 }
 
 AboutAtlas::~AboutAtlas()
