@@ -6,7 +6,6 @@
 #define ATLASGAMEMANAGER_EXCEPTIONS_HPP
 
 #include <exception>
-#include <format>
 #include <source_location>
 
 #include "core/logging/logging.hpp"
