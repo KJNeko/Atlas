@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['id_0',['id',['../structatlas_1_1records_1_1VersionKey.html#aa3cd7ce3d62cf8d2f7d9bdb07f8e7f14',1,'atlas::records::VersionKey::id'],['../classatlas_1_1remote_1_1F95RemoteData.html#aeedf838dec24ada8991d2cf4718418dd',1,'atlas::remote::F95RemoteData::id'],['../structatlas_1_1records_1_1InvalidRecordID.html#a99762dda553d156c2c85f3de0e07c719',1,'atlas::records::InvalidRecordID::id']]],
+  ['id_5fname_1',['id_name',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a5e4b475ee4e0bee767bb35cd475759dd',1,'atlas::remote::internal::AtlasData']]],
+  ['image_5fimporters_2',['image_importers',['../structThreadPools.html#a00d1da50ccfc137d3ea9db2c5e8b1202',1,'ThreadPools']]],
+  ['image_5floaders_3',['image_loaders',['../structThreadPools.html#a7d1da033ce8931302d0f2c74a9219f36',1,'ThreadPools']]],
+  ['import_5ftriggered_4',['import_triggered',['../classBatchImportDialog.html#a798b36ee120a063fdffb9c442f060629',1,'BatchImportDialog']]],
+  ['import_5fwaiting_5',['import_waiting',['../classBatchImportDialog.html#aee84d8ab1bfffd80a0b179ebf127d7e8',1,'BatchImportDialog']]],
+  ['importers_6',['importers',['../structThreadPools.html#ab7d0d0bf56233df2a24ba187bec6804f',1,'ThreadPools']]],
+  ['infos_7',['infos',['../structGameImportData.html#ab0509ba93a7fa231fbed28f639e16559',1,'GameImportData']]],
+  ['invalid_5fatlas_5fid_8',['INVALID_ATLAS_ID',['../Types_8hpp.html#af981dbd1c8135680eaee9809d28fa598',1,'Types.hpp']]],
+  ['invalid_5ff95_5fid_9',['INVALID_F95_ID',['../Types_8hpp.html#af79d7c3027891d042aaeeeebf374ead4',1,'Types.hpp']]],
+  ['invalid_5frecord_5fid_10',['INVALID_RECORD_ID',['../Types_8hpp.html#a0b25c30bf54101f04ce0934c8d4450b0',1,'Types.hpp']]],
+  ['invalid_5ftag_5fid_11',['INVALID_TAG_ID',['../tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e',1,'tags.hpp']]],
+  ['is_5fbanner_12',['is_banner',['../structFileInfo.html#ab78b6260767ab87b3691e9cd93b22e66',1,'FileInfo']]],
+  ['is_5fgame_5fdir_13',['is_game_dir',['../structDirInfo.html#ad412367091926acaeabbc6c782a37df5',1,'DirInfo']]],
+  ['is_5flinux_14',['is_linux',['../namespacesys.html#aa2ac265b71333afb5ee36da4910b0765',1,'sys']]],
+  ['is_5fpreview_15',['is_preview',['../structFileInfo.html#a723aeff4326a21ad54483fb3587901d6',1,'FileInfo']]],
+  ['is_5fsupporting_5fname_16',['is_supporting_name',['../structDirInfo.html#a9c4f52e6b8f32c0e322103a46a6ca806',1,'DirInfo']]],
+  ['is_5fwindows_17',['is_windows',['../namespacesys.html#a5797826512ac565d31d1a6111e75f19e',1,'sys']]]
+];

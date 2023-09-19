@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['a_20href_20https_3a_20github_20com_20kjneko_20atlas_20issues_202_20issue_202_20a_0',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md1',1,'']]],
-  ['a_20href_20https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_1',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
-  ['a_20href_20https_3a_20github_20com_20kjneko_20atlas_20issues_204_20issue_204_20a_2',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
-  ['atlas_20issues_202_20issue_202_20a_3',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md1',1,'']]],
-  ['atlas_20issues_203_20issue_203_20a_4',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
-  ['atlas_20issues_204_20issue_204_20a_5',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]]
+  ['3_20issue_203_20a_0',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
+  ['3_2datlas_5fdata_2ecpp_1',['3-atlas_data.cpp',['../3-atlas__data_8cpp.html',1,'']]]
 ];
