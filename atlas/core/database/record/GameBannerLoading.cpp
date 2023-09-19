@@ -198,7 +198,7 @@ namespace atlas::records
 		}
 
 		if ( promise.isCanceled() ) return;
-		const auto key { std::format(
+		const auto key { format_ns::format(
 			"{}x{}:{}:{}", target_size.width(), target_size.height(), static_cast< int >( scale_type ), path ) };
 
 		if ( promise.isCanceled() ) return;
@@ -251,7 +251,7 @@ namespace atlas::records
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( pixmap );
 
-		const auto key { std::format( "{}", path ) };
+		const auto key { format_ns::format( "{}", path ) };
 
 		if ( auto opt = internal::find( key ); opt.has_value() )
 			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
@@ -271,7 +271,7 @@ namespace atlas::records
 			return QtFuture::makeReadyFuture( QPixmap() );
 
 		const auto key {
-			std::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
+			format_ns::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
 		};
 
 		if ( auto opt = internal::find( key ); opt.has_value() )

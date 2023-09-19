@@ -41,37 +41,38 @@ namespace atlas::logging
 	struct debug
 	{
 		debug(
-			const std::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { std::format( "{}: ", loc ) };
-				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logDebug( location_string + body_str );
 			}
 			else
-				internal::logDebug( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logDebug( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
 	template < typename... Ts >
-	debug( std::format_string< Ts... >, Ts&&... ) -> debug< Ts... >;
+	debug( format_ns::format_string< Ts... >, Ts&&... ) -> debug< Ts... >;
 
 	template < typename... Ts >
 	struct info
 	{
 		info(
-			const std::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
-				internal::logInfo( std::format( "{}: \"{}\"", loc, std::format( body, std::forward< Ts >( ts )... ) ) );
+				internal::logInfo(
+					format_ns::format( "{}: \"{}\"", loc, format_ns::format( body, std::forward< Ts >( ts )... ) ) );
 			else
-				internal::logInfo( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logInfo( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
@@ -82,90 +83,90 @@ namespace atlas::logging
 	struct warn
 	{
 		warn(
-			const std::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { std::format( "{}: ", loc ) };
-				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logWarn( location_string + body_str );
 			}
 			else
-				internal::logWarn( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logWarn( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
 	template < typename... Ts >
-	warn( std::format_string< Ts... >, Ts&&... ) -> warn< Ts... >;
+	warn( format_ns::format_string< Ts... >, Ts&&... ) -> warn< Ts... >;
 
 	template < typename... Ts >
 	struct error
 	{
 		error(
-			const std::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { std::format( "{}: ", loc ) };
-				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logError( location_string + body_str );
 			}
 			else
-				internal::logError( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logError( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
 	template < typename... Ts >
-	error( std::format_string< Ts... >, Ts&&... a ) -> error< Ts... >;
+	error( format_ns::format_string< Ts... >, Ts&&... a ) -> error< Ts... >;
 
 	template < typename... Ts >
 	struct errorLoc
 	{
-		errorLoc( const std::format_string< Ts... > body, const std::source_location& loc, Ts&... ts )
+		errorLoc( const format_ns::format_string< Ts... > body, const std::source_location& loc, Ts&... ts )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { std::format( "{}: ", loc ) };
-				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logError( location_string + body_str );
 			}
 			else
-				internal::logError( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logError( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
 	template < typename... Ts >
-	errorLoc( std::format_string< Ts... >, const std::source_location&, Ts&&... a ) -> errorLoc< Ts... >;
+	errorLoc( format_ns::format_string< Ts... >, const std::source_location&, Ts&&... a ) -> errorLoc< Ts... >;
 
 	template < typename... Ts >
 	struct critical
 	{
 		critical(
-			const std::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { std::format( "{}: ", loc ) };
-				const auto body_str { std::format( body, std::forward< Ts >( ts )... ) };
+				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logCritical( location_string + body_str );
 			}
 			else
-				internal::logCritical( std::format( "{}: \"{}\"", loc, body ) );
+				internal::logCritical( format_ns::format( "{}: \"{}\"", loc, body ) );
 		}
 	};
 
 	template < typename... Ts >
-	critical( std::format_string< Ts... >, Ts&&... ) -> critical< Ts... >;
+	critical( format_ns::format_string< Ts... >, Ts&&... ) -> critical< Ts... >;
 } // namespace atlas::logging
 
 #endif //ATLAS_LOGGING_HPP

@@ -135,7 +135,7 @@ namespace atlas
 	void AtlasRemote::downloadUpdate( const std::uint64_t update_time )
 	{
 		ZoneScoped;
-		const auto update_path { std::format( REMOTE "packages/{}.update", update_time ) };
+		const auto update_path { format_ns::format( REMOTE "packages/{}.update", update_time ) };
 		QNetworkRequest request { QUrl { QString::fromStdString( update_path ) } };
 		auto* reply { m_manager.get( request ) };
 
@@ -303,7 +303,7 @@ namespace atlas
 		atlas::logging::info( "Processing update for time {}", update_time );
 		//Check if the file exists
 		const std::filesystem::path local_update_archive_path {
-			std::format( "./data/updates/{}.update", update_time )
+			format_ns::format( "./data/updates/{}.update", update_time )
 		};
 
 		if ( !std::filesystem::exists( local_update_archive_path ) )
@@ -352,7 +352,8 @@ namespace atlas
 
 			//Check if the next update file is ready to go
 			const auto next_time { getNextUpdateTime() };
-			if ( next_time != 0 && std::filesystem::exists( std::format( "./data/updates/{}.update", next_time ) ) )
+			if ( next_time != 0
+			     && std::filesystem::exists( format_ns::format( "./data/updates/{}.update", next_time ) ) )
 			{
 				//Trigger it
 				processPendingUpdates();
@@ -374,7 +375,7 @@ namespace atlas
 
 		while ( update_time != 0 )
 		{
-			const auto path { std::format( "./data/updates/{}.update", update_time ) };
+			const auto path { format_ns::format( "./data/updates/{}.update", update_time ) };
 			if ( !std::filesystem::exists( path ) ) return;
 
 			processUpdateFile( update_time );

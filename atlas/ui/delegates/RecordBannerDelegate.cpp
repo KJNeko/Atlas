@@ -56,7 +56,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		ZoneScopedN( "Draw banner" );
 
 		const QString key { QString::fromStdString(
-			std::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
+			format_ns::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
 
 		//spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
 

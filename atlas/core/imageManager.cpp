@@ -71,7 +71,7 @@ namespace imageManager
 		if ( !std::filesystem::exists( path ) )
 		{
 			atlas::logging::warn( "Attempted to open file {} which doesn't exist anymore. Wrong permissions?", path );
-			throw std::runtime_error( std::format( "Filepath {} does not exist. Unable to add as image", path ) );
+			throw std::runtime_error( format_ns::format( "Filepath {} does not exist. Unable to add as image", path ) );
 		}
 
 		//Load file so we have direct access to the bytearray
@@ -80,7 +80,7 @@ namespace imageManager
 		if ( !file.open( QFile::ReadOnly ) )
 		{
 			atlas::logging::error( "Failed to open image file located at: {}", path );
-			throw std::runtime_error( std::format( "Failed to load image from file: {}", path ) );
+			throw std::runtime_error( format_ns::format( "Failed to load image from file: {}", path ) );
 		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
@@ -116,7 +116,8 @@ namespace imageManager
 				return dest;
 			}
 			else
-				throw std::runtime_error( std::format( "Unable to save gif to images folder: {}", path.filename() ) );
+				throw std::
+					runtime_error( format_ns::format( "Unable to save gif to images folder: {}", path.filename() ) );
 		}
 
 		//if webp conversion is bigger then save original image
@@ -159,7 +160,7 @@ namespace imageManager
 		thumb.save( QString::fromStdString( thumb_file ) );
 		if ( !img.save( QString::fromStdString( dest.string() ) ) )
 		{
-			throw std::runtime_error( std::format( "Failed to save image to location: {}", std::move( dest ) ) );
+			throw std::runtime_error( format_ns::format( "Failed to save image to location: {}", std::move( dest ) ) );
 		}
 		//Try to save thumbnail
 	}

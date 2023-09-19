@@ -43,7 +43,8 @@ namespace atlas::exceptions
 	struct TransactionInvalid : public DatabaseException
 	{
 		TransactionInvalid( const char* const m_sql_string ) :
-		  DatabaseException( std::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
+		  DatabaseException( format_ns::
+		                         format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
 		{}
 	};
 

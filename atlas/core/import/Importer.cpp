@@ -55,9 +55,9 @@ namespace internal
 		TracyCZoneN( tracy_checkZone, "Check", true );
 		//Verify that everything is valid
 		if ( !std::filesystem::exists( game_root ) )
-			throw std::runtime_error( std::format( "Root path {:ce} does not exist", game_root ) );
+			throw std::runtime_error( format_ns::format( "Root path {:ce} does not exist", game_root ) );
 		if ( !std::filesystem::exists( executable_path ) )
-			throw std::runtime_error( std::format( "Executable {:ce} does not exist", executable_path ) );
+			throw std::runtime_error( format_ns::format( "Executable {:ce} does not exist", executable_path ) );
 		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
 		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
 		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
@@ -230,7 +230,7 @@ namespace internal
 				catch ( std::exception& e_n )
 				{
 					atlas::notifications::createMessage( QString::fromStdString(
-						std::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
+						format_ns::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
 					atlas::logging::warn( "Failed to add preview from future: {}", e_n.what() );
 				}
 			}

@@ -7,25 +7,50 @@
 
 #include <QString>
 
-#include <filesystem>
+// clang-format:off
+
+#ifdef HAVE_STD_FORMAT
 #include <format>
+namespace format_ns = std;
+
+#else
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#endif
+
+#include <fmt/format.h>
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+namespace format_ns = fmt;
+
+#endif
+
+// clang-format:on
+
+#include <filesystem>
 #include <source_location>
 
-//! Formatter for QString in std::format
+//! Formatter for QString in format_ns::format
 template <>
-struct std::formatter< QString >
+struct format_ns::formatter< QString >
 {
-	constexpr auto parse( std::format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
+	constexpr auto parse( format_ns::format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
 	template < typename FormatContext >
 	auto format( const QString& my, FormatContext& ctx ) const -> decltype( ctx.out() )
 	{
-		return std::format_to( ctx.out(), "{}", my.toStdString() );
+		return format_ns::format_to( ctx.out(), "{}", my.toStdString() );
 	}
 };
 
 template <>
-struct std::formatter< std::filesystem::path >
+struct format_ns::formatter< std::filesystem::path >
 {
 	bool print_canonical { false };
 	bool print_exists { false };
@@ -55,7 +80,7 @@ struct std::formatter< std::filesystem::path >
 };
 
 template <>
-struct std::formatter< std::source_location >
+struct format_ns::formatter< std::source_location >
 {
 	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
 
@@ -63,13 +88,13 @@ struct std::formatter< std::source_location >
 };
 
 template <>
-struct std::formatter< std::format_string<> >
+struct format_ns::formatter< format_ns::format_string<> >
 {
 	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
 
-	format_context::iterator format( const std::format_string<>& str, format_context& ctx ) const
+	format_context::iterator format( const format_ns::format_string<>& str, format_context& ctx ) const
 	{
-		return std::format_to( ctx.out(), "{}", str.get() );
+		return format_ns::format_to( ctx.out(), "{}", str.get() );
 	}
 };
 

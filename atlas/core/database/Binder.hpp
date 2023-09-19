@@ -42,7 +42,7 @@ class Binder
 				param_counter,
 				sqlite3_bind_parameter_count( stmt ),
 				std::string( sqlite3_sql( stmt ) ) );
-			throw std::runtime_error( std::format(
+			throw std::runtime_error( format_ns::format(
 				"param_counter > param_count = {} > {} for query \"{}\"",
 				param_counter,
 				sqlite3_bind_parameter_count( stmt ),
@@ -55,7 +55,7 @@ class Binder
 				break;
 			default:
 				{
-					throw std::runtime_error( std::format(
+					throw std::runtime_error( format_ns::format(
 						"DB: Failed to bind to \"{}\": Reason: \"{}\"",
 						sqlite3_sql( stmt ),
 						sqlite3_errmsg( &Database::ref() ) ) );
@@ -72,7 +72,7 @@ class Binder
 		const auto step_ret { sqlite3_step( stmt ) };
 
 		if ( param_counter != max_param_count )
-			throw AtlasException( std::format(
+			throw AtlasException( format_ns::format(
 				"param_counter != max_param_count = {} != {} for query \"{}\"",
 				param_counter,
 				max_param_count,
@@ -103,7 +103,7 @@ class Binder
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ),
 						std::source_location::current() );
-					throw AtlasException( std::format(
+					throw AtlasException( format_ns::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );

@@ -133,7 +133,7 @@ namespace atlas::utils
 
 		if ( files.size() < index )
 			throw std::runtime_error(
-				std::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
+				format_ns::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
 
 		return files.at( index );
 	}
