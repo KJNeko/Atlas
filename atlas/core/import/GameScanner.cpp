@@ -37,6 +37,8 @@ void runner(
 	atlas::utils::FileScanner scanner { folder };
 	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
+	atlas::logging::debug( "Importing folder {} with base {} using regex {}", folder, base, regex );
+
 	if ( promise.isCanceled() ) return;
 	if ( potential_executables.size() <= 0 ) throw NoExecutablesFound( folder );
 

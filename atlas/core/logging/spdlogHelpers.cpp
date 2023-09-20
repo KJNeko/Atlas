@@ -38,6 +38,7 @@ namespace atlas::logging::internal
 	void logWarn( const std::string_view msg )
 	{
 		spdlog::warn( msg );
+		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
 			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), WARNING );
 	}
@@ -45,6 +46,7 @@ namespace atlas::logging::internal
 	void logError( const std::string_view msg )
 	{
 		spdlog::error( msg );
+		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
 			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ERROR );
 	}
@@ -52,6 +54,7 @@ namespace atlas::logging::internal
 	void logCritical( const std::string_view msg )
 	{
 		spdlog::critical( msg );
+		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
 			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), CRITICAL );
 	}
