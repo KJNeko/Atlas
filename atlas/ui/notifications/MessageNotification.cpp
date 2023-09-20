@@ -19,6 +19,8 @@ MessageNotification::MessageNotification( const MessageLevel level, QString str,
 	ui->setupUi( this );
 	ui->label->setText( std::move( str ) );
 
+	using enum MessageLevel;
+
 	switch ( level )
 	{
 		default:
