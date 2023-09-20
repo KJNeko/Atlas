@@ -16,7 +16,7 @@ jobs:
       - name: Extract version
         id: meta
         run: |
-          echo "version=${{env.GITHUB_REF_NAME}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "version=$env:GITHUB_REF_NAME" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           echo "env.GITHUB_REF_NAME=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
@@ -30,14 +30,14 @@ jobs:
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager_${{env.GITHUB_REF_NAME }}
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager_${{ env.GITHUB_REF_NAME }}_windows.zip ${{github.workspace}}\Atlas-GameManager_${{ env.GITHUB_REF_NAME }}
+          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager_$env:GITHUB_REF_NAME
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME_windows.zip ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
-          path: ${{github.workspace}}\Atlas-GameManager_${{ env.GITHUB_REF_NAME }}_windows.zip
+          path: ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME_windows.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -62,7 +62,7 @@ jobs:
       - name: Rename
         run: |
           mkdir windows
-          mv Windows-Extract\Atlas-GameManager-Windows.zip Atlas-GameManager-${{ env.GITHUB_REF_NAME }}-windows.zip
+          mv Windows-Extract\Atlas-GameManager-Windows.zip Atlas-GameManager-$env:GITHUB_REF_NAME-windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
