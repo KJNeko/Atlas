@@ -29,14 +29,14 @@ namespace atlas::notifications
 		return *internal::notification_manager;
 	}
 
-	void createMessage( QString message )
+	void createMessage( QString message, const MessageLevel level )
 	{
 		if ( internal::notification_manager == nullptr )
 			throw std::runtime_error( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
-			[ &message ]()
+			[ &message, level ]()
 			{
-				auto* ptr { new MessageNotification( std::move( message ), internal::notification_manager ) };
+				auto* ptr { new MessageNotification( level, std::move( message ), internal::notification_manager ) };
 				ptr->show();
 				internal::notification_manager->addNotification( ptr );
 			} );

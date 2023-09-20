@@ -229,18 +229,8 @@ namespace internal
 				}
 				catch ( std::exception& e_n )
 				{
-					atlas::notifications::createMessage( QString::fromStdString(
-						format_ns::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
-					atlas::logging::warn( "Failed to add preview from future: {}", e_n.what() );
+					atlas::logging::error( "Failed to add preview from future: {}", e_n.what() );
 				}
-			}
-			catch ( std::runtime_error& e )
-			{
-				atlas::logging::warn( "Failed to add preview from future: {}", e.what() );
-			}
-			catch ( std::exception& e )
-			{
-				atlas::logging::warn( "Failed to add preview from future: {}", e.what() );
 			}
 		}
 

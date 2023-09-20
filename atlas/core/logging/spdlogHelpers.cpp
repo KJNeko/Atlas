@@ -30,28 +30,28 @@ namespace atlas::logging::internal
 	{
 		spdlog::info( msg );
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), INFO );
 	}
 
 	void logWarn( const std::string_view msg )
 	{
 		spdlog::warn( msg );
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), WARNING );
 	}
 
 	void logError( const std::string_view msg )
 	{
 		spdlog::error( msg );
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ERROR );
 	}
 
 	void logCritical( const std::string_view msg )
 	{
 		spdlog::critical( msg );
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ) );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), CRITICAL );
 	}
 
 } // namespace atlas::logging::internal

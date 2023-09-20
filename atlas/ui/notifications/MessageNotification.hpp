@@ -16,6 +16,16 @@ namespace Ui
 
 QT_END_NAMESPACE
 
+enum MessageLevel
+{
+	DEBUG,
+	INFO_SELFCLOSE,
+	INFO,
+	WARNING,
+	ERROR,
+	CRITICAL
+};
+
 class MessageNotification final : public Notification
 {
 	Q_OBJECT
@@ -23,7 +33,7 @@ class MessageNotification final : public Notification
 
   public:
 
-	explicit MessageNotification( QString str, QWidget* parent = nullptr );
+	explicit MessageNotification( const MessageLevel level, QString str, QWidget* parent = nullptr );
 	~MessageNotification() override;
 
   private:
