@@ -79,7 +79,7 @@ namespace atlas::remote
 				last_db_update = last_db_update_in;
 			};
 
-			if ( atlas_id == INVALID_ATLAS_ID ) throw std::runtime_error( "Invalid atlas id" );
+			if ( atlas_id == INVALID_ATLAS_ID ) throw AtlasException( "Invalid atlas id" );
 		}
 
 		std::shared_ptr< AtlasData > get( const AtlasID id )

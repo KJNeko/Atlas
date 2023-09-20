@@ -47,7 +47,7 @@ namespace atlas
 
 	AtlasRemote& atlasRemote()
 	{
-		if ( internal::remote == nullptr ) throw std::runtime_error( "AtlasRemote has not been initialized!" );
+		if ( internal::remote == nullptr ) throw AtlasException( "AtlasRemote has not been initialized!" );
 
 		return *internal::remote;
 	}
@@ -265,9 +265,7 @@ namespace atlas
 
 		if ( !json.contains( "min_ver" ) )
 		{
-			atlas::logging::error( "Failed to parse update file. Missing min_ver" );
-			qDebug() << json.keys();
-			throw std::runtime_error( "Failed to parse update file. Missing min_ver" );
+			throw AtlasException( "Failed to parse update file. Missing min_ver" );
 		}
 
 		const std::uint64_t version { static_cast< std::uint64_t >( json[ "min_ver" ].toInteger() ) };

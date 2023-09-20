@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "core/exceptions.hpp"
 #include "core/logging/logging.hpp"
 
 namespace atlas::utils
@@ -64,7 +65,7 @@ namespace atlas::utils
 			void return_value( FileInfo&& from )
 			{
 				if ( from.filename == "" )
-					throw std::runtime_error( "FileScannerGenerator: return value had no filename!" );
+					throw AtlasException( "FileScannerGenerator: return value had no filename!" );
 
 				value = std::move( from );
 			}
@@ -72,7 +73,7 @@ namespace atlas::utils
 			std::suspend_always yield_value( FileInfo from )
 			{
 				if ( from.filename == "" )
-					throw std::runtime_error( "FromScannerGenerator:: yield value had no filename!" );
+					throw AtlasException( "FromScannerGenerator:: yield value had no filename!" );
 
 				value = std::move( from );
 				return {};

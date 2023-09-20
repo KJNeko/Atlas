@@ -62,16 +62,34 @@ namespace imageManager
 		return dest;
 	}
 
+	void
+		saveImage( const std::filesystem::path& source, const QByteArray& byteArray, const std::filesystem::path& dest )
+	{
+		const QImage img { QImage::fromData( byteArray ) };
+		const QImage thumb = img.scaled( 200, 94, Qt::KeepAspectRatio );
+		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"
+			                           + dest.extension().string() };
+		//img.save( QString::fromStdString( dest.string() ) );
+		thumb.save( QString::fromStdString( thumb_file ) );
+		if ( !img.save( QString::fromStdString( dest.string() ) ) )
+		{
+			throw ImportException( format_ns::
+			                           format( "Failed to save image {} to location: {}", source, std::move( dest ) )
+			                               .c_str() );
+		}
+		//Try to save thumbnail
+	}
+
 	[[nodiscard]] std::filesystem::path internalImportImage( const std::filesystem::path& path, const RecordID game_id )
 	try
-
 	{
 		//spdlog::debug( path );
 		ZoneScoped;
 		if ( !std::filesystem::exists( path ) )
 		{
 			atlas::logging::warn( "Attempted to open file {} which doesn't exist anymore. Wrong permissions?", path );
-			throw std::runtime_error( format_ns::format( "Filepath {} does not exist. Unable to add as image", path ) );
+			throw ImportException( format_ns::format( "Filepath {} does not exist. Unable to add as image", path )
+			                           .c_str() );
 		}
 
 		//Load file so we have direct access to the bytearray
@@ -80,7 +98,7 @@ namespace imageManager
 		if ( !file.open( QFile::ReadOnly ) )
 		{
 			atlas::logging::error( "Failed to open image file located at: {}", path );
-			throw std::runtime_error( format_ns::format( "Failed to load image from file: {}", path ) );
+			throw ImportException( format_ns::format( "Failed to load image from file: {}", path ).c_str() );
 		}
 		TracyCZoneN( tracy_ImageLoad, "Image load", true );
 		const QByteArray byteArray { file.readAll() };
@@ -102,6 +120,7 @@ namespace imageManager
 		if ( ( temp_image.width() > webp_max ) || ( temp_image.height() > webp_max ) ) // Dimensions too big for WebP?
 		{
 			atlas::logging::error( "File is too big for webp" );
+			//TODO: Should this throw?
 		}
 
 		//If GIF then store, do not convert
@@ -116,22 +135,22 @@ namespace imageManager
 				return dest;
 			}
 			else
-				throw std::
-					runtime_error( format_ns::format( "Unable to save gif to images folder: {}", path.filename() ) );
+				throw ImportException( format_ns::format( "Unable to save gif to images folder: {}", path.filename() )
+				                           .c_str() );
 		}
 
 		//if webp conversion is bigger then save original image
 		if ( ( webp_buffer.size() >= byteArray.size() ) ) // Is WebP bigger? Write the other format.
 		{
 			auto dest { getDestFilePath( byteArray, dest_root, path.extension().string() ) };
-			saveImage( byteArray, dest );
+			saveImage( path, byteArray, dest );
 
 			return dest;
 		}
 		else
 		{
 			auto dest { getDestFilePath( webp_byteArray, dest_root, ".webp" ) };
-			saveImage( webp_byteArray, dest );
+			saveImage( path, webp_byteArray, dest );
 
 			return dest;
 		}
@@ -148,21 +167,6 @@ namespace imageManager
 		importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
 		return QtConcurrent::run( &( globalPools().image_importers ), &internalImportImage, path, game_id );
-	}
-
-	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest )
-	{
-		const QImage img { QImage::fromData( byteArray ) };
-		const QImage thumb = img.scaled( 200, 94, Qt::KeepAspectRatio );
-		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"
-			                           + dest.extension().string() };
-		//img.save( QString::fromStdString( dest.string() ) );
-		thumb.save( QString::fromStdString( thumb_file ) );
-		if ( !img.save( QString::fromStdString( dest.string() ) ) )
-		{
-			throw std::runtime_error( format_ns::format( "Failed to save image to location: {}", std::move( dest ) ) );
-		}
-		//Try to save thumbnail
 	}
 
 } // namespace imageManager

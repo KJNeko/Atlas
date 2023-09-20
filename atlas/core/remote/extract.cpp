@@ -19,7 +19,7 @@ namespace atlas
 		switch ( info->blockSizeID )
 		{
 			default:
-				throw std::runtime_error( "Invalid block size" );
+				throw AtlasException( "Invalid block size when getting block size for LZ4 archive" );
 			case LZ4F_default:
 				[[fallthrough]];
 			case LZ4F_max64KB:
@@ -58,8 +58,7 @@ namespace atlas
 			if ( const auto fires = LZ4F_getFrameInfo( dctx, &info, header_buffer.data(), &processed_bytes );
 			     LZ4F_isError( fires ) )
 			{
-				throw std::
-					runtime_error( format_ns::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
+				throw AtlasException( format_ns::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
 			}
 
 			const auto block_size { get_block_size( &info ) };
@@ -98,8 +97,7 @@ namespace atlas
 				if ( LZ4F_isError( ret ) )
 				{
 					logging::error( "Failed to decompress LZ4 archive: {}", LZ4F_getErrorName( ret ) );
-					throw std::
-						runtime_error( format_ns::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
+					throw AtlasException( format_ns::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
 				}
 				//Shift buffer over by ready_bytes (bytes read by LZ4F_decompress)
 				std::memmove( buffer.data(), buffer.data() + bytes_processed, buffer.size() - bytes_processed );
@@ -113,7 +111,9 @@ namespace atlas
 			}
 		}
 		else
-			throw std::runtime_error( format_ns::format( "Failed to open file: {}", path.string() ) );
+		{
+			throw AtlasException( format_ns::format( "Failed to open file: {}", path.string() ) );
+		}
 
 		LZ4F_freeDecompressionContext( dctx );
 

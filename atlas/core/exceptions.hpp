@@ -15,16 +15,43 @@ namespace atlas::exceptions
 	struct AtlasException : public std::runtime_error
 	{
 		std::source_location sloc;
+		std::string what_text;
+
+		virtual const char* what() const noexcept override { return what_text.c_str(); }
 
 		AtlasException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
 		  std::runtime_error( msg ),
-		  sloc( loc )
+		  sloc( loc ),
+		  what_text( format_ns::format( "{}: {}", sloc, std::runtime_error::what() ) )
 		{
 			atlas::logging::errorLoc( "{}", loc, msg );
 		}
 
 		AtlasException( const std::string msg, const std::source_location loc = std::source_location::current() ) :
 		  AtlasException( msg.c_str(), loc )
+		{}
+	};
+
+	struct RecordException : public AtlasException
+	{
+		RecordException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+		  AtlasException( msg, loc )
+		{}
+	};
+
+	struct VersionConflict : public RecordException
+	{
+		RecordID m_game_id;
+		QString m_version;
+
+		VersionConflict(
+			const char* const msg,
+			const RecordID game_id,
+			const QString version,
+			const std::source_location loc = std::source_location::current() ) :
+		  RecordException( msg, loc ),
+		  m_game_id( game_id ),
+		  m_version( version )
 		{}
 	};
 
@@ -59,6 +86,13 @@ namespace atlas::exceptions
 			const char* const m_sql_string, const std::source_location loc = std::source_location::current() ) :
 		  DatabaseException(
 			  format_ns::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ), loc )
+		{}
+	};
+
+	struct SettingsException : public AtlasException
+	{
+		SettingsException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+		  AtlasException( msg, loc )
 		{}
 	};
 

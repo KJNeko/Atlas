@@ -44,8 +44,6 @@ namespace imageManager
 		getDestFilePath( const QByteArray& byteArray, const std::filesystem::path& dest_root, const std::string& ext );
 	 */
 
-	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest );
-
 } // namespace imageManager
 
 #endif //ATLAS_IMAGEMANAGER_HPP

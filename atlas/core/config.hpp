@@ -12,6 +12,7 @@
 #include <filesystem>
 
 #include "ConfigNotification.hpp"
+#include "core/exceptions.hpp"
 #include "logging/formatters.hpp"
 #include "logging/logging.hpp"
 
@@ -70,7 +71,7 @@ inline QSettings getSettingsObject()
 			     settings_obj.canConvert< type >() )                                                                   \
 				return settings_obj.value< type >();                                                                   \
 			else                                                                                                       \
-				throw std::runtime_error( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );      \
+				throw SettingsException( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );       \
 		}                                                                                                              \
 	}
 
@@ -150,7 +151,7 @@ inline QSettings getSettingsObject()
 				     settings_obj.canConvert< int >() )                                                                \
 					return settings_obj.value< int >();                                                                \
 				else                                                                                                   \
-					throw std::runtime_error( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );  \
+					throw SettingsException( "Failed to convert key " KEY_VALUE( group, name ) " to desired type" );   \
 			}                                                                                                          \
                                                                                                                        \
 			SETTINGS_D( group, name, int, default_value )                                                              \

@@ -17,7 +17,7 @@ namespace atlas::records
 	GameData::GameData( const RecordID id ) : m_game_id( id )
 	{
 		ZoneScoped;
-		if ( id == INVALID_RECORD_ID ) throw std::runtime_error( "Invalid record id" );
+		if ( id == INVALID_RECORD_ID ) throw AtlasException( "Invalid record id" );
 
 		bool exists { false };
 		RapidTransaction()
@@ -40,7 +40,7 @@ namespace atlas::records
 			m_description = std::move( desc );
 		};
 
-		if ( !exists ) throw std::runtime_error( "Record does not exist" );
+		if ( !exists ) throw AtlasException( "Record does not exist" );
 
 		RapidTransaction() << "SELECT count(*) FROM previews WHERE record_id = ?" << m_game_id >> m_preview_count;
 
@@ -89,7 +89,7 @@ namespace atlas::records
 		for ( const auto& version : m_versions )
 			if ( version->m_version == name ) return version;
 
-		throw std::runtime_error( "GameData: No version of name found" );
+		throw AtlasException( "GameData: No version of name found" );
 	}
 
 	std::size_t strToTagID( const QString str )

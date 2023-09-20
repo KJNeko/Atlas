@@ -55,12 +55,12 @@ namespace internal
 		TracyCZoneN( tracy_checkZone, "Check", true );
 		//Verify that everything is valid
 		if ( !std::filesystem::exists( game_root ) )
-			throw std::runtime_error( format_ns::format( "Root path {:ce} does not exist", game_root ) );
+			throw AtlasException( format_ns::format( "Root path {:ce} does not exist", game_root ) );
 		if ( !std::filesystem::exists( executable_path ) )
-			throw std::runtime_error( format_ns::format( "Executable {:ce} does not exist", executable_path ) );
-		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
-		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
-		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
+			throw AtlasException( format_ns::format( "Executable {:ce} does not exist", executable_path ) );
+		if ( title.isEmpty() ) throw AtlasException( "Title is empty" );
+		if ( creator.isEmpty() ) throw AtlasException( "Creator is empty" );
+		if ( version.isEmpty() ) throw AtlasException( "Version is empty" );
 		TracyCZoneEnd( tracy_checkZone );
 
 		TracyCZoneN( tracy_FileScanner, "File scan", true );
@@ -102,6 +102,7 @@ namespace internal
 		if ( owning )
 		{
 			ZoneScopedN( "Copying files" );
+			//TODO: Calculate filesize first THEN move files. Abort if we think there is not enough space. Prompt user
 			signaler.setMax( static_cast< int >( file_count ) );
 
 			std::size_t i { 0 };
@@ -119,8 +120,8 @@ namespace internal
 
 				if ( !std::filesystem::copy_file( source, dest, std::filesystem::copy_options::overwrite_existing ) )
 				{
-					atlas::logging::error( "Failed to copy file {} to {}", source.string(), dest.string() );
-					throw std::runtime_error( "Failed to copy file" );
+					//TODO: Ask the user if they wish to continue or abort the entire import.
+					throw AtlasException( format_ns::format( "Failed to copy file {} -> {}", source, dest ) );
 				}
 			}
 
@@ -196,6 +197,7 @@ namespace internal
 					try
 					{
 						if ( qt_e.exception() ) std::rethrow_exception( qt_e.exception() );
+						//TODO: Ask the user if they wish to continue or abort the entire import.
 					}
 					catch ( std::exception& e )
 					{
@@ -225,6 +227,7 @@ namespace internal
 				//Qt is fucking stupid.
 				try
 				{
+					//TODO: Ask the user if they wish to continue or abort the entire import.
 					if ( e.exception() ) std::rethrow_exception( e.exception() );
 				}
 				catch ( std::exception& e_n )

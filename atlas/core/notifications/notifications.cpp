@@ -6,6 +6,7 @@
 
 #include <QPromise>
 
+#include "core/exceptions.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 
@@ -25,14 +26,14 @@ namespace atlas::notifications
 	NotificationManagerUI& handle()
 	{
 		if ( internal::notification_manager == nullptr )
-			throw std::runtime_error( "Init notification handler before accessing handle" );
+			throw AtlasException( "Init notification handler before accessing handle" );
 		return *internal::notification_manager;
 	}
 
 	void createMessage( QString message, const MessageLevel level )
 	{
 		if ( internal::notification_manager == nullptr )
-			throw std::runtime_error( "Notification manage not initalized before notification!" );
+			throw AtlasException( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
 			[ &message, level ]()
 			{
