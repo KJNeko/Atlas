@@ -52,6 +52,6 @@ namespace atlas::remote
 
 		const internal::F95Data* operator->() const { return data_ptr.get(); }
 	};
-} // namespace atlas::remote
 
+} // namespace atlas::remote
 #endif //ATLASGAMEMANAGER_F95DATA_HPP
