@@ -5,6 +5,7 @@
 #ifndef ATLASGAMEMANAGER_DEVNOTIFICATION_HPP
 #define ATLASGAMEMANAGER_DEVNOTIFICATION_HPP
 
+#include "MessageNotification.hpp"
 #include "Notification.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -23,7 +24,7 @@ class DevNotification final : public Notification
 
   public:
 
-	explicit DevNotification( std::string msg, QString info, QWidget* parent = nullptr );
+	explicit DevNotification( const MessageLevel level, QString msg, QWidget* parent = nullptr );
 	~DevNotification() override;
 
   private:

@@ -13,13 +13,40 @@
 
 #include "ui_DevNotification.h"
 
-DevNotification::DevNotification( std::string body, QString info, QWidget* parent ) :
+DevNotification::DevNotification( const MessageLevel level, QString msg, QWidget* parent ) :
   Notification( parent ),
   ui( new Ui::DevNotification )
 {
 	ui->setupUi( this );
-	ui->errorMessage->setText( QString::fromStdString( body ) );
-	ui->errorData->setText( std::move( info ) );
+
+	ui->errorData->setText( std::move( msg ) );
+
+	switch ( level )
+	{
+		default:
+			[[fallthrough]];
+		case MessageLevel::DEBUG:
+			[[fallthrough]];
+		case MessageLevel::INFO_SELFCLOSE:
+			[[fallthrough]];
+		case MessageLevel::INFO:
+			[[fallthrough]];
+		case MessageLevel::WARNING:
+			{
+				ui->errorType->setText( "Warning" );
+				break;
+			}
+		case MessageLevel::ERROR:
+			{
+				ui->errorType->setText( "Error" );
+				break;
+			}
+		case MessageLevel::CRITICAL:
+			{
+				ui->errorType->setText( "Critical" );
+				break;
+			}
+	}
 }
 
 DevNotification::~DevNotification()
