@@ -4,7 +4,7 @@
   </a>
   
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/KJNeko/Atlas?style=flat&logo=github&logoColor=white&label=)
-![Static Badge](https://img.shields.io/badge/-C++14/17-3F63B3.svg?style=flat&logo=C%2B%2B&logoColor=white")
+![Static Badge](https://img.shields.io/badge/-C++20-3F63B3.svg?style=flat&logo=C%2B%2B&logoColor=white")
 ![Static Badge](https://img.shields.io/badge/-Windows-6E46A2.svg?style=flat&logo=windows-11&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/-Linux-9C2A91.svg?style=flat&logo=linux&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/MinGW%2013+%20-flag.svg?color=555555&style=flat&logo=cmake&logoColor=white&label=)
