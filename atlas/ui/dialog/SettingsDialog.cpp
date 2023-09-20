@@ -568,7 +568,6 @@ void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
 	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	qlv->repaint();
-	atlas::logging::info( "{}", static_cast< int >( idx ) );
 	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
 	///config::grid_ui::gridImageLayout::set(idx);
 	qlv->repaint();

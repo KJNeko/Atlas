@@ -414,4 +414,14 @@ namespace atlas::records
 			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 		return data;
 	}
+	std::optional< atlas::remote::F95RemoteData > Game::findF95Data( QString atlas_id )
+	{
+		//std::vector< std::string > data;
+		std::optional<atlas::remote::F95RemoteData > data;
+		//spdlog::info( "{}{}", title, developer );
+		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << atlas_id
+			>> [ &data ]( const F95ID f95_id ) { data = { f95_id }; };
+		return data;
+	}
+
 } // namespace atlas::records

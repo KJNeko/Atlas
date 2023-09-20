@@ -18,6 +18,7 @@ class QFuture;
 namespace atlas::remote
 {
 	class AtlasRemoteData;
+	class F95RemoteData;
 }
 
 namespace atlas::records
@@ -72,6 +73,7 @@ namespace atlas::records
 
 		//!Test Function.
 		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
+		std::optional< atlas::remote::F95RemoteData > findF95Data( QString atlas_id );
 
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
