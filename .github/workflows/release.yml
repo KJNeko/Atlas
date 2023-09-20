@@ -16,8 +16,8 @@ jobs:
       - name: Extract version
         id: meta
         run: |
-          echo "version=$env:GITHUB_REF_NAME" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
-          echo "env.GITHUB_REF_NAME=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "version=${{github.event.pull_request.head.ref}} | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "github.event.pull_request.head.ref=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
@@ -30,14 +30,14 @@ jobs:
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager_$env:GITHUB_REF_NAME
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME_windows.zip ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME
+          ren ${{github.workspace}}\builds\build-r\bin Atlas-GameManager_${{github.event.pull_request.head.ref }}
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager_${{ github.event.pull_request.head.ref }}_windows.zip ${{github.workspace}}\Atlas-GameManager_${{ github.event.pull_request.head.ref }}
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Extract
-          path: ${{github.workspace}}\Atlas-GameManager_$env:GITHUB_REF_NAME_windows.zip
+          path: ${{github.workspace}}\Atlas-GameManager_${{ github.event.pull_request.head.ref }}_windows.zip
           if-no-files-found: error
           retention-days: 2
 
@@ -56,13 +56,13 @@ jobs:
         id: meta
         run: |
           echo "version=${GITHUB_REF##*/}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
-          echo "env.GITHUB_REF_NAME=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "github.event.pull_request.head.ref=${GITHUB_REF##*/v}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - name: Rename
         run: |
           mkdir windows
-          mv Windows-Extract\Atlas-GameManager-Windows.zip Atlas-GameManager-$env:GITHUB_REF_NAME-windows.zip
+          mv Windows-Extract\Atlas-GameManager-Windows.zip Atlas-GameManager_${{ github.event.pull_request.head.ref }}_windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
@@ -71,4 +71,4 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            Atlas-GameManager_${{env.GITHUB_REF_NAME}}_windows.zip
+            Atlas-GameManager_${{github.event.pull_request.head.ref}}_windows.zip
