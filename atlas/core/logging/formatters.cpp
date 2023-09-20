@@ -42,8 +42,7 @@ auto format_ns::formatter< std::source_location >::format( const std::source_loc
 	//ATLAS_SANITIZE_SOURCE_LOC will be a string that is the source path.
 	constexpr auto sanitize_offset { std::char_traits< char >::length( ATLAS_SANITIZE_SOURCE_LOC ) };
 
-	return format_ns::
-		format_to( ctx.out(), "{}:{} {}", loc.file_name() + sanitize_offset, loc.line(), loc.function_name() );
+	return format_ns::format_to( ctx.out(), "{}:{}", loc.file_name() + sanitize_offset, loc.line() );
 #else
 	return format_ns::format_to( ctx.out(), "{}:{} {}", loc.file_name(), loc.line(), loc.function_name() );
 #endif
