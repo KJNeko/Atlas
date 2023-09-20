@@ -39,11 +39,26 @@ namespace atlas::exceptions
 		{}
 	};
 
+	struct ImportException : public AtlasException
+	{
+		ImportException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+		  AtlasException( msg, loc )
+		{}
+	};
+
+	struct NoExecutablesFound : public ImportException
+	{
+		NoExecutablesFound( std::filesystem::path folder, std::source_location loc = std::source_location::current() ) :
+		  ImportException( format_ns::format( "No executables found for directory: {}", folder ).c_str(), loc )
+		{}
+	};
+
 	struct TransactionInvalid : public DatabaseException
 	{
-		TransactionInvalid( const char* const m_sql_string ) :
-		  DatabaseException( format_ns::
-		                         format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
+		TransactionInvalid(
+			const char* const m_sql_string, const std::source_location loc = std::source_location::current() ) :
+		  DatabaseException(
+			  format_ns::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ), loc )
 		{}
 	};
 

@@ -44,7 +44,6 @@ namespace gl
 			const auto match { regex.match( infos.thread_url ) };
 			if ( !match.isValid() || match.captured( "f95_id" ) == "" )
 			{
-				//TODO: devwarn here
 				atlas::logging::warn(
 					"Unable to extract f95 id from GL_Infos.ini for {} using regex \"{}\" and url \"{}\"",
 					path,

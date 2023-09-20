@@ -33,199 +33,174 @@ void runner(
 	const bool size_files )
 {
 	ZoneScoped;
-	try
+	if ( promise.isCanceled() ) return;
+	atlas::utils::FileScanner scanner { folder };
+	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
+
+	if ( promise.isCanceled() ) return;
+	if ( potential_executables.size() <= 0 ) throw NoExecutablesFound( folder );
+
+	auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
 	{
-		if ( promise.isCanceled() ) return;
-		atlas::utils::FileScanner scanner { folder };
-		std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
-
-		if ( promise.isCanceled() ) return;
-		if ( potential_executables.size() > 0 )
+		if ( gl::dirHasGLInfo( folder ) )
 		{
-			auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
+			const auto gl_info { gl::parse( folder / GL_INFO_FILENAME ) };
+			// Grab information from remote.
+
+			if ( gl_info.f95_thread_id == INVALID_F95_ID )
 			{
-				if ( gl::dirHasGLInfo( folder ) )
+				//Unable to do anything with this
+				//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
+				return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+			}
+
+			//Try to find the thread info
+			if ( !atlas::remote::hasF95DataFor( gl_info.f95_thread_id ) )
+			{
+				return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+			}
+			else
+			{
+				try
 				{
-					const auto gl_info { gl::parse( folder / GL_INFO_FILENAME ) };
-					// Grab information from remote.
+					atlas::remote::F95RemoteData f95_data { gl_info.f95_thread_id };
+					atlas::remote::AtlasRemoteData atlas_data { f95_data->atlas_id };
 
-					if ( gl_info.f95_thread_id == INVALID_F95_ID )
-					{
-						//Unable to do anything with this
-						//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
-						return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-					}
-
-					//Try to find the thread info
-					if ( !atlas::remote::hasF95DataFor( gl_info.f95_thread_id ) )
-					{
-						return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-					}
-					else
-					{
-						try
-						{
-							atlas::remote::F95RemoteData f95_data { gl_info.f95_thread_id };
-							atlas::remote::AtlasRemoteData atlas_data { f95_data->atlas_id };
-
-							//Grab version info from gl_infos directly
-							regex::GroupsOutput output {
-								atlas_data->title, atlas_data->creator, gl_info.version, atlas_data->engine
-							};
-
-							return output;
-						}
-						catch ( std::exception& e )
-						{
-							atlas::logging::warn( "Failed to get remote data in scanner: {}", e.what() );
-							return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-						}
-					}
-				}
-				else
-				{
+					//Grab version info from gl_infos directly
 					regex::GroupsOutput output {
-						regex::extractGroups( regex, QString::fromStdString( folder.string() ) )
+						atlas_data->title, atlas_data->creator, gl_info.version, atlas_data->engine
 					};
 
-					//std::optional< atlas::remote::AtlasRemoteData > atlas_data {atlas::records::Game().findAtlasData( output.title, output.creator )};
-					//atlas::remote::AtlasRemoteData atlas_data { atlas::records::Game().findAtlasData( output.title, output.creator ).value()->atlas_id};
-					//atlas::remote::F95RemoteData f95_data { atlas::records::Game().findF95Data(" ") };
-					
-					//atlas::remote::AtlasRemoteData::
 					return output;
 				}
-			}();
-
-			//Search for banners
-			std::array< QString, BannerType::SENTINEL > banners {};
-
-			{
-				ZoneScopedN( "Scan for banners" );
-				for ( const auto& file : scanner )
+				catch ( std::exception& e )
 				{
-					if ( promise.isCanceled() ) return;
-					if ( file.depth > 1 ) break;
-
-					const auto& path { file.path };
-					const auto& stem { path.filename().stem() };
-
-					if ( stem == "banner" )
-					{
-						banners[ Normal ] = QString::fromStdString( path.string() );
-					}
-					else if ( stem == "banner_w" )
-					{
-						banners[ Wide ] = QString::fromStdString( path.string() );
-					}
-					else if ( stem == "logo" )
-					{
-						banners[ Logo ] = QString::fromStdString( path.string() );
-					}
-					else if ( stem == "cover" )
-					{
-						banners[ Cover ] = QString::fromStdString( path.string() );
-					}
-					else
-						continue;
+					atlas::logging::warn( "Failed to get remote data in scanner: {}", e.what() );
+					return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 				}
 			}
-
-			std::vector< QString > previews;
-
-			{
-				ZoneScopedN( "Scan for previews" );
-				if ( std::filesystem::exists( folder / "previews" ) )
-				{
-					for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
-					{
-						if ( promise.isCanceled() ) return;
-						if ( file.is_regular_file() )
-							previews.emplace_back( QString::fromStdString( file.path().string() ) );
-					}
-				}
-			}
-
-			std::uint64_t file_size { 0 };
-			std::uint64_t file_count { 0 };
-
-			if ( size_files )
-			{
-				//Size up files
-				for ( const auto& file : scanner )
-				{
-					++file_count;
-					file_size += file.size;
-				}
-			}
-
-			auto gl_info { [ &folder ]() -> gl::GameListInfos
-				           {
-							   //Check if we have a GL_Infos.ini file
-							   if ( gl::dirHasGLInfo( folder ) )
-								   //We have one.
-								   return gl::parse( folder );
-							   else
-								   return {};
-						   }() };
-
-			// Fetch the game_id from the DB. Will return INVALID_RECORD_ID if not found
-			const auto game_id { atlas::records::fetchRecord( title, creator, engine ) };
-
-			//If the gl_info has a f95_id then we can use that.
-			auto atlas_id { INVALID_ATLAS_ID };
-
-			if ( gl_info.f95_thread_id != INVALID_F95_ID )
-			{
-				//We can try to get the atlas_id from the f95 thread if it's valid.
-				atlas_id = atlas::remote::atlasIDFromF95Thread( gl_info.f95_thread_id );
-			}
-
-			if ( engine.isEmpty() )
-			{
-				//Set engine if it's not set already via the regex
-				engine = engineName( determineEngine( scanner ) );
-			}
-
-			if ( promise.isCanceled() ) return;
-			GameImportData data {
-				std::filesystem::relative( folder, base ),
-				std::move( title ),
-				std::move( creator ),
-				std::move( engine ),
-				version.isEmpty() ? "0.0" : std::move( version ),
-				file_size,
-				file_count,
-				potential_executables,
-				potential_executables.at( 0 ),
-				std::move( banners ),
-				std::move( previews ),
-				std::move( gl_info ),
-				game_id,
-				atlas_id,
-			};
-
-			promise.addResult( std::move( data ) );
 		}
 		else
 		{
-			atlas::logging::warn( "No executables found for path {} Ignoring path", folder );
-			return;
+			regex::GroupsOutput output { regex::extractGroups( regex, QString::fromStdString( folder.string() ) ) };
+
+			//std::optional< atlas::remote::AtlasRemoteData > atlas_data {atlas::records::Game().findAtlasData( output.title, output.creator )};
+			//atlas::remote::AtlasRemoteData atlas_data { atlas::records::Game().findAtlasData( output.title, output.creator ).value()->atlas_id};
+			//atlas::remote::F95RemoteData f95_data { atlas::records::Game().findF95Data(" ") };
+
+			//atlas::remote::AtlasRemoteData::
+			return output;
 		}
+	}();
 
-		return;
-	}
+	//Search for banners
+	std::array< QString, BannerType::SENTINEL > banners {};
 
-	catch ( const std::exception& e )
 	{
-		atlas::logging::error( "{}", e.what() );
-		promise.setException( std::current_exception() );
+		ZoneScopedN( "Scan for banners" );
+		for ( const auto& file : scanner )
+		{
+			if ( promise.isCanceled() ) return;
+			if ( file.depth > 1 ) break;
+
+			const auto& path { file.path };
+			const auto& stem { path.filename().stem() };
+
+			if ( stem == "banner" )
+			{
+				banners[ Normal ] = QString::fromStdString( path.string() );
+			}
+			else if ( stem == "banner_w" )
+			{
+				banners[ Wide ] = QString::fromStdString( path.string() );
+			}
+			else if ( stem == "logo" )
+			{
+				banners[ Logo ] = QString::fromStdString( path.string() );
+			}
+			else if ( stem == "cover" )
+			{
+				banners[ Cover ] = QString::fromStdString( path.string() );
+			}
+			else
+				continue;
+		}
 	}
 
-	catch ( ... )
+	std::vector< QString > previews;
+
 	{
-		promise.setException( std::current_exception() );
+		ZoneScopedN( "Scan for previews" );
+		if ( std::filesystem::exists( folder / "previews" ) )
+		{
+			for ( const auto& file : std::filesystem::directory_iterator( folder / "previews" ) )
+			{
+				if ( promise.isCanceled() ) return;
+				if ( file.is_regular_file() ) previews.emplace_back( QString::fromStdString( file.path().string() ) );
+			}
+		}
 	}
+
+	std::uint64_t file_size { 0 };
+	std::uint64_t file_count { 0 };
+
+	if ( size_files )
+	{
+		//Size up files
+		for ( const auto& file : scanner )
+		{
+			++file_count;
+			file_size += file.size;
+		}
+	}
+
+	auto gl_info { [ &folder ]() -> gl::GameListInfos
+		           {
+					   //Check if we have a GL_Infos.ini file
+					   if ( gl::dirHasGLInfo( folder ) )
+						   //We have one.
+						   return gl::parse( folder );
+					   else
+						   return {};
+				   }() };
+
+	// Fetch the game_id from the DB. Will return INVALID_RECORD_ID if not found
+	const auto game_id { atlas::records::fetchRecord( title, creator, engine ) };
+
+	//If the gl_info has a f95_id then we can use that.
+	auto atlas_id { INVALID_ATLAS_ID };
+
+	if ( gl_info.f95_thread_id != INVALID_F95_ID )
+	{
+		//We can try to get the atlas_id from the f95 thread if it's valid.
+		atlas_id = atlas::remote::atlasIDFromF95Thread( gl_info.f95_thread_id );
+	}
+
+	if ( engine.isEmpty() )
+	{
+		//Set engine if it's not set already via the regex
+		engine = engineName( determineEngine( scanner ) );
+	}
+
+	if ( promise.isCanceled() ) return;
+	GameImportData data {
+		std::filesystem::relative( folder, base ),
+		std::move( title ),
+		std::move( creator ),
+		std::move( engine ),
+		version.isEmpty() ? "0.0" : std::move( version ),
+		file_size,
+		file_count,
+		potential_executables,
+		potential_executables.at( 0 ),
+		std::move( banners ),
+		std::move( previews ),
+		std::move( gl_info ),
+		game_id,
+		atlas_id,
+	};
+
+	promise.addResult( std::move( data ) );
 }
 
 void GameScanner::
@@ -312,6 +287,10 @@ try
 catch ( std::exception& e )
 {
 	atlas::logging::error( "Main runner ate error before entering Qt space! {}", e.what() );
+}
+catch ( ... )
+{
+	atlas::logging::error( "Main runner fucking died" );
 }
 
 void GameScanner::start( const std::filesystem::path path, const QString regex, const bool size_folders )

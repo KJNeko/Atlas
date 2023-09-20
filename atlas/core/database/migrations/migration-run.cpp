@@ -101,18 +101,12 @@ namespace atlas::database::migrations
 				trans.commit();
 			}
 		}
-		catch ( std::exception& e )
+		catch ( DatabaseException& e )
 		{
-			logging::error(
-				"Failed to apply migration. Currently at {}: {}",
-				config::database::migration_version::get(),
-				e.what() );
-			std::abort();
-		}
-		catch ( ... )
-		{
-			logging::
-				error( "Failed to apply migration. Currently at {}: ...", config::database::migration_version::get() );
+			logging::error( "Failed to apply migration. Currently at {}", config::database::migration_version::get() );
+
+			Database::deinit();
+
 			std::abort();
 		}
 	}
