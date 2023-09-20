@@ -76,7 +76,7 @@ namespace atlas::exceptions
 	struct NoExecutablesFound : public ImportException
 	{
 		NoExecutablesFound( std::filesystem::path folder, std::source_location loc = std::source_location::current() ) :
-		  ImportException( format_ns::format( "No executables found for directory: {}", folder ).c_str(), loc )
+		  ImportException( format_ns::format( "No valid executables found for directory: {}", folder ).c_str(), loc )
 		{}
 	};
 
