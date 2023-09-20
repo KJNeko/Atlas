@@ -18,7 +18,7 @@ QT_END_NAMESPACE
 
 enum class MessageLevel
 {
-	DEBUG = 0,
+	DEBUG,
 	INFO_SELFCLOSE,
 	INFO,
 	WARNING,
