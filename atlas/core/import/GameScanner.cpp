@@ -88,8 +88,9 @@ void runner(
 						regex::extractGroups( regex, QString::fromStdString( folder.string() ) )
 					};
 
-					std::optional< atlas::remote::AtlasRemoteData > atlas_data {atlas::records::Game().findAtlasData( output.title, output.creator )};
-					std::optional<atlas::remote::F95RemoteData> f95_data { atlas::records::Game().findF95Data(" ") };
+					//std::optional< atlas::remote::AtlasRemoteData > atlas_data {atlas::records::Game().findAtlasData( output.title, output.creator )};
+					//atlas::remote::AtlasRemoteData atlas_data { atlas::records::Game().findAtlasData( output.title, output.creator ).value()->atlas_id};
+					//atlas::remote::F95RemoteData f95_data { atlas::records::Game().findF95Data(" ") };
 					
 					//atlas::remote::AtlasRemoteData::
 					return output;
