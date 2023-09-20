@@ -41,11 +41,11 @@ namespace atlas::notifications
 				{
 					default:
 						[[fallthrough]];
-					case MessageLevel::DEBUG:
+					case MessageLevel::ATLAS_DEBUG:
 						[[fallthrough]];
-					case MessageLevel::INFO_SELFCLOSE:
+					case MessageLevel::ATLAS_INFO_SELFCLOSE:
 						[[fallthrough]];
-					case MessageLevel::INFO:
+					case MessageLevel::ATLAS_INFO:
 						{
 							auto* ptr {
 								new MessageNotification( level, std::move( message ), internal::notification_manager )
@@ -54,11 +54,11 @@ namespace atlas::notifications
 							internal::notification_manager->addNotification( ptr );
 							return;
 						}
-					case MessageLevel::WARNING:
+					case MessageLevel::ATLAS_WARNING:
 						[[fallthrough]];
-					case MessageLevel::ERROR:
+					case MessageLevel::ATLAS_ERROR:
 						[[fallthrough]];
-					case MessageLevel::CRITICAL:
+					case MessageLevel::ATLAS_CRITICAL:
 						{
 							auto* ptr {
 								new DevNotification( level, std::move( message ), internal::notification_manager )

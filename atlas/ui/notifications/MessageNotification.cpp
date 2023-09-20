@@ -25,10 +25,10 @@ MessageNotification::MessageNotification( const MessageLevel level, QString str,
 	{
 		default:
 			[[fallthrough]];
-		case DEBUG:
+		case ATLAS_DEBUG:
 			ui->lblType->setText( "Debug" );
 			break;
-		case INFO_SELFCLOSE:
+		case ATLAS_INFO_SELFCLOSE:
 			{
 				//Setup timer to self close this notification after 10 seconds
 				QTimer* timer { new QTimer() };
@@ -43,16 +43,16 @@ MessageNotification::MessageNotification( const MessageLevel level, QString str,
 				timer->start();
 			}
 			[[fallthrough]];
-		case INFO:
+		case ATLAS_INFO:
 			ui->lblType->setText( "Info" );
 			break;
-		case WARNING:
+		case ATLAS_WARNING:
 			ui->lblType->setText( "Warning" );
 			break;
-		case ERROR:
+		case ATLAS_ERROR:
 			ui->lblType->setText( "Error" );
 			break;
-		case CRITICAL:
+		case ATLAS_CRITICAL:
 			ui->lblType->setText( "Critical" );
 			break;
 	}

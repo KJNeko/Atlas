@@ -25,23 +25,23 @@ DevNotification::DevNotification( const MessageLevel level, QString msg, QWidget
 	{
 		default:
 			[[fallthrough]];
-		case MessageLevel::DEBUG:
+		case MessageLevel::ATLAS_DEBUG:
 			[[fallthrough]];
-		case MessageLevel::INFO_SELFCLOSE:
+		case MessageLevel::ATLAS_INFO_SELFCLOSE:
 			[[fallthrough]];
-		case MessageLevel::INFO:
+		case MessageLevel::ATLAS_INFO:
 			[[fallthrough]];
-		case MessageLevel::WARNING:
+		case MessageLevel::ATLAS_WARNING:
 			{
 				ui->errorType->setText( "Warning" );
 				break;
 			}
-		case MessageLevel::ERROR:
+		case MessageLevel::ATLAS_ERROR:
 			{
 				ui->errorType->setText( "Error" );
 				break;
 			}
-		case MessageLevel::CRITICAL:
+		case MessageLevel::ATLAS_CRITICAL:
 			{
 				ui->errorType->setText( "Critical" );
 				break;

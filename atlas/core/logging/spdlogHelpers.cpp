@@ -32,7 +32,7 @@ namespace atlas::logging::internal
 	{
 		spdlog::info( msg );
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), INFO );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_INFO );
 	}
 
 	void logWarn( const std::string_view msg )
@@ -40,7 +40,7 @@ namespace atlas::logging::internal
 		spdlog::warn( msg );
 		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), WARNING );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_WARNING );
 	}
 
 	void logError( const std::string_view msg )
@@ -48,7 +48,7 @@ namespace atlas::logging::internal
 		spdlog::error( msg );
 		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ERROR );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_ERROR );
 	}
 
 	void logCritical( const std::string_view msg )
@@ -56,7 +56,7 @@ namespace atlas::logging::internal
 		spdlog::critical( msg );
 		spdlog::dump_backtrace();
 		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), CRITICAL );
+			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_CRITICAL );
 	}
 
 } // namespace atlas::logging::internal

@@ -19,7 +19,7 @@ namespace atlas::notifications
 	void initNotifications( QWidget* parent );
 	NotificationManagerUI& handle();
 
-	void createMessage( QString message, const MessageLevel level = MessageLevel::INFO );
+	void createMessage( QString message, const MessageLevel level = MessageLevel::ATLAS_INFO );
 
 	bool isNotificationsReady();
 

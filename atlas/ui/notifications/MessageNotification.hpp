@@ -18,12 +18,12 @@ QT_END_NAMESPACE
 
 enum class MessageLevel
 {
-	DEBUG,
-	INFO_SELFCLOSE,
-	INFO,
-	WARNING,
-	ERROR,
-	CRITICAL
+	ATLAS_DEBUG,
+	ATLAS_INFO_SELFCLOSE,
+	ATLAS_INFO,
+	ATLAS_WARNING,
+	ATLAS_ERROR,
+	ATLAS_CRITICAL
 };
 
 class MessageNotification final : public Notification
