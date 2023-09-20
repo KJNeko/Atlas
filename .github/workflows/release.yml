@@ -60,7 +60,7 @@ jobs:
       - name: Rename
         run: |
           mkdir windows
-          mv Windows-Extract\windows.zip Atlas-GameManager.${{ env.version_short }}.-windows.zip
+          mv ${{github.workspace}}\windows.zip Atlas-GameManager_${{ env.version_short }}_windows.zip
 
       - name: Upload
         uses: softprops/action-gh-release@v1
@@ -69,4 +69,4 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            Atlas-GameManager.${{ env.version_short }}.-windows.zip
+            Atlas-GameManager_${{ env.version_short }}_windows.zip
