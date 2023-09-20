@@ -66,18 +66,26 @@ namespace atlas::logging
 		info(
 			const format_ns::format_string< Ts... > body,
 			Ts&&... ts,
-			const std::source_location& loc = std::source_location::current() )
+			[[maybe_unused]] const std::source_location& loc = std::source_location::current() )
 		{
+#ifdef NDEBUG
+			// Used during release builds. Prevents the user from getting spammed with internal info
+			if constexpr ( sizeof...( Ts ) > 0 )
+				internal::logInfo( format_ns::format( body, std::forward< Ts >( ts )... ) );
+			else
+				internal::logInfo( body.get() );
+#else
 			if constexpr ( sizeof...( Ts ) > 0 )
 				internal::logInfo(
 					format_ns::format( "{}: \"{}\"", loc, format_ns::format( body, std::forward< Ts >( ts )... ) ) );
 			else
 				internal::logInfo( format_ns::format( "{}: \"{}\"", loc, body ) );
+#endif
 		}
 	};
 
 	template < typename... Ts >
-	info( std::string_view, Ts&&... ) -> info< Ts... >;
+	info( format_ns::format_string< Ts... >, Ts&&... ) -> info< Ts... >;
 
 	template < typename... Ts >
 	struct warn
