@@ -2,16 +2,20 @@
   <a href="https://atlas-gamesdb.com/">
     <img height="180px" src="https://github.com/KJNeko/Atlas/blob/master/atlas/assets/Atlas_logo_v2.svg" alt="atlas logo">
   </a>
-
-
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fatlas-gamesdb.com%2F)
-![GitHub release (with filter)](https://img.shields.io/github/v/release/KJNeko/Atlas)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/KJNeko/Atlas/.github%2Fworkflows%2Frelease.yml?event=push&label=release-build)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/KJNeko/Atlas/.github%2Fworkflows%2Fpr-test-build.yml?event=push&label=pr-build)
+  
+![GitHub release (with filter)](https://img.shields.io/github/v/release/KJNeko/Atlas?style=flat&logo=github&logoColor=white&label=)
+![Static Badge](https://img.shields.io/badge/-C++14/17-3F63B3.svg?style=flat&logo=C%2B%2B&logoColor=white")
+![Static Badge](https://img.shields.io/badge/-Windows-6E46A2.svg?style=flat&logo=windows-11&logoColor=white)
+![Static Badge](https://img.shields.io/badge/-Linux-9C2A91.svg?style=flat&logo=linux&logoColor=white)
+![Static Badge](https://img.shields.io/badge/MinGW%2013+%20-flag.svg?color=555555&style=flat&logo=cmake&logoColor=white&label=)
+![Static Badge](https://img.shields.io/badge/-docs-green.svg?logo=Wikipedia)
+<br>
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/KJNeko/Atlas/.github%2Fworkflows%2Frelease.yml?event=push&label=release)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/KJNeko/Atlas/.github%2Fworkflows%2Fpr-test-build.yml?event=push&label=pr)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/KJNeko/Atlas/.github%2Fworkflows%2Fnightly.yml?event=push&label=nightly)
 ![GitHub issues](https://img.shields.io/github/issues/KJNeko/Atlas)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/KJNeko/Atlas?label=pull%20request)
-
+![GitHub all releases](https://img.shields.io/github/downloads/KJNeko/Atlas/total)
 </div>
 
 #
