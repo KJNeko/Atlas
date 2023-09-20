@@ -16,9 +16,9 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-enum MessageLevel
+enum class MessageLevel
 {
-	DEBUG,
+	DEBUG = 0,
 	INFO_SELFCLOSE,
 	INFO,
 	WARNING,
