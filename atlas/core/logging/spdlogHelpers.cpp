@@ -21,6 +21,8 @@
 
 namespace atlas::logging::internal
 {
+	using enum MessageLevel;
+
 	void logDebug( const std::string_view msg )
 	{
 		spdlog::debug( msg );
