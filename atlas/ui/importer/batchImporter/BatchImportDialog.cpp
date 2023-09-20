@@ -145,9 +145,9 @@ void BatchImportDialog::importFiles()
 	(void)QtConcurrent::run(
 		[ games, owning, root ]()
 		{
+			atlas::logging::debug( "Starting to fill import queue" );
 			for ( auto game : games )
 			{
-				atlas::logging::debug( "Triggering import game for {}", game.title );
 				(void)importGame( std::move( game ), root, owning );
 			}
 			atlas::logging::debug( "Finished queueing imports" );
