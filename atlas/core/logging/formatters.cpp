@@ -44,6 +44,7 @@ auto format_ns::formatter< std::source_location >::format( const std::source_loc
 
 	return format_ns::format_to( ctx.out(), "{}:{}", loc.file_name() + sanitize_offset, loc.line() );
 #else
-	return format_ns::format_to( ctx.out(), "{}:{} {}", loc.file_name(), loc.line(), loc.function_name() );
+	return format_ns::
+		format_to( ctx.out(), "File: {}:{}\n\tFunction: {}\n\t", loc.file_name(), loc.line(), loc.function_name() );
 #endif
 }

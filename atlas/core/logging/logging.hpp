@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <source_location>
 
+//Formatters needs to exist before we include the other things since notifications.hpp uses some formatters in here for it's own logging
 // clang-format: off
 #include "formatters.hpp"
 // clang-format: on
@@ -17,12 +18,12 @@
 #include "core/Types.hpp"
 #include "core/notifications/notifications.hpp"
 
-void initLogging();
-
 namespace atlas::logging
 {
 	//! Loads the spdlog interfaces for file rotations and logging without a GUI
 	void init();
+
+	void setFormat();
 
 	//! Loads the GUI hooks required for some warnings to display to the user
 	void initGUIHooks();
@@ -47,7 +48,7 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}: ", loc ) };
+				const auto location_string { format_ns::format( "{}", loc ) };
 				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
 
 				internal::logDebug( location_string + body_str );
@@ -77,9 +78,9 @@ namespace atlas::logging
 #else
 			if constexpr ( sizeof...( Ts ) > 0 )
 				internal::logInfo(
-					format_ns::format( "{}: \"{}\"", loc, format_ns::format( body, std::forward< Ts >( ts )... ) ) );
+					format_ns::format( "{}Message: {}", loc, format_ns::format( body, std::forward< Ts >( ts )... ) ) );
 			else
-				internal::logInfo( format_ns::format( "{}: \"{}\"", loc, body ) );
+				internal::logInfo( format_ns::format( "{}Message: {}", loc, body ) );
 #endif
 		}
 	};
