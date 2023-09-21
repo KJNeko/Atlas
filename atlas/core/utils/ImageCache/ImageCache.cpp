@@ -4,6 +4,9 @@
 
 #include "ImageCache.hpp"
 
+#include "core/imageManager.hpp"
+#include "core/logging/logging.hpp"
+
 namespace atlas::cache
 {
 
@@ -94,6 +97,10 @@ namespace atlas::cache
 
 		if ( cache.contains( key ) ) return;
 
+		if ( pixmap.isNull() )
+			throw ImageManagerException( format_ns::format( "Attempted to insert a null pixmap with key {}", key )
+			                                 .c_str() );
+
 		PixmapItem item { std::move( pixmap ) };
 
 		current_size += item.size();
@@ -105,6 +112,7 @@ namespace atlas::cache
 
 	std::optional< QPixmap > ImageCache::find( std::string key )
 	{
+		atlas::logging::debug( "Cache at {}", cache.size() );
 		std::lock_guard guard { mtx };
 		if ( auto itter = cache.find( key ); itter != cache.end() )
 		{

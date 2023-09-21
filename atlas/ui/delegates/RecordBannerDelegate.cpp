@@ -14,6 +14,7 @@
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
 #include "core/database/record/game/Game.hpp"
+#include "core/imageManager.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
 

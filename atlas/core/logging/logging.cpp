@@ -40,7 +40,7 @@ namespace atlas::logging
 		auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };
 
 #ifndef NDEBUG
-		console_sink->set_level( spdlog::level::trace );
+		console_sink->set_level( spdlog::level::debug );
 #endif
 
 		// file sink will print out to a log file and rotate it out when getting too big.

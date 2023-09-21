@@ -52,7 +52,6 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
-	QString toCamelCase( const QString& s );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	void drawText(
 		QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str ) const;

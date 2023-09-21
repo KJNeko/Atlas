@@ -18,14 +18,33 @@ class QByteArray;
 template < typename T >
 class QFuture;
 
-class ImageManagerException : public AtlasException
-{};
+struct ImageManagerException : public AtlasException
+{
+	ImageManagerException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+	  AtlasException( msg, loc )
+	{}
+};
 
-class ImageImportError : public ImageManagerException
-{};
+struct ImageImportError : public ImageManagerException
+{
+	ImageImportError( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+	  ImageManagerException( msg, loc )
+	{}
+};
 
-class ImageSaveError : public ImageManagerException
-{};
+struct ImageSaveError : public ImageManagerException
+{
+	ImageSaveError( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+	  ImageManagerException( msg, loc )
+	{}
+};
+
+struct ImageLoadError : public ImageManagerException
+{
+	ImageLoadError( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+	  ImageManagerException( msg, loc )
+	{}
+};
 
 namespace atlas::images
 {

@@ -50,14 +50,14 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 {
 	if ( !index.isValid() ) return {};
 
+	const auto game { m_records.at( static_cast< std::size_t >( index.row() ) ) };
+
 	switch ( role )
 	{
 		case Qt::DisplayRole:
 			[[fallthrough]];
 		case RecordListModelRoles::Raw:
-			return QVariant::fromStdVariant( std::variant<
-											 atlas::records::Game >( m_records.at( static_cast<
-																				   std::size_t >( index.row() ) ) ) );
+			return QVariant::fromStdVariant( std::variant< atlas::records::Game >( game ) );
 		case Qt::ToolTipRole:
 			[[fallthrough]];
 		case Qt::StatusTipRole:
@@ -150,7 +150,7 @@ QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int ro
 			case Qt::Horizontal:
 				return QVariant( "Horizontal" ); // no column header, it's already in the tree
 			default:
-				return QVariant( "Verticle" );
+				return QVariant( "Vertical" );
 		}
 	}
 	else

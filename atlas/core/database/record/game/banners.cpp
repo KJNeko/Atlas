@@ -31,13 +31,10 @@ namespace atlas::records
 					format_ns::format( "Failed to set banner. importImage returned a invalid path: {}!", path )
 						.c_str() );
 		}
-		else
-		{
-			if ( !std::filesystem::exists( path ) )
-				throw RecordException( format_ns::format( "Invalid path {} given to setBanner.", path ).c_str() );
-		}
+		else if ( !std::filesystem::exists( path ) )
+			throw RecordException( format_ns::format( "Invalid path {} given to setBanner.", path ).c_str() );
 
-		if ( hasBanner( type ) )
+		if ( !hasBanner( type ) )
 		{
 			//If path isn't here then we insert it instead
 			RapidTransaction() << "INSERT INTO banners (record_id, path, type) VALUES (?,?,?)" << m_id << path
@@ -80,15 +77,20 @@ namespace atlas::records
 	{
 		const auto path { bannerPath( type ) };
 
-		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
-			return QtFuture::makeReadyFuture( QPixmap() );
+		if ( path.empty() )
+			QtFuture::makeExceptionalFuture( std::make_exception_ptr( ImageLoadError(
+				format_ns::format( "Not path for game id: {} with type: {}", m_id, static_cast< int >( type ) )
+					.c_str() ) ) );
+		//Ideally we would check if the path exists too but it's too expensive do to during a paint
 
 		const auto key {
 			format_ns::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
 		};
 
 		if ( auto opt = banner_cache.find( key ); opt.has_value() )
+		{
 			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
+		}
 		else
 		{
 			return atlas::images::loadScaledImage( size, scale_type, path );
