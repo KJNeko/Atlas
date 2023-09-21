@@ -6,6 +6,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 
 #include <spdlog/spdlog.h>
 
