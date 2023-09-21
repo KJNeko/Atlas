@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QString>
 
+#include "core/logging/formatters.hpp"
 #include "ui/notifications/DevNotification.hpp"
 #include "ui/notifications/MessageNotification.hpp"
 #include "ui/notifications/NotificationManagerUI.hpp"
@@ -29,7 +30,7 @@ namespace atlas::notifications
 		QString user_message, QString full_message, const MessageLevel level = MessageLevel::ATLAS_INFO );
 
 	inline void createMessage(
-		const std::string_view user_message,
+		const format_ns::string_view user_message,
 		const std::string_view full_message,
 		const MessageLevel level = MessageLevel::ATLAS_INFO )
 	{

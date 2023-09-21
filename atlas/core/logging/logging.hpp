@@ -28,7 +28,7 @@ namespace atlas::logging
 	//! Loads the GUI hooks required for some warnings to display to the user
 	void initGUIHooks();
 
-	inline auto formatSourceLocation( const std::source_location loc, const std::string_view msg )
+	inline std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg )
 	{
 		return format_ns::format( "{}Message: {}", loc, msg );
 	}
@@ -53,14 +53,14 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				auto full_message { formatSourceLocation( source_location, user_message ) };
+				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				const std::string full_message { formatSourceLocation( source_location, user_message ) };
 
 				internal::logDebug( full_message );
 			}
 			else
 			{
-				auto full_message { formatSourceLocation( source_location, format_string.get() ) };
+				const std::string full_message { formatSourceLocation( source_location, format_string.get() ) };
 
 				internal::logDebug( full_message );
 			}
@@ -78,14 +78,13 @@ namespace atlas::logging
 			Ts&&... ts,
 			[[maybe_unused]] const std::source_location& source_location = std::source_location::current() )
 		{
-			auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-			auto full_message { formatSourceLocation( source_location, user_message ) };
+			const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+			const std::string full_message { formatSourceLocation( source_location, user_message ) };
 
 			internal::logInfo( full_message );
 
 			if ( notifications::isNotificationsReady() )
-				atlas::notifications::
-					createMessage( std::move( user_message ), std::move( full_message ), MessageLevel::ATLAS_INFO );
+				atlas::notifications::createMessage( user_message, full_message, MessageLevel::ATLAS_INFO );
 		}
 	};
 
@@ -102,24 +101,24 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				auto full_message { formatSourceLocation( source_location, user_message ) };
+				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				const std::string full_message { formatSourceLocation( source_location, user_message ) };
 
 				internal::logWarn( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::createMessage(
 						format_ns::format( format_string, std::forward< Ts >( ts )... ),
-						std::move( full_message ),
+						full_message,
 						MessageLevel::ATLAS_WARNING );
 			}
 			else
 			{
-				auto full_message { formatSourceLocation( source_location, format_string.get() ) };
+				const std::string full_message { formatSourceLocation( source_location, format_string.get() ) };
 
 				internal::logWarn( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::
-						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_WARNING );
+						createMessage( format_string.get(), full_message, MessageLevel::ATLAS_WARNING );
 			}
 		}
 	};
@@ -137,24 +136,23 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				auto user_message { format_ns::format( body, std::forward< Ts >( ts )... ) };
-				auto full_message { formatSourceLocation( loc, user_message ) };
+				const std::string user_message { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				const std::string full_message { formatSourceLocation( loc, user_message ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::createMessage(
 						format_ns::format( body, std::forward< Ts >( ts )... ),
-						std::move( full_message ),
+						full_message,
 						MessageLevel::ATLAS_ERROR );
 			}
 			else
 			{
-				auto full_message { formatSourceLocation( loc, body.get() ) };
+				const std::string full_message { formatSourceLocation( loc, body.get() ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
-					atlas::notifications::
-						createMessage( body.get(), std::move( full_message ), MessageLevel::ATLAS_ERROR );
+					atlas::notifications::createMessage( body.get(), full_message, MessageLevel::ATLAS_ERROR );
 			}
 		}
 	};
@@ -169,24 +167,23 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				auto full_message { formatSourceLocation( loc, user_message ) };
+				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				const std::string full_message { formatSourceLocation( loc, user_message ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::createMessage(
 						format_ns::format( format_string, std::forward< Ts >( ts )... ),
-						std::move( full_message ),
+						full_message,
 						MessageLevel::ATLAS_ERROR );
 			}
 			else
 			{
-				auto full_message { formatSourceLocation( loc, format_string.get() ) };
+				const std::string full_message { formatSourceLocation( loc, format_string.get() ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
-					atlas::notifications::
-						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_ERROR );
+					atlas::notifications::createMessage( format_string.get(), full_message, MessageLevel::ATLAS_ERROR );
 			}
 		}
 	};
@@ -204,24 +201,24 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				auto full_message { formatSourceLocation( loc, user_message ) };
+				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				const std::string full_message { formatSourceLocation( loc, user_message ) };
 
 				internal::logCritical( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::createMessage(
 						format_ns::format( format_string, std::forward< Ts >( ts )... ),
-						std::move( full_message ),
+						full_message,
 						MessageLevel::ATLAS_CRITICAL );
 			}
 			else
 			{
-				auto full_message { formatSourceLocation( loc, format_string.get() ) };
+				const std::string full_message { formatSourceLocation( loc, format_string.get() ) };
 
 				internal::logCritical( full_message );
 				if ( notifications::isNotificationsReady() )
 					atlas::notifications::
-						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_CRITICAL );
+						createMessage( format_string.get(), full_message, MessageLevel::ATLAS_CRITICAL );
 			}
 		}
 	};
