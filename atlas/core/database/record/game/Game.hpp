@@ -138,7 +138,7 @@ namespace atlas::records
 
 		void connectF95Data( const F95ID id );
 
-		// Used to accessing internal data
+		//! Used to accessing internal GameData as a const data member
 		[[nodiscard]] const GameData* operator->() const { return ptr.get(); }
 
 		[[nodiscard]] bool hasVersion( const QString str ) const;
@@ -152,11 +152,6 @@ namespace atlas::records
 
 	//! Imports a record into the database
 	/**
-	 *
-	 * @param title
-	 * @param creator
-	 * @param engine
-	 * @param transaction
 	 * @throws RecordAlreadyExists
 	 * @return
 	 */
