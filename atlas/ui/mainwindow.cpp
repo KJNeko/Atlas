@@ -56,15 +56,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
 												 config::application::font::get() );
 
-	try
-	{
-		QApplication::setFont( font );
-		//throw 505;
-	}
-	catch ( int num )
-	{
-		atlas::logging::error( "Unable to load default font. Verify system font available" );
-	}
+	QApplication::setFont( font );
 
 	config::notify();
 
@@ -119,8 +111,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	setBottomGameCounter();
 	refreshSearch();
 
-	const QString windowTitle = QString::fromStdString("ATLAS ") + utils::version_string_qt() ;
-	MainWindow::setWindowTitle(windowTitle);
+	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
+	MainWindow::setWindowTitle( windowTitle );
 }
 
 MainWindow::~MainWindow()
