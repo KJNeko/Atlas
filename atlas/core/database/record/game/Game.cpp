@@ -101,7 +101,7 @@ namespace atlas::records
 
 	void Game::addPlaytime( const std::uint64_t seconds )
 	{
-		const auto new_playtime { ptr->m_total_playtime + time };
+		const auto new_playtime { ptr->m_total_playtime + seconds };
 		RapidTransaction() << "UPDATE games SET total_playtime = ? WHERE record_id = ?" << new_playtime << m_id;
 		ptr->m_total_playtime = new_playtime;
 		emit dataChanged();
@@ -180,27 +180,5 @@ namespace atlas::records
 	  id( in_id )
 	{}
 
-	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > Game::findAtlasData( QString title, QString developer )
-	{
-		//std::vector< std::string > data;
-		std::optional< atlas::remote::AtlasRemoteData > data;
-		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
-						   << developer
-			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
-		return data;
-	}
-
-	std::optional< atlas::remote::F95RemoteData > Game::findF95Data( QString atlas_id )
-	{
-		//std::vector< std::string > data;
-		std::optional< atlas::remote::F95RemoteData > data;
-		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))"
-						   << atlas_id
-			>> [ &data ]( const F95ID f95_id ) { data = { f95_id }; };
-		return data;
-	}
 
 } // namespace atlas::records

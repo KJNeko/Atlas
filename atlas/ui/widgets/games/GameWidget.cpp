@@ -174,7 +174,7 @@ void GameWidget::reloadRecord()
 		//ui->previewList->hide();
 	}
 
-	std::optional< atlas::remote::AtlasRemoteData > atlas_data = record.findAtlasData( title, developer );
+	std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, developer );
 
 	//Fill vars with data if available, Check if cb is enabled from settings menu
 	if ( atlas_data.has_value() && config::experimental::local_match::get() )

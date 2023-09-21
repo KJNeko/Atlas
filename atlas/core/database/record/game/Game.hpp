@@ -71,10 +71,6 @@ namespace atlas::records
 		//! Get thumbnail from image. BLOCKING
 		QPixmap requestThumbnail( const QSize size, const BannerType type );
 
-		//!Test Function.
-		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
-		std::optional< atlas::remote::F95RemoteData > findF95Data( QString atlas_id );
-
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
 		 * @note No files are moved during this process. Any file movement must take place BEFORE this function is called.
