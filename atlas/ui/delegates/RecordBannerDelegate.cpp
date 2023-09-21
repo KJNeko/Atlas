@@ -91,7 +91,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 					pixmap.fill( Qt::transparent );
 					{
 						QPainter paintert( &pixmap );
-						qt_blurImage( &paintert, srcImg, config::experimental::loading_preview_blur::get() , true, false ); //blur radius
+						qt_blurImage(
+							&paintert,
+							srcImg,
+							config::experimental::loading_preview_blur::get(),
+							true,
+							false ); //blur radius
 					}
 				}
 			}
@@ -198,6 +203,8 @@ void RecordBannerDelegate::
 
 		switch ( location )
 		{
+			case NONE:
+				[[fallthrough]];
 			case TOP_LEFT:
 				{
 					const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };

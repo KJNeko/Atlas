@@ -149,6 +149,8 @@ QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int ro
 		{
 			case Qt::Horizontal:
 				return QVariant( "Horizontal" ); // no column header, it's already in the tree
+			case Qt::Vertical:
+				[[fallthrough]];
 			default:
 				return QVariant( "Vertical" );
 		}

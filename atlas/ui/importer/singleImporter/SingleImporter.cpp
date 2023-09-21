@@ -265,8 +265,12 @@ void SingleImporter::on_stackedWidget_currentChanged( int index )
 {
 	switch ( static_cast< Page >( index ) )
 	{
-		default:
+		case BannerPage:
 			[[fallthrough]];
+		case PreviewPage:
+			[[fallthrough]];
+		default:
+			return;
 		case DataEntry:
 			verifyDataEntry();
 			break;

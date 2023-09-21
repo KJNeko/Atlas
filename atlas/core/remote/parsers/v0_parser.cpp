@@ -328,6 +328,8 @@ namespace remote::parsers::v0
 					case SetF95:
 						parseF95Array( data, transaction );
 						break;
+					case InvalidSet:
+						[[fallthrough]];
 					default:
 						throw AtlasException( "Unexpected set!" );
 				}
