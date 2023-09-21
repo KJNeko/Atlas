@@ -30,7 +30,7 @@ namespace atlas::logging
 
 	inline auto formatSourceLocation( const std::source_location loc, const std::string_view msg )
 	{
-		return format_ns::format( "{}Message:{}", loc, msg );
+		return format_ns::format( "{}Message: {}", loc, msg );
 	}
 
 	//Everything in this namespace is defined in `spdlogHelpers.cpp`
