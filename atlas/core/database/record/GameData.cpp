@@ -92,15 +92,6 @@ namespace atlas::records
 		throw AtlasException( "GameData: No version of name found" );
 	}
 
-	std::size_t strToTagID( const QString str )
-	{
-		ZoneScoped;
-		RapidTransaction transaction;
-		std::size_t id { 0 };
-		transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str >> id;
-		return id;
-	}
-
 	RecordID recordID( const QString& title, const QString& creator, const QString& engine )
 	{
 		ZoneScoped;
