@@ -83,7 +83,7 @@ set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 target_compile_Features(Atlas PRIVATE cxx_constexpr)
 
 #Set all HAVE_X flags
-if (HAVE_STD_FORMAT)
+if (HAVE_STD_FORMAT AND NOT DEFINED ATLAS_IGNORE_STD_FORMAT)
     target_compile_definitions(Atlas PRIVATE HAVE_STD_FORMAT=1)
 endif ()
 
