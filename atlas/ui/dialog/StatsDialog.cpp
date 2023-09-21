@@ -14,7 +14,7 @@
 #include <QValueAxis>
 
 #include "core/database/RapidTransaction.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "ui_StatsDialog.h"
 
 StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::StatsDialog )

@@ -18,9 +18,10 @@
 
 #include "config.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/utils/ImageCache/ImageCache.hpp"
 #include "core/utils/threading/pools.hpp"
 
-namespace imageManager
+namespace atlas::images
 {
 	void cleanOrphans()
 	{
@@ -169,4 +170,100 @@ namespace imageManager
 		return QtConcurrent::run( &( globalPools().image_importers ), &internalImportImage, path, game_id );
 	}
 
-} // namespace imageManager
+	inline static atlas::cache::ImageCache scale_cache;
+
+	namespace internal
+	{
+		void loadScaledImage(
+			QPromise< QPixmap >& promise,
+			const QSize target_size,
+			const SCALE_TYPE scale_type,
+			const std::filesystem::path path )
+		{
+			const QRect bannerRect { 0, 0, target_size.width(), target_size.height() };
+			if ( promise.isCanceled() ) return;
+
+			if ( path.empty() || !std::filesystem::exists( path ) )
+			{
+				promise.addResult( QPixmap() );
+				return;
+			}
+
+			if ( promise.isCanceled() ) return;
+			const auto key { format_ns::format(
+				"{}x{}:{}:{}", target_size.width(), target_size.height(), static_cast< int >( scale_type ), path ) };
+
+			if ( promise.isCanceled() ) return;
+			if ( auto opt = scale_cache.find( key ); opt.has_value() )
+			{
+				promise.addResult( opt.value() );
+				return;
+			}
+			else
+			{
+				QImageReader loader { QString::fromStdString( path.string() ) };
+				const auto image_size { loader.size() };
+
+				//Calculate the scale we want in order to fit the image properly.
+				loader.setScaledSize( image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) ) );
+
+				if ( promise.isCanceled() ) return;
+				QPixmap pixmap { QPixmap::fromImageReader( &loader ) };
+				if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
+				{
+					pixmap = pixmap.copy( bannerRect ); //Crop banner image. Mainly used for Fill scale option
+				}
+				if ( promise.isCanceled() ) return;
+
+				if ( pixmap.isNull() )
+				{
+					atlas::logging::
+						warn( "Qt failed to load image {} Pixmap was null after attempted loading. ", path );
+					promise.addResult( pixmap );
+				}
+
+				if ( promise.isCanceled() ) return;
+
+				scale_cache.insert( key, pixmap );
+				promise.addResult( std::move( pixmap ) );
+			}
+		}
+
+		void loadImage( QPromise< QPixmap >& promise, const std::filesystem::path path )
+		{
+			ZoneScoped;
+			if ( promise.isCanceled() ) return;
+			QPixmap pixmap;
+
+			if ( promise.isCanceled() ) return;
+			if ( path.empty() || !std::filesystem::exists( path ) )
+			{
+				promise.addResult( pixmap );
+			}
+
+			if ( promise.isCanceled() ) return;
+			if ( !pixmap.load( QString::fromStdString( path.string() ) ) )
+			{
+				atlas::logging::warn( "Qt Failed to load image {}", path );
+				promise.addResult( pixmap );
+			}
+			if ( promise.isCanceled() ) return;
+			if ( pixmap.size() == QSize( 0, 0 ) || pixmap.isNull() )
+				atlas::logging::warn( "Suspected failed to load banner {}", path );
+			promise.addResult( pixmap );
+		}
+
+	} // namespace internal
+
+	QFuture< QPixmap >
+		loadScaledImage( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path path )
+	{
+		return QtConcurrent::run( &internal::loadScaledImage, target_size, scale_type, path );
+	}
+
+	QFuture< QPixmap > loadImage( const std::filesystem::path path )
+	{
+		return QtConcurrent::run( &globalPools().image_loaders, &internal::loadImage, path );
+	}
+
+} // namespace atlas::images

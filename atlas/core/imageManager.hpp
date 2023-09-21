@@ -10,6 +10,7 @@
 #include <filesystem>
 
 #include "Types.hpp"
+#include "config.hpp"
 #include "core/exceptions.hpp"
 
 class QByteArray;
@@ -26,24 +27,19 @@ class ImageImportError : public ImageManagerException
 class ImageSaveError : public ImageManagerException
 {};
 
-namespace imageManager
+namespace atlas::images
 {
 	//! Clears all images not found attached to any record
 	void cleanOrphans();
 
 	//! Stores the image located at `path` in the data folder
-	//std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id );
-
-	//! Stores the image located at `path` in the data folder
 	[[nodiscard]] QFuture< std::filesystem::path >
 		importImage( const std::filesystem::path& path, const RecordID game_id );
 
-	/*
-	[[nodiscard]] QByteArray hashData( const char* data_ptr, const int size );
-	[[nodiscard]] std::filesystem::path
-		getDestFilePath( const QByteArray& byteArray, const std::filesystem::path& dest_root, const std::string& ext );
-	 */
+	[[nodiscard]] QFuture< QPixmap >
+		loadScaledImage( const QSize target_size, const SCALE_TYPE type, const std::filesystem::path );
+	[[nodiscard]] QFuture< QPixmap > loadImage( const std::filesystem::path path );
 
-} // namespace imageManager
+} // namespace atlas::images
 
 #endif //ATLAS_IMAGEMANAGER_HPP

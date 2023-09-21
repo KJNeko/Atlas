@@ -8,9 +8,9 @@
 
 #include <iostream>
 
-#include "Game.hpp"
 #include "Version.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/database/record/game/Game.hpp"
 
 namespace atlas::records
 {

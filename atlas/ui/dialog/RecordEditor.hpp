@@ -7,8 +7,8 @@
 
 #include <QDialog>
 
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 
 QT_BEGIN_NAMESPACE
 

@@ -19,7 +19,7 @@ namespace atlas::remote
 {
 	class AtlasRemoteData;
 	class F95RemoteData;
-}
+} // namespace atlas::remote
 
 namespace atlas::records
 {
@@ -96,10 +96,11 @@ namespace atlas::records
 		void removeVersion( const Version& info );
 
 		//! Adds playtime to the playtime counter
-		void addPlaytime( const std::uint64_t );
+		void addPlaytime( const std::uint64_t seconds );
 
+		//! Template form of `addPlaytime` for taking in any chrono duration
 		template < class Rep, class Period >
-		void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
+		inline void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
 		{
 			addPlaytime( std::chrono::duration_cast< std::chrono::seconds >( time_diff ).count() );
 		}
@@ -109,9 +110,8 @@ namespace atlas::records
 
 		//====================Banners/Previews======================================
 
-		//! Returns a future for the banner to be loaded.
-
-		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const std::uint64_t index ) const;
+		//! Returns a future for the preview to be loaded.
+		[[nodiscard]] QFuture< QPixmap > requestPreview( const std::uint64_t index ) const;
 
 		void reorderPreviews( std::vector< std::filesystem::path > paths );
 		//! If index is zero then it will place it at the highest possible postion (starting at 1)
@@ -129,6 +129,7 @@ namespace atlas::records
 			requestBanner( const int width, const int height, const SCALE_TYPE scale_type, const BannerType type );
 		[[nodiscard]] QFuture< QPixmap >
 			requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type );
+		bool hasBanner( const BannerType type ) const;
 
 		//=============== Remote connection ====================================
 

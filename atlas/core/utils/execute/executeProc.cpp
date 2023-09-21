@@ -9,8 +9,8 @@
 #include <QUrl>
 #include <QtCore>
 
-#include "core/database/record/Game.hpp"
 #include "core/database/record/Version.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/logging/logging.hpp"
 
 inline static QProcess* running_process { nullptr };

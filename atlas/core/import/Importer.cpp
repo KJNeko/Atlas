@@ -12,8 +12,8 @@
 
 #include "GameImportData.hpp"
 #include "ImportNotifier.hpp"
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/imageManager.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
@@ -141,7 +141,7 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				const std::filesystem::path banner_path { path.toStdWString() };
-				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
+				banner_futures[ i ] = atlas::images::importImage( banner_path, record->m_game_id );
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -161,8 +161,7 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler.setSubMessage( QString( "Importing preview %1" ).arg( path ) );
-			preview_futures.emplace_back( imageManager::importImage( { path.toStdWString() }, record->m_game_id ) );
-			//record.addPreview( { path.toStdString() } );
+			preview_futures.emplace_back( atlas::images::importImage( { path.toStdWString() }, record->m_game_id ) );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{

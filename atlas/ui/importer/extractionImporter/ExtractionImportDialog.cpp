@@ -12,7 +12,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
 

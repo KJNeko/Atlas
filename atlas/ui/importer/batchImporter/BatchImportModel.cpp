@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QLocale>
 
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/logging/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const

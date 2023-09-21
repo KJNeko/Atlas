@@ -10,8 +10,8 @@
 #include <filesystem>
 
 #include "core/config.hpp"
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/gamelist/utils.hpp"
 
 struct GameImportData

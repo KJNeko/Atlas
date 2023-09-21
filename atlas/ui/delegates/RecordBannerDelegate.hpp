@@ -9,7 +9,7 @@
 #include <QtCore/QModelIndex>
 
 #include "core/config.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/utils/QImageBlur.hpp"
 class RecordListModel;
 

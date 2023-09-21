@@ -1,0 +1,118 @@
+//
+// Created by kj16609 on 9/21/23.
+//
+
+#include "ImageCache.hpp"
+
+namespace atlas::cache
+{
+
+	std::uint64_t ImageCache::PixmapItem::size() const
+	{
+		if ( pixmap.isNull() ) return 0;
+		const auto result { static_cast< int64_t >( pixmap.width() ) * static_cast< int64_t >( pixmap.height() )
+			                * static_cast< int64_t >( pixmap.depth() ) / 8 };
+
+		if ( result < 0 )
+			return std::numeric_limits< std::uint64_t >::max();
+		else
+			return static_cast< uint64_t >( result );
+	}
+
+	std::uint64_t ImageCache::PixmapItem::score() const
+	{
+		double time_score_ratio { 1.2 };
+
+		const std::uint64_t size_score { size() };
+		const std::uint64_t time_diff {
+			static_cast< uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( Clock::now() - last_accessed )
+			                             .count() )
+		};
+
+		// If size is zero then we emit a super high score to get this item removed as soon as we can. Since it's likely fucked.
+		if ( size_score == 0 ) return std::numeric_limits< std::uint64_t >::max();
+
+		// Prevent multiply by 0
+		if ( time_diff == 0 ) return size_score;
+
+		// Take the size score and multiplty it by the time diff. Making it higher the more time has ellapsed depending on the ratio.
+		const auto val { static_cast< uint64_t >(
+			static_cast< double >( size_score ) * ( static_cast< double >( time_diff ) * time_score_ratio ) ) };
+
+		//If somehow. Magically. We manage to get val to zero. We just return max.
+		if ( val == 0 ) return std::numeric_limits< std::uint64_t >::max();
+		return val;
+	}
+
+	void ImageCache::prune()
+	{
+		std::lock_guard guard { mtx };
+		//Timepoint at which we declare data as 'stale' and can probably safely remove it
+		using namespace std::chrono_literals;
+		//Time at which a image can be declared 'old' and can safely be removed if it's not been accessed in this timeframe.
+		const auto stale_timepoint { Clock::now() - 10s };
+
+		int offset { 0 };
+		for ( std::uint64_t i = 0; i < cache.size(); ++i )
+		{
+			auto begin { cache.begin() };
+			std::advance( begin, i - static_cast< uint64_t >( offset ) );
+
+			if ( begin->second.last_accessed < stale_timepoint )
+			{
+				current_size -= begin->second.size();
+				cache.erase( begin->first );
+				++offset;
+			}
+		}
+
+		if ( current_size < max_size ) return;
+
+		std::vector< std::pair< std::string, PixmapItem > > ordered { cache.begin(), cache.end() };
+		std::sort(
+			ordered.begin(),
+			ordered.end(),
+			[]( const std::pair< std::string, PixmapItem >& first, const std::pair< std::string, PixmapItem >& second )
+			{ return first.second.score() > second.second.score(); } );
+
+		//Remove the last items from the map
+		for ( const auto& [ key, item ] : ordered )
+		{
+			if ( current_size < max_size )
+				break;
+			else
+			{
+				current_size -= item.size();
+				cache.erase( key );
+			}
+		}
+	}
+
+	void ImageCache::insert( std::string key, QPixmap pixmap )
+	{
+		std::lock_guard guard { mtx };
+
+		if ( cache.contains( key ) ) return;
+
+		PixmapItem item { std::move( pixmap ) };
+
+		current_size += item.size();
+
+		cache.insert( { key, std::move( item ) } );
+
+		if ( current_size > max_size ) prune();
+	}
+
+	std::optional< QPixmap > ImageCache::find( std::string key )
+	{
+		std::lock_guard guard { mtx };
+		if ( auto itter = cache.find( key ); itter != cache.end() )
+		{
+			itter->second();
+			return itter->second.pixmap;
+		}
+		else
+			return std::nullopt;
+	}
+
+} // namespace atlas::cache
