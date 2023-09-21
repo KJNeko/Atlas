@@ -28,6 +28,11 @@ namespace atlas::logging
 	//! Loads the GUI hooks required for some warnings to display to the user
 	void initGUIHooks();
 
+	inline auto formatSourceLocation( const std::source_location loc, const std::string_view msg )
+	{
+		return format_ns::format( "{}Message:{}", loc, msg );
+	}
+
 	//Everything in this namespace is defined in `spdlogHelpers.cpp`
 	namespace internal
 	{
@@ -42,19 +47,23 @@ namespace atlas::logging
 	struct debug
 	{
 		debug(
-			const format_ns::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > format_string,
 			Ts&&... ts,
-			const std::source_location& loc = std::source_location::current() )
+			const std::source_location& source_location = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}", loc ) };
-				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				auto full_message { formatSourceLocation( source_location, user_message ) };
 
-				internal::logDebug( location_string + body_str );
+				internal::logDebug( full_message );
 			}
 			else
-				internal::logDebug( format_ns::format( "{}: \"{}\"", loc, body ) );
+			{
+				auto full_message { formatSourceLocation( source_location, format_string.get() ) };
+
+				internal::logDebug( full_message );
+			}
 		}
 	};
 
@@ -65,23 +74,18 @@ namespace atlas::logging
 	struct info
 	{
 		info(
-			const format_ns::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > format_string,
 			Ts&&... ts,
-			[[maybe_unused]] const std::source_location& loc = std::source_location::current() )
+			[[maybe_unused]] const std::source_location& source_location = std::source_location::current() )
 		{
-#ifdef NDEBUG
-			// Used during release builds. Prevents the user from getting spammed with internal info
-			if constexpr ( sizeof...( Ts ) > 0 )
-				internal::logInfo( format_ns::format( body, std::forward< Ts >( ts )... ) );
-			else
-				internal::logInfo( body.get() );
-#else
-			if constexpr ( sizeof...( Ts ) > 0 )
-				internal::logInfo(
-					format_ns::format( "{}Message: {}", loc, format_ns::format( body, std::forward< Ts >( ts )... ) ) );
-			else
-				internal::logInfo( format_ns::format( "{}Message: {}", loc, body ) );
-#endif
+			auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+			auto full_message { formatSourceLocation( source_location, user_message ) };
+
+			internal::logInfo( full_message );
+
+			if ( notifications::isNotificationsReady() )
+				atlas::notifications::
+					createMessage( std::move( user_message ), std::move( full_message ), MessageLevel::ATLAS_INFO );
 		}
 	};
 
@@ -92,19 +96,31 @@ namespace atlas::logging
 	struct warn
 	{
 		warn(
-			const format_ns::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > format_string,
 			Ts&&... ts,
-			const std::source_location& loc = std::source_location::current() )
+			const std::source_location& source_location = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}: ", loc ) };
-				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				auto full_message { formatSourceLocation( source_location, user_message ) };
 
-				internal::logWarn( location_string + body_str );
+				internal::logWarn( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::createMessage(
+						format_ns::format( format_string, std::forward< Ts >( ts )... ),
+						std::move( full_message ),
+						MessageLevel::ATLAS_WARNING );
 			}
 			else
-				internal::logWarn( format_ns::format( "{}: \"{}\"", loc, body ) );
+			{
+				auto full_message { formatSourceLocation( source_location, format_string.get() ) };
+
+				internal::logWarn( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::
+						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_WARNING );
+			}
 		}
 	};
 
@@ -121,13 +137,25 @@ namespace atlas::logging
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}: ", loc ) };
-				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto user_message { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto full_message { formatSourceLocation( loc, user_message ) };
 
-				internal::logError( location_string + body_str );
+				internal::logError( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::createMessage(
+						format_ns::format( body, std::forward< Ts >( ts )... ),
+						std::move( full_message ),
+						MessageLevel::ATLAS_ERROR );
 			}
 			else
-				internal::logError( format_ns::format( "{}: \"{}\"", loc, body ) );
+			{
+				auto full_message { formatSourceLocation( loc, body.get() ) };
+
+				internal::logError( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::
+						createMessage( body.get(), std::move( full_message ), MessageLevel::ATLAS_ERROR );
+			}
 		}
 	};
 
@@ -137,17 +165,29 @@ namespace atlas::logging
 	template < typename... Ts >
 	struct errorLoc
 	{
-		errorLoc( const format_ns::format_string< Ts... > body, const std::source_location& loc, Ts&... ts )
+		errorLoc( const format_ns::format_string< Ts... > format_string, const std::source_location& loc, Ts&... ts )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}: ", loc ) };
-				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				auto full_message { formatSourceLocation( loc, user_message ) };
 
-				internal::logError( location_string + body_str );
+				internal::logError( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::createMessage(
+						format_ns::format( format_string, std::forward< Ts >( ts )... ),
+						std::move( full_message ),
+						MessageLevel::ATLAS_ERROR );
 			}
 			else
-				internal::logError( format_ns::format( "{}: \"{}\"", loc, body ) );
+			{
+				auto full_message { formatSourceLocation( loc, format_string.get() ) };
+
+				internal::logError( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::
+						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_ERROR );
+			}
 		}
 	};
 
@@ -158,19 +198,31 @@ namespace atlas::logging
 	struct critical
 	{
 		critical(
-			const format_ns::format_string< Ts... > body,
+			const format_ns::format_string< Ts... > format_string,
 			Ts&&... ts,
 			const std::source_location& loc = std::source_location::current() )
 		{
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
-				const auto location_string { format_ns::format( "{}: ", loc ) };
-				const auto body_str { format_ns::format( body, std::forward< Ts >( ts )... ) };
+				auto user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
+				auto full_message { formatSourceLocation( loc, user_message ) };
 
-				internal::logCritical( location_string + body_str );
+				internal::logCritical( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::createMessage(
+						format_ns::format( format_string, std::forward< Ts >( ts )... ),
+						std::move( full_message ),
+						MessageLevel::ATLAS_CRITICAL );
 			}
 			else
-				internal::logCritical( format_ns::format( "{}: \"{}\"", loc, body ) );
+			{
+				auto full_message { formatSourceLocation( loc, format_string.get() ) };
+
+				internal::logCritical( full_message );
+				if ( notifications::isNotificationsReady() )
+					atlas::notifications::
+						createMessage( format_string.get(), std::move( full_message ), MessageLevel::ATLAS_CRITICAL );
+			}
 		}
 	};
 

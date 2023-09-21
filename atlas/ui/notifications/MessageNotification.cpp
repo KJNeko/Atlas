@@ -12,12 +12,14 @@
 
 #include "ui_MessageNotification.h"
 
-MessageNotification::MessageNotification( const MessageLevel level, QString str, QWidget* parent ) :
+MessageNotification::
+	MessageNotification( const MessageLevel level, QString user_message, QString full_message, QWidget* parent ) :
   Notification( parent ),
+  m_full_message( std::move( full_message ) ),
   ui( new Ui::MessageNotification )
 {
 	ui->setupUi( this );
-	ui->label->setText( std::move( str ) );
+	ui->label->setText( std::move( user_message ) );
 
 	using enum MessageLevel;
 

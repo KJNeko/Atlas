@@ -13,8 +13,9 @@
 
 #include "ui_DevNotification.h"
 
-DevNotification::DevNotification( const MessageLevel level, QString msg, QWidget* parent ) :
+DevNotification::DevNotification( const MessageLevel level, QString msg, QString full_message, QWidget* parent ) :
   Notification( parent ),
+  m_full_message( std::move( full_message ) ),
   ui( new Ui::DevNotification )
 {
 	ui->setupUi( this );
@@ -57,5 +58,5 @@ DevNotification::~DevNotification()
 void DevNotification::on_copyError_pressed()
 {
 	QClipboard* clip { QGuiApplication::clipboard() };
-	clip->setText( ui->errorData->text() );
+	clip->setText( m_full_message );
 }

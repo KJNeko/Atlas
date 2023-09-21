@@ -23,40 +23,45 @@ namespace atlas::logging::internal
 {
 	using enum MessageLevel;
 
+	//! Passes message to spdlog
 	void logDebug( const std::string_view msg )
 	{
 		spdlog::debug( msg );
 	}
 
+	//! Passes message to spdlog
 	void logInfo( const std::string_view msg )
 	{
 		spdlog::info( msg );
-		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_INFO );
+		//	if ( notifications::isNotificationsReady() )
+		//		atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_INFO );
 	}
 
+	//! Passes message to spdlog
 	void logWarn( const std::string_view msg )
 	{
 		spdlog::warn( msg );
 		spdlog::dump_backtrace();
-		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_WARNING );
+		//	if ( notifications::isNotificationsReady() )
+		//		atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_WARNING );
 	}
 
+	//! Passes message to spdlog
 	void logError( const std::string_view msg )
 	{
 		spdlog::error( msg );
 		spdlog::dump_backtrace();
-		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_ERROR );
+		//	if ( notifications::isNotificationsReady() )
+		//		atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_ERROR );
 	}
 
+	//! Passes message to spdlog
 	void logCritical( const std::string_view msg )
 	{
 		spdlog::critical( msg );
 		spdlog::dump_backtrace();
-		if ( notifications::isNotificationsReady() )
-			atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_CRITICAL );
+		//	if ( notifications::isNotificationsReady() )
+		//		atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_CRITICAL );
 	}
 
 } // namespace atlas::logging::internal

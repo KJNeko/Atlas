@@ -30,12 +30,12 @@ namespace atlas::notifications
 		return *internal::notification_manager;
 	}
 
-	void createMessage( QString message, const MessageLevel level )
+	void createMessage( QString user_message, QString full_message, const MessageLevel level )
 	{
 		if ( internal::notification_manager == nullptr )
 			throw AtlasException( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
-			[ &message, level ]() -> void
+			[ &user_message, level, &full_message ]() -> void
 			{
 				switch ( level )
 				{
@@ -47,9 +47,11 @@ namespace atlas::notifications
 						[[fallthrough]];
 					case MessageLevel::ATLAS_INFO:
 						{
-							auto* ptr {
-								new MessageNotification( level, std::move( message ), internal::notification_manager )
-							};
+							auto* ptr { new MessageNotification(
+								level,
+								std::move( user_message ),
+								std::move( full_message ),
+								internal::notification_manager ) };
 							ptr->show();
 							internal::notification_manager->addNotification( ptr );
 							return;
@@ -60,9 +62,11 @@ namespace atlas::notifications
 						[[fallthrough]];
 					case MessageLevel::ATLAS_CRITICAL:
 						{
-							auto* ptr {
-								new DevNotification( level, std::move( message ), internal::notification_manager )
-							};
+							auto* ptr { new DevNotification(
+								level,
+								std::move( user_message ),
+								std::move( full_message ),
+								internal::notification_manager ) };
 							ptr->show();
 							internal::notification_manager->addNotification( ptr );
 							return;

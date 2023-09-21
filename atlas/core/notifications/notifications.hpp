@@ -19,7 +19,30 @@ namespace atlas::notifications
 	void initNotifications( QWidget* parent );
 	NotificationManagerUI& handle();
 
-	void createMessage( QString message, const MessageLevel level = MessageLevel::ATLAS_INFO );
+	/**
+	 *
+	 * @param user_message The abbreviated message sent to the user
+	 * @param full_message The full message sent to the log
+	 * @param level
+	 */
+	void createMessage(
+		QString user_message, QString full_message, const MessageLevel level = MessageLevel::ATLAS_INFO );
+
+	inline void createMessage(
+		const std::string_view user_message,
+		const std::string_view full_message,
+		const MessageLevel level = MessageLevel::ATLAS_INFO )
+	{
+		createMessage(
+			QString::fromLocal8Bit( user_message.data(), static_cast< qsizetype >( user_message.size() ) ),
+			QString::fromLocal8Bit( full_message.data(), static_cast< qsizetype >( full_message.size() ) ),
+			level );
+	}
+
+	inline void createUserMessage( const QString str )
+	{
+		createMessage( str, {} );
+	}
 
 	bool isNotificationsReady();
 

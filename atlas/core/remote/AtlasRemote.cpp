@@ -360,9 +360,6 @@ namespace atlas
 		catch ( const std::exception& e )
 		{
 			atlas::logging::error( "Failed to process update file {}: What: {}", update_time, e.what() );
-			atlas::notifications::createMessage( QString( "Failed to process update file %1\nWhat: %2" )
-			                                         .arg( update_time )
-			                                         .arg( e.what() ) );
 		}
 	}
 
@@ -389,8 +386,6 @@ namespace atlas
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
 	{
-		atlas::notifications::createMessage( QString( "Processed update for time %1" ).arg( update_time ) );
-
 		RapidTransaction()
 			<< "UPDATE updates SET processed_time = ? WHERE update_time = ?"
 			<< ( yes ? std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now()
@@ -398,6 +393,8 @@ namespace atlas
 		                   .count() :
 		               0 )
 			<< update_time;
+
+		atlas::logging::info( "Processed update for time {}", update_time );
 	}
 
 	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
