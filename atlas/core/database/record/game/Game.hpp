@@ -147,11 +147,6 @@ namespace atlas::records
 	  public:
 
 	  signals:
-		/*
-	void bannerLoaded( const BannerType type, const QPixmap pixmap );
-	void
-		sizedBannerLoaded( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const QPixmap pixmap );
-	 */
 		void dataChanged();
 	}; // class Game
 
@@ -169,9 +164,9 @@ namespace atlas::records
 	[[nodiscard]] bool recordExists( QString title, QString creator, QString engine );
 	[[nodiscard]] RecordID fetchRecord( QString title, QString creator, QString engine );
 
-	struct RecordException : public std::runtime_error
+	struct RecordException : public AtlasException
 	{
-		RecordException( const char* const msg ) : std::runtime_error( msg ) {}
+		RecordException( const char* const msg ) : AtlasException( msg ) {}
 	};
 
 	struct RecordAlreadyExists : public RecordException

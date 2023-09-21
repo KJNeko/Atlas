@@ -58,6 +58,9 @@ namespace atlas::records
 
 	//! Returns 0 if there is not record with this data
 	RecordID recordID( const QString& title, const QString& creator, const QString& engine );
+
+	bool recordExists( const QString& title, const QString& creator, const QString& engine );
+
 } // namespace atlas::records
 
 #endif //ATLAS_RECORD_HPP
