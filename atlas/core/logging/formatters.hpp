@@ -22,12 +22,11 @@ namespace format_ns = std;
 #endif
 
 #include <fmt/format.h>
+namespace format_ns = fmt;
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
-
-namespace format_ns = fmt;
 
 #endif
 

@@ -21,7 +21,6 @@ namespace atlas::notifications
 	NotificationManagerUI& handle();
 
 	/**
-	 *
 	 * @param user_message The abbreviated message sent to the user
 	 * @param full_message The full message sent to the log
 	 * @param level
