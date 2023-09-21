@@ -8,7 +8,9 @@
 
 #include <moc_NotificationManagerUI.cpp>
 
-#include "core/logging.hpp"
+#include <QObject>
+
+#include "core/logging/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"
 
@@ -124,7 +126,7 @@ void NotificationManagerUI::on_btnClose_pressed()
 	// Close anything that ***CAN*** be closed.
 
 	auto children { ui->notifications->children() };
-	spdlog::info( "Attempting to close {} notifications", children.size() - 1 );
+
 	for ( auto* child : children )
 	{
 		if ( child->objectName() != "verticalLayout" )

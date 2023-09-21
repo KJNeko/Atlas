@@ -14,8 +14,8 @@ Binder::Binder( const std::string_view sql )
 
 	if ( prepare_ret != SQLITE_OK )
 	{
-		atlas::logging::error( fmt::format( "Failed to prepare statement: \n\t{}", sql ) );
-		throw std::runtime_error( fmt::format(
+		atlas::logging::error( "Failed to prepare statement: \n\t{}", sql );
+		throw DatabaseException( format_ns::format(
 			"DB: Failed to prepare statement: \"{}\", Reason: \"{}\"", sql, sqlite3_errmsg( &Database::ref() ) ) );
 	}
 

@@ -7,40 +7,49 @@
 
 #include <QString>
 
+// clang-format:off
+
+#ifdef HAVE_STD_FORMAT
+#include <format>
+namespace format_ns = std;
+
+#else
 #ifdef __GNUC__
 #pragma GCC diagnostic push
-
 #pragma GCC diagnostic ignored "-Weffc++"
 #pragma GCC diagnostic ignored "-Wswitch-default"
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
-#ifndef __clang__
-#pragma GCC diagnostic ignored "-Wsuggest-final-types"
-#pragma GCC diagnostic ignored "-Wsuggest-final-methods"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #endif
 
 #include <fmt/format.h>
+namespace format_ns = fmt;
 
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
 
-#include <filesystem>
+#endif
 
-//! Formatter for QString in fmt::format
+// clang-format:on
+
+#include <filesystem>
+#include <source_location>
+
+//! Formatter for QString in format_ns::format
 template <>
-struct fmt::formatter< QString >
+struct format_ns::formatter< QString >
 {
-	constexpr auto parse( fmt::format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
+	constexpr auto parse( format_ns::format_parse_context& ctx ) -> decltype( ctx.begin() ) { return ctx.begin(); }
 
 	template < typename FormatContext >
 	auto format( const QString& my, FormatContext& ctx ) const -> decltype( ctx.out() )
 	{
-		return fmt::format_to( ctx.out(), "{}", my.toStdString() );
+		return format_ns::format_to( ctx.out(), "{}", my.toStdString() );
 	}
 };
 
 template <>
-struct fmt::formatter< std::filesystem::path >
+struct format_ns::formatter< std::filesystem::path >
 {
 	bool print_canonical { false };
 	bool print_exists { false };
@@ -67,6 +76,25 @@ struct fmt::formatter< std::filesystem::path >
 	}
 
 	format_context::iterator format( const std::filesystem::path& path, format_context& ctx ) const;
+};
+
+template <>
+struct format_ns::formatter< std::source_location >
+{
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+
+	format_context::iterator format( const std::source_location& loc, format_context& ctx ) const;
+};
+
+template <>
+struct format_ns::formatter< format_ns::format_string<> >
+{
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+
+	format_context::iterator format( const format_ns::format_string<>& str, format_context& ctx ) const
+	{
+		return format_ns::format_to( ctx.out(), "{}", str.get() );
+	}
 };
 
 #endif //ATLASGAMEMANAGER_FORMATTERS_HPP

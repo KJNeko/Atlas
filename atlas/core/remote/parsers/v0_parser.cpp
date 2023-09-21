@@ -67,7 +67,7 @@ namespace remote::parsers::v0
 	{
 		const auto keys { obj.keys() };
 
-		if ( !obj.contains( "atlas_id" ) ) throw std::runtime_error( "Atlas data did not contain it's pkey!" );
+		if ( !obj.contains( "atlas_id" ) ) throw AtlasException( "Atlas data did not contain it's pkey!" );
 
 		const auto pkey { obj[ "atlas_id" ].toInteger() };
 
@@ -75,13 +75,13 @@ namespace remote::parsers::v0
 		{
 			const auto& data { obj[ key ] };
 			if ( data.isString() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
+				trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
 					  << pkey;
 			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
+				trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
 					  << pkey;
 			else
-				throw std::runtime_error( "Unexpected type when parsing atlas data!" );
+				throw AtlasException( "Unexpected type when parsing atlas data!" );
 		}
 	}
 
@@ -197,7 +197,7 @@ namespace remote::parsers::v0
 	{
 		const auto keys { obj.keys() };
 
-		if ( !obj.contains( "f95_id" ) ) throw std::runtime_error( "F95 data did not contain it's pkey!" );
+		if ( !obj.contains( "f95_id" ) ) throw AtlasException( "F95 data did not contain it's pkey!" );
 
 		const auto pkey { obj[ "f95_id" ].toInteger() };
 
@@ -205,13 +205,13 @@ namespace remote::parsers::v0
 		{
 			const auto& data { obj[ key ] };
 			if ( data.isString() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
+				trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
 					  << pkey;
 			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toInteger()
-					  << pkey;
+				trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+					  << data.toInteger() << pkey;
 			else
-				throw std::runtime_error( "Unexpected type when parsing f95zone data!" );
+				throw AtlasException( "Unexpected type when parsing f95zone data!" );
 		}
 	}
 
@@ -312,7 +312,7 @@ namespace remote::parsers::v0
 				const auto set { nameToSet( table_key ) };
 				if ( set == InvalidSet )
 				{
-					throw std::runtime_error( fmt::format( "Unexpected data in set! Key = {}", table_key ) );
+					throw AtlasException( format_ns::format( "Unexpected data in set! Key = {}", table_key ) );
 				}
 
 				ZoneScopedN( "Process set" );
@@ -329,7 +329,7 @@ namespace remote::parsers::v0
 						parseF95Array( data, transaction );
 						break;
 					default:
-						throw std::runtime_error( "Unexpected set!" );
+						throw AtlasException( "Unexpected set!" );
 				}
 			}
 

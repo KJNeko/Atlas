@@ -19,7 +19,8 @@ namespace atlas::tags
 		{
 			RapidTransaction() << "INSERT INTO tags (tag) VALUES (?) RETURNING tag_id" << trimmed >> tag_id;
 			if ( tag_id == INVALID_TAG_ID )
-				throw std::runtime_error( "Something went wrong while trying to add tag to DB" );
+				throw AtlasException( format_ns::
+				                          format( "Something went wrong while trying to add tag {} to DB", str ) );
 			return tag_id;
 		}
 	}

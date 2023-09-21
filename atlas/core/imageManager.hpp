@@ -10,11 +10,21 @@
 #include <filesystem>
 
 #include "Types.hpp"
+#include "core/exceptions.hpp"
 
 class QByteArray;
 
 template < typename T >
 class QFuture;
+
+class ImageManagerException : public AtlasException
+{};
+
+class ImageImportError : public ImageManagerException
+{};
+
+class ImageSaveError : public ImageManagerException
+{};
 
 namespace imageManager
 {
@@ -33,8 +43,6 @@ namespace imageManager
 	[[nodiscard]] std::filesystem::path
 		getDestFilePath( const QByteArray& byteArray, const std::filesystem::path& dest_root, const std::string& ext );
 	 */
-
-	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest );
 
 } // namespace imageManager
 

@@ -6,7 +6,8 @@
 
 #include <QPromise>
 
-#include "core/logging.hpp"
+#include "core/exceptions.hpp"
+#include "core/logging/logging.hpp"
 #include "core/utils/mainThread/mainThread.hpp"
 
 namespace atlas::notifications
@@ -25,39 +26,58 @@ namespace atlas::notifications
 	NotificationManagerUI& handle()
 	{
 		if ( internal::notification_manager == nullptr )
-			throw std::runtime_error( "Init notification handler before accessing handle" );
+			throw AtlasException( "Init notification handler before accessing handle" );
 		return *internal::notification_manager;
 	}
 
-	void createMessage( QString message )
+	void createMessage( QString user_message, QString full_message, const MessageLevel level )
 	{
 		if ( internal::notification_manager == nullptr )
-			throw std::runtime_error( "Notification manage not initalized before notification!" );
+			throw AtlasException( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
-			[ &message ]()
+			[ &user_message, level, &full_message ]() -> void
 			{
-				auto* ptr { new MessageNotification( std::move( message ), internal::notification_manager ) };
-				ptr->show();
-				internal::notification_manager->addNotification( ptr );
+				switch ( level )
+				{
+					default:
+						[[fallthrough]];
+					case MessageLevel::ATLAS_DEBUG:
+						[[fallthrough]];
+					case MessageLevel::ATLAS_INFO_SELFCLOSE:
+						[[fallthrough]];
+					case MessageLevel::ATLAS_INFO:
+						{
+							auto* ptr { new MessageNotification(
+								level,
+								std::move( user_message ),
+								std::move( full_message ),
+								internal::notification_manager ) };
+							ptr->show();
+							internal::notification_manager->addNotification( ptr );
+							return;
+						}
+					case MessageLevel::ATLAS_WARNING:
+						[[fallthrough]];
+					case MessageLevel::ATLAS_ERROR:
+						[[fallthrough]];
+					case MessageLevel::ATLAS_CRITICAL:
+						{
+							auto* ptr { new DevNotification(
+								level,
+								std::move( user_message ),
+								std::move( full_message ),
+								internal::notification_manager ) };
+							ptr->show();
+							internal::notification_manager->addNotification( ptr );
+							return;
+						}
+				}
 			} );
 	}
 
-	namespace internal
+	bool isNotificationsReady()
 	{
-		void createDevMessage( std::string body, QJsonDocument doc )
-		{
-			if ( internal::notification_manager == nullptr )
-				throw std::runtime_error( "Notification manage not initalized before notification!" );
-			spdlog::info( "{}: {}", body, doc.toJson().toStdString() );
-
-			utils::executeOnMain(
-				[ & ]()
-				{
-					auto* ptr { new DevNotification( std::move( body ), doc.toJson() ) };
-					ptr->show();
-					internal::notification_manager->addNotification( ptr );
-				} );
-		}
-	} // namespace internal
+		return internal::notification_manager != nullptr;
+	}
 
 } // namespace atlas::notifications

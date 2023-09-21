@@ -12,6 +12,8 @@
 #include <QMouseEvent>
 #include <QUrl>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/record/Version.hpp"
 #include "ui/delegates/RecordBannerDelegate.hpp"
 #include "ui/dialog/RecordEditor.hpp"
@@ -32,7 +34,6 @@ RecordListView::RecordListView( QWidget* parent ) : QListView( parent )
 
 void RecordListView::setRenderMode( const DelegateType type )
 {
-	spdlog::debug( "Setting Render Mode" );
 	ZoneScoped;
 	if ( type == current_render_mode ) return;
 
@@ -207,7 +208,6 @@ void RecordListView::mouseDoubleClickEvent( [[maybe_unused]] QMouseEvent* event 
 
 void RecordListView::reloadConfig()
 {
-	spdlog::debug( "Config Reloaded" );
 	ZoneScoped;
 	switch ( current_render_mode )
 	{

@@ -11,7 +11,6 @@
 
 #include "core/Types.hpp"
 #include "core/config.hpp"
-#include "core/logging/dev.hpp"
 
 template < typename T >
 class QFuture;
@@ -37,10 +36,6 @@ namespace atlas::records
 
 	  public:
 
-		//Logging/debug
-		template < typename T >
-		friend QJsonObject atlas::logging::dev::internalSerializer( const T& );
-
 		Game() = default;
 		~Game();
 		explicit Game( const RecordID id );
@@ -58,7 +53,7 @@ namespace atlas::records
 		Game( const Game& other ) : QObject( other.parent() ), ptr( other.ptr ), m_id( other.m_id )
 		{
 			if ( other.m_id == INVALID_RECORD_ID )
-				throw std::runtime_error( "Attempted to copy an object with an invalid record id" );
+				throw AtlasException( "Attempted to copy an object with an invalid record id" );
 			this->moveToThread( other.thread() );
 		}
 

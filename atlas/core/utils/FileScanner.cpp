@@ -8,21 +8,22 @@
 
 #include <queue>
 
-#include "core/logging.hpp"
+#include "core/exceptions.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::utils
 {
 
 	FileInfo FileScannerGenerator::operator()()
 	{
-		if ( m_h.done() ) throw std::runtime_error( "FileScannerGenerator is done." );
+		if ( m_h.done() ) throw AtlasException( "FileScannerGenerator is done but operator was still called" );
 		m_h();
 
 		if ( m_h.promise().exception ) std::rethrow_exception( m_h.promise().exception );
 		if ( m_h.promise().value.has_value() )
 			return m_h.promise().value.value();
 		else
-			throw std::runtime_error( "Failed to get value from FileScannerGenerator." );
+			throw AtlasException( "Failed to get value from FileScannerGenerator." );
 	}
 
 #ifdef __GNUC__
@@ -36,8 +37,8 @@ namespace atlas::utils
 	{
 		if ( !std::filesystem::exists( path ) )
 		{
-			spdlog::error( "scan_files: Path {} does not exist.", path.string() );
-			throw std::runtime_error( "Path does not exist." );
+			atlas::logging::error( "Expected path does not exist: {}", path.string() );
+			throw AtlasException( format_ns::format( "Path {} does not exist.", path ).c_str() );
 		}
 
 		auto dir_empty = []( const std::filesystem::path& dir_path ) -> bool
@@ -100,8 +101,7 @@ namespace atlas::utils
 			}
 		}
 
-		spdlog::error( "Managed to escape loop in coroutine scan_files" );
-		throw std::runtime_error( "Managed to escape loop in coroutine scan_files" );
+		throw AtlasException( "Managed to escape loop in coroutine scan_files" );
 	}
 
 #ifdef __GNUC__
@@ -132,8 +132,8 @@ namespace atlas::utils
 		}
 
 		if ( files.size() < index )
-			throw std::runtime_error(
-				fmt::format( "FileScanner::at({}): size < index : {} < {}", index, files.size(), index ) );
+			throw AtlasException( format_ns::format( "index = {}: size < index : {} < {}", index, files.size(), index )
+			                          .c_str() );
 
 		return files.at( index );
 	}

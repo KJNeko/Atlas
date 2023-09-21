@@ -63,7 +63,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	}
 	catch ( int num )
 	{
-		spdlog::error( "Unable to load default font. Verify system font available" );
+		atlas::logging::error( "Unable to load default font. Verify system font available" );
 	}
 
 	config::notify();
@@ -84,7 +84,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 
-	atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" ).arg( utils::version_string_qt() ) );
+	atlas::notifications::createUserMessage( QString( "Welcome to atlas! Version: %1" )
+	                                             .arg( utils::version_string_qt() ) );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );

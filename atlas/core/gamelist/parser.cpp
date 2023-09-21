@@ -7,7 +7,7 @@
 
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/remote/F95Data.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "utils.hpp"
 
 namespace gl
@@ -44,8 +44,7 @@ namespace gl
 			const auto match { regex.match( infos.thread_url ) };
 			if ( !match.isValid() || match.captured( "f95_id" ) == "" )
 			{
-				//TODO: devwarn here
-				spdlog::warn(
+				atlas::logging::warn(
 					"Unable to extract f95 id from GL_Infos.ini for {} using regex \"{}\" and url \"{}\"",
 					path,
 					regex_str,
@@ -62,7 +61,7 @@ namespace gl
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "Failed to parse GL_Infos.ini at {}. Reason: {}", path, e.what() );
+		atlas::logging::error( "Failed to parse GL_Infos.ini at {}. Reason: {}", path, e.what() );
 		return {};
 	}
 
@@ -80,7 +79,7 @@ namespace gl
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::warn( "Failed to parse f95 data! {}", e.what() );
+		atlas::logging::warn( "Failed to parse f95 data! {}", e.what() );
 		return INVALID_ATLAS_ID;
 	}
 

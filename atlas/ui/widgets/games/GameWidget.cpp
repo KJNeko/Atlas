@@ -11,6 +11,8 @@
 #include <QTimeZone>
 #include <QTimer>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/record/Version.hpp"
 #include "core/database/remote/AtlasData.hpp"
 #include "core/utils/QImageBlur.hpp"
@@ -338,7 +340,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 std::optional< atlas::records::Version > GameWidget::selectedVersion()
 {
 	ZoneScoped;
-	if ( !m_record.has_value() ) throw std::runtime_error( "selectedVersion: Record invalid" );
+	if ( !m_record.has_value() ) throw AtlasException( "Record invalid" );
 
 	const auto& versions { m_record.value()->m_versions };
 
@@ -417,7 +419,7 @@ void GameWidget::updateGameState()
 {
 	if ( lastState != processIsRunning() )
 	{
-		spdlog::info( "Reload Record" );
+		atlas::logging::info( "Reload Record" );
 		reloadRecord();
 	}
 	//Check if game is already running. Update Status

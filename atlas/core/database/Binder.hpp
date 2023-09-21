@@ -12,7 +12,8 @@
 #include "Database.hpp"
 #include "FunctionDecomp.hpp"
 #include "binders.hpp"
-#include "core/logging.hpp"
+#include "core/exceptions.hpp"
+#include "core/logging/logging.hpp"
 #include "extractors.hpp"
 
 class Binder
@@ -36,7 +37,7 @@ class Binder
 	{
 		if ( param_counter > max_param_count )
 		{
-			throw std::runtime_error( fmt::format(
+			throw DatabaseException( format_ns::format(
 				"param_counter > param_count = {} > {} for query \"{}\"",
 				param_counter,
 				sqlite3_bind_parameter_count( stmt ),
@@ -49,8 +50,8 @@ class Binder
 				break;
 			default:
 				{
-					throw std::runtime_error( fmt::format(
-						"DB: Failed to bind to \"{}\": Reason: \"{}\"",
+					throw DatabaseException( format_ns::format(
+						"Failed to bind to \"{}\": Reason: \"{}\"",
 						sqlite3_sql( stmt ),
 						sqlite3_errmsg( &Database::ref() ) ) );
 				}
@@ -66,7 +67,7 @@ class Binder
 		const auto step_ret { sqlite3_step( stmt ) };
 
 		if ( param_counter != max_param_count )
-			throw std::runtime_error( fmt::format(
+			throw AtlasException( format_ns::format(
 				"param_counter != max_param_count = {} != {} for query \"{}\"",
 				param_counter,
 				max_param_count,
@@ -92,11 +93,12 @@ class Binder
 				[[fallthrough]];
 			case SQLITE_ERROR:
 				{
-					atlas::logging::error( fmt::format(
+					atlas::logging::error(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ) ) );
-					throw std::runtime_error( fmt::format(
+						sqlite3_expanded_sql( stmt ),
+						std::source_location::current() );
+					throw AtlasException( format_ns::format(
 						"DB: Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );
@@ -114,9 +116,11 @@ class Binder
 		//Execute the query.
 		while ( true )
 		{
-			if ( stmt == nullptr ) throw std::runtime_error( "stmt was nullptr" );
+			if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
 
-			switch ( sqlite3_step( stmt ) )
+			const auto result { sqlite3_step( stmt ) };
+
+			switch ( result )
 			{
 				case SQLITE_ROW:
 					[[likely]]
@@ -130,9 +134,8 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::error(
-							fmt::format( "Unhandled error in sqlite! \nQuery: \"{}\"", sqlite3_expanded_sql( stmt ) ) );
-						throw std::runtime_error( "Unhandled error in sqlite!" );
+						throw DatabaseException( format_ns::format(
+							"Unhandled error in sqlite: {} \"{}\"", result, sqlite3_expanded_sql( stmt ) ) );
 					}
 			}
 		}
@@ -147,9 +150,11 @@ class Binder
 		//Execute the query.
 		while ( true )
 		{
-			if ( stmt == nullptr ) throw std::runtime_error( "stmt was nullptr" );
+			if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
 
-			switch ( sqlite3_step( stmt ) )
+			const auto result { sqlite3_step( stmt ) };
+
+			switch ( result )
 			{
 				case SQLITE_ROW:
 					[[likely]]
@@ -161,9 +166,8 @@ class Binder
 					return;
 				default:
 					{
-						atlas::logging::
-							error( fmt::format( "Unhandled error in sqlite!: {}", sqlite3_expanded_sql( stmt ) ) );
-						throw std::runtime_error( "Unhandled error in sqlite!" );
+						throw DatabaseException( format_ns::format(
+							"Unhandled error in sqlite: {} \"{}\"", result, sqlite3_expanded_sql( stmt ) ) );
 					}
 			}
 		}

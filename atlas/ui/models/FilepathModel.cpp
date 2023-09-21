@@ -9,7 +9,7 @@
 #include <QIODevice>
 #include <QMimeData>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
 {

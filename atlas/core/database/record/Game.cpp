@@ -126,7 +126,10 @@ namespace atlas::records
 		}
 		else
 		{
-			throw std::runtime_error( "Version with name already exists" );
+			throw VersionConflict(
+				format_ns::format( "Version with name {} already exists on game {}", version_name, this->m_id ).c_str(),
+				this->m_id,
+				version_name );
 		}
 	}
 
@@ -152,7 +155,11 @@ namespace atlas::records
 
 		if ( itter != versions.end() )
 		{
-			throw std::runtime_error( "Game: Tried to delete non existant version!" );
+			throw RecordException( format_ns::format(
+									   "Attempted to delete version {} from game {} that doesn't exist",
+									   version_name,
+									   this->m_id )
+			                           .c_str() );
 		}
 		else
 		{
@@ -196,16 +203,19 @@ namespace atlas::records
 	void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 	{
 		// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
+		if ( !std::filesystem::exists( path ) )
+			throw RecordException( format_ns::format( "Invalid path {} given to addPreview.", path ).c_str() );
+
 		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
 		{
-			path = imageManager::importImage( path, m_id ).result();
-
-			if ( !std::filesystem::exists( path ) )
-				throw std::runtime_error( "addPreview: invalid path from importImage" );
-		}
-		else
-		{
-			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to addPreview." );
+			try
+			{
+				path = imageManager::importImage( path, m_id ).result();
+			}
+			catch ( QUnhandledException& e )
+			{
+				std::rethrow_exception( e.exception() );
+			}
 		}
 
 		//Get the highest position
@@ -288,11 +298,14 @@ namespace atlas::records
 		{
 			path = imageManager::importImage( path, m_id ).result();
 			if ( !std::filesystem::exists( path ) )
-				throw std::runtime_error( "Failed to set banner. importImage returned a invalid path!" );
+				throw RecordException(
+					format_ns::format( "Failed to set banner. importImage returned a invalid path: {}!", path )
+						.c_str() );
 		}
 		else
 		{
-			if ( !std::filesystem::exists( path ) ) throw std::runtime_error( "Invalid path given to setBanner." );
+			if ( !std::filesystem::exists( path ) )
+				throw RecordException( format_ns::format( "Invalid path {} given to setBanner.", path ).c_str() );
 		}
 
 		RapidTransaction() << "SELECT count(*) FROM banners WHERE record_id = ? AND type = ? " << m_id
@@ -318,11 +331,13 @@ namespace atlas::records
 
 	void Game::connectAtlasData( const AtlasID atlas_id )
 	{
-		if ( atlas_id == INVALID_ATLAS_ID ) throw std::runtime_error( "Invalid atlas id" );
+		if ( atlas_id == INVALID_ATLAS_ID )
+			throw RecordException( format_ns::format( "Invalid atlas id: {}", atlas_id ).c_str() );
 
 		AtlasID new_id { INVALID_ATLAS_ID };
 		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> new_id;
-		if ( new_id == INVALID_ATLAS_ID ) throw std::runtime_error( "No Atlas data with this id" );
+		if ( new_id == INVALID_ATLAS_ID )
+			throw RecordException( format_ns::format( "No Atlas data with this id: {}", atlas_id ).c_str() );
 
 		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, game_id) VALUES (?,?)" << atlas_id << m_id;
 
@@ -331,7 +346,8 @@ namespace atlas::records
 
 	void Game::connectF95Data( const F95ID f95_id )
 	{
-		if ( f95_id == INVALID_F95_ID ) throw std::runtime_error( "Invalid F95 ID" );
+		if ( f95_id == INVALID_F95_ID )
+			throw RecordException( format_ns::format( "Invalid F95 ID: {}", f95_id ).c_str() );
 
 		F95ID new_id { INVALID_ATLAS_ID };
 		RapidTransaction() << "SELECT new_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> new_id;
@@ -368,7 +384,8 @@ namespace atlas::records
 		if ( ver_itter != ptr->m_versions.end() )
 			return *ver_itter;
 		else
-			throw std::runtime_error( "No version of that name in game" );
+			throw RecordException( format_ns::format( "No version of that name in game: {} -> {}", m_id, str )
+			                           .c_str() );
 	}
 
 	//! imports a new record and returns it. Will return an existing record if the record already exists
@@ -414,12 +431,14 @@ namespace atlas::records
 			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 		return data;
 	}
+
 	std::optional< atlas::remote::F95RemoteData > Game::findF95Data( QString atlas_id )
 	{
 		//std::vector< std::string > data;
-		std::optional<atlas::remote::F95RemoteData > data;
+		std::optional< atlas::remote::F95RemoteData > data;
 		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << atlas_id
+		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))"
+						   << atlas_id
 			>> [ &data ]( const F95ID f95_id ) { data = { f95_id }; };
 		return data;
 	}

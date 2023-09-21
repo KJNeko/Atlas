@@ -32,8 +32,7 @@ void RecordListModel::addRecord( atlas::records::Game record, const std::size_t 
 
 void RecordListModel::removeRecord( QPersistentModelIndex index )
 {
-	if ( !index.isValid() )
-		throw std::runtime_error( "RecordListModel::removeRecord(QPersistentModelIndex): index is not valid" );
+	if ( !index.isValid() ) throw AtlasException( "Index is not valid" );
 
 	beginRemoveRows( {}, index.row(), index.row() );
 	auto itter { m_records.begin() + index.row() };
@@ -103,7 +102,7 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 		}
 		else
 		{
-			spdlog::warn( "Future is invalid" );
+			atlas::logging::warn( "Future is invalid" );
 		}
 	}
 

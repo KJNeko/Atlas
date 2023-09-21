@@ -15,7 +15,7 @@ namespace atlas::database
 		if ( last_locked == std::this_thread::get_id() )
 		{
 			//Deadlock
-			throw std::runtime_error( "Deadlock detected!" );
+			throw DatabaseException( "Deadlock detected!" );
 		}
 		else
 		{
@@ -35,7 +35,7 @@ namespace atlas::database
 		if ( !m_finished )
 		{
 			Binder( "ROLLBACK TRANSACTION" );
-			throw std::runtime_error( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
+			throw DatabaseException( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
 		}
 
 		last_locked = std::thread::id();
@@ -64,4 +64,5 @@ namespace atlas::database
 		else
 			throw TransactionInvalid( "Attempted to abort a finished transaction" );
 	}
+
 } // namespace atlas::database

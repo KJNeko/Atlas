@@ -29,5 +29,7 @@ else()
     message(DEBUG "Unknown Platform")
 endif ()
 
+include(feature_checks)
+include(versioninfo)
 include(profiling)
 message(DEBUG "Leaving ${CMAKE_CURRENT_LIST_FILE}")

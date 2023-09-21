@@ -11,6 +11,7 @@
 #include <QTimer>
 
 #include "core/database/FunctionDecomp.hpp"
+#include "core/exceptions.hpp"
 
 namespace utils
 {
@@ -22,7 +23,7 @@ namespace utils
 	{
 		auto main { mainThread() };
 		if ( main == nullptr )
-			throw std::runtime_error( "Tried to run executeOnMain without setting a main thread first!" );
+			throw AtlasException( "Tried to run executeOnMain without setting a main thread first!" );
 
 		if ( QThread::currentThread() == mainThread() )
 		{
