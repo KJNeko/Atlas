@@ -1,5 +1,4 @@
 
-include(CheckCXXSourceCompiles)
 
 check_cxx_source_compiles(
         "#include <format>\nint main(void){ std::format(\"{}\", 1);return 0;}"
