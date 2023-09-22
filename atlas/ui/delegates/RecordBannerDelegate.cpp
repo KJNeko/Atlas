@@ -87,7 +87,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				if ( config::experimental::loading_preview::get() )
 				{
 					pixmap = record.requestThumbnail( Normal );
-					QImage srcImg { pixmap.toImage() };
 					pixmap.fill( Qt::transparent );
 					pixmap = atlas::images::
 						blurPixmap( pixmap, config::experimental::loading_preview_blur::get(), true, false );
