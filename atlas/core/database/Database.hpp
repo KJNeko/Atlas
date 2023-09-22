@@ -38,15 +38,4 @@ class Database
 	friend class Binder;
 };
 
-struct DbResults
-{
-	int rows_returned { 0 };
-};
-
-struct DbException : public std::runtime_error
-{};
-
-struct NoRows : public DbException
-{};
-
 #endif //ATLAS_DATABASE_HPP
