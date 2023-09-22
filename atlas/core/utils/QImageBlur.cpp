@@ -13,7 +13,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 QPixmap blurPixmap( const QPixmap& pixmap, qreal radius, bool quality )
 {

@@ -13,7 +13,7 @@
 
 #include <filesystem>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {

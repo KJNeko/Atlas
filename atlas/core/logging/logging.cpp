@@ -4,7 +4,7 @@
 
 #include "logging.hpp"
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

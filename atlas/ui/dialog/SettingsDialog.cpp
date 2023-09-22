@@ -13,7 +13,7 @@
 #include <QStandardItemModel>
 
 #include "ProgressBarDialog.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/foldersize.hpp"
 #include "ui_SettingsDialog.h"

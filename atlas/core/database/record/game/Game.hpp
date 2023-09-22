@@ -10,7 +10,7 @@
 #include <filesystem> // Keep this down here for the same reason.
 
 #include "core/Types.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 template < typename T >
 class QFuture;

@@ -16,7 +16,7 @@
 
 #include <fstream>
 
-#include "config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/utils/ImageCache/ImageCache.hpp"
 #include "core/utils/threading/pools.hpp"

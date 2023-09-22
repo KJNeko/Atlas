@@ -2,7 +2,7 @@
 
 #include <moc_mainwindow.cpp>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"

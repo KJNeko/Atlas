@@ -13,7 +13,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/Database.hpp"
 #include "core/version.hpp"
 #include "ui/mainwindow.h"

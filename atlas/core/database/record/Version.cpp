@@ -4,7 +4,7 @@
 
 #include "Version.hpp"
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/logging/logging.hpp"

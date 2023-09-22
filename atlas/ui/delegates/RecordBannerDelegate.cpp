@@ -10,7 +10,7 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
 #include "core/database/record/game/Game.hpp"

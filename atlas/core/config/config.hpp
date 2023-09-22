@@ -13,8 +13,8 @@
 
 #include "ConfigNotification.hpp"
 #include "core/exceptions.hpp"
-#include "logging/formatters.hpp"
-#include "logging/logging.hpp"
+#include "core/logging/formatters.hpp"
+#include "core/logging/logging.hpp"
 
 /**
  *

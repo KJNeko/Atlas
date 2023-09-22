@@ -9,7 +9,7 @@
 #include <sqlite3.h>
 
 #include "RapidTransaction.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/migrations/templates.hpp"
 #include "core/database/record/game/Game.hpp"
 

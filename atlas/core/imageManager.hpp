@@ -10,7 +10,7 @@
 #include <filesystem>
 
 #include "Types.hpp"
-#include "config.hpp"
+#include "core/config/config.hpp"
 #include "core/exceptions.hpp"
 
 class QByteArray;
