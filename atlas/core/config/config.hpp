@@ -271,6 +271,14 @@ enum BannerType
 	SENTINEL // Used to determine the number of banner types
 };
 
+enum BannerMask
+{
+	MASK_NORMAL = 1 << 0,
+	MASK_WIDE = 1 << 1,
+	MASK_COVER = 1 << 2,
+	MASK_LOGO = 1 << 3,
+};
+
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
 SETTINGS_DE( grid_ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
 SETTINGS_D( grid_ui, blurRadius, int, 30 )

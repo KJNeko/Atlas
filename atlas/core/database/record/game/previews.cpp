@@ -7,7 +7,8 @@
 #include "Game.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
-#include "core/imageManager.hpp"
+#include "core/images/images.hpp"
+#include "core/images/import.hpp"
 
 namespace atlas::records
 {
@@ -36,7 +37,7 @@ namespace atlas::records
 		{
 			try
 			{
-				path = atlas::images::importImage( path, m_id ).result();
+				path = atlas::images::async::importImage( path, m_id ).result();
 			}
 			catch ( QUnhandledException& e )
 			{

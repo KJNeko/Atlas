@@ -4,7 +4,7 @@
 
 #include "ImageCache.hpp"
 
-#include "core/imageManager.hpp"
+#include "core/images/images.hpp"
 #include "core/logging/logging.hpp"
 
 namespace atlas::cache

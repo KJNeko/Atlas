@@ -9,7 +9,7 @@
 
 #include <filesystem>
 
-#include "Types.hpp"
+#include "core/Types.hpp"
 #include "core/config/config.hpp"
 #include "core/exceptions.hpp"
 
@@ -51,13 +51,9 @@ namespace atlas::images
 	//! Clears all images not found attached to any record
 	void cleanOrphans();
 
-	//! Stores the image located at `path` in the data folder
-	[[nodiscard]] QFuture< std::filesystem::path >
-		importImage( const std::filesystem::path& path, const RecordID game_id );
-
-	[[nodiscard]] QFuture< QPixmap >
-		loadScaledImage( const QSize target_size, const SCALE_TYPE type, const std::filesystem::path );
-	[[nodiscard]] QFuture< QPixmap > loadImage( const std::filesystem::path path );
+	QImage blurImage( const QImage& image, qreal blur_radius, bool quality_blur, bool alpha_only, int transposed = 0 );
+	QPixmap
+		blurPixmap( const QPixmap& pixmap, qreal blur_radius, bool quality_blur, bool alpha_only, int transposed = 0 );
 
 } // namespace atlas::images
 

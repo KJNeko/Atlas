@@ -11,7 +11,7 @@
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/database/remote/F95Data.hpp"
-#include "core/imageManager.hpp"
+#include "core/images/images.hpp"
 #include "moc_Game.cpp"
 
 namespace atlas::records

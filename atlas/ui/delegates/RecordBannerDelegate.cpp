@@ -14,14 +14,9 @@
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
 #include "core/database/record/game/Game.hpp"
-#include "core/imageManager.hpp"
+#include "core/images/images.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
-
-QT_BEGIN_NAMESPACE
-extern Q_WIDGETS_EXPORT void
-	qt_blurImage( QPainter* p, QImage& blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
-QT_END_NAMESPACE
 
 void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex& index )
 	const
@@ -53,14 +48,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	const QRect shadow_rect { x_offset, y_offset, banner_size.width() + 10, banner_size.height() + 10 };
 
+	if ( record.hasBanner( Normal ) )
 	{
-		ZoneScopedN( "Draw banner" );
-
-		const QString key { QString::fromStdString(
-			format_ns::format( "{}x{}:{}", options.rect.x(), options.rect.y(), record.bannerPath( Normal ) ) ) };
-
-		//spdlog::debug( "image path:{}", record.bannerPath( Normal ).extension() );
-
 		if ( record.bannerPath( Normal ).extension() == ".gif" )
 		{
 			//NOT IMPLEMENTED
@@ -70,9 +59,20 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 		QPixmap pixmap;
 
-		if ( !banner.isFinished() )
+		if ( banner.isFinished() )
 		{
-			//We got the future
+			pixmap = banner.result();
+
+			//Check if we need to add blur background. Draw behind original image
+			if ( aspect_ratio == FIT_BLUR_EXPANDING )
+			{
+				ZoneScopedN( "Blur image" );
+				pixmap = blurToSize(
+					pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
+			}
+		}
+		else
+		{
 			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
 			if ( m_model != nullptr ) this->m_model->refreshOnFuture( index, std::move( banner ) );
 
@@ -83,36 +83,15 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			}
 			else
 			{
-				//Add experimental feature
+				//Add experimental feature: Thumbnail loading
 				if ( config::experimental::loading_preview::get() )
 				{
 					pixmap = record.requestThumbnail( banner_size, Normal );
 					QImage srcImg { pixmap.toImage() };
 					pixmap.fill( Qt::transparent );
-					{
-						QPainter paintert( &pixmap );
-						qt_blurImage(
-							&paintert,
-							srcImg,
-							config::experimental::loading_preview_blur::get(),
-							true,
-							false ); //blur radius
-					}
+					pixmap = atlas::images::
+						blurPixmap( pixmap, config::experimental::loading_preview_blur::get(), true, false );
 				}
-			}
-		}
-		else
-		{
-			ZoneScopedN( "Get image from variant" );
-			//We got the banner and should continue as normal
-			pixmap = banner.result();
-
-			//Check if we need to add blur background. Draw behind original image
-			if ( aspect_ratio == FIT_BLUR_EXPANDING )
-			{
-				ZoneScopedN( "Blur image" );
-				pixmap = blurToSize(
-					pixmap, banner_size.width(), banner_size.height(), m_feather_radius, m_blur_radius, m_blur_type );
 			}
 		}
 

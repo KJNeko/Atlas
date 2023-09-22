@@ -87,12 +87,14 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 	}
 	else
 	{
+		//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
 		if ( future.isValid() )
 		{
 			if ( !loaders.contains( index.row() ) )
 			{
 				auto* loader { new ImageLoader( index, std::move( future ) ) };
-				connect( loader, &ImageLoader::imageReady, this, &RecordListModel::reloadRecord );
+				connect(
+					loader, &ImageLoader::imageReady, this, &RecordListModel::reloadRecord, Qt::SingleShotConnection );
 				loader->moveToThread( &loading_thread );
 				loaders.insert( std::make_pair( index.row(), loader ) );
 			}
@@ -102,23 +104,10 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 		}
 		else
 		{
-			atlas::logging::warn( "Future is invalid" );
+			//Even if the future is valid. It might mean that it completed before we were ready?
+			emit dataChanged( index, index );
 		}
 	}
-
-	/*
-		QFutureWatcher< QPixmap >* watcher { new QFutureWatcher< QPixmap >() };
-		QFuture< QPixmap >* future_ptr { new QFuture< QPixmap >( future ) };
-		watcher->setFuture( *future_ptr );
-
-		connect( watcher, &QFutureWatcher< QPixmap >::finished, watcher, &QFutureWatcher< QPixmap >::deleteLater );
-		connect( watcher, &QFutureWatcher< QPixmap >::finished, [ future_ptr ]() { delete future_ptr; } );
-		connect(
-			watcher,
-			&QFutureWatcher< QPixmap >::finished,
-			this,
-			[ this, index ]() { emit dataChanged( index, index ); } );
-		 */
 }
 
 void RecordListModel::killLoaders()

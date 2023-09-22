@@ -279,6 +279,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 						{
 							ZoneScopedN( "Blur image" );
+							//TODO: Replace this with the new `atlas::images::blurPixmap` instead. Also resize it first then blur.
 							return blurToSize(
 								std::move( banner ),
 								banner_size.width(),
@@ -468,8 +469,10 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 		ui->previewList->show();
 		//Calculate Rows and Columns
 		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
-		const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };		
-		//Each preview has +5 padding at top and bottom. 
+		const int rows {
+			static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
+		};
+		//Each preview has +5 padding at top and bottom.
 		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
