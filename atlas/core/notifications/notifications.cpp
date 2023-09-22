@@ -20,7 +20,10 @@ namespace atlas::notifications
 	void initNotifications( QWidget* parent )
 	{
 		internal::notification_manager = new NotificationManagerUI( parent );
-		internal::notification_manager->show();
+		if ( internal::notification_manager )
+			internal::notification_manager->show();
+		else
+			throw AtlasException( "Failed to init notification manager" );
 	}
 
 	NotificationManagerUI& handle()
@@ -53,7 +56,7 @@ namespace atlas::notifications
 								std::move( full_message ),
 								internal::notification_manager ) };
 							ptr->show();
-							internal::notification_manager->addNotification( ptr );
+							notifications::handle().addNotification( ptr );
 							return;
 						}
 					case MessageLevel::ATLAS_WARNING:
@@ -68,7 +71,7 @@ namespace atlas::notifications
 								std::move( full_message ),
 								internal::notification_manager ) };
 							ptr->show();
-							internal::notification_manager->addNotification( ptr );
+							notifications::handle().addNotification( ptr );
 							return;
 						}
 				}
