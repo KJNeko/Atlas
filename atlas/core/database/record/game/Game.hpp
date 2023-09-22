@@ -69,7 +69,7 @@ namespace atlas::records
 		bool versionExists( const QString& str );
 
 		//! Get thumbnail from image. BLOCKING
-		QPixmap requestThumbnail( const QSize size, const BannerType type );
+		QPixmap requestThumbnail( const BannerType type );
 
 		//! Adds a new version. Will throw if version of same name exists.
 		/**

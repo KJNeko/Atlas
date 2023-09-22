@@ -86,7 +86,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				//Add experimental feature: Thumbnail loading
 				if ( config::experimental::loading_preview::get() )
 				{
-					pixmap = record.requestThumbnail( banner_size, Normal );
+					pixmap = record.requestThumbnail( Normal );
 					QImage srcImg { pixmap.toImage() };
 					pixmap.fill( Qt::transparent );
 					pixmap = atlas::images::

@@ -94,19 +94,11 @@ namespace atlas::records
 			return atlas::images::async::loadScaledPixmap( size, scale_type, path );
 	}
 
-	QPixmap Game::requestThumbnail( const QSize size, const BannerType type )
+	QPixmap Game::requestThumbnail( const BannerType type )
 	{
 		const auto& path { bannerPath( type ) };
 
 		return atlas::images::thumbnail( path );
-
-		/*
-		const QPixmap pixmap { QPixmap( QString::fromStdString(
-											path.parent_path().string() + "//" + path.stem().string() + "_thumb"
-											+ path.extension().string() ) )
-			                       .scaled( size, Qt::IgnoreAspectRatio ) };
-		return pixmap;
-		 */
 	}
 
 	//! Simple passthrough to same function but with combined size via QSize instead of seperate ints
