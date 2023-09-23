@@ -27,7 +27,7 @@ namespace atlas::cache
 
 			std::uint64_t size() const;
 
-			std::uint64_t score() const;
+			std::uint64_t score( const std::chrono::time_point< std::chrono::steady_clock >& current_time ) const;
 
 			bool operator<( const PixmapItem& other ) const { return size() < other.size(); }
 		};

@@ -22,13 +22,14 @@ namespace atlas::cache
 			return static_cast< uint64_t >( result );
 	}
 
-	std::uint64_t ImageCache::PixmapItem::score() const
+	std::uint64_t ImageCache::PixmapItem::score( const std::chrono::time_point< std::chrono::steady_clock >&
+	                                                 current_time ) const
 	{
 		double time_score_ratio { 1.2 };
 
 		const std::uint64_t size_score { size() };
 		const std::uint64_t time_diff {
-			static_cast< uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( Clock::now() - last_accessed )
+			static_cast< uint64_t >( std::chrono::duration_cast< std::chrono::seconds >( current_time - last_accessed )
 			                             .count() )
 		};
 
@@ -72,11 +73,13 @@ namespace atlas::cache
 		if ( current_size < max_size ) return;
 
 		std::vector< std::pair< std::string, PixmapItem > > ordered { cache.begin(), cache.end() };
+		const auto timepoint { Clock::now() };
 		std::sort(
 			ordered.begin(),
 			ordered.end(),
-			[]( const std::pair< std::string, PixmapItem >& first, const std::pair< std::string, PixmapItem >& second )
-			{ return first.second.score() > second.second.score(); } );
+			[ &timepoint ](
+				const std::pair< std::string, PixmapItem >& first, const std::pair< std::string, PixmapItem >& second )
+			{ return first.second.score( timepoint ) > second.second.score( timepoint ); } );
 
 		//Remove the last items from the map
 		for ( const auto& [ key, item ] : ordered )
