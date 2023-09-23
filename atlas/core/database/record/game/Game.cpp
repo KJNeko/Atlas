@@ -36,21 +36,6 @@ namespace atlas::records
 			}
 		}
 
-		inline static std::shared_ptr< GameData > movePtr( GameData&& data )
-		{
-			ZoneScoped;
-			std::lock_guard guard { map_mtx };
-
-			if ( auto itter = map.find( data.m_game_id ); itter != map.end() )
-				return itter->second;
-			else
-			{
-				auto ptr = std::make_shared< GameData >( std::move( data ) );
-				map.emplace( ptr->m_game_id, ptr );
-				return ptr;
-			}
-		}
-
 		inline static void releasePtr( const RecordID idkey )
 		{
 			ZoneScoped;
@@ -75,6 +60,7 @@ namespace atlas::records
 
 	void Game::setTitle( QString title )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		RapidTransaction() << "UPDATE games SET title = ? WHERE record_id = ?" << title << m_id;
 		ptr->m_title = std::move( title );
 		emit dataChanged();
@@ -82,6 +68,7 @@ namespace atlas::records
 
 	void Game::setCreator( QString creator )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		RapidTransaction() << "UPDATE games SET creator = ? WHERE record_id = ?" << creator << m_id;
 		ptr->m_creator = std::move( creator );
 		emit dataChanged();
@@ -89,6 +76,7 @@ namespace atlas::records
 
 	void Game::setEngine( QString engine )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		RapidTransaction() << "UPDATE games SET engine = ? WHERE record_id = ?" << engine << m_id;
 		ptr->m_engine = std::move( engine );
 		emit dataChanged();
@@ -96,11 +84,13 @@ namespace atlas::records
 
 	void Game::setDescription( QString description )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		RapidTransaction() << "UPDATE games SET description = ? WHERE record_id = ?" << description << m_id;
 	}
 
 	void Game::addPlaytime( const std::uint64_t seconds )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto new_playtime { ptr->m_total_playtime + seconds };
 		RapidTransaction() << "UPDATE games SET total_playtime = ? WHERE record_id = ?" << new_playtime << m_id;
 		ptr->m_total_playtime = new_playtime;
@@ -109,6 +99,7 @@ namespace atlas::records
 
 	void Game::setLastPlayed( const std::uint64_t time )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		RapidTransaction() << "UPDATE games SET last_played_r = ? WHERE record_id = ?" << time << m_id;
 		ptr->m_last_played = time;
 		emit dataChanged();
@@ -116,6 +107,7 @@ namespace atlas::records
 
 	void Game::connectAtlasData( const AtlasID atlas_id )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		if ( atlas_id == INVALID_ATLAS_ID )
 			throw RecordException( format_ns::format( "Invalid atlas id: {}", atlas_id ).c_str() );
 
@@ -131,6 +123,7 @@ namespace atlas::records
 
 	void Game::connectF95Data( const F95ID f95_id )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		if ( f95_id == INVALID_F95_ID )
 			throw RecordException( format_ns::format( "Invalid F95 ID: {}", f95_id ).c_str() );
 

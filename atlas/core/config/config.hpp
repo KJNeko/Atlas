@@ -217,11 +217,11 @@ SETTINGS_D( ui, use_system_theme, bool, false )
 
 enum SCALE_TYPE : int
 {
-	IGNORE_ASPECT_RATIO = 0,
-	KEEP_ASPECT_RATIO = 1,
-	KEEP_ASPECT_RATIO_BY_EXPANDING = 2,
-	FIT_BLUR_EXPANDING = 3,
-	FIT_BLUR_STRETCH = 4
+	IGNORE_ASPECT_RATIO = Qt::IgnoreAspectRatio,
+	KEEP_ASPECT_RATIO = Qt::KeepAspectRatio,
+	KEEP_ASPECT_RATIO_BY_EXPANDING = Qt::KeepAspectRatioByExpanding,
+	FIT_BLUR_EXPANDING = 3, //TODO: Remove due to confusion
+	FIT_BLUR_STRETCH = 4 //TODO: Remove due to confusion
 };
 
 enum BLUR_TYPE : int

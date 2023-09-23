@@ -15,7 +15,7 @@ namespace atlas::records
 	struct GameData
 	{
 		GameData() = delete;
-		GameData( GameData&& other ) = default;
+		GameData( GameData&& other ) = delete;
 
 		RecordID m_game_id { INVALID_RECORD_ID };
 		QString m_title {};
@@ -32,6 +32,8 @@ namespace atlas::records
 
 		std::optional< remote::AtlasRemoteData > atlas_data { std::nullopt };
 		std::optional< remote::F95RemoteData > f95_data { std::nullopt };
+
+		std::recursive_mutex m_mtx {};
 
 		//Some helpers for commonly used data sets.
 		const Version& getVersion( const QString ) const;

@@ -22,6 +22,7 @@ namespace atlas::records
 
 	void Game::setBanner( std::filesystem::path path, const BannerType type )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
 			path = images::async::importImage( path, m_id ).result();
@@ -50,14 +51,15 @@ namespace atlas::records
 		emit dataChanged();
 	}
 
-	const std::filesystem::path& Game::bannerPath( const BannerType type ) const
+	const std::filesystem::path Game::bannerPath( const BannerType type ) const
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		return this->ptr->m_banner_paths[ static_cast< unsigned long >( type ) ];
 	}
 
 	QFuture< QPixmap > Game::requestBanner( const BannerType type ) const
 	{
-		ZoneScoped;
+		std::lock_guard guard { this->ptr->m_mtx };
 
 		const auto& path { bannerPath( type ) };
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
@@ -73,6 +75,7 @@ namespace atlas::records
 
 	QFuture< QPixmap > Game::requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& path { bannerPath( type ) };
 
 		if ( !hasBanner( type ) ) return QtFuture::makeReadyFuture( QPixmap() );
@@ -96,6 +99,7 @@ namespace atlas::records
 
 	QPixmap Game::requestThumbnail( const BannerType type )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& path { bannerPath( type ) };
 
 		return atlas::images::thumbnail( path );
@@ -110,6 +114,7 @@ namespace atlas::records
 
 	QFuture< QPixmap > Game::requestPreview( const std::uint64_t index ) const
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& previews { this->ptr->m_preview_paths };
 		const auto& path { previews.at( index ) };
 

@@ -119,7 +119,7 @@ namespace atlas::records
 		void removeUserTag( QString str );
 
 		void setBanner( std::filesystem::path path, const BannerType type );
-		const std::filesystem::path& bannerPath( const BannerType type ) const;
+		const std::filesystem::path bannerPath( const BannerType type ) const;
 		[[nodiscard]] QFuture< QPixmap > requestBanner( const BannerType type ) const;
 		[[nodiscard]] QFuture< QPixmap >
 			requestBanner( const int width, const int height, const SCALE_TYPE scale_type, const BannerType type );

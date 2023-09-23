@@ -14,6 +14,7 @@ namespace atlas::records
 		std::uint64_t folder_size,
 		const bool in_place )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		auto& versions { ptr->m_versions };
 		if ( versionExists( version_name ) )
 		{
@@ -41,6 +42,7 @@ namespace atlas::records
 
 	bool Game::versionExists( const QString& version_name )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& versions { ptr->m_versions };
 		return std::find_if(
 				   versions.begin(),
@@ -51,6 +53,7 @@ namespace atlas::records
 
 	void Game::removeVersion( const Version& info )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		auto& versions { ptr->m_versions };
 		const auto& version_name { info->m_version };
 		//Check if version exists
@@ -79,6 +82,7 @@ namespace atlas::records
 
 	bool Game::hasVersion( const QString str ) const
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto ver_itter { std::find_if(
 			ptr->m_versions.begin(),
 			ptr->m_versions.end(),
@@ -90,6 +94,7 @@ namespace atlas::records
 
 	Version& Game::operator[]( const QString str ) const
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		const auto ver_itter { std::find_if(
 			ptr->m_versions.begin(),
 			ptr->m_versions.end(),

@@ -4,6 +4,7 @@
 
 #include "loader.hpp"
 
+#include <QImageReader>
 #include <QtConcurrentRun>
 
 #include "core/utils/ImageCache/ImageCache.hpp"
@@ -41,7 +42,35 @@ namespace atlas::images
 	QPixmap loadScaledPixmap( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
 	{
 		atlas::logging::debug( "Loading image: {}", path );
-		return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type );
+
+		QImageReader reader;
+		const QSize image_size { reader.size() };
+
+		//Default to the other loader if the image size is invalid
+		if ( image_size == QSize() ) return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type );
+
+		//Calculate the size we need to load for each scaling tyle
+		switch ( scale_type )
+		{
+			case IGNORE_ASPECT_RATIO:
+				[[fallthrough]];
+			case KEEP_ASPECT_RATIO:
+				[[fallthrough]];
+			case KEEP_ASPECT_RATIO_BY_EXPANDING:
+				{
+					reader.setScaledSize( image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) ) );
+					break;
+				}
+			case FIT_BLUR_EXPANDING:
+				[[fallthrough]];
+			case FIT_BLUR_STRETCH:
+				{
+					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
+					break;
+				}
+		}
+
+		return QPixmap::fromImage( reader.read() );
 	}
 
 	QImage loadImage( const std::filesystem::path& path )

@@ -12,6 +12,7 @@ namespace atlas::records
 {
 	void Game::addUserTag( QString str )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		auto& tags { ptr->m_tags };
 		if ( const auto itter = std::find( tags.begin(), tags.end(), str ); itter == tags.end() )
 		{
@@ -30,6 +31,7 @@ namespace atlas::records
 
 	void Game::removeUserTag( QString str )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		auto& tags { ptr->m_tags };
 		if ( const auto itter = std::find( tags.begin(), tags.end(), str ); itter != tags.end() )
 		{

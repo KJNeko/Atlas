@@ -15,6 +15,7 @@ namespace atlas::records
 
 	void Game::reorderPreviews( std::vector< std::filesystem::path > paths )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		//If the path doesn't exist then it just gets added as if it did before
 		RapidTransaction() << "DELETE FROM previews WHERE record_id = ?" << m_id;
 
@@ -29,6 +30,7 @@ namespace atlas::records
 
 	void Game::addPreview( std::filesystem::path path, std::uint64_t index )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		// If relative returns an empty string then we can safely assume that the path is not inside of the image folder
 		if ( !std::filesystem::exists( path ) )
 			throw RecordException( format_ns::format( "Invalid path {} given to addPreview.", path ).c_str() );
@@ -66,6 +68,7 @@ namespace atlas::records
 
 	void Game::removePreview( const std::uint64_t index )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		auto& previews { ptr->m_preview_paths };
 		RapidTransaction() << "DELETE FROM previews WHERE record_id = ? AND position = ?" << m_id << index;
 
@@ -78,6 +81,7 @@ namespace atlas::records
 
 	void Game::removePreview( const std::filesystem::path path )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		//Find the preview index
 		const auto& previews { ptr->m_preview_paths };
 		const auto index { std::find( previews.begin(), previews.end(), path ) };
