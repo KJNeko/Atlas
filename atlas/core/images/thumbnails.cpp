@@ -18,7 +18,7 @@ namespace atlas::images
 
 		//Create thumbnail
 		const auto dest { thumbnailPath( image_path ) };
-		QImage thumb { loadImage( image_path ) };
+		QPixmap thumb { async::loadPixmap( image_path ).result() };
 
 		thumb = thumb.scaled(
 			config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get(), Qt::IgnoreAspectRatio );

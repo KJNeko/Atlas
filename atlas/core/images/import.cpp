@@ -50,7 +50,7 @@ namespace atlas::images
 
 	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		const QImage image { loadImage( path ) };
+		const QImage image { atlas::images::loadImage( path ) };
 		const std::uint64_t original_file_size { std::filesystem::file_size( path ) };
 		const std::filesystem::path game_image_folder { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( game_image_folder );
