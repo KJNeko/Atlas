@@ -6,6 +6,7 @@
 #define ATLAS_RECORDVIEW_HPP
 
 #include <QListView>
+#include <QScrollEvent>
 
 #include "core/Types.hpp"
 #include "core/database/record/GameData.hpp"
@@ -34,6 +35,7 @@ class RecordListView final : public QListView
 	void reloadConfig();
 
 	void paintEvent( QPaintEvent* event ) override;
+	void wheelEvent( QWheelEvent* event ) override;
 
   signals:
 	void openDetailedView( const atlas::records::Game record );
