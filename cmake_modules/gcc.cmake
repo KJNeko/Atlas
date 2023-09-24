@@ -18,7 +18,8 @@
 				AppendFlag("-Wnonnull") #Prevents passing null as an argument marked as nonnull attribute
 				AppendFlag("-Wnull-dereference") #Warns about a possible null dereference. Compiler checks all possible paths
 				#AppendFlag("-Wnrvo") #Compiler checks for return value optimization invalidations
-				AppendFlag("-Winfinite-recursion") #Warns about infinite recursive calls
+				# Disabled because of older GCC compilers being unhappy with it
+				#AppendFlag("-Winfinite-recursion") #Warns about infinite recursive calls
 				AppendFlag("-Winit-self") #Yells at you if you init something with itself
 				AppendFlag("-Wimplicit-fallthrough=4") # Warns about switch statements having a implicit fallthrough. must be marked with [[fallthrough]]
 				AppendFlag("-Wignored-qualifiers") #Warns if qualifiers are used in return types. Which are ignored.
@@ -62,7 +63,8 @@
 				AppendFlag("-Wclobbered") #Warns about variables that are changed by longjmp or vfork
 				AppendFlag("-Wconversion") #Warns about conversions between real and integer numbers and conversions between signed/unsigned numbers
 				AppendFlag("-Wdangling-else") #Warns about confusing else statements
-				AppendFlag("-Wdangling-pointer=2") #Warns about use of pointers with automatic lifetime
+				# Disabled because of older GCC compilers being unhappy with it
+				#AppendFlag("-Wdangling-pointer=2") #Warns about use of pointers with automatic lifetime
 				AppendFlag("-Wempty-body") #Warns about empty conditional bodies
 				AppendFlag("-Wfloat-conversion") #Warns about reduction of precision from double -> float conversions
 				AppendFlag("-Waddress") #Prevents off uses of addresses
@@ -75,7 +77,8 @@
 				AppendFlag("-Wredundant-decls") #Warns about declarations that happen more then once.
 				AppendFlag("-Wctor-dtor-privacy") #Warns if a class appears unusable due to private ctor/dtors
 				AppendFlag("-Wdelete-non-virtual-dtor") #Warns about using `delete` on a class that has virtual functions without a virtual dtor
-				AppendFlag("-Winvalid-constexpr") #Warns that a function marked as constexpr can't possibly produce a constexpr expression
+				# Disabled because of older GCC compilers being unhappy with it
+				#AppendFlag("-Winvalid-constexpr") #Warns that a function marked as constexpr can't possibly produce a constexpr expression
 				AppendFlag("-Wnoexcept") #Warns when a noexcept expression is false due to throwing
 				AppendFlag("-Wnoexcept-type")
 				AppendFlag("-Wclass-memaccess") #Warns about accessing memory of a class. Which is likely invalid
@@ -96,7 +99,8 @@
 				AppendFlag("-Wsuggest-final-types") #Self explanatory
 				AppendFlag("-Wsuggest-final-methods")# ^
 				AppendFlag("-Wsuggest-override")#      ^
-				AppendFlag("-Wuse-after-free") #Warns about accessing a value after calling 'free' on it
+				# Disabled because of older GCC compilers being unhappy with it
+				##AppendFlag("-Wuse-after-free") #Warns about accessing a value after calling 'free' on it
 				AppendFlag("-Wuseless-cast") #Warns about a cast that is useless.
 
 				# Starting other weird flags
