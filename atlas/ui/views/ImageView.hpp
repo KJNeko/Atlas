@@ -21,9 +21,6 @@ class ImageView final : public QListView
 
 	ImageView( QWidget* parent = nullptr );
 
-	FilepathModel* pathmodel();
-	FilepathModel* pathmodel() const;
-	ImageDelegate* delegate();
 	std::vector< std::filesystem::path > selectedItems() const;
 	std::vector< std::filesystem::path > paths() const;
 	std::vector< QString > pathsQString() const;

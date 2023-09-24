@@ -115,7 +115,6 @@ namespace atlas::cache
 
 	std::optional< QPixmap > ImageCache::find( std::string key )
 	{
-		atlas::logging::debug( "Cache at {}", cache.size() );
 		std::lock_guard guard { mtx };
 		if ( auto itter = cache.find( key ); itter != cache.end() )
 		{

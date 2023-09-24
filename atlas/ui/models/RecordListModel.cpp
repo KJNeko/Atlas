@@ -73,6 +73,7 @@ void RecordListModel::reloadRecord( QPersistentModelIndex index )
 {
 	if ( index.isValid() )
 	{
+		loaders.erase( index.row() );
 		emit dataChanged( index, index );
 	}
 }
@@ -118,8 +119,6 @@ void RecordListModel::killLoaders()
 {
 	loaders.clear();
 }
-
-
 
 QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int role ) const
 {

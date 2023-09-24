@@ -12,6 +12,7 @@
 void ImageView::setPaths( const std::vector< std::filesystem::path >& paths )
 {
 	auto model { dynamic_cast< FilepathModel* >( QListView::model() ) };
+	model->killLoaders();
 	model->setFilepaths( paths );
 }
 
@@ -22,22 +23,7 @@ ImageView::ImageView( QWidget* parent ) : QListView( parent )
 	QListView::setModel( filepath_model );
 	QListView::setItemDelegate( new ImageDelegate( filepath_model ) );
 
-	connect( pathmodel(), &FilepathModel::reordered, this, &ImageView::modelReordered );
-}
-
-FilepathModel* ImageView::pathmodel() const
-{
-	return dynamic_cast< FilepathModel* >( QListView::model() );
-}
-
-FilepathModel* ImageView::pathmodel()
-{
-	return dynamic_cast< FilepathModel* >( QListView::model() );
-}
-
-ImageDelegate* ImageView::delegate()
-{
-	return dynamic_cast< ImageDelegate* >( QListView::itemDelegate() );
+	connect( static_cast< FilepathModel* >( model() ), &FilepathModel::reordered, this, &ImageView::modelReordered );
 }
 
 void ImageView::modelReordered()
@@ -62,7 +48,7 @@ std::vector< std::filesystem::path > ImageView::selectedItems() const
 
 std::vector< std::filesystem::path > ImageView::paths() const
 {
-	return pathmodel()->getFilepaths();
+	return static_cast< FilepathModel* >( model() )->getFilepaths();
 }
 
 std::vector< QString > ImageView::pathsQString() const

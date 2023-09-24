@@ -145,14 +145,18 @@ namespace atlas::images
 			if ( promise.isCanceled() ) return;
 			atlas::logging::debug( "Loading image: {}", path );
 
+			if ( !std::filesystem::exists( path ) )
+				throw AtlasException( format_ns::format( "Failed to find image at path {}", path ) );
+
 			QImageReader reader { QString::fromStdString( path.string() ) };
 			const QSize image_size { reader.size() };
 			const auto key { pixmapKey( target_size, scale_type, path ) };
 
 			//Default to the other loader if the image size is invalid
-			if ( promise.isCanceled() ) return;
 			if ( image_size == QSize() )
 			{
+				atlas::logging::
+					warn( "Image was not readable by QImageReader. Falling back to alternative loading method" );
 				const auto pixmap { scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type ) };
 				scale_cache.insert( key, pixmap );
 				promise.addResult( std::move( pixmap ) );
@@ -184,6 +188,8 @@ namespace atlas::images
 
 			const auto pixmap { QPixmap::fromImage( reader.read() ) };
 			scale_cache.insert( key, pixmap );
+			atlas::logging::debug(
+				"Finished loading image: {} with size {}x{}", path, pixmap.size().width(), pixmap.size().width() );
 			promise.addResult( std::move( pixmap ) );
 		}
 

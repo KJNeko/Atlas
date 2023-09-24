@@ -15,6 +15,7 @@
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
 {
 	beginResetModel();
+	killLoaders();
 	this->m_paths = filepaths;
 	endResetModel();
 }
@@ -44,20 +45,23 @@ int FilepathModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
 
 QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 {
-	if ( role == FilepathModel::PixmapRole )
-	{
-		const auto& path { m_paths[ static_cast< unsigned long >( index.row() ) ] };
-		const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
-		return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
-			atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
-	}
-	else if ( role == Qt::DisplayRole )
-	{
-		return QVariant::fromValue( QString::fromStdString( m_paths[ static_cast< unsigned long >( index.row() ) ]
-		                                                        .string() ) );
-	}
+	const auto& path { m_paths[ static_cast< unsigned long >( index.row() ) ] };
 
-	return {};
+	switch ( role )
+	{
+		case FilepathModel::PixmapRole:
+			{
+				const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+				return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
+					atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
+			}
+		case Qt::StatusTipRole:
+			[[fallthrough]];
+		case Qt::DisplayRole:
+			return QVariant::fromValue( QString::fromStdString( path.string() ) );
+		default:
+			return {};
+	}
 }
 
 Qt::DropActions FilepathModel::supportedDropActions() const
@@ -70,6 +74,7 @@ bool FilepathModel::removeRows( int row, int count, const QModelIndex& parent )
 	if ( row < 0 || static_cast< std::size_t >( row + count ) > m_paths.size() ) return false;
 
 	beginRemoveRows( parent, row, row + count - 1 );
+	killLoaders();
 
 	for ( int i = 0; i < count; ++i ) m_paths.erase( m_paths.begin() + row );
 
@@ -92,6 +97,7 @@ bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 	if ( row > rowCount( {} ) ) return false;
 
 	beginInsertRows( parent, row, row + col - 1 );
+	killLoaders();
 
 	if ( row == rowCount( {} ) )
 	{
@@ -147,6 +153,7 @@ bool FilepathModel::moveRows(
 	const std::vector< std::filesystem::path > data { s_beg, s_end };
 
 	beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild );
+	killLoaders();
 
 	m_paths.erase( s_beg, s_end );
 
@@ -210,6 +217,7 @@ void FilepathModel::reloadRecord( QPersistentModelIndex index )
 	{
 		emit dataChanged( index, index );
 	}
+	loaders.erase( index.row() );
 }
 
 void FilepathModel::killLoaders()
