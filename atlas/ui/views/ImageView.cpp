@@ -17,8 +17,10 @@ void ImageView::setPaths( const std::vector< std::filesystem::path >& paths )
 
 ImageView::ImageView( QWidget* parent ) : QListView( parent )
 {
-	QListView::setModel( new FilepathModel() );
-	QListView::setItemDelegate( new ImageDelegate() );
+	auto* filepath_model { new FilepathModel() };
+
+	QListView::setModel( filepath_model );
+	QListView::setItemDelegate( new ImageDelegate( filepath_model ) );
 
 	connect( pathmodel(), &FilepathModel::reordered, this, &ImageView::modelReordered );
 }

@@ -11,23 +11,17 @@
 
 #include <tracy/Tracy.hpp>
 
-#include <filesystem>
-
 #include "core/config/config.hpp"
+#include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	//atlas::records::Game record { index.data().value< atlas::records::Game >() };
+	QFuture< QPixmap > future { index.data( FilepathModel::PixmapRole ).value< QFuture< QPixmap > >() };
 
-	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
-
-	if ( std::filesystem::exists( path ) )
+	if ( future.isFinished() )
 	{
-		QPixmap pixmap { QString::fromStdString( path.string() ) };
-
-		pixmap = pixmap.scaled( item.rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
-
+		const auto& pixmap { future.result() };
 		//Reset the current brush
 		painter->setBrush( Qt::NoBrush );
 		QPen pen;
@@ -45,9 +39,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
 	else
-	{
-		painter->drawText( item.rect, Qt::AlignCenter, "Filepath does not exist" );
-	}
+		m_model->refreshOnFuture( index, future );
 
 	painter->drawRect( item.rect );
 }

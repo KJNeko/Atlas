@@ -9,10 +9,13 @@
 #include "core/database/record/GameData.hpp"
 #include "core/images/images.hpp"
 #include "core/images/import.hpp"
+#include "core/images/loader.hpp"
+#include "core/utils/ImageCache/ImageCache.hpp"
+
+inline static atlas::cache::ImageCache preview_cache;
 
 namespace atlas::records
 {
-
 	void Game::reorderPreviews( std::vector< std::filesystem::path > paths )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
@@ -64,6 +67,36 @@ namespace atlas::records
 			[ &previews ]( std::filesystem::path preview_path ) { previews.emplace_back( std::move( preview_path ) ); };
 
 		emit dataChanged();
+	}
+
+	QFuture< QPixmap > Game::preview( const std::uint64_t index )
+	{
+		std::lock_guard guard { this->ptr->m_mtx };
+		const auto& previews { ptr->m_preview_paths };
+		if ( static_cast< std::uint64_t >( index ) > previews.size() )
+			throw AtlasException( format_ns::format(
+									  "Attempted to get preview for index higher then max size: index = {}, size = {}",
+									  index,
+									  previews.size() )
+			                          .c_str() );
+
+		const auto& path { previews.at( index ) };
+		return atlas::images::async::loadPixmap( path );
+	}
+
+	QFuture< QPixmap > Game::scaledPreview( const QSize size, const SCALE_TYPE scale_type, const std::uint64_t index )
+	{
+		std::lock_guard guard { this->ptr->m_mtx };
+		const auto& previews { ptr->m_preview_paths };
+		if ( static_cast< std::uint64_t >( index ) > previews.size() )
+			throw AtlasException( format_ns::format(
+									  "Attempted to get preview for index higher then max size: index = {}, size = {}",
+									  index,
+									  previews.size() )
+			                          .c_str() );
+
+		const auto& path { previews.at( index ) };
+		return atlas::images::async::loadScaledPixmap( size, scale_type, path );
 	}
 
 	void Game::removePreview( const std::uint64_t index )

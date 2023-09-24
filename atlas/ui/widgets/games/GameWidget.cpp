@@ -27,8 +27,10 @@
 GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameWidget )
 {
 	ui->setupUi( this );
-	ui->previewList->setItemDelegate( new ImageDelegate() );
-	ui->previewList->setModel( new FilepathModel() );
+
+	auto* filepath_model { new FilepathModel() };
+	ui->previewList->setItemDelegate( new ImageDelegate( filepath_model ) );
+	ui->previewList->setModel( filepath_model );
 	//Used to detect when game has exited. Check every 2 seconds
 	QTimer* timer = new QTimer( this );
 	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
@@ -195,8 +197,7 @@ void GameWidget::reloadRecord()
 	title = "<b>Title: </b>" + title + "<br>";
 	developer = "<b>Developer: </b>" + developer + "<br>";
 	engine = "<b>Engine: </b>" + engine + "<br>";
-	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() +  current_version
-		              + "<br>" };
+	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() + current_version + "<br>" };
 
 	ui->teDetails->setText(
 		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date
@@ -395,25 +396,27 @@ void GameWidget::on_btnManageRecord_pressed()
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {
-
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
 		ui->previewList->show();
 		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
 		//If the item has not fully loaded use show event
-		if(cols != 0)
+		if ( cols != 0 )
 		{
-			const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };
+			const int rows {
+				static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
+			};
 			//+5 padding at top and bottom of each image
-			const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+			const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
 			ui->previewList->setMinimumHeight( previewListHeight );
 		}
 	}
-	else{
+	else
+	{
 		ui->previewList->setMinimumHeight( 10 );
 		ui->previewList->hide();
 	}
-		reloadRecord();
+	reloadRecord();
 }
 
 void GameWidget::updateGameState()
@@ -473,11 +476,12 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 			static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
 		};
 		//Each preview has +5 padding at top and bottom.
-		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+		const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
 	}
-		else{
+	else
+	{
 		ui->previewList->setMinimumHeight( 10 );
 		ui->previewList->hide();
 	}

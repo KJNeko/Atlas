@@ -92,9 +92,13 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 		{
 			if ( !loaders.contains( index.row() ) )
 			{
-				auto* loader { new ImageLoader( index, std::move( future ) ) };
+				auto* loader { new atlas::images::ImageLoader( index, std::move( future ) ) };
 				connect(
-					loader, &ImageLoader::imageReady, this, &RecordListModel::reloadRecord, Qt::SingleShotConnection );
+					loader,
+					&atlas::images::ImageLoader::imageReady,
+					this,
+					&RecordListModel::reloadRecord,
+					Qt::SingleShotConnection );
 				loader->moveToThread( &loading_thread );
 				loaders.insert( std::make_pair( index.row(), loader ) );
 			}
@@ -112,23 +116,10 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 
 void RecordListModel::killLoaders()
 {
-	for ( const auto& loader : loaders ) delete loader.second;
-
 	loaders.clear();
 }
 
-ImageLoader::ImageLoader( QPersistentModelIndex index, QFuture< QPixmap > future ) :
-  m_index( index ),
-  m_future( std::move( future ) )
-{
-	connect( &watcher, &decltype( watcher )::finished, this, &ImageLoader::triggerReady );
-	watcher.setFuture( m_future );
-}
 
-void ImageLoader::triggerReady()
-{
-	emit imageReady( m_index );
-}
 
 QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int role ) const
 {

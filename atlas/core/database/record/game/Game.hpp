@@ -114,6 +114,9 @@ namespace atlas::records
 		void addPreview( std::filesystem::path path, std::uint64_t index = 0 );
 		void removePreview( const std::uint64_t index );
 		void removePreview( const std::filesystem::path path );
+		[[nodiscard]] QFuture< QPixmap > preview( const std::uint64_t index );
+		[[nodiscard]] QFuture< QPixmap >
+			scaledPreview( const QSize size, const SCALE_TYPE scale_type, const std::uint64_t index );
 
 		void addUserTag( QString str );
 		void removeUserTag( QString str );

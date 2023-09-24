@@ -13,8 +13,6 @@
 
 namespace atlas::records
 {
-	inline static atlas::cache::ImageCache banner_cache;
-
 	bool Game::hasBanner( const BannerType type ) const
 	{
 		return !bannerPath( type ).empty();
@@ -64,11 +62,6 @@ namespace atlas::records
 		const auto& path { bannerPath( type ) };
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() ); // Path is not valid so we return an empty pixmap.
-
-		const std::string cache_key { format_ns::format( "{}", path ) };
-
-		if ( std::optional< QPixmap > opt = banner_cache.find( cache_key ); opt.has_value() )
-			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
 		else
 			return atlas::images::async::loadPixmap( path );
 	}
@@ -82,17 +75,6 @@ namespace atlas::records
 
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() );
-		/*	return QtFuture::makeExceptionalFuture< QPixmap >( std::make_exception_ptr( ImageLoadError(
-				format_ns::format( "No banner path for game id: {} with type: {}", m_id, static_cast< int >( type ) )
-					.c_str() ) ) );*/
-		//TODO: Rip out everywhere this is needed and check if we even have the banner via `hasBanner`
-
-		const std::string cache_key {
-			format_ns::format( "{}x{}:{}:{}", size.width(), size.height(), static_cast< int >( scale_type ), path )
-		};
-
-		if ( std::optional< QPixmap > opt = banner_cache.find( cache_key ); opt.has_value() )
-			return QtFuture::makeReadyFuture( std::move( opt.value() ) );
 		else
 			return atlas::images::async::loadScaledPixmap( size, scale_type, path );
 	}

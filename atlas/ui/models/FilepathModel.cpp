@@ -9,6 +9,7 @@
 #include <QIODevice>
 #include <QMimeData>
 
+#include "core/images/loader.hpp"
 #include "core/logging/logging.hpp"
 
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
@@ -19,7 +20,9 @@ void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& fi
 }
 
 FilepathModel::FilepathModel( QObject* parent ) : QAbstractListModel( parent )
-{}
+{
+	loading_thread.start();
+}
 
 QModelIndex FilepathModel::index( int row, int column, const QModelIndex& parent ) const
 {
@@ -41,9 +44,18 @@ int FilepathModel::rowCount( [[maybe_unused]] const QModelIndex& parent ) const
 
 QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 {
-	if ( role == Qt::DisplayRole || role == Qt::EditRole )
+	if ( role == FilepathModel::PixmapRole )
+	{
+		const auto& path { m_paths[ static_cast< unsigned long >( index.row() ) ] };
+		const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+		return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
+			atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
+	}
+	else if ( role == Qt::DisplayRole )
+	{
 		return QVariant::fromValue( QString::fromStdString( m_paths[ static_cast< unsigned long >( index.row() ) ]
 		                                                        .string() ) );
+	}
 
 	return {};
 }
@@ -153,4 +165,54 @@ bool FilepathModel::moveRows(
 std::vector< std::filesystem::path > FilepathModel::getFilepaths() const
 {
 	return m_paths;
+}
+
+void FilepathModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future )
+{
+	//Upon future finishing we signal `dataChanged` in order to get Qt to repaint the specific item. Repaint is luckly not called if it's off screen. Meaning we don't 'waste' paints by responding to off-screen futures finally finishing
+	if ( future.isFinished() )
+	{
+		// Optimistic checking
+		emit dataChanged( index, index );
+	}
+	else
+	{
+		//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
+		if ( future.isValid() )
+		{
+			if ( !loaders.contains( index.row() ) )
+			{
+				auto* loader { new atlas::images::ImageLoader( index, std::move( future ) ) };
+				connect(
+					loader,
+					&atlas::images::ImageLoader::imageReady,
+					this,
+					&FilepathModel::reloadRecord,
+					Qt::SingleShotConnection );
+				loader->moveToThread( &loading_thread );
+				loaders.insert( std::make_pair( index.row(), loader ) );
+			}
+			else
+				future.cancel();
+			//Image is already loading. So cancel this one
+		}
+		else
+		{
+			//Even if the future is valid. It might mean that it completed before we were ready?
+			emit dataChanged( index, index );
+		}
+	}
+}
+
+void FilepathModel::reloadRecord( QPersistentModelIndex index )
+{
+	if ( index.isValid() )
+	{
+		emit dataChanged( index, index );
+	}
+}
+
+void FilepathModel::killLoaders()
+{
+	loaders.clear();
 }
