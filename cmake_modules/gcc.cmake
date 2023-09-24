@@ -13,7 +13,7 @@
 				set(FGL_WARNINGS "-Wall -Wundef -Wextra")
 
 
-				AppendFlag("-Wno-changes-meaning") # Prevents accidently changing the type of things. Cannot define 1 things as another later
+				#AppendFlag("-Wno-changes-meaning") # Prevents accidently changing the type of things. Cannot define 1 things as another later
 				AppendFlag("-Wdouble-promotion") #Prevents issue where you can do math as a double which might not be intended.
 				AppendFlag("-Wnonnull") #Prevents passing null as an argument marked as nonnull attribute
 				AppendFlag("-Wnull-dereference") #Warns about a possible null dereference. Compiler checks all possible paths
@@ -31,7 +31,7 @@
 				AppendFlag("-Wmissing-include-dirs") #Warns when missing a include dir that was supplied to the compiler
 				AppendFlag("-Wmultistatement-macros") #Warns about odd behaviours with macros being used with conditionals that appear guarded by them
 				AppendFlag("-Wparentheses") #Warns about unnecessary parentheses or other weird cases. (Also warns of a case x<=y<=z being seen as (<=y ? 1 : 0) <= z
-				AppendFlag("-Wno-self-move") # Prevents moving a value into itself. Which has no effect
+				#AppendFlag("-Wno-self-move") # Prevents moving a value into itself. Which has no effect
 				AppendFlag("-Wsequence-point") # Prevents some really weird shit like a = a++. Since due to the order of operations this results in undefined behaviour
 				AppendFlag("-Wreturn-type") #Warns when a return type defaults to int.
 				AppendFlag("-Wno-shift-count-negative") #Warns when a bitshift count is negative
