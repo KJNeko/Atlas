@@ -126,10 +126,10 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable, game_size, owning );
+			record.addVersion( version, dest_root, relative_executable, game_size, !owning );
 		}
 		else
-			record.addVersion( version, game_root, relative_executable, game_size, owning );
+			record.addVersion( version, game_root, relative_executable, game_size, !owning );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 		if ( gl_infos.f95_thread_id != INVALID_F95_ID ) record.connectF95Data( gl_infos.f95_thread_id );
