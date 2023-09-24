@@ -48,6 +48,7 @@ namespace atlas::images
 
 	QPixmap blurPixmap( const QPixmap& pixmap, qreal blur_radius, bool quality_blur, bool alpha_only, int transposed )
 	{
+		//TODO: Figure out if alpha_only and transposed are things we can use here
 		QGraphicsScene scene;
 		QGraphicsPixmapItem item;
 		item.setPixmap( pixmap );
