@@ -19,6 +19,11 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	ZoneScoped;
 	QFuture< QPixmap > future { index.data( FilepathModel::PixmapRole ).value< QFuture< QPixmap > >() };
 
+	if ( item.state & QStyle::State_Selected )
+	{
+		painter->fillRect( item.rect, item.palette.highlight() );
+	}
+
 	if ( future.isFinished() )
 	{
 		const auto& pixmap { future.result() };
@@ -30,11 +35,6 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		pen.setWidth( 1 );
 		pen.setStyle( Qt::SolidLine );
 		painter->setPen( pen );
-
-		if ( item.state & QStyle::State_Selected )
-		{
-			painter->fillRect( item.rect, item.palette.highlight() );
-		}
 
 		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
