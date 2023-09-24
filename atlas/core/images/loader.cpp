@@ -52,7 +52,7 @@ namespace atlas::images
 		{
 			QPixmap pixmap;
 			pixmap.load( QString::fromStdString( path.string() ) );
-			pixmap_cache.insert( path, pixmap );
+			pixmap_cache.insert( path.string(), pixmap );
 			return pixmap;
 		}
 	}
@@ -131,7 +131,7 @@ namespace atlas::images
 				if ( promise.isCanceled() ) return;
 				QPixmap pixmap;
 				pixmap.load( QString::fromStdString( path.string() ) );
-				pixmap_cache.insert( path, pixmap );
+				pixmap_cache.insert( path.string(), pixmap );
 				promise.addResult( std::move( pixmap ) );
 			}
 		}
