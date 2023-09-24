@@ -26,7 +26,8 @@ class FilepathModel final : public QAbstractListModel
 	enum CustomRoles
 	{
 		StartUserRole = Qt::UserRole,
-		PixmapRole
+		PixmapRole,
+		FilepathRole
 	};
 
 	FilepathModel( QObject* parent = nullptr );

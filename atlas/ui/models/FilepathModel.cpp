@@ -55,6 +55,8 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 				return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
 					atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
 			}
+		case FilepathRole:
+			[[fallthrough]];
 		case Qt::StatusTipRole:
 			[[fallthrough]];
 		case Qt::DisplayRole:
