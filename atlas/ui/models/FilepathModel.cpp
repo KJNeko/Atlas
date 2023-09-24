@@ -99,7 +99,7 @@ bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 	beginInsertRows( parent, row, row + col - 1 );
 	killLoaders();
 
-	if ( row == rowCount( {} ) )
+	if ( row == rowCount() )
 	{
 		//Insert to end
 		for ( int i = 0; i < col; ++i )
