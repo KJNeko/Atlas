@@ -14,6 +14,7 @@
 
 #include "ProgressBarDialog.hpp"
 #include "core/config/config.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/foldersize.hpp"
 #include "ui_SettingsDialog.h"
@@ -244,9 +245,12 @@ void SettingsDialog::preparePathsSettings()
 		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::images::
 	                                                                                              getPath() ) ) ) );
 
-	ui->gamesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::games::
-	                                                                                              getPath() ) ) ) );
+	std::uint64_t total_filesize { 0 };
+
+	//TODO: Set a seperate in_place and not in_place size
+	RapidTransaction() << "SELECT SUM(folder_size) FROM versions" >> total_filesize;
+
+	ui->gamesSizeLabel->setText( locale.formattedDataSize( static_cast< qint64 >( total_filesize ) ) );
 
 	ui->databaseSizeLabel->setText( locale.formattedDataSize(
 		static_cast< qint64 >( std::filesystem::file_size( config::paths::database::getPath() / "atlas.db" ) ) ) );
