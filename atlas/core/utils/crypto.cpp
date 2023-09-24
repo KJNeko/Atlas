@@ -26,7 +26,7 @@ namespace atlas::crypto::sha256
 			{
 				ifs.read( buffer.data(), buffer.size() );
 				const auto read_bytes { ifs.gcount() };
-				hash.addData( QByteArrayView( buffer.data(), read_bytes ) );
+				hash.addData( buffer.data(), read_bytes );
 			}
 
 			return hash.result().toHex().toStdString();
@@ -38,7 +38,7 @@ namespace atlas::crypto::sha256
 	std::string hash( const QByteArrayView view )
 	{
 		QCryptographicHash hash { QCryptographicHash::Sha256 };
-		hash.addData( view );
+		hash.addData( view.data(), view.size() );
 
 		return hash.result().toHex().toStdString();
 	}
