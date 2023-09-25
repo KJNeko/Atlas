@@ -29,7 +29,7 @@ function(SetVersionInfo)
 	if (DEFINED ATLAS_GIT_TAG)
 		message("-- Git tag set to: ${ATLAS_GIT_TAG}")
 	else ()
-		execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_TAG OUTPUT_STRIP_TRAILING_WHITESPACE)
+		execute_process(COMMAND ${GIT_EXECUTABLE} describe --always --tags --match=v* --abbrev=0 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_TAG OUTPUT_STRIP_TRAILING_WHITESPACE)
 		message("-- Git tag set to: ${ATLAS_GIT_TAG}")
 	endif ()
 
