@@ -12,6 +12,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "core/config/config.hpp"
+#include "core/images/thumbnails.hpp"
 #include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
@@ -39,7 +40,15 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
 	else
+	{
 		m_model->refreshOnFuture( index, future );
+
+		const auto pixmap {
+			atlas::images::thumbnail( index.data( FilepathModel::FilepathRole ).value< std::filesystem::path >() )
+		};
+
+		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
+	}
 
 	painter->drawRect( item.rect );
 }
