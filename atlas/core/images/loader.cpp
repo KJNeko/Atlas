@@ -5,6 +5,7 @@
 #include "loader.hpp"
 
 #include <QImageReader>
+#include <QPainter>
 #include <QtConcurrentRun>
 
 #include "core/utils/ImageCache/ImageCache.hpp"
@@ -77,6 +78,11 @@ namespace atlas::images
 		//Calculate the size we need to load for each scaling tyle
 		switch ( scale_type )
 		{
+			default:
+				{
+					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
+					break;
+				}
 			case IGNORE_ASPECT_RATIO:
 				[[fallthrough]];
 			case KEEP_ASPECT_RATIO:
@@ -101,7 +107,12 @@ namespace atlas::images
 				}
 		}
 
-		return QPixmap::fromImage( reader.read() );
+		auto image { reader.read() };
+
+		atlas::logging::
+			debug( "Finished loading image: {} with size {} targeting {}", path, image.size(), image.size() );
+
+		return QPixmap::fromImage( image );
 	}
 
 	QImage loadImage( const std::filesystem::path& path )
@@ -175,34 +186,9 @@ namespace atlas::images
 				promise.addResult( std::move( pixmap ) );
 			}
 
-			//Calculate the size we need to load for each scaling tyle
-			switch ( scale_type )
-			{
-				case IGNORE_ASPECT_RATIO:
-					[[fallthrough]];
-				case KEEP_ASPECT_RATIO:
-					[[fallthrough]];
-				case KEEP_ASPECT_RATIO_BY_EXPANDING:
-					{
-						reader.setScaledSize( image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) ) );
-						break;
-					}
-				default:
-					[[fallthrough]];
-				case FIT_BLUR_EXPANDING:
-					[[fallthrough]];
-				case FIT_BLUR_STRETCH:
-					{
-						reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
-						break;
-					}
-			}
-			if ( promise.isCanceled() ) return;
-
-			const auto pixmap { QPixmap::fromImage( reader.read() ) };
+			QPixmap pixmap { atlas::images::loadScaledPixmap( target_size, scale_type, path ) };
 			scale_cache.insert( key, pixmap );
-			atlas::logging::debug(
-				"Finished loading image: {} with size {}x{}", path, pixmap.size().width(), pixmap.size().width() );
+
 			promise.addResult( std::move( pixmap ) );
 		}
 
