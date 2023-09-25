@@ -18,7 +18,7 @@ namespace atlas::images
 {
 	QSize thumbnailSize()
 	{
-		return { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+		return { config::images::thumbnail_x::get(), config::images::thumbnail_y::get() };
 	}
 
 	std::filesystem::path createThumbnail( const std::filesystem::path& image_path )
