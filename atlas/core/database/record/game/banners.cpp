@@ -55,18 +55,21 @@ namespace atlas::records
 		return this->ptr->m_banner_paths[ static_cast< unsigned long >( type ) ];
 	}
 
-	QFuture< QPixmap > Game::requestBanner( const BannerType type ) const
+	QFuture< QPixmap > Game::requestBanner( const BannerType type, const bool use_thumbnail ) const
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 
 		const auto& path { bannerPath( type ) };
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() ); // Path is not valid so we return an empty pixmap.
+		else if ( use_thumbnail )
+			return atlas::images::async::thumbnail( path );
 		else
 			return atlas::images::async::loadPixmap( path );
 	}
 
-	QFuture< QPixmap > Game::requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type )
+	QFuture< QPixmap > Game::
+		requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& path { bannerPath( type ) };
@@ -75,6 +78,8 @@ namespace atlas::records
 
 		if ( path.empty() ) //Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() );
+		else if ( use_thumbnail )
+			return atlas::images::async::scaledThumbnail( size, scale_type, path );
 		else
 			return atlas::images::async::loadScaledPixmap( size, scale_type, path );
 	}
@@ -88,19 +93,26 @@ namespace atlas::records
 	}
 
 	//! Simple passthrough to same function but with combined size via QSize instead of seperate ints
-	QFuture< QPixmap > Game::
-		requestBanner( const int width, const int height, const SCALE_TYPE scale_type, const BannerType type )
+	QFuture< QPixmap > Game::requestBanner(
+		const int width,
+		const int height,
+		const SCALE_TYPE scale_type,
+		const BannerType type,
+		const bool use_thumbnail )
 	{
-		return requestBanner( { width, height }, scale_type, type );
+		return requestBanner( { width, height }, scale_type, type, use_thumbnail );
 	}
 
-	QFuture< QPixmap > Game::requestPreview( const std::uint64_t index ) const
+	QFuture< QPixmap > Game::requestPreview( const std::uint64_t index, const bool use_thumbnail ) const
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& previews { this->ptr->m_preview_paths };
 		const auto& path { previews.at( index ) };
 
-		return atlas::images::async::loadPixmap( path );
+		if ( use_thumbnail )
+			return atlas::images::async::thumbnail( path );
+		else
+			return atlas::images::async::loadPixmap( path );
 	}
 
 } // namespace atlas::records

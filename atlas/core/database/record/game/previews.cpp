@@ -10,6 +10,7 @@
 #include "core/images/images.hpp"
 #include "core/images/import.hpp"
 #include "core/images/loader.hpp"
+#include "core/images/thumbnails.hpp"
 #include "core/utils/ImageCache/ImageCache.hpp"
 
 inline static atlas::cache::ImageCache preview_cache;
@@ -69,7 +70,7 @@ namespace atlas::records
 		emit dataChanged();
 	}
 
-	QFuture< QPixmap > Game::preview( const std::uint64_t index )
+	QFuture< QPixmap > Game::preview( const std::uint64_t index, const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& previews { ptr->m_preview_paths };
@@ -81,10 +82,15 @@ namespace atlas::records
 			                          .c_str() );
 
 		const auto& path { previews.at( index ) };
-		return atlas::images::async::loadPixmap( path );
+
+		if ( use_thumbnail )
+			return atlas::images::async::thumbnail( path );
+		else
+			return atlas::images::async::loadPixmap( path );
 	}
 
-	QFuture< QPixmap > Game::scaledPreview( const QSize size, const SCALE_TYPE scale_type, const std::uint64_t index )
+	QFuture< QPixmap > Game::scaledPreview(
+		const QSize size, const SCALE_TYPE scale_type, const std::uint64_t index, const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& previews { ptr->m_preview_paths };
@@ -96,7 +102,10 @@ namespace atlas::records
 			                          .c_str() );
 
 		const auto& path { previews.at( index ) };
-		return atlas::images::async::loadScaledPixmap( size, scale_type, path );
+		if ( use_thumbnail )
+			return atlas::images::async::thumbnail( path );
+		else
+			return atlas::images::async::loadScaledPixmap( size, scale_type, path );
 	}
 
 	void Game::removePreview( const std::uint64_t index )

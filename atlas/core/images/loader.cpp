@@ -80,10 +80,13 @@ namespace atlas::images
 			case IGNORE_ASPECT_RATIO:
 				[[fallthrough]];
 			case KEEP_ASPECT_RATIO:
-				[[fallthrough]];
-			case KEEP_ASPECT_RATIO_BY_EXPANDING:
 				{
 					reader.setScaledSize( image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) ) );
+					[[fallthrough]];
+				}
+			case KEEP_ASPECT_RATIO_BY_EXPANDING:
+				{
+					reader.setClipRect( { { 0, 0 }, target_size } );
 					break;
 				}
 			case FIT_BLUR_EXPANDING:
@@ -210,6 +213,7 @@ namespace atlas::images
 		QFuture< QPixmap >
 			loadScaledPixmap( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
 		{
+			using namespace std::chrono_literals;
 			if ( path.empty() ) throw ImageLoadError( "Failed to load image. Path empty" );
 
 			const auto key { pixmapKey( target_size, scale_type, path ) };
@@ -217,12 +221,14 @@ namespace atlas::images
 			if ( auto pixmap_opt = scale_cache.find( key ); pixmap_opt.has_value() )
 				return QtFuture::makeReadyFuture( pixmap_opt.value() );
 			else
+			{
 				return QtConcurrent::
 					run( &globalPools().image_loaders,
 				         &atlas::images::internal::loadScaledPixmap,
 				         target_size,
 				         scale_type,
 				         path );
+			}
 		}
 
 		QFuture< QPixmap > loadPixmap( const std::filesystem::path& path )

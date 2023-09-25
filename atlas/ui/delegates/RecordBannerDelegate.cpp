@@ -55,7 +55,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			//NOT IMPLEMENTED
 		}
 
-		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal ) };
+		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal, USE_THUMBNAIL ) };
 
 		QPixmap pixmap;
 

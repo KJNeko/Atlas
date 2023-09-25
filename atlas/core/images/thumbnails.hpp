@@ -5,13 +5,16 @@
 #ifndef ATLASGAMEMANAGER_THUMBNAILS_HPP
 #define ATLASGAMEMANAGER_THUMBNAILS_HPP
 
+#include <QFuture>
 #include <QImage>
 
 #include <filesystem>
 
+#include "core/config/config.hpp"
+#include "core/utils/ImageCache/ImageCache.hpp"
+
 namespace atlas::images
 {
-
 	//! Creates a thumbnail for a given image.
 	/**
 	 * Will create a thumbnail next to the original image with a `.thumb` as it's extention
@@ -24,6 +27,13 @@ namespace atlas::images
 
 	//! Returns the thumbnail for a path. Path must be a TRUE image. NOT the thumbnail path
 	QPixmap thumbnail( const std::filesystem::path& path );
+
+	namespace async
+	{
+		QFuture< QPixmap > thumbnail( const std::filesystem::path& path );
+		QFuture< QPixmap >
+			scaledThumbnail( const QSize size, const SCALE_TYPE scale_type, const std::filesystem::path& path );
+	} // namespace async
 
 } // namespace atlas::images
 
