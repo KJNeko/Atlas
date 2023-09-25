@@ -46,7 +46,12 @@ namespace atlas::images
 		return blurPixmap( pixmap, blur_radius, quality_blur, alpha_only, transposed ).toImage();
 	}
 
-	QPixmap blurPixmap( const QPixmap& pixmap, qreal blur_radius, bool quality_blur, bool alpha_only, int transposed )
+	QPixmap blurPixmap(
+		const QPixmap& pixmap,
+		qreal blur_radius,
+		bool quality_blur,
+		[[maybe_unused]] bool alpha_only,
+		[[maybe_unused]] int transposed )
 	{
 		//TODO: Figure out if alpha_only and transposed are things we can use here
 		QGraphicsScene scene;
