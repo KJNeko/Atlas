@@ -9,7 +9,6 @@
 
 namespace atlas::images
 {
-
 	std::filesystem::path createThumbnail( const std::filesystem::path& image_path )
 	{
 		atlas::logging::debug( "Creating thumbnail for {}", image_path );
@@ -18,10 +17,10 @@ namespace atlas::images
 
 		//Create thumbnail
 		const auto dest { thumbnailPath( image_path ) };
-		QPixmap thumb { async::loadPixmap( image_path ).result() };
+		QPixmap thumb { loadPixmap( image_path ) };
 
-		thumb = thumb.scaled(
-			config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get(), Qt::IgnoreAspectRatio );
+		thumb =
+			thumb.scaled( config::images::thumbnail_x::get(), config::images::thumbnail_y::get(), Qt::KeepAspectRatio );
 
 		if ( !thumb.save( QString::fromStdString( dest.string() ), "webp", 95 ) )
 			throw AtlasException( format_ns::format( "Failed to save thumbnail for {} to {}", image_path, dest ) );
@@ -31,6 +30,9 @@ namespace atlas::images
 
 	std::filesystem::path thumbnailPath( const std::filesystem::path& image )
 	{
+		if ( !std::filesystem::exists( image ) )
+			throw AtlasException(
+				format_ns::format( "attempted to get a thumbanil path for a non existant path: {}", image ) );
 		return image.parent_path() / ( image.stem().string() + ".thumb" );
 	}
 
@@ -47,10 +49,15 @@ namespace atlas::images
 
 		const auto thumb_path { thumbnailPath( path ) };
 
-		if ( !std::filesystem::exists( path ) ) (void)createThumbnail( path );
+		logging::debug( "Thumbnail path should be: {}", thumb_path );
 
-		QPixmap image;
-		image.load( QString::fromStdWString( thumb_path.wstring() ) );
+		if ( !std::filesystem::exists( thumb_path ) )
+			(void)createThumbnail( path );
+		else
+			logging::debug( "Thumbnail already existed" );
+
+		auto image { loadPixmap( thumb_path ) };
+
 		return image;
 	}
 

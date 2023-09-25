@@ -314,8 +314,8 @@ SETTINGS_D( grid_ui, centerWidgets, bool, false )
 
 SETTINGS_D( ui, stretch_banner_images, bool, false )
 SETTINGS_D( ui, use_simple_layout, bool, true )
-SETTINGS_D( images, store_all_as_one_type, bool, false )
-SETTINGS_D( images, image_type, QString, "webp" )
+SETTINGS_D( images, thumbnail_x, int, 300 )
+SETTINGS_D( images, thumbnail_y, int, 200 )
 
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )

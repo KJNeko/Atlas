@@ -26,7 +26,14 @@ namespace atlas::images
 
 	QPixmap scalePixmap( QPixmap img, const QSize target_size, const SCALE_TYPE scale_type )
 	{
-		atlas::logging::debug( "Scaling image to {}x{}", target_size.width(), target_size.height() );
+		if ( img.isNull() ) throw AtlasException( "Attempted to scale a null pixmap!" );
+
+		atlas::logging::debug(
+			"Scaling image to {}x{} from {}x{}",
+			target_size.width(),
+			target_size.height(),
+			img.size().width(),
+			img.size().height() );
 
 		img = img.scaled( target_size, Qt::AspectRatioMode( scale_type ) );
 

@@ -10,6 +10,7 @@
 #include <QMimeData>
 
 #include "core/images/loader.hpp"
+#include "core/images/thumbnails.hpp"
 #include "core/logging/logging.hpp"
 
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
@@ -54,6 +55,7 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 				const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 				return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
 					atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
+				break;
 			}
 		case FilepathRole:
 			[[fallthrough]];
