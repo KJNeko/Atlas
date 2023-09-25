@@ -29,7 +29,7 @@ namespace atlas::images
 
 		QPixmap thumb { loadPixmap( image_path ) };
 
-		thumb = thumb.scaled( thumbnailSize(), Qt::KeepAspectRatio );
+		thumb = thumb.scaled( thumbnailSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
 		const auto dest { thumbnailPath( image_path ) };
 		if ( !thumb.save( QString::fromStdString( dest.string() ), "webp", 95 ) )
