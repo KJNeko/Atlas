@@ -58,10 +58,12 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	QApplication::setFont( font );
 
+	//Notification Stuff
 	config::notify();
 
 	atlas::notifications::initNotifications( this );
 	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
+	ui->btnLog->setText("Hide Log");
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
@@ -95,8 +97,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionUpdates->setEnabled( false );
 	ui->actionUpdates->setVisible( false );
 
-	//Used to keep games list centered
-	ui->dummy_button->setHidden( true );
+
 	connect(
 		&atlas::import::internal::getNotifier(),
 		&atlas::import::ImportNotifier::notification,
@@ -350,3 +351,11 @@ void MainWindow::on_stackedWidget_currentChanged( const int idx )
 {
 	if ( idx == 0 ) ui->detailedRecordView->clearRecord();
 }
+
+void MainWindow::on_btnLog_pressed()
+{
+	auto& task_popup { atlas::notifications::handle() };
+	task_popup.setHidden( !task_popup.isHidden() );
+	ui->btnLog->setText( task_popup.isHidden() == true ? "Show Log" : "Hide Log" );
+}
+
