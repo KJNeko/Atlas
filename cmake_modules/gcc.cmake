@@ -46,7 +46,7 @@
 				AppendFlag("-Wunknown-pragmas") #Self explanitory
 				AppendFlag("-Wno-prio-ctor-dtor") #Yells about the developer setting priority to compiler reserved values for ctor/dtors
 				AppendFlag("-Wstrict-aliasing=3") #Included in -Wall. Prevents aliasing rule breaking
-				AppendFlag("-Wstrict-overflow=5") #Trys to hint at using values that won't overflow or will have the smallest chance of overflowing. Example. x+2 > y -> x+1 >= y
+				AppendFlag("-Wstrict-overflow=4") #Trys to hint at using values that won't overflow or will have the smallest chance of overflowing. Example. x+2 > y -> x+1 >= y
 				AppendFlag("-Wbool-operation") #Warn against weird operations on the boolean type. Such as bitwise operations ON the bool
 				AppendFlag("-Wduplicated-branches") #Warns about branches that appear to do the same thing
 				AppendFlag("-Wduplicated-cond") #Warns about a conditional branch having a matching condition for both sides
