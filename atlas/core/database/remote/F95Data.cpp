@@ -96,4 +96,15 @@ namespace atlas::remote
 		internal::releasePtr( id );
 	}
 
+	std::optional< atlas::remote::F95RemoteData > findF95Data( QString atlas_id )
+	{
+		//std::vector< std::string > data;
+		std::optional< atlas::remote::F95RemoteData > data;
+		//spdlog::info( "{}{}", title, developer );
+		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))"
+						   << atlas_id
+			>> [ &data ]( const F95ID f95_id ) { data = { f95_id }; };
+		return data;
+	}
+
 } // namespace atlas::remote

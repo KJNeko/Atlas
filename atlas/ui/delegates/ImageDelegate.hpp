@@ -7,9 +7,19 @@
 
 #include <QAbstractItemDelegate>
 
+#include "ui/models/FilepathModel.hpp"
+
 class ImageDelegate final : public QAbstractItemDelegate
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE( ImageDelegate )
+
+	FilepathModel* m_model;
+
+  public:
+
+	ImageDelegate( FilepathModel* model, QObject* parent = nullptr ) : QAbstractItemDelegate( parent ), m_model( model )
+	{}
 
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;

@@ -59,7 +59,6 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 			[[fallthrough]]; //print path
 		case CREATOR:
 			[[fallthrough]]; //print creator
-
 		case ENGINE:
 			[[fallthrough]];
 		case SIZE:
@@ -89,6 +88,8 @@ void BatchImportDelegate::paint( QPainter* painter, const QStyleOptionViewItem& 
 					painter->drawText( options.rect, Qt::AlignLeft | Qt::AlignVCenter, data );
 				break;
 			}
+		case COLUMNS_MAX:
+		case IS_CONFLICTING:
 		default:
 			break;
 	}
@@ -210,6 +211,14 @@ QWidget* BatchImportDelegate::
 				edit->resize( options.rect.size() );
 				return edit;
 			}
+		case SIZE:
+			[[fallthrough]];
+		case FOLDER_PATH:
+			[[fallthrough]];
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
 		default:
 			return QAbstractItemDelegate::createEditor( parent, options, index );
 	}
@@ -243,6 +252,14 @@ void BatchImportDelegate::setModelData( QWidget* editor, QAbstractItemModel* mod
 				model->setData( index, edit->text() );
 				break;
 			}
+		case FOLDER_PATH:
+			[[fallthrough]];
+		case SIZE:
+			[[fallthrough]];
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
 		default:
 			return QAbstractItemDelegate::setModelData( editor, model, index );
 	}
@@ -280,7 +297,15 @@ void BatchImportDelegate::setEditorData( QWidget* editor, const QModelIndex& ind
 				edit->setText( index.data( Qt::DisplayRole ).value< QString >() );
 				break;
 			}
+		case SIZE:
+			[[fallthrough]];
+		case FOLDER_PATH:
+			[[fallthrough]];
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
 		default:
-			return QAbstractItemDelegate::setEditorData( editor, index );
+			return;
 	}
 }

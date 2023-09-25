@@ -4,7 +4,7 @@
 
 #include "logging.hpp"
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -18,7 +18,6 @@
 #pragma GCC diagnostic ignored "-Wsuggest-final-methods"
 #endif
 
-#include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
@@ -27,9 +26,9 @@
 
 #else
 
-#include <spdlog/logger.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
 #endif
 
@@ -40,7 +39,7 @@ namespace atlas::logging
 		auto console_sink { std::make_shared< spdlog::sinks::stdout_color_sink_mt >() };
 
 #ifndef NDEBUG
-		console_sink->set_level( spdlog::level::trace );
+		console_sink->set_level( spdlog::level::debug );
 #endif
 
 		// file sink will print out to a log file and rotate it out when getting too big.
@@ -73,4 +72,10 @@ namespace atlas::logging
 	{
 		spdlog::set_pattern( "[%H:%M:%S] [%^%l%$] [thread %t]:\n\t%v" );
 	}
+
+	std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg )
+	{
+		return format_ns::format( "{}Message: {}", loc, msg );
+	}
+
 } // namespace atlas::logging

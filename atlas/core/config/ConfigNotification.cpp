@@ -4,10 +4,9 @@
 
 #include "ConfigNotification.hpp"
 
-#include <moc_ConfigNotification.cpp>
-
 #include "config.hpp"
 #include "core/utils/threading/pools.hpp"
+#include "moc_ConfigNotification.cpp"
 
 namespace config
 {

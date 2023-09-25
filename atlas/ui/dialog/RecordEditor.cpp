@@ -405,9 +405,10 @@ void RecordEditor::loadVersions()
 
 void RecordEditor::on_previewList_reordered()
 {
-	m_record.reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
+	m_record.reorderPreviews( static_cast< FilepathModel* >( ui->previewList->model() )->getFilepaths() );
 }
 
-void RecordEditor::on_btnClose_pressed(){
+void RecordEditor::on_btnClose_pressed()
+{
 	this->close();
 }

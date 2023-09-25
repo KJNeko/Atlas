@@ -50,14 +50,14 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 {
 	if ( !index.isValid() ) return {};
 
+	const auto game { m_records.at( static_cast< std::size_t >( index.row() ) ) };
+
 	switch ( role )
 	{
 		case Qt::DisplayRole:
 			[[fallthrough]];
 		case RecordListModelRoles::Raw:
-			return QVariant::fromStdVariant( std::variant<
-											 atlas::records::Game >( m_records.at( static_cast<
-																				   std::size_t >( index.row() ) ) ) );
+			return QVariant::fromStdVariant( std::variant< atlas::records::Game >( game ) );
 		case Qt::ToolTipRole:
 			[[fallthrough]];
 		case Qt::StatusTipRole:
@@ -73,6 +73,7 @@ void RecordListModel::reloadRecord( QPersistentModelIndex index )
 {
 	if ( index.isValid() )
 	{
+		loaders.erase( index.row() );
 		emit dataChanged( index, index );
 	}
 }
@@ -87,12 +88,18 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 	}
 	else
 	{
+		//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
 		if ( future.isValid() )
 		{
 			if ( !loaders.contains( index.row() ) )
 			{
-				auto* loader { new ImageLoader( index, std::move( future ) ) };
-				connect( loader, &ImageLoader::imageReady, this, &RecordListModel::reloadRecord );
+				auto* loader { new atlas::images::ImageLoader( index, std::move( future ) ) };
+				connect(
+					loader,
+					&atlas::images::ImageLoader::imageReady,
+					this,
+					&RecordListModel::reloadRecord,
+					Qt::SingleShotConnection );
 				loader->moveToThread( &loading_thread );
 				loaders.insert( std::make_pair( index.row(), loader ) );
 			}
@@ -102,43 +109,15 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 		}
 		else
 		{
-			atlas::logging::warn( "Future is invalid" );
+			//Even if the future is valid. It might mean that it completed before we were ready?
+			emit dataChanged( index, index );
 		}
 	}
-
-	/*
-		QFutureWatcher< QPixmap >* watcher { new QFutureWatcher< QPixmap >() };
-		QFuture< QPixmap >* future_ptr { new QFuture< QPixmap >( future ) };
-		watcher->setFuture( *future_ptr );
-
-		connect( watcher, &QFutureWatcher< QPixmap >::finished, watcher, &QFutureWatcher< QPixmap >::deleteLater );
-		connect( watcher, &QFutureWatcher< QPixmap >::finished, [ future_ptr ]() { delete future_ptr; } );
-		connect(
-			watcher,
-			&QFutureWatcher< QPixmap >::finished,
-			this,
-			[ this, index ]() { emit dataChanged( index, index ); } );
-		 */
 }
 
 void RecordListModel::killLoaders()
 {
-	for ( const auto& loader : loaders ) delete loader.second;
-
 	loaders.clear();
-}
-
-ImageLoader::ImageLoader( QPersistentModelIndex index, QFuture< QPixmap > future ) :
-  m_index( index ),
-  m_future( std::move( future ) )
-{
-	connect( &watcher, &decltype( watcher )::finished, this, &ImageLoader::triggerReady );
-	watcher.setFuture( m_future );
-}
-
-void ImageLoader::triggerReady()
-{
-	emit imageReady( m_index );
 }
 
 QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int role ) const
@@ -149,8 +128,10 @@ QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int ro
 		{
 			case Qt::Horizontal:
 				return QVariant( "Horizontal" ); // no column header, it's already in the tree
+			case Qt::Vertical:
+				[[fallthrough]];
 			default:
-				return QVariant( "Verticle" );
+				return QVariant( "Vertical" );
 		}
 	}
 	else

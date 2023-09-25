@@ -12,7 +12,7 @@
 
 #include "BatchImportDelegate.hpp"
 #include "BatchImportModel.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "ui_BatchImportDialog.h"

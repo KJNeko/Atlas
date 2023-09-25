@@ -12,9 +12,10 @@
 
 #include "GameImportData.hpp"
 #include "ImportNotifier.hpp"
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
-#include "core/imageManager.hpp"
+#include "core/database/record/game/Game.hpp"
+#include "core/images/images.hpp"
+#include "core/images/import.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
 #include "core/utils/operators.hpp"
@@ -125,10 +126,10 @@ namespace internal
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable, game_size, owning );
+			record.addVersion( version, dest_root, relative_executable, game_size, !owning );
 		}
 		else
-			record.addVersion( version, game_root, relative_executable, game_size, owning );
+			record.addVersion( version, game_root, relative_executable, game_size, !owning );
 
 		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
 		if ( gl_infos.f95_thread_id != INVALID_F95_ID ) record.connectF95Data( gl_infos.f95_thread_id );
@@ -141,7 +142,7 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				const std::filesystem::path banner_path { path.toStdWString() };
-				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
+				banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -161,8 +162,8 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler.setSubMessage( QString( "Importing preview %1" ).arg( path ) );
-			preview_futures.emplace_back( imageManager::importImage( { path.toStdWString() }, record->m_game_id ) );
-			//record.addPreview( { path.toStdString() } );
+			preview_futures
+				.emplace_back( atlas::images::async::importImage( { path.toStdWString() }, record->m_game_id ) );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
@@ -230,9 +231,9 @@ namespace internal
 					//TODO: Ask the user if they wish to continue or abort the entire import.
 					if ( e.exception() ) std::rethrow_exception( e.exception() );
 				}
-				catch ( std::exception& e_n )
+				catch ( AtlasException& e_n )
 				{
-					atlas::logging::error( "Failed to add preview from future: {}", e_n.what() );
+					atlas::logging::error( "Failed to add preview from future: \n{}", e_n.what() );
 				}
 			}
 		}

@@ -19,6 +19,9 @@ namespace atlas::exceptions
 
 		virtual const char* what() const noexcept override { return what_text.c_str(); }
 
+		//! Returns the what() message without any source location info
+		const char* whatRaw() const noexcept { return std::runtime_error::what(); }
+
 		AtlasException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
 		  std::runtime_error( msg ),
 		  sloc( loc ),

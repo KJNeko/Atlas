@@ -8,7 +8,7 @@
 #include <QImage>
 #include <QPixmap>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 QPixmap blurToSize(
 	const QPixmap& pixmap,

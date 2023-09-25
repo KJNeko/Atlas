@@ -13,7 +13,8 @@
 #include <QStandardItemModel>
 
 #include "ProgressBarDialog.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
+#include "core/database/RapidTransaction.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/foldersize.hpp"
 #include "ui_SettingsDialog.h"
@@ -84,6 +85,7 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::prepareThemeSettings()
 {
+	atlas::logging::debug( "Preparing theme settings" );
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
 	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
@@ -106,10 +108,12 @@ void SettingsDialog::prepareThemeSettings()
 	}
 
 	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
+	atlas::logging::debug( "Finished preparing Theme settings" );
 }
 
 void SettingsDialog::saveApplicationSettings()
 {
+	atlas::logging::debug( "Saving application settings" );
 	config::ui::use_system_theme::set( ui->cbUseSystemTheme->isChecked() );
 	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
 	config::application::font::set( ui->cbAppFont->currentText() );
@@ -122,10 +126,12 @@ void SettingsDialog::saveApplicationSettings()
 	//config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
 
 	reloadTheme();
+	atlas::logging::debug( "Saved application settings" );
 }
 
 void SettingsDialog::prepareGridViewerSettings()
 {
+	atlas::logging::debug( "Preparing grid viewer settings" );
 	//Init Grid previewSettings
 	//Grid Capsule Settings
 
@@ -180,10 +186,12 @@ void SettingsDialog::prepareGridViewerSettings()
 
 	//ui->cbCenterItems->setEnabled( false );
 	//ui->leFont->setEnabled( false );
+	atlas::logging::debug( "Finished preparing Grid settings" );
 }
 
 void SettingsDialog::saveBannerViewerSettings()
 {
+	atlas::logging::debug( "Saving banner view settings" );
 	config::grid_ui::imageLayout::set( static_cast< SCALE_TYPE >( ui->cbImageLayout->currentIndex() ) );
 	config::grid_ui::blurType::set( static_cast< BLUR_TYPE >( ui->cbBlurType->currentIndex() ) );
 	config::grid_ui::blurRadius::set( ui->sbBlurRadius->value() );
@@ -216,10 +224,12 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::experimental::loading_preview_blur::set( ui->spExpThumbRadius->value() );
 
 	config::notify();
+	atlas::logging::debug( "Finished saving banner view settings" );
 }
 
 void SettingsDialog::preparePathsSettings()
 {
+	atlas::logging::debug( "Preparing paths settings" );
 	//Set 'root' canomical path
 	ui->canonicalPath->setText( QString::fromStdString( std::filesystem::canonical( "./" ).string() ) );
 
@@ -235,16 +245,21 @@ void SettingsDialog::preparePathsSettings()
 		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::images::
 	                                                                                              getPath() ) ) ) );
 
-	ui->gamesSizeLabel
-		->setText( locale.formattedDataSize( static_cast< qint64 >( atlas::utils::folderSize( config::paths::games::
-	                                                                                              getPath() ) ) ) );
+	std::uint64_t total_filesize { 0 };
+
+	//TODO: Set a seperate in_place and not in_place size
+	RapidTransaction() << "SELECT SUM(folder_size) FROM versions" >> total_filesize;
+
+	ui->gamesSizeLabel->setText( locale.formattedDataSize( static_cast< qint64 >( total_filesize ) ) );
 
 	ui->databaseSizeLabel->setText( locale.formattedDataSize(
 		static_cast< qint64 >( std::filesystem::file_size( config::paths::database::getPath() / "atlas.db" ) ) ) );
+	atlas::logging::debug( "Finished preparing paths settings" );
 }
 
 void SettingsDialog::savePathsSettings()
 {
+	atlas::logging::debug( "Saving path settings" );
 	//Handle pathSettings
 	if ( ui->gamePath->text() != config::paths::games::get() )
 	{
@@ -337,36 +352,45 @@ void SettingsDialog::savePathsSettings()
 
 		config::paths::images::setPath( new_image_path );
 	}
+	atlas::logging::debug( "Finished saving path settings" );
 }
 
 void SettingsDialog::prepareThreadSettings()
 {
+	atlas::logging::debug( "Preparing thread settings" );
 	using namespace config::threads;
 
 	ui->sbImageImportThreads->setValue( image_import_threads::get() );
 	ui->sbImageLoadingThreads->setValue( image_loader_threads::get() );
 	ui->sbImportPreProcessorThreads->setValue( import_pre_loader_threads::get() );
 	ui->sbImportThreads->setValue( import_threads::get() );
+	atlas::logging::debug( "Finished preparing thread settings" );
 }
 
 void SettingsDialog::saveThreadSettings()
 {
+	atlas::logging::debug( "Saving thread settings" );
 	using namespace config::threads;
 
 	image_import_threads::set( ui->sbImageImportThreads->value() );
 	image_loader_threads::set( ui->sbImageLoadingThreads->value() );
 	import_pre_loader_threads::set( ui->sbImportPreProcessorThreads->value() );
 	import_threads::set( ui->sbImportThreads->value() );
+	atlas::logging::debug( "Finished saving thread settings" );
 }
 
 void SettingsDialog::prepareExperimentalSettings()
 {
+	atlas::logging::debug( "Preparing experimental settings" );
 	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
+	atlas::logging::debug( "Finished preparing experimental settings" );
 }
 
 void SettingsDialog::saveExperimentalSettings()
 {
+	atlas::logging::debug( "Saving experimental settings" );
 	config::experimental::local_match::set( ui->cbExpFindAtlData->isChecked() );
+	atlas::logging::debug( "Finished saving experimental settings" );
 }
 
 //USED TO CHANGE STACKED WIDGET INDEX

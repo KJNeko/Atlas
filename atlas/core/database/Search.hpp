@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 
 class QString;
 

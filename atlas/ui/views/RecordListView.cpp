@@ -233,6 +233,12 @@ void RecordListView::reloadConfig()
 void RecordListView::paintEvent( QPaintEvent* event )
 {
 	ZoneScoped;
-	static_cast< RecordListModel* >( this->model() )->killLoaders();
+	//static_cast< RecordListModel* >( this->model() )->killLoaders();
 	QListView::paintEvent( event );
+}
+
+void RecordListView::wheelEvent( QWheelEvent* event )
+{
+	QListView::wheelEvent( event );
+	static_cast< RecordListModel* >( this->model() )->killLoaders();
 }

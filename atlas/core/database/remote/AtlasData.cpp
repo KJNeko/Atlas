@@ -123,4 +123,16 @@ namespace atlas::remote
 		return id;
 	}
 
+	//Test functions
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer )
+	{
+		//std::vector< std::string > data;
+		std::optional< atlas::remote::AtlasRemoteData > data;
+		//spdlog::info( "{}{}", title, developer );
+		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
+						   << developer
+			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+		return data;
+	}
+
 } // namespace atlas::remote

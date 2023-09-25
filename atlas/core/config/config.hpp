@@ -13,28 +13,8 @@
 
 #include "ConfigNotification.hpp"
 #include "core/exceptions.hpp"
-#include "logging/formatters.hpp"
-#include "logging/logging.hpp"
-
-/**
- *
- * @page H95Settings Settings list
- *
- * @warning THESE SHOULD NEVER BE MODIFIED MANUALLY IN `config.ini` UNLESS TOLD TOO. These are simply to provide some reference to what they are when developing new modules
- *
- * |Group 		| Key				| Value 	| Default	|
- * |------------|-------------------|-----------|-----------|
- * |			| first_launch 		| boolean 	|  true 	|
- * |			| version_number 	| int 		| 100 		|
- * | main_view	| item_width 		| int 		| 400 		|
- * | main_view	| item_height 		| int 		| 300		|
- * | main_view	| banner_width 		| int 		| 400		|
- * | main_view	| banner_height 	| int 		| 280		|
- * | main_view	| padding			| int		| 4			|
- * | paths 		| data 				| string 	| ./data/   |
- * | paths		| games				| string	| ./data/games	 |
- * | paths		| images			| string	| ./data/images |
- */
+#include "core/logging/formatters.hpp"
+#include "core/logging/logging.hpp"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -237,11 +217,11 @@ SETTINGS_D( ui, use_system_theme, bool, false )
 
 enum SCALE_TYPE : int
 {
-	IGNORE_ASPECT_RATIO = 0,
-	KEEP_ASPECT_RATIO = 1,
-	KEEP_ASPECT_RATIO_BY_EXPANDING = 2,
-	FIT_BLUR_EXPANDING = 3,
-	FIT_BLUR_STRETCH = 4
+	IGNORE_ASPECT_RATIO = Qt::IgnoreAspectRatio,
+	KEEP_ASPECT_RATIO = Qt::KeepAspectRatio,
+	KEEP_ASPECT_RATIO_BY_EXPANDING = Qt::KeepAspectRatioByExpanding,
+	FIT_BLUR_EXPANDING = 3, //TODO: Remove due to confusion
+	FIT_BLUR_STRETCH = 4 //TODO: Remove due to confusion
 };
 
 enum BLUR_TYPE : int
@@ -269,6 +249,14 @@ enum BannerType
 	Cover = 2,
 	Logo = 3,
 	SENTINEL // Used to determine the number of banner types
+};
+
+enum BannerMask
+{
+	MASK_NORMAL = 1 << 0,
+	MASK_WIDE = 1 << 1,
+	MASK_COVER = 1 << 2,
+	MASK_LOGO = 1 << 3,
 };
 
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
@@ -326,8 +314,8 @@ SETTINGS_D( grid_ui, centerWidgets, bool, false )
 
 SETTINGS_D( ui, stretch_banner_images, bool, false )
 SETTINGS_D( ui, use_simple_layout, bool, true )
-SETTINGS_D( images, store_all_as_one_type, bool, false )
-SETTINGS_D( images, image_type, QString, "webp" )
+SETTINGS_D( images, thumbnail_x, int, 300 )
+SETTINGS_D( images, thumbnail_y, int, 200 )
 
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )

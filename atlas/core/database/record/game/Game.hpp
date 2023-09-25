@@ -10,7 +10,7 @@
 #include <filesystem> // Keep this down here for the same reason.
 
 #include "core/Types.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 template < typename T >
 class QFuture;
@@ -19,7 +19,10 @@ namespace atlas::remote
 {
 	class AtlasRemoteData;
 	class F95RemoteData;
-}
+} // namespace atlas::remote
+
+[[maybe_unused]] constexpr bool USE_THUMBNAIL { true };
+[[maybe_unused]] constexpr bool USE_FULLSIZE { false };
 
 namespace atlas::records
 {
@@ -69,11 +72,7 @@ namespace atlas::records
 		bool versionExists( const QString& str );
 
 		//! Get thumbnail from image. BLOCKING
-		QPixmap requestThumbnail( const QSize size, const BannerType type );
-
-		//!Test Function.
-		std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
-		std::optional< atlas::remote::F95RemoteData > findF95Data( QString atlas_id );
+		QPixmap requestThumbnail( const BannerType type );
 
 		//! Adds a new version. Will throw if version of same name exists.
 		/**
@@ -96,10 +95,11 @@ namespace atlas::records
 		void removeVersion( const Version& info );
 
 		//! Adds playtime to the playtime counter
-		void addPlaytime( const std::uint64_t );
+		void addPlaytime( const std::uint64_t seconds );
 
+		//! Template form of `addPlaytime` for taking in any chrono duration
 		template < class Rep, class Period >
-		void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
+		inline void addPlaytime( const std::chrono::duration< Rep, Period > time_diff )
 		{
 			addPlaytime( std::chrono::duration_cast< std::chrono::seconds >( time_diff ).count() );
 		}
@@ -109,26 +109,37 @@ namespace atlas::records
 
 		//====================Banners/Previews======================================
 
-		//! Returns a future for the banner to be loaded.
-
-		[[nodiscard]] QFuture< QPixmap > requestPreviewIndex( const std::uint64_t index ) const;
+		//! Returns a future for the preview to be loaded.
+		[[nodiscard]] QFuture< QPixmap > requestPreview( const std::uint64_t index, const bool use_thumbnail = false )
+			const;
 
 		void reorderPreviews( std::vector< std::filesystem::path > paths );
 		//! If index is zero then it will place it at the highest possible postion (starting at 1)
 		void addPreview( std::filesystem::path path, std::uint64_t index = 0 );
 		void removePreview( const std::uint64_t index );
 		void removePreview( const std::filesystem::path path );
+		[[nodiscard]] QFuture< QPixmap > preview( const std::uint64_t index, const bool use_thumbnail = false );
+		[[nodiscard]] QFuture< QPixmap > scaledPreview(
+			const QSize size,
+			const SCALE_TYPE scale_type,
+			const std::uint64_t index,
+			const bool use_thumbnail = false );
 
 		void addUserTag( QString str );
 		void removeUserTag( QString str );
 
 		void setBanner( std::filesystem::path path, const BannerType type );
-		std::filesystem::path bannerPath( const BannerType type ) const;
-		[[nodiscard]] QFuture< QPixmap > requestBanner( const BannerType type ) const;
-		[[nodiscard]] QFuture< QPixmap >
-			requestBanner( const int width, const int height, const SCALE_TYPE scale_type, const BannerType type );
-		[[nodiscard]] QFuture< QPixmap >
-			requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type );
+		const std::filesystem::path bannerPath( const BannerType type ) const;
+		[[nodiscard]] QFuture< QPixmap > requestBanner( const BannerType type, const bool use_thumbnail = false ) const;
+		[[nodiscard]] QFuture< QPixmap > requestBanner(
+			const int width,
+			const int height,
+			const SCALE_TYPE scale_type,
+			const BannerType type,
+			const bool use_thumbnail = false );
+		[[nodiscard]] QFuture< QPixmap > requestBanner(
+			const QSize size, const SCALE_TYPE scale_type, const BannerType type, const bool use_thumbnail = false );
+		bool hasBanner( const BannerType type ) const;
 
 		//=============== Remote connection ====================================
 
@@ -137,7 +148,7 @@ namespace atlas::records
 
 		void connectF95Data( const F95ID id );
 
-		// Used to accessing internal data
+		//! Used to accessing internal GameData as a const data member
 		[[nodiscard]] const GameData* operator->() const { return ptr.get(); }
 
 		[[nodiscard]] bool hasVersion( const QString str ) const;
@@ -146,21 +157,11 @@ namespace atlas::records
 	  public:
 
 	  signals:
-		/*
-	void bannerLoaded( const BannerType type, const QPixmap pixmap );
-	void
-		sizedBannerLoaded( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const QPixmap pixmap );
-	 */
 		void dataChanged();
 	}; // class Game
 
 	//! Imports a record into the database
 	/**
-	 *
-	 * @param title
-	 * @param creator
-	 * @param engine
-	 * @param transaction
 	 * @throws RecordAlreadyExists
 	 * @return
 	 */
@@ -168,9 +169,9 @@ namespace atlas::records
 	[[nodiscard]] bool recordExists( QString title, QString creator, QString engine );
 	[[nodiscard]] RecordID fetchRecord( QString title, QString creator, QString engine );
 
-	struct RecordException : public std::runtime_error
+	struct RecordException : public AtlasException
 	{
-		RecordException( const char* const msg ) : std::runtime_error( msg ) {}
+		RecordException( const char* const msg ) : AtlasException( msg ) {}
 	};
 
 	struct RecordAlreadyExists : public RecordException

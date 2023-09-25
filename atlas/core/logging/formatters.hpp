@@ -32,6 +32,8 @@ namespace format_ns = fmt;
 
 // clang-format:on
 
+#include <QSize>
+
 #include <filesystem>
 #include <source_location>
 
@@ -97,4 +99,14 @@ struct format_ns::formatter< format_ns::format_string<> >
 	}
 };
 
+template <>
+struct format_ns::formatter< QSize >
+{
+	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+
+	format_context::iterator format( const QSize size, format_context& ctx ) const
+	{
+		return format_ns::format_to( ctx.out(), "{}x{}", size.width(), size.height() );
+	}
+};
 #endif //ATLASGAMEMANAGER_FORMATTERS_HPP

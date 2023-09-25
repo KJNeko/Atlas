@@ -2,7 +2,7 @@
 
 #include <moc_mainwindow.cpp>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
@@ -56,15 +56,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
 												 config::application::font::get() );
 
-	try
-	{
-		QApplication::setFont( font );
-		//throw 505;
-	}
-	catch ( int num )
-	{
-		atlas::logging::error( "Unable to load default font. Verify system font available" );
-	}
+	QApplication::setFont( font );
 
 	config::notify();
 
@@ -119,8 +111,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	setBottomGameCounter();
 	refreshSearch();
 
-	const QString windowTitle = QString::fromStdString("ATLAS ") + utils::version_string_qt() ;
-	MainWindow::setWindowTitle(windowTitle);
+	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
+	MainWindow::setWindowTitle( windowTitle );
 }
 
 MainWindow::~MainWindow()
@@ -185,6 +177,7 @@ void MainWindow::on_btnFilter_pressed()
 
 void MainWindow::on_actionOptions_triggered()
 {
+	atlas::logging::debug( "Settings menu requested" );
 	SettingsDialog settingsDialog { this };
 	settingsDialog.setModal( true );
 	settingsDialog.exec();
@@ -196,6 +189,7 @@ void MainWindow::on_actionOptions_triggered()
 
 void MainWindow::switchToDetailed( const atlas::records::Game record )
 {
+	atlas::logging::debug( "Switched to detailed view for game {}", record->m_title );
 	ui->detailedRecordView->setRecord( record );
 	ui->stackedWidget->setCurrentIndex( 1 );
 }
@@ -264,6 +258,7 @@ void MainWindow::on_actionViewFileHistory_triggered()
 
 void MainWindow::searchTextChanged( [[maybe_unused]] const QString str )
 {
+	atlas::logging::debug( "Search text changed to {}", str );
 	/*const auto search_type = [ & ]()
 	{
 		switch ( ui->sortSelection->currentIndex() )

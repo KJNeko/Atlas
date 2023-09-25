@@ -27,8 +27,10 @@
 GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameWidget )
 {
 	ui->setupUi( this );
-	ui->previewList->setItemDelegate( new ImageDelegate() );
-	ui->previewList->setModel( new FilepathModel() );
+
+	auto* filepath_model { new FilepathModel() };
+	ui->previewList->setItemDelegate( new ImageDelegate( filepath_model ) );
+	ui->previewList->setModel( filepath_model );
 	//Used to detect when game has exited. Check every 2 seconds
 	QTimer* timer = new QTimer( this );
 	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
@@ -174,7 +176,7 @@ void GameWidget::reloadRecord()
 		//ui->previewList->hide();
 	}
 
-	std::optional< atlas::remote::AtlasRemoteData > atlas_data = record.findAtlasData( title, developer );
+	std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, developer );
 
 	//Fill vars with data if available, Check if cb is enabled from settings menu
 	if ( atlas_data.has_value() && config::experimental::local_match::get() )
@@ -195,8 +197,7 @@ void GameWidget::reloadRecord()
 	title = "<b>Title: </b>" + title + "<br>";
 	developer = "<b>Developer: </b>" + developer + "<br>";
 	engine = "<b>Engine: </b>" + engine + "<br>";
-	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() +  current_version
-		              + "<br>" };
+	QString version { "<b> Version : </b> " + versions[ 0 ].getVersionName() + current_version + "<br>" };
 
 	ui->teDetails->setText(
 		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date
@@ -240,7 +241,11 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		//Math for showing logo
 		//150 is min width for lofo heigh and 280 is max height
-		const double scale_factor = ui->bannerFrame->width() > 2300 ? .85 : ui->bannerFrame->width() / 2300.0;
+		const int banner_width { ui->bannerFrame->width() };
+		//Hints to the compiler that this is fine
+		const double scale_factor { ( static_cast< std::uint64_t >( banner_width ) > 2300 ) ?
+			                            0.85 :
+			                            ( static_cast< double >( banner_width ) / 2300.0 ) };
 		const int logo_height =
 			( image_height * scale_factor ) < 150 ? 150 :
 			( image_height * scale_factor ) > 280 ? 280 :
@@ -279,6 +284,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 						{
 							ZoneScopedN( "Blur image" );
+							//TODO: Replace this with the new `atlas::images::blurPixmap` instead. Also resize it first then blur.
 							return blurToSize(
 								std::move( banner ),
 								banner_size.width(),
@@ -394,25 +400,27 @@ void GameWidget::on_btnManageRecord_pressed()
 
 void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 {
-
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
 		ui->previewList->show();
 		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
 		//If the item has not fully loaded use show event
-		if(cols != 0)
+		if ( cols != 0 )
 		{
-			const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };
+			const int rows {
+				static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
+			};
 			//+5 padding at top and bottom of each image
-			const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+			const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
 			ui->previewList->setMinimumHeight( previewListHeight );
 		}
 	}
-	else{
+	else
+	{
 		ui->previewList->setMinimumHeight( 10 );
 		ui->previewList->hide();
 	}
-		reloadRecord();
+	reloadRecord();
 }
 
 void GameWidget::updateGameState()
@@ -468,13 +476,16 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 		ui->previewList->show();
 		//Calculate Rows and Columns
 		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
-		const int rows { static_cast<int>(std::ceil(ui->previewList->model()->rowCount() / static_cast<double>(cols))) };		
-		//Each preview has +5 padding at top and bottom. 
-		const int previewListHeight { (10 + config::grid_ui::bannerSizeY::get()) * rows};
+		const int rows {
+			static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
+		};
+		//Each preview has +5 padding at top and bottom.
+		const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
 	}
-		else{
+	else
+	{
 		ui->previewList->setMinimumHeight( 10 );
 		ui->previewList->hide();
 	}

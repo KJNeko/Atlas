@@ -28,10 +28,7 @@ namespace atlas::logging
 	//! Loads the GUI hooks required for some warnings to display to the user
 	void initGUIHooks();
 
-	inline std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg )
-	{
-		return format_ns::format( "{}Message: {}", loc, msg );
-	}
+	std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg );
 
 	//Everything in this namespace is defined in `spdlogHelpers.cpp`
 	namespace internal

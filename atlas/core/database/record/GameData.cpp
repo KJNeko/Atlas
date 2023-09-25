@@ -8,9 +8,9 @@
 
 #include <iostream>
 
-#include "Game.hpp"
 #include "Version.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/database/record/game/Game.hpp"
 
 namespace atlas::records
 {
@@ -67,12 +67,12 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		RecordID record_id { 0 };
+		RecordID record_id { INVALID_RECORD_ID };
 		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title_in
 					<< creator_in << engine_in
-			>> [ & ]( const RecordID id ) noexcept { record_id = id; };
+			>> record_id;
 
-		if ( record_id != 0 )
+		if ( record_id != INVALID_RECORD_ID )
 		{
 			Game game { record_id };
 			throw RecordAlreadyExists( game );
@@ -92,15 +92,6 @@ namespace atlas::records
 		throw AtlasException( "GameData: No version of name found" );
 	}
 
-	std::size_t strToTagID( const QString str )
-	{
-		ZoneScoped;
-		RapidTransaction transaction;
-		std::size_t id { 0 };
-		transaction << "SELECT tag_id FROM tags WHERE tag = ?" << str >> id;
-		return id;
-	}
-
 	RecordID recordID( const QString& title, const QString& creator, const QString& engine )
 	{
 		ZoneScoped;
@@ -109,19 +100,15 @@ namespace atlas::records
 		RapidTransaction transaction;
 		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title << creator
 					<< engine
-			>> [ &record_id ]( [[maybe_unused]] const RecordID id ) noexcept { record_id = id; };
+			>> record_id;
 
 		return record_id;
 	}
 
+	//! Helper function. Returns if a title,creator,engine combo can be found.
 	bool recordExists( const QString& title, const QString& creator, const QString& engine )
-	try
 	{
 		ZoneScoped;
-		return recordID( title, creator, engine );
-	}
-	catch ( [[maybe_unused]] const NoRows& e )
-	{
-		return false;
+		return recordID( title, creator, engine ) != INVALID_RECORD_ID;
 	}
 } // namespace atlas::records
