@@ -66,34 +66,27 @@ void NotificationManagerUI::addNotification( Notification* notif )
 
 void NotificationManagerUI::setHeight()
 {
-	if ( ui->scrollArea->isHidden() )
-	{
-		setFixedHeight( ui->NotificationFrame->height() );
-		emit requestMove();
-		return;
-	}
-	else
-	{
-		//Accumulate child size
-		int height { 0 };
-		height += ui->NotificationFrame->height();
-		height += ui->notifications->layout()->contentsMargins().bottom();
+	int height { 0 };
+	height += ui->NotificationFrame->height();
+	height += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
 
-		for ( auto* notif : notifications() )
-		{
-			height += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+
+	if ( ui->scrollArea->isVisible() )
+	{
+		spdlog::info( "Noti size: {}", notifications().size() );
+		//setFixedHeight( ui->NotificationFrame->height() );
+		if(notifications().size() > 0){
+			for ( auto* notif : notifications() )
+			{
+				height += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+			}
+			height += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
+			height += 9; //This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
 		}
-
-		constexpr int MAX_HEIGHT { 500 };
-		constexpr int MIN_HEIGHT { 0 };
-
-		//Clamp it down
-		height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
-
-		this->setHidden( notifications().size() == 0 );
-		setFixedHeight( height );
-		emit requestMove();
 	}
+
+	setFixedHeight( height );
+	emit requestMove();
 }
 
 void NotificationManagerUI::resizeEvent( QResizeEvent* event )
@@ -119,7 +112,7 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 }
 
 //Buttons
-void NotificationManagerUI::on_btnClose_pressed()
+void NotificationManagerUI::on_btnHideNotifications_pressed()
 {
 	// Close anything that ***CAN*** be closed.
 
@@ -127,15 +120,22 @@ void NotificationManagerUI::on_btnClose_pressed()
 	spdlog::info( "Attempting to close {} notifications", children.size() - 1 );
 	for ( auto* child : children )
 	{
-		if ( child->objectName() != "verticalLayout" )
+		spdlog::info( "Children: {}", child->objectName() );
+		if ( child->objectName() == "MessageNotification" )
 		{
 			Notification* notif { dynamic_cast< Notification* >( child ) };
-			notif->selfCloseTrigger();
+			notif->setParent( nullptr );
+			notif->close();
+			notif->deleteLater();
+			notifications().clear();
+			//notif->selfClosePtr();
 		}
 	}
+	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
+	setHeight();
 }
 
-void NotificationManagerUI::on_btnHideShow_pressed()
+void NotificationManagerUI::on_btnMinimize_pressed()
 {
 	//Set to inverse
 	ui->scrollArea->setVisible( !ui->scrollArea->isVisible() );

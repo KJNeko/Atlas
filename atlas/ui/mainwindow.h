@@ -66,6 +66,7 @@ class MainWindow final : public QMainWindow
 	void on_actionViewFileHistory_triggered();
 	void on_btnAddGame_pressed();
 	void on_btnFilter_pressed();
+	void on_btnLog_pressed();
 	void searchTextChanged( const QString str );
 	//void on_sortOrderButton_clicked();
 	//void on_sortSelection_currentIndexChanged( int index );
