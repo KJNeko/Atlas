@@ -6,6 +6,8 @@
 
 #include <tracy/Tracy.hpp>
 
+#include "core/exceptions.hpp"
+
 enum TokenOperators
 {
 	NOT,
@@ -136,13 +138,13 @@ std::string parseOperator( const std::string_view str )
 				case INVALID_OPERATOR:
 					[[fallthrough]];
 				default:
-					throw std::runtime_error(
-						fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
+					throw AtlasException(
+						format_ns::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
+	throw AtlasException( format_ns::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 std::string parseSystem( const std::string_view str )
@@ -159,7 +161,7 @@ std::string parseSystem( const std::string_view str )
 						//Extract up to first `<` or `>`
 						const auto pos { std::min( str.find( '<' ), str.find( '>' ) ) };
 						if ( pos == str.npos )
-							throw std::runtime_error( fmt::format(
+							throw AtlasException( format_ns::format(
 								"Failed to process \"{}\" in switch statement for {}: Expected \'<\' or \'>\'",
 								str,
 								__func__ ) );
@@ -176,13 +178,13 @@ std::string parseSystem( const std::string_view str )
 				case INVALID_SYSTEM:
 					[[fallthrough]];
 				default:
-					throw std::runtime_error(
-						fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
+					throw AtlasException(
+						format_ns::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
+	throw AtlasException( format_ns::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 std::pair< std::string_view, std::string_view > seperateNamespace( const std::string_view str )
@@ -211,13 +213,13 @@ std::string parseNamespace( const std::string_view str )
 				switch ( type )
 				{
 					case CREATOR:
-						return fmt::format( " creator LIKE \'{}\'", escape( sub ) );
+						return format_ns::format( " creator LIKE \'{}\'", escape( sub ) );
 					case ENGINE:
-						return fmt::format( " engine LIKE \'{}\'", escape( sub ) );
+						return format_ns::format( " engine LIKE \'{}\'", escape( sub ) );
 					case TITLE:
-						return fmt::format( " title LIKE \'{}\'", escape( sub ) );
+						return format_ns::format( " title LIKE \'{}\'", escape( sub ) );
 					case TAG:
-						return fmt::format(
+						return format_ns::format(
 							" record_id IN (SELECT record_id FROM tag_mappings NATURAL JOIN tags WHERE tag LIKE \'{}\')",
 							escape( sub ) );
 					case NAMESPACE_END:
@@ -225,14 +227,14 @@ std::string parseNamespace( const std::string_view str )
 					case INVALID_NAMESPACE:
 						[[fallthrough]];
 					default:
-						throw std::runtime_error(
-							fmt::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
+						throw AtlasException(
+							format_ns::format( "{}: Failed to process \"{}\" in switch statement", __func__, str ) );
 				}
 			}
 		}
 	}
 
-	throw std::runtime_error( fmt::format( "{}: Failed to process \"{}\"", __func__, str ) );
+	throw AtlasException( format_ns::format( "{}: Failed to process \"{}\"", __func__, str ) );
 }
 
 //! Parses the string via `parseNamespace(const std::string_view)` or `parseOperator(const std::string_view)`.
@@ -249,7 +251,7 @@ std::string parse( const std::string_view str )
 	else if ( isOperator( str ) )
 		return parseOperator( str );
 	else
-		throw std::runtime_error( fmt::format( "Failed to parse! {}", str ) );
+		throw AtlasException( format_ns::format( "Failed to parse! {}", str ) );
 }
 
 //! Extracts characters until reaching a grouping operator or namespace or system tag
@@ -297,7 +299,6 @@ std::string processString( std::string_view str_view )
 {
 	ZoneScoped;
 	str_view = trimSpaces( str_view );
-	spdlog::debug( "Processing search query: \"{}\"", str_view );
 	std::string query;
 
 	//Prevents infinite loops if we somehow reach one.

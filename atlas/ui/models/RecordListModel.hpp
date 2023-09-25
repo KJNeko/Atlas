@@ -10,27 +10,8 @@
 
 #include <iostream>
 
-#include "core/database/record/Game.hpp"
-
-struct ImageLoader final : public QObject
-{
-	Q_OBJECT
-
-	QPersistentModelIndex m_index;
-	QFuture< QPixmap > m_future;
-	QFutureWatcher< QPixmap > watcher {};
-
-  public:
-
-	ImageLoader( QPersistentModelIndex index, const QFuture< QPixmap > future );
-
-	void triggerReady();
-
-	~ImageLoader() { m_future.cancel(); }
-
-  signals:
-	void imageReady( QPersistentModelIndex index );
-};
+#include "core/database/record/game/Game.hpp"
+#include "core/images/ImageLoader.hpp"
 
 class RecordListModel final : public QAbstractListModel
 {
@@ -41,7 +22,7 @@ class RecordListModel final : public QAbstractListModel
 
 	//Map of active loading images
 	QThread loading_thread {};
-	std::unordered_map< int, ImageLoader* > loaders {};
+	std::unordered_map< int, std::unique_ptr< atlas::images::ImageLoader > > loaders {};
 
   public:
 

@@ -2,7 +2,7 @@ name: Release Nightly
 on:
   push:
     branches:
-      - nightly
+      - staging
   workflow_dispatch:
 
 jobs:

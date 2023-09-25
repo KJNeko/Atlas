@@ -79,7 +79,7 @@ namespace atlas::remote
 				last_db_update = last_db_update_in;
 			};
 
-			if ( atlas_id == INVALID_ATLAS_ID ) throw std::runtime_error( "Invalid atlas id" );
+			if ( atlas_id == INVALID_ATLAS_ID ) throw AtlasException( "Invalid atlas id" );
 		}
 
 		std::shared_ptr< AtlasData > get( const AtlasID id )
@@ -121,6 +121,18 @@ namespace atlas::remote
 		AtlasID id { INVALID_ATLAS_ID };
 		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << thread_id >> id;
 		return id;
+	}
+
+	//Test functions
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer )
+	{
+		//std::vector< std::string > data;
+		std::optional< atlas::remote::AtlasRemoteData > data;
+		//spdlog::info( "{}{}", title, developer );
+		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
+						   << developer
+			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+		return data;
 	}
 
 } // namespace atlas::remote

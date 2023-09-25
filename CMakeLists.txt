@@ -26,23 +26,29 @@ message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 #Verify after setting QT_PATH
 if (DEFINED QT_PATH)
-    message("-- QT_PATH defined as ${QT_PATH}.")
-    list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
+	message("-- QT_PATH defined as ${QT_PATH}.")
+	list(APPEND CMAKE_PREFIX_PATH ${QT_PATH})
 else ()
-    message("-- QT_PATH not defined.")
+	message("-- QT_PATH not defined.")
 endif ()
 
 add_subdirectory(dependencies/tracy)
 
-option(SPDLOG_FMT_EXTERNAL "" ON)
-add_subdirectory(dependencies/fmt)
-#add_subdirectory(dependencies/catch2)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
+
+
+if (NOT HAS_STD_FORMAT)
+	add_subdirectory(dependencies/fmt)
+	option(SPDLOG_FMT_EXTERNAL "" ON)
+else ()
+	option(SPDLOG_FMT_EXTERNAL "" OFF)
+endif ()
+
 add_subdirectory(dependencies/spdlog)
 
 #lz4
 include(dependencies/lz4_build.cmake)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake)
 
 find_package(SQLite3 3.31.1 REQUIRED)
 message("-- include = ${SQLite3_INCLUDE_DIR}")
@@ -56,53 +62,45 @@ set(CMAKE_AUTORCC ON)
 
 
 file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/atlas/core/*.cpp")
+		"${CMAKE_CURRENT_SOURCE_DIR}/atlas/core/*.cpp")
 
 file(GLOB_RECURSE UI_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/*.cpp")
+		"${CMAKE_CURRENT_SOURCE_DIR}/atlas/ui/*.cpp")
 
 #Build exe
 message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
-add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+if (WIN32)
+	add_executable(Atlas WIN32 ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+else ()
+	add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/atlas/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/atlas/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+endif ()
+
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
-target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
+
+if (NOT HAS_STD_FORMAT)
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
+else ()
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4)
+endif ()
+
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
+target_compile_Features(Atlas PRIVATE cxx_constexpr)
 
-if (DEFINED ATLAS_GIT_BRANCH)
-    message("-- Set git branch string to ${ATLAS_GIT_BRANCH}")
-else ()
-    #Get the git branch us currently
-    execute_process(COMMAND git rev-parse --abbrev-ref HEAD WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message("-- Set git branch string to: ${ATLAS_GIT_BRANCH}")
+#Set all HAVE_X flags
+if (HAVE_STD_FORMAT AND NOT DEFINED ATLAS_IGNORE_STD_FORMAT)
+	target_compile_definitions(Atlas PRIVATE HAVE_STD_FORMAT=1)
 endif ()
 
-if (DEFINED ATLAS_GIT_REVISION)
-    message("-- Set git revision to: ${ATLAS_GIT_REVISION}")
-else ()
-    execute_process(COMMAND git log -1 --format=%H WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_REVISION OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message("-- Set git revision to ${ATLAS_GIT_REVISION}")
+if (HAVE_STD_BACKTRACE)
+	target_compile_definitions(Atlas PRIVATE HAVE_STD_BACKTRACE=1)
 endif ()
 
-if (DEFINED ATLAS_GIT_TAG)
-    message("-- Git tag set to: ${ATLAS_GIT_TAG}")
-else ()
-    execute_process(COMMAND git describe --abbrev=0 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_TAG OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message("-- Git tag set to: ${ATLAS_GIT_TAG}")
+if (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
+	target_compile_definitions(Atlas PRIVATE ATLAS_SANITIZE_SOURCE_LOC="${CMAKE_SOURCE_DIR}")
 endif ()
 
-if (DEFINED ATLAS_GIT_REVISION_BRIEF)
-    message("-- Set git revision to: ${ATLAS_GIT_REVISION_BRIEF}")
-else ()
-    execute_process(COMMAND git log -1 --format=%h WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE ATLAS_GIT_REVISION_BRIEF OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message("-- Set git revision to ${ATLAS_GIT_REVISION_BRIEF}")
-endif ()
-
-target_compile_definitions(Atlas PRIVATE ATLAS_GIT_BRANCH=${ATLAS_GIT_BRANCH})
-target_compile_definitions(Atlas PRIVATE ATLAS_GIT_TAG=${ATLAS_GIT_TAG})
-target_compile_definitions(Atlas PRIVATE ATLAS_GIT_REVISION=${ATLAS_GIT_REVISION})
-target_compile_definitions(Atlas PRIVATE ATLAS_GIT_REVISION_BRIEF=${ATLAS_GIT_REVISION_BRIEF})
-
+SetVersionInfo()
 PlatformPostSetup()
 CompilerPostSetup()
 

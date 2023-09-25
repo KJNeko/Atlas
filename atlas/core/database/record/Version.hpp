@@ -10,7 +10,7 @@
 #include <filesystem>
 
 #include "core/Types.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 
 namespace atlas::records
 {
@@ -44,12 +44,9 @@ namespace atlas::records
 
 	  public:
 
-		template < typename T >
-		friend QJsonObject atlas::logging::dev::internalSerializer( const T& );
-
 		const VersionData* operator->() const
 		{
-			if ( data_ptr == nullptr ) throw std::runtime_error( "Version: Pointer was nullptr!" );
+			if ( data_ptr == nullptr ) throw AtlasException( "Version: Pointer was nullptr!" );
 			return data_ptr.get();
 		}
 

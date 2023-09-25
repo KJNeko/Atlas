@@ -163,7 +163,7 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 			}
 			catch ( std::filesystem::filesystem_error& e )
 			{
-				spdlog::error( "Failed to delete {} due to {}", file.path(), e.what() );
+				atlas::logging::error( "Failed to delete {} due to {}", file.path(), e.what() );
 			}
 		}
 
@@ -173,7 +173,7 @@ void RecordEditor::on_btnDeleteVersion_pressed()
 		}
 		catch ( std::filesystem::filesystem_error& e )
 		{
-			spdlog::error( "Failed to delete all due to {}", e.what() );
+			atlas::logging::error( "Failed to delete all due to {}", e.what() );
 		}
 
 		loadVersions();
@@ -405,9 +405,10 @@ void RecordEditor::loadVersions()
 
 void RecordEditor::on_previewList_reordered()
 {
-	m_record.reorderPreviews( ui->previewList->pathmodel()->getFilepaths() );
+	m_record.reorderPreviews( static_cast< FilepathModel* >( ui->previewList->model() )->getFilepaths() );
 }
 
-void RecordEditor::on_btnClose_pressed(){
+void RecordEditor::on_btnClose_pressed()
+{
 	this->close();
 }

@@ -16,14 +16,28 @@ namespace Ui
 
 QT_END_NAMESPACE
 
+enum class MessageLevel
+{
+	ATLAS_DEBUG,
+	ATLAS_INFO_SELFCLOSE,
+	ATLAS_INFO,
+	ATLAS_WARNING,
+	ATLAS_ERROR,
+	ATLAS_CRITICAL
+};
+
 class MessageNotification final : public Notification
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( MessageNotification )
 
+	//! Full message that was sent to the log
+	QString m_full_message;
+
   public:
 
-	explicit MessageNotification( QString str, QWidget* parent = nullptr );
+	explicit MessageNotification(
+		const MessageLevel level, QString user_message, QString full_message, QWidget* parent = nullptr );
 	~MessageNotification() override;
 
   private:

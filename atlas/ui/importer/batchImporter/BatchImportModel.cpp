@@ -7,8 +7,8 @@
 #include <QLineEdit>
 #include <QLocale>
 
-#include "core/database/record/Game.hpp"
-#include "core/logging.hpp"
+#include "core/database/record/game/Game.hpp"
+#include "core/logging/logging.hpp"
 
 int BatchImportModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 {
@@ -85,6 +85,8 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						return QString::fromStdString( item.executable.string() );
 					case IS_CONFLICTING:
 						return item.conflicting_version;
+					case COLUMNS_MAX:
+						[[fallthrough]];
 					default:
 						return QString( "Missing handler for Qt::DisplayRole for this column in BatchImportModel.cpp" );
 				}
@@ -134,6 +136,8 @@ QVariant BatchImportModel::data( const QModelIndex& index, int role ) const
 						[[fallthrough]];
 					case COLUMNS_MAX:
 						[[fallthrough]];
+					case IS_CONFLICTING:
+						[[fallthrough]];
 					default:
 						return {};
 				}
@@ -181,6 +185,10 @@ QVariant BatchImportModel::headerData( int section, Qt::Orientation orientation,
 						return QString( "Size" );
 					case EXECUTABLE:
 						return QString( "Executable" );
+					case COLUMNS_MAX:
+						[[fallthrough]];
+					case IS_CONFLICTING:
+						[[fallthrough]];
 					default:
 						return QString( "MISSING HEADER IN SWITCH" );
 				}
@@ -233,9 +241,13 @@ Qt::ItemFlags BatchImportModel::flags( const QModelIndex& index ) const
 		case SIZE:
 			[[fallthrough]];
 		case FOLDER_PATH:
+			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
 			[[fallthrough]];
 		default:
-			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+			return {};
 	}
 	return QAbstractItemModel::flags( index );
 }
@@ -246,21 +258,16 @@ bool BatchImportModel::setData( const QModelIndex& index, const QVariant& value,
 
 	auto recheckData = [ &data ]()
 	{
-		spdlog::info( "Checking that {} doesn't have in valid data anymore", data.title );
 		data.game_id = atlas::records::recordID( data.title, data.creator, data.engine );
 		if ( data.game_id != INVALID_ATLAS_ID )
 		{
 			const atlas::records::Game game { data.game_id };
-			spdlog::debug( "Found existing record: {}", game->m_title );
 			//Record exists. Set if the version still exists
 
 			data.conflicting_version = game.hasVersion( data.version );
-
-			spdlog::debug( "Data conflicting: {}", data.conflicting_version ? "Yes" : "No" );
 		}
 		else
 		{
-			spdlog::debug( "Data doesn't match any existing record" );
 			//Can't possibly conflict now.
 			data.conflicting_version = false;
 		}
@@ -333,6 +340,10 @@ void BatchImportModel::sort( int idx, Qt::SortOrder order )
 
 	switch ( static_cast< ImportColumns >( idx ) )
 	{
+		case COLUMNS_MAX:
+			[[fallthrough]];
+		case IS_CONFLICTING:
+			[[fallthrough]];
 		default:
 			[[fallthrough]];
 		case TITLE:

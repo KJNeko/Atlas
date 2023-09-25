@@ -11,6 +11,10 @@
 namespace atlas::database::migrations
 {
 	//! Up must be defined to create/modify the tables that are required.
+	/**
+	 * @tparam id ID of the migration to run
+	 * @return Returns the migration string. Must be a valid SQL query
+	 */
 	template < std::uint64_t id >
 	[[nodiscard]] std::string_view migration();
 

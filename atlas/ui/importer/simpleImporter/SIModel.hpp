@@ -8,8 +8,8 @@
 #include <QAbstractItemModel>
 #include <QDir>
 
-#include "core/config.hpp"
-#include "core/logging.hpp"
+#include "core/config/config.hpp"
+#include "core/logging/logging.hpp"
 
 enum class SupportingType
 {

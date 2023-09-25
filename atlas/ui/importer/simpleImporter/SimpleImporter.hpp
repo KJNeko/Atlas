@@ -18,7 +18,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class Node;
+struct Node;
 
 class SimpleImporter final : public QDialog
 {

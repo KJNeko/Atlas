@@ -11,23 +11,23 @@
 
 #include <tracy/Tracy.hpp>
 
-#include <filesystem>
-
-#include "core/config.hpp"
+#include "core/config/config.hpp"
+#include "core/images/thumbnails.hpp"
+#include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	//atlas::records::Game record { index.data().value< atlas::records::Game >() };
+	QFuture< QPixmap > future { index.data( FilepathModel::PixmapRole ).value< QFuture< QPixmap > >() };
 
-	const std::filesystem::path path { index.data( Qt::DisplayRole ).value< QString >().toStdString() };
-
-	if ( std::filesystem::exists( path ) )
+	if ( item.state & QStyle::State_Selected )
 	{
-		QPixmap pixmap { QString::fromStdString( path.string() ) };
+		painter->fillRect( item.rect, item.palette.highlight() );
+	}
 
-		pixmap = pixmap.scaled( item.rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
-
+	if ( future.isFinished() )
+	{
+		const auto& pixmap { future.result() };
 		//Reset the current brush
 		painter->setBrush( Qt::NoBrush );
 		QPen pen;
@@ -37,16 +37,17 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		pen.setStyle( Qt::SolidLine );
 		painter->setPen( pen );
 
-		if ( item.state & QStyle::State_Selected )
-		{
-			painter->fillRect( item.rect, item.palette.highlight() );
-		}
-
 		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
 	else
 	{
-		painter->drawText( item.rect, Qt::AlignCenter, "Filepath does not exist" );
+		m_model->refreshOnFuture( index, future );
+
+		const auto pixmap {
+			atlas::images::thumbnail( index.data( FilepathModel::FilepathRole ).value< std::filesystem::path >() )
+		};
+
+		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
 
 	painter->drawRect( item.rect );

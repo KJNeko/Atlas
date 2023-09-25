@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
+    <width>518</width>
     <height>106</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="errorMessage">
+    <widget class="QLabel" name="errorType">
      <property name="minimumSize">
       <size>
        <width>500</width>

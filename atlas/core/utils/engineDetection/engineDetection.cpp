@@ -9,6 +9,7 @@
 #include <QMimeDatabase>
 #include <QString>
 
+#include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
 
 #include <algorithm>
@@ -17,7 +18,7 @@
 #include <fstream>
 #include <string>
 
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 #include "core/system.hpp"
 #include "core/utils/FileScanner.hpp"
 

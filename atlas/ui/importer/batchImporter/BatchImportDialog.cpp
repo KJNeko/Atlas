@@ -12,7 +12,7 @@
 
 #include "BatchImportDelegate.hpp"
 #include "BatchImportModel.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "ui_BatchImportDialog.h"
@@ -116,7 +116,7 @@ void BatchImportDialog::processFiles()
 		regex::regexify( regex::escapeStr( QString::fromStdString( ( base / search ).string() ) ) )
 	};
 
-	spdlog::debug( "Scanning {} for games", base );
+	atlas::logging::debug( "Scanning {} for games", base );
 
 	scanner.start( base, cleaned_regex, ui->cbScanFilesize->isChecked() );
 
@@ -145,12 +145,12 @@ void BatchImportDialog::importFiles()
 	(void)QtConcurrent::run(
 		[ games, owning, root ]()
 		{
+			atlas::logging::debug( "Starting to fill import queue" );
 			for ( auto game : games )
 			{
-				spdlog::debug( "Triggering import game for {}", game.title );
 				(void)importGame( std::move( game ), root, owning );
 			}
-			spdlog::debug( "Finished queueing imports" );
+			atlas::logging::debug( "Finished queueing imports" );
 		} );
 
 	accept();
@@ -162,7 +162,7 @@ void BatchImportDialog::on_btnNext_pressed()
 
 	if ( import_triggered ) return;
 
-	spdlog::debug( "next pressed" );
+	atlas::logging::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
 		import_triggered = true;
@@ -212,7 +212,7 @@ void BatchImportDialog::on_btnNext_pressed()
 void BatchImportDialog::on_btnBack_pressed()
 {
 	ZoneScoped;
-	spdlog::debug( "Back pressed" );
+	atlas::logging::debug( "Back pressed" );
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 
@@ -287,7 +287,7 @@ void BatchImportDialog::reject()
 void BatchImportDialog::importFailure( const QString top, const QString bottom )
 {
 	ZoneScoped;
-	spdlog::warn( "An import failure signal was detected" );
+	atlas::logging::warn( "An import failure signal was detected" );
 	if ( QMessageBox::warning(
 			 this,
 			 top,

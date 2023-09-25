@@ -6,17 +6,29 @@
 #define ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 
 #include <QAbstractItemModel>
+#include <QFuture>
 
 #include <deque>
 #include <filesystem>
+
+#include "core/images/ImageLoader.hpp"
 
 class FilepathModel final : public QAbstractListModel
 {
 	Q_OBJECT
 
 	std::vector< std::filesystem::path > m_paths {};
+	std::unordered_map< int, std::unique_ptr< atlas::images::ImageLoader > > loaders {};
+	QThread loading_thread {};
 
   public:
+
+	enum CustomRoles
+	{
+		StartUserRole = Qt::UserRole,
+		PixmapRole,
+		FilepathRole
+	};
 
 	FilepathModel( QObject* parent = nullptr );
 
@@ -41,9 +53,12 @@ class FilepathModel final : public QAbstractListModel
 	Qt::ItemFlags flags( const QModelIndex& index ) const override;
 
 	std::vector< std::filesystem::path > getFilepaths() const;
+	void refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future );
+	void killLoaders();
 
   public slots:
 	void setFilepaths( const std::vector< std::filesystem::path >& filepaths );
+	void reloadRecord( QPersistentModelIndex index );
 
   signals:
 	void reordered();

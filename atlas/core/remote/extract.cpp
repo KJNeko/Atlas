@@ -8,7 +8,8 @@
 #include <fstream>
 #include <lz4frame.h>
 
-#include "core/logging.hpp"
+#include "core/exceptions.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas
 {
@@ -18,7 +19,7 @@ namespace atlas
 		switch ( info->blockSizeID )
 		{
 			default:
-				throw std::runtime_error( "Invalid block size" );
+				throw AtlasException( "Invalid block size when getting block size for LZ4 archive" );
 			case LZ4F_default:
 				[[fallthrough]];
 			case LZ4F_max64KB:
@@ -35,12 +36,11 @@ namespace atlas
 	std::vector< char > extract( const std::filesystem::path path )
 	{
 		ZoneScoped;
-		spdlog::info( "Extracting {}", path );
 		LZ4F_dctx* dctx { nullptr };
 		if ( const auto status = LZ4F_createDecompressionContext( &dctx, LZ4F_VERSION ); LZ4F_isError( status ) )
 		{
-			throw std::runtime_error(
-				fmt::format( "Failed to create decompression context: {}", LZ4F_getErrorName( status ) ) );
+			throw AtlasException(
+				format_ns::format( "Failed to create decompression context: {}", LZ4F_getErrorName( status ) ) );
 		}
 
 		std::vector< char > out_data;
@@ -58,7 +58,7 @@ namespace atlas
 			if ( const auto fires = LZ4F_getFrameInfo( dctx, &info, header_buffer.data(), &processed_bytes );
 			     LZ4F_isError( fires ) )
 			{
-				throw std::runtime_error( fmt::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
+				throw AtlasException( format_ns::format( "Failed to get frame info: {}", LZ4F_getErrorName( fires ) ) );
 			}
 
 			const auto block_size { get_block_size( &info ) };
@@ -66,7 +66,6 @@ namespace atlas
 			char* const decompression_buffer = new char[ block_size ];
 			std::memset( decompression_buffer, 0, block_size );
 
-			spdlog::info( "Header ate {} bytes", processed_bytes );
 			//Rewind file
 			ifs.seekg( static_cast< long long >( processed_bytes ), std::ios::beg );
 
@@ -97,8 +96,8 @@ namespace atlas
 
 				if ( LZ4F_isError( ret ) )
 				{
-					spdlog::error( "Failed to decompress: {}", LZ4F_getErrorName( ret ) );
-					throw std::runtime_error( fmt::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
+					logging::error( "Failed to decompress LZ4 archive: {}", LZ4F_getErrorName( ret ) );
+					throw AtlasException( format_ns::format( "Failed to decompress: {}", LZ4F_getErrorName( ret ) ) );
 				}
 				//Shift buffer over by ready_bytes (bytes read by LZ4F_decompress)
 				std::memmove( buffer.data(), buffer.data() + bytes_processed, buffer.size() - bytes_processed );
@@ -112,14 +111,12 @@ namespace atlas
 			}
 		}
 		else
-			throw std::runtime_error( fmt::format( "Failed to open file: {}", path.string() ) );
+		{
+			throw AtlasException( format_ns::format( "Failed to open file: {}", path.string() ) );
+		}
 
 		LZ4F_freeDecompressionContext( dctx );
-		const auto file_size { std::filesystem::file_size( path ) };
-		const auto data_size { out_data.size() };
-		const float percent { static_cast< float >( data_size ) / static_cast< float >( file_size ) };
-		spdlog::info(
-			"Finished extracting file {} -> {}: {}%", std::filesystem::file_size( path ), out_data.size(), percent );
+
 		return out_data;
 	}
 
