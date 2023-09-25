@@ -22,7 +22,7 @@ namespace atlas::remote
 } // namespace atlas::remote
 
 constexpr bool USE_THUMBNAIL { true };
-constexpr bool NO_FULLSIZE { false };
+constexpr bool USE_FULLSIZE { false };
 
 namespace atlas::records
 {
