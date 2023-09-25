@@ -16,6 +16,11 @@ inline static atlas::cache::ImageCache thumb_cache;
 
 namespace atlas::images
 {
+	QSize thumbnailSize()
+	{
+		return { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+	}
+
 	std::filesystem::path createThumbnail( const std::filesystem::path& image_path )
 	{
 		atlas::logging::debug( "Creating thumbnail for {}", image_path );
@@ -24,8 +29,7 @@ namespace atlas::images
 
 		QPixmap thumb { loadPixmap( image_path ) };
 
-		thumb =
-			thumb.scaled( config::images::thumbnail_x::get(), config::images::thumbnail_y::get(), Qt::KeepAspectRatio );
+		thumb = thumb.scaled( thumbnailSize(), Qt::KeepAspectRatio );
 
 		const auto dest { thumbnailPath( image_path ) };
 		if ( !thumb.save( QString::fromStdString( dest.string() ), "webp", 95 ) )
@@ -84,7 +88,7 @@ namespace atlas::images
 		QImageReader original_reader { QString::fromStdString( path.string() ) };
 		QImageReader thumb_reader { QString::fromStdString( thumb_path.string() ) };
 
-		const auto target_size { QSize( config::images::thumbnail_x::get(), config::images::thumbnail_y::get() ) };
+		const auto target_size { thumbnailSize() };
 		const auto expected_size { original_reader.size().scaled( target_size, Qt::KeepAspectRatio ) };
 
 		if ( expected_size != thumb_reader.size() )
