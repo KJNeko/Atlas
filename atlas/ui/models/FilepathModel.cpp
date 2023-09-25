@@ -58,7 +58,7 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 				break;
 			}
 		case FilepathRole:
-			[[fallthrough]];
+			return QVariant::fromValue( path );
 		case Qt::StatusTipRole:
 			[[fallthrough]];
 		case Qt::DisplayRole:
