@@ -21,8 +21,8 @@ namespace atlas::remote
 	class F95RemoteData;
 } // namespace atlas::remote
 
-constexpr bool USE_THUMBNAIL { true };
-constexpr bool USE_FULLSIZE { false };
+[[maybe_unused]] constexpr bool USE_THUMBNAIL { true };
+[[maybe_unused]] constexpr bool USE_FULLSIZE { false };
 
 namespace atlas::records
 {
