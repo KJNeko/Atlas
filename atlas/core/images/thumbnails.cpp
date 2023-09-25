@@ -113,7 +113,7 @@ namespace atlas::images
 
 				QPixmap pixmap { atlas::images::loadPixmap( thumb_path ) };
 
-				thumb_cache.insert( thumb_path, pixmap );
+				thumb_cache.insert( thumb_path.string(), pixmap );
 				promise.addResult( std::move( pixmap ) );
 			}
 
