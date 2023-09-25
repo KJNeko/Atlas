@@ -61,31 +61,37 @@ void NotificationManagerUI::addNotification( Notification* notif )
 	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
 	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
 	ui->label->setText( QString( "%1 notifications" ).arg( ++active_notifications ) );
+	ui->btnHideNotifications->setVisible(true );
 	setHeight();
 }
 
 void NotificationManagerUI::setHeight()
 {
 	int height { 0 };
+	int scroll_Area { 0 };
 	height += ui->NotificationFrame->height();
 	height += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
 
-
-	if ( ui->scrollArea->isVisible() )
+	if ( ui->scrollArea->isVisible())
 	{
-		spdlog::info( "Noti size: {}", notifications().size() );
+		spdlog::info( "Children size: {}", ui->notifications->children().size() );
 		//setFixedHeight( ui->NotificationFrame->height() );
-		if(notifications().size() > 0){
+		if(ui->notifications->children().size() >1 )
+		{
 			for ( auto* notif : notifications() )
 			{
-				height += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+				scroll_Area += notif->sizeHint().height() + ui->notifications->layout()->spacing();
 			}
-			height += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
-			height += 9; //This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
+				scroll_Area += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
+			scroll_Area += 9; //This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
 		}
+		else{
+			height += 2;
+		}
+		
 	}
-
-	setFixedHeight( height );
+	ui->scrollArea->setFixedHeight(scroll_Area );
+	setFixedHeight( height + scroll_Area );
 	emit requestMove();
 }
 
@@ -126,12 +132,13 @@ void NotificationManagerUI::on_btnHideNotifications_pressed()
 			Notification* notif { dynamic_cast< Notification* >( child ) };
 			notif->setParent( nullptr );
 			notif->close();
-			notif->deleteLater();
-			notifications().clear();
-			//notif->selfClosePtr();
+			notif->deleteLater();			
 		}
 	}
+
 	ui->label->setText( QString( "%1 notifications" ).arg( --active_notifications ) );
+	ui->scrollArea->setFixedHeight( 0 );
+	ui->btnHideNotifications->setVisible( false );
 	setHeight();
 }
 
