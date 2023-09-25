@@ -5,6 +5,7 @@
 #include "thumbnails.hpp"
 
 #include "core/exceptions.hpp"
+#include "core/utils/ImageCache/ImageCache.hpp"
 #include "loader.hpp"
 
 inline static atlas::cache::ImageCache thumb_cache;
@@ -50,16 +51,13 @@ namespace atlas::images
 
 		const auto thumb_path { thumbnailPath( path ) };
 
-		if ( auto opt = thumb_cache.find( thumb_path.string() ); opt.has_value )
+		if ( auto opt = thumb_cache.find( thumb_path.string() ); opt.has_value() )
 			return opt.value();
 		else
 		{
 			logging::debug( "Thumbnail path should be: {}", thumb_path );
 
-			if ( !std::filesystem::exists( thumb_path ) )
-				(void)createThumbnail( path );
-			else
-				logging::debug( "Thumbnail already existed" );
+			if ( !std::filesystem::exists( thumb_path ) ) (void)createThumbnail( path );
 
 			auto image { loadPixmap( thumb_path ) };
 
