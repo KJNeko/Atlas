@@ -76,7 +76,6 @@ void NotificationManagerUI::setHeight()
 
 	if ( ui->scrollArea->isVisible())
 	{
-		spdlog::info( "Children size: {}", ui->notifications->children().size() );
 		//setFixedHeight( ui->NotificationFrame->height() );
 		if(ui->notifications->children().size() >1 )
 		{
@@ -128,7 +127,6 @@ void NotificationManagerUI::on_btnHideNotifications_pressed()
 
 	for ( auto* child : children )
 	{
-		spdlog::info( "Children: {}", child->objectName() );
 		if ( child->objectName() == "MessageNotification" )
 		{
 			Notification* notif { dynamic_cast< Notification* >( child ) };
