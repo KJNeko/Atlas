@@ -87,7 +87,10 @@ namespace atlas::images
 					break;
 				}
 			case FIT_BLUR_EXPANDING:
-				[[fallthrough]];
+				{
+					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatioByExpanding ) );
+					break;
+				}
 			case FIT_BLUR_STRETCH:
 				{
 					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
