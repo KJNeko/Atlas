@@ -6,6 +6,7 @@
 #ifndef ATLASGAMEMANAGER_BINDER_HPP
 #define ATLASGAMEMANAGER_BINDER_HPP
 
+#include <concepts>
 #include <sqlite3.h>
 #include <string>
 
@@ -61,6 +62,7 @@ class Binder
 	}
 
 	template < typename T >
+		requires( !std::is_reference_v< T > )
 	void operator>>( T& t )
 	{
 		ran = true;
@@ -93,13 +95,8 @@ class Binder
 				[[fallthrough]];
 			case SQLITE_ERROR:
 				{
-					atlas::logging::error(
-						"DB: Query error: \"{}\", Query: \"{}\"",
-						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ),
-						std::source_location::current() );
-					throw AtlasException( format_ns::format(
-						"DB: Query error: \"{}\", Query: \"{}\"",
+					throw DatabaseException( format_ns::format(
+						"Query error: \"{}\", Query: \"{}\"",
 						sqlite3_errmsg( &Database::ref() ),
 						sqlite3_expanded_sql( stmt ) ) );
 				}
@@ -132,6 +129,17 @@ class Binder
 					}
 				case SQLITE_DONE:
 					return;
+				case SQLITE_MISUSE:
+					[[fallthrough]];
+				case SQLITE_BUSY:
+					[[fallthrough]];
+				case SQLITE_ERROR:
+					{
+						throw DatabaseException( format_ns::format(
+							"Query error: \"{}\", Query: \"{}\"",
+							sqlite3_errmsg( &Database::ref() ),
+							sqlite3_expanded_sql( stmt ) ) );
+					}
 				default:
 					{
 						throw DatabaseException( format_ns::format(
