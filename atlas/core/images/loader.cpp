@@ -71,6 +71,7 @@ namespace atlas::images
 
 		QImageReader reader;
 		const QSize image_size { reader.size() };
+		QSize scaled_size { 0, 0 };
 
 		//Default to the other loader if the image size is invalid
 		if ( image_size == QSize() ) return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type );
@@ -80,14 +81,14 @@ namespace atlas::images
 		{
 			default:
 				{
-					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
+					scaled_size = image_size.scaled( target_size, Qt::KeepAspectRatio );
 					break;
 				}
 			case IGNORE_ASPECT_RATIO:
 				[[fallthrough]];
 			case KEEP_ASPECT_RATIO:
 				{
-					reader.setScaledSize( image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) ) );
+					scaled_size = image_size.scaled( target_size, Qt::AspectRatioMode( scale_type ) );
 					[[fallthrough]];
 				}
 			case KEEP_ASPECT_RATIO_BY_EXPANDING:
@@ -97,22 +98,32 @@ namespace atlas::images
 				}
 			case FIT_BLUR_EXPANDING:
 				{
-					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatioByExpanding ) );
+					scaled_size = image_size.scaled( target_size, Qt::KeepAspectRatioByExpanding );
 					break;
 				}
 			case FIT_BLUR_STRETCH:
 				{
-					reader.setScaledSize( image_size.scaled( target_size, Qt::KeepAspectRatio ) );
+					scaled_size = image_size.scaled( target_size, Qt::KeepAspectRatio );
 					break;
 				}
 		}
 
-		auto image { reader.read() };
+		if ( reader.size() == scaled_size ) //Image is already scaled to what we expect. Just load it normally.
+		{
+			atlas::logging::debug( "Bypassing QImageReader as image was already scaled" );
+			return loadPixmap( path );
+		}
+		else
+		{
+			reader.setScaledSize( scaled_size );
 
-		atlas::logging::
-			debug( "Finished loading image: {} with size {} targeting {}", path, image.size(), image.size() );
+			auto image { reader.read() };
 
-		return QPixmap::fromImage( image );
+			atlas::logging::
+				debug( "Finished loading image: {} with size {} targeting {}", path, image.size(), image.size() );
+
+			return QPixmap::fromImage( image );
+		}
 	}
 
 	QImage loadImage( const std::filesystem::path& path )
