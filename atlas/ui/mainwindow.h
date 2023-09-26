@@ -8,6 +8,7 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+#include "core/updater/AtlasUpdater.hpp"
 QT_BEGIN_NAMESPACE
 
 namespace Ui
