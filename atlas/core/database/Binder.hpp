@@ -160,8 +160,6 @@ class Binder
 				std::string( sqlite3_sql( stmt ) ) ) );
 
 		ran = true;
-		using Tpl = std::tuple< Ts... >;
-		Tpl tpl;
 
 		if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
 
@@ -176,6 +174,7 @@ class Binder
 				{
 					if constexpr ( sizeof...( Ts ) > 0 )
 					{
+						std::tuple< Ts... > tpl;
 						extractRow< 0, Ts... >( stmt, tpl );
 						tpl_opt = std::move( tpl );
 						return;
