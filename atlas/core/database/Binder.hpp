@@ -152,7 +152,9 @@ class Binder
 	{
 		if ( param_counter != max_param_count )
 			throw AtlasException( format_ns::format(
-				"param_counter != max_param_count = {} != {} for query \"{}\"",
+				"Not enough parameters given for query! Given {}, Expected {}. param_counter != max_param_count = {} != {} for query \"{}\"",
+				param_counter,
+				max_param_count,
 				param_counter,
 				max_param_count,
 				std::string( sqlite3_sql( stmt ) ) ) );
