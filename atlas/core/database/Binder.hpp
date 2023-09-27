@@ -133,13 +133,6 @@ class Binder
 	{
 		ran = true;
 
-		if ( param_counter != max_param_count )
-			throw AtlasException( format_ns::format(
-				"param_counter != max_param_count = {} != {} for query \"{}\"",
-				param_counter,
-				max_param_count,
-				std::string( sqlite3_sql( stmt ) ) ) );
-
 		std::optional< std::tuple< Ts... > > opt_tpl { std::nullopt };
 		executeQuery( opt_tpl );
 
@@ -156,12 +149,20 @@ class Binder
 		requires( !( is_optional< Ts > || ... ) && !( is_tuple< Ts > || ... ) )
 	void executeQuery( std::optional< std::tuple< Ts... > >& tpl_opt )
 	{
-		using Tpl = std::tuple< Ts... >;
+		if ( param_counter != max_param_count )
+			throw AtlasException( format_ns::format(
+				"param_counter != max_param_count = {} != {} for query \"{}\"",
+				param_counter,
+				max_param_count,
+				std::string( sqlite3_sql( stmt ) ) ) );
 
 		ran = true;
+		using Tpl = std::tuple< Ts... >;
 		Tpl tpl;
 
 		if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
+
+		atlas::logging::debug( "Executing query {}", sqlite3_expanded_sql( stmt ) );
 
 		const auto step_ret { sqlite3_step( stmt ) };
 
@@ -184,21 +185,23 @@ class Binder
 				}
 			case SQLITE_DONE:
 				{
+					atlas::logging::debug( "Finished query {}", sqlite3_expanded_sql( stmt ) );
 					tpl_opt = std::nullopt;
 					return;
-				}
-			default:
-				[[fallthrough]];
-			case SQLITE_MISUSE:
-				[[fallthrough]];
-			case SQLITE_BUSY:
-				[[fallthrough]];
-			case SQLITE_ERROR:
-				{
-					throw AtlasException( format_ns::format(
-						"DB: Query error: \"{}\", Query: \"{}\"",
-						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ) ) );
+
+					default:
+						[[fallthrough]];
+					case SQLITE_MISUSE:
+						[[fallthrough]];
+					case SQLITE_BUSY:
+						[[fallthrough]];
+					case SQLITE_ERROR:
+						{
+							throw AtlasException( format_ns::format(
+								"DB: Query error: \"{}\", Query: \"{}\"",
+								sqlite3_errmsg( &Database::ref() ),
+								sqlite3_expanded_sql( stmt ) ) );
+						}
 				}
 		}
 	}

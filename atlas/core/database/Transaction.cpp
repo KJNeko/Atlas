@@ -46,8 +46,10 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
+			//sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
+			*this << "COMMIT TRANSACTION";
 			m_finished = true;
+			atlas::logging::debug( "Commit called" );
 		}
 		else
 			throw TransactionInvalid( "Attempted to commit a finished transaction" );
@@ -58,8 +60,10 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
+			*this << "ABORT TRANSACTION";
+			//sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
 			m_finished = true;
+			atlas::logging::debug( "Abort called" );
 		}
 		else
 			throw TransactionInvalid( "Attempted to abort a finished transaction" );
