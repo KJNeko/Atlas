@@ -90,24 +90,25 @@ class Binder
 		requires( (!is_optional< T >) && (!is_tuple< T >))
 	void operator>>( T& t )
 	{
-		std::tuple< T > tpl;
+		std::optional< std::tuple< T > > tpl;
 
-		*this >> tpl;
+		executeQuery( tpl );
 
-		t = std::move( std::get< 0, T >( tpl ) );
+		if ( tpl.has_value() ) t = std::move( std::get< 0, T >( tpl.value() ) );
 	}
 
 	template < typename T >
 		requires( !is_optional< T > && (!is_tuple< T >))
 	void operator>>( std::optional< T >& t )
 	{
-		T tmp;
+		std::optional< std::tuple< T > > tpl;
 
-		*this >> tmp;
-		if constexpr ( std::is_move_assignable_v< T > )
-			t = std::move( tmp );
+		executeQuery( tpl );
+
+		if ( tpl.has_value() )
+			t = std::move( std::get< 0, T >( tpl.value() ) );
 		else
-			t = tmp;
+			t = std::nullopt;
 	}
 
 	template < typename Function >
