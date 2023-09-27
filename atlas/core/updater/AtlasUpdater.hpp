@@ -28,7 +28,11 @@ namespace atlas
         void check_for_updates();
 		AtlasUpdater();
 
-    };
+        private:
+
+		  void handleJsonResponse( QNetworkReply* reply );
+		  void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
+	};
     
     void initUpdateHandler();
 	void shutdownUpdateHandler();
