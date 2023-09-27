@@ -22,11 +22,12 @@ Binder::Binder( const std::string_view sql )
 	max_param_count = sqlite3_bind_parameter_count( stmt );
 }
 
-Binder::~Binder()
+Binder::~Binder() noexcept( false )
 {
 	if ( !ran ) [[unlikely]]
 	{
-		sqlite3_step( stmt );
+		std::optional< std::tuple<> > tpl;
+		executeQuery( tpl );
 	}
 
 	sqlite3_finalize( stmt );
