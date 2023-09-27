@@ -34,7 +34,7 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			Binder( "ROLLBACK TRANSACTION" );
+			*this << "ROLLBACK TRANSACTION";
 			throw DatabaseException( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
 		}
 
@@ -60,7 +60,7 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			*this << "ABORT TRANSACTION";
+			*this << "ROLLBACK TRANSACTION";
 			//sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
 			m_finished = true;
 			atlas::logging::debug( "Abort called" );
