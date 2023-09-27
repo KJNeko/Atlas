@@ -77,7 +77,6 @@ void Database::initalize( const std::filesystem::path init_path )
 		game.setBanner( "./data/images/config_image.webp", Normal );
 	}
 
-	config::db::first_start::set( false );
 }
 
 void Database::deinit()

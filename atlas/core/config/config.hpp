@@ -205,7 +205,6 @@ SETTINGS_D( importer, downloadBanner, bool, false )
 SETTINGS_D( importer, downloadVNDB, bool, false )
 SETTINGS_D( importer, moveImported, bool, true )
 
-SETTINGS_D( db, first_start, bool, true )
 SETTINGS_D( logging, level, int, 2 )
 
 SETTINGS_GEO( main_window )
@@ -314,8 +313,6 @@ SETTINGS_D( grid_ui, centerWidgets, bool, false )
 
 SETTINGS_D( ui, stretch_banner_images, bool, false )
 SETTINGS_D( ui, use_simple_layout, bool, true )
-SETTINGS_D( images, thumbnail_x, int, 300 )
-SETTINGS_D( images, thumbnail_y, int, 200 )
 
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )
@@ -334,8 +331,6 @@ SETTINGS_D( threads, import_pre_loader_threads, int, 4 )
 SETTINGS_D( experimental, local_match, bool, false )
 SETTINGS_D( experimental, loading_preview, bool, false )
 SETTINGS_D( experimental, loading_preview_blur, int, 90 )
-
-SETTINGS_D( database, migration_version, int, 0 )
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

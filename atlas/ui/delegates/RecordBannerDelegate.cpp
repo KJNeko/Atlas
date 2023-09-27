@@ -86,10 +86,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				//Add experimental feature: Thumbnail loading
 				if ( config::experimental::loading_preview::get() )
 				{
-					pixmap = record.requestThumbnail( Normal );
-					pixmap.fill( Qt::transparent );
-					pixmap = atlas::images::
-						blurPixmap( pixmap, config::experimental::loading_preview_blur::get(), true, false );
+					//TODO: Blurhash loading here!
 				}
 			}
 		}
