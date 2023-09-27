@@ -103,18 +103,11 @@ class Binder
 	{
 		T tmp;
 
-		try
-		{
-			*this >> tmp;
-			if constexpr ( std::is_move_assignable_v< T > )
-				t = std::move( tmp );
-			else
-				t = tmp;
-		}
-		catch ( DatabaseException& e )
-		{
-			t = std::nullopt;
-		}
+		*this >> tmp;
+		if constexpr ( std::is_move_assignable_v< T > )
+			t = std::move( tmp );
+		else
+			t = tmp;
 	}
 
 	template < typename Function >
@@ -154,8 +147,7 @@ class Binder
 		{
 			tpl = std::move( opt_tpl.value() );
 		}
-		else
-			throw DatabaseException( "Expected 1 row. Got 0" );
+		return;
 	}
 
   private:
