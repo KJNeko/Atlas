@@ -16,6 +16,32 @@
 #include "core/logging/logging.hpp"
 #include "extractors.hpp"
 
+template < typename T >
+concept has_value = requires( T& t ) {
+	{
+		t.value()
+	} -> std::same_as< typename T::value_type& >;
+};
+
+template < typename T >
+concept has_value_check = requires( T& t ) {
+	{
+		t.has_value()
+	} -> std::same_as< bool >;
+};
+
+template < typename T >
+concept has_get = requires( T& t ) {
+	{
+		std::get< 0 >( t )
+	};
+};
+
+template < typename T > concept is_tuple = has_get< std::remove_reference_t< T > >;
+
+template < typename T >
+concept is_optional = has_value< std::remove_reference_t< T > > && has_value_check< std::remove_reference_t< T > >;
+
 class Binder
 {
 	sqlite3_stmt* stmt { nullptr };
@@ -61,119 +87,130 @@ class Binder
 	}
 
 	template < typename T >
+		requires( (!is_optional< T >) && (!is_tuple< T >))
 	void operator>>( T& t )
 	{
-		ran = true;
-		const auto step_ret { sqlite3_step( stmt ) };
+		std::optional< std::tuple< T > > tpl;
 
+		executeQuery( tpl );
+
+		if ( tpl.has_value() ) t = std::move( std::get< 0, T >( tpl.value() ) );
+	}
+
+	template < typename T >
+		requires( !is_optional< T > && (!is_tuple< T >))
+	void operator>>( std::optional< T >& t )
+	{
+		std::optional< std::tuple< T > > tpl;
+
+		executeQuery( tpl );
+
+		if ( tpl.has_value() )
+			t = std::move( std::get< 0, T >( tpl.value() ) );
+		else
+			t = std::nullopt;
+	}
+
+	template < typename Function >
+		requires( (!is_optional< Function >) && (!is_tuple< Function >))
+	void operator>>( Function&& func )
+	{
+		using FuncArgs = FunctionDecomp< Function >;
+		using Tpl = FuncArgs::ArgTuple;
+
+		std::optional< Tpl > opt_tpl { std::nullopt };
+		executeQuery( opt_tpl );
+
+		while ( opt_tpl.has_value() )
+		{
+			std::apply( func, std::move( opt_tpl.value() ) );
+			executeQuery( opt_tpl );
+		}
+	}
+
+	template < typename... Ts >
+		requires( !( is_optional< Ts > && ... ) ) && ( !( is_tuple< Ts > && ... ) )
+	void operator>>( std::tuple< Ts... >& tpl )
+	{
+		ran = true;
+
+		std::optional< std::tuple< Ts... > > opt_tpl { std::nullopt };
+		executeQuery( opt_tpl );
+
+		if ( opt_tpl.has_value() )
+		{
+			tpl = std::move( opt_tpl.value() );
+		}
+		return;
+	}
+
+  private:
+
+	template < typename... Ts >
+		requires( !( is_optional< Ts > || ... ) && !( is_tuple< Ts > || ... ) )
+	void executeQuery( std::optional< std::tuple< Ts... > >& tpl_opt )
+	{
 		if ( param_counter != max_param_count )
 			throw AtlasException( format_ns::format(
-				"param_counter != max_param_count = {} != {} for query \"{}\"",
+				"Not enough parameters given for query! Given {}, Expected {}. param_counter != max_param_count = {} != {} for query \"{}\"",
+				param_counter,
+				max_param_count,
 				param_counter,
 				max_param_count,
 				std::string( sqlite3_sql( stmt ) ) ) );
+
+		ran = true;
+
+		if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
+
+		atlas::logging::debug( "Executing query {}", sqlite3_expanded_sql( stmt ) );
+
+		const auto step_ret { sqlite3_step( stmt ) };
 
 		switch ( step_ret )
 		{
 			case SQLITE_ROW:
 				[[likely]]
 				{
-					extract< 0, T >( stmt, t );
-					return;
+					if constexpr ( sizeof...( Ts ) > 0 )
+					{
+						std::tuple< Ts... > tpl;
+						extractRow< 0, Ts... >( stmt, tpl );
+						tpl_opt = std::move( tpl );
+						return;
+					}
+					else
+					{
+						tpl_opt = std::nullopt;
+						return;
+					}
 				}
 			case SQLITE_DONE:
 				{
+					atlas::logging::debug( "Finished query {}", sqlite3_expanded_sql( stmt ) );
+					tpl_opt = std::nullopt;
 					return;
-				}
-			default:
-				[[fallthrough]];
-			case SQLITE_MISUSE:
-				[[fallthrough]];
-			case SQLITE_BUSY:
-				[[fallthrough]];
-			case SQLITE_ERROR:
-				{
-					atlas::logging::error(
-						"DB: Query error: \"{}\", Query: \"{}\"",
-						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ),
-						std::source_location::current() );
-					throw AtlasException( format_ns::format(
-						"DB: Query error: \"{}\", Query: \"{}\"",
-						sqlite3_errmsg( &Database::ref() ),
-						sqlite3_expanded_sql( stmt ) ) );
+
+					default:
+						[[fallthrough]];
+					case SQLITE_MISUSE:
+						[[fallthrough]];
+					case SQLITE_BUSY:
+						[[fallthrough]];
+					case SQLITE_ERROR:
+						{
+							throw AtlasException( format_ns::format(
+								"DB: Query error: \"{}\", Query: \"{}\"",
+								sqlite3_errmsg( &Database::ref() ),
+								sqlite3_expanded_sql( stmt ) ) );
+						}
 				}
 		}
 	}
 
-	template < typename Function >
-	void operator>>( Function&& func )
-	{
-		using FuncArgs = FunctionDecomp< Function >;
-		using Tpl = FuncArgs::ArgTuple;
-		ran = true;
+  public:
 
-		//Execute the query.
-		while ( true )
-		{
-			if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
-
-			const auto result { sqlite3_step( stmt ) };
-
-			switch ( result )
-			{
-				case SQLITE_ROW:
-					[[likely]]
-					{
-						Tpl tpl;
-						extractRow< 0 >( stmt, tpl );
-						std::apply( func, std::move( tpl ) );
-						break;
-					}
-				case SQLITE_DONE:
-					return;
-				default:
-					{
-						throw DatabaseException( format_ns::format(
-							"Unhandled error in sqlite: {} \"{}\"", result, sqlite3_expanded_sql( stmt ) ) );
-					}
-			}
-		}
-	}
-
-	template < typename... Ts >
-		requires( sizeof...( Ts ) > 1 )
-	void operator>>( std::tuple< Ts... >& tpl )
-	{
-		ran = true;
-
-		//Execute the query.
-		while ( true )
-		{
-			if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
-
-			const auto result { sqlite3_step( stmt ) };
-
-			switch ( result )
-			{
-				case SQLITE_ROW:
-					[[likely]]
-					{
-						extractRow< 0 >( stmt, tpl );
-						continue;
-					}
-				case SQLITE_DONE:
-					return;
-				default:
-					{
-						throw DatabaseException( format_ns::format(
-							"Unhandled error in sqlite: {} \"{}\"", result, sqlite3_expanded_sql( stmt ) ) );
-					}
-			}
-		}
-	}
-
-	~Binder();
+	~Binder() noexcept( false );
 };
 
 #endif //ATLASGAMEMANAGER_BINDER_HPP

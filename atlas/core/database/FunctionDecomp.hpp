@@ -6,11 +6,12 @@
 #ifndef ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP
 #define ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP
 
+#include <concepts>
 #include <tuple>
 
 // Everything below here is just pure magic.
 // I'll try to decipher how the hell this works someday....
-template < typename >
+template < typename Function >
 struct FunctionDecomp;
 
 template < typename Function >
@@ -48,4 +49,6 @@ struct FunctionDecomp< ReturnType ( * )( Args... ) >
 template < typename Func >
 using FunctionReturn = FunctionDecomp< Func >::ResultType;
 
+template < typename Func >
+using FunctionTuple = FunctionDecomp< Func >::ArgTuple;
 #endif //ATLASGAMEMANAGER_FUNCTIONDECOMP_HPP
