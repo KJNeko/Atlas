@@ -13,10 +13,19 @@ jobs:
         with:
           submodules: 'true'
           ref: staging
-
+      
+      - name: Version Increment
+        id: version
+        run: |
+          echo "current_version=$(git describe --always --tags --match=v* --abbrev=0)" >> $GITHUB_OUTPUT  
+      
+      - name: Short Sha ID
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=nightly-${{github.sha}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{steps.vars.outputs.current_version}}-${{ steps.vars.outputs.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
