@@ -16,7 +16,7 @@ jobs:
 
       - name: Version Increment
         id: version
-        run: echo "current_version=$(git ls-remote --tags --sort="v:refname"  https://github.com/KJNeko/Atlas.git v* | tail -n1 | sed 's/.*\///; s/\^{}//')" >> $env:GITHUB_ENV
+        run: echo "current_version=$(git ls-remote --tags --sort="v:refname"  https://github.com/KJNeko/Atlas.git "v*.*.?" | tail -n1 | sed 's/.*\///; s/\^{}//')" >> $env:GITHUB_ENV
       
       - name: Short Sha ID
         id: sha
