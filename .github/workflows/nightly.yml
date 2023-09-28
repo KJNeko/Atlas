@@ -14,9 +14,17 @@ jobs:
           submodules: 'true'
           ref: staging
 
+      - name: Version Increment
+        id: version
+        run: echo "current_version=$(git ls-remote --tags --sort="v:refname"  https://github.com/KJNeko/Atlas.git v* | tail -n1 | sed 's/.*\///; s/\^{}//')" >> $env:GITHUB_ENV
+      
+      - name: Short Sha ID
+        id: sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $env:GITHUB_ENV
+
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=nightly-${{github.sha}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ env.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
