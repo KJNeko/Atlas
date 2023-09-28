@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "core/logging/logging.hpp"
+#include "core/version.hpp"
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -89,11 +90,21 @@ namespace atlas
 			QJsonObject jsonObject = jsonResponse.object();
 			const QJsonArray& array = jsonResponse.array();
 
+			QString version =
+				QString::fromLocal8Bit( utils::git_tag.data(), static_cast< qsizetype >( utils::git_tag.size() ) ) + "-"
+				+ QString::fromLocal8Bit( utils::git_rev_brief.data(), static_cast< qsizetype >( utils::git_rev_brief.size() ) );
+			qInfo() << version;
+			/*[[maybe_unused]] constexpr std::string_view git_branch { ATLAS_GIT_BRANCH };
+			[[maybe_unused]] constexpr std::string_view git_revision { ATLAS_GIT_REVISION };
+			[[maybe_unused]] constexpr std::string_view git_rev_brief { ATLAS_GIT_REVISION_BRIEF };
+			[[maybe_unused]] constexpr std::string_view git_tag { ATLAS_GIT_TAG };*/
+
 			for ( const auto& data : array )
 			{
 				const auto& obj { data.toObject() };
 				qInfo() << obj[ "tag_name" ].toString();
 				qInfo() << obj[ "created_at" ].toString();
+				qInfo() << obj[ "target_commitish" ].toString();
 				for ( const auto& assets : obj["assets"].toArray())
 				{
 					const auto& asset { assets.toObject() };
