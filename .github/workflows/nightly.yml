@@ -16,16 +16,19 @@ jobs:
       
       - name: Version Increment
         id: version
-        run: |
-          echo "current_version=$(git describe --always --tags --match=v* --abbrev=0)" >> $GITHUB_OUTPUT  
+        run: echo "current_version=$(git describe --always --tags --match=v* --abbrev=0)" >> $GITHUB_OUTPUT  
       
       - name: Short Sha ID
-        id: vars
+        id: sha
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       
+      - name: Check Version
+        id: build-version
+        run: echo ${{steps.version.outputs.current_version}}
+
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=${{steps.vars.outputs.current_version}}-${{ steps.vars.outputs.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{steps.version.outputs.current_version}}-${{ steps.sha.outputs.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
