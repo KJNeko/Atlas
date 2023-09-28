@@ -21,10 +21,6 @@ jobs:
       - name: Short Sha ID
         id: sha
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      
-      - name: Check Version
-        id: build-version
-        run: echo ${{steps.version.outputs.current_version}}
 
       - name: Prepare version string
         run: |
