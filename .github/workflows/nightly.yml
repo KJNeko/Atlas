@@ -11,9 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'false'
-          ref: master
+          submodules: 'true'
+          ref: staging
       
+      - name: Get next version
+        uses: reecetech/version-increment@2023.9.3
+        id: version_test
+        with:
+          scheme: semver
+          increment: patch
+
       - name: Version Increment
         id: version
         run: echo "current_version=$(git describe --always --tags --match=v* --abbrev=0)" >> $env:GITHUB_ENV
@@ -24,12 +31,8 @@ jobs:
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ env.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ env.sha_short }}-${{ steps.version.outputs.version }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
-      - uses: actions/checkout@v3
-        with:
-          submodules: 'true'
-          ref: staging
 
       - uses: ./.github/actions/build-windows
         with:
