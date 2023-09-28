@@ -13,13 +13,6 @@ jobs:
         with:
           submodules: 'true'
           ref: staging
-      
-      - name: Get next version
-        uses: reecetech/version-increment@2023.9.3
-        id: version_test
-        with:
-          scheme: semver
-          increment: patch
 
       - name: Version Increment
         id: version
@@ -31,7 +24,7 @@ jobs:
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ env.sha_short }}-${{ steps.version.outputs.version }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ env.sha_short }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
