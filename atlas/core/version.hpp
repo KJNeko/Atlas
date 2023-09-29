@@ -23,12 +23,17 @@
 #error "No git tag specified. Specify the tag with -DATLAS_GIT_TAG"
 #endif
 
+#ifndef ATLAS_GIT_CREATED_TIME
+#error "Unable to get time. Specify the tag with -DATLAS_GIT_TIME"
+#endif
+
 #else
 
 #define ATLAS_VERSION "Debug Build. DO NOT REDISTRIBUTE"
 #define ATLAS_GIT_BRANCH "NOT SET DURING BUILD PROCESS"
 #define ATLAS_GIT_REVISION "NOT SET DURING BUILD PROCESS"
 #define ATLAS_GIT_TAG "NOT SET DURING BUILD PROCESS"
+#define ATLAS_GIT_CREATED_TIME "NOT SET DURING BUILD PROCESS"
 
 #endif
 
@@ -52,6 +57,7 @@ namespace utils
 	[[maybe_unused]] constexpr std::string_view git_revision { ATLAS_GIT_REVISION };
 	[[maybe_unused]] constexpr std::string_view git_rev_brief { ATLAS_GIT_REVISION_BRIEF };
 	[[maybe_unused]] constexpr std::string_view git_tag { ATLAS_GIT_TAG };
+	[[maybe_unused]] constexpr std::string_view git_time { ATLAS_GIT_CREATED_TIME };
 
 	inline const QString version_string_qt()
 	{

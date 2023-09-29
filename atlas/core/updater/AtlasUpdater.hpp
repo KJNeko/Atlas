@@ -30,6 +30,8 @@ namespace atlas
 
         private:
 
+		  long int converToEpoch( QString time );
+		  long int converToShortEpoch( QString time );
 		  void handleJsonResponse( QNetworkReply* reply );
 		  void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
 	};

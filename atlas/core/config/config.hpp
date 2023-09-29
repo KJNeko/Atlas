@@ -317,6 +317,7 @@ SETTINGS_D( ui, use_simple_layout, bool, true )
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )
 SETTINGS_D( application, theme_folder, QString, "./data/themes" )
+SETTINGS_D( application, update_channel, QString, "stable" )
 
 SETTINGS_D( remote, allow_checks, bool, false )
 SETTINGS_D( remote, last_check, int, 0 )

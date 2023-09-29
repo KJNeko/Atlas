@@ -2,8 +2,13 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMessageBox>
+#include <QSpacerItem>
+#include <QGridLayout>
+
 #include "core/logging/logging.hpp"
 #include "core/version.hpp"
+#include "core/config/config.hpp"
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -90,23 +95,81 @@ namespace atlas
 			QJsonObject jsonObject = jsonResponse.object();
 			const QJsonArray& array = jsonResponse.array();
 
-			QString version =
+			const QString version =
 				QString::fromLocal8Bit( utils::git_tag.data(), static_cast< qsizetype >( utils::git_tag.size() ) ) + "-"
-				+ QString::fromLocal8Bit( utils::git_rev_brief.data(), static_cast< qsizetype >( utils::git_rev_brief.size() ) );
-			qInfo() << version;
+				+ QString::fromLocal8Bit( utils::git_rev_brief.data(), static_cast< qsizetype >( utils::git_rev_brief.size() ) ).left(7);
+			const QString branch = QString::
+				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
 
-			for ( const auto& data : array )
+			const long int buildtime {  QString("1686017").toInt()/*converToShortEpoch( QString::fromLocal8Bit(
+				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) )*/ };
+			qInfo() << buildtime;			
+			struct release{
+				QString tag_name;
+				long int created_at;
+				QString target_commitish;
+				QString browser_download_url;
+			};
+
+			std::vector<release> releases;
+
+			//Check that we are not on a dev branch
+			if(branch != "master" || branch != "staging")
 			{
-				const auto& obj { data.toObject() };
-				qInfo() << obj[ "tag_name" ].toString();
-				qInfo() << obj[ "created_at" ].toString();
-				qInfo() << obj[ "target_commitish" ].toString();
-				for ( const auto& assets : obj["assets"].toArray())
+				int last_unix_ts = buildtime;
+				for ( const auto& data : array )
 				{
-					const auto& asset { assets.toObject() };
-					qInfo() << asset[ "browser_download_url" ].toString();
+					const auto& obj { data.toObject() };
+					const auto tag_name { obj[ "tag_name" ].toString() };
+					const auto created_at { obj[ "created_at" ].toString() };
+					const auto target_commitish { obj[ "target_commitish" ].toString() };
+					QString browser_download_url { "" };
+					for ( const auto& assets : obj["assets"].toArray())
+					{
+						const auto& asset { assets.toObject() };
+						browser_download_url = asset[ "browser_download_url" ].toString();
+					}
+					if(converToShortEpoch( created_at ) > last_unix_ts)
+					{
+						last_unix_ts = created_at.toInt();
+						if(config::application::update_channel::get() == "nightly")
+						{
+							qInfo() << target_commitish;
+							qInfo() << tag_name;
+							qInfo() << converToShortEpoch( created_at );
+							releases.push_back( release( tag_name, converToShortEpoch(created_at), target_commitish, browser_download_url ) );
+						}
+						if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+						{
+							qInfo() << target_commitish;
+							qInfo() << tag_name;
+							qInfo() << converToShortEpoch( created_at );
+							releases.push_back( release( tag_name, converToShortEpoch(created_at), target_commitish, browser_download_url ) );
+						}
+					}
 				}
+
+				QMessageBox msgBox;
+				msgBox.setWindowTitle( "Update Available" );
+				msgBox.setText("A new version of ATLAS is available!\n\nCurrent Version: " + version + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?");
+				msgBox.setIcon( QMessageBox::Question );
+				msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
+				msgBox.setDetailedText( "Changelog" );
+				QSpacerItem* horizontalSpacer = new QSpacerItem(450, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+				QGridLayout* layout = static_cast<QGridLayout*>(msgBox.layout());
+				layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+				msgBox.exec();
+
 			}
+			else{
+				//Show box saying there is no update because your on a dev branch
+				QMessageBox msgBox;
+				msgBox.setWindowTitle( "No Update Available" );
+				msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +version);
+				msgBox.exec();
+			}
+
+
 		}
 		reply->deleteLater();
 
@@ -193,6 +256,35 @@ namespace atlas
 				break;
 			case QNetworkReply::UnknownServerError:
 				break;
+		}
+	}
+
+	long int AtlasUpdater::converToEpoch(QString time){
+		std::tm t = {};
+		std::istringstream ss(time.toStdString());
+
+		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+		{
+			return static_cast<long int>(std::mktime( &t ));
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	long int AtlasUpdater::converToShortEpoch(QString time){
+		std::tm t = {};
+		std::istringstream ss(time.toStdString());
+
+		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+		{
+			const long int unix_time {static_cast<long int>(std::mktime( &t ))};
+			return QString::number( unix_time ).left( QString::number( unix_time ).length() - 3 ).toInt();
+		}
+		else
+		{
+			return 0;
 		}
 	}
 }
