@@ -98,9 +98,6 @@ namespace atlas
 			QJsonObject jsonObject = jsonResponse.object();
 			const QJsonArray& array = jsonResponse.array();
 
-			const QString version =
-				QString::fromLocal8Bit( utils::git_tag.data(), static_cast< qsizetype >( utils::git_tag.size() ) ) + "-"
-				+ QString::fromLocal8Bit( utils::git_rev_brief.data(), static_cast< qsizetype >( utils::git_rev_brief.size() ) ).left(7);
 			const QString branch = QString::
 				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
 
@@ -155,7 +152,7 @@ namespace atlas
 
 				QMessageBox msgBox;
 				msgBox.setWindowTitle( releases.size() > 0 ? "Update Available" : "No Update Available" );
-				msgBox.setText( releases.size() > 0 ? "A new version of ATLAS is available!\n\nCurrent Version: " + version + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?": "");
+				msgBox.setText( releases.size() > 0 ? "A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt() + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?": "");
 				msgBox.setIcon( QMessageBox::Question );
 				msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
 				msgBox.setDetailedText( "Changelog" );
@@ -176,7 +173,8 @@ namespace atlas
 					
 					QMessageBox msgBox;
 					msgBox.setWindowTitle( "No Update Available" );
-					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +version);
+					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +utils::version_string_qt());
+					msgBox.setIcon( QMessageBox::Warning );
 					msgBox.exec();
 				}
 			}

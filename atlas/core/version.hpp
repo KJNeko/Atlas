@@ -61,7 +61,24 @@ namespace utils
 
 	inline const QString version_string_qt()
 	{
-		return QString::fromLocal8Bit( version_string.data(), static_cast< qsizetype >( version_string.size() ) );
+		const QString version {
+			QString::fromLocal8Bit( git_tag.data(), static_cast< qsizetype >( git_tag.size() ) )
+		};
+
+		const QString branch {
+			QString::fromLocal8Bit( git_branch.data(), static_cast< qsizetype >( git_branch.size() ) )
+		};
+
+		std::tm t = {};
+		std::istringstream ss( QString::fromLocal8Bit( git_time.data(), static_cast< qsizetype >( git_time.size() )).toStdString());
+		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+		{
+			const long int unix_time {static_cast<long int>(std::mktime( &t ))};
+			return version + "-" + QString::number( unix_time ).left( QString::number( unix_time ).length() - 3 ) + " | " + branch ;
+		}
+		else{
+			return version + "- UNKNOWN | " + branch;
+		}
 	}
 } // namespace utils
 
