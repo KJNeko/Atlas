@@ -14,6 +14,7 @@
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
 #include "core/database/record/game/Game.hpp"
+#include "core/images/blurhash.hpp"
 #include "core/images/images.hpp"
 #include "core/utils/QImageBlur.hpp"
 #include "ui/models/RecordListModel.hpp"
@@ -58,7 +59,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal, USE_THUMBNAIL ) };
 
 		QPixmap pixmap;
-
 		if ( banner.isFinished() )
 		{
 			pixmap = banner.result();
@@ -83,11 +83,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			}
 			else
 			{
-				//Add experimental feature: Thumbnail loading
-				if ( config::experimental::loading_preview::get() )
-				{
-					//TODO: Blurhash loading here!
-				}
+				pixmap = atlas::images::getBlurhash( record.bannerPath( Normal ), banner_size );
 			}
 		}
 

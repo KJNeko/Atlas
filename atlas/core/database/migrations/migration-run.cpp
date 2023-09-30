@@ -28,7 +28,7 @@ namespace atlas::database::migrations
 		break;
 
 	//! Int to represent what the highest migration is at (Starting at migration 0 we run until we are N <= MIGRATIONS_VERSION)
-	inline static constexpr int MIGRATIONS_VERSION { 17 };
+	inline static constexpr int MIGRATIONS_VERSION { 18 };
 
 	/**
 	 * @brief Runs all transactions up until hitting MIGRATIONS_VERSION - 1.
@@ -90,6 +90,7 @@ namespace atlas::database::migrations
 					MIGRATE( 14 )
 					MIGRATE( 15 )
 					MIGRATE( 16 )
+					MIGRATE( 17 )
 					default:
 						logging::critical(
 							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",
