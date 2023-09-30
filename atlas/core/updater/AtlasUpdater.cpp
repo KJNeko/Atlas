@@ -98,14 +98,11 @@ namespace atlas
 			QJsonObject jsonObject = jsonResponse.object();
 			const QJsonArray& array = jsonResponse.array();
 
-			const QString version =
-				QString::fromLocal8Bit( utils::git_tag.data(), static_cast< qsizetype >( utils::git_tag.size() ) ) + "-"
-				+ QString::fromLocal8Bit( utils::git_rev_brief.data(), static_cast< qsizetype >( utils::git_rev_brief.size() ) ).left(7);
 			const QString branch = QString::
 				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
 
-			const long int buildtime {  QString("1686017").toInt()/*converToShortEpoch( QString::fromLocal8Bit(
-				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) )*/ };
+			const long int buildtime { converToShortEpoch( QString::fromLocal8Bit(
+				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) ) };
 			struct release{
 				QString tag_name;
 				long int created_at;
@@ -116,7 +113,7 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			if(branch != "master" || branch != "staging")
+			if(branch == "master" || branch == "staging")
 			{
 				int last_unix_ts = buildtime;
 				for ( const auto& data : array )
@@ -155,7 +152,7 @@ namespace atlas
 
 				QMessageBox msgBox;
 				msgBox.setWindowTitle( releases.size() > 0 ? "Update Available" : "No Update Available" );
-				msgBox.setText( releases.size() > 0 ? "A new version of ATLAS is available!\n\nCurrent Version: " + version + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?": "");
+				msgBox.setText( releases.size() > 0 ? "A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt() + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?": "");
 				msgBox.setIcon( QMessageBox::Question );
 				msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
 				msgBox.setDetailedText( "Changelog" );
@@ -176,7 +173,8 @@ namespace atlas
 					
 					QMessageBox msgBox;
 					msgBox.setWindowTitle( "No Update Available" );
-					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +version);
+					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +utils::version_string_qt());
+					msgBox.setIcon( QMessageBox::Warning );
 					msgBox.exec();
 				}
 			}
@@ -222,10 +220,12 @@ namespace atlas
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
 
-		QString command {"Expand-Archive -Force " + file.fileName() + " " + QString::fromStdString( std::filesystem::current_path().string())};
-		qInfo() << command;
-		QProcess process;
-		process.start( "powershell", QStringList() << command );
+		QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
+			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
+		//qInfo() << command;
+		QProcess *process = new QProcess(this);
+		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));
+
 	}
 
 	void AtlasUpdater::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
