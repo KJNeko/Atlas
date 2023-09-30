@@ -25,18 +25,20 @@ namespace atlas
 
         public:
         //AtlasUpdater(QObject* parent, std::shared_ptr<gui_settings> gui_settings);
-        void check_for_updates();
+        void check_for_updates(bool isManual);
 		AtlasUpdater();
 
         private:
 
 		  long int converToEpoch( QString time );
 		  long int converToShortEpoch( QString time );
-		  void handleJsonResponse( QNetworkReply* reply );
+		  void handleJsonResponse( QNetworkReply* reply, bool isManual );
 		  void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
+		  void downloadUpdate( QString url );
+		  void saveFile( QNetworkReply* reply );
 	};
     
-    void initUpdateHandler();
+    void initUpdateHandler(bool isManual);
 	void shutdownUpdateHandler();
 }
 

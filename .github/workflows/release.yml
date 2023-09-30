@@ -29,8 +29,8 @@ jobs:
         run: |
           cd ${{github.workspace}}
           mkdir Atlas-Release
-          move ${{github.workspace}}\builds\build-r\bin Atlas-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\windows.zip ${{github.workspace}}\Atlas-Release
+          move ${{github.workspace}}\builds\build-r\bin\* Atlas-Release
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\windows.zip ${{github.workspace}}\Atlas-Releas\*
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3

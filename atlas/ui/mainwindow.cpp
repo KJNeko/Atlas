@@ -94,8 +94,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
-	ui->actionUpdates->setEnabled( false );
-	ui->actionUpdates->setVisible( false );
 
 
 	connect(
@@ -117,7 +115,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Check for updates
 	//updater.check_for_updates( true );
-	atlas::initUpdateHandler();
+	atlas::initUpdateHandler(false);
 }
 
 MainWindow::~MainWindow()
@@ -363,3 +361,7 @@ void MainWindow::on_btnLog_pressed()
 	ui->btnLog->setText( task_popup.isHidden() == true ? "Show Log" : "Hide Log" );
 }
 
+void MainWindow::on_actionUpdates_triggered()
+{
+	atlas::initUpdateHandler( true );
+}
