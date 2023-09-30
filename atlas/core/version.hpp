@@ -5,6 +5,11 @@
 #ifndef ATLASGAMEMANAGER_VERSION_HPP
 #define ATLASGAMEMANAGER_VERSION_HPP
 
+#include <iomanip>
+#include <iostream>
+#include <locale>
+#include <sstream>
+
 #ifndef BYPASS_ATLAS_VERSION_STRINGS_REQUIRED
 
 #ifndef ATLAS_GIT_REVISION
