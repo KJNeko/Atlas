@@ -104,8 +104,8 @@ namespace atlas
 			const QString branch = QString::
 				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
 
-			const long int buildtime {  QString("1686017").toInt()/*converToShortEpoch( QString::fromLocal8Bit(
-				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) )*/ };
+			const long int buildtime { converToShortEpoch( QString::fromLocal8Bit(
+				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) ) };
 			struct release{
 				QString tag_name;
 				long int created_at;
@@ -116,7 +116,7 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			if(branch != "master" || branch != "staging")
+			if(branch == "master" || branch == "staging")
 			{
 				int last_unix_ts = buildtime;
 				for ( const auto& data : array )
@@ -222,10 +222,12 @@ namespace atlas
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
 
-		QString command {"Expand-Archive -Force " + file.fileName() + " " + QString::fromStdString( std::filesystem::current_path().string())};
-		qInfo() << command;
-		QProcess process;
-		process.start( "powershell", QStringList() << command );
+		QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
+			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
+		//qInfo() << command;
+		QProcess *process = new QProcess(this);
+		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));
+
 	}
 
 	void AtlasUpdater::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
