@@ -14,7 +14,6 @@ Binder::Binder( const std::string_view sql )
 
 	if ( prepare_ret != SQLITE_OK )
 	{
-		atlas::logging::error( "Failed to prepare statement: \n\t{}", sql );
 		throw DatabaseException( format_ns::format(
 			"DB: Failed to prepare statement: \"{}\", Reason: \"{}\"", sql, sqlite3_errmsg( &Database::ref() ) ) );
 	}
@@ -22,11 +21,13 @@ Binder::Binder( const std::string_view sql )
 	max_param_count = sqlite3_bind_parameter_count( stmt );
 }
 
-Binder::~Binder()
+Binder::~Binder() noexcept( false )
 {
 	if ( !ran ) [[unlikely]]
 	{
-		sqlite3_step( stmt );
+		atlas::logging::debug( "Binder falloff. Running query" );
+		std::optional< std::tuple<> > tpl;
+		executeQuery( tpl );
 	}
 
 	sqlite3_finalize( stmt );

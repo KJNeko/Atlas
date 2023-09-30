@@ -69,6 +69,17 @@ namespace atlas::exceptions
 		{}
 	};
 
+	struct DatabaseRowMismatch : public DatabaseException
+	{
+		DatabaseRowMismatch( const char* const msg, const std::source_location loc = std::source_location::current() ) :
+		  DatabaseException( msg, loc )
+		{}
+
+		DatabaseRowMismatch( std::string msg, std::source_location loc = std::source_location::current() ) :
+		  DatabaseException( msg.c_str(), loc )
+		{}
+	};
+
 	struct ImportException : public AtlasException
 	{
 		ImportException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
