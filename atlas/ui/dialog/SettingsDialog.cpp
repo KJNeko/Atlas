@@ -71,6 +71,9 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	//Set general as highlighted
 	ui->btnGeneral->setChecked( true );
 
+	//Set Update channel
+	ui->cbUpdateChannel->setCurrentText( config::application::update_channel::get() );
+
 	prepareThemeSettings();
 	preparePathsSettings();
 	prepareGridViewerSettings();
@@ -121,7 +124,7 @@ void SettingsDialog::saveApplicationSettings()
 	//Set font for application
 	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
-
+	config::application::update_channel::set(ui->cbUpdateChannel->currentText() );
 	//Set exp features
 	//config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
 
