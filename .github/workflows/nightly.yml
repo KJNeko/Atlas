@@ -37,8 +37,9 @@ jobs:
         run: |
           env
           cd ${{github.workspace}}
+          move ${{github.workspace}}\builds\build-r\bin\themes ${{github.workspace}}\builds\build-r\bin\data\themes
           move ${{github.workspace}}\builds\build-r\bin\* Atlas-GameManager-Nightly-Release
-          move ${{github.workspace}}\Atlas-GameManager-Nightly-Release\themes ${{github.workspace}}\Atlas-GameManager-Nightly-Release\data\themes
+
           7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release\*
 
       - name: Create release
