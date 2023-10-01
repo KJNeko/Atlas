@@ -36,6 +36,7 @@ namespace atlas
 		  void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
 		  void downloadUpdate( QString url );
 		  void saveFile( QNetworkReply* reply );
+		  int updateMessageBox( QString message, QString windowTitle, bool includeChangelog );
 	};
     
     void initUpdateHandler(bool isManual);

@@ -150,26 +150,20 @@ namespace atlas
 					}
 				}
 
-				QMessageBox msgBox;
-				msgBox.setWindowTitle( releases.size() > 0? "Update Available" : "No Update Available" );
-				msgBox.setText(
-					releases.size() > 0?
-						"A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
-							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?" :
-						"Current Version: " + utils::version_string_qt() + "\nThere is no Update Available." );
-				msgBox.setIcon( QMessageBox::Question );
-				msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
-				msgBox.setDetailedText( "Changelog" );
-				QSpacerItem* horizontalSpacer = new QSpacerItem(450, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-				QGridLayout* layout = static_cast<QGridLayout*>(msgBox.layout());
-				layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
-				int ret { msgBox.exec()};
-
-				if( ret == QMessageBox::Ok && releases.size() > 0 )
+				if(releases.size() > 0)
 				{
-					downloadUpdate( releases.back().browser_download_url );
+					const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
+							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
+
+					if( msgBox == QMessageBox::Ok )	
+					{
+						downloadUpdate( releases.back().browser_download_url );
+					}
 				}
 
+				if(releases.size() == 0 && isManual){
+					updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+				}
 			}
 			else{			
 				//Show box saying there is no update because your on a dev branch. This will only show if done from file menu
@@ -192,27 +186,28 @@ namespace atlas
 			"Failed to handle json response from {}. Exception: {}", reply->url().path().toStdString(), e.what() );
 	}
 
+
 	void AtlasUpdater::downloadUpdate(QString url)
-	{
-		QNetworkRequest request { url};
-		request.setTransferTimeout( 2000 );
-		auto* reply { m_manager.get( request ) };
-		//reply->deleteLater();
+{
+	QNetworkRequest request { url};
+	request.setTransferTimeout( 2000 );
+	auto* reply { m_manager.get( request ) };
+	//reply->deleteLater();
 
-		connect(
-			reply,
-			&QNetworkReply::finished,
-			this,
-			[ =, this ]() { saveFile( reply ); },
-			Qt::SingleShotConnection );
+	connect(
+		reply,
+		&QNetworkReply::finished,
+		this,
+		[ =, this ]() { saveFile( reply ); },
+		Qt::SingleShotConnection );
 
-		connect(
-			reply,
-			&QNetworkReply::errorOccurred,
-			this,
-			[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
-			Qt::SingleShotConnection );
-	}
+	connect(
+		reply,
+		&QNetworkReply::errorOccurred,
+		this,
+		[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
+		Qt::SingleShotConnection );
+}
 
 	void AtlasUpdater::saveFile(QNetworkReply* reply)
 	{	
@@ -340,4 +335,23 @@ namespace atlas
 			return 0;
 		}
 	}
+
+	int AtlasUpdater::updateMessageBox(QString message, QString windowTitle, bool includeChangelog)
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle(windowTitle);
+		msgBox.setText( message );
+		msgBox.setIcon( QMessageBox::Question );
+		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
+		if(includeChangelog)
+		{
+			msgBox.setDetailedText( "Changelog" );
+		}
+		QSpacerItem* horizontalSpacer = new QSpacerItem(450, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+		QGridLayout* layout = static_cast<QGridLayout*>(msgBox.layout());
+		layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+	
+		return msgBox.exec();
+	}
+
 }
