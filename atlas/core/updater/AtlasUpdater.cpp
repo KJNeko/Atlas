@@ -151,9 +151,9 @@ namespace atlas
 				}
 
 				QMessageBox msgBox;
-				msgBox.setWindowTitle( releases.size() > 0 ? "Update Available" : "No Update Available" );
+				msgBox.setWindowTitle( releases.size() > 0? "Update Available" : "No Update Available" );
 				msgBox.setText(
-					releases.size() > 0 ?
+					releases.size() > 0?
 						"A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
 							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?" :
 						"Current Version: " + utils::version_string_qt() + "\nThere is no Update Available." );

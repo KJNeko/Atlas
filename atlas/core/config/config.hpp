@@ -196,7 +196,7 @@ inline QSettings getSettingsObject()
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
-SETTINGS_FILE( paths, theme, "./data/themes/dark.qss" )
+SETTINGS_FILE( paths, theme, "./themes/dark.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
 SETTINGS_D( importer, skipFilesize, bool, false )
@@ -316,7 +316,7 @@ SETTINGS_D( ui, use_simple_layout, bool, true )
 
 SETTINGS_D( application, font, QString, "" )
 SETTINGS_D( application, fontSize, int, 10 )
-SETTINGS_D( application, theme_folder, QString, "./data/themes" )
+SETTINGS_D( application, theme_folder, QString, "./themes" )
 SETTINGS_D( application, update_channel, QString, "stable" )
 
 SETTINGS_D( remote, allow_checks, bool, false )

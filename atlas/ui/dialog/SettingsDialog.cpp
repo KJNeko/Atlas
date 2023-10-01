@@ -91,9 +91,10 @@ void SettingsDialog::prepareThemeSettings()
 	atlas::logging::debug( "Preparing theme settings" );
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
-	if ( !std::filesystem::exists( "./data/themes" ) ) std::filesystem::create_directories( "./data/themes" );
+	if ( !std::filesystem::exists( config::application::theme_folder::get().toStdString() ) )
+		std::filesystem::create_directories(config::application::theme_folder::get().toStdString() );
 	//Load all valid options.
-	for ( auto& qss_option : std::filesystem::directory_iterator( "./data/themes" ) )
+	for ( auto& qss_option : std::filesystem::directory_iterator( config::application::theme_folder::get().toStdString() ) )
 	{
 		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
 			ui->themeBox->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
@@ -118,7 +119,7 @@ void SettingsDialog::saveApplicationSettings()
 {
 	atlas::logging::debug( "Saving application settings" );
 	config::ui::use_system_theme::set( ui->cbUseSystemTheme->isChecked() );
-	config::paths::theme::set( "./data/themes/" + ui->themeBox->currentText() );
+	config::paths::theme::set( config::application::theme_folder::get() + "/" + ui->themeBox->currentText() );
 	config::application::font::set( ui->cbAppFont->currentText() );
 	config::application::fontSize::set( ui->sbAppFontSize->value() );
 	//Set font for application
@@ -519,7 +520,7 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 	else
 	{
 		atlas::logging::debug( "Theme changed to {}", text );
-		QFile file { "./data/themes/" + text };
+		QFile file { config::application::theme_folder::get() + "/" + text };
 		file.open( QFile::ReadOnly );
 		QString style { file.readAll() };
 
