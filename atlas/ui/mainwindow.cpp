@@ -112,10 +112,12 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
 	MainWindow::setWindowTitle( windowTitle );
-
-	//Check for updates
-	//updater.check_for_updates( true );
-	atlas::initUpdateHandler(false);
+	
+	//Check for updates | Windows only
+	if(WIN32)
+	{
+		atlas::initUpdateHandler(false);
+	}
 }
 
 MainWindow::~MainWindow()

@@ -152,7 +152,11 @@ namespace atlas
 
 				QMessageBox msgBox;
 				msgBox.setWindowTitle( releases.size() > 0 ? "Update Available" : "No Update Available" );
-				msgBox.setText( releases.size() > 0 ? "A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt() + "\nLatest Version: " +releases.back().tag_name+ "\n\nDo you want to update?": "");
+				msgBox.setText(
+					releases.size() > 0 ?
+						"A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
+							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?" :
+						"Current Version: " + utils::version_string_qt() + "\nThere is no Update Available." );
 				msgBox.setIcon( QMessageBox::Question );
 				msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
 				msgBox.setDetailedText( "Changelog" );
