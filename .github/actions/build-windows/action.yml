@@ -81,7 +81,7 @@ runs:
     - name: CMake Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -DATLAS_GIT_REVISION_BRIEF='${{github.run_number}} -G "MinGW Makefiles"
 
     - name: Build Target Atlas Release
       shell: powershell

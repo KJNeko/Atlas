@@ -70,20 +70,17 @@ namespace utils
 			QString::fromLocal8Bit( git_tag.data(), static_cast< qsizetype >( git_tag.size() ) )
 		};
 
-		const QString branch {
+		QString branch {
 			QString::fromLocal8Bit( git_branch.data(), static_cast< qsizetype >( git_branch.size() ) )
 		};
 
-		std::tm t = {};
-		std::istringstream ss( QString::fromLocal8Bit( git_time.data(), static_cast< qsizetype >( git_time.size() )).toStdString());
-		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
-		{
-			const long int unix_time {static_cast<long int>(std::mktime( &t ))};
-			return version + "-" + QString::number( unix_time ).left( QString::number( unix_time ).length() - 3 ) + " | " + branch ;
-		}
-		else{
-			return version + "- UNKNOWN | " + branch;
-		}
+		branch = branch == "staging" ? "nightly" : branch;
+
+		const QString sha_short {
+			QString::fromLocal8Bit( git_rev_brief.data(), static_cast< qsizetype >( git_rev_brief.size() ) )
+		};
+
+		return version + "-" + sha_short + " | " + branch;
 	}
 } // namespace utils
 
