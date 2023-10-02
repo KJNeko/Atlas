@@ -56,7 +56,7 @@ namespace atlas::images
 		//pixels_cpp.resize( width * height * 3 );
 		//decodeToArray( hash.data(), width, height, 0, channels, pixels_cpp.data() );
 
-		auto pixels_cpp { blurhash::decode( hash, width, height, 0, channels ) };
+		auto pixels_cpp { blurhash::decode< 8, 8 >( hash, width, height, 0, channels ) };
 
 		QImage image { width, height, QImage::Format::Format_RGB888 };
 		for ( int y = 0; y < height; ++y )
@@ -94,8 +94,8 @@ namespace atlas::images
 
 			blur_hash = createBlurhash( path );
 
-			RapidTransaction() << "INSERT INTO blurhash (image_sha256, blurhash) VALUES (?,?)" << path.stem().u8string()
-							   << blur_hash;
+			RapidTransaction() << "INSERT INTO image_blurhash (image_sha256, blurhash) VALUES (?,?)"
+							   << path.stem().u8string() << blur_hash;
 		}
 
 		return decodeBlurhash( blur_hash, size.width(), size.height() );
