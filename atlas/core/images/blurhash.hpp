@@ -9,9 +9,6 @@
 
 #include <filesystem>
 
-#include "blurhash/decode.h"
-#include "blurhash/encode.h"
-
 namespace atlas::images
 {
 	QPixmap getBlurhash( const std::filesystem::path&, const QSize size );

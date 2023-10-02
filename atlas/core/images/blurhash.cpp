@@ -4,6 +4,8 @@
 
 #include "core/images/blurhash.hpp"
 
+#include <blurhash-cxx.hpp>
+
 #include "core/database/RapidTransaction.hpp"
 #include "loader.hpp"
 

@@ -49,6 +49,8 @@ add_subdirectory(dependencies/spdlog)
 #lz4
 include(dependencies/lz4_build.cmake)
 
+#blurhash
+add_subdirectory(dependencies/blurhash)
 
 find_package(SQLite3 3.31.1 REQUIRED)
 message("-- include = ${SQLite3_INCLUDE_DIR}")
@@ -79,9 +81,9 @@ endif ()
 target_include_directories(Atlas PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/atlas)
 
 if (NOT HAS_STD_FORMAT)
-	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4)
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4 BlurhashCXX)
 else ()
-	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4)
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4 BlurhashCXX)
 endif ()
 
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
