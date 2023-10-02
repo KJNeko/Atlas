@@ -43,7 +43,7 @@ namespace atlas::cache
 		void prune();
 
 		//! Inserts a pixmap into the cache
-		void insert( std::string key, QPixmap pixmap );
+		void insert( const std::string& key, const QPixmap& pixmap );
 
 		std::optional< QPixmap > find( std::string key );
 	};
