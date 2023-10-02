@@ -7,7 +7,10 @@
 #include <blurhash-cxx.hpp>
 
 #include "core/database/RapidTransaction.hpp"
+#include "core/utils/ImageCache/ImageCache.hpp"
 #include "loader.hpp"
+
+inline static atlas::cache::ImageCache blurhash_cache;
 
 namespace atlas::images
 {
@@ -58,24 +61,37 @@ namespace atlas::images
 		//pixels_cpp.resize( width * height * 3 );
 		//decodeToArray( hash.data(), width, height, 0, channels, pixels_cpp.data() );
 
-		auto pixels_cpp { blurhash::decode< 8, 8 >( hash, width, height, 0, channels ) };
+		const auto key { format_ns::format( "{}-{}x{}", hash, width, height ) };
 
-		QImage image { width, height, QImage::Format::Format_RGB888 };
-		for ( int y = 0; y < height; ++y )
+		if ( auto image_opt = blurhash_cache.find( key ); image_opt.has_value() )
 		{
-			const auto y_idx { y * width * channels };
-			for ( int x = 0; x < width; ++x )
-			{
-				const auto x_idx { x * channels };
-				const std::size_t idx { static_cast< size_t >( x_idx + y_idx ) };
-
-				const auto color { qRgb( pixels_cpp[ idx + 0 ], pixels_cpp[ idx + 1 ], pixels_cpp[ idx + 2 ] ) };
-
-				image.setPixel( x, y, color );
-			}
+			return image_opt.value();
 		}
+		else
+		{
+			auto pixels_cpp { blurhash::decode( hash, width, height, 0, channels ) };
 
-		return QPixmap::fromImage( image );
+			QImage image { width, height, QImage::Format::Format_RGB888 };
+			for ( int y = 0; y < height; ++y )
+			{
+				const auto y_idx { y * width * channels };
+				for ( int x = 0; x < width; ++x )
+				{
+					const auto x_idx { x * channels };
+					const std::size_t idx { static_cast< size_t >( x_idx + y_idx ) };
+
+					const auto color { qRgb( pixels_cpp[ idx + 0 ], pixels_cpp[ idx + 1 ], pixels_cpp[ idx + 2 ] ) };
+
+					image.setPixel( x, y, color );
+				}
+			}
+
+			const auto pixmap { QPixmap::fromImage( image ) };
+
+			blurhash_cache.insert( key, pixmap );
+
+			return pixmap;
+		}
 	}
 
 	QPixmap getBlurhash( const std::filesystem::path& path, const QSize size )
