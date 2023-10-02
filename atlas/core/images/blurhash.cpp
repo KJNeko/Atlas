@@ -25,17 +25,17 @@ namespace atlas::images
 		const int channels { 3 };
 
 		std::vector< std::uint8_t > data;
-		data.resize( image.width() * image.height() * channels );
+		data.resize( static_cast< unsigned long >( image.width() * image.height() * channels ) );
 
 		for ( int y = 0; y < image.height(); ++y )
 		{
-			const auto y_idx { y * image.width() * channels };
+			const int y_idx { y * image.width() * channels };
 			for ( int x = 0; x < image.width(); ++x )
 			{
 				//Decode pixel to RGB
 				const QColor pixel { image.pixel( x, y ) };
-				const auto x_idx { x * channels };
-				const auto idx { y_idx + x_idx };
+				const int x_idx { x * channels };
+				const std::size_t idx { static_cast< std::size_t >( y_idx + x_idx ) };
 
 				data[ idx + 0 ] = static_cast< std::uint8_t >( pixel.red() );
 				data[ idx + 1 ] = static_cast< std::uint8_t >( pixel.green() );
