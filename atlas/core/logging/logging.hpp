@@ -17,10 +17,10 @@
 
 #include "core/Types.hpp"
 #include "core/notifications/notifications.hpp"
+#include "ui/dialog/Console.h"
 
 namespace atlas::logging
 {
-	//! Loads the spdlog interfaces for file rotations and logging without a GUI
 	void init();
 
 	void setFormat();
@@ -222,6 +222,8 @@ namespace atlas::logging
 
 	template < typename... Ts >
 	critical( format_ns::format_string< Ts... >, Ts&&... ) -> critical< Ts... >;
+
+
 } // namespace atlas::logging
 
 #endif //ATLAS_LOGGING_HPP
