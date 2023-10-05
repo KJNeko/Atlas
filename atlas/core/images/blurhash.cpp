@@ -15,11 +15,13 @@ inline static atlas::cache::ImageCache blurhash_cache;
 namespace atlas::images
 {
 
-	std::string createBlurhash( const std::filesystem::path& path )
+	std::string createBlurhash( const QPixmap& pixmap )
 	{
-		ZoneScoped;
-		if ( !std::filesystem::exists( path ) ) return {};
-		auto image { loadImage( path ) };
+		return createBlurhash( pixmap.toImage() );
+	}
+
+	std::string createBlurhash( QImage image )
+	{
 		image = image.convertToFormat( QImage::Format_RGB888 );
 
 		const int channels { 3 };
@@ -47,9 +49,15 @@ namespace atlas::images
 			8,
 			8 >( image.width(), image.height(), reinterpret_cast< const std::uint8_t* >( image.bits() ), channels ) };
 
-		atlas::logging::info( "Created blurhash {}", blurhash_str );
-
 		return blurhash_str;
+	}
+
+	std::string createBlurhash( const std::filesystem::path& path )
+	{
+		ZoneScoped;
+		if ( !std::filesystem::exists( path ) ) return {};
+		auto image { loadImage( path ) };
+		return createBlurhash( image );
 	}
 
 	QPixmap decodeBlurhash( const std::string& hash, int width, int height )

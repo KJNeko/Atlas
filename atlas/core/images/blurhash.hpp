@@ -11,7 +11,10 @@
 
 namespace atlas::images
 {
-	QPixmap getBlurhash( const std::filesystem::path&, const QSize size );
-}
+	std::string createBlurhash( const QPixmap& pixmap );
+	std::string createBlurhash( QImage image );
+	std::string createBlurhash( const std::filesystem::path& path );
+	[[nodiscard]] QPixmap getBlurhash( const std::filesystem::path&, const QSize size );
+} // namespace atlas::images
 
 #endif //ATLASGAMEMANAGER_BLURHASH_HPP
