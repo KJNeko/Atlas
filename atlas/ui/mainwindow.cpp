@@ -11,6 +11,7 @@
 #include "core/version.hpp"
 #include "ui/dialog/AboutAtlas.hpp"
 #include "ui/dialog/SettingsDialog.hpp"
+
 #include "ui/dialog/StatsDialog.hpp"
 #include "ui/dialog/aboutqtdialog.h"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
@@ -94,8 +95,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
-	ui->actionUpdates->setEnabled( false );
-	ui->actionUpdates->setVisible( false );
 
 
 	connect(
@@ -114,6 +113,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
 	MainWindow::setWindowTitle( windowTitle );
+	
+	//Check for updates | Windows only
+	if(WIN32)
+	{
+		atlas::initUpdateHandler(false);
+	}
+
+	console->setModal( true );
 }
 
 MainWindow::~MainWindow()
@@ -359,3 +366,13 @@ void MainWindow::on_btnLog_pressed()
 	ui->btnLog->setText( task_popup.isHidden() == true ? "Show Log" : "Hide Log" );
 }
 
+void MainWindow::on_actionUpdates_triggered()
+{
+	atlas::initUpdateHandler( true );
+}
+
+void MainWindow::on_actionConsoleWindow_triggered()
+{
+	
+	console->exec();
+}

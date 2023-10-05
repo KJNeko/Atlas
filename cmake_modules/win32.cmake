@@ -71,7 +71,7 @@ if (WIN32)
 
 		add_custom_command(TARGET Atlas POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/3rdparty/engines/types
-				${CMAKE_BINARY_DIR}/bin/data/engine/types
+				${CMAKE_BINARY_DIR}/bin/engine/types
 				COMMENT "Copying Engine Types")
 
 	endfunction()   # PlatformPostSetup

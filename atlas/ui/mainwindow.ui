@@ -765,17 +765,11 @@ margin-right:5px;</string>
      <addaction name="actionSingleImporter"/>
      <addaction name="actionExtractionImporter"/>
     </widget>
-    <widget class="QMenu" name="menuConsole_Window">
-     <property name="title">
-      <string>Console Window</string>
-     </property>
-     <addaction name="actionShowConsole"/>
-    </widget>
     <addaction name="menuImport"/>
     <addaction name="actionManage"/>
     <addaction name="actionDownload"/>
     <addaction name="actionOptions"/>
-    <addaction name="menuConsole_Window"/>
+    <addaction name="actionConsoleWindow"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -885,6 +879,11 @@ margin-right:5px;</string>
   <action name="actionShowConsole">
    <property name="text">
     <string>Show</string>
+   </property>
+  </action>
+  <action name="actionConsoleWindow">
+   <property name="text">
+    <string>Console Window</string>
    </property>
   </action>
  </widget>
