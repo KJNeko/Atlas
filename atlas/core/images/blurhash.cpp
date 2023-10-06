@@ -39,15 +39,13 @@ namespace atlas::images
 				const int x_idx { x * channels };
 				const std::size_t idx { static_cast< std::size_t >( y_idx + x_idx ) };
 
-				data[ idx + 0 ] = static_cast< std::uint8_t >( pixel.red() );
-				data[ idx + 1 ] = static_cast< std::uint8_t >( pixel.green() );
-				data[ idx + 2 ] = static_cast< std::uint8_t >( pixel.blue() );
+				data[ idx + RED ] = static_cast< std::uint8_t >( pixel.red() );
+				data[ idx + GREEN ] = static_cast< std::uint8_t >( pixel.green() );
+				data[ idx + BLUE ] = static_cast< std::uint8_t >( pixel.blue() );
 			}
 		}
 
-		const auto blurhash_str { blurhash::encode<
-			8,
-			8 >( image.width(), image.height(), reinterpret_cast< const std::uint8_t* >( image.bits() ), channels ) };
+		const auto blurhash_str { blurhash::encode< 8, 8 >( image.width(), image.height(), data.data(), channels ) };
 
 		return blurhash_str;
 	}
@@ -88,7 +86,9 @@ namespace atlas::images
 					const auto x_idx { x * channels };
 					const std::size_t idx { static_cast< size_t >( x_idx + y_idx ) };
 
-					const auto color { qRgb( pixels_cpp[ idx + 0 ], pixels_cpp[ idx + 1 ], pixels_cpp[ idx + 2 ] ) };
+					const auto color {
+						qRgb( pixels_cpp[ idx + RED ], pixels_cpp[ idx + GREEN ], pixels_cpp[ idx + BLUE ] )
+					};
 
 					image.setPixel( x, y, color );
 				}
