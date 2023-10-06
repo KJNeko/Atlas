@@ -63,7 +63,7 @@ void NotificationManagerUI::addNotification( Notification* notif )
 	//ui->scrollArea->resize(ui->scrollArea->width(), notificationWidgetHeight);
 	//ui->notifications->resize(ui->scrollArea->width(), notificationWidgetHeight);
 	ui->label->setText( QString( "%1 notifications" ).arg( ++active_notifications ) );
-	ui->btnHideNotifications->setVisible(true );
+	ui->btnHideNotifications->setVisible( true );
 	setHeight();
 }
 
@@ -71,27 +71,36 @@ void NotificationManagerUI::setHeight()
 {
 	int height { 0 };
 	int scroll_Area { 0 };
+	int clamp_max { 550 };
 	height += ui->NotificationFrame->height();
-	height += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
+	height += NotificationManagerUI::layout()->contentsMargins().bottom()
+	        + NotificationManagerUI::layout()->contentsMargins().top();
 
-	if ( ui->scrollArea->isVisible())
+	if ( ui->scrollArea->isVisible() )
 	{
 		//setFixedHeight( ui->NotificationFrame->height() );
-		if(ui->notifications->children().size() >1 )
+		if ( ui->notifications->children().size() > 1 )
 		{
 			for ( auto* notif : notifications() )
 			{
 				scroll_Area += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+				if ( scroll_Area > clamp_max )
+				{
+					scroll_Area = clamp_max;
+					break;
+				}
 			}
-				scroll_Area += NotificationManagerUI::layout()->contentsMargins().bottom() + NotificationManagerUI::layout()->contentsMargins().top();
-			scroll_Area += 9; //This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
+			scroll_Area += NotificationManagerUI::layout()->contentsMargins().bottom()
+			             + NotificationManagerUI::layout()->contentsMargins().top();
+			//This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
+			scroll_Area += 9;
 		}
-		else{
+		else
+		{
 			height += 2;
 		}
-		
 	}
-	ui->scrollArea->setFixedHeight(scroll_Area );
+	ui->scrollArea->setFixedHeight( scroll_Area );
 	setFixedHeight( height + scroll_Area );
 	emit requestMove();
 }
@@ -132,7 +141,7 @@ void NotificationManagerUI::on_btnHideNotifications_pressed()
 			Notification* notif { dynamic_cast< Notification* >( child ) };
 			notif->setParent( nullptr );
 			notif->close();
-			notif->deleteLater();			
+			notif->deleteLater();
 		}
 	}
 

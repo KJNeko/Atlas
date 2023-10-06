@@ -115,10 +115,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	MainWindow::setWindowTitle( windowTitle );
 	
 	//Check for updates | Windows only
-	if(WIN32)
-	{
-		atlas::initUpdateHandler(false);
-	}
+	//	if(WIN32)
+	//	{
+	//		atlas::initUpdateHandler(false);
+	//	}
 
 	console->setModal( true );
 }
