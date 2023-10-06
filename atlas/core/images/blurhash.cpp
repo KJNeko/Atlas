@@ -45,7 +45,7 @@ namespace atlas::images
 			}
 		}
 
-		const auto blurhash_str { blurhash::encode< 8, 8 >( image.width(), image.height(), data.data(), channels ) };
+		const auto blurhash_str { blurhash::encode< 5, 5 >( image.width(), image.height(), data.data(), channels ) };
 
 		return blurhash_str;
 	}
@@ -62,10 +62,6 @@ namespace atlas::images
 	{
 		ZoneScoped;
 		const int channels { 3 };
-
-		//std::vector< std::uint8_t > pixels_cpp;
-		//pixels_cpp.resize( width * height * 3 );
-		//decodeToArray( hash.data(), width, height, 0, channels, pixels_cpp.data() );
 
 		const auto key { format_ns::format( "{}-{}x{}", hash, width, height ) };
 
@@ -93,6 +89,8 @@ namespace atlas::images
 					image.setPixel( x, y, color );
 				}
 			}
+
+			image = image.scaled( width, height, Qt::AspectRatioMode::IgnoreAspectRatio, Qt::SmoothTransformation );
 
 			const auto pixmap { QPixmap::fromImage( image ) };
 
