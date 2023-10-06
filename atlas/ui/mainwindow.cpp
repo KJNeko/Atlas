@@ -321,6 +321,10 @@ void MainWindow::movePopup()
 	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y } };
 
 	task_popup.move( point );
+
+	//Check if the popup is hidden since we call this once when we turn visible <=> invisible.
+	ui->btnLog->setText( task_popup.isVisible() ? "Hide Log" : "Show Log" );
+
 	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
 	//task_popup.setMaximumHeight( ui->recordView->height() );
 }
@@ -360,7 +364,7 @@ void MainWindow::on_btnLog_pressed()
 {
 	auto& task_popup { atlas::notifications::handle() };
 	task_popup.setHidden( !task_popup.isHidden() );
-	ui->btnLog->setText( task_popup.isHidden() == true ? "Show Log" : "Hide Log" );
+	ui->btnLog->setText( task_popup.isHidden() ? "Show Log" : "Hide Log" );
 }
 
 void MainWindow::on_actionUpdates_triggered()

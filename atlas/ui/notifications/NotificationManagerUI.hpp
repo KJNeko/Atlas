@@ -47,7 +47,7 @@ class NotificationManagerUI final : public QDialog
 
   private slots:
 	void deleteNotification( Notification* ptr );
-	void on_btnHideNotifications_pressed();
+	void on_btnClearNotifications_pressed();
 	void on_btnMinimize_pressed();
 
   signals:
