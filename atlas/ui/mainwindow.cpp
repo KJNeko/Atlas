@@ -11,7 +11,6 @@
 #include "core/version.hpp"
 #include "ui/dialog/AboutAtlas.hpp"
 #include "ui/dialog/SettingsDialog.hpp"
-
 #include "ui/dialog/StatsDialog.hpp"
 #include "ui/dialog/aboutqtdialog.h"
 #include "ui/importer/batchImporter/BatchImportDialog.hpp"
@@ -64,7 +63,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	atlas::notifications::initNotifications( this );
 	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
-	ui->btnLog->setText("Hide Log");
+	ui->btnLog->setText( "Hide Log" );
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
@@ -96,7 +95,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
 
-
 	connect(
 		&atlas::import::internal::getNotifier(),
 		&atlas::import::ImportNotifier::notification,
@@ -113,12 +111,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
 	MainWindow::setWindowTitle( windowTitle );
-	
+
 	//Check for updates | Windows only
-	//	if(WIN32)
-	//	{
-	//		atlas::initUpdateHandler(false);
-	//	}
+#ifdef _WIN32
+	atlas::initUpdateHandler( false );
+#endif
 
 	console->setModal( true );
 }
@@ -373,6 +370,5 @@ void MainWindow::on_actionUpdates_triggered()
 
 void MainWindow::on_actionConsoleWindow_triggered()
 {
-	
 	console->exec();
 }
