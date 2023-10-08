@@ -22,6 +22,7 @@
 SingleImporter::SingleImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::SingleImporter )
 {
 	ui->setupUi( this );
+	ui->previews->delegate()->use_thumbnils = false;
 }
 
 SingleImporter::~SingleImporter()
