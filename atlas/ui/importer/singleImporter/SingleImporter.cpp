@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QMovie>
 
 #include "core/database/record/GameData.hpp"
 #include "core/gamelist/utils.hpp"
@@ -343,8 +344,20 @@ void SingleImporter::on_leBannerNormal_textChanged( const QString& text )
 		else
 		{
 			ui->leBannerNormal->setStyleSheet( "" );
-			ui->bannerNormal
-				->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+
+			if ( text.endsWith( ".gif" ) )
+			{
+				auto movie { std::make_unique< QMovie >( text ) };
+				movie->start();
+				ui->bannerNormal->setMovie( movie.get() );
+				m_movies.emplace_back( std::move( movie ) );
+			}
+			else
+			{
+				ui->bannerNormal->setMovie( nullptr );
+				ui->bannerNormal
+					->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+			}
 		}
 	}
 }
@@ -362,8 +375,20 @@ void SingleImporter::on_leBannerWide_textChanged( const QString& text )
 		else
 		{
 			ui->leBannerWide->setStyleSheet( "" );
-			ui->bannerWide
-				->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+
+			if ( text.endsWith( ".gif" ) )
+			{
+				auto movie { std::make_unique< QMovie >( text ) };
+				movie->start();
+				ui->bannerWide->setMovie( movie.get() );
+				m_movies.emplace_back( std::move( movie ) );
+			}
+			else
+			{
+				ui->bannerWide->setMovie( nullptr );
+				ui->bannerWide
+					->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+			}
 		}
 	}
 }
@@ -380,9 +405,21 @@ void SingleImporter::on_leBannerCover_textChanged( const QString& text )
 		}
 		else
 		{
-			ui->leBannerCover->setStyleSheet( "" );
-			ui->bannerCover
-				->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+			ui->leBannerLogo->setStyleSheet( "" );
+
+			if ( text.endsWith( ".gif" ) )
+			{
+				auto movie { std::make_unique< QMovie >( text ) };
+				movie->start();
+				ui->bannerCover->setMovie( movie.get() );
+				m_movies.emplace_back( std::move( movie ) );
+			}
+			else
+			{
+				ui->bannerCover->setMovie( nullptr );
+				ui->bannerCover
+					->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+			}
 		}
 	}
 }
@@ -400,8 +437,20 @@ void SingleImporter::on_leBannerLogo_textChanged( const QString& text )
 		else
 		{
 			ui->leBannerLogo->setStyleSheet( "" );
-			ui->bannerLogo
-				->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+
+			if ( text.endsWith( ".gif" ) )
+			{
+				auto movie { std::make_unique< QMovie >( text ) };
+				movie->start();
+				ui->bannerLogo->setMovie( movie.get() );
+				m_movies.emplace_back( std::move( movie ) );
+			}
+			else
+			{
+				ui->bannerLogo->setMovie( nullptr );
+				ui->bannerLogo
+					->setPixmap( pixmap.scaled( ui->bannerTabWidget->size() - QSize( 50, 70 ), Qt::KeepAspectRatio ) );
+			}
 		}
 	}
 }

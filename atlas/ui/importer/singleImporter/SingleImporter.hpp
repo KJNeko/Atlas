@@ -21,6 +21,8 @@ class SingleImporter final : public QDialog
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( SingleImporter )
 
+	std::vector< std::unique_ptr< QMovie > > m_movies;
+
   public:
 
 	explicit SingleImporter( QWidget* parent = nullptr );
