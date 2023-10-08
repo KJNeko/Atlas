@@ -116,7 +116,7 @@ namespace atlas::records
 		if ( new_id == INVALID_ATLAS_ID )
 			throw RecordException( format_ns::format( "No Atlas data with this id: {}", atlas_id ).c_str() );
 
-		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, game_id) VALUES (?,?)" << atlas_id << m_id;
+		RapidTransaction() << "INSERT INTO atlas_mappings (atlas_id, record_id) VALUES (?,?)" << atlas_id << m_id;
 
 		ptr->atlas_data = remote::AtlasRemoteData( atlas_id );
 	}
