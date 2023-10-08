@@ -125,14 +125,14 @@ void SingleImporter::on_leRootPath_textChanged( [[maybe_unused]] const QString& 
 	{
 		ui->leExecutable->setEnabled( true );
 		ui->btnSelectExec->setEnabled( true );
-		ui->infoLabel->setText( "" );
+		ui->lblStatus->setText( "" );
 		fillIn();
 	}
 	else
 	{
 		ui->leExecutable->setEnabled( false );
 		ui->btnSelectExec->setEnabled( false );
-		ui->infoLabel->setText( "Root directory does not exist" );
+		ui->lblStatus->setText( "Root directory does not exist" );
 	}
 }
 
@@ -142,12 +142,12 @@ void SingleImporter::on_leExecutable_textChanged( [[maybe_unused]] const QString
 	if ( execFile.exists() )
 	{
 		ui->metadataFrame->setEnabled( true );
-		ui->infoLabel->setText( "" );
+		ui->lblStatus->setText( "" );
 	}
 	else
 	{
 		ui->btnNext->setEnabled( false );
-		ui->infoLabel->setText( "Executable does not exist. Should NOT be relative" );
+		ui->lblStatus->setText( "Executable does not exist. Should NOT be relative" );
 	}
 }
 
@@ -246,18 +246,18 @@ void SingleImporter::verifyDataEntry()
 
 	if ( title.isEmpty() || creator.isEmpty() || version.isEmpty() )
 	{
-		ui->infoLabel->setText( "One or more required fields are empty" );
+		ui->lblStatus->setText( "One or more required fields are empty" );
 		return;
 	}
 
 	if ( atlas::records::recordExists( title, creator, engine ) )
 	{
-		ui->infoLabel->setText( "Record already exists with the given title, creator, and engine" );
+		ui->lblStatus->setText( "Record already exists with the given title, creator, and engine" );
 		return;
 	}
 
 	ui->btnNext->setEnabled( true );
-	ui->infoLabel->setText( "" );
+	ui->lblStatus->setText( "" );
 }
 
 void SingleImporter::on_stackedWidget_currentChanged( int index )
@@ -474,6 +474,7 @@ void SingleImporter::fillIn()
 		ui->leVersion->setText( gl_data.version );
 
 		//TODO: Use the f95 id we get here to request more information from the f95_data table
+		ui->lblStatus->setText( "Found GL_Infos.ini. Took information from ini" );
 	}
 
 	//Check if there are banners
