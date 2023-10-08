@@ -128,7 +128,7 @@ namespace atlas::records
 			throw RecordException( format_ns::format( "Invalid F95 ID: {}", f95_id ).c_str() );
 
 		F95ID new_id { INVALID_ATLAS_ID };
-		RapidTransaction() << "SELECT new_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> new_id;
+		RapidTransaction() << "SELECT f95_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> new_id;
 
 		if ( new_id == INVALID_F95_ID )
 		{
@@ -136,7 +136,7 @@ namespace atlas::records
 			new_id = f95_id;
 		}
 
-		RapidTransaction() << "INSERT INTO f95_zone_mappings (game_id, f95_id) VALUES (?,?)" << m_id << new_id;
+		RapidTransaction() << "INSERT INTO f95_zone_mappings (record_id, f95_id) VALUES (?,?)" << m_id << new_id;
 
 		ptr->f95_data = remote::F95RemoteData( f95_id );
 	}
