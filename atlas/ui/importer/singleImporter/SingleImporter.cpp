@@ -14,6 +14,7 @@
 
 #include "core/database/record/GameData.hpp"
 #include "core/gamelist/utils.hpp"
+#include "core/import/GameImportData.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "ui_SingleImporter.h"
@@ -169,11 +170,6 @@ void SingleImporter::on_btnSelectExec_pressed()
 
 void SingleImporter::on_cbUseRegex_stateChanged( int state )
 {
-	if ( state == Qt::Checked )
-		ui->leRegex->setEnabled( true );
-	else
-		ui->leRegex->setEnabled( false );
-
 	ui->leRegex->setEnabled( state == Qt::Checked );
 
 	//This releases the edits from being disabled by the regex when it's unticked. They should always be locked (Except for the 'version' field)
@@ -203,8 +199,8 @@ void SingleImporter::on_leRegex_textChanged( const QString& text )
 
 void SingleImporter::triggerImport()
 {
-	const std::filesystem::path root_path { ui->leRootPath->text().toStdString() };
-	const std::filesystem::path exec_path { ui->leExecutable->text().toStdString() };
+	std::filesystem::path root_path { ui->leRootPath->text().toStdString() };
+	std::filesystem::path exec_path { ui->leExecutable->text().toStdString() };
 	const auto title { ui->leTitle->text() };
 	const auto creator { ui->leCreator->text() };
 	const auto engine { ui->leEngine->text() };
@@ -216,22 +212,24 @@ void SingleImporter::triggerImport()
 	banners[ BannerType::Cover ] = ui->leBannerCover->text();
 	banners[ BannerType::Logo ] = ui->leBannerLogo->text();
 
-	/*
-	(void)importGame(
-		root_path,
-		std::filesystem::relative( root_path, exec_path ),
-		title,
-		creator,
-		engine,
-		version,
-		banners,
-		ui->previews->pathsQString(),
-		0,
-		0,
-		ui->cbMoveDir->isChecked(),
-		INVALID_ATLAS_ID,
-		INVALID_RECORD_ID );
-	 */
+	GameImportData game_data { std::move( root_path ),
+		                       title,
+		                       creator,
+		                       engine,
+		                       version,
+		                       0,
+		                       0,
+		                       {},
+		                       std::move( std::filesystem::relative( exec_path, root_path ) ),
+		                       banners,
+		                       ui->previews->pathsQString(),
+		                       gl::parse( root_path / "GL_Infos.ini" ),
+		                       INVALID_RECORD_ID,
+		                       INVALID_ATLAS_ID
+
+	};
+
+	(void)importGame( std::move( game_data ), "", ui->cbMoveDir->isChecked() );
 
 	close();
 }

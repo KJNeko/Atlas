@@ -175,7 +175,7 @@ void runner(
 
 	if ( promise.isCanceled() ) return;
 	GameImportData data {
-		std::filesystem::relative( folder, base ),
+		std::move( folder ),
 		std::move( title ),
 		std::move( creator ),
 		std::move( engine ),
