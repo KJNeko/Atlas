@@ -35,9 +35,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
-	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
-	connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
-	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
+	//connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
+	//connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	//connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
@@ -63,7 +63,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	atlas::notifications::initNotifications( this );
 	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
-	ui->btnLog->setText("Hide Log");
+	ui->btnLog->setText( "Hide Log" );
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
@@ -94,9 +94,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
-	ui->actionUpdates->setEnabled( false );
-	ui->actionUpdates->setVisible( false );
-
 
 	connect(
 		&atlas::import::internal::getNotifier(),
@@ -115,9 +112,12 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
 	MainWindow::setWindowTitle( windowTitle );
 
-	//Check for updates
-	//updater.check_for_updates( true );
-	atlas::initUpdateHandler();
+	//Check for updates | Windows only
+#ifdef _WIN32
+	atlas::initUpdateHandler( false );
+#endif
+
+	console->setModal( true );
 }
 
 MainWindow::~MainWindow()
@@ -206,7 +206,7 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::on_btnAddGame_pressed()
 {
-	BatchImportDialog importer { this };
+	SingleImporter importer { this };
 	importer.exec();
 }
 
@@ -321,6 +321,10 @@ void MainWindow::movePopup()
 	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y } };
 
 	task_popup.move( point );
+
+	//Check if the popup is hidden since we call this once when we turn visible <=> invisible.
+	ui->btnLog->setText( task_popup.isVisible() ? "Hide Log" : "Show Log" );
+
 	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
 	//task_popup.setMaximumHeight( ui->recordView->height() );
 }
@@ -360,6 +364,15 @@ void MainWindow::on_btnLog_pressed()
 {
 	auto& task_popup { atlas::notifications::handle() };
 	task_popup.setHidden( !task_popup.isHidden() );
-	ui->btnLog->setText( task_popup.isHidden() == true ? "Show Log" : "Hide Log" );
+	ui->btnLog->setText( task_popup.isHidden() ? "Show Log" : "Hide Log" );
 }
 
+void MainWindow::on_actionUpdates_triggered()
+{
+	atlas::initUpdateHandler( true );
+}
+
+void MainWindow::on_actionConsoleWindow_triggered()
+{
+	console->exec();
+}

@@ -26,8 +26,6 @@ message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 include(dependencies)
 
-#lz4
-
 find_package(SQLite3 3.31.1 REQUIRED)
 message("-- include = ${SQLite3_INCLUDE_DIR}")
 message("-- lib = ${SQLite3_LIBRARY}")

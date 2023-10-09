@@ -79,4 +79,11 @@ template < typename T >
 	return sqlite3_bind_double( stmt, idx, val );
 }
 
+template < typename T >
+	requires std::is_same_v< std::string, T >
+[[nodiscard]] int bindParameter( sqlite3_stmt* stmt, const T val, const int idx ) noexcept
+{
+	return bindParameter< QString >( stmt, QString::fromStdString( val ), idx );
+}
+
 #endif //ATLASGAMEMANAGER_BINDERS_HPP

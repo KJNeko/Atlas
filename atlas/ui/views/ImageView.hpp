@@ -9,9 +9,8 @@
 #include <QMouseEvent>
 
 #include "core/database/record/GameData.hpp"
-
-class FilepathModel;
-class ImageDelegate;
+#include "ui/delegates/ImageDelegate.hpp"
+#include "ui/models/FilepathModel.hpp"
 
 class ImageView final : public QListView
 {
@@ -24,6 +23,10 @@ class ImageView final : public QListView
 	std::vector< std::filesystem::path > selectedItems() const;
 	std::vector< std::filesystem::path > paths() const;
 	std::vector< QString > pathsQString() const;
+
+	FilepathModel* filepathModel() const { return dynamic_cast< FilepathModel* >( QListView::model() ); }
+
+	ImageDelegate* delegate() const { return dynamic_cast< ImageDelegate* >( QListView::itemDelegate() ); }
 
   private slots:
 	void modelReordered();

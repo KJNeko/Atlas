@@ -2,7 +2,17 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMessageBox>
+#include <QSpacerItem>
+#include <QGridLayout>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QFile>
+#include <QProcess>
+
 #include "core/logging/logging.hpp"
+#include "core/version.hpp"
+#include "core/config/config.hpp"
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -14,11 +24,11 @@ namespace atlas
 	{
 		inline static AtlasUpdater* uManager { nullptr };
 	}
-    void initUpdateHandler()
+    void initUpdateHandler(bool isManual)
 	{
 		if ( internal::uManager == nullptr ) internal::uManager = new AtlasUpdater();
 
-		internal::uManager->check_for_updates();
+		internal::uManager->check_for_updates(isManual);
 	}
 
 	void shutdownUpdateHandler()
@@ -33,10 +43,9 @@ namespace atlas
 		m_thread.start();*/
 	}
 
-    void AtlasUpdater::check_for_updates()
+    void AtlasUpdater::check_for_updates(bool isManual)
     {
       	QUrl url("https://api.github.com/repos/KJNeko/Atlas/releases");
-		qInfo() << url.toString();
 		atlas::logging::info( "Checking github for updates at {}", url.toString() );
 		QNetworkRequest request { url};
 		request.setTransferTimeout( 2000 );
@@ -46,7 +55,7 @@ namespace atlas
 			reply,
 			&QNetworkReply::finished,
 			this,
-			[ =, this ]() { handleJsonResponse( reply ); },
+			[ =, this ]() { handleJsonResponse( reply, isManual ); },
 			Qt::SingleShotConnection );
 
 		connect(
@@ -57,7 +66,7 @@ namespace atlas
 			Qt::SingleShotConnection );
     }
 
-	void AtlasUpdater::handleJsonResponse( QNetworkReply* reply )
+	void AtlasUpdater::handleJsonResponse( QNetworkReply* reply, bool isManual )
 	try
 	{
 		atlas::logging::debug( "Handling json response from {}", reply->url().path().toStdString() );
@@ -89,15 +98,82 @@ namespace atlas
 			QJsonObject jsonObject = jsonResponse.object();
 			const QJsonArray& array = jsonResponse.array();
 
-			for ( const auto& data : array )
+			const QString branch = QString::
+				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
+
+			const long int buildtime { converToShortEpoch( QString::fromLocal8Bit(
+				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) ) };
+			struct release{
+				QString tag_name;
+				long int created_at;
+				QString target_commitish;
+				QString browser_download_url;
+			};
+
+			std::vector<release> releases;
+
+			//Check that we are not on a dev branch
+			if(branch == "master" || branch == "staging")
 			{
-				const auto& obj { data.toObject() };
-				qInfo() << obj[ "tag_name" ].toString();
-				qInfo() << obj[ "created_at" ].toString();
-				for ( const auto& assets : obj["assets"].toArray())
+				int last_unix_ts = buildtime;
+				for ( const auto& data : array )
 				{
-					const auto& asset { assets.toObject() };
-					qInfo() << asset[ "browser_download_url" ].toString();
+					const auto& obj { data.toObject() };
+					const auto tag_name { obj[ "tag_name" ].toString() };
+					const auto created_at { converToShortEpoch(obj[ "created_at" ].toString()) };
+					const auto target_commitish { obj[ "target_commitish" ].toString() };
+					QString browser_download_url { "" };
+					for ( const auto& assets : obj["assets"].toArray())
+					{
+						const auto& asset { assets.toObject() };
+						browser_download_url = asset[ "browser_download_url" ].toString();
+					}
+					if(created_at > last_unix_ts)
+					{						
+						if(config::application::update_channel::get() == "nightly")
+						{						
+							qInfo() << target_commitish;
+							qInfo() << tag_name;
+							qInfo() <<  created_at << ">" << last_unix_ts;
+							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+							last_unix_ts = created_at;
+						}
+						if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+						{
+							qInfo() << target_commitish;
+							qInfo() << tag_name;
+							qInfo() << created_at;
+							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+							last_unix_ts = created_at;
+						}
+
+					}
+				}
+
+				if(releases.size() > 0)
+				{
+					const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
+							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
+
+					if( msgBox == QMessageBox::Ok )	
+					{
+						downloadUpdate( releases.back().browser_download_url );
+					}
+				}
+
+				if(releases.size() == 0 && isManual){
+					updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+				}
+			}
+			else{			
+				//Show box saying there is no update because your on a dev branch. This will only show if done from file menu
+				if(isManual){
+					
+					QMessageBox msgBox;
+					msgBox.setWindowTitle( "No Update Available" );
+					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +utils::version_string_qt());
+					msgBox.setIcon( QMessageBox::Warning );
+					msgBox.exec();
 				}
 			}
 		}
@@ -109,6 +185,48 @@ namespace atlas
 		atlas::logging::error(
 			"Failed to handle json response from {}. Exception: {}", reply->url().path().toStdString(), e.what() );
 	}
+
+
+	void AtlasUpdater::downloadUpdate(QString url)
+{
+	QNetworkRequest request { url};
+	request.setTransferTimeout( 2000 );
+	auto* reply { m_manager.get( request ) };
+	//reply->deleteLater();
+
+	connect(
+		reply,
+		&QNetworkReply::finished,
+		this,
+		[ =, this ]() { saveFile( reply ); },
+		Qt::SingleShotConnection );
+
+	connect(
+		reply,
+		&QNetworkReply::errorOccurred,
+		this,
+		[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
+		Qt::SingleShotConnection );
+}
+
+	void AtlasUpdater::saveFile(QNetworkReply* reply)
+	{	
+		QFile file(QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip"));
+		std::filesystem::create_directory(std::string( std::getenv( "APPDATA" )) + "\\ATLAS");
+		file.open(QIODevice::WriteOnly);
+    	file.write(reply->readAll());
+		qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
+		qInfo() << "FILE DOWNLOADED";
+		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
+
+		QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
+			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
+		//qInfo() << command;
+		QProcess *process = new QProcess(this);
+		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));
+
+	}
+
 	void AtlasUpdater::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
 	{
 		reply->deleteLater();
@@ -188,4 +306,52 @@ namespace atlas
 				break;
 		}
 	}
+
+	long int AtlasUpdater::converToEpoch(QString time){
+		std::tm t = {};
+		std::istringstream ss(time.toStdString());
+
+		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+		{
+			return static_cast<long int>(std::mktime( &t ));
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	long int AtlasUpdater::converToShortEpoch(QString time){
+		std::tm t = {};
+		std::istringstream ss(time.toStdString());
+
+		if (ss >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S"))
+		{
+			const long int unix_time {static_cast<long int>(std::mktime( &t ))};
+			return QString::number( unix_time ).left( QString::number( unix_time ).length() - 3 ).toInt();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	int AtlasUpdater::updateMessageBox(QString message, QString windowTitle, bool includeChangelog)
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle(windowTitle);
+		msgBox.setText( message );
+		msgBox.setIcon( QMessageBox::Question );
+		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No);
+		if(includeChangelog)
+		{
+			msgBox.setDetailedText( "Changelog" );
+		}
+		QSpacerItem* horizontalSpacer = new QSpacerItem(450, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+		QGridLayout* layout = static_cast<QGridLayout*>(msgBox.layout());
+		layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+	
+		return msgBox.exec();
+	}
+
 }

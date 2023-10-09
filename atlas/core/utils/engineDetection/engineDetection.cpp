@@ -506,7 +506,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 	//get current directory
 	bool isEngine = false;
 	std::filesystem::path engine_path =
-		std::filesystem::current_path() / "data" / "engine" / "types" / ( "Engine." + engine + ".txt" );
+		std::filesystem::current_path() / "engine" / "types" / ( "Engine." + engine + ".txt" );
 
 	if ( std::ifstream ifs( engine_path ); ifs )
 	{

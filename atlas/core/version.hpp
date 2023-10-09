@@ -5,6 +5,11 @@
 #ifndef ATLASGAMEMANAGER_VERSION_HPP
 #define ATLASGAMEMANAGER_VERSION_HPP
 
+#include <iomanip>
+#include <iostream>
+#include <locale>
+#include <sstream>
+
 #ifndef BYPASS_ATLAS_VERSION_STRINGS_REQUIRED
 
 #ifndef ATLAS_GIT_REVISION
@@ -23,12 +28,17 @@
 #error "No git tag specified. Specify the tag with -DATLAS_GIT_TAG"
 #endif
 
+#ifndef ATLAS_GIT_CREATED_TIME
+#error "Unable to get time. Specify the tag with -DATLAS_GIT_TIME"
+#endif
+
 #else
 
 #define ATLAS_VERSION "Debug Build. DO NOT REDISTRIBUTE"
 #define ATLAS_GIT_BRANCH "NOT SET DURING BUILD PROCESS"
 #define ATLAS_GIT_REVISION "NOT SET DURING BUILD PROCESS"
 #define ATLAS_GIT_TAG "NOT SET DURING BUILD PROCESS"
+#define ATLAS_GIT_CREATED_TIME "NOT SET DURING BUILD PROCESS"
 
 #endif
 
@@ -52,10 +62,25 @@ namespace utils
 	[[maybe_unused]] constexpr std::string_view git_revision { ATLAS_GIT_REVISION };
 	[[maybe_unused]] constexpr std::string_view git_rev_brief { ATLAS_GIT_REVISION_BRIEF };
 	[[maybe_unused]] constexpr std::string_view git_tag { ATLAS_GIT_TAG };
+	[[maybe_unused]] constexpr std::string_view git_time { ATLAS_GIT_CREATED_TIME };
 
 	inline const QString version_string_qt()
 	{
-		return QString::fromLocal8Bit( version_string.data(), static_cast< qsizetype >( version_string.size() ) );
+		const QString version {
+			QString::fromLocal8Bit( git_tag.data(), static_cast< qsizetype >( git_tag.size() ) )
+		};
+
+		QString branch {
+			QString::fromLocal8Bit( git_branch.data(), static_cast< qsizetype >( git_branch.size() ) )
+		};
+
+		branch = branch == "staging" ? "nightly" : branch;
+
+		const QString sha_short {
+			QString::fromLocal8Bit( git_rev_brief.data(), static_cast< qsizetype >( git_rev_brief.size() ) )
+		};
+
+		return version + "-" + sha_short + " | " + branch;
 	}
 } // namespace utils
 

@@ -9,6 +9,7 @@
 
 #include "core/database/Search.hpp"
 #include "core/updater/AtlasUpdater.hpp"
+#include "ui/dialog/Console.h"
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -29,6 +30,7 @@ class MainWindow final : public QMainWindow
   public:
 
 	MainWindow( QWidget* parent = nullptr );
+	Console *console = new Console();
 	~MainWindow();
 
   private:
@@ -52,9 +54,10 @@ class MainWindow final : public QMainWindow
 	void on_actionBulkImporter_triggered();
 	void on_actionSingleImporter_triggered();
 	void on_actionExtractionImporter_triggered();
-	//void on_actionImport_triggered();
+	void on_actionUpdates_triggered();
 	void on_actionOptions_triggered();
 	void on_actionExit_triggered();
+	void on_actionConsoleWindow_triggered();
 	//void on_actionDownload_triggered();
 	//void on_actionManage_triggered();
 	//void on_actionArrangeBy_triggered();

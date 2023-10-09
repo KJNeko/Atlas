@@ -25,6 +25,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		painter->fillRect( item.rect, item.palette.highlight() );
 	}
 
+	//If the pixmap is already loaded, draw it
 	if ( future.isFinished() )
 	{
 		const auto& pixmap { future.result() };
@@ -43,11 +44,15 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 	{
 		m_model->refreshOnFuture( index, future );
 
-		const auto pixmap {
-			atlas::images::thumbnail( index.data( FilepathModel::FilepathRole ).value< std::filesystem::path >() )
-		};
+		if ( use_thumbnils )
+		{
+			// If the pixmap is not loaded, draw the thumbnail
+			const auto pixmap {
+				atlas::images::thumbnail( index.data( FilepathModel::FilepathRole ).value< std::filesystem::path >() )
+			};
 
-		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
+			painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
+		}
 	}
 
 	painter->drawRect( item.rect );

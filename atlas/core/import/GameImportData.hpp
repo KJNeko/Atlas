@@ -23,7 +23,9 @@ struct GameImportData
 	QString version;
 	std::size_t size;
 	std::uint64_t file_count;
+	//! Non relative path to possible executables
 	std::vector< std::filesystem::path > executables;
+	//! Non relative path to executable
 	std::filesystem::path executable;
 	std::array< QString, BannerType::SENTINEL > banners;
 	std::vector< QString > previews;

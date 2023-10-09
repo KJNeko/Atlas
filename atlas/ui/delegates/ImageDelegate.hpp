@@ -18,6 +18,8 @@ class ImageDelegate final : public QAbstractItemDelegate
 
   public:
 
+	bool use_thumbnils { true };
+
 	ImageDelegate( FilepathModel* model, QObject* parent = nullptr ) : QAbstractItemDelegate( parent ), m_model( model )
 	{}
 

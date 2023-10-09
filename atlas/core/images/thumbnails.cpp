@@ -32,6 +32,7 @@ namespace atlas::images
 		thumb = thumb.scaled( thumbnailSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
 		const auto dest { thumbnailPath( image_path ) };
+		std::filesystem::create_directories( dest.parent_path() );
 		if ( !thumb.save( QString::fromStdString( dest.string() ), "webp", 95 ) )
 			throw AtlasException( format_ns::format( "Failed to save thumbnail for {} to {}", image_path, dest ) );
 
@@ -43,7 +44,7 @@ namespace atlas::images
 		if ( !std::filesystem::exists( image ) )
 			throw AtlasException(
 				format_ns::format( "attempted to get a thumbanil path for a non existant path: {}", image ) );
-		return image.parent_path() / ( image.stem().string() + ".thumb" );
+		return config::paths::images::getPath() / "thumbnails" / ( image.stem().string() + ".thumb" );
 	}
 
 	/**
