@@ -45,7 +45,7 @@ std::vector< std::filesystem::path > ImageView::selectedItems() const
 
 std::vector< std::filesystem::path > ImageView::paths() const
 {
-	filepathModel()->getFilepaths();
+	return filepathModel()->getFilepaths();
 }
 
 std::vector< QString > ImageView::pathsQString() const
