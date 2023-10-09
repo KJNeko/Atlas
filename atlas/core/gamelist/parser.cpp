@@ -26,6 +26,11 @@ namespace gl
 	GameListInfos parse( const std::filesystem::path& path )
 	try
 	{
+		if ( std::filesystem::is_directory( path ) )
+			throw AtlasException( format_ns::format( "Path given was a directory! {}", path ) );
+		if ( path.filename() != GL_INFO_FILENAME )
+			throw AtlasException( format_ns::format( "Path given was not a GL_Infos.ini file! {}", path ) );
+
 		GameListInfos infos;
 
 		const QSettings settings( QString::fromStdString( path.string() ), QSettings::IniFormat );

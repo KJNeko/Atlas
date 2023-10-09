@@ -50,11 +50,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	if ( record.hasBanner( Normal ) )
 	{
-		if ( record.bannerPath( Normal ).extension() == ".gif" )
-		{
-			//NOT IMPLEMENTED
-		}
-
 		QFuture< QPixmap > banner { record.requestBanner( banner_size, aspect_ratio, Normal, USE_THUMBNAIL ) };
 
 		QPixmap pixmap;

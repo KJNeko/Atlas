@@ -59,8 +59,8 @@ namespace atlas::records
 				>> index;
 		}
 
-		RapidTransaction() << "INSERT INTO previews (record_id, path, position) VALUES (?,?,?)" << m_id << path
-						   << index;
+		RapidTransaction() << "INSERT INTO previews (record_id, path, position) VALUES (?,?,?) ON CONFLICT DO NOTHING"
+						   << m_id << path << index;
 		auto& previews { this->ptr->m_preview_paths };
 		previews.clear();
 

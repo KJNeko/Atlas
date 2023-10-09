@@ -50,7 +50,8 @@ namespace internal
 
 		promise.start();
 
-		const auto game_root { import_root / relative_path };
+		// If the import_root is empty then we should consider relative_path as the true path
+		const auto game_root { import_root.empty() ? relative_path : import_root / relative_path };
 		const auto executable_path { game_root / relative_executable };
 
 		TracyCZoneN( tracy_checkZone, "Check", true );

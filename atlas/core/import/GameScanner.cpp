@@ -42,20 +42,30 @@ void runner(
 	if ( promise.isCanceled() ) return;
 	if ( potential_executables.size() <= 0 ) throw NoExecutablesFound( folder );
 
+	auto gl_info { [ &folder ]() -> gl::GameListInfos
+		           {
+					   //Check if we have a GL_Infos.ini file
+					   if ( gl::dirHasGLInfo( folder ) )
+					   {
+						   atlas::logging::debug( "Found GL info for {}", folder );
+						   //We have one.
+						   return gl::parse( folder / GL_INFO_FILENAME );
+					   }
+					   else
+						   return {};
+				   }() };
+
 	auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
 	{
-		if ( gl::dirHasGLInfo( folder ) )
+		if ( gl_info.f95_thread_id == INVALID_F95_ID )
 		{
-			const auto gl_info { gl::parse( folder / GL_INFO_FILENAME ) };
-			// Grab information from remote.
-
-			if ( gl_info.f95_thread_id == INVALID_F95_ID )
-			{
-				//Unable to do anything with this
-				//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
-				return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-			}
-
+			atlas::logging::warn( "Found GL info but it had an invalid F95 id!" );
+			//Unable to do anything with this
+			//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
+			return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
+		}
+		else
+		{
 			//Try to find the thread info
 			if ( !atlas::remote::hasF95DataFor( gl_info.f95_thread_id ) )
 			{
@@ -81,17 +91,6 @@ void runner(
 					return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
 				}
 			}
-		}
-		else
-		{
-			regex::GroupsOutput output { regex::extractGroups( regex, QString::fromStdString( folder.string() ) ) };
-
-			//std::optional< atlas::remote::AtlasRemoteData > atlas_data {atlas::records::Game().findAtlasData( output.title, output.creator )};
-			//atlas::remote::AtlasRemoteData atlas_data { atlas::records::Game().findAtlasData( output.title, output.creator ).value()->atlas_id};
-			//atlas::remote::F95RemoteData f95_data { atlas::records::Game().findF95Data(" ") };
-
-			//atlas::remote::AtlasRemoteData::
-			return output;
 		}
 	}();
 
@@ -156,16 +155,6 @@ void runner(
 		}
 	}
 
-	auto gl_info { [ &folder ]() -> gl::GameListInfos
-		           {
-					   //Check if we have a GL_Infos.ini file
-					   if ( gl::dirHasGLInfo( folder ) )
-						   //We have one.
-						   return gl::parse( folder );
-					   else
-						   return {};
-				   }() };
-
 	// Fetch the game_id from the DB. Will return INVALID_RECORD_ID if not found
 	const auto game_id { atlas::records::fetchRecord( title, creator, engine ) };
 
@@ -186,7 +175,7 @@ void runner(
 
 	if ( promise.isCanceled() ) return;
 	GameImportData data {
-		std::filesystem::relative( folder, base ),
+		std::move( folder ),
 		std::move( title ),
 		std::move( creator ),
 		std::move( engine ),
