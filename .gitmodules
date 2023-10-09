@@ -24,4 +24,4 @@
 	url = https://github.com/lz4/lz4.git
 [submodule "dependencies/blurhash"]
 	path = dependencies/blurhash
-	url = https://github.com/KJNeko/blurhash-cxx
+	url = https://github.com/KJNeko/blurhash-cxx.git
