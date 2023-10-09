@@ -9,6 +9,7 @@
 
 #include <fstream>
 
+#include "blurhash.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/crypto.hpp"
 #include "core/utils/threading/pools.hpp"
@@ -68,6 +69,9 @@ namespace atlas::images
 		QByteArray webp_file_data;
 		QBuffer webp_file_buffer { &webp_file_data };
 		image.save( &webp_file_buffer, "webp", 95 );
+
+		//Create blurhash.
+		(void)createBlurhash( image );
 
 		if ( webp_file_data.size() > static_cast< qsizetype >( original_file_size ) )
 		{

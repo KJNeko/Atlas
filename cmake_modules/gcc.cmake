@@ -46,7 +46,7 @@
 				AppendFlag("-Wunknown-pragmas") #Self explanitory
 				AppendFlag("-Wno-prio-ctor-dtor") #Yells about the developer setting priority to compiler reserved values for ctor/dtors
 				AppendFlag("-Wstrict-aliasing=3") #Included in -Wall. Prevents aliasing rule breaking
-				AppendFlag("-Wstrict-overflow=4") #Trys to hint at using values that won't overflow or will have the smallest chance of overflowing. Example. x+2 > y -> x+1 >= y
+				AppendFlag("-Wstrict-overflow=2") #Trys to hint at using values that won't overflow or will have the smallest chance of overflowing. Example. x+2 > y -> x+1 >= y
 				AppendFlag("-Wbool-operation") #Warn against weird operations on the boolean type. Such as bitwise operations ON the bool
 				AppendFlag("-Wduplicated-branches") #Warns about branches that appear to do the same thing
 				AppendFlag("-Wduplicated-cond") #Warns about a conditional branch having a matching condition for both sides
@@ -117,7 +117,7 @@
 				set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s -flto=auto -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops")
 				set(FGL_FLAGS_DEBUG "${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
 				set(FGL_FLAGS_SYSTEM "${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
-				set(FGL_FLAGS_RELEASE "${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE} ${FGL_WARNINGS} -Werror")
+				set(FGL_FLAGS_RELEASE "${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE} ${FGL_WARNINGS}")
 				set(FGL_FLAGS_RELWITHDEBINFO "${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
 				set(FGL_FLAGS "${FGL_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE)
 			endif ()

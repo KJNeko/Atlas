@@ -94,7 +94,7 @@ namespace atlas::cache
 		}
 	}
 
-	void ImageCache::insert( std::string key, QPixmap pixmap )
+	void ImageCache::insert( const std::string& key, const QPixmap& pixmap )
 	{
 		std::lock_guard guard { mtx };
 

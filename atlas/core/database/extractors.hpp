@@ -80,6 +80,15 @@ void extract( sqlite3_stmt* stmt, std::filesystem::path& t ) noexcept
 }
 
 template < std::uint64_t index, typename T >
+	requires std::is_same_v< T, std::string >
+void extract( sqlite3_stmt* stmt, std::string& t ) noexcept
+{
+	QString str;
+	extract< index, QString >( stmt, str );
+	t = { str.toStdString() };
+}
+
+template < std::uint64_t index, typename T >
 	requires std::is_same_v< T, std::vector< std::byte > >
 void extract( sqlite3_stmt* stmt, std::vector< std::byte >& t ) noexcept
 {
