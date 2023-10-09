@@ -13,8 +13,10 @@ namespace atlas::database::migrations
 			R"(
 				CREATE TABLE image_blurhash
 				(
-					image_sha256 BLOB UNIQUE NOT NULL,
-					blurhash TEXT NOT NULL
+					image_sha256 BLOB UNIQUE PRIMARY KEY NOT NULL,
+					blurhash TEXT NOT NULL,
+					image_width INTEGER NOT NULL,
+					image_height INTEGER NOT NULL
 				);
 			)";
 	}

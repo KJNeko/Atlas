@@ -108,6 +108,7 @@ namespace atlas::images
 		{
 			void loadThumbnail( QPromise< QPixmap >& promise, const std::filesystem::path origin_path )
 			{
+				std::this_thread::sleep_for( std::chrono::milliseconds( 300 ) );
 				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
 
 				if ( !std::filesystem::exists( thumb_path ) )
@@ -127,6 +128,7 @@ namespace atlas::images
 				const SCALE_TYPE scale_type,
 				const std::filesystem::path origin_path )
 			{
+				std::this_thread::sleep_for( std::chrono::milliseconds( 300 ) );
 				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
 
 				if ( !std::filesystem::exists( thumb_path ) )

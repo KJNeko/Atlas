@@ -50,14 +50,6 @@ namespace atlas::images
 		return blurhash_str;
 	}
 
-	std::string createBlurhash( const std::filesystem::path& path )
-	{
-		ZoneScoped;
-		if ( !std::filesystem::exists( path ) ) return {};
-		auto image { loadImage( path ) };
-		return createBlurhash( image );
-	}
-
 	QPixmap decodeBlurhash( const std::string& hash, int width, int height )
 	{
 		ZoneScoped;
@@ -105,9 +97,20 @@ namespace atlas::images
 		ZoneScoped;
 		//Check if the blurhash exists inside of the database
 		std::string blur_hash;
+		int image_height { 0 };
+		int image_width { 0 };
 
-		RapidTransaction() << "SELECT blurhash FROM image_blurhash WHERE image_sha256 = ?" << path.stem().u8string()
-			>> blur_hash;
+		RapidTransaction() << "SELECT blurhash, image_height, image_width FROM image_blurhash WHERE image_sha256 = ?"
+						   << path.stem().u8string()
+			>> [ & ]( const std::string hash, int height, int width )
+		{
+			blur_hash = hash;
+			image_height = height;
+			image_width = width;
+		};
+
+		const QSize image_size { image_width, image_height };
+		const QSize final_size { image_size.scaled( size, Qt::KeepAspectRatio ) };
 
 		if ( blur_hash.empty() )
 		{
@@ -116,13 +119,15 @@ namespace atlas::images
 				throw AtlasException( format_ns::
 				                          format( "Expected path {} to make blurhash. Path does not exist", path ) );
 
-			blur_hash = createBlurhash( path );
+			const auto image { loadImage( path ) };
+			blur_hash = createBlurhash( image );
 
-			RapidTransaction() << "INSERT INTO image_blurhash (image_sha256, blurhash) VALUES (?,?)"
-							   << path.stem().u8string() << blur_hash;
+			RapidTransaction()
+				<< "INSERT INTO image_blurhash (image_sha256, blurhash, image_width, image_height) VALUES (?,?,?,?)"
+				<< path.stem().u8string() << blur_hash << image.width() << image.height();
 		}
 
-		return decodeBlurhash( blur_hash, size.width(), size.height() );
+		return decodeBlurhash( blur_hash, final_size.width(), final_size.height() );
 	}
 
 } // namespace atlas::images
