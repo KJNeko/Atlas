@@ -38,3 +38,6 @@ if (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
 endif ()
 
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/data/themes COMMENT " Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/data/themes")
+
+PlatformPostSetup()
+CompilerPostSetup()

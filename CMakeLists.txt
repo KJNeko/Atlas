@@ -36,5 +36,4 @@ add_subdirectory(atlas)
 add_subdirectory(atlas-updater)
 
 SetVersionInfo()
-PlatformPostSetup()
 CompilerPostSetup()
