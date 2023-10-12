@@ -1,4 +1,7 @@
 #include "AtlasUpdater.hpp"
+
+#include <moc_AtlasUpdater.cpp>
+
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>

@@ -1,4 +1,7 @@
 #include "Console.h"
+
+#include <moc_Console.cpp>
+
 #include "ui_Console.h"
 
 Console::Console(QWidget *parent) :
