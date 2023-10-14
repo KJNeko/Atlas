@@ -436,3 +436,13 @@ bool BatchImportModel::isGood() const
 
 	return true;
 }
+
+bool BatchImportModel::removeRows( int row, int count, const QModelIndex& parent )
+{
+	if ( row < 0 || row >= rowCount() || count < 0 || ( row + count ) > rowCount() ) return false;
+
+	beginRemoveRows( parent, row, row + count - 1 );
+	m_data.erase( m_data.begin() + row, m_data.begin() + row + count );
+	endRemoveRows();
+	return true;
+}

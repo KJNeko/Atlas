@@ -50,6 +50,7 @@ class BatchImportDialog final : public QDialog
 	void finishedPreProcessing();
 	void importFailure( const QString top, const QString bottom );
 	void waitingOnThreads();
+	void keyPressEvent( QKeyEvent* event ) override;
 
   signals:
 	void addToModel( const GameImportData data );
