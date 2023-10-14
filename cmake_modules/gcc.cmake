@@ -126,7 +126,7 @@
 				# Final sets
 				set(FGL_FLAGS "${FGL_OPTIMIZATION_FLAGS_${UPPER_BUILD_TYPE}} ${FGL_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE) # Flags for our shit
 				set(FGL_CHILD_FLAGS "${FGL_OPTIMIZATION_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE) # Child flags for adding optmization to anything we build ourselves but doesn't follow our standard
-				set(CMAKE_CXX_FLAGS ${FGL_FLAGS})
+				set(CMAKE_CXX_FLAGS ${FGL_CHILD_FLAGS})
 			endif ()
 		endfunction()
 
