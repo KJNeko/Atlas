@@ -8,6 +8,7 @@
 #include <QPixmap>
 
 #include <chrono>
+#include <map>
 #include <mutex>
 
 namespace atlas::cache
