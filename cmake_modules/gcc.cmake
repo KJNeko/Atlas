@@ -112,9 +112,9 @@
 				set(FGL_CONFIG "-std=c++20 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
 
 				# Optimization flags
-				set(FGL_OPTIMIZATION_FLAGS_RELEASE "-O2 -s -flto=auto -fdevirtualize-at-ltrans -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops") # System agonistc flags
+				set(FGL_OPTIMIZATION_FLAGS_RELEASE "-O2 -s -flto=auto -fdevirtualize-at-ltrans -fdevirtualize-speculatively -funroll-loops") # System agonistc flags
 				set(FGL_OPTIMIZATION_FLAGS_DEBUG "-O0 -g -fstrict-aliasing -fno-omit-frame-pointer -ftrapv -fverbose-asm -femit-class-debug-always") # Debug flags
-				set(FGL_OPTIMIZATION_FLAGS_SYSTEM "-march=native -flto=auto -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums") # System specific flags. Probably not portable
+				set(FGL_OPTIMIZATION_FLAGS_SYSTEM "-march=native -flto=auto -fdeclone-ctor-dtor -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums") # System specific flags. Probably not portable
 				set(FGL_OPTIMIZATION_FLAGS_RELWITHDEBINFO "-O2 -g -fdevirtualize-at-ltrans -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops")
 
 				# Final flag sets
