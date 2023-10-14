@@ -112,7 +112,7 @@
 				set(FGL_CONFIG "-std=c++20 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
 				set(FGL_DEBUG "-O0 -g -fstrict-aliasing -fno-omit-frame-pointer -ftrapv -fverbose-asm -femit-class-debug-always")
 				#Generates system specific stuff (IE requires AVX)
-				set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums")
+				set(FGL_SYSTEM_SPECIFIC "-march=native -flto=auto -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums")
 				#Generates safe optimization flags
 				set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops -fuse-linker-plugin")
 				set(FGL_FLAGS_DEBUG "${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
