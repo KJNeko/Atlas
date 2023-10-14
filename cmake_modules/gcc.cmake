@@ -110,16 +110,23 @@
 				#set(FGL_WARNINGS "${FGL_WARNINGS_GENERIC} -Wpessimizing-move -Wpedantic -Weffc++ -pedantic-errors -Wnoexcept -Wuninitialized -Wunused -Wunused-parameter -Winit-self -Wconversion -Wuseless-cast -Wextra-semi -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wformat-signedness -Wno-format-zero-length -Wmissing-include-dirs -Wshift-overflow=2 -Walloc-zero -Walloca -Wsign-promo -Wconversion -Wduplicated-branches -Wduplicated-cond -Wshadow -Wshadow=local -Wvirtual-inheritance -Wno-virtual-move-assign -Wunsafe-loop-optimizations -Wnormalized -Wpacked -Wredundant-decls -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wstrict-null-sentinel -Wold-style-cast -Woverloaded-virtual -Wzero-as-null-pointer-constant -Wconditionally-supported -Wwrite-strings -Wunused-const-variable=2 -Wdouble-promotion -Wpointer-arith -Wcast-align=strict -Wcast-qual -Wconversion -Wsign-conversion -Wimplicit-fallthrough=1 -Wmisleading-indentation -Wdangling-else -Wdate-time -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation=2 -Wswitch-default -Wstringop-overflow=4 -Warray-bounds=2 -Wattribute-alias=2 -Wcatch-value=2 -Wplacement-new=2 -Wtrampolines -Winvalid-imported-macros -Winvalid-imported-macros")
 
 				set(FGL_CONFIG "-std=c++20 -fmax-errors=3 -fconcepts-diagnostics-depth=4")
-				set(FGL_DEBUG "-O0 -g -fstrict-aliasing -fno-omit-frame-pointer -ftrapv -fverbose-asm -femit-class-debug-always")
-				#Generates system specific stuff (IE requires AVX)
-				set(FGL_SYSTEM_SPECIFIC "-march=native -flto=auto -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums")
-				#Generates safe optimization flags
-				set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops -fuse-linker-plugin")
-				set(FGL_FLAGS_DEBUG "${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
-				set(FGL_FLAGS_SYSTEM "${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
-				set(FGL_FLAGS_RELEASE "${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE} ${FGL_WARNINGS}")
-				set(FGL_FLAGS_RELWITHDEBINFO "${FGL_CONFIG} -DNDEBUG -g ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
-				set(FGL_FLAGS "${FGL_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE)
+
+				# Optimization flags
+				set(FGL_OPTIMIZATION_FLAGS_RELEASE "-O2 -s -flto=auto -fdevirtualize-at-ltrans -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops") # System agonistc flags
+				set(FGL_OPTIMIZATION_FLAGS_DEBUG "-O0 -g -fstrict-aliasing -fno-omit-frame-pointer -ftrapv -fverbose-asm -femit-class-debug-always") # Debug flags
+				set(FGL_OPTIMIZATION_FLAGS_SYSTEM "-march=native -flto=auto -fgcse -fgcse-las -fgcse-sm -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums") # System specific flags. Probably not portable
+				set(FGL_OPTIMIZATION_FLAGS_RELWITHDEBINFO "-O2 -g -fdevirtualize-at-ltrans -fdevirtualize-speculatively -fdeclone-ctor-dtor -funroll-loops")
+
+				# Final flag sets
+				set(FGL_FLAGS_DEBUG "${FGL_CONFIG} ${FGL_WARNINGS} ${FGL_DEBUG}")
+				set(FGL_FLAGS_SYSTEM "${FLG_CONFIG} ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+				set(FGL_FLAGS_RELEASE "${FGL_CONFIG} ${FGL_SYSTEM_SAFE} ${FGL_WARNINGS}")
+				set(FGL_FLAGS_RELWITHDEBINFO "${FGL_CONFIG} ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
+
+				# Final sets
+				set(FGL_FLAGS "${FGL_OPTIMIZATION_FLAGS_${UPPER_BUILD_TYPE}} ${FGL_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE) # Flags for our shit
+				set(FGL_CHILD_FLAGS "${FGL_OPTIMIZATION_FLAGS_${UPPER_BUILD_TYPE}}" PARENT_SCOPE) # Child flags for adding optmization to anything we build ourselves but doesn't follow our standard
+				set(CMAKE_CXX_FLAGS ${FGL_FLAGS})
 			endif ()
 		endfunction()
 
