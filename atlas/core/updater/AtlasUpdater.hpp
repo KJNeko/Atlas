@@ -7,10 +7,12 @@
 
 #include <QNetworkReply>
 #include <QThread>
+#include <QProgressDialog>
 
 class QNetworkReply;
 
 #include <filesystem>
+#include <ui/dialog/UpdateDialog.h>
 
 namespace atlas
 {
@@ -23,10 +25,12 @@ namespace atlas
 		QNetworkAccessManager m_manager {};
 
 
+
         public:
         //AtlasUpdater(QObject* parent, std::shared_ptr<gui_settings> gui_settings);
         void check_for_updates(bool isManual);
 		AtlasUpdater();
+	    ~AtlasUpdater();
 
         private:
 
@@ -37,6 +41,8 @@ namespace atlas
 		  void downloadUpdate( QString url );
 		  void saveFile( QNetworkReply* reply );
 		  int updateMessageBox( QString message, QString windowTitle, bool includeChangelog );
+		  void downloadProgress( int ist, int max );
+		  UpdateDialog* ud = new UpdateDialog();
 	};
     
     void initUpdateHandler(bool isManual);

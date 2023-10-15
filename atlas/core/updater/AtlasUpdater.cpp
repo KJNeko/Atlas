@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QSpacerItem>
-#include <QGridLayout>
+#include <QGridLayout>  
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QFile>
@@ -16,6 +16,8 @@
 #include "core/logging/logging.hpp"
 #include "core/version.hpp"
 #include "core/config/config.hpp"
+
+#include<unistd.h>
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -30,6 +32,7 @@ namespace atlas
     void initUpdateHandler(bool isManual)
 	{
 		if ( internal::uManager == nullptr ) internal::uManager = new AtlasUpdater();
+		
 
 		internal::uManager->check_for_updates(isManual);
 	}
@@ -44,6 +47,11 @@ namespace atlas
 		/*m_manager.moveToThread( &m_thread );
 		moveToThread( &m_thread );
 		m_thread.start();*/
+	}
+
+	AtlasUpdater::~AtlasUpdater()
+	{
+		ud->deleteLater();
 	}
 
     void AtlasUpdater::check_for_updates(bool isManual)
@@ -116,9 +124,10 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			if(branch == "master" || branch == "staging")
+			//if(branch == "master" || branch == "staging")
+			if(true)
 			{
-				int last_unix_ts = buildtime;
+				int last_unix_ts = 0;
 				for ( const auto& data : array )
 				{
 					const auto& obj { data.toObject() };
@@ -192,28 +201,32 @@ namespace atlas
 
 	void AtlasUpdater::downloadUpdate(QString url)
 {
-	QNetworkRequest request { url};
-	request.setTransferTimeout( 2000 );
-	auto* reply { m_manager.get( request ) };
-	//reply->deleteLater();
+	// Set progress bar to 0
 
-	connect(
-		reply,
-		&QNetworkReply::finished,
-		this,
-		[ =, this ]() { saveFile( reply ); },
-		Qt::SingleShotConnection );
+		QNetworkRequest request { url };
+		request.setTransferTimeout( 2000 );
+		auto* reply { m_manager.get( request ) };
+		//reply->deleteLater();
 
-	connect(
-		reply,
-		&QNetworkReply::errorOccurred,
-		this,
-		[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
-		Qt::SingleShotConnection );
+		connect(
+			reply, &QNetworkReply::finished, this, [ =, this ]() { saveFile( reply ); }, Qt::SingleShotConnection );
+
+		connect(
+			reply,
+			&QNetworkReply::errorOccurred,
+			this,
+			[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
+			Qt::SingleShotConnection );
+		connect( 
+			reply, 
+			&QNetworkReply::downloadProgress, 
+			this, &downloadProgress );
 }
 
 	void AtlasUpdater::saveFile(QNetworkReply* reply)
-	{	
+	{
+		//Close Dialog
+		ud->close();
 		QFile file(QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip"));
 		std::filesystem::create_directory(std::string( std::getenv( "APPDATA" )) + "\\ATLAS");
 		file.open(QIODevice::WriteOnly);
@@ -221,12 +234,14 @@ namespace atlas
 		qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
-
-		QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
+		QProcess *process = new QProcess(this);
+		QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
+		process->startDetached( "AtlasUpdater.exe", QStringList(command));
+		/*QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
 			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
 		//qInfo() << command;
 		QProcess *process = new QProcess(this);
-		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));
+		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));*/
 
 	}
 
@@ -357,4 +372,9 @@ namespace atlas
 		return msgBox.exec();
 	}
 
+	void AtlasUpdater::downloadProgress(int ist, int max)
+	{
+		ud->show();
+		ud->UpdateProgressBar( static_cast<int>((100.0/max) *ist));
+	}
 }
