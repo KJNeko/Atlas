@@ -27,7 +27,7 @@ namespace atlas::crypto::sha256
 				ifs.read( buffer.data(), buffer.size() );
 				const auto read_bytes { ifs.gcount() };
 
-#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 5, 0 ) )
+#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 3, 0 ) )
 				hash.addData( QByteArrayView( buffer.data(), read_bytes ) );
 #else
 				hash.addData( buffer.data(), read_bytes );
