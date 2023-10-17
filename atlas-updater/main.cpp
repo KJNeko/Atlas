@@ -13,7 +13,7 @@ int main( int argc, char** argv )
 		// We should expect TWO arguments. The 0th arg is the path to the OUR executable and the 1st arg is the PID of the process to watch.
 	}
 
-	int pid = std::stoi( argv[ 1 ] );
+	//int pid = std::stoi( argv[ 1 ] );
 
 	//Watch the pid until it dies. If it takes longer then 1 minute then abort the update process.
 	const auto now { std::chrono::steady_clock::now() };

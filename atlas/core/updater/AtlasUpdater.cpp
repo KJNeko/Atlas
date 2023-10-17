@@ -12,12 +12,16 @@
 #include <QNetworkReply>
 #include <QFile>
 #include <QProcess>
+#include <QCoreApplication>
 
 #include "core/logging/logging.hpp"
 #include "core/version.hpp"
 #include "core/config/config.hpp"
 
 #include<unistd.h>
+#include <windows.h>
+#include <stdio.h>
+#include <tchar.h>
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -234,9 +238,21 @@ namespace atlas
 		qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
-		QProcess *process = new QProcess(this);
-		QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
-		process->startDetached( "AtlasUpdater.exe", QStringList(command));
+
+		//STARTUPINFO info={sizeof(info)};
+		//PROCESS_INFORMATION processInfo;
+		/*if (CreateProcess("AtlasUpdater.exe", "1 2", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
+		{
+			WaitForSingleObject(processInfo.hProcess, INFINITE);
+			CloseHandle(processInfo.hProcess);
+			CloseHandle(processInfo.hThread);
+		}*/
+
+		//QProcess *process = new QProcess(this);
+		//QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
+		//process->startDetached( "AtlasUpdater.exe", QStringList(command));
+
+		QCoreApplication::quit();
 		/*QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
 			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
 		//qInfo() << command;

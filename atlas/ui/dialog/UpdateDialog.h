@@ -10,6 +10,7 @@ class UpdateDialog;
 class UpdateDialog : public QDialog
 {
     Q_OBJECT
+    Q_DISABLE_COPY_MOVE( UpdateDialog )
 
 public:
     explicit UpdateDialog(QWidget *parent = nullptr);
