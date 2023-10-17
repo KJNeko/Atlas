@@ -239,15 +239,22 @@ namespace atlas
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
 
-		//STARTUPINFO info={sizeof(info)};
-		//PROCESS_INFORMATION processInfo;
-		/*if (CreateProcess("AtlasUpdater.exe", "1 2", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
-		{
-			WaitForSingleObject(processInfo.hProcess, INFINITE);
-			CloseHandle(processInfo.hProcess);
-			CloseHandle(processInfo.hThread);
-		}*/
-
+	    STARTUPINFO si;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        ZeroMemory(&pi, sizeof(pi));
+        
+        //Wide string because windows is stupid
+        std::wstring path = L"AtlasUpdater.exe";
+        std::wstring args = L"1 2";
+    
+        if (CreateProcess(path, args, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi))
+        {
+            WaitForSingleObject(pi.hProcess, INFINITE);
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+        }
 		//QProcess *process = new QProcess(this);
 		//QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
 		//process->startDetached( "AtlasUpdater.exe", QStringList(command));
