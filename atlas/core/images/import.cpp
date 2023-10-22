@@ -71,7 +71,7 @@ namespace atlas::images
 		image.save( &webp_file_buffer, "webp", 95 );
 
 		//Create blurhash.
-		(void)createBlurhash( image );
+		if ( config::experimental::use_blurhash::get() ) (void)createBlurhash( image );
 
 		if ( webp_file_data.size() > static_cast< qsizetype >( original_file_size ) )
 		{
