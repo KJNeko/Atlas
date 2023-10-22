@@ -18,7 +18,7 @@
 #include "core/version.hpp"
 #include "core/config/config.hpp"
 
-#include<unistd.h>
+#include <unistd.h>
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
@@ -239,27 +239,35 @@ namespace atlas
 		qInfo() << "FILE DOWNLOADED";
 		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
 
-	    STARTUPINFO si;
+        STARTUPINFOA si;
         PROCESS_INFORMATION pi;
         ZeroMemory(&si, sizeof(si));
         si.cb = sizeof(si);
         ZeroMemory(&pi, sizeof(pi));
         
         //Wide string because windows is stupid
-        std::wstring path = L"AtlasUpdater.exe";
-        std::wstring args = L"1 2";
+        const std::string path = "AtlasUpdater.exe";
+        const std::string args = std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip" + std::to_string(::getpid());
+
+		qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
+
+		char* win_buffer { new char[args.size()] } ;
+        std::memcpy(win_buffer, args.c_str(), args.size());
     
-        if (CreateProcess(path, args, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi))
+        if (CreateProcessA(path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
         {
+			//QCoreApplication::quit(); //Kill QT application
+			//exit(3); //Kill Program
             WaitForSingleObject(pi.hProcess, INFINITE);
             CloseHandle(pi.hProcess);
             CloseHandle(pi.hThread);
+
         }
 		//QProcess *process = new QProcess(this);
 		//QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
 		//process->startDetached( "AtlasUpdater.exe", QStringList(command));
 
-		QCoreApplication::quit();
+
 		/*QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
 			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
 		//qInfo() << command;
