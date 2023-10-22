@@ -46,6 +46,8 @@ class BatchImportModel final : public QAbstractTableModel
 	bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole ) override;
 	void sort( int idx, Qt::SortOrder order = Qt::AscendingOrder ) override;
 
+	bool removeRows( int row, int count, const QModelIndex& parent = {} ) override;
+
 	void clearData();
 
 	//! Returns true if we are okay to import.

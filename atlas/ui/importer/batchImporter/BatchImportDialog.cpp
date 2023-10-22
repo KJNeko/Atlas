@@ -4,6 +4,7 @@
 
 #include <QAbstractItemView>
 #include <QFileDialog>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QMimeDatabase>
 #include <QtConcurrent>
@@ -43,6 +44,8 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		&BatchImportModel::dataChanged,
 		this,
 		&BatchImportDialog::modelChanged );
+
+	ui->twGames->setEditTriggers( QAbstractItemView::DoubleClicked );
 
 	loadConfig();
 }
@@ -307,4 +310,39 @@ void BatchImportDialog::importFailure( const QString top, const QString bottom )
 void BatchImportDialog::waitingOnThreads()
 {
 	import_waiting = true;
+}
+
+void BatchImportDialog::keyPressEvent( QKeyEvent* event )
+{
+	if ( event->matches( QKeySequence::StandardKey::Delete ) )
+	{
+		const auto selection_model { ui->twGames->selectionModel() };
+
+		// Get list of all rows
+		const QModelIndexList selected { selection_model->selectedIndexes() };
+
+		std::vector< int > rows;
+		rows.reserve( selected.size() );
+		for ( const auto& index : selected ) rows.push_back( index.row() );
+		// Remove duplicates
+		std::sort( rows.begin(), rows.end() );
+		rows.erase( std::unique( rows.begin(), rows.end() ), rows.end() );
+
+		// Prompt to user if they really want to remove these rows
+		if ( QMessageBox::
+		         question( this, "Remove Games", "Are you sure you want to remove these games from being imported?" )
+		     == QMessageBox::Yes )
+		{
+			int offset { 0 };
+
+			// Remove the rows
+			for ( const auto& row : rows )
+			{
+				ui->twGames->model()->removeRow( row - offset );
+				offset += 1;
+			}
+		}
+	}
+	else
+		QDialog::keyPressEvent( event );
 }
