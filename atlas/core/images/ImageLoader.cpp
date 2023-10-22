@@ -4,6 +4,8 @@
 
 #include "ImageLoader.hpp"
 
+#include <moc_ImageLoader.cpp>
+
 namespace atlas::images
 {
 	ImageLoader::ImageLoader( QPersistentModelIndex index, QFuture< QPixmap > future ) :
