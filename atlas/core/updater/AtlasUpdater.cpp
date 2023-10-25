@@ -256,8 +256,8 @@ namespace atlas
     
         if (CreateProcessA(path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
         {
-			//QCoreApplication::quit(); //Kill QT application
-			//exit(3); //Kill Program
+			QCoreApplication::quit(); //Kill QT application
+			exit(3); //Kill Program
             WaitForSingleObject(pi.hProcess, INFINITE);
             CloseHandle(pi.hProcess);
             CloseHandle(pi.hThread);
