@@ -78,7 +78,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			}
 			else
 			{
-				pixmap = atlas::images::getBlurhash( record.bannerPath( Normal ), banner_size );
+				if ( config::experimental::use_blurhash::get() )
+					pixmap = atlas::images::getBlurhash( record.bannerPath( Normal ), banner_size );
+				else
+					pixmap = {};
 			}
 		}
 

@@ -42,7 +42,7 @@ namespace atlas::logging::internal
 	void logWarn( const std::string_view msg )
 	{
 		spdlog::warn( msg );
-		spdlog::dump_backtrace();
+		//spdlog::dump_backtrace();
 		//	if ( notifications::isNotificationsReady() )
 		//		atlas::notifications::createMessage( QString::fromStdString( std::string( msg ) ), ATLAS_WARNING );
 	}

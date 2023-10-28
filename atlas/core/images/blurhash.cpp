@@ -53,7 +53,7 @@ namespace atlas::images
 	QPixmap decodeBlurhash( const std::string& hash, int width, int height )
 	{
 		ZoneScoped;
-		const int channels { 3 };
+		constexpr int channels { 3 };
 
 		const auto key { format_ns::format( "{}-{}x{}", hash, width, height ) };
 
@@ -63,13 +63,17 @@ namespace atlas::images
 		}
 		else
 		{
-			auto pixels_cpp { blurhash::decode( hash, width, height, 0, channels ) };
+			const QSize input_size { width, height };
+			//Max 100x100 for performance and scale up later
+			const QSize load_size { input_size.scaled( 128, 128, Qt::AspectRatioMode::KeepAspectRatio ) };
+			QImage image { load_size, QImage::Format::Format_RGB888 };
 
-			QImage image { width, height, QImage::Format::Format_RGB888 };
-			for ( int y = 0; y < height; ++y )
+			auto pixels_cpp { blurhash::decode( hash, image.width(), image.height(), 0, channels ) };
+
+			for ( int y = 0; y < image.height(); ++y )
 			{
-				const auto y_idx { y * width * channels };
-				for ( int x = 0; x < width; ++x )
+				const auto y_idx { y * image.width() * channels };
+				for ( int x = 0; x < image.width(); ++x )
 				{
 					const auto x_idx { x * channels };
 					const std::size_t idx { static_cast< size_t >( x_idx + y_idx ) };
