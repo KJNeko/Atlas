@@ -13,7 +13,7 @@
 
 enum class SupportingType
 {
-	NoSupportingType,
+	NoSupportingType = -1,
 	TITLE,
 	CREATOR,
 	VERSION,
