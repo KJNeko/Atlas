@@ -247,7 +247,8 @@ namespace atlas
         
         //Wide string because windows is stupid
         const std::string path = "AtlasUpdater.exe";
-        const std::string args = std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip" + std::to_string(::getpid());
+		const std::string args = "0"; //Default, DO NOT SHOW GUI
+		//std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" + std::to_string( ::getpid() );
 
 		qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
 
