@@ -448,6 +448,7 @@ void SimpleImporter::updateSidebar()
 		ui->stackedWidget->setCurrentIndex( BlankPage );
 	}
 
+	updateSidebar();
 	no_modification = false;
 }
 
