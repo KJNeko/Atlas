@@ -17,5 +17,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+	void CheckForUpdateFile();
+	void InstallUpdate(std::string update_file);
 };
 #endif // MAINWINDOW_HPP
