@@ -21,7 +21,8 @@ SimpleImporter::SimpleImporter( QWidget* parent ) : QDialog( parent ), ui( new U
 	ui->dirView->setModel( new SIModel() );
 	ui->dirView->setContextMenuPolicy( Qt::CustomContextMenu );
 
-	//connect( ui->dirView, &QTreeView::customContextMenuRequested, this, &SimpleImporter::onCustomContextMenuRequested );
+	connect( ui->dirView, &QTreeView::customContextMenuRequested, this, &SimpleImporter::onCustomContextMenuRequested );
+
 	connect(
 		ui->dirView->selectionModel(),
 		&QItemSelectionModel::selectionChanged,
@@ -53,8 +54,121 @@ void SimpleImporter::dirView_itemSelectionChanged(
 	updateSidebar();
 }
 
+int depthOfIndex( const QModelIndex& index )
+{
+	int depth { 0 };
+	QModelIndex parent { index.parent() };
+	while ( parent.isValid() )
+	{
+		++depth;
+		parent = parent.parent();
+	}
+	return depth;
+}
+
 void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint& point )
-{}
+{
+	QMenu menu;
+
+	const QModelIndex item { ui->dirView->indexAt( point ) };
+	int idx_depth { depthOfIndex( item ) };
+
+	Node* node { static_cast< Node* >( item.internalPointer() ) };
+	const bool is_folder { std::holds_alternative< DirInfo >( node->m_info ) };
+
+	menu.addSection( QString( "Depth: %1" ).arg( idx_depth ) );
+
+	if ( is_folder )
+	{
+		auto* dir_info { &std::get< DirInfo >( node->m_info ) };
+
+		auto this_item_menu { menu.addMenu( "This Item" ) };
+
+		this_item_menu->addAction(
+			"Set nothing",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = false;
+				dir_info->is_game_dir = false;
+				dir_info->supporting_type = SupportingType::TITLE;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+
+		this_item_menu->addAction(
+			"Set game root",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_game_dir = true;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+
+		auto this_item_supporting_menu { this_item_menu->addMenu( "Set supporting" ) };
+		this_item_supporting_menu->addAction(
+			"None",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = false;
+				dir_info->supporting_type = SupportingType::TITLE;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+		this_item_supporting_menu->addAction(
+			"Title",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = true;
+				dir_info->supporting_type = SupportingType::TITLE;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+		this_item_supporting_menu->addAction(
+			"Creator",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = true;
+				dir_info->supporting_type = SupportingType::CREATOR;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+		this_item_supporting_menu->addAction(
+			"Version",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = true;
+				dir_info->supporting_type = SupportingType::VERSION;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+		this_item_supporting_menu->addAction(
+			"Engine",
+			[ dir_info, &item, this ]()
+			{
+				dir_info->is_supporting_name = true;
+				dir_info->supporting_type = SupportingType::ENGINE;
+				this->ui->dirView->model()->dataChanged( item, item );
+			} );
+
+		auto this_level { menu.addMenu( "This Depth" ) };
+		this_level->addAction( "Set nothing", []() {} );
+		this_level->addAction( "Set game root", []() {} );
+		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };
+		this_level_supporting_menu->addAction( "None", []() {} );
+		this_level_supporting_menu->addAction( "Title", []() {} );
+		this_level_supporting_menu->addAction( "Creator", []() {} );
+		this_level_supporting_menu->addAction( "Version", []() {} );
+		this_level_supporting_menu->addAction( "Engine", []() {} );
+
+		menu.addAction( "Set preview folder", []() {} );
+	}
+	else
+	{
+		menu.addAction( "Set preview", []() {} );
+
+		auto banner_actions { menu.addMenu( "Set banner" ) };
+		banner_actions->addAction( "Normal", []() {} );
+		banner_actions->addAction( "Wide", []() {} );
+		banner_actions->addAction( "Logo", []() {} );
+		banner_actions->addAction( "Cover", []() {} );
+	}
+
+	menu.exec( QCursor::pos() );
+}
 
 std::vector< QPersistentModelIndex > SimpleImporter::selected() const
 {
@@ -253,10 +367,10 @@ void SimpleImporter::updateSidebar()
 		else
 			ui->cIsGameRoot->setCheckState( Qt::Unchecked );
 
-		if ( checked_support < count && checked_support > 0 )
-			ui->cIsSupporting->setCheckState( Qt::PartiallyChecked );
-		else if ( checked_support == count )
+		if ( checked_support == count )
 			ui->cIsSupporting->setCheckState( Qt::Checked );
+		else if ( checked_support > 0 )
+			ui->cIsSupporting->setCheckState( Qt::PartiallyChecked );
 		else
 			ui->cIsSupporting->setCheckState( Qt::Unchecked );
 

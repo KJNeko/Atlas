@@ -90,10 +90,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionCoverView->setVisible( false );
 	ui->actionListView->setVisible( false );
 	ui->actionManage->setVisible( false );
-	ui->actionSimpleImporter->setVisible( false );
-	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
 	ui->actionDownload->setVisible( false );
+
+	//ui->actionSimpleImporter->setVisible( false );
+	//ui->actionSingleImporter->setVisible( false );
 
 	connect(
 		&atlas::import::internal::getNotifier(),
