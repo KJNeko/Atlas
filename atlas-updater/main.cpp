@@ -14,9 +14,9 @@ int main( int argc, char** argv )
 {
     const std::string update_file = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip";
     const std::string update_tmp_dir = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\tmp";
-    const std::string atlas_dir =std::filesystem::current_path().string();
+    const std::string atlas_dir =std::filesystem::current_path().parent_path().string();
 	bool errors = false;
-    std::vector<std::string> files { "AtlasUpdater.exe", "libstdc++-6.dll", "data", "libgcc_s_seh-1.dll", "libwinpthread-1.dll" };
+    std::vector<std::string> folders { "data", "updater" };
 
 
 	//check that the update file exist
@@ -30,7 +30,7 @@ int main( int argc, char** argv )
 			std::filesystem::path dst( atlas_dir_path );
 
 
-            if(!(std::find(files.begin(), files.end(), dir_entry.path().filename().string()) != files.end()))
+            if(!(std::find(folders.begin(), folders.end(), dir_entry.path().filename().string()) != folders.end()))
             {
                 try{
                     if(std::filesystem::remove_all(dst))

@@ -13,7 +13,9 @@ if (WIN32)
 	#include_directories(${CMAKE_SOURCE_DIR}/dependencies/elzip) # Path to the 11zip
 	
 	#add_executable(AtlasUpdater WIN32 ${SRC_FILES})
+	
 	add_executable(AtlasUpdater ${SRC_FILES})
+    set_target_properties(AtlasUpdater PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/updater")
 	target_include_directories(AtlasUpdater PUBLIC ${CMAKE_SOURCE_DIR}/atlas-updater)
 	target_link_libraries(AtlasUpdater PRIVATE elzip)
 endif ()
