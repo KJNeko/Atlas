@@ -63,12 +63,13 @@ int main( int argc, char** argv )
 		errors = true;
 	}
 
+    //Atlas updater version should increase if changes are made. 
     //Check if there were errors
     if( errors == true){
          int msgboxID = MessageBox(
             NULL,
             "There was an error while trying to run the updater. You will need to download the latest update from github",
-            "Atlas Updater",
+            "Atlas Updater 1.0",
             MB_ICONERROR | MB_OK
         );
 
@@ -83,7 +84,7 @@ int main( int argc, char** argv )
         int msgboxID = MessageBox(
             NULL,
             "Update Complete. Press OK to continue",
-            "Atlas Updater",
+            "Atlas Updater 1.0",
             MB_ICONASTERISK  | MB_OK
         );
 
