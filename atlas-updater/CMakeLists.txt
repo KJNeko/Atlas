@@ -1,8 +1,6 @@
 
 
 if (WIN32)
-	set(CMAKE_CXX_STANDARD 20)
-	set(CMAKE_CXX_STANDARD_REQUIRED ON)
 	
 	file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/atlas-updater/*.cpp)
 
@@ -17,5 +15,5 @@ if (WIN32)
 	#add_executable(AtlasUpdater WIN32 ${SRC_FILES})
 	add_executable(AtlasUpdater ${SRC_FILES})
 	target_include_directories(AtlasUpdater PUBLIC ${CMAKE_SOURCE_DIR}/atlas-updater)
-	target_link_libraries(AtlasUpdater PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts elzip)
+	target_link_libraries(AtlasUpdater PRIVATE elzip)
 endif ()
