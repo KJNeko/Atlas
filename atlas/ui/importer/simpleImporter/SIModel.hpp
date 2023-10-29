@@ -8,6 +8,8 @@
 #include <QAbstractItemModel>
 #include <QDir>
 
+#include <queue>
+
 #include "core/config/config.hpp"
 #include "core/logging/logging.hpp"
 
@@ -47,7 +49,8 @@ struct Node
 	std::variant< DirInfo, FileInfo > m_info { DirInfo {} };
 	QString m_path;
 
-  private:
+	std::vector< Node* > m_children {};
+	Node* m_parent { nullptr };
 
 	bool m_scanned { false };
 
@@ -89,7 +92,73 @@ struct Node
 		return 0;
 	}
 
+	Node* root()
+	{
+		Node* ptr { this };
+		if ( this->parent() == nullptr ) return ptr;
+
+		while ( ptr->parent() != nullptr )
+		{
+			ptr = ptr->parent();
+		}
+
+		return ptr;
+	}
+
+	const Node* root() const
+	{
+		const Node* ptr { this };
+		if ( this->parent() == nullptr ) return ptr;
+
+		while ( ptr->parent() != nullptr )
+		{
+			ptr = ptr->parent();
+		}
+
+		return ptr;
+	}
+
+	int depth() const
+	{
+		int counter { 0 };
+		const Node* ptr { this };
+
+		if ( this->parent() == nullptr ) return 0;
+
+		while ( ptr != nullptr )
+		{
+			++counter;
+			ptr = ptr->parent();
+		}
+
+		return counter;
+	}
+
+	std::vector< Node* > childrenAtDepth( const int target_depth )
+	{
+		if ( target_depth == 0 )
+			return { this };
+		else if ( target_depth > 0 )
+		{
+			if ( !m_scanned ) scan();
+
+			std::vector< Node* > nodes;
+
+			for ( auto child : m_children )
+			{
+				auto child_data { child->childrenAtDepth( target_depth - 1 ) };
+				std::copy( child_data.begin(), child_data.end(), std::back_inserter( nodes ) );
+			}
+
+			return nodes;
+		}
+		else
+			return {};
+	}
+
 	const Node* parent() const { return m_parent; }
+
+	Node* parent() { return m_parent; }
 
 	const Node* child( const int idx ) const
 	{
@@ -107,15 +176,12 @@ struct Node
 			return m_children[ static_cast< std::size_t >( idx ) ];
 	}
 
+	std::vector< Node* > children() const { return m_children; }
+
 	~Node()
 	{
 		for ( auto& child : m_children ) delete child;
 	}
-
-  private:
-
-	std::vector< Node* > m_children {};
-	Node* m_parent { nullptr };
 };
 
 class SIModel final : public QAbstractItemModel

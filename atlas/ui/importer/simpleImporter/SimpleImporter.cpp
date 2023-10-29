@@ -56,7 +56,7 @@ void SimpleImporter::dirView_itemSelectionChanged(
 
 int depthOfIndex( const QModelIndex& index )
 {
-	int depth { 0 };
+	int depth { 1 };
 	QModelIndex parent { index.parent() };
 	while ( parent.isValid() )
 	{
@@ -80,81 +80,201 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 	if ( is_folder )
 	{
-		auto* dir_info { &std::get< DirInfo >( node->m_info ) };
+		DirInfo& dir_info { std::get< DirInfo >( node->m_info ) };
 
 		auto this_item_menu { menu.addMenu( "This Item" ) };
 
 		this_item_menu->addAction(
 			"Set nothing",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = false;
-				dir_info->is_game_dir = false;
-				dir_info->supporting_type = SupportingType::TITLE;
+				dir_info.is_supporting_name = false;
+				dir_info.is_game_dir = false;
+				dir_info.supporting_type = SupportingType::TITLE;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 
 		this_item_menu->addAction(
 			"Set game root",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_game_dir = true;
+				dir_info.is_game_dir = true;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 
 		auto this_item_supporting_menu { this_item_menu->addMenu( "Set supporting" ) };
 		this_item_supporting_menu->addAction(
 			"None",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = false;
-				dir_info->supporting_type = SupportingType::TITLE;
+				dir_info.is_supporting_name = false;
+				dir_info.supporting_type = SupportingType::TITLE;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 		this_item_supporting_menu->addAction(
 			"Title",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = true;
-				dir_info->supporting_type = SupportingType::TITLE;
+				dir_info.is_supporting_name = true;
+				dir_info.supporting_type = SupportingType::TITLE;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 		this_item_supporting_menu->addAction(
 			"Creator",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = true;
-				dir_info->supporting_type = SupportingType::CREATOR;
+				dir_info.is_supporting_name = true;
+				dir_info.supporting_type = SupportingType::CREATOR;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 		this_item_supporting_menu->addAction(
 			"Version",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = true;
-				dir_info->supporting_type = SupportingType::VERSION;
+				dir_info.is_supporting_name = true;
+				dir_info.supporting_type = SupportingType::VERSION;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 		this_item_supporting_menu->addAction(
 			"Engine",
-			[ dir_info, &item, this ]()
+			[ &dir_info, &item, this ]()
 			{
-				dir_info->is_supporting_name = true;
-				dir_info->supporting_type = SupportingType::ENGINE;
+				dir_info.is_supporting_name = true;
+				dir_info.supporting_type = SupportingType::ENGINE;
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 
-		auto this_level { menu.addMenu( "This Depth" ) };
-		this_level->addAction( "Set nothing", []() {} );
-		this_level->addAction( "Set game root", []() {} );
-		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };
-		this_level_supporting_menu->addAction( "None", []() {} );
-		this_level_supporting_menu->addAction( "Title", []() {} );
-		this_level_supporting_menu->addAction( "Creator", []() {} );
-		this_level_supporting_menu->addAction( "Version", []() {} );
-		this_level_supporting_menu->addAction( "Engine", []() {} );
+		Node* root { node->root() };
 
-		menu.addAction( "Set preview folder", []() {} );
+		auto this_level { menu.addMenu( "This Depth" ) };
+		this_level->addAction(
+			"Set nothing",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.is_game_dir = false;
+
+						info.supporting_type = SupportingType::NoSupportingType;
+					}
+				}
+			} );
+
+		this_level->addAction(
+			"Set game root",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_game_dir = true;
+					}
+				}
+
+				qDebug() << "Set root for " << children.size() << " games";
+			} );
+
+		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };
+
+		this_level_supporting_menu->addAction(
+			"None",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.supporting_type = SupportingType::NoSupportingType;
+					}
+				}
+			} );
+		this_level_supporting_menu->addAction(
+			"Title",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.supporting_type = SupportingType::TITLE;
+					}
+				}
+			} );
+		this_level_supporting_menu->addAction(
+			"Creator",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.supporting_type = SupportingType::CREATOR;
+					}
+				}
+			} );
+		this_level_supporting_menu->addAction(
+			"Version",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.supporting_type = SupportingType::VERSION;
+					}
+				}
+			} );
+		this_level_supporting_menu->addAction(
+			"Engine",
+			[ idx_depth, root ]()
+			{
+				auto children { root->childrenAtDepth( idx_depth ) };
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					{
+						DirInfo& info { std::get< DirInfo >( child->m_info ) };
+						info.is_supporting_name = false;
+						info.supporting_type = SupportingType::ENGINE;
+					}
+				}
+			} );
+
+		menu.addAction(
+			"Set preview folder",
+			[ node ]()
+			{
+				auto children { node->children() };
+
+				for ( auto child : children )
+				{
+					if ( std::holds_alternative< FileInfo >( child->m_info ) )
+					{
+						auto& info { std::get< FileInfo >( child->m_info ) };
+						info.is_preview = true;
+					}
+				}
+			} );
 	}
 	else
 	{
@@ -168,6 +288,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 	}
 
 	menu.exec( QCursor::pos() );
+	updateSidebar();
 }
 
 std::vector< QPersistentModelIndex > SimpleImporter::selected() const
@@ -448,7 +569,6 @@ void SimpleImporter::updateSidebar()
 		ui->stackedWidget->setCurrentIndex( BlankPage );
 	}
 
-	updateSidebar();
 	no_modification = false;
 }
 
