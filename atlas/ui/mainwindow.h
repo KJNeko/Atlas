@@ -9,7 +9,7 @@
 
 #include "core/database/Search.hpp"
 #include "core/updater/AtlasUpdater.hpp"
-#include "ui/dialog/Console.h"
+#include "ui/dialog/console/Console.hpp"
 QT_BEGIN_NAMESPACE
 
 namespace Ui
