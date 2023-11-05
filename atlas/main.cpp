@@ -43,10 +43,8 @@ int main( int argc, char** argv )
 
 	QApplication app { argc, argv };
 
-	//Attach the UI console writer
-	auto sink { std::make_shared< atlas::logging::ConsoleSinkMT >() };
-	sink->set_level( spdlog::level::debug );
-	spdlog::default_logger()->sinks().push_back( sink );
+	//Logger should be ready now.
+	atlas::logging::init();
 
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
 
