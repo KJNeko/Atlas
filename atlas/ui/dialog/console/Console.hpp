@@ -19,7 +19,7 @@ class Console : public QDialog
 	~Console();
 
   public slots:
-	void writeData( const QString& data );
+	void writeData( const QString& message );
 
   private:
 

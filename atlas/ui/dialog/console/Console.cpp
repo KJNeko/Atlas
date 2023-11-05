@@ -19,7 +19,7 @@ Console::~Console()
 	delete ui;
 }
 
-void Console::writeData( const QString& data )
+void Console::writeData( const QString& message )
 {
-	ui->textEdit->append( data + "\n" );
+	ui->textEdit->append( message );
 }
