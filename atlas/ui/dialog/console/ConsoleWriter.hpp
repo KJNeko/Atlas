@@ -37,7 +37,6 @@ namespace atlas::logging
 
 		void write( const QString& msg )
 		{
-			qDebug() << "Writing message " << msg << "to buffer";
 			messages.emplace_back( msg );
 			emit dataWritten( msg );
 		}
