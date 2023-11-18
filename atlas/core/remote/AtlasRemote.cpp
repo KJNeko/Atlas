@@ -79,7 +79,7 @@ namespace atlas
 		const QString path { REMOTE "api/updates" };
 		atlas::logging::info( "Checking remote for updates at {}", path.toStdString() );
 		QNetworkRequest request { QUrl { path } };
-		request.setTransferTimeout( 2000 );
+		request.setTransferTimeout( 5000 );
 		auto* reply { m_manager.get( request ) };
 
 		connect(
@@ -171,13 +171,24 @@ namespace atlas
 		}
 
 		const QByteArray response_data { reply->readAll() };
+		atlas::logging::debug( "Response returned {} bytes", response_data.size() );
 		const QJsonDocument doc { QJsonDocument::fromJson( response_data ) };
+
+		if ( doc.isNull() )
+		{
+			logging::warn(
+				"Failed to handle json response from {}. The json response was null!",
+				reply->url().path().toStdString() );
+			return;
+		}
+
 		if ( !doc.isArray() )
 		{
 			logging::warn(
 				"Failed to handle json response from {}. The json response was not an array!",
 				reply->url().path().toStdString() );
 			logging::warn( "{}", response_data.toStdString() );
+			return;
 		}
 		const QJsonArray& array = doc.array();
 
@@ -196,6 +207,8 @@ namespace atlas
 
 			const std::uint64_t update_time { static_cast< std::uint64_t >( obj[ "date" ].toInteger() ) };
 
+			atlas::logging::debug( "Processing update for timestamp: {}", update_time );
+
 			if ( update_time == 1686886200 || update_time == 1687918793 ) continue;
 
 			const auto& md5_str { obj[ "md5" ].toString() };
@@ -205,11 +218,11 @@ namespace atlas
 			memcpy( md5_data_c.data(), md5.data(), static_cast< size_t >( md5.size() ) );
 
 			const auto updates { getUpdatesList() };
-			const auto it = std::find_if(
+			const auto it { std::find_if(
 				updates.begin(),
 				updates.end(),
 				[ update_time ]( const auto& pair )
-				{ return pair.first == static_cast< std::uint64_t >( update_time ); } );
+				{ return pair.first == static_cast< std::uint64_t >( update_time ); } ) };
 
 			RapidTransaction t {};
 			if ( it == updates.end() )
@@ -247,6 +260,7 @@ namespace atlas
 
 		for ( const auto& [ update_time, processed_time ] : updates )
 		{
+			atlas::logging::debug( "Update time: {}, processed time: {}", update_time, processed_time );
 			if ( processed_time != 0 ) continue;
 			return update_time;
 		}
@@ -366,11 +380,13 @@ namespace atlas
 	void AtlasRemote::processPendingUpdates()
 	try
 	{
+		atlas::logging::debug( "Starting to process pending updates" );
 		auto update_time { getNextUpdateTime() };
 
 		while ( update_time != 0 )
 		{
-			const auto path { format_ns::format( "./data/updates/{}.update", update_time ) };
+			const std::filesystem::path path { format_ns::format( "./data/updates/{}.update", update_time ) };
+			atlas::logging::debug( "Processing update: {}", path );
 			if ( !std::filesystem::exists( path ) ) return;
 
 			processUpdateFile( update_time );

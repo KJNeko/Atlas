@@ -32,9 +32,13 @@ namespace atlas::tags
 
 	TagID resolve( const QString& str )
 	{
-		TagID tag_id { INVALID_TAG_ID };
+		std::optional< TagID > tag_id;
 		RapidTransaction() << "SELECT tag_id FROM tags WHERE tag = ?" << str >> tag_id;
-		return tag_id;
+
+		if ( tag_id.has_value() )
+			return tag_id.value();
+		else
+			return INVALID_TAG_ID;
 	}
 
 } // namespace atlas::tags

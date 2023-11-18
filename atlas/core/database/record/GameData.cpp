@@ -44,13 +44,13 @@ namespace atlas::records
 
 		RapidTransaction() << "SELECT count(*) FROM previews WHERE record_id = ?" << m_game_id >> m_preview_count;
 
-		AtlasID atlas_id { INVALID_ATLAS_ID };
+		std::optional< AtlasID > atlas_id;
 		RapidTransaction() << "SELECT atlas_id FROM atlas_mappings WHERE record_id = ? " << m_game_id >> atlas_id;
-		if ( atlas_id != INVALID_ATLAS_ID ) atlas_data = { atlas_id };
+		if ( atlas_id.has_value() ) atlas_data = { atlas_id.value() };
 
-		F95ID f95_id { INVALID_F95_ID };
+		std::optional< F95ID > f95_id;
 		RapidTransaction() << "SELECT f95_id FROM f95_zone_mappings WHERE record_id = ?" << m_game_id >> f95_id;
-		if ( f95_id != INVALID_F95_ID ) f95_data = { f95_id };
+		if ( f95_id.has_value() ) f95_data = { f95_id.value() };
 
 		RapidTransaction() << "SELECT version FROM versions WHERE record_id = ?" << m_game_id >>
 			[ & ]( const QString version ) { m_versions.emplace_back( Version( this->m_game_id, version ) ); };
@@ -67,14 +67,14 @@ namespace atlas::records
 	{
 		ZoneScoped;
 		RapidTransaction transaction;
-		RecordID record_id { INVALID_RECORD_ID };
+		std::optional< RecordID > record_id;
 		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title_in
 					<< creator_in << engine_in
 			>> record_id;
 
-		if ( record_id != INVALID_RECORD_ID )
+		if ( record_id.has_value() )
 		{
-			Game game { record_id };
+			Game game { record_id.value() };
 			throw RecordAlreadyExists( game );
 		}
 
@@ -95,14 +95,17 @@ namespace atlas::records
 	RecordID recordID( const QString& title, const QString& creator, const QString& engine )
 	{
 		ZoneScoped;
-		RecordID record_id { INVALID_RECORD_ID };
+		std::optional< RecordID > record_id;
 
 		RapidTransaction transaction;
 		transaction << "SELECT record_id FROM games WHERE title = ? AND creator = ? AND engine = ?" << title << creator
 					<< engine
 			>> record_id;
 
-		return record_id;
+		if ( record_id.has_value() )
+			return record_id.value();
+		else
+			return INVALID_RECORD_ID;
 	}
 
 	//! Helper function. Returns if a title,creator,engine combo can be found.

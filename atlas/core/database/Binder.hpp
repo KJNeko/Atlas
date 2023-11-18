@@ -87,6 +87,7 @@ class Binder
 		return *this;
 	}
 
+	// Feed into value directly
 	template < typename T >
 		requires( (!is_optional< T >) && (!is_tuple< T >))
 	void operator>>( T& t )
@@ -95,9 +96,13 @@ class Binder
 
 		executeQuery( tpl );
 
-		if ( tpl.has_value() ) t = std::move( std::get< 0, T >( tpl.value() ) );
+		if ( tpl.has_value() )
+			t = std::move( std::get< 0, T >( tpl.value() ) );
+		else
+			throw DatabaseRowMismatch( format_ns::format( "No rows returned for query \"{}\"", sqlite3_sql( stmt ) ) );
 	}
 
+	// Feed output into optional
 	template < typename T >
 		requires( !is_optional< T > && (!is_tuple< T >))
 	void operator>>( std::optional< T >& t )
@@ -112,6 +117,7 @@ class Binder
 			t = std::nullopt;
 	}
 
+	// Call function using output
 	template < typename Function >
 		requires( (!is_optional< Function >) && (!is_tuple< Function >))
 	void operator>>( Function&& func )
@@ -129,6 +135,7 @@ class Binder
 		}
 	}
 
+	// Feed output into tuple
 	template < typename... Ts >
 		requires( !( is_optional< Ts > && ... ) ) && ( !( is_tuple< Ts > && ... ) )
 	void operator>>( std::tuple< Ts... >& tpl )
@@ -136,12 +143,13 @@ class Binder
 		ran = true;
 
 		std::optional< std::tuple< Ts... > > opt_tpl { std::nullopt };
-		executeQuery( opt_tpl );
+		executeQuery< Ts... >( opt_tpl );
 
 		if ( opt_tpl.has_value() )
-		{
 			tpl = std::move( opt_tpl.value() );
-		}
+		else
+			throw DatabaseRowMismatch( "No rows returned for query" );
+
 		return;
 	}
 
@@ -149,7 +157,7 @@ class Binder
 
 	template < typename... Ts >
 		requires( !( is_optional< Ts > || ... ) && !( is_tuple< Ts > || ... ) )
-	void executeQuery( std::optional< std::tuple< Ts... > >& tpl_opt )
+	void executeQuery( [[maybe_unused]] std::optional< std::tuple< Ts... > >& tpl_opt )
 	{
 		if ( param_counter != max_param_count )
 			throw AtlasException( format_ns::format(
@@ -158,13 +166,16 @@ class Binder
 				max_param_count,
 				param_counter,
 				max_param_count,
-				std::string( sqlite3_sql( stmt ) ) ) );
+				std::string_view( sqlite3_sql(
+					stmt ) ) ) ); // String view is safe here since the string is owned by sqlite3 and not freed until the statement is finalized
 
 		ran = true;
 
 		if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
 
+#ifdef LOG_SQL_QUERIES
 		atlas::logging::debug( "Executing query {}", sqlite3_expanded_sql( stmt ) );
+#endif
 
 		const auto step_ret { sqlite3_step( stmt ) };
 
@@ -182,14 +193,18 @@ class Binder
 					}
 					else
 					{
-						tpl_opt = std::nullopt;
-						return;
+						throw AtlasException( format_ns::format(
+							"No rows were expected but rows were returned for query: \"{}\". Is this intentional?",
+							sqlite3_expanded_sql( stmt ) ) );
 					}
 				}
 			case SQLITE_DONE:
 				{
+#ifdef LOG_SQL_QUERIES
 					atlas::logging::debug( "Finished query {}", sqlite3_expanded_sql( stmt ) );
-					tpl_opt = std::nullopt;
+#endif
+					//Help hint to the compiler that it shouldn't keep an empty tuple around
+					if constexpr ( sizeof...( Ts ) > 0 ) tpl_opt = std::nullopt;
 					return;
 
 					default:
