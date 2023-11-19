@@ -402,15 +402,16 @@ namespace atlas
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
 	{
-		RapidTransaction()
-			<< "UPDATE updates SET processed_time = ? WHERE update_time = ?"
-			<< ( yes ? std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now()
-		                                                                            .time_since_epoch() )
-		                   .count() :
-		               0 )
-			<< update_time;
+		const std::uint64_t update_now {
+			static_cast< uint64_t >( std::chrono::duration_cast<
+										 std::chrono::seconds >( std::chrono::system_clock::now().time_since_epoch() )
+			                             .count() )
+		};
 
-		atlas::logging::info( "Processed update for time {}", update_time );
+		RapidTransaction() << "UPDATE updates SET processed_time = ? WHERE update_time = ?" << ( yes ? update_now : 0 )
+						   << update_time;
+
+		atlas::logging::info( "Processed update for time {} at {}", update_time, update_now );
 	}
 
 	void AtlasRemote::handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply )
