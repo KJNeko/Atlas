@@ -18,7 +18,7 @@
 #pragma GCC diagnostic ignored "-Wsuggest-final-methods"
 #endif
 
-#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
@@ -43,14 +43,10 @@ namespace atlas::logging
 #endif
 
 		// file sink will print out to a log file and rotate it out when getting too big.
-		auto file_sink {
-			std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "./data/logs/log.txt", 1024 * 1024 * 1, 3 )
-		};
+		auto file_sink { std::make_shared< spdlog::sinks::basic_file_sink_mt >( "./data/logs/log.txt" ) };
 		file_sink->set_level( spdlog::level::info );
 
-		auto error_file_sink {
-			std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "./data/logs/error.txt", 1024 * 1024 * 1, 3 )
-		};
+		auto error_file_sink { std::make_shared< spdlog::sinks::basic_file_sink_mt >( "./data/logs/error.txt" ) };
 		error_file_sink->set_level( spdlog::level::err );
 
 		//TODO: Hook into UI and make a sink for spdlog to output into.
@@ -61,7 +57,7 @@ namespace atlas::logging
 
 		logger->debug( "Logger setup" );
 
-		spdlog::set_default_logger( logger );
+		spdlog::set_default_logger( std::move( logger ) );
 		setFormat();
 
 #ifndef NDEBUG
