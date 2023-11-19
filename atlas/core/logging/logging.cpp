@@ -6,7 +6,6 @@
 
 #include "core/config/config.hpp"
 
-
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 
@@ -64,6 +63,10 @@ namespace atlas::logging
 
 		spdlog::set_default_logger( logger );
 		setFormat();
+
+#ifndef NDEBUG
+		spdlog::set_level( spdlog::level::debug );
+#endif
 
 		spdlog::enable_backtrace( 32 );
 		spdlog::debug( "Default logger set" );
