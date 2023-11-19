@@ -226,7 +226,11 @@ struct Node
 	const Node* child( const int idx ) const
 	{
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
+		{
+			atlas::logging::
+				error( "Tried to access child at index {} but there are only {} children", idx, m_children.size() );
 			return nullptr;
+		}
 		else
 			return m_children[ static_cast< std::size_t >( idx ) ];
 	}
@@ -234,7 +238,11 @@ struct Node
 	Node* child( const int idx )
 	{
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
+		{
+			atlas::logging::
+				error( "Tried to access child at index {} but there are only {} children", idx, m_children.size() );
 			return nullptr;
+		}
 		else
 			return m_children[ static_cast< std::size_t >( idx ) ];
 	}
