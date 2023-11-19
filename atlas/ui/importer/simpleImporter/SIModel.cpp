@@ -34,6 +34,12 @@ QModelIndex SIModel::index( int row, int column, const QModelIndex& parent_idx )
 
 	if ( !parent_idx.isValid() )
 	{
+		if ( m_root == nullptr )
+		{
+			atlas::logging::error( "m_root is nullptr" );
+			return QModelIndex();
+		}
+
 		const Node* child { m_root->child( row ) };
 
 		if ( child )
@@ -44,6 +50,12 @@ QModelIndex SIModel::index( int row, int column, const QModelIndex& parent_idx )
 	else
 	{
 		const Node* parent { static_cast< Node* >( parent_idx.internalPointer() ) };
+		if ( parent == nullptr )
+		{
+			atlas::logging::error( "parent is nullptr" );
+			return QModelIndex();
+		}
+
 		const Node* child { parent->child( row ) };
 		if ( child )
 			return createIndex( row, column, child );
@@ -57,7 +69,20 @@ QModelIndex SIModel::parent( const QModelIndex& index ) const
 	if ( !index.isValid() ) return QModelIndex();
 
 	const Node* child { static_cast< Node* >( index.internalPointer() ) };
+
+	if ( child == nullptr )
+	{
+		atlas::logging::error( "child parent is nullptr" );
+		return QModelIndex();
+	}
+
 	const Node* parent { child->parent() };
+
+	if ( parent == nullptr )
+	{
+		atlas::logging::error( "parent is nullptr" );
+		return QModelIndex();
+	}
 
 	if ( parent == m_root ) return QModelIndex();
 
@@ -69,10 +94,23 @@ int SIModel::rowCount( const QModelIndex& index ) const
 	if ( index.column() > 0 ) return 0;
 
 	if ( !index.isValid() )
-		return m_root->childCount();
+	{
+		if ( m_root == nullptr )
+		{
+			atlas::logging::error( "m_root is nullptr" );
+			return 0;
+		}
+		else
+			return m_root->childCount();
+	}
 	else
 	{
 		Node* ptr { static_cast< Node* >( index.internalPointer() ) };
+		if ( ptr == nullptr )
+		{
+			atlas::logging::error( "ptr is nullptr" );
+			return 0;
+		}
 		if ( !ptr->scanned() ) ptr->scan();
 		return ptr->childCount();
 	}
@@ -91,12 +129,25 @@ QVariant SIModel::data( const QModelIndex& index, int role ) const
 			{
 				const Node* const node { static_cast< Node* >( index.internalPointer() ) };
 
+				if ( node == nullptr )
+				{
+					atlas::logging::error( "node is nullptr" );
+					return {};
+				}
+
 				return node->name();
 			}
 		case Qt::FontRole:
 			{
 				QFont font;
 				const Node* const node { static_cast< Node* >( index.internalPointer() ) };
+
+				if ( node == nullptr )
+				{
+					atlas::logging::error( "node is nullptr" );
+					return {};
+				}
+
 				if ( node->isFolder() )
 				{
 					const auto& dir_info { std::get< DirInfo >( node->m_info ) };
@@ -115,13 +166,16 @@ QVariant SIModel::data( const QModelIndex& index, int role ) const
 				return font;
 			}
 		default:
-			return SIModel::data( index, role );
+			return {};
 	}
 }
 
 SIModel::~SIModel()
 {
-	delete m_root;
+	if ( m_root == nullptr )
+		return;
+	else
+		delete m_root;
 }
 
 Node::Node( const QString str, Node* parent, const bool scan_immediate ) : m_name( str ), m_parent( parent )
