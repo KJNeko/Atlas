@@ -85,18 +85,37 @@ int SIModel::columnCount( [[maybe_unused]] const QModelIndex& parent ) const
 
 QVariant SIModel::data( const QModelIndex& index, int role ) const
 {
-	Node* node { static_cast< Node* >( index.internalPointer() ) };
-
 	switch ( role )
 	{
 		case Qt::DisplayRole:
 			{
-				const auto str { node->m_path };
-				const auto itter { str.lastIndexOf( QDir::separator() ) };
-				return str.mid( itter + 1 );
+				const Node* const node { static_cast< Node* >( index.internalPointer() ) };
+
+				return node->name();
+			}
+		case Qt::FontRole:
+			{
+				QFont font;
+				const Node* const node { static_cast< Node* >( index.internalPointer() ) };
+				if ( node->isFolder() )
+				{
+					const auto& dir_info { std::get< DirInfo >( node->m_info ) };
+
+					font.setItalic( dir_info.is_supporting_name );
+					font.setBold( dir_info.is_game_dir );
+					return font;
+				}
+				else if ( node->isFile() )
+				{
+					const auto& file_info { std::get< FileInfo >( node->m_info ) };
+
+					font.setUnderline( file_info.is_banner || file_info.is_preview );
+				}
+
+				return font;
 			}
 		default:
-			return QVariant();
+			return SIModel::data( index, role );
 	}
 }
 
@@ -105,11 +124,11 @@ SIModel::~SIModel()
 	delete m_root;
 }
 
-Node::Node( const QString str, Node* parent, const bool scan_immediate ) : m_path( str ), m_parent( parent )
+Node::Node( const QString str, Node* parent, const bool scan_immediate ) : m_name( str ), m_parent( parent )
 {
 	if ( scan_immediate ) scan();
 
-	QFileInfo info { str };
+	const QFileInfo info { pathStr() };
 	if ( info.isDir() )
 		m_info = DirInfo();
 	else

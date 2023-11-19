@@ -15,11 +15,19 @@
 
 enum class SupportingType
 {
-	NoSupportingType = -1,
-	TITLE,
-	CREATOR,
-	VERSION,
-	ENGINE
+	TITLE = 0,
+	CREATOR = 1,
+	VERSION = 2,
+	ENGINE = 3
+};
+
+enum SupportingMask : int
+{
+	NO_SUPPORTING_MASK = 0,
+	TITLE = 1 << 0,
+	CREATOR = 1 << 1,
+	VERSION = 1 << 2,
+	ENGINE = 1 << 3
 };
 
 struct DirInfo
@@ -31,7 +39,8 @@ struct DirInfo
 	QString engine { "" };
 
 	bool is_supporting_name { false };
-	SupportingType supporting_type { SupportingType::NoSupportingType };
+	SupportingType supporting_type { SupportingType::TITLE };
+	int supporting_mask { SupportingMask::NO_SUPPORTING_MASK };
 };
 
 struct FileInfo
@@ -40,6 +49,7 @@ struct FileInfo
 	BannerType banner_type { BannerType::Normal };
 
 	bool is_preview { false };
+	bool is_executable { false };
 };
 
 struct Node
@@ -47,7 +57,7 @@ struct Node
 	Q_DISABLE_COPY_MOVE( Node )
 
 	std::variant< DirInfo, FileInfo > m_info { DirInfo {} };
-	QString m_path;
+	QString m_name;
 
 	std::vector< Node* > m_children {};
 	Node* m_parent { nullptr };
@@ -56,23 +66,74 @@ struct Node
 
   public:
 
+	DirInfo filledInfo() const
+	{
+		if ( !std::holds_alternative< DirInfo >( m_info ) )
+			return {};
+		else
+		{
+			auto info { std::get< DirInfo >( m_info ) };
+
+			//Check for any fields populated by the parents
+			const Node* ptr { this };
+
+			while ( ptr != nullptr )
+			{
+				if ( !std::holds_alternative< DirInfo >( ptr->m_info ) ) //The fuck?
+					throw std::runtime_error( "Expected dir info but got file info instead!" );
+
+				const auto& parent_info { std::get< DirInfo >( ptr->m_info ) };
+
+				if ( parent_info.is_supporting_name )
+				{
+					switch ( parent_info.supporting_type )
+					{
+						case SupportingType::TITLE:
+							info.title = ptr->name();
+							info.supporting_mask |= SupportingMask::TITLE;
+							break;
+						case SupportingType::CREATOR:
+							info.creator = ptr->name();
+							info.supporting_mask |= SupportingMask::CREATOR;
+							break;
+						case SupportingType::VERSION:
+							info.version = ptr->name();
+							info.supporting_mask |= SupportingMask::VERSION;
+							break;
+						case SupportingType::ENGINE:
+							info.engine = ptr->name();
+							info.supporting_mask |= SupportingMask::ENGINE;
+							break;
+					}
+				}
+
+				ptr = ptr->parent();
+			}
+
+			return info;
+		}
+	}
+
 	Node( const QString str, Node* parent = nullptr, const bool scan_immediate = false );
 
 	QString name() const
 	{
-		const auto split_pos { m_path.lastIndexOf( QDir::separator() ) };
-		return m_path.mid( split_pos + 1 );
+		return m_name;
+		//const auto split_pos { m_path.lastIndexOf( QDir::separator() ) };
+		//return m_path.mid( split_pos + 1 );
 	}
 
 	void scan()
 	{
-		QDir dir { m_path };
-		QFileInfo info { m_path };
+		const QString path_str { this->pathStr() };
+		QFileInfo info { path_str };
+
 		if ( info.isFile() ) return;
 
+		QDir dir { path_str };
 		//Scan all files and directories
 		for ( const auto& entry : dir.entryInfoList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot ) )
-			m_children.push_back( new Node( entry.absoluteFilePath(), this ) );
+			m_children.push_back( new Node( entry.fileName(), this ) );
 
 		m_scanned = true;
 	}
@@ -89,12 +150,14 @@ struct Node
 			return static_cast< int >( std::distance(
 				parent_children.begin(), std::find( parent_children.begin(), parent_children.end(), this ) ) );
 		}
+
 		return 0;
 	}
 
 	Node* root()
 	{
 		Node* ptr { this };
+
 		if ( this->parent() == nullptr ) return ptr;
 
 		while ( ptr->parent() != nullptr )
@@ -176,11 +239,35 @@ struct Node
 			return m_children[ static_cast< std::size_t >( idx ) ];
 	}
 
+	bool isFile() const { return std::holds_alternative< FileInfo >( m_info ); }
+
+	bool isFolder() const { return std::holds_alternative< DirInfo >( m_info ); }
+
+	DirInfo& dirInfo() { return std::get< DirInfo >( m_info ); }
+
+	FileInfo& fileInfo() { return std::get< FileInfo >( m_info ); }
+
 	std::vector< Node* > children() const { return m_children; }
+
+	std::filesystem::path path() const
+	{
+		if ( m_parent == nullptr )
+			return std::filesystem::path( name().toStdString() );
+		else
+			return m_parent->path() / name().toStdString();
+	}
+
+	QString pathStr() const
+	{
+		if ( m_parent == nullptr )
+			return name();
+		else
+			return m_parent->pathStr() + QDir::separator() + name();
+	}
 
 	~Node()
 	{
-		for ( auto& child : m_children ) delete child;
+		for ( auto child : m_children ) delete child;
 	}
 };
 

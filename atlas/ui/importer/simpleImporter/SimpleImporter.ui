@@ -13,8 +13,38 @@
   <property name="windowTitle">
    <string>SimpleImporter</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="1" column="2">
+    <widget class="QPushButton" name="btnImport">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Import</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="btnReselectRoot">
+     <property name="text">
+      <string>Reselect root</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="3">
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -83,6 +113,9 @@
            </item>
            <item row="3" column="2">
             <widget class="QComboBox" name="cbSupportingSelection">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
              <item>
               <property name="text">
                <string>Title</string>
@@ -188,36 +221,6 @@
          </widget>
          <widget class="QWidget" name="filePage">
           <layout class="QGridLayout" name="gridLayout">
-           <item row="2" column="0">
-            <widget class="QCheckBox" name="cIsPreview">
-             <property name="text">
-              <string>Is Preview</string>
-             </property>
-             <property name="tristate">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <widget class="QLabel" name="previewLabel">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="cIsBanner">
-             <property name="text">
-              <string>Is Banner</string>
-             </property>
-             <property name="tristate">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QComboBox" name="cbBannerType">
              <item>
@@ -240,6 +243,43 @@
                <string>Icon</string>
               </property>
              </item>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLabel" name="previewLabel">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="cIsBanner">
+             <property name="text">
+              <string>Is Banner</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="cIsPreview">
+             <property name="text">
+              <string>Is Preview</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QCheckBox" name="cbIsExecutable">
+             <property name="text">
+              <string>Is Executable</string>
+             </property>
             </widget>
            </item>
           </layout>

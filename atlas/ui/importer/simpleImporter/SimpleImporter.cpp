@@ -10,6 +10,7 @@
 
 #include <QComboBox>
 #include <QMenu>
+#include <QProgressDialog>
 
 #include "SIModel.hpp"
 #include "ui_SimpleImporter.h"
@@ -66,6 +67,50 @@ int depthOfIndex( const QModelIndex& index )
 	return depth;
 }
 
+void SimpleImporter::setGameRoot( Node* node )
+{
+	if ( node->isFolder() )
+	{
+		auto& node_info { node->dirInfo() };
+		node_info.is_game_dir = true;
+
+		//Detect for any banners or preview folders
+
+		QProgressDialog progress_dialog { "Scanning...", "", 0, 1, this };
+
+		progress_dialog.show();
+		node->scan();
+		progress_dialog.setValue( 1 );
+
+		auto children { node->children() };
+
+		progress_dialog.setMaximum( children.size() );
+
+		for ( auto child : children )
+		{
+			progress_dialog.setValue( progress_dialog.value() + 1 );
+			QApplication::processEvents();
+			if ( child->isFolder() && child->name() == "previews" )
+			{
+				child->scan();
+
+				//Take all files within that folder and mark as previews
+				for ( const auto& previews_children : child->children() )
+				{
+					if ( previews_children->isFile() ) previews_children->fileInfo().is_preview = true;
+				}
+			}
+			else if ( child->isFile() && child->name().startsWith( "banner" ) )
+			{
+				//If the child is a file and starts with 'banner' then mark as banner
+				child->fileInfo().is_banner = true;
+			}
+		}
+	}
+	else
+		return;
+}
+
 void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint& point )
 {
 	QMenu menu;
@@ -74,13 +119,12 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 	int idx_depth { depthOfIndex( item ) };
 
 	Node* node { static_cast< Node* >( item.internalPointer() ) };
-	const bool is_folder { std::holds_alternative< DirInfo >( node->m_info ) };
 
 	menu.addSection( QString( "Depth: %1" ).arg( idx_depth ) );
 
-	if ( is_folder )
+	if ( node->isFolder() )
 	{
-		DirInfo& dir_info { std::get< DirInfo >( node->m_info ) };
+		DirInfo& dir_info { node->dirInfo() };
 
 		auto this_item_menu { menu.addMenu( "This Item" ) };
 
@@ -96,9 +140,9 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 		this_item_menu->addAction(
 			"Set game root",
-			[ &dir_info, &item, this ]()
+			[ node, &item, this ]()
 			{
-				dir_info.is_game_dir = true;
+				setGameRoot( node );
 				this->ui->dirView->model()->dataChanged( item, item );
 			} );
 
@@ -152,34 +196,30 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 			[ idx_depth, root ]()
 			{
 				auto children { root->childrenAtDepth( idx_depth ) };
+
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
+
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
 						info.is_supporting_name = false;
 						info.is_game_dir = false;
-
-						info.supporting_type = SupportingType::NoSupportingType;
 					}
 				}
 			} );
 
 		this_level->addAction(
 			"Set game root",
-			[ idx_depth, root ]()
+			[ idx_depth, root, this ]()
 			{
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
-					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_game_dir = true;
-					}
+					QApplication::processEvents();
+					setGameRoot( child );
 				}
-
-				qDebug() << "Set root for " << children.size() << " games";
 			} );
 
 		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };
@@ -191,11 +231,11 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
 						info.is_supporting_name = false;
-						info.supporting_type = SupportingType::NoSupportingType;
 					}
 				}
 			} );
@@ -206,10 +246,11 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = false;
+						info.is_supporting_name = true;
 						info.supporting_type = SupportingType::TITLE;
 					}
 				}
@@ -221,10 +262,11 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = false;
+						info.is_supporting_name = true;
 						info.supporting_type = SupportingType::CREATOR;
 					}
 				}
@@ -236,10 +278,11 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = false;
+						info.is_supporting_name = true;
 						info.supporting_type = SupportingType::VERSION;
 					}
 				}
@@ -251,10 +294,11 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = false;
+						info.is_supporting_name = true;
 						info.supporting_type = SupportingType::ENGINE;
 					}
 				}
@@ -268,6 +312,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 				for ( auto child : children )
 				{
+					QApplication::processEvents();
 					if ( std::holds_alternative< FileInfo >( child->m_info ) )
 					{
 						auto& info { std::get< FileInfo >( child->m_info ) };
@@ -313,8 +358,6 @@ void SimpleImporter::on_cIsGameRoot_toggled( bool checked )
 		{
 			std::get< DirInfo >( node->m_info ).is_game_dir = checked;
 		}
-
-		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 	updateSidebar();
 }
@@ -370,6 +413,7 @@ void SimpleImporter::on_leCreator_textChanged( const QString& text )
 		{
 			std::get< DirInfo >( node->m_info ).creator = text;
 		}
+		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 	updateSidebar();
 }
@@ -387,6 +431,7 @@ void SimpleImporter::on_leVersion_textChanged( const QString& text )
 		{
 			std::get< DirInfo >( node->m_info ).version = text;
 		}
+		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 	updateSidebar();
 }
@@ -404,6 +449,7 @@ void SimpleImporter::on_leTitle_textChanged( const QString& text )
 		{
 			std::get< DirInfo >( node->m_info ).title = text;
 		}
+		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 	updateSidebar();
 }
@@ -421,14 +467,26 @@ void SimpleImporter::on_leEngine_textChanged( const QString& text )
 		{
 			std::get< DirInfo >( node->m_info ).engine = text;
 		}
+		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 	updateSidebar();
 }
 
 void SimpleImporter::updateSidebar()
 {
-	const auto current { selected() };
 	no_modification = true; // Prevent the GUI slots from making changes to the record.
+
+	//Wipe UI
+	ui->stackedWidget->setCurrentIndex( BlankPage );
+	ui->leTitle->clear();
+	ui->leCreator->clear();
+	ui->leEngine->clear();
+	ui->leVersion->clear();
+	ui->cIsGameRoot->setCheckState( Qt::Unchecked );
+	ui->cIsSupporting->setCheckState( Qt::Unchecked );
+	ui->cbSupportingSelection->setCurrentIndex( static_cast< int >( SupportingType::TITLE ) );
+
+	const std::vector< QPersistentModelIndex > current { selected() };
 
 	//Check if current selection is just made of files or directories.
 
@@ -470,6 +528,7 @@ void SimpleImporter::updateSidebar()
 		// Count up how many are checked and how many are not.
 		for ( const auto& idx : current )
 		{
+			QApplication::processEvents();
 			const Node* node { static_cast< Node* >( idx.internalPointer() ) };
 			if ( std::holds_alternative< DirInfo >( node->m_info ) )
 			{
@@ -504,10 +563,12 @@ void SimpleImporter::updateSidebar()
 		{
 			//Only one selection if we are here.
 			Node* node { static_cast< Node* >( current.front().internalPointer() ) };
-			const auto& dir_info { std::get< DirInfo >( node->m_info ) };
-			const auto& [ is_game, title, creator, version, engine, supporting, type ] { dir_info };
+			const DirInfo dir_info { node->filledInfo() };
+			const auto& [ is_game_dir, title, creator, version, engine, supporting, supporting_type, supporting_mask ] {
+				dir_info
+			};
 
-			if ( is_game )
+			if ( is_game_dir )
 			{
 				ui->gameBasicInfo->setEnabled( true );
 
@@ -515,9 +576,22 @@ void SimpleImporter::updateSidebar()
 				ui->leCreator->setText( creator );
 				ui->leEngine->setText( engine );
 				ui->leVersion->setText( version );
+
+				//Lock depending on mask
+				ui->leTitle->setEnabled( !( supporting_mask & SupportingMask::TITLE ) );
+				ui->leCreator->setEnabled( !( supporting_mask & SupportingMask::CREATOR ) );
+				ui->leEngine->setEnabled( !( supporting_mask & SupportingMask::ENGINE ) );
+				ui->leVersion->setEnabled( !( supporting_mask & SupportingMask::VERSION ) );
+			}
+			else
+			{
+				ui->leTitle->setEnabled( false );
+				ui->leCreator->setEnabled( false );
+				ui->leEngine->setEnabled( false );
+				ui->leVersion->setEnabled( false );
 			}
 
-			if ( supporting ) ui->cbSupportingSelection->setCurrentIndex( static_cast< int >( type ) );
+			if ( supporting ) ui->cbSupportingSelection->setCurrentIndex( static_cast< int >( supporting_type ) );
 		}
 	}
 	else if ( file_count > 0 && dir_count == 0 ) // Only files
@@ -526,19 +600,24 @@ void SimpleImporter::updateSidebar()
 
 		std::size_t checked_banner { 0 };
 		std::size_t checked_preview { 0 };
+		std::size_t checked_executables { 0 };
 		std::size_t total { 0 };
 
 		for ( const auto& index : current )
 		{
+			QApplication::processEvents();
 			Node* node { static_cast< Node* >( index.internalPointer() ) };
 			if ( std::holds_alternative< FileInfo >( node->m_info ) )
 			{
 				const auto& file_info { std::get< FileInfo >( node->m_info ) };
 				if ( file_info.is_banner ) ++checked_banner;
 				if ( file_info.is_preview ) ++checked_preview;
+				if ( file_info.is_executable ) ++checked_executables;
 				++total;
 			}
 		}
+
+		ui->cbBannerType->setDisabled( checked_banner < total && checked_banner > 0 );
 
 		if ( checked_banner < total && checked_banner > 0 )
 			ui->cIsBanner->setCheckState( Qt::PartiallyChecked );
@@ -554,15 +633,12 @@ void SimpleImporter::updateSidebar()
 		else
 			ui->cIsPreview->setCheckState( Qt::Unchecked );
 
-		if ( total > 1 )
-			ui->cbBannerType->setCurrentIndex( 0 );
+		if ( checked_executables < total && checked_executables > 0 )
+			ui->cbIsExecutable->setCheckState( Qt::PartiallyChecked );
+		else if ( checked_executables == total )
+			ui->cbIsExecutable->setCheckState( Qt::Checked );
 		else
-		{
-			Node* first { static_cast< Node* >( current.front().internalPointer() ) };
-			const auto& file_info { std::get< FileInfo >( first->m_info ) };
-			const auto& [ is_banner, type, is_preview ] { file_info };
-			if ( is_banner ) ui->cbBannerType->setCurrentIndex( static_cast< int >( type ) );
-		}
+			ui->cbIsExecutable->setCheckState( Qt::Unchecked );
 	}
 	else // Mix
 	{
@@ -582,12 +658,14 @@ void SimpleImporter::on_cIsBanner_toggled( bool checked )
 
 	for ( const auto& index : current )
 	{
+		QApplication::processEvents();
 		Node* node { static_cast< Node* >( index.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
 			auto& file_info { std::get< FileInfo >( node->m_info ) };
 			file_info.is_banner = checked;
 		}
+		ui->dirView->model()->dataChanged( index, index );
 	}
 }
 
@@ -601,12 +679,14 @@ void SimpleImporter::on_cIsPreview_toggled( bool checked )
 
 	for ( const auto& index : current )
 	{
+		QApplication::processEvents();
 		Node* node { static_cast< Node* >( index.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
 			auto& file_info { std::get< FileInfo >( node->m_info ) };
 			file_info.is_preview = checked;
 		}
+		ui->dirView->model()->dataChanged( index, index );
 	}
 }
 
@@ -620,11 +700,13 @@ void SimpleImporter::on_cbBannerType_currentIndexChanged( int index )
 
 	for ( const auto& node_idx : current )
 	{
+		QApplication::processEvents();
 		Node* node { static_cast< Node* >( node_idx.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
 			auto& file_info { std::get< FileInfo >( node->m_info ) };
 			file_info.banner_type = static_cast< BannerType >( index );
 		}
+		ui->dirView->model()->dataChanged( node_idx, node_idx );
 	}
 }
