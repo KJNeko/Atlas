@@ -69,7 +69,7 @@ int depthOfIndex( const QModelIndex& index )
 
 void SimpleImporter::setGameRoot( Node* node )
 {
-	if ( node->isFolder() )
+	if ( node && node->isFolder() )
 	{
 		auto& node_info { node->dirInfo() };
 		node_info.is_game_dir = true;
@@ -89,7 +89,7 @@ void SimpleImporter::setGameRoot( Node* node )
 		for ( auto child : children )
 		{
 			progress_dialog.setValue( progress_dialog.value() + 1 );
-			QApplication::processEvents();
+			//QApplication::processEvents();
 			if ( child->isFolder() && child->name() == "previews" )
 			{
 				child->scan();
@@ -199,7 +199,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
@@ -217,7 +217,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					setGameRoot( child );
 				}
 			} );
@@ -231,7 +231,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
@@ -246,7 +246,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
@@ -262,7 +262,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
@@ -278,7 +278,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
@@ -294,7 +294,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				auto children { root->childrenAtDepth( idx_depth ) };
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< DirInfo >( child->m_info ) )
 					{
 						DirInfo& info { std::get< DirInfo >( child->m_info ) };
@@ -312,7 +312,7 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 				for ( auto child : children )
 				{
-					QApplication::processEvents();
+					//	QApplication::processEvents();
 					if ( std::holds_alternative< FileInfo >( child->m_info ) )
 					{
 						auto& info { std::get< FileInfo >( child->m_info ) };
@@ -528,7 +528,7 @@ void SimpleImporter::updateSidebar()
 		// Count up how many are checked and how many are not.
 		for ( const auto& idx : current )
 		{
-			QApplication::processEvents();
+			//	QApplication::processEvents();
 			const Node* node { static_cast< Node* >( idx.internalPointer() ) };
 			if ( std::holds_alternative< DirInfo >( node->m_info ) )
 			{
@@ -605,7 +605,7 @@ void SimpleImporter::updateSidebar()
 
 		for ( const auto& index : current )
 		{
-			QApplication::processEvents();
+			//	QApplication::processEvents();
 			Node* node { static_cast< Node* >( index.internalPointer() ) };
 			if ( std::holds_alternative< FileInfo >( node->m_info ) )
 			{
@@ -658,7 +658,7 @@ void SimpleImporter::on_cIsBanner_toggled( bool checked )
 
 	for ( const auto& index : current )
 	{
-		QApplication::processEvents();
+		//	QApplication::processEvents();
 		Node* node { static_cast< Node* >( index.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
@@ -679,7 +679,7 @@ void SimpleImporter::on_cIsPreview_toggled( bool checked )
 
 	for ( const auto& index : current )
 	{
-		QApplication::processEvents();
+		//	QApplication::processEvents();
 		Node* node { static_cast< Node* >( index.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
@@ -700,7 +700,7 @@ void SimpleImporter::on_cbBannerType_currentIndexChanged( int index )
 
 	for ( const auto& node_idx : current )
 	{
-		QApplication::processEvents();
+		//	QApplication::processEvents();
 		Node* node { static_cast< Node* >( node_idx.internalPointer() ) };
 		if ( std::holds_alternative< FileInfo >( node->m_info ) )
 		{
