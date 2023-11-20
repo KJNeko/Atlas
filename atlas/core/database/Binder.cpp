@@ -23,9 +23,8 @@ Binder::Binder( const std::string_view sql )
 
 Binder::~Binder() noexcept( false )
 {
-	if ( !ran ) [[unlikely]]
+	if ( !ran )
 	{
-		atlas::logging::debug( "Binder falloff. Running query" );
 		std::optional< std::tuple<> > tpl;
 		executeQuery( tpl );
 	}

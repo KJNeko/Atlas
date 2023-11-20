@@ -78,9 +78,9 @@ namespace atlas::remote
 
 	bool hasF95DataFor( const F95ID f95_id )
 	{
-		F95ID id { INVALID_F95_ID };
+		std::optional< F95ID > id;
 		RapidTransaction() << "SELECT f95_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> id;
-		return id != INVALID_F95_ID;
+		return id.has_value();
 	}
 
 	void createDummyF95Record( const F95ID f95_id )

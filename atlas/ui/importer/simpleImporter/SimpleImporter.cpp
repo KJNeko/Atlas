@@ -84,7 +84,7 @@ void SimpleImporter::setGameRoot( Node* node )
 
 		auto children { node->children() };
 
-		progress_dialog.setMaximum( children.size() );
+		progress_dialog.setMaximum( static_cast< int >( children.size() ) );
 
 		for ( auto child : children )
 		{

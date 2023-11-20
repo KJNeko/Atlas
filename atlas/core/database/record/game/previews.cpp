@@ -54,9 +54,11 @@ namespace atlas::records
 		//Get the highest position
 		if ( index == 0 )
 		{
+			std::optional< std::uint64_t > result;
 			RapidTransaction() << "SELECT position FROM previews WHERE record_id = ? ORDER BY position DESC LIMIT 1"
 							   << m_id
-				>> index;
+				>> result;
+			if ( result.has_value() ) index = result.value();
 		}
 
 		RapidTransaction() << "INSERT INTO previews (record_id, path, position) VALUES (?,?,?) ON CONFLICT DO NOTHING"

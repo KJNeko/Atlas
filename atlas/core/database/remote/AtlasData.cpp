@@ -118,9 +118,12 @@ namespace atlas::remote
 
 	[[nodiscard]] AtlasID atlasIDFromF95Thread( const F95ID thread_id )
 	{
-		AtlasID id { INVALID_ATLAS_ID };
+		std::optional< AtlasID > id;
 		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << thread_id >> id;
-		return id;
+		if ( id.has_value() )
+			return id.value();
+		else
+			return INVALID_ATLAS_ID;
 	}
 
 	//Test functions

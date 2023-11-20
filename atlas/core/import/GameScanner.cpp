@@ -223,9 +223,9 @@ try
 			TracyCZoneEnd( regex_Tracy );
 
 			//Is the directory we just found already in the database?
-			RecordID path_id { INVALID_RECORD_ID };
+			std::optional< RecordID > path_id;
 			RapidTransaction() << "SELECT record_id FROM versions WHERE game_path = ?" << itter->path() >> path_id;
-			if ( path_id != INVALID_RECORD_ID ) continue;
+			if ( path_id.has_value() ) continue;
 
 			if ( result )
 			{
