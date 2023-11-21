@@ -12,6 +12,10 @@ Binder::Binder( const std::string_view sql )
 		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
 	};
 
+	if ( stmt == nullptr )
+		throw DatabaseException( format_ns::
+		                             format( "Failed to prepare stmt, {}", sqlite3_errmsg( &Database::ref() ) ) );
+
 	if ( prepare_ret != SQLITE_OK )
 	{
 		throw DatabaseException( format_ns::format(
@@ -21,13 +25,24 @@ Binder::Binder( const std::string_view sql )
 	max_param_count = sqlite3_bind_parameter_count( stmt );
 }
 
-Binder::~Binder() noexcept( false )
+Binder::~Binder()
 {
-	if ( !ran )
+	try
 	{
-		std::optional< std::tuple<> > tpl;
-		executeQuery( tpl );
-	}
+		if ( !ran )
+		{
+			std::optional< std::tuple<> > tpl;
+			executeQuery( tpl );
+		}
 
-	sqlite3_finalize( stmt );
+		sqlite3_finalize( stmt );
+	}
+	catch ( std::exception& e )
+	{
+		atlas::logging::critical( "Binder's dtor has thrown!, {}", e.what() );
+	}
+	catch ( ... )
+	{
+		atlas::logging::critical( "Binder's dtor has thrown!, ..." );
+	}
 }

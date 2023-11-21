@@ -226,7 +226,7 @@ class Binder
 
   public:
 
-	~Binder() noexcept( false );
+	~Binder();
 };
 
 #endif //ATLASGAMEMANAGER_BINDER_HPP
