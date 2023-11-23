@@ -12,6 +12,8 @@
 template < std::uint64_t, typename T >
 void extract( sqlite3_stmt*, T& ) = delete;
 
+#ifndef NDEBUG
+
 template < std::uint64_t index, typename T >
 	requires std::same_as< std::string, T >
 void extract( [[maybe_unused]] sqlite3_stmt* stmt, [[maybe_unused]] std::string& t ) noexcept
@@ -25,6 +27,8 @@ void extract( [[maybe_unused]] sqlite3_stmt* stmt, [[maybe_unused]] std::string&
 {
 	static_assert( false, "T is not move constructable" );
 }
+
+#endif
 
 template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
