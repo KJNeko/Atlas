@@ -13,6 +13,20 @@ template < std::uint64_t, typename T >
 void extract( sqlite3_stmt*, T& ) = delete;
 
 template < std::uint64_t index, typename T >
+	requires std::same_as< std::string, T >
+void extract( [[maybe_unused]] sqlite3_stmt* stmt, [[maybe_unused]] std::string& t ) noexcept
+{
+	static_assert( false, "You should use std::string_view instead of std::string to reduce the need to memove/copy" );
+}
+
+template < std::uint64_t index, typename T >
+	requires( !std::move_constructible< T > )
+void extract( [[maybe_unused]] sqlite3_stmt* stmt, [[maybe_unused]] std::string& t ) noexcept
+{
+	static_assert( false, "T is not move constructable" );
+}
+
+template < std::uint64_t index, typename T >
 	requires std::is_integral_v< T >
 void extract( sqlite3_stmt* stmt, T& t ) noexcept
 {
@@ -34,8 +48,8 @@ void extract( sqlite3_stmt* stmt, T& t ) noexcept
 }
 
 template < std::uint64_t index, typename T >
-	requires std::is_same_v< T, std::u8string >
-void extract( sqlite3_stmt* stmt, std::u8string& t ) noexcept
+	requires std::is_same_v< T, std::u8string_view >
+void extract( sqlite3_stmt* stmt, std::u8string_view& t ) noexcept
 {
 	const unsigned char* const txt { sqlite3_column_text( stmt, index ) };
 
@@ -47,9 +61,41 @@ void extract( sqlite3_stmt* stmt, std::u8string& t ) noexcept
 	else
 	{
 		const auto len { strlen( reinterpret_cast< const char* const >( txt ) ) };
-		t = { reinterpret_cast< const char8_t* >( txt ), len };
+		t = std::u8string_view( reinterpret_cast< const char8_t* const >( txt ), len );
 		return;
 	}
+}
+
+template < std::uint64_t index, typename T >
+	requires std::is_same_v< T, std::string_view >
+void extract( sqlite3_stmt* stmt, std::string_view& t ) noexcept
+{
+#ifdef __linux__
+	const unsigned char* const txt { sqlite3_column_text( stmt, index ) };
+#else
+	const unsigned char* const txt { sqlite3_column_text16( stmt, index ) };
+#endif
+
+	if ( txt == nullptr )
+	{
+		t = {};
+		return;
+	}
+	else
+	{
+		const auto len { strlen( reinterpret_cast< const char* const >( txt ) ) };
+		t = std::string_view( reinterpret_cast< const char* const >( txt ), len );
+		return;
+	}
+}
+
+template < std::uint64_t index, typename T >
+	requires std::is_same_v< T, std::filesystem::path >
+void extract( sqlite3_stmt* stmt, std::filesystem::path& t ) noexcept
+{
+	std::string_view path_str;
+	extract< index, std::string_view >( stmt, path_str );
+	t = path_str;
 }
 
 template < std::uint64_t index, typename T >
@@ -68,24 +114,6 @@ void extract( sqlite3_stmt* stmt, QString& t ) noexcept
 		t = QString::fromUtf8( txt );
 		return;
 	}
-}
-
-template < std::uint64_t index, typename T >
-	requires std::is_same_v< T, std::filesystem::path >
-void extract( sqlite3_stmt* stmt, std::filesystem::path& t ) noexcept
-{
-	std::u8string str;
-	extract< index, std::u8string >( stmt, str );
-	t = { std::move( str ) };
-}
-
-template < std::uint64_t index, typename T >
-	requires std::is_same_v< T, std::string >
-void extract( sqlite3_stmt* stmt, std::string& t ) noexcept
-{
-	QString str;
-	extract< index, QString >( stmt, str );
-	t = { str.toStdString() };
 }
 
 template < std::uint64_t index, typename T >

@@ -106,7 +106,7 @@ namespace atlas::images
 
 		RapidTransaction() << "SELECT blurhash, image_height, image_width FROM image_blurhash WHERE image_sha256 = ?"
 						   << path.stem().u8string()
-			>> [ & ]( const std::string hash, int height, int width )
+			>> [ & ]( const std::string_view hash, int height, int width )
 		{
 			blur_hash = hash;
 			image_height = height;
