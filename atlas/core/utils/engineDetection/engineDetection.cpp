@@ -83,7 +83,7 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
 	const std::vector< std::string_view > extensions { ".exe", ".html", ".sh",  ".swf", ".flv",
-		                                               ".jar", ".qsp",  ".bat", ".rag" };
+		                                               ".jar", ".qsp",  ".bat", ".rag", ".ps1" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
