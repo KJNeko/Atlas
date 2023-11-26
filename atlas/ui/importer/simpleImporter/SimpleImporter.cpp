@@ -89,7 +89,7 @@ void SimpleImporter::setGameRoot( Node* node )
 		for ( auto child : children )
 		{
 			progress_dialog.setValue( progress_dialog.value() + 1 );
-			//QApplication::processEvents();
+			QApplication::processEvents( QEventLoop::AllEvents, 25 );
 			if ( child->isFolder() && child->name() == "previews" )
 			{
 				child->scan();
