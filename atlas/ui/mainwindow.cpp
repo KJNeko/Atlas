@@ -143,7 +143,7 @@ void MainWindow::readSettings()
 
 void MainWindow::on_actionSimpleImporter_triggered()
 {
-	QMessageBox::information( this, "Importer", "Please select the game directory" );
+	QMessageBox::information( this, "Importer", "Please select the directory where your games are located" );
 	if ( const auto dir = QFileDialog::getExistingDirectory(
 			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
 	     !dir.isEmpty() )
