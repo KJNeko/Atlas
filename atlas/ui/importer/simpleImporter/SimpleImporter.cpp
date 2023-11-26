@@ -13,6 +13,8 @@
 #include <QProgressDialog>
 
 #include "SIModel.hpp"
+#include "core/utils/FileScanner.hpp"
+#include "core/utils/engineDetection/engineDetection.hpp"
 #include "ui_SimpleImporter.h"
 
 SimpleImporter::SimpleImporter( QWidget* parent ) : QDialog( parent ), ui( new Ui::SimpleImporter )
@@ -106,6 +108,34 @@ void SimpleImporter::setGameRoot( Node* node )
 				child->fileInfo().is_banner = true;
 			}
 		}
+
+		//Detect executables
+		atlas::utils::FileScanner scanner { node->path() };
+		std::vector< std::filesystem::path > executables { detectExecutables( scanner ) };
+
+		if ( executables.size() <= 0 )
+		{
+			atlas::logging::warn( "Failed to find any executables for game at {}", node->path() );
+			return;
+		}
+
+		//Set highest in list as the executable
+		auto* executable_node { node->findRelative( executables.at( 0 ) ) };
+
+		if ( executable_node == nullptr )
+		{
+			atlas::logging::warn( "Failed to find game node with path {}", executables.at( 0 ) );
+			return;
+		}
+		else if ( executable_node->isFile() )
+		{
+			executable_node->fileInfo().is_executable = true;
+		}
+		else
+			atlas::logging::error(
+				"Somehow the executable search gave us a directory. Report as bug. Info:\n\tPath: {}\n\tFlags:{}",
+				node->path(),
+				( node->isFile() << 1 ) | ( node->isFolder() ) );
 	}
 	else
 		return;
@@ -321,15 +351,40 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 				}
 			} );
 	}
-	else
+	else if ( node->isFile() )
 	{
-		menu.addAction( "Set preview", []() {} );
+		menu.addAction( "Set preview", [ node ]() { node->fileInfo().is_preview = true; } );
 
 		auto banner_actions { menu.addMenu( "Set banner" ) };
-		banner_actions->addAction( "Normal", []() {} );
-		banner_actions->addAction( "Wide", []() {} );
-		banner_actions->addAction( "Logo", []() {} );
-		banner_actions->addAction( "Cover", []() {} );
+		banner_actions->addAction( "None", [ node ]() { node->fileInfo().is_banner = false; } );
+		banner_actions->addAction(
+			"Normal",
+			[ node ]()
+			{
+				node->fileInfo().is_banner = true;
+				node->fileInfo().banner_type = Normal;
+			} );
+		banner_actions->addAction(
+			"Wide",
+			[ node ]()
+			{
+				node->fileInfo().is_banner = true;
+				node->fileInfo().banner_type = Wide;
+			} );
+		banner_actions->addAction(
+			"Logo",
+			[ node ]()
+			{
+				node->fileInfo().is_banner = true;
+				node->fileInfo().banner_type = Logo;
+			} );
+		banner_actions->addAction(
+			"Cover",
+			[ node ]()
+			{
+				node->fileInfo().is_banner = true;
+				node->fileInfo().banner_type = Cover;
+			} );
 	}
 
 	menu.exec( QCursor::pos() );

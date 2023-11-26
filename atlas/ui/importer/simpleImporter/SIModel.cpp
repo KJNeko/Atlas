@@ -188,3 +188,53 @@ Node::Node( const QString str, Node* parent, const bool scan_immediate ) : m_nam
 	else
 		m_info = FileInfo();
 }
+
+Node* Node::find( const QString filename )
+{
+	if ( m_children.size() == 0 ) this->scan();
+
+	auto itter { std::find_if(
+		m_children.begin(), m_children.end(), [ &filename ]( Node* node ) { return node->name() == filename; } ) };
+
+	if ( itter == m_children.end() )
+		return nullptr;
+	else
+		return *itter;
+}
+
+Node* Node::findPath( const std::filesystem::path path )
+{
+	//Create relative from root node then find relative from that
+	const Node* root { this->root() };
+	if ( root == nullptr )
+		return nullptr;
+	else
+		return findRelative( std::filesystem::relative( root->path(), path ) );
+}
+
+Node* Node::findRelative( std::filesystem::path relative_path )
+{
+	atlas::logging::debug( "Finding relative path at {} starting at {}", relative_path, this->path() );
+
+	std::vector< QString > pieces;
+
+	while ( !relative_path.empty() )
+	{
+		pieces.emplace_back( QString::fromStdString( relative_path.filename() ) );
+		relative_path = relative_path.parent_path();
+	}
+
+	//Reverse order
+	std::reverse( pieces.begin(), pieces.end() );
+
+	Node* current { this };
+
+	//Find each item
+	while ( !pieces.empty() && current != nullptr )
+	{
+		current = current->find( pieces[ pieces.size() - 1 ] );
+		pieces.pop_back();
+	}
+
+	return current;
+}

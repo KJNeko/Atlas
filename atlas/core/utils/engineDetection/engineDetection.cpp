@@ -99,21 +99,15 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					 extensions.end(),
 					 QString::fromStdString( path.extension().string() ).toLower().toStdString() )
 			     != extensions.end() )
-
 			{
-				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
 				QMimeDatabase mime_db;
 				const auto type { mime_db.mimeTypeForFile( QString::fromStdString( path.string() ) ) };
-				TracyCZoneEnd( mimeInfo_Tracy );
 
 				//General executables
 				//.exe
 				if ( type.inherits( "application/x-ms-dos-executable" ) )
 				{
-					//prioritize AMD64
-					path.string().find( "32" ) ?
-						potential_executables.insert( potential_executables.begin(), relative ) :
-						potential_executables.insert( potential_executables.end(), relative );
+					potential_executables.push_back( relative );
 					continue;
 				}
 				//.html
@@ -161,6 +155,8 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 		}
 	}
 
+	atlas::logging::debug( "Found {} executables at {}", potential_executables.size(), scanner.path() );
+
 	return scoreExecutables( std::move( potential_executables ) );
 }
 
@@ -176,18 +172,21 @@ std::vector< std::filesystem::path >
 
 	for ( auto& path : paths )
 	{
-		std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
+		const std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
 
-		if constexpr ( sys::is_linux )
-			if ( extension == ".sh" ) execs.emplace_back( std::move( path ), 20 );
-
-		if ( extension == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".html" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".qsp" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".jar" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".bat" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".rag" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".exe" )
+		{
+			if ( std::find( path.begin(), path.end(), "32" ) != path.end() ) // Executable is likely 32 bit
+				execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 15 );
+			else
+				execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		}
+		else if ( extension == ".bat" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 25 );
+		else if ( extension == ".sh" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 25 : 10 );
+		else
+			execs.emplace_back( std::move( path ), 10 );
 	}
 
 	std::sort(

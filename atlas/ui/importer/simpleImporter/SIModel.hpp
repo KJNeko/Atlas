@@ -273,6 +273,10 @@ struct Node
 			return m_parent->pathStr() + QDir::separator() + name();
 	}
 
+	Node* findRelative( const std::filesystem::path relative_path );
+	Node* findPath( const std::filesystem::path path );
+	Node* find( const QString file_name );
+
 	~Node()
 	{
 		for ( auto child : m_children ) delete child;
