@@ -54,14 +54,16 @@ constexpr std::tuple blacklist_execs { std::string_view( "UnityCrashHandler32.ex
 	                                   std::string_view( "python.exe" ),
 	                                   std::string_view( "dxwebsetup" ),
 	                                   std::string_view( "UE4PrereqSetup_X64.exe" ),
-	                                   std::string_view( "UEPrereqSetup_x64.exe" ) };
+	                                   std::string_view( "UEPrereqSetup_x64.exe" ),
+	                                   std::string_view( "dxwebsetup.exe" ) };
 
 bool isBlacklistT( const std::string& name, const std::string_view comp )
 {
 	return name == comp;
 }
 
-bool isBlacklistT( const std::string& name, std::string_view comp, std::same_as< std::string_view > auto... comps )
+bool isBlacklistT(
+	const std::string& name, const std::string_view comp, const std::same_as< std::string_view > auto... comps )
 {
 	return name == comp || isBlacklistT( name, comps... );
 }
