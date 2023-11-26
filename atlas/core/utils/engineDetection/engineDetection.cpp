@@ -29,6 +29,12 @@ bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] atlas::utils::FileScanner& sca
 }
 
 template <>
+bool isEngineT< Engine::UNKNOWN >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return true;
+}
+
+template <>
 bool isEngineT< ENGINES_END >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return true;
@@ -74,13 +80,12 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
-	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
+	const std::vector< std::string_view > extensions { ".exe", ".html", ".sh",  ".swf", ".flv",
+		                                               ".jar", ".qsp",  ".bat", ".rag" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
-		ZoneScopedN( "Process file" );
-
 		if ( depth > 1 ) break;
 
 		if ( std::filesystem::is_regular_file( path ) )
@@ -165,7 +170,6 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, [[maybe_unused]] const Engine engine_type )
 {
-	ZoneScoped;
 	std::vector< std::pair< std::filesystem::path, int > > execs;
 
 	for ( auto& path : paths )
@@ -504,9 +508,9 @@ QString engineNameT< BAT >()
 bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 {
 	//get current directory
-	bool isEngine = false;
-	std::filesystem::path engine_path =
-		std::filesystem::current_path() / "engine" / "types" / ( "Engine." + engine + ".txt" );
+	bool isEngine { false };
+	const std::filesystem::path engine_path { std::filesystem::current_path() / "engine" / "types"
+		                                      / ( "Engine." + engine + ".txt" ) };
 
 	if ( std::ifstream ifs( engine_path ); ifs )
 	{
@@ -516,9 +520,9 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 		while ( getline( ifs, line ) )
 		{
 			//Check if first item in string is a period for a file type
-			std::vector< char > charArry;
-			std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
-			if ( charArry[ 0 ] == '.' ) //file type check
+			//std::vector< char > charArry;
+			//std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
+			if ( line[ 0 ] == '.' ) //file type check
 			{
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
@@ -534,7 +538,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 			else
 			{
 				//Check if there is a / at begining of string. add if missing
-				if ( charArry[ 0 ] != '/' )
+				if ( line[ 0 ] != '/' )
 				{
 					line = "\\" + line;
 				}
@@ -552,8 +556,9 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 				}
 			}
 		};
-		ifs.close();
-	}
 
-	return isEngine;
+		return isEngine;
+	}
+	else
+		return false;
 }
