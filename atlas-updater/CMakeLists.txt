@@ -15,7 +15,7 @@ if (WIN32)
 	#add_executable(AtlasUpdater WIN32 ${SRC_FILES})
 	
 	add_executable(AtlasUpdater ${SRC_FILES})
-    set_target_properties(AtlasUpdater PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/updater" COMPILE_FLAGS "${FGL_FLAGS} -static -static-libgcc -static-libstdc++")
+    set_target_properties(AtlasUpdater PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/updater" COMPILE_FLAGS "${FGL_FLAGS} -static -static-libstdc++ -static-libgcc")
 	target_include_directories(AtlasUpdater PUBLIC ${CMAKE_SOURCE_DIR}/atlas-updater)
 	target_link_libraries(AtlasUpdater PRIVATE elzip)
 endif ()
