@@ -43,6 +43,9 @@ class SimpleImporter final : public QDialog
 
 	void setGameRoot( Node* node );
 
+	void verifyGames();
+	Node* root();
+
   private slots:
 	void onCustomContextMenuRequested( const QPoint& point );
 	void dirView_itemSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );

@@ -116,6 +116,19 @@ struct Node
 
 	Node( const QString str, Node* parent = nullptr, const bool scan_immediate = false );
 
+	std::vector< Node* > findGameRoots()
+	{
+		if ( this->isFolder() && this->dirInfo().is_game_dir )
+			return { this };
+		else
+		{
+			if ( !this->scanned() )
+				return {};
+			else
+			{}
+		}
+	}
+
 	QString name() const
 	{
 		return m_name;

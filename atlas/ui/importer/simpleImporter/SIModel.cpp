@@ -220,7 +220,7 @@ Node* Node::findRelative( std::filesystem::path relative_path )
 
 	while ( !relative_path.empty() )
 	{
-		pieces.emplace_back( QString::fromStdString( relative_path.filename().string() ) );
+		pieces.emplace_back( QString::fromStdString( relative_path.filename() ) );
 		relative_path = relative_path.parent_path();
 	}
 

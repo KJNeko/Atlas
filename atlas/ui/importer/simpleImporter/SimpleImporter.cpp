@@ -389,6 +389,17 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 	menu.exec( QCursor::pos() );
 	updateSidebar();
+	verifyGames();
+}
+
+Node* SimpleImporter::root()
+{
+	return reinterpret_cast< Node* >( ui->dirView->model()->index( 0, 0 ).internalPointer() );
+}
+
+void SimpleImporter::verifyGames()
+{
+	std::vector< Node* > game_roots { root()->findGameRoots() };
 }
 
 std::vector< QPersistentModelIndex > SimpleImporter::selected() const
