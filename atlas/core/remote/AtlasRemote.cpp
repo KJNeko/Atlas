@@ -345,7 +345,15 @@ namespace atlas
 		atlas::logging::debug( "Processing file {:ce}", local_update_archive_path );
 		try
 		{
-			atlas::parse( atlas::extract( local_update_archive_path ) );
+			auto data { atlas::extract( local_update_archive_path ) };
+#ifndef NDEBUG
+			if ( std::ofstream ofs( local_update_archive_path.string() + ".decoded" ); ofs )
+			{
+				ofs.write( data.data(), data.size() );
+			}
+#endif
+
+			atlas::parse( std::move( data ) );
 			markComplete( update_time );
 
 			//Check if the next update file is ready to go
@@ -359,7 +367,7 @@ namespace atlas
 		}
 		catch ( const std::exception& e )
 		{
-			atlas::logging::error( "Failed to process update file {}: What: {}", update_time, e.what() );
+			atlas::logging::error( "Failed to process update file {}", update_time );
 		}
 	}
 

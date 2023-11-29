@@ -74,14 +74,34 @@ namespace remote::parsers::v0
 		for ( const auto& key : keys )
 		{
 			const auto& data { obj[ key ] };
-			if ( data.isString() )
-				trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
-					  << pkey;
-			else if ( data.isDouble() )
-				trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
-					  << pkey;
-			else
-				throw AtlasException( "Unexpected type when parsing atlas data!" );
+
+			switch ( data.type() )
+			{
+				case QJsonValue::Bool:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toBool() << pkey;
+					break;
+				case QJsonValue::Double:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toInteger() << pkey;
+					break;
+				case QJsonValue::String:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toString() << pkey;
+					break;
+				case QJsonValue::Null:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << std::nullopt
+						  << pkey;
+					continue;
+				case QJsonValue::Array:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was array" );
+				case QJsonValue::Object:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was object" );
+				case QJsonValue::Undefined:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was undefined" );
+				default:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was default case" );
+			}
 		}
 	}
 
@@ -153,6 +173,13 @@ namespace remote::parsers::v0
 		}
 	}
 
+	bool atlasIDExists( Transaction& trans, const AtlasID atlas_id )
+	{
+		std::optional< AtlasID > id { std::nullopt };
+		trans << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> id;
+		return id.has_value();
+	}
+
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
 	{
 		ProgressSignaler signaler {};
@@ -164,10 +191,16 @@ namespace remote::parsers::v0
 		{
 			const auto& obj { obj_data.toObject() };
 
-			if ( !validateAtlasKeys( obj ) )
-				updateAtlasData( obj, trans ); //This is probably an update
-			else
+			if ( !obj.contains( ( "atlas_id" ) ) )
+				throw AtlasException( "Expected atlas_id. Got nothing in obj for update" );
+
+			if ( validateAtlasKeys( obj ) && !atlasIDExists( trans, obj[ "atlas_id" ].toInteger() ) )
 				insertAtlasData( obj, trans );
+			else if ( atlasIDExists( trans, obj[ "atlas_id" ].toInteger() ) )
+				updateAtlasData( obj, trans );
+			else
+				throw AtlasException( "Failed to update record. Record incomplete and did not exist" );
+
 			++counter;
 			signaler.setProgress( counter );
 			signaler.setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
@@ -204,14 +237,34 @@ namespace remote::parsers::v0
 		for ( const auto& key : keys )
 		{
 			const auto& data { obj[ key ] };
-			if ( data.isString() )
-				trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
-					  << pkey;
-			else if ( data.isDouble() )
-				trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
-					  << data.toInteger() << pkey;
-			else
-				throw AtlasException( "Unexpected type when parsing f95zone data!" );
+
+			switch ( data.type() )
+			{
+				case QJsonValue::Null:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << std::nullopt << pkey;
+					break;
+				case QJsonValue::Bool:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toBool() << pkey;
+					break;
+				case QJsonValue::Double:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toInteger() << pkey;
+					break;
+				case QJsonValue::String:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toString() << pkey;
+					break;
+				case QJsonValue::Array:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was array" );
+				case QJsonValue::Object:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was object" );
+				case QJsonValue::Undefined:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was undefined" );
+				default:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was default case" );
+			}
 		}
 	}
 
@@ -276,6 +329,13 @@ namespace remote::parsers::v0
 		}
 	}
 
+	bool F95IDExists( const F95ID f95_id, Transaction& trans )
+	{
+		std::optional< F95ID > id;
+		trans << "SELECT f95_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> id;
+		return id.has_value();
+	}
+
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
 		ProgressSignaler signaler { QString( "Processing update for F95 data" ) };
@@ -286,10 +346,12 @@ namespace remote::parsers::v0
 		{
 			const auto& obj { obj_data.toObject() };
 
-			if ( !validateF95Keys( obj ) )
+			if ( validateF95Keys( obj ) && !F95IDExists( obj[ "f95_id" ].toInteger(), trans ) )
+				insertF95Data( obj, trans );
+			else if ( F95IDExists( obj[ "f95_id" ].toInteger(), trans ) )
 				updateF95Data( obj, trans );
 			else
-				insertF95Data( obj, trans );
+				throw AtlasException( "Failed to update record. Record incomplete and did not exist" );
 
 			++counter;
 			signaler.setProgress( counter );
