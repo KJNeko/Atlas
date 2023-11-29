@@ -196,6 +196,7 @@ namespace atlas
 
 			const std::uint64_t update_time { static_cast< std::uint64_t >( obj[ "date" ].toInteger() ) };
 
+			//Blacklist records that are broken/invalid/old
 			if ( update_time == 1686886200 || update_time == 1687918793 ) continue;
 
 			const auto& md5_str { obj[ "md5" ].toString() };

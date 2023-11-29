@@ -186,6 +186,9 @@ namespace remote::parsers::v0
 
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler.setMax( max );
+
+		signaler.setMessage( "Updating/Adding Atlas records" );
+
 		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
@@ -338,7 +341,8 @@ namespace remote::parsers::v0
 
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
-		ProgressSignaler signaler { QString( "Processing update for F95 data" ) };
+		ProgressSignaler signaler {};
+		signaler.setMessage( "Inserting/Updating data for F95Zone" );
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler.setMax( max );
 		int counter { 0 };
@@ -355,7 +359,7 @@ namespace remote::parsers::v0
 
 			++counter;
 			signaler.setProgress( counter );
-			signaler.setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
+			signaler.setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
