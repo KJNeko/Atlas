@@ -14,7 +14,7 @@ int main( int argc, char** argv )
 {
     const std::string update_file = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip";
     const std::string update_tmp_dir = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\tmp";
-    const std::string atlas_dir =std::filesystem::current_path().parent_path().string();
+    const std::string atlas_dir =std::filesystem::current_path().string();
 	bool errors = false;
     std::vector<std::string> folders { "data", "updater" };
 
@@ -32,27 +32,34 @@ int main( int argc, char** argv )
 
             if(!(std::find(folders.begin(), folders.end(), dir_entry.path().filename().string()) != folders.end()))
             {
-                try{
-                    if(std::filesystem::remove_all(dst))
-                    {
-                        std::cout << "file removed" << "\n";
-                    }
-                    if(!dir_entry.is_directory())
-                    {
-                        std::filesystem::copy( dir_entry.path(),
-                                            dst,
-                                            std::filesystem::copy_options::overwrite_existing );
-                    }
-                    else{
-                        std::filesystem::copy( dir_entry.path(),
-                                            dst,
-                                            std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive );
-                    }
-                }
-                catch (const std::exception &e)
+                //Check for updater file
+                
+                if(dir_entry.path().filename() != "AtlasUpdater.exe" && dir_entry.path().filename() != "updater") 
                 {
-                    std::cout << e.what() << "\n";       
-                    std::cout << dir_entry.path().filename().string() << "  " << dst.string() << '\n';            
+                    std::cout << dir_entry.path().string() << " -> " << dst.string() << '\n';  
+                    try{
+                        if(std::filesystem::remove_all(dst))
+                        {
+                            std::cout << "file removed" << "\n";
+                        }
+                        if(!dir_entry.is_directory())
+                        {
+                            std::filesystem::copy( dir_entry.path(),
+                                                dst,
+                                                std::filesystem::copy_options::overwrite_existing );
+                        }
+                        else{
+                            std::filesystem::copy( dir_entry.path(),
+                                                dst,
+                                                std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive );
+                            std::cout << "file Added" << "\n";
+                        }
+                    }
+                    catch (const std::exception &e)
+                    {
+                        std::cout << e.what() << "\n";       
+                        std::cout << dir_entry.path().filename().string() << "  " << dst.string() << '\n';            
+                    }
                 }
             }
         }

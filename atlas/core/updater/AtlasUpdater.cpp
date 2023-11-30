@@ -128,57 +128,59 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			//if(branch == "master" || branch == "staging")
-			if(true)
+			if(branch == "master" || branch == "staging")
 			{
-				int last_unix_ts = 0;
-				for ( const auto& data : array )
+				if(true)
 				{
-					const auto& obj { data.toObject() };
-					const auto tag_name { obj[ "tag_name" ].toString() };
-					const auto created_at { converToShortEpoch(obj[ "created_at" ].toString()) };
-					const auto target_commitish { obj[ "target_commitish" ].toString() };
-					QString browser_download_url { "" };
-					for ( const auto& assets : obj["assets"].toArray())
+					int last_unix_ts = buildtime;
+					for ( const auto& data : array )
 					{
-						const auto& asset { assets.toObject() };
-						browser_download_url = asset[ "browser_download_url" ].toString();
-					}
-					if(created_at > last_unix_ts)
-					{						
-						if(config::application::update_channel::get() == "nightly")
-						{						
-							qInfo() << target_commitish;
-							qInfo() << tag_name;
-							qInfo() <<  created_at << ">" << last_unix_ts;
-							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
-							last_unix_ts = created_at;
-						}
-						if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+						const auto& obj { data.toObject() };
+						const auto tag_name { obj[ "tag_name" ].toString() };
+						const auto created_at { converToShortEpoch(obj[ "created_at" ].toString()) };
+						const auto target_commitish { obj[ "target_commitish" ].toString() };
+						QString browser_download_url { "" };
+						for ( const auto& assets : obj["assets"].toArray())
 						{
-							qInfo() << target_commitish;
-							qInfo() << tag_name;
-							qInfo() << created_at;
-							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
-							last_unix_ts = created_at;
+							const auto& asset { assets.toObject() };
+							browser_download_url = asset[ "browser_download_url" ].toString();
 						}
+						if(created_at > last_unix_ts)
+						{						
+							if(config::application::update_channel::get() == "nightly")
+							{						
+								//qInfo() << target_commitish;
+								//qInfo() << tag_name;
+								//qInfo() <<  created_at << ">" << last_unix_ts;
+								releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+								last_unix_ts = created_at;
+							}
+							if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+							{
+								//qInfo() << target_commitish;
+								//qInfo() << tag_name;
+								//qInfo() << created_at;
+								releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+								last_unix_ts = created_at;
+							}
 
+						}
 					}
-				}
 
-				if(releases.size() > 0)
-				{
-					const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
-							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
-
-					if( msgBox == QMessageBox::Ok )	
+					if(releases.size() > 0)
 					{
-						downloadUpdate( releases.back().browser_download_url );
-					}
-				}
+						const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
+								+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
 
-				if(releases.size() == 0 && isManual){
-					updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+						if( msgBox == QMessageBox::Ok )	
+						{
+							downloadUpdate( releases.back().browser_download_url );
+						}
+					}
+
+					if(releases.size() == 0 && isManual){
+						updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+					}
 				}
 			}
 			else{			
@@ -192,6 +194,7 @@ namespace atlas
 					msgBox.exec();
 				}
 			}
+		
 		}
 		reply->deleteLater();
 
@@ -235,9 +238,9 @@ namespace atlas
 		std::filesystem::create_directory(std::string( std::getenv( "APPDATA" )) + "\\ATLAS");
 		file.open(QIODevice::WriteOnly);
     	file.write(reply->readAll());
-		qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
-		qInfo() << "FILE DOWNLOADED";
-		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
+		//qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
+		//qInfo() << "FILE DOWNLOADED";
+		//qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
 
         STARTUPINFOA si;
         PROCESS_INFORMATION pi;
@@ -246,11 +249,11 @@ namespace atlas
         ZeroMemory(&pi, sizeof(pi));
         
         //Wide string because windows is stupid
-        const std::string path = "AtlasUpdater.exe";
+        const std::string path = "updater/AtlasUpdater.exe";
 		const std::string args = "0"; //Default, DO NOT SHOW GUI
 		//std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" + std::to_string( ::getpid() );
 
-		qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
+		//qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
 
 		char* win_buffer { new char[args.size()] } ;
         std::memcpy(win_buffer, args.c_str(), args.size());
@@ -265,7 +268,7 @@ namespace atlas
 
         }
 		//QProcess *process = new QProcess(this);
-		//QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
+		QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
 		//process->startDetached( "AtlasUpdater.exe", QStringList(command));
 
 
