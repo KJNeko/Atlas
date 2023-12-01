@@ -19,7 +19,9 @@
 #include "core/config/config.hpp"
 
 #include <unistd.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <stdio.h>
 #include <tchar.h>
 
@@ -241,6 +243,7 @@ namespace atlas
 		//qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
 		//qInfo() << "FILE DOWNLOADED";
 		//qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
+		#ifdef _WIN32
 
         STARTUPINFOA si;
         PROCESS_INFORMATION pi;
@@ -277,6 +280,7 @@ namespace atlas
 		//qInfo() << command;
 		QProcess *process = new QProcess(this);
 		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));*/
+		#endif
 
 	}
 
