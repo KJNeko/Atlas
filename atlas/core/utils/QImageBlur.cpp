@@ -93,6 +93,10 @@ QPixmap blurToSize(
 				case FEATHER_IMAGE:
 					resized.setAlphaChannel( alpha_mask );
 					break;
+				case SQUARE: //TODO: Figure out what this should do
+					break;
+				case BACKGROUND_ONLY: // TODO: Implement
+					break;
 				default:
 					break;
 			}
