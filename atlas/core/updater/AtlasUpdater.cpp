@@ -229,7 +229,7 @@ namespace atlas
 		connect( 
 			reply, 
 			&QNetworkReply::downloadProgress, 
-			this, &downloadProgress );
+			this, downloadProgress );
 }
 
 	void AtlasUpdater::saveFile(QNetworkReply* reply)
