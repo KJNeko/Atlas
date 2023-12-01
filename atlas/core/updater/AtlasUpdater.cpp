@@ -187,8 +187,7 @@ namespace atlas
 			}
 			else{			
 				//Show box saying there is no update because your on a dev branch. This will only show if done from file menu
-				if(isManual){
-					
+				if(isManual){					
 					QMessageBox msgBox;
 					msgBox.setWindowTitle( "No Update Available" );
 					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +utils::version_string_qt());

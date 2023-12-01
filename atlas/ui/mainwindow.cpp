@@ -367,7 +367,7 @@ void MainWindow::on_btnLog_pressed()
 void MainWindow::on_actionUpdates_triggered()
 {
 	#ifdef _WIN32
-		atlas::initUpdateHandler( false );
+		atlas::initUpdateHandler( true );
 	#endif
 }
 
