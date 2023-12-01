@@ -130,11 +130,11 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			if(branch == "master" || branch == "staging")
+			if(branch != "")//branch == "master" || branch == "staging")
 			{
 				if(true)
 				{
-					int last_unix_ts = buildtime;
+					long int last_unix_ts = 0;//buildtime;
 					for ( const auto& data : array )
 					{
 						const auto& obj { data.toObject() };
@@ -261,6 +261,7 @@ namespace atlas
 
 		char* win_buffer { new char[args.size()] } ;
         std::memcpy(win_buffer, args.c_str(), args.size());
+		//char cmdArgs[] = "echoargs.exe name@example.com";
     
         if (CreateProcessA(path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
         {
@@ -271,16 +272,7 @@ namespace atlas
             CloseHandle(pi.hThread);
 
         }
-		//QProcess *process = new QProcess(this);
-		QString command { QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip") + " " + QString::number(getpid()) };
-		//process->startDetached( "AtlasUpdater.exe", QStringList(command));
-
-
-		/*QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
-			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
-		//qInfo() << command;
-		QProcess *process = new QProcess(this);
-		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));*/
+		
 		#endif
 
 	}

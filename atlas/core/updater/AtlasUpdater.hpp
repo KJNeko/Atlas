@@ -24,8 +24,6 @@ namespace atlas
         QThread m_thread {};
 		QNetworkAccessManager m_manager {};
 
-
-
         public:
         //AtlasUpdater(QObject* parent, std::shared_ptr<gui_settings> gui_settings);
         void check_for_updates(bool isManual);

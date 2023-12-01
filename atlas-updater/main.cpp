@@ -8,13 +8,18 @@
 #include <windows.h>
 #include <winuser.h>
 #include <vector>
+#include <unistd.h>
+#include <stdio.h>
+#include <tchar.h>
+#include <cstring>
 
 
-int main( int argc, char** argv )
+int main()// int argc, char** argv )
 {
     const std::string update_file = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip";
     const std::string update_tmp_dir = std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\tmp";
     const std::string atlas_dir =std::filesystem::current_path().string();
+    const std::string atlas_exe = atlas_dir + "\\Atlas.exe";
 	bool errors = false;
     std::vector<std::string> folders { "data", "updater" };
 
@@ -76,7 +81,7 @@ int main( int argc, char** argv )
          int msgboxID = MessageBox(
             NULL,
             "There was an error while trying to run the updater. You will need to download the latest update from github",
-            "Atlas Updater 1.0",
+            "Atlas Updater v1.0",
             MB_ICONERROR | MB_OK
         );
 
@@ -91,9 +96,31 @@ int main( int argc, char** argv )
         int msgboxID = MessageBox(
             NULL,
             "Update Complete. Press OK to continue",
-            "Atlas Updater 1.0",
+            "Atlas Updater v1.0",
             MB_ICONASTERISK  | MB_OK
         );
+
+        STARTUPINFOA si;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        ZeroMemory(&pi, sizeof(pi));
+        
+        //Wide string because windows is stupid
+        
+        const std::string args = "0"; //Default, DO NOT SHOW GUI
+
+        char* win_buffer { new char[args.size()] } ;
+        std::memcpy(win_buffer, args.c_str(), args.size());
+    
+        if (CreateProcessA(atlas_exe.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+        {
+            exit(0); //Kill Program
+            WaitForSingleObject(pi.hProcess, INFINITE);
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+        }
+        
 
         switch (msgboxID)
         {
