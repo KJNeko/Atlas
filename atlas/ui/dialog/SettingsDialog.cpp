@@ -91,11 +91,10 @@ void SettingsDialog::prepareThemeSettings()
 	atlas::logging::debug( "Preparing theme settings" );
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
-	if ( !std::filesystem::exists( config::application::theme_folder::get().toStdString() ) )
-		std::filesystem::create_directories( config::application::theme_folder::get().toStdString() );
+	if ( !std::filesystem::exists( config::application::theme_folder::getPath() ) )
+		std::filesystem::create_directories( config::application::theme_folder::getPath() );
 	//Load all valid options.
-	for ( auto& qss_option :
-	      std::filesystem::directory_iterator( config::application::theme_folder::get().toStdString() ) )
+	for ( auto& qss_option : std::filesystem::directory_iterator( config::application::theme_folder::getPath() ) )
 	{
 		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
 			ui->themeBox->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
