@@ -210,26 +210,27 @@ namespace atlas
 
 	void AtlasUpdater::downloadUpdate(QString url)
 {
-	// Set progress bar to 0
+	#ifdef _WIN32
 
-		QNetworkRequest request { url };
-		request.setTransferTimeout( 2000 );
-		auto* reply { m_manager.get( request ) };
-		//reply->deleteLater();
+	QNetworkRequest request { url };
+	request.setTransferTimeout( 2000 );
+	auto* reply { m_manager.get( request ) };
+	//reply->deleteLater();
 
-		connect(
-			reply, &QNetworkReply::finished, this, [ =, this ]() { saveFile( reply ); }, Qt::SingleShotConnection );
+	connect(
+		reply, &QNetworkReply::finished, this, [ =, this ]() { saveFile( reply ); }, Qt::SingleShotConnection );
 
-		connect(
-			reply,
-			&QNetworkReply::errorOccurred,
-			this,
-			[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
-			Qt::SingleShotConnection );
-		connect( 
-			reply, 
-			&QNetworkReply::downloadProgress, 
-			this, downloadProgress );
+	connect(
+		reply,
+		&QNetworkReply::errorOccurred,
+		this,
+		[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
+		Qt::SingleShotConnection );
+	connect( 
+		reply, 
+		&QNetworkReply::downloadProgress, 
+		this, &downloadProgress );
+	#endif
 }
 
 	void AtlasUpdater::saveFile(QNetworkReply* reply)
