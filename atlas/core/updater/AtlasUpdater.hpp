@@ -36,9 +36,9 @@ namespace atlas
 
         private:
 
-		  long int converToEpoch( QString time );
-		  long int converToShortEpoch( QString time );
-		  void handleJsonResponse( QNetworkReply* reply, bool isManual );
+		std::uint64_t converToEpoch( QString time );
+		std::uint64_t converToShortEpoch( QString time );
+		void handleJsonResponse( QNetworkReply* reply, bool isManual );
 		  void handleManifestError( QNetworkReply::NetworkError error, QNetworkReply* reply );
 		  void downloadUpdate( QString url );
 		  void saveFile( QNetworkReply* reply );
