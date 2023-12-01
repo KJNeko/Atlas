@@ -112,8 +112,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
 	MainWindow::setWindowTitle( windowTitle );
 
-
-
 	console->setModal( true );
 }
 
@@ -366,9 +364,9 @@ void MainWindow::on_btnLog_pressed()
 
 void MainWindow::on_actionUpdates_triggered()
 {
-	#ifdef _WIN32
-		atlas::initUpdateHandler( true );
-	#endif
+#ifdef _WIN32
+	atlas::initUpdateHandler( true );
+#endif
 }
 
 void MainWindow::on_actionConsoleWindow_triggered()

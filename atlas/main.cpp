@@ -63,7 +63,7 @@ int main( int argc, char** argv )
 	if ( GetLastError() == ERROR_ALREADY_EXISTS ) // did the mutex already exist?
 		return -1; // quit; mutex is released automatically
 
-	//Check for updates | Windows only
+		//Check for updates | Windows only
 #ifdef _WIN32
 	atlas::initUpdateHandler( false );
 #endif
