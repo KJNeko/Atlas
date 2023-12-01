@@ -7,15 +7,23 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QSpacerItem>
-#include <QGridLayout>
+#include <QGridLayout>  
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QFile>
 #include <QProcess>
+#include <QCoreApplication>
 
 #include "core/logging/logging.hpp"
 #include "core/version.hpp"
 #include "core/config/config.hpp"
+
+#include <unistd.h>
+#ifdef _WIN32
+#include <windows.h>
+#include <stdio.h>
+#include <tchar.h>
+#endif
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
@@ -30,6 +38,7 @@ namespace atlas
     void initUpdateHandler(bool isManual)
 	{
 		if ( internal::uManager == nullptr ) internal::uManager = new AtlasUpdater();
+		
 
 		internal::uManager->check_for_updates(isManual);
 	}
@@ -44,6 +53,11 @@ namespace atlas
 		/*m_manager.moveToThread( &m_thread );
 		moveToThread( &m_thread );
 		m_thread.start();*/
+	}
+
+	AtlasUpdater::~AtlasUpdater()
+	{
+		ud->deleteLater();
 	}
 
     void AtlasUpdater::check_for_updates(bool isManual)
@@ -118,60 +132,62 @@ namespace atlas
 			//Check that we are not on a dev branch
 			if(branch == "master" || branch == "staging")
 			{
-				int last_unix_ts = buildtime;
-				for ( const auto& data : array )
+				if(true)
 				{
-					const auto& obj { data.toObject() };
-					const auto tag_name { obj[ "tag_name" ].toString() };
-					const auto created_at { converToShortEpoch(obj[ "created_at" ].toString()) };
-					const auto target_commitish { obj[ "target_commitish" ].toString() };
-					QString browser_download_url { "" };
-					for ( const auto& assets : obj["assets"].toArray())
+					long int last_unix_ts = buildtime;
+					for ( const auto& data : array )
 					{
-						const auto& asset { assets.toObject() };
-						browser_download_url = asset[ "browser_download_url" ].toString();
-					}
-					if(created_at > last_unix_ts)
-					{						
-						if(config::application::update_channel::get() == "nightly")
-						{						
-							qInfo() << target_commitish;
-							qInfo() << tag_name;
-							qInfo() <<  created_at << ">" << last_unix_ts;
-							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
-							last_unix_ts = created_at;
-						}
-						if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+						const auto& obj { data.toObject() };
+						const auto tag_name { obj[ "tag_name" ].toString() };
+						const auto created_at { converToShortEpoch(obj[ "created_at" ].toString()) };
+						const auto target_commitish { obj[ "target_commitish" ].toString() };
+						QString browser_download_url { "" };
+						for ( const auto& assets : obj["assets"].toArray())
 						{
-							qInfo() << target_commitish;
-							qInfo() << tag_name;
-							qInfo() << created_at;
-							releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
-							last_unix_ts = created_at;
+							const auto& asset { assets.toObject() };
+							browser_download_url = asset[ "browser_download_url" ].toString();
 						}
+						if(created_at > last_unix_ts)
+						{						
+							if(config::application::update_channel::get() == "nightly")
+							{						
+								//qInfo() << target_commitish;
+								//qInfo() << tag_name;
+								//qInfo() <<  created_at << ">" << last_unix_ts;
+								releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+								last_unix_ts = created_at;
+							}
+							if(config::application::update_channel::get() == "stable" && target_commitish == "master")
+							{
+								//qInfo() << target_commitish;
+								//qInfo() << tag_name;
+								//qInfo() << created_at;
+								releases.push_back( release( tag_name, created_at, target_commitish, browser_download_url ) );
+								last_unix_ts = created_at;
+							}
 
+						}
 					}
-				}
 
-				if(releases.size() > 0)
-				{
-					const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
-							+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
-
-					if( msgBox == QMessageBox::Ok )	
+					if(releases.size() > 0)
 					{
-						downloadUpdate( releases.back().browser_download_url );
-					}
-				}
+						const int msgBox {updateMessageBox("A new version of ATLAS is available!\n\nCurrent Version: " + utils::version_string_qt()
+								+ "\nLatest Version: " + releases.back().tag_name + "\n\nDo you want to update?","Update Available", false )};
 
-				if(releases.size() == 0 && isManual){
-					updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+						if( msgBox == QMessageBox::Ok )	
+						{
+							downloadUpdate( releases.back().browser_download_url );
+						}
+					}
+
+					if(releases.size() == 0 && isManual){
+						updateMessageBox("There is no update Available\n\nCurrent Version: " + utils::version_string_qt(),"No Update Available", false );
+					}
 				}
 			}
 			else{			
 				//Show box saying there is no update because your on a dev branch. This will only show if done from file menu
-				if(isManual){
-					
+				if(isManual){					
 					QMessageBox msgBox;
 					msgBox.setWindowTitle( "No Update Available" );
 					msgBox.setText("You are on a dev branch. There are no updates for this build\n\nCurrent Branch: " + branch +"\nCurrent Version: " +utils::version_string_qt());
@@ -179,6 +195,7 @@ namespace atlas
 					msgBox.exec();
 				}
 			}
+		
 		}
 		reply->deleteLater();
 
@@ -192,17 +209,15 @@ namespace atlas
 
 	void AtlasUpdater::downloadUpdate(QString url)
 {
-	QNetworkRequest request { url};
+	#ifdef _WIN32
+
+	QNetworkRequest request { url };
 	request.setTransferTimeout( 2000 );
 	auto* reply { m_manager.get( request ) };
 	//reply->deleteLater();
 
 	connect(
-		reply,
-		&QNetworkReply::finished,
-		this,
-		[ =, this ]() { saveFile( reply ); },
-		Qt::SingleShotConnection );
+		reply, &QNetworkReply::finished, this, [ =, this ]() { saveFile( reply ); }, Qt::SingleShotConnection );
 
 	connect(
 		reply,
@@ -210,23 +225,54 @@ namespace atlas
 		this,
 		[ =, this ]( const QNetworkReply::NetworkError& error ) { handleManifestError( error, reply ); },
 		Qt::SingleShotConnection );
+	connect( 
+		reply, 
+		&QNetworkReply::downloadProgress, 
+		this, &downloadProgress );
+	#endif
 }
 
 	void AtlasUpdater::saveFile(QNetworkReply* reply)
-	{	
+	{
+		//Close Dialog
+		ud->close();
 		QFile file(QString::fromStdString(std::string( std::getenv( "APPDATA" )) + "\\ATLAS\\update.zip"));
 		std::filesystem::create_directory(std::string( std::getenv( "APPDATA" )) + "\\ATLAS");
 		file.open(QIODevice::WriteOnly);
     	file.write(reply->readAll());
-		qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
-		qInfo() << "FILE DOWNLOADED";
-		qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
+		//qInfo() << QString::fromStdString( std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" );
+		//qInfo() << "FILE DOWNLOADED";
+		//qInfo() << "App path : " << QString::fromStdString(std::filesystem::current_path().string());
+		#ifdef _WIN32
 
-		QString command { "stop-process -name Atlas ; Start-Sleep -Seconds 3; Expand-Archive -Force " + file.fileName()
-			              + " " + QString::fromStdString( std::filesystem::current_path().string() ) };
-		//qInfo() << command;
-		QProcess *process = new QProcess(this);
-		process->startDetached("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", QStringList(command));
+        STARTUPINFOA si;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        ZeroMemory(&pi, sizeof(pi));
+        
+        //Wide string because windows is stupid
+        const std::string path = "updater/AtlasUpdater.exe";
+		const std::string args = "0"; //Default, DO NOT SHOW GUI
+		//std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" + std::to_string( ::getpid() );
+
+		//qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
+
+		char* win_buffer { new char[args.size()] } ;
+        std::memcpy(win_buffer, args.c_str(), args.size());
+		//char cmdArgs[] = "echoargs.exe name@example.com";
+    
+        if (CreateProcessA(path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+        {
+			QCoreApplication::quit(); //Kill QT application
+			exit(0); //Kill Program
+            WaitForSingleObject(pi.hProcess, INFINITE);
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+
+        }
+		
+		#endif
 
 	}
 
@@ -357,4 +403,9 @@ namespace atlas
 		return msgBox.exec();
 	}
 
+	void AtlasUpdater::downloadProgress(int ist, int max)
+	{
+		ud->show();
+		ud->UpdateProgressBar( static_cast<int>((100.0/max) *ist));
+	}
 }

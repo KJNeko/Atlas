@@ -1,6 +1,7 @@
 # /cmake_modules/win32.cmake
 
 if (WIN32)
+	set(BUILD_SHARED_LIBS FALSE)
 	set(which_program "where")
 	set(os_path_separator "\\")
 

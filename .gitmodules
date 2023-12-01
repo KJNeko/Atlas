@@ -25,3 +25,6 @@
 [submodule "dependencies/blurhash"]
 	path = dependencies/blurhash
 	url = https://github.com/KJNeko/blurhash-cxx.git
+[submodule "dependencies/elzip"]
+	path = dependencies/elzip
+	url = https://github.com/Sygmei/11Zip.git

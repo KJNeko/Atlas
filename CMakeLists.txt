@@ -33,7 +33,11 @@ message("-- lib = ${SQLite3_LIBRARY}")
 message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 add_subdirectory(atlas)
-add_subdirectory(atlas-updater)
+
+if (WIN32)
+    add_subdirectory(atlas-updater)
+endif()
+
 
 SetVersionInfo()
 CompilerPostSetup()
