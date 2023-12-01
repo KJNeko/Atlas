@@ -21,9 +21,9 @@
 #include <unistd.h>
 #ifdef _WIN32
 #include <windows.h>
-#endif
 #include <stdio.h>
 #include <tchar.h>
+#endif
 
 #define REPO "https://api.github.com/repos/KJNeko/Atlas"
 
