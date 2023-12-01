@@ -92,9 +92,10 @@ void SettingsDialog::prepareThemeSettings()
 	ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
 
 	if ( !std::filesystem::exists( config::application::theme_folder::get().toStdString() ) )
-		std::filesystem::create_directories(config::application::theme_folder::get().toStdString() );
+		std::filesystem::create_directories( config::application::theme_folder::get().toStdString() );
 	//Load all valid options.
-	for ( auto& qss_option : std::filesystem::directory_iterator( config::application::theme_folder::get().toStdString() ) )
+	for ( auto& qss_option :
+	      std::filesystem::directory_iterator( config::application::theme_folder::get().toStdString() ) )
 	{
 		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
 			ui->themeBox->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
@@ -125,7 +126,7 @@ void SettingsDialog::saveApplicationSettings()
 	//Set font for application
 	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
 	dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
-	config::application::update_channel::set(ui->cbUpdateChannel->currentText() );
+	config::application::update_channel::set( ui->cbUpdateChannel->currentText() );
 	//Set exp features
 	//config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
 

@@ -173,5 +173,4 @@ namespace atlas::records
 	  id( in_id )
 	{}
 
-
 } // namespace atlas::records
