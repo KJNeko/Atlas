@@ -130,11 +130,11 @@ namespace atlas
 			std::vector<release> releases;
 
 			//Check that we are not on a dev branch
-			if(branch != "")//branch == "master" || branch == "staging")
+			if(branch == "master" || branch == "staging")
 			{
 				if(true)
 				{
-					long int last_unix_ts = 0;//buildtime;
+					long int last_unix_ts = buildtime;
 					for ( const auto& data : array )
 					{
 						const auto& obj { data.toObject() };

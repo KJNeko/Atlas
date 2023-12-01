@@ -22,7 +22,7 @@ namespace atlas
         Q_OBJECT
 
         //QThread m_thread {};
-		//QNetworkAccessManager m_manager {};
+		QNetworkAccessManager m_manager {};
 
         public:
         //AtlasUpdater(QObject* parent, std::shared_ptr<gui_settings> gui_settings);
