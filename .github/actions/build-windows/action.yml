@@ -87,10 +87,10 @@ runs:
       shell: powershell
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true'}}
       run: |
-        cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
+        cmake --build ${{github.workspace}}\builds\build-r -j8 
 
     - name: Build Target Atlas Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
       run: |
-        cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
+        cmake --build ${{github.workspace}}\builds\build-d -j8
