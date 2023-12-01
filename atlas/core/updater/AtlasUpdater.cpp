@@ -117,13 +117,13 @@ namespace atlas
 			const QString branch = QString::
 				fromLocal8Bit( utils::git_branch.data(), static_cast< qsizetype >( utils::git_branch.size() ) );
 
-			const long int buildtime { converToShortEpoch( QString::fromLocal8Bit(
+			const std::uint64_t buildtime { converToShortEpoch( QString::fromLocal8Bit(
 				utils::git_time.data(), static_cast< qsizetype >( utils::git_time.size() ) ) ) };
 
 			struct release
 			{
 				QString tag_name;
-				long int created_at;
+				std::uint64_t created_at;
 				QString target_commitish;
 				QString browser_download_url;
 			};
@@ -135,7 +135,7 @@ namespace atlas
 			{
 				if ( true )
 				{
-					long int last_unix_ts = buildtime;
+					std::uint64_t last_unix_ts = buildtime;
 					for ( const auto& data : array )
 					{
 						const auto& obj { data.toObject() };
