@@ -148,6 +148,7 @@ namespace atlas
 							const auto& asset { assets.toObject() };
 							browser_download_url = asset[ "browser_download_url" ].toString();
 						}
+						//Set to 0 so it always downloads
 						if ( created_at > last_unix_ts )
 						{
 							if ( config::application::update_channel::get() == "nightly" )
