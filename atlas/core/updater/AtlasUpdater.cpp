@@ -131,12 +131,11 @@ namespace atlas
 			std::vector< release > releases;
 
 			//Check that we are not on a dev branch
-			if ( branch !="")//== "master" || branch == "staging" )
+			if ( branch == "master" || branch == "staging" )
 			{
 				if ( true )
 				{
-					std::uint64_t last_unix_ts = 0;
-					//buildtime;
+					std::uint64_t last_unix_ts = buildtime;
 					for ( const auto& data : array )
 					{
 						const auto& obj { data.toObject() };
@@ -262,39 +261,41 @@ namespace atlas
 
 		//Wide string because windows is stupid
 		const std::string path = "AtlasUpdater.exe";
-		const std::string args = "0 local"; //Default, Not implemented but two arguments are needed for program to update
+		const std::string args =
+			"0 local"; //Default, Not implemented but two arguments are needed for program to update
 		//std::string( std::getenv( "APPDATA" ) ) + "\\ATLAS\\update.zip" + std::to_string( ::getpid() );
 
 		//qInfo() << QString::fromStdString(std::to_string( ::getpid() ));
 
 		char* win_buffer { new char[ args.size() ] };
 		std::memcpy( win_buffer, args.c_str(), args.size() );
-	
+
 		QMessageBox msgBox;
 		msgBox.setWindowTitle( "Atlas Updater" );
-		msgBox.setText("Update downloaded. Click OK to install");
-		msgBox.setStandardButtons(QMessageBox::Ok);
- 		msgBox.setDefaultButton(QMessageBox::Ok);
+		msgBox.setText( "Update downloaded. Click OK to install" );
+		msgBox.setStandardButtons( QMessageBox::Ok );
+		msgBox.setDefaultButton( QMessageBox::Ok );
 		msgBox.setIcon( QMessageBox::Information );
 		int result = msgBox.exec();
 
-		switch (result) {
-		case QMessageBox::Ok:
-			if ( CreateProcessA( path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi ) )
-			{
-				QCoreApplication::quit(); //Kill QT application
-				exit( 0 ); //Kill Program
-				WaitForSingleObject( pi.hProcess, INFINITE );
-				CloseHandle( pi.hProcess );
-				CloseHandle( pi.hThread );
-			}
-			break;
-		
-		default:
-			// should never be reached
-			break;
-		}
+		switch ( result )
+		{
+			case QMessageBox::Ok:
+				if ( CreateProcessA(
+						 path.c_str(), win_buffer, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi ) )
+				{
+					QCoreApplication::quit(); //Kill QT application
+					exit( 0 ); //Kill Program
+					WaitForSingleObject( pi.hProcess, INFINITE );
+					CloseHandle( pi.hProcess );
+					CloseHandle( pi.hThread );
+				}
+				break;
 
+			default:
+				// should never be reached
+				break;
+		}
 
 #endif
 	}
