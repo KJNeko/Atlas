@@ -8,8 +8,10 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+#ifdef _WIN32
 #include "core/updater/AtlasUpdater.hpp"
-#include "ui/dialog/Console.h"
+#include "ui/dialog/console/Console.hpp"
+#endif
 QT_BEGIN_NAMESPACE
 
 namespace Ui

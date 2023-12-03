@@ -3,6 +3,7 @@
 //
 
 #include <string_view>
+
 #include "templates.hpp"
 
 namespace atlas::database::migrations

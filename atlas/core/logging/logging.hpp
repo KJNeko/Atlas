@@ -17,7 +17,7 @@
 
 #include "core/Types.hpp"
 #include "core/notifications/notifications.hpp"
-#include "ui/dialog/Console.h"
+#include "ui/dialog/console/Console.hpp"
 
 namespace atlas::logging
 {

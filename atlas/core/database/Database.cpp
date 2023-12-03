@@ -35,8 +35,6 @@ namespace internal
 void Database::initalize( const std::filesystem::path init_path )
 {
 	ZoneScoped;
-	atlas::logging::init();
-
 	if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
 		std::filesystem::create_directories( init_path.parent_path() );
 
@@ -76,7 +74,6 @@ void Database::initalize( const std::filesystem::path init_path )
 
 		game.setBanner( "./data/images/config_image.webp", Normal );
 	}
-
 }
 
 void Database::deinit()

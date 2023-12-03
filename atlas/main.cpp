@@ -29,6 +29,7 @@
 // clang-format on
 
 #include "core/exceptions.hpp"
+#include "ui/dialog/console/ConsoleWriter.hpp"
 
 void clear_lock()
 {
@@ -37,12 +38,14 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-	//initLogging can't be called here since the GUI needs to exist so we need to override out formatting style before we call init.
+	//Set format for any logging done before the sinks are ready.
 	atlas::logging::setFormat();
 
-	//spdlog::info( "EntryPoint" );
-	//initLogging();
 	QApplication app { argc, argv };
+
+	//Logger should be ready now.
+	atlas::logging::init();
+
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
 
 	QSplashScreen splash( splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ) );
@@ -59,6 +62,11 @@ int main( int argc, char** argv )
 	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
 	if ( GetLastError() == ERROR_ALREADY_EXISTS ) // did the mutex already exist?
 		return -1; // quit; mutex is released automatically
+
+		//Check for updates | Windows only
+#ifdef _WIN32
+	atlas::initUpdateHandler( false );
+#endif
 
 #else
 	if ( std::filesystem::exists( "atlas_lock" ) )
@@ -143,6 +151,7 @@ int main( int argc, char** argv )
 	std::filesystem::path db_path = config::paths::database::getPath() / "atlas.db";
 	Database::initalize( db_path );
 
+	//Do not increase
 	QPixmapCache::setCacheLimit( 1024 * 512 );
 
 	MainWindow window;
