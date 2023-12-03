@@ -10,6 +10,7 @@
 
 #include <QComboBox>
 #include <QMenu>
+#include <QMessageBox>
 #include <QProgressDialog>
 
 #include "SIModel.hpp"
@@ -389,17 +390,94 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 	menu.exec( QCursor::pos() );
 	updateSidebar();
-	verifyGames();
 }
 
 Node* SimpleImporter::root()
 {
-	return reinterpret_cast< Node* >( ui->dirView->model()->index( 0, 0 ).internalPointer() );
+	return reinterpret_cast< Node* >( ui->dirView->model()->index( 0, 0 ).internalPointer() )->root();
+}
+
+bool requiredFieldsFilled( QWidget* parent, Node* node )
+{
+	if ( node->isFile() )
+	{
+		atlas::logging::error( "Somehow got a file" );
+		//How? We should only have dirs at this point
+		return false;
+	}
+
+	DirInfo data { node->filledInfo() };
+
+	if ( data.version.isEmpty() )
+	{
+		QMessageBox::information( parent, "Missing field info", "Missing required field information: Version" );
+		return false;
+	}
+
+	if ( data.creator.isEmpty() )
+	{
+		QMessageBox::information( parent, "Missing field info", "Missing required field information: Creator" );
+		return false;
+	}
+
+	if ( data.title.isEmpty() )
+	{
+		QMessageBox::information( parent, "Missing field info", "Missing required field information: Title" );
+		return false;
+	}
+
+	//Check that an executable is set
+	if ( data.executable_relative_path.isEmpty() )
+	{
+		QMessageBox::information( parent, "Missing field info", "Missing executable. Please set a file as executable" );
+		return false;
+	}
+
+	return true;
+}
+
+QModelIndex SimpleImporter::indexFromNode( Node* node )
+{
+	if ( node == nullptr ) return {};
+	if ( node->isRoot() )
+		return {};
+	else
+	{
+		//Create index from parent
+		QModelIndex parent_index { indexFromNode( node->parent() ) };
+		return ui->dirView->model()->index( node->row(), 0, parent_index );
+	}
 }
 
 void SimpleImporter::verifyGames()
 {
 	std::vector< Node* > game_roots { root()->findGameRoots() };
+
+	bool good { true };
+
+	for ( Node* game : game_roots )
+	{
+		//Check that the required fields are filled
+		if ( !requiredFieldsFilled( this, game ) )
+		{
+			//Scroll to the game
+			auto idx { indexFromNode( game ) };
+			ui->dirView->scrollTo( idx, QAbstractItemView::PositionAtCenter );
+			ui->dirView->selectionModel()->select( idx, QItemSelectionModel::SelectionFlag::ClearAndSelect );
+
+			good = false;
+			break;
+		}
+	}
+
+	if ( good )
+	{
+		ui->btnImport->setText( "Import" );
+	}
+	else
+	{
+		ui->btnImport->setText( "Check" );
+	}
 }
 
 std::vector< QPersistentModelIndex > SimpleImporter::selected() const
@@ -630,7 +708,7 @@ void SimpleImporter::updateSidebar()
 			//Only one selection if we are here.
 			Node* node { static_cast< Node* >( current.front().internalPointer() ) };
 			const DirInfo dir_info { node->filledInfo() };
-			const auto& [ is_game_dir, title, creator, version, engine, supporting, supporting_type, supporting_mask ] {
+			const auto& [ is_game_dir, title, creator, version, engine, supporting, supporting_type, supporting_mask, executable_rel_path, preview_count ] {
 				dir_info
 			};
 
@@ -774,5 +852,20 @@ void SimpleImporter::on_cbBannerType_currentIndexChanged( int index )
 			file_info.banner_type = static_cast< BannerType >( index );
 		}
 		ui->dirView->model()->dataChanged( node_idx, node_idx );
+	}
+}
+
+void SimpleImporter::on_btnImport_clicked()
+{
+	verifyGames();
+
+	if ( ui->btnImport->text() == "Import" )
+	{
+		const std::vector< Node* > games { root()->findGameRoots() };
+
+		for ( const auto& game : games )
+		{
+			//Do import process.
+		}
 	}
 }
