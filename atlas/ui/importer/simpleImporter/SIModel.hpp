@@ -75,7 +75,10 @@ struct Node
 	DirInfo filledInfo() const
 	{
 		if ( !std::holds_alternative< DirInfo >( m_info ) )
+		{
+			atlas::logging::error( "Attempted to get dir info from a file node!" );
 			return {};
+		}
 		else
 		{
 			auto info { std::get< DirInfo >( m_info ) };
@@ -127,6 +130,12 @@ struct Node
 			{
 				const auto* child_node { children_to_scan.front() };
 				children_to_scan.pop();
+
+				if ( child_node == nullptr )
+				{
+					atlas::logging::error( "child_node is nullptr" );
+					continue;
+				}
 
 				if ( child_node->isFolder() && child_node->scanned() )
 				{
@@ -268,11 +277,11 @@ struct Node
 		{
 			if ( !m_scanned ) scan();
 
-			std::vector< Node* > nodes;
+			std::vector< Node* > nodes {};
 
 			for ( auto child : m_children )
 			{
-				auto child_data { child->childrenAtDepth( target_depth - 1 ) };
+				std::vector< Node* > child_data { child->childrenAtDepth( target_depth - 1 ) };
 				std::copy( child_data.begin(), child_data.end(), std::back_inserter( nodes ) );
 			}
 
@@ -288,6 +297,8 @@ struct Node
 
 	const Node* child( const int idx ) const
 	{
+		if ( !m_scanned ) return nullptr;
+
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
 		{
 			atlas::logging::
@@ -300,6 +311,8 @@ struct Node
 
 	Node* child( const int idx )
 	{
+		if ( !m_scanned ) scan();
+
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
 		{
 			atlas::logging::
@@ -320,7 +333,17 @@ struct Node
 
 	const FileInfo& fileInfo() const { return std::get< FileInfo >( m_info ); }
 
-	std::vector< Node* > children() const { return m_children; }
+	std::vector< Node* > children() const
+	{
+		assert( m_scanned && "Attempted to access children before scanning!" );
+		return m_children;
+	}
+
+	std::vector< Node* > children()
+	{
+		if ( !m_scanned ) scan();
+		return m_children;
+	}
 
 	std::filesystem::path path() const
 	{

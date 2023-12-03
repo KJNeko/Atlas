@@ -356,11 +356,23 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 
 Node* SimpleImporter::root()
 {
-	return reinterpret_cast< Node* >( ui->dirView->model()->index( 0, 0 ).internalPointer() )->root();
+	auto* internal_ptr { ui->dirView->model()->index( 0, 0 ).internalPointer() };
+	if ( internal_ptr == nullptr )
+	{
+		atlas::logging::error( "Internal pointer is nullptr" );
+		return nullptr;
+	}
+	else
+		return static_cast< Node* >( internal_ptr )->root();
 }
 
 bool requiredFieldsFilled( QWidget* parent, Node* node )
 {
+	if ( node == nullptr )
+	{
+		atlas::logging::error( "Node was nullptr!" );
+	}
+
 	if ( node->isFile() )
 	{
 		atlas::logging::error( "Somehow got a file" );
@@ -413,12 +425,25 @@ QModelIndex SimpleImporter::indexFromNode( Node* node )
 
 void SimpleImporter::verifyGames()
 {
-	std::vector< Node* > game_roots { root()->findGameRoots() };
+	auto* tree_root { root() };
+	if ( tree_root == nullptr )
+	{
+		atlas::logging::error( "Tree root is nullptr" );
+		return;
+	}
+
+	std::vector< Node* > game_roots { tree_root->findGameRoots() };
 
 	bool good { true };
 
 	for ( Node* game : game_roots )
 	{
+		if ( game == nullptr )
+		{
+			atlas::logging::error( "Game root is nullptr" );
+			continue;
+		}
+
 		//Check that the required fields are filled
 		if ( !requiredFieldsFilled( this, game ) )
 		{
@@ -823,11 +848,19 @@ void SimpleImporter::on_btnImport_clicked()
 
 	if ( ui->btnImport->text() == "Import" )
 	{
-		const std::vector< Node* > games { root()->findGameRoots() };
+		auto* tree_root { root() };
+		if ( tree_root == nullptr )
+		{
+			atlas::logging::error( "Tree root is nullptr" );
+			return;
+		}
+
+		const std::vector< Node* > games { tree_root->findGameRoots() };
 
 		for ( const auto& game : games )
 		{
 			//Do import process.
+			atlas::logging::debug( "STUB: Should be processing game: {}", game->path() );
 		}
 	}
 }
