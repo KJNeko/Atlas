@@ -78,21 +78,11 @@ void SimpleImporter::setGameRoot( Node* node )
 		node_info.is_game_dir = true;
 
 		//Detect for any banners or preview folders
-
-		QProgressDialog progress_dialog { "Scanning...", "", 0, 1, this };
-
-		progress_dialog.show();
-		node->scan();
-		progress_dialog.setValue( 1 );
-
 		auto children { node->children() };
-
-		progress_dialog.setMaximum( static_cast< int >( children.size() ) );
 
 		for ( auto child : children )
 		{
-			progress_dialog.setValue( progress_dialog.value() + 1 );
-			QApplication::processEvents( QEventLoop::AllEvents, 25 );
+			//QApplication::processEvents( QEventLoop::AllEvents, 25 );
 			if ( child->isFolder() && child->name() == "previews" )
 			{
 				child->scan();
@@ -246,94 +236,66 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 			[ idx_depth, root, this ]()
 			{
 				auto children { root->childrenAtDepth( idx_depth ) };
+
+				QProgressDialog prog_dialog { this };
+				prog_dialog.setLabelText( "Setting game root(s)" );
+				prog_dialog.setRange( 0, static_cast< int >( children.size() ) );
+				prog_dialog.show();
+
 				for ( auto child : children )
 				{
-					//	QApplication::processEvents();
+					prog_dialog.setLabelText( "Setting game root(s)\n" + child->pathStr() );
+					prog_dialog.setValue( prog_dialog.value() + 1 );
+					QApplication::processEvents();
 					setGameRoot( child );
 				}
 			} );
 
 		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };
 
-		this_level_supporting_menu->addAction(
-			"None",
-			[ idx_depth, root ]()
+		auto setSupportingDirsAtDepth = [ idx_depth, root, this ]( const SupportingType type )
+		{
+			auto children { root->childrenAtDepth( idx_depth ) };
+
+			QProgressDialog prog_dialog { this };
+			prog_dialog.setLabelText( "Setting supporting folder(s)" );
+			prog_dialog.setRange( 0, static_cast< int >( children.size() ) );
+			prog_dialog.show();
+
+			for ( auto child : children )
 			{
-				auto children { root->childrenAtDepth( idx_depth ) };
-				for ( auto child : children )
+				prog_dialog.setLabelText( "Setting supporting folder(s)\n" + child->pathStr() );
+				prog_dialog.setValue( prog_dialog.value() + 1 );
+				QApplication::processEvents();
+
+				//	QApplication::processEvents();
+				if ( std::holds_alternative< DirInfo >( child->m_info ) )
 				{
-					//	QApplication::processEvents();
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					DirInfo& info { std::get< DirInfo >( child->m_info ) };
+
+					if ( type == SupportingType::NONE )
 					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
 						info.is_supporting_name = false;
 					}
-				}
-			} );
-		this_level_supporting_menu->addAction(
-			"Title",
-			[ idx_depth, root ]()
-			{
-				auto children { root->childrenAtDepth( idx_depth ) };
-				for ( auto child : children )
-				{
-					//	QApplication::processEvents();
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
+					else
 					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
 						info.is_supporting_name = true;
-						info.supporting_type = SupportingType::TITLE;
+						info.supporting_type = type;
 					}
 				}
-			} );
+			}
+		};
+
 		this_level_supporting_menu->addAction(
-			"Creator",
-			[ idx_depth, root ]()
-			{
-				auto children { root->childrenAtDepth( idx_depth ) };
-				for ( auto child : children )
-				{
-					//	QApplication::processEvents();
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
-					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = true;
-						info.supporting_type = SupportingType::CREATOR;
-					}
-				}
-			} );
+			"None", [ &setSupportingDirsAtDepth ]() { setSupportingDirsAtDepth( SupportingType::NONE ); } );
 		this_level_supporting_menu->addAction(
-			"Version",
-			[ idx_depth, root ]()
-			{
-				auto children { root->childrenAtDepth( idx_depth ) };
-				for ( auto child : children )
-				{
-					//	QApplication::processEvents();
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
-					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = true;
-						info.supporting_type = SupportingType::VERSION;
-					}
-				}
-			} );
+			"Title", [ &setSupportingDirsAtDepth ]() { setSupportingDirsAtDepth( SupportingType::TITLE ); } );
 		this_level_supporting_menu->addAction(
-			"Engine",
-			[ idx_depth, root ]()
-			{
-				auto children { root->childrenAtDepth( idx_depth ) };
-				for ( auto child : children )
-				{
-					//	QApplication::processEvents();
-					if ( std::holds_alternative< DirInfo >( child->m_info ) )
-					{
-						DirInfo& info { std::get< DirInfo >( child->m_info ) };
-						info.is_supporting_name = true;
-						info.supporting_type = SupportingType::ENGINE;
-					}
-				}
-			} );
+			"Creator", [ &setSupportingDirsAtDepth ]() { setSupportingDirsAtDepth( SupportingType::CREATOR ); } );
+		this_level_supporting_menu->addAction(
+			"Version", [ &setSupportingDirsAtDepth ]() { setSupportingDirsAtDepth( SupportingType::VERSION ); } );
+		this_level_supporting_menu->addAction(
+			"Engine", [ &setSupportingDirsAtDepth ]() { setSupportingDirsAtDepth( SupportingType::ENGINE ); } );
 
 		menu.addAction(
 			"Set preview folder",

@@ -15,6 +15,7 @@
 
 enum class SupportingType
 {
+	NONE = -1,
 	TITLE = 0,
 	CREATOR = 1,
 	VERSION = 2,
@@ -94,6 +95,8 @@ struct Node
 				{
 					switch ( parent_info.supporting_type )
 					{
+						case SupportingType::NONE:
+							[[fallthrough]];
 						case SupportingType::TITLE:
 							info.title = ptr->name();
 							info.supporting_mask |= SupportingMask::TITLE;
