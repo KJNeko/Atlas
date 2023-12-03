@@ -69,6 +69,8 @@ namespace atlas::logging
 		spdlog::set_default_logger( std::move( logger ) );
 		setFormat();
 
+		spdlog::flush_on( spdlog::level::warn );
+
 #ifndef NDEBUG
 		spdlog::set_level( spdlog::level::debug );
 #endif
