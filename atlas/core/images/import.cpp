@@ -21,23 +21,25 @@
 namespace atlas::images
 {
 
-	void downloader::getImage( const std::filesystem::path& path, const RecordID game_id )
+	void Downloader::getImage( const std::filesystem::path& path, const RecordID game_id )
 	{
+		if ( game_id == INVALID_RECORD_ID ) throw AtlasException( "Invalid game_id given to getImage" );
+		m_game_id = game_id;
 		QUrl imageUrl( QString::fromStdString( path.string() ) );
-		const auto m_pImgCtrl = new FileDownloader( imageUrl, this );
 
-		connect( m_pImgCtrl, SIGNAL( downloaded() ), this, SLOT( imageLoaded( m_pImgCtrl, game_id ) ) );
+		m_pImgCtrl = std::make_unique< FileDownloader >( imageUrl, this );
+
+		connect( m_pImgCtrl.get(), &FileDownloader::downloaded, this, &Downloader::imageFinished );
 	}
 
-	void downloader::imageLoaded( const FileDownloader* m_pImgCtrl, const RecordID game_id )
+	void Downloader::imageFinished()
 	{
 		QPixmap pixmap;
 		pixmap.loadFromData( m_pImgCtrl->downloadedData() );
-		importPixmap( pixmap, game_id );
+		(void)importPixmap( pixmap, m_game_id );
 	}
 
 	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest )
-
 	{
 		if ( std::ofstream ofs( dest, std::ios::binary ); ofs )
 		{

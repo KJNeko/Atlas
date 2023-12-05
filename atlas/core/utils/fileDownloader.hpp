@@ -7,14 +7,14 @@
 #include <QNetworkRequest>
 #include <QObject>
 
-class FileDownloader : public QObject
+class FileDownloader final : public QObject
 {
 	Q_OBJECT
 
   public:
 
-	explicit FileDownloader( QUrl imageUrl, QObject* parent = 0 );
-	virtual ~FileDownloader();
+	explicit FileDownloader( QUrl imageUrl, QObject* parent = nullptr );
+	~FileDownloader();
 	QByteArray downloadedData() const;
 
   signals:
@@ -25,8 +25,8 @@ class FileDownloader : public QObject
 
   private:
 
-	QNetworkAccessManager m_WebCtrl;
-	QByteArray m_DownloadedData;
+	QNetworkAccessManager m_WebCtrl {};
+	QByteArray m_DownloadedData {};
 };
 
 #endif // FILEDOWNLOADER_H

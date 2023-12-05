@@ -16,11 +16,17 @@
 
 namespace atlas::images
 {
-	class downloader final : public QObject
+	class Downloader final : public QObject
 	{
+		std::unique_ptr< FileDownloader > m_pImgCtrl {};
+		RecordID m_game_id { INVALID_RECORD_ID };
+
+	  public:
+
 		void getImage( const std::filesystem::path& path, const RecordID game_id );
+
 	  private slots:
-		void imageLoaded( const FileDownloader* m_pImgCtrl, const RecordID game_id );
+		void imageFinished();
 	};
 
 	/**
