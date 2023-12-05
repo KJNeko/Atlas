@@ -143,7 +143,15 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				const std::filesystem::path banner_path { path.toStdWString() };
-				banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				//Check if path is actually a url
+				if ( QString::fromStdString( path.toStdString() ).contains( "http" ) )
+				{
+					banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
+				else
+				{
+					banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };

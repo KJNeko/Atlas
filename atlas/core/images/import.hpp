@@ -12,9 +12,17 @@
 #include <filesystem>
 
 #include "core/Types.hpp"
+#include "core/utils/fileDownloader.hpp"
 
 namespace atlas::images
 {
+	class downloader final : public QObject
+	{
+		void getImage( const std::filesystem::path& path, const RecordID game_id );
+	  private slots:
+		void imageLoaded( const FileDownloader* m_pImgCtrl, const RecordID game_id );
+	};
+
 	/**
 	 * @param source Source path of the image. Used for logging purposes.
 	 * @param byteArray
@@ -24,11 +32,15 @@ namespace atlas::images
 
 	[[nodiscard]] std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id );
 
+	[[nodiscard]] std::filesystem::path importPixmap( const QPixmap pixmap, const RecordID game_id );
+
 	namespace async
 	{
 		//! Stores the image located at `path` in the data folder
 		[[nodiscard]] QFuture< std::filesystem::path >
 			importImage( const std::filesystem::path& path, const RecordID game_id );
+
+		[[nodiscard]] QFuture< std::filesystem::path > importPixmap( const QPixmap pixmap, const RecordID game_id );
 
 	} // namespace async
 } // namespace atlas::images

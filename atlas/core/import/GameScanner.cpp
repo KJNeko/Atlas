@@ -126,6 +126,17 @@ void runner(
 			else
 				continue;
 		}
+
+		//Check if images are available locally, if not, get the url
+		//Download image so we can store it later
+
+		std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, creator );
+		if ( atlas_data.has_value() )
+		{
+			std::optional< atlas::remote::F95RemoteData > f95_data =
+				atlas::remote::findF95Data( QString::number( atlas_data.value()->atlas_id ) );
+			banners[ Normal ] = f95_data.value()->banner_url;
+		}
 	}
 
 	std::vector< QString > previews;
@@ -157,7 +168,6 @@ void runner(
 
 	// Fetch the game_id from the DB. Will return INVALID_RECORD_ID if not found
 	const auto game_id { atlas::records::fetchRecord( title, creator, engine ) };
-
 	//If the gl_info has a f95_id then we can use that.
 	auto atlas_id { INVALID_ATLAS_ID };
 
