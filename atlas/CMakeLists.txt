@@ -12,26 +12,24 @@ else ()
 	add_executable(Atlas WIN32 ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
-target_precompile_headers(Atlas PRIVATE
+target_precompile_headers(Atlas PUBLIC
 		<memory>
 		<iostream>
 		<filesystem>
 		<string>
+		<source_location>
 
 		<QObject>
 		<QWidget>
 		<QString>
 		<QVariant>
+		<QAbstractItemDelegate>
+		<QImage>
+		<QPixmap>
+		<QtCore/QModelIndex>
+		<QDialog>
 
 		<sqlite3.h>
-		<spdlog/spdlog.h>
-
-		${CMAKE_CURRENT_SOURCE_DIR}/core/database/Binder.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/core/database/RapidTransaction.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/core/database/Transaction.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/GameData.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/game/Game.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/core/logging/logging.hpp
 )
 
 target_include_directories(Atlas PUBLIC ${CMAKE_SOURCE_DIR}/atlas)
