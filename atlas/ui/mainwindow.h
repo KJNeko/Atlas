@@ -9,6 +9,7 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+#include "core/utils/fileDownloader.hpp"
 
 #ifdef _WIN32
 #include "core/updater/AtlasUpdater.hpp"
@@ -84,6 +85,7 @@ class MainWindow final : public QMainWindow
 	void setBottomGameCounter();
 	void refreshSearch();
 	void on_stackedWidget_currentChanged( const int idx );
+	void loadImage( const FileDownloader* fdownloader, RecordID id );
 };
 
 #endif // MAINWINDOW_H

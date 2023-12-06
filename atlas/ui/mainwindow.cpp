@@ -4,6 +4,7 @@
 
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/images/import.hpp"
 #include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
@@ -379,30 +380,38 @@ void MainWindow::on_actionUpdateMeta_triggered()
 	//This will only update values that are already matched in the database.
 	atlas::logging::info( "Running Image Download Test" );
 	//Get a list of every record id
-	std::vector< int > record_ids;
+	std::vector< RecordID > record_ids;
 	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( int record_id )
 	{ record_ids.push_back( record_id ); };
 
 	for ( auto& record_id : record_ids )
 	{
-		//std::cout << record_id << "\n";
-		const auto record = atlas::records::GameData( record_id );
+		atlas::records::Game game { record_id };
+		if ( game->atlas_data.has_value() )
+		{
+			const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
+			AtlasID id { atlas_data->atlas_id };
 
-		std::optional< atlas::remote::F95RemoteData > f95_data =
-			atlas::remote::findF95Data( QString::number( record.atlas_data.value()->atlas_id() ) );
+			std::optional< atlas::remote::F95RemoteData > f95_data =
+				atlas::remote::findF95Data( QString::number( id ) );
 
-		//banners[ Normal ] = f95_data.value()->banner_url;
+			QUrl imageUrl( f95_data.value()->banner_url );
+			const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, this );
 
-		std::cout << record.m_title.toStdString() << "\n";
+			connect(
+				m_pImgCtrl, SIGNAL( downloaded( const m_pImgCtrl, id ) ), this, SLOT( loadImage( m_pImgCtrl, id ) ) );
+		}
 	}
+}
 
-	//std::optional< atlas::records::Game > gameData;
+void MainWindow::loadImage( const FileDownloader* fdownloader, RecordID id )
+{
+	QPixmap pixmap;
+	pixmap.loadFromData( fdownloader->downloadedData() );
 
-	/*RapidTransaction() << "SELECT * FROM games" >> [ &gameData ]( const atlas::records::Game record )
-	{ gameData = { record }; };*/
+	atlas::records::Game game { id };
 
-	/*for ( auto& element : gameData )
-	{
-		atlas::logging::info( "Atlas_id:{}", element->m_title );
-	}*/
+	std::filesystem::path path = atlas::images::importPixmap( pixmap, id );
+
+	game.setBanner( path.string(), Normal );
 }
