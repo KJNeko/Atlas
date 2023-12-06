@@ -1,3 +1,6 @@
+
+
+#pragma once
 #ifndef UPDATEDIALOG_H
 #define UPDATEDIALOG_H
 

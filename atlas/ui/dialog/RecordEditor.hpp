@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/4/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDEDITOR_HPP
 #define ATLAS_RECORDEDITOR_HPP
 

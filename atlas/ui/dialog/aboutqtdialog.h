@@ -1,3 +1,5 @@
+
+#pragma once
 #ifndef ABOUTQTDIALOG_H
 #define ABOUTQTDIALOG_H
 

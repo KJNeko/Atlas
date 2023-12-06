@@ -1,3 +1,5 @@
+
+#pragma once
 #ifndef ADDGAMEDIALOG_H
 #define ADDGAMEDIALOG_H
 

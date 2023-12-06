@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/17/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 #define ATLASGAMEMANAGER_FILEPATHMODEL_HPP
 
