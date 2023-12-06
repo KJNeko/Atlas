@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/2/23.
 //
 
+#pragma once
 #ifndef ATLAS_IMAGEMANAGER_HPP
 #define ATLAS_IMAGEMANAGER_HPP
 

@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/9/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_FILESCANNER_HPP
 #define ATLASGAMEMANAGER_FILESCANNER_HPP
 

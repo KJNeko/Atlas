@@ -2,6 +2,7 @@
 // Created by kj16609 on 9/18/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_EXCEPTIONS_HPP
 #define ATLASGAMEMANAGER_EXCEPTIONS_HPP
 
