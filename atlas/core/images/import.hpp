@@ -41,6 +41,11 @@ namespace atlas::images
 
 	[[nodiscard]] std::filesystem::path importPixmap( const QPixmap pixmap, const RecordID game_id );
 
+	[[nodiscard]] inline std::filesystem::path importPixmap( const QPixmap pixmap, const atlas::records::Game game )
+	{
+		return importPixmap( pixmap, game.id() );
+	}
+
 	namespace async
 	{
 		//! Stores the image located at `path` in the data folder

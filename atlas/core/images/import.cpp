@@ -27,7 +27,7 @@ namespace atlas::images
 		m_game_id = game_id;
 		QUrl imageUrl( QString::fromStdString( path.string() ) );
 
-		m_pImgCtrl = std::make_unique< FileDownloader >( imageUrl, this );
+		m_pImgCtrl = std::make_unique< FileDownloader >( imageUrl, atlas::records::Game( m_game_id ), this );
 
 		connect( m_pImgCtrl.get(), &FileDownloader::downloaded, this, &Downloader::imageFinished );
 	}

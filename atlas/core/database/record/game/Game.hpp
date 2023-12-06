@@ -44,9 +44,6 @@ namespace atlas::records
 		~Game();
 		explicit Game( const RecordID id );
 
-		//! Returns true if ptr points to valid game data
-		inline bool valid() const { return ptr != nullptr; }
-
 		Game& operator=( const Game& other )
 		{
 			ptr = other.ptr;
@@ -60,6 +57,12 @@ namespace atlas::records
 				throw AtlasException( "Attempted to copy an object with an invalid record id" );
 			this->moveToThread( other.thread() );
 		}
+
+		//! Returns true if ptr points to valid game data
+		inline bool valid() const { return ptr != nullptr; }
+
+		//! Returns the record id for this game
+		[[nodiscard]] inline RecordID id() const { return m_id; }
 
 		//! Sets the title for the game.
 		void setTitle( QString title );

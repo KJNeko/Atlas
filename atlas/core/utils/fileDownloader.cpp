@@ -1,6 +1,10 @@
 #include "fileDownloader.hpp"
 
-FileDownloader::FileDownloader( QUrl imageUrl, QObject* parent, RecordID record_id ) : QObject( parent )
+#include "core/database/record/game/Game.hpp"
+
+FileDownloader::FileDownloader( QUrl imageUrl, atlas::records::Game game, QObject* parent ) :
+  QObject( parent ),
+  m_game( game )
 {
 	if ( record_id != 0 )
 	{

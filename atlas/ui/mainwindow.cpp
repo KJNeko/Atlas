@@ -404,14 +404,12 @@ void MainWindow::on_actionUpdateMeta_triggered()
 	}
 }
 
-void MainWindow::loadImage( const FileDownloader* fdownloader, RecordID id )
+void MainWindow::loadImage( const FileDownloader* fdownloader, atlas::records::Game game )
 {
 	QPixmap pixmap;
 	pixmap.loadFromData( fdownloader->downloadedData() );
 
-	atlas::records::Game game { id };
-
-	std::filesystem::path path = atlas::images::importPixmap( pixmap, id );
+	std::filesystem::path path = atlas::images::importPixmap( pixmap, game );
 
 	game.setBanner( path.string(), Normal );
 }
