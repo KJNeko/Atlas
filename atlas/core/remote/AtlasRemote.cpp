@@ -271,7 +271,7 @@ namespace atlas
 
 		const std::uint64_t version { static_cast< std::uint64_t >( json[ "min_ver" ].toInteger() ) };
 
-		using namespace remote::parsers;
+		using namespace ::remote::parsers;
 
 		if ( version > MAX_REMOTE_VERSION )
 		{
