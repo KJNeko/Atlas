@@ -2,6 +2,7 @@
 // Created by kj16609 on 9/22/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_THUMBNAILS_HPP
 #define ATLASGAMEMANAGER_THUMBNAILS_HPP
 
