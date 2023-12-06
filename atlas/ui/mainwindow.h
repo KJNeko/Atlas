@@ -2,12 +2,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDebug>
 #include <QMainWindow>
 #include <QThread>
 #include <QTimer>
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+
 #ifdef _WIN32
 #include "core/updater/AtlasUpdater.hpp"
 #include "ui/dialog/console/Console.hpp"
@@ -32,7 +34,7 @@ class MainWindow final : public QMainWindow
   public:
 
 	MainWindow( QWidget* parent = nullptr );
-	Console *console = new Console();
+	Console* console = new Console();
 	~MainWindow();
 
   private:
@@ -60,6 +62,7 @@ class MainWindow final : public QMainWindow
 	void on_actionOptions_triggered();
 	void on_actionExit_triggered();
 	void on_actionConsoleWindow_triggered();
+	void on_actionUpdateMeta_triggered();
 	//void on_actionDownload_triggered();
 	//void on_actionManage_triggered();
 	//void on_actionArrangeBy_triggered();

@@ -3,6 +3,7 @@
 #include <moc_AtlasUpdater.cpp>
 
 #include <QCoreApplication>
+#include <QDebug>
 #include <QFile>
 #include <QGridLayout>
 #include <QJsonArray>
@@ -19,6 +20,7 @@
 #include "core/config/config.hpp"
 #include "core/logging/logging.hpp"
 #include "core/version.hpp"
+
 #ifdef _WIN32
 #include <stdio.h>
 #include <tchar.h>

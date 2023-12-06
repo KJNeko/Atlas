@@ -93,7 +93,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSimpleImporter->setVisible( false );
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
-	ui->actionDownload->setVisible( false );
+	//ui->actionDownload->setVisible( false );
 
 	connect(
 		&atlas::import::internal::getNotifier(),
@@ -372,4 +372,18 @@ void MainWindow::on_actionUpdates_triggered()
 void MainWindow::on_actionConsoleWindow_triggered()
 {
 	console->exec();
+}
+
+void MainWindow::on_actionUpdateMeta_triggered()
+{
+	atlas::logging::info( "Running Test" );
+	//Go through each item and check if a banner image is available
+	std::vector< std::string > ids;
+	RapidTransaction() << "SELECT atlas_id FROM atlas_data" >> [ &ids ]( std::string atlas_id )
+	{ ids.push_back( atlas_id ); };
+
+	for ( auto& element : ids )
+	{
+		atlas::logging::info( "Atlas_id:{}", element );
+	}
 }
