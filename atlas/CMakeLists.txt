@@ -12,6 +12,26 @@ else ()
 	add_executable(Atlas WIN32 ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
+target_precompile_headers(Atlas PRIVATE
+		<memory>
+		<iostream>
+		<filesystem>
+
+		<QObject>
+		<QWidget>
+		<QString>
+		<QVariant>
+
+		<sqlite3.h>
+		<spdlog/spdlog.h>
+
+		${CMAKE_CURRENT_SOURCE_DIR}/core/database/Binder.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/core/database/RapidTransaction.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/core/database/Transaction.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/GameData.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/game/Game.hpp
+)
+
 target_include_directories(Atlas PUBLIC ${CMAKE_SOURCE_DIR}/atlas)
 
 if (ATLAS_LINK_FMT EQUAL 1)
@@ -20,7 +40,7 @@ else ()
 	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4 BlurhashCXX)
 endif ()
 
-set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS}) 
+set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})
 target_compile_Features(Atlas PRIVATE cxx_constexpr)
 
 #Set all HAVE_X flags
