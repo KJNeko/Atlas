@@ -13,6 +13,8 @@ set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/data)
 
+option(BUILD_SHARED_LIBS "Build shared library" ON) 
+
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(common)

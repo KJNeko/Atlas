@@ -2,6 +2,7 @@
 // Created by kj16609 on 7/21/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_NOTIFICATION_HPP
 #define ATLASGAMEMANAGER_NOTIFICATION_HPP
 

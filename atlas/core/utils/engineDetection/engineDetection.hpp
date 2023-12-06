@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/1/23.
 //
 
+#pragma once
 #ifndef ATLAS_ENGINEDETECTION_HPP
 #define ATLAS_ENGINEDETECTION_HPP
 

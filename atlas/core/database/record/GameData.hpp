@@ -2,6 +2,7 @@
 // Created by kj16609 on 1/13/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORD_HPP
 #define ATLAS_RECORD_HPP
 

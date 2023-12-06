@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/24/23.
 //
 
+#pragma once
 #ifndef ATLAS_SETTINGSDIALOG_HPP
 #define ATLAS_SETTINGSDIALOG_HPP
 

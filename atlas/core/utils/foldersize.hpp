@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/27/23.
 //
 
+#pragma once
 #ifndef ATLAS_FOLDERSIZE_HPP
 #define ATLAS_FOLDERSIZE_HPP
 

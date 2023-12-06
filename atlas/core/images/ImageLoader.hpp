@@ -2,6 +2,7 @@
 // Created by kj16609 on 9/23/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_IMAGELOADER_HPP
 #define ATLASGAMEMANAGER_IMAGELOADER_HPP
 

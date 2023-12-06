@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/5/23.
 //
 
+#pragma once
 #ifndef ATLAS_QUERYBUILDER_HPP
 #define ATLAS_QUERYBUILDER_HPP
 

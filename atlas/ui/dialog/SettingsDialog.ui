@@ -563,6 +563,11 @@ border-right:none;
               <string>nightly</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>off</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

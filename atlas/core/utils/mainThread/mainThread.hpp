@@ -2,6 +2,7 @@
 // Created by kj16609 on 7/22/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_MAINTHREAD_HPP
 #define ATLASGAMEMANAGER_MAINTHREAD_HPP
 

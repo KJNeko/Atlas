@@ -2,6 +2,7 @@
 // Created by kj16609 on 1/27/23.
 //
 
+#pragma once
 #ifndef ATLAS_LOGGING_HPP
 #define ATLAS_LOGGING_HPP
 
