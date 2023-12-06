@@ -376,14 +376,33 @@ void MainWindow::on_actionConsoleWindow_triggered()
 
 void MainWindow::on_actionUpdateMeta_triggered()
 {
-	atlas::logging::info( "Running Test" );
-	//Go through each item and check if a banner image is available
-	std::vector< std::string > ids;
-	RapidTransaction() << "SELECT atlas_id FROM atlas_data" >> [ &ids ]( std::string atlas_id )
-	{ ids.push_back( atlas_id ); };
+	//This will only update values that are already matched in the database.
+	atlas::logging::info( "Running Image Download Test" );
+	//Get a list of every record id
+	std::vector< int > record_ids;
+	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( int record_id )
+	{ record_ids.push_back( record_id ); };
 
-	for ( auto& element : ids )
+	for ( auto& record_id : record_ids )
 	{
-		atlas::logging::info( "Atlas_id:{}", element );
+		//std::cout << record_id << "\n";
+		const auto record = atlas::records::GameData( record_id );
+
+		std::optional< atlas::remote::F95RemoteData > f95_data =
+			atlas::remote::findF95Data( QString::number( record.atlas_data.value()->atlas_id() ) );
+
+		//banners[ Normal ] = f95_data.value()->banner_url;
+
+		std::cout << record.m_title.toStdString() << "\n";
 	}
+
+	//std::optional< atlas::records::Game > gameData;
+
+	/*RapidTransaction() << "SELECT * FROM games" >> [ &gameData ]( const atlas::records::Game record )
+	{ gameData = { record }; };*/
+
+	/*for ( auto& element : gameData )
+	{
+		atlas::logging::info( "Atlas_id:{}", element->m_title );
+	}*/
 }
