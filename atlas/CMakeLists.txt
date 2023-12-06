@@ -16,6 +16,7 @@ target_precompile_headers(Atlas PRIVATE
 		<memory>
 		<iostream>
 		<filesystem>
+		<string>
 
 		<QObject>
 		<QWidget>
