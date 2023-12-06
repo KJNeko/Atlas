@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/4/23.
 //
 
+#pragma once
 #ifndef ATLAS_SYSTEM_HPP
 #define ATLAS_SYSTEM_HPP
 

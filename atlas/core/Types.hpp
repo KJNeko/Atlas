@@ -2,6 +2,7 @@
 // Created by kj16609 on 1/15/23.
 //
 
+#pragma once
 #ifndef ATLAS_TYPES_HPP
 #define ATLAS_TYPES_HPP
 

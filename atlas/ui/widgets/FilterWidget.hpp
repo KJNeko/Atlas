@@ -1,3 +1,5 @@
+
+#pragma once
 #ifndef FILTERWIDGET_H
 #define FILTERWIDGET_H
 

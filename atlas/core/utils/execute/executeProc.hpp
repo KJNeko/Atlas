@@ -2,6 +2,7 @@
 // Created by kj16609 on 2/20/23.
 //
 
+#pragma once
 #ifndef ATLAS_EXECUTEPROC_HPP
 #define ATLAS_EXECUTEPROC_HPP
 

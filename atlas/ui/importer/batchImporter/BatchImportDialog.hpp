@@ -1,3 +1,6 @@
+
+
+#pragma once
 #ifndef BATCHIMPORTDIALOG_H
 #define BATCHIMPORTDIALOG_H
 

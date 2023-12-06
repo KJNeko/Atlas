@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/15/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDLISTMODEL_HPP
 #define ATLAS_RECORDLISTMODEL_HPP
 

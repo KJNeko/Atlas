@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/26/23.
 //
 
+#pragma once
 #ifndef ATLAS_BATCHIMPORTMODEL_HPP
 #define ATLAS_BATCHIMPORTMODEL_HPP
 

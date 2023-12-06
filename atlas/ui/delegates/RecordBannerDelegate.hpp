@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/29/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDBANNERDELEGATE_HPP
 #define ATLAS_RECORDBANNERDELEGATE_HPP
 

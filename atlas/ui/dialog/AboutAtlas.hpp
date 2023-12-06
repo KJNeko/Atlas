@@ -1,3 +1,5 @@
+
+#pragma once
 #ifndef ABOUTATLAS_HPP
 #define ABOUTATLAS_HPP
 

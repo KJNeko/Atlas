@@ -2,6 +2,7 @@
 // Created by kj16609 on 5/26/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_SINGLEIMPORTER_HPP
 #define ATLASGAMEMANAGER_SINGLEIMPORTER_HPP
 

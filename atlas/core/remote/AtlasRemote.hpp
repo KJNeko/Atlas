@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/6/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_ATLASREMOTE_HPP
 #define ATLASGAMEMANAGER_ATLASREMOTE_HPP
 
