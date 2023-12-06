@@ -31,6 +31,7 @@ target_precompile_headers(Atlas PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/core/database/Transaction.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/GameData.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/core/database/record/game/Game.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/core/logging/logging.hpp
 )
 
 target_include_directories(Atlas PUBLIC ${CMAKE_SOURCE_DIR}/atlas)
