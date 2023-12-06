@@ -26,7 +26,7 @@ class FileDownloader final : public QObject
 	void downloaded( const FileDownloader* fdownloader, atlas::records::Game );
 
   private slots:
-	void fileDownloaded( QNetworkReply* pReply, const FileDownloader* fdownloader, RecordID record_id );
+	void fileDownloaded( QNetworkReply* pReply );
 
   private:
 

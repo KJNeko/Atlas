@@ -381,7 +381,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 	atlas::logging::info( "Running Image Download Test" );
 	//Get a list of every record id
 	std::vector< RecordID > record_ids;
-	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( int record_id )
+	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( RecordID record_id )
 	{ record_ids.push_back( record_id ); };
 
 	for ( auto& record_id : record_ids )
@@ -389,17 +389,20 @@ void MainWindow::on_actionUpdateMeta_triggered()
 		atlas::records::Game game { record_id };
 		if ( game->atlas_data.has_value() )
 		{
+			if ( !game->atlas_data.has_value() ) continue; // If there is no atlas data then we can't do anything
+
 			const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
 			AtlasID id { atlas_data->atlas_id };
 
 			std::optional< atlas::remote::F95RemoteData > f95_data =
 				atlas::remote::findF95Data( QString::number( id ) );
 
-			QUrl imageUrl( f95_data.value()->banner_url );
-			const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, this );
+			if ( !f95_data.has_value() ) continue;
 
-			connect(
-				m_pImgCtrl, SIGNAL( downloaded( const m_pImgCtrl, id ) ), this, SLOT( loadImage( m_pImgCtrl, id ) ) );
+			QUrl imageUrl( f95_data.value()->banner_url );
+			const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, game, this );
+
+			connect( m_pImgCtrl, &FileDownloader::downloaded, this, &MainWindow::loadImage );
 		}
 	}
 }
@@ -412,4 +415,6 @@ void MainWindow::loadImage( const FileDownloader* fdownloader, atlas::records::G
 	std::filesystem::path path = atlas::images::importPixmap( pixmap, game );
 
 	game.setBanner( path.string(), Normal );
+
+	delete fdownloader; // We are done with it. We own it. We nuke it.
 }
