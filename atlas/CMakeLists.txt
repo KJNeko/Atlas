@@ -18,8 +18,10 @@ target_precompile_headers(Atlas PUBLIC
 		<filesystem>
 		<string>
 		<source_location>
+		<exception>
 
 		<QObject>
+		<QSettings>
 		<QWidget>
 		<QString>
 		<QVariant>
