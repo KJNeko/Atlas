@@ -6,17 +6,10 @@ FileDownloader::FileDownloader( QUrl imageUrl, atlas::records::Game game, QObjec
   QObject( parent ),
   m_game( game )
 {
-	if ( !game.valid() ) return; // Do fuck all
+	if ( !game.valid() ) throw AtlasException( "Invalid game given to FileDownloader" );
+	if ( imageUrl.isEmpty() ) throw AtlasException( "Empty URL given to FileDownloader" );
 
 	connect( &m_WebCtrl, &QNetworkAccessManager::finished, this, &FileDownloader::fileDownloaded );
-
-	/*
-		connect(
-			&m_WebCtrl,
-			SIGNAL( finished( QNetworkReply* ) ),
-			this,
-			SLOT( fileDownloaded( QNetworkReply*, record_id ) ) );
-		 */
 
 	QNetworkRequest request( imageUrl );
 	m_WebCtrl.get( request );

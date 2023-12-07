@@ -400,9 +400,17 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			if ( !f95_data.has_value() ) continue;
 
 			QUrl imageUrl( f95_data.value()->banner_url );
-			const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, game, this );
+			if ( imageUrl.isEmpty() ) continue; // No URL to import
 
-			connect( m_pImgCtrl, &FileDownloader::downloaded, this, &MainWindow::loadImage );
+			try
+			{
+				const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, game, this );
+				connect( m_pImgCtrl, &FileDownloader::downloaded, this, &MainWindow::loadImage );
+			}
+			catch ( const AtlasException& e )
+			{
+				continue;
+			}
 		}
 	}
 }
