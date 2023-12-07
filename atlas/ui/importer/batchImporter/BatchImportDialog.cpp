@@ -346,3 +346,8 @@ void BatchImportDialog::keyPressEvent( QKeyEvent* event )
 	else
 		QDialog::keyPressEvent( event );
 }
+
+void BatchImportDialog::setPath( const QString& str )
+{
+	ui->tbPath->setText( str );
+}

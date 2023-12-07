@@ -2,6 +2,8 @@
 
 #include <moc_mainwindow.cpp>
 
+#include <ui/dialog/importBasicDialog/ImportSelectionPopup.hpp>
+
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/import/ImportNotifier.hpp"
@@ -202,8 +204,8 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::on_btnAddGame_pressed()
 {
-	SingleImporter importer { this };
-	importer.exec();
+	atlas::ui::imports::ImportSelectionPopup popup { this };
+	popup.exec();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )

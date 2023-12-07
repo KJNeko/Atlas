@@ -557,3 +557,8 @@ void SingleImporter::fillIn()
 
 	ui->previews->setPaths( previews );
 }
+
+void SingleImporter::setPath( const QString& path )
+{
+	ui->leRootPath->setText( path );
+}
