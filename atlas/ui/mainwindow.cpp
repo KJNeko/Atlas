@@ -392,19 +392,20 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			if ( !game->atlas_data.has_value() ) continue; // If there is no atlas data then we can't do anything
 
 			const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
-			AtlasID id { atlas_data->atlas_id };
+			const AtlasID id { atlas_data->atlas_id };
 
-			std::optional< atlas::remote::F95RemoteData > f95_data =
-				atlas::remote::findF95Data( QString::number( id ) );
+			std::optional< atlas::remote::F95RemoteData > f95_data {
+				atlas::remote::findF95Data( QString::number( id ) )
+			};
 
 			if ( !f95_data.has_value() ) continue;
 
-			QUrl imageUrl( f95_data.value()->banner_url );
-			if ( imageUrl.isEmpty() ) continue; // No URL to import
+			const QUrl image_url( f95_data.value()->banner_url );
+			if ( image_url.isEmpty() ) continue; // No URL to import
 
 			try
 			{
-				const FileDownloader* m_pImgCtrl = new FileDownloader( imageUrl, game, this );
+				const FileDownloader* m_pImgCtrl { new FileDownloader( image_url, game, this ) };
 				connect( m_pImgCtrl, &FileDownloader::downloaded, this, &MainWindow::loadImage );
 			}
 			catch ( const AtlasException& e )
@@ -420,7 +421,7 @@ void MainWindow::loadImage( const FileDownloader* fdownloader, atlas::records::G
 	QPixmap pixmap;
 	pixmap.loadFromData( fdownloader->downloadedData() );
 
-	std::filesystem::path path = atlas::images::importPixmap( pixmap, game );
+	const std::filesystem::path path { atlas::images::importPixmap( pixmap, game ) };
 
 	game.setBanner( path.string(), Normal );
 

@@ -16,7 +16,6 @@
 #include "core/utils/fileDownloader.hpp"
 #include "core/utils/threading/pools.hpp"
 #include "images.hpp"
-#include "loader.hpp"
 
 namespace atlas::images
 {
@@ -136,6 +135,7 @@ namespace atlas::images
 		downloader.getImage( url, record_id );
 
 		QThread* this_thread { QThread::currentThread() };
+		downloader.moveToThread( this_thread );
 		QEventLoop loop;
 		QObject::connect( &downloader, &Downloader::finished, &loop, &QEventLoop::quit );
 		QObject::connect( this_thread, &QThread::finished, &loop, &QEventLoop::quit );
