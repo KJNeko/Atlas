@@ -145,7 +145,8 @@ namespace atlas::images
 
 		if ( downloader.m_pixmap.isNull() )
 		{
-			atlas::logging::error("Failed to download image from url: \"{}\".\nMaybe url doesn't provide an image?", url;
+			atlas::logging::
+				error( "Failed to download image from url: \"{}\".\nMaybe url doesn't provide an image?", url );
 			return {};
 		}
 
