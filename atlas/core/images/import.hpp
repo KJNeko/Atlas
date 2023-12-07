@@ -19,15 +19,22 @@ namespace atlas::images
 {
 	class Downloader final : public QObject
 	{
+		Q_OBJECT
+
 		std::unique_ptr< FileDownloader > m_pImgCtrl {};
 		RecordID m_game_id { INVALID_RECORD_ID };
 
 	  public:
 
-		void getImage( const std::filesystem::path& path, const RecordID game_id );
+		QPixmap m_pixmap {};
+
+		void getImage( const QString& path, const RecordID game_id );
 
 	  private slots:
 		void imageFinished();
+
+	  signals:
+		void finished();
 	};
 
 	/**
@@ -48,6 +55,8 @@ namespace atlas::images
 
 	namespace async
 	{
+		[[nodiscard]] QFuture< std::filesystem::path > importImageFromURL( const QString url, const RecordID game_id );
+
 		//! Stores the image located at `path` in the data folder
 		[[nodiscard]] QFuture< std::filesystem::path >
 			importImage( const std::filesystem::path& path, const RecordID game_id );

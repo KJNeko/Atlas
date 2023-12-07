@@ -164,7 +164,8 @@ namespace internal
 				//Check if path is actually a url
 				if ( QString::fromStdString( path.toStdString() ).contains( "http" ) )
 				{
-					banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+					banner_futures[ i ] = atlas::images::async::importImageFromURL( path, record->m_game_id );
+					//banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
 				}
 				else
 				{

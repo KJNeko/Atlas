@@ -21,22 +21,21 @@
 namespace atlas::images
 {
 
-	void Downloader::getImage( const std::filesystem::path& path, const RecordID game_id )
+	void Downloader::getImage( const QString& path, const RecordID game_id )
 	{
 		if ( game_id == INVALID_RECORD_ID ) throw AtlasException( "Invalid game_id given to getImage" );
 		m_game_id = game_id;
-		QUrl imageUrl( QString::fromStdString( path.string() ) );
+		QUrl image_url { path };
 
-		m_pImgCtrl = std::make_unique< FileDownloader >( imageUrl, atlas::records::Game( m_game_id ), this );
+		m_pImgCtrl = std::make_unique< FileDownloader >( image_url, atlas::records::Game( m_game_id ), this );
 
 		connect( m_pImgCtrl.get(), &FileDownloader::downloaded, this, &Downloader::imageFinished );
 	}
 
 	void Downloader::imageFinished()
 	{
-		QPixmap pixmap;
-		pixmap.loadFromData( m_pImgCtrl->downloadedData() );
-		(void)importPixmap( pixmap, m_game_id );
+		m_pixmap.loadFromData( m_pImgCtrl->downloadedData() );
+		emit finished();
 	}
 
 	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest )
@@ -130,8 +129,37 @@ namespace atlas::images
 		return dest;
 	}
 
+	std::filesystem::path importImageFromURL( const QString url, const RecordID record_id )
+	{
+		atlas::logging::debug( "Importing image from url: \"{}\"", url );
+		Downloader downloader;
+		downloader.getImage( url, record_id );
+
+		QThread* this_thread { QThread::currentThread() };
+		QEventLoop loop;
+		QObject::connect( &downloader, &Downloader::finished, &loop, &QEventLoop::quit );
+		QObject::connect( this_thread, &QThread::finished, &loop, &QEventLoop::quit );
+		loop.exec();
+
+		atlas::logging::info( "Finished downloading image from url: \"{}\"", url );
+
+		if ( downloader.m_pixmap.isNull() )
+		{
+			atlas::logging::error("Failed to download image from url: \"{}\".\nMaybe url doesn't provide an image?", url;
+			return {};
+		}
+
+		return importPixmap( downloader.m_pixmap, record_id );
+	}
+
 	namespace async
 	{
+		[[nodiscard]] QFuture< std::filesystem::path > importImageFromURL( const QString url, const RecordID record_id )
+		{
+			return QtConcurrent::
+				run( &( globalPools().image_importers ), &atlas::images::importImageFromURL, url, record_id );
+		}
+
 		[[nodiscard]] QFuture< std::filesystem::path >
 			importImage( const std::filesystem::path& path, const RecordID game_id )
 		{
