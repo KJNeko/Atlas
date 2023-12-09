@@ -29,6 +29,10 @@ namespace atlas::images
 
 		QPixmap thumb { loadPixmap( image_path ) };
 
+		if ( thumb.isNull() )
+			throw AtlasException( format_ns::
+			                          format( "Failed to load pixmap for {} while creating thumbnail", image_path ) );
+
 		thumb = thumb.scaled( thumbnailSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
 		const auto dest { thumbnailPath( image_path ) };
@@ -94,7 +98,7 @@ namespace atlas::images
 
 		if ( expected_size != thumb_reader.size() )
 		{
-			atlas::logging::warn(
+			atlas::logging::debug(
 				"Had to remake thumbnail for {} at {}. Expected size was {} but came back as {}",
 				path,
 				thumb_path,
@@ -129,22 +133,33 @@ namespace atlas::images
 				const SCALE_TYPE scale_type,
 				const std::filesystem::path origin_path )
 			{
-				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
+				try
+				{
+					const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
 
-				if ( !std::filesystem::exists( thumb_path ) )
-					(void)createThumbnail( origin_path );
-				else
-					verifyThumbnail( origin_path );
+					if ( !std::filesystem::exists( thumb_path ) )
+						(void)createThumbnail( origin_path );
+					else
+						verifyThumbnail( origin_path );
 
-				QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, thumb_path ) };
-				atlas::logging::debug(
-					"Loaded thumb {} with size of {}x{}", thumb_path, pixmap.size().width(), pixmap.size().height() );
+					QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, thumb_path ) };
+					atlas::logging::debug(
+						"Loaded thumb {} with size of {}x{}",
+						thumb_path,
+						pixmap.size().width(),
+						pixmap.size().height() );
 
-				const auto key { format_ns::format(
-					"{}x{}-{}-{}", size.width(), size.height(), static_cast< int >( scale_type ), thumb_path ) };
+					const auto key { format_ns::format(
+						"{}x{}-{}-{}", size.width(), size.height(), static_cast< int >( scale_type ), thumb_path ) };
 
-				thumb_cache.insert( key, pixmap );
-				promise.addResult( std::move( pixmap ) );
+					thumb_cache.insert( key, pixmap );
+					promise.addResult( std::move( pixmap ) );
+				}
+				catch ( ... )
+				{
+					promise.setException( std::current_exception() );
+					return;
+				}
 			}
 
 		} // namespace internal
