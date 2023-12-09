@@ -80,7 +80,10 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 	// Model is empty so we just return and do fuck all
 	if ( this->model()->rowCount() == 0 ) return;
 
-	atlas::records::Game record { selectionModel()->currentIndex().data().value< atlas::records::Game >() };
+	const auto current_index { selectionModel()->currentIndex() };
+	if ( !current_index.isValid() ) return;
+
+	atlas::records::Game record { current_index.data().value< atlas::records::Game >() };
 
 	//menu.addAction( QString( "Title: %1" ).arg( record->getTitle() ) );
 	//menu.addAction( QString( "Creator: %1" ).arg( record->getCreator() ) );
