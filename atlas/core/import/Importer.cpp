@@ -272,7 +272,6 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
-		atlas::logging::error( "{}", e.what() );
 		promise.setException( std::current_exception() );
 	}
 
