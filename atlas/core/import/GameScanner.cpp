@@ -59,7 +59,7 @@ void runner(
 	{
 		if ( gl_info.f95_thread_id == INVALID_F95_ID )
 		{
-			atlas::logging::warn( "Found GL info but it had an invalid F95 id!" );
+			//atlas::logging::warn( "Found GL info but it had an invalid F95 id!" );
 			//Unable to do anything with this
 			//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
 			return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );

@@ -60,6 +60,10 @@ namespace atlas::images
 		{
 			QPixmap pixmap;
 			pixmap.load( QString::fromStdString( path.string() ) );
+
+			if ( pixmap.isNull() )
+				throw ImageLoadError( format_ns::format( "Failed to load pixmap for {}", path ).c_str() );
+
 			pixmap_cache.insert( path.string(), pixmap );
 			return pixmap;
 		}

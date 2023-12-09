@@ -407,10 +407,10 @@ void MainWindow::on_actionUpdateMeta_triggered()
 				.then(
 					[ record_id ]( std::filesystem::path path )
 					{
-						atlas::records::Game game { record_id };
+						atlas::records::Game game_r { record_id };
 						if ( !path.empty() )
 						{
-							game.setBanner( path.string(), Normal );
+							game_r.setBanner( path.string(), Normal );
 						}
 					}
 
