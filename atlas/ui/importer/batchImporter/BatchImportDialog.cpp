@@ -246,7 +246,16 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 	ZoneScoped;
 	emit addToModel( game_data );
 
-	if ( ui->twGames->model()->rowCount() > 0 ) ui->twGames->resizeColumnsToContents();
+	static std::chrono::time_point< std::chrono::steady_clock > last_update { std::chrono::steady_clock::now() };
+
+	// Once we get to a certain point we should stop resizing the columns
+	const bool is_record_in_view { ui->twGames->model()->rowCount() < 50 };
+
+	if ( std::chrono::steady_clock::now() - last_update > std::chrono::milliseconds( 250 ) && is_record_in_view )
+	{
+		ui->twGames->resizeColumnsToContents();
+		last_update = std::chrono::steady_clock::now();
+	}
 
 	if ( !import_waiting )
 		ui->statusLabel->setText(
