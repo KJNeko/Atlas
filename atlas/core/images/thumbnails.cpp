@@ -95,8 +95,9 @@ namespace atlas::images
 		if ( expected_size != thumb_reader.size() )
 		{
 			atlas::logging::warn(
-				"Had to remake thumbnail for {}. Expected size was {} but came back as {}",
+				"Had to remake thumbnail for {} at {}. Expected size was {} but came back as {}",
 				path,
+				thumb_path,
 				expected_size,
 				target_size );
 			createThumbnail( path );
