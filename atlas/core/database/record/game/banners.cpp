@@ -179,6 +179,7 @@ namespace atlas::records
 		const BannerType type,
 		const bool use_thumbnail )
 	{
+		std::lock_guard guard { this->ptr->m_mtx };
 		return requestBanner( { width, height }, scale_type, type, use_thumbnail );
 	}
 
