@@ -8,34 +8,18 @@
 
 #include <QByteArray>
 #include <QFuture>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QPixmap>
 
 #include <filesystem>
 
 #include "core/Types.hpp"
-#include "core/utils/fileDownloader.hpp"
+#include "core/database/record/game/Game.hpp"
 
 namespace atlas::images
 {
-	class Downloader final : public QObject
-	{
-		Q_OBJECT
 
-		std::unique_ptr< FileDownloader > m_pImgCtrl {};
-		RecordID m_game_id { INVALID_RECORD_ID };
-
-	  public:
-
-		QPixmap m_pixmap {};
-
-		void getImage( const QString& path, const RecordID game_id );
-
-	  private slots:
-		void imageFinished();
-
-	  signals:
-		void finished();
-	};
 
 	/**
 	 * @param source Source path of the image. Used for logging purposes.

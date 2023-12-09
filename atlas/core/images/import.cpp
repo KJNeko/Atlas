@@ -12,30 +12,13 @@
 
 #include "blurhash.hpp"
 #include "core/logging/logging.hpp"
+#include "core/network/NetworkManager.hpp"
 #include "core/utils/crypto.hpp"
-#include "core/utils/fileDownloader.hpp"
 #include "core/utils/threading/pools.hpp"
 #include "images.hpp"
 
 namespace atlas::images
 {
-
-	void Downloader::getImage( const QString& path, const RecordID game_id )
-	{
-		if ( game_id == INVALID_RECORD_ID ) throw AtlasException( "Invalid game_id given to getImage" );
-		m_game_id = game_id;
-		QUrl image_url { path };
-
-		m_pImgCtrl = std::make_unique< FileDownloader >( image_url, atlas::records::Game( m_game_id ), this );
-
-		connect( m_pImgCtrl.get(), &FileDownloader::downloaded, this, &Downloader::imageFinished );
-	}
-
-	void Downloader::imageFinished()
-	{
-		m_pixmap.loadFromData( m_pImgCtrl->downloadedData() );
-		emit finished();
-	}
 
 	void saveImage( const QByteArray& byteArray, const std::filesystem::path& dest )
 	{
@@ -131,24 +114,27 @@ namespace atlas::images
 	std::filesystem::path importImageFromURL( const QString url, const RecordID record_id )
 	{
 		atlas::logging::debug( "Importing image from url: \"{}\"", url );
-		Downloader downloader;
-		downloader.getImage( url, record_id );
 
-		QThread* this_thread { QThread::currentThread() };
-		downloader.moveToThread( this_thread );
-		QEventLoop loop;
-		QObject::connect( &downloader, &Downloader::finished, &loop, &QEventLoop::quit );
-		QObject::connect( this_thread, &QThread::finished, &loop, &QEventLoop::quit );
-		loop.exec();
+		auto future { atlas::network::NetworkManager::instance().getImage( url ) };
 
-		if ( downloader.m_pixmap.isNull() )
+		if ( future.isCanceled() )
 		{
-			atlas::logging::
-				error( "Failed to download image from url: \"{}\".\nMaybe url doesn't provide an image?", url );
-			return {};
+			throw AtlasException( format_ns::format( "Failed to download image from url: \"{}\".", url ).c_str() );
 		}
 
-		return importPixmap( downloader.m_pixmap, record_id );
+		future.waitForFinished();
+		if ( !future.isValid() )
+			throw AtlasException( format_ns::
+			                          format( "Failed to download image from url: \"{}\".\nFuture was invalid!", url )
+			                              .c_str() );
+		QImage pixmap { future.result() };
+
+		if ( pixmap.isNull() )
+		{
+			throw AtlasException( format_ns::format( "Failed to download image from url: \"{}\".", url ).c_str() );
+		}
+
+		return importPixmap( QPixmap::fromImage( pixmap ), record_id );
 	}
 
 	namespace async

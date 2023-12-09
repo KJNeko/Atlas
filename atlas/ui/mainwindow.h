@@ -10,7 +10,6 @@
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
-#include "core/utils/fileDownloader.hpp"
 
 #ifdef _WIN32
 #include "core/updater/AtlasUpdater.hpp"
