@@ -86,7 +86,6 @@ class MainWindow final : public QMainWindow
 	void setBottomGameCounter();
 	void refreshSearch();
 	void on_stackedWidget_currentChanged( const int idx );
-	void loadImage( const FileDownloader* fdownloader, atlas::records::Game game );
 };
 
 #endif // MAINWINDOW_H

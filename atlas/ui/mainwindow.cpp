@@ -403,27 +403,18 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			const QUrl image_url( f95_data.value()->banner_url );
 			if ( image_url.isEmpty() ) continue; // No URL to import
 
-			try
-			{
-				const FileDownloader* m_pImgCtrl { new FileDownloader( image_url, game, this ) };
-				connect( m_pImgCtrl, &FileDownloader::downloaded, this, &MainWindow::loadImage );
-			}
-			catch ( const AtlasException& e )
-			{
-				continue;
-			}
+			atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
+				.then(
+					[ record_id ]( std::filesystem::path path )
+					{
+						atlas::records::Game game { record_id };
+						if ( !path.empty() )
+						{
+							game.setBanner( path.string(), Normal );
+						}
+					}
+
+				);
 		}
 	}
-}
-
-void MainWindow::loadImage( const FileDownloader* fdownloader, atlas::records::Game game )
-{
-	QPixmap pixmap;
-	pixmap.loadFromData( fdownloader->downloadedData() );
-
-	const std::filesystem::path path { atlas::images::importPixmap( pixmap, game ) };
-
-	game.setBanner( path.string(), Normal );
-
-	delete fdownloader; // We are done with it. We own it. We nuke it.
 }
