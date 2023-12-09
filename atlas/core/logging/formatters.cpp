@@ -4,6 +4,12 @@
 
 #include "formatters.hpp"
 
+#include <QSize>
+#include <QUrl>
+
+#include <filesystem>
+#include <source_location>
+
 //std stuff
 
 auto format_ns::formatter< std::filesystem::path >::format( const std::filesystem::path& path, format_context& ctx )
@@ -55,4 +61,22 @@ auto format_ns::formatter< std::source_location >::format( const std::source_loc
 	return format_ns::
 		format_to( ctx.out(), "File: {}:{}\n\tFunction: {}\n\t", loc.file_name(), loc.line(), loc.function_name() );
 #endif
+}
+
+//QURL
+auto format_ns::formatter< QUrl >::format( const QUrl& url, format_context& ctx ) const -> decltype( ctx.out() )
+{
+	return format_ns::format_to( ctx.out(), "{}", url.toString().toStdString() );
+}
+
+auto format_ns::formatter< QSize >::format( const QSize size, format_context& ctx ) const -> decltype( ctx.out() )
+{
+	return format_ns::format_to( ctx.out(), "{}x{}", size.width(), size.height() );
+}
+
+auto format_ns::formatter<
+	format_ns::format_string<> >::format( const format_ns::format_string<>& str, format_context& ctx ) const
+	-> decltype( ctx.out() )
+{
+	return format_ns::format_to( ctx.out(), "{}", str.get() );
 }
