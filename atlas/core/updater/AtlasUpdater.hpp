@@ -44,7 +44,7 @@ namespace atlas
 		void saveFile( QNetworkReply* reply );
 		int updateMessageBox( QString message, QString windowTitle, bool includeChangelog );
 		void downloadProgress( int ist, int max );
-		UpdateDialog* ud = new UpdateDialog();
+		std::unique_ptr< UpdateDialog > ud { std::make_unique< UpdateDialog >() };
 	};
 
 	void initUpdateHandler( bool isManual );

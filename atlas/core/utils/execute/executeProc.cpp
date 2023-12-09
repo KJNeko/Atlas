@@ -28,8 +28,8 @@ void executeProc( const RecordID game_id, const QString version, const QString& 
 	}
 
 	const auto start_time { std::chrono::steady_clock::now() };
-	;
 
+	if ( running_process != nullptr ) delete running_process;
 	running_process = new QProcess();
 	running_process->start( path );
 

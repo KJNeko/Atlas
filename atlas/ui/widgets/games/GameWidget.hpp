@@ -4,6 +4,7 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
+#include <QTimer>
 #include <QWidget>
 
 #include "core/database/record/GameData.hpp"
@@ -35,6 +36,8 @@ class GameWidget final : public QWidget
 
 	//! Reloads the widget with all the record information
 	void reloadRecord();
+
+	QTimer m_update_timer { this };
 
   public:
 

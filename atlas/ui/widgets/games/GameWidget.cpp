@@ -32,9 +32,9 @@ GameWidget::GameWidget( QWidget* parent ) : QWidget( parent ), ui( new Ui::GameW
 	ui->previewList->setItemDelegate( new ImageDelegate( filepath_model ) );
 	ui->previewList->setModel( filepath_model );
 	//Used to detect when game has exited. Check every 2 seconds
-	QTimer* timer = new QTimer( this );
-	connect( timer, SIGNAL( timeout() ), this, SLOT( updateGameState() ) );
-	timer->start( 2000 );
+
+	m_update_timer.start( 2000 );
+	connect( &m_update_timer, &QTimer::timeout, this, &GameWidget::updateGameState );
 
 	//Check how many versions there are
 }

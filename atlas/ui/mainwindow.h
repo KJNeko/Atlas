@@ -36,7 +36,7 @@ class MainWindow final : public QMainWindow
   public:
 
 	MainWindow( QWidget* parent = nullptr );
-	Console* console = new Console();
+	std::unique_ptr< Console > console { std::make_unique< Console >() };
 	~MainWindow();
 
   private:
