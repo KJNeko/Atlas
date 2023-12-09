@@ -123,16 +123,34 @@ namespace atlas::remote
 		return id;
 	}
 
-	//Test functions
-	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer )
+	// Find Altas ID from Record Title and Creator name. Only use first letter from creator
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString creator )
 	{
-		//std::vector< std::string > data;
+		//REPLACE ' from query. Not done yet
 		std::optional< atlas::remote::AtlasRemoteData > data;
-		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title
-						   << developer
-			>> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
-		return data;
+		title = title.toUpper().replace( " ", "" ).replace( "'", "" ); //Convert to caps and remove spaces
+		QString creator_fl = creator.toUpper().replace( " ", "" ).mid( 0, 1 ); //Get first letter and convert to caps
+		//std::string query count = "";
+
+		std::string query =
+			"Select * from atlas_data WHERE UPPER( REPLACE( title, ' ','') ) like '%" + title.toStdString()
+			+ "%' AND UPPER( REPLACE( creator, ' ','') ) like '%" + creator_fl.toStdString()
+			+ "%' Order By LENGTH( UPPER( REPLACE( title, ' ','') ) ) - LENGTH( '" + title.toStdString() + "' ) ";
+
+		//Check if creator is empty
+		//RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title << creator >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+
+		RapidTransaction() << query >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+
+		if ( data.has_value() )
+		{
+			return data;
+		}
+		else
+		{
+			qInfo() << "there is no db info";
+			return data;
+		}
 	}
 
 } // namespace atlas::remote
