@@ -141,8 +141,6 @@ namespace atlas::images
 		QObject::connect( this_thread, &QThread::finished, &loop, &QEventLoop::quit );
 		loop.exec();
 
-		atlas::logging::info( "Finished downloading image from url: \"{}\"", url );
-
 		if ( downloader.m_pixmap.isNull() )
 		{
 			atlas::logging::

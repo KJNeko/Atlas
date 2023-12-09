@@ -262,8 +262,6 @@ try
 		}
 	}
 
-	atlas::logging::info( "Waiting for futures to finish" );
-
 	emit prescanWaiting();
 
 	for ( auto& future : futures | std::views::reverse )
