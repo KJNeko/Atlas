@@ -379,7 +379,8 @@ void MainWindow::on_actionUpdateMeta_triggered()
 {
 	bool download_all_images = false;
 
-	QMessageBox msgBox;
+	QMessageBox msgBox( this );
+	msgBox.setWindowFlags( Qt::FramelessWindowHint | Qt::Dialog ); //Dont show title or exit button
 	msgBox.setWindowTitle( "Update Metadata/Images" );
 	msgBox.setText( tr( "Please select and update option below" ) );
 	QAbstractButton* pbutton1 = msgBox.addButton( tr( "All metadata" ), QMessageBox::YesRole );
