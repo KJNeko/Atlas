@@ -889,7 +889,7 @@ margin-right:5px;</string>
   </action>
   <action name="actionUpdateMeta">
    <property name="text">
-    <string>Update metadata &amp; media</string>
+    <string>Update game metadata</string>
    </property>
   </action>
  </widget>
