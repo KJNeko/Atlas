@@ -54,6 +54,7 @@ if (HAVE_STD_BACKTRACE)
 	target_compile_definitions(Atlas PRIVATE HAVE_STD_BACKTRACE=1)
 endif ()
 
+target_compile_definitions(Atlas PRIVATE ATLAS_CMAKE_SOURCE_LOCATION="${CMAKE_SOURCE_DIR}")
 
 if (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
 	target_compile_definitions(Atlas PRIVATE ATLAS_SANITIZE_SOURCE_LOC="${CMAKE_SOURCE_DIR}")
