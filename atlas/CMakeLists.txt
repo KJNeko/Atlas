@@ -56,6 +56,10 @@ endif ()
 
 target_compile_definitions(Atlas PRIVATE ATLAS_CMAKE_SOURCE_LOCATION="${CMAKE_SOURCE_DIR}")
 
+if (DEFINED ATLAS_EMBED_FULL_SOURCE_LOCATION)
+	target_compile_definitions(Atlas PRIVATE ATLAS_EMBED_FULL_SOURCE_LOCATION=1)
+endif ()
+
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/themes COMMENT " Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/themes")
 
 PlatformPostSetup()

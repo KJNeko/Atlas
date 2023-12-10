@@ -38,16 +38,12 @@ auto format_ns::formatter< std::filesystem::path >::format( const std::filesyste
 	}
 }
 
-#ifndef ATLAS_FULL_SOURCE_LOC
-#define ATLAS_SANITIZE_SOURCE_LOC ATLAS_CMAKE_SOURCE_LOCATION
-#endif
-
 auto format_ns::formatter< std::source_location >::format( const std::source_location& loc, format_context& ctx ) const
 	-> decltype( ctx.out() )
 {
-#ifdef ATLAS_SANITIZE_SOURCE_LOC
+#ifndef ATLAS_EMBED_FULL_SOURCE_LOCATION
 	//ATLAS_SANITIZE_SOURCE_LOC will be a string that is the source path.
-	constexpr auto sanitize_offset { std::char_traits< char >::length( ATLAS_SANITIZE_SOURCE_LOC ) };
+	constexpr auto sanitize_offset { std::char_traits< char >::length( ATLAS_CMAKE_SOURCE_LOCATION ) };
 
 	return format_ns::format_to( ctx.out(), "{}:{}", loc.file_name() + sanitize_offset, loc.line() );
 #else
