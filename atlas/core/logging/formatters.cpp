@@ -38,15 +38,8 @@ auto format_ns::formatter< std::filesystem::path >::format( const std::filesyste
 	}
 }
 
-#define STR( val ) #val
-#define TOSTRING( val ) STR( val )
-
-#ifdef NDEBUG
+#ifndef ATLAS_FULL_SOURCE_LOC
 #define ATLAS_SANITIZE_SOURCE_LOC ATLAS_CMAKE_SOURCE_LOCATION
-#endif
-
-#ifdef ATLAS_FULL_SOURCE_LOC
-#undef ATLAS_SANITIZE_SOURCE_LOC
 #endif
 
 auto format_ns::formatter< std::source_location >::format( const std::source_location& loc, format_context& ctx ) const
