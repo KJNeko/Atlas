@@ -9,7 +9,7 @@ function(CompilerPreSetup)
 		#Generates system specific stuff (IE requires AVX)
 		set(FGL_SYSTEM_SPECIFIC "-march=native -fgcse -fgcse-las -fgcse-sm -fdeclone-ctor-dtor -fdevirtualize-speculatively -ftree-loop-im -fivopts -ftree-loop-ivcanon -fira-hoist-pressure -fsched-pressure -fsched-spec-load -fipa-pta -flto=auto -s -ffat-lto-objects -fno-enforce-eh-specs -fstrict-enums -funroll-loops")
 		#Generates safe optimization flags
-		set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s")
+		set(FGL_SYSTEM_SAFE "-O3 -fdevirtualize-at-ltrans -s -fno-use-linker-plugin")
 		set(FGL_FLAGS_DEBUG "${FGL_WARNINGS} ${FGL_CONFIG} ${FGL_DEBUG}")
 		set(FGL_FLAGS_SYSTEM "${FLG_CONFIG} -DNDEBUG ${FGL_SYSTEM_SAFE} ${FGL_SYSTEM_SPECIFIC}")
 		set(FGL_FLAGS_RELEASE "${FGL_CONFIG} -DNDEBUG -s ${FGL_SYSTEM_SAFE} ${FGL_WARNINGS} -Werror")
