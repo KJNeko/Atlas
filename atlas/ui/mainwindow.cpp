@@ -406,12 +406,13 @@ void MainWindow::on_actionUpdateMeta_triggered()
 	for ( auto& record_id : record_ids )
 	{
 		atlas::records::Game game { record_id };
-		if ( game->atlas_data.has_value() )
+		std::optional< atlas::remote::AtlasRemoteData > atlas_data {
+			atlas::remote::findAtlasData( game->m_title, game->m_creator )
+		};
+		if ( atlas_data.has_value() )
 		{
-			if ( !game->atlas_data.has_value() ) continue; // If there is no atlas data then we can't do anything
-
-			const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
-			const AtlasID atlas_id { atlas_data->atlas_id };
+			//const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
+			const AtlasID atlas_id { atlas_data.value()->atlas_id };
 
 			std::optional< atlas::remote::F95RemoteData > f95_data {
 				atlas::remote::findF95Data( QString::number( atlas_id ) )
@@ -420,12 +421,18 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			if ( !f95_data.has_value() ) continue;
 
 			const QUrl image_url( f95_data.value()->banner_url );
-			//const F95ID f95_id { f95_data.value()->f95_id };
+			const F95ID f95_id { f95_data.value()->f95_id };
 
 			if ( image_url.isEmpty() ) continue; // No URL to import
-			//Check if we should download all images or not
-			if ( download_all_images )
+			//Check if we should download all images or not. Check if this is a new item and update the image if not
+			if ( download_all_images || !game->atlas_data.has_value() )
 			{
+				//Store data if this is a new entry
+				if ( !game->atlas_data.has_value() )
+				{
+					game.connectAtlasData( atlas_id );
+					game.connectF95Data( f95_id );
+				}
 				atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
 					.then(
 						[ record_id ]( std::filesystem::path path )
@@ -440,13 +447,9 @@ void MainWindow::on_actionUpdateMeta_triggered()
 					);
 			}
 		}
-		//We need to try and find the data
 		else
 		{
 			qInfo() << game->m_title;
-			//Connect data to Atlas data
-			//game.connectAtlasData( atlas_id );
-			//game.connectF95Data( f95_id );
 		}
 	}
 }
