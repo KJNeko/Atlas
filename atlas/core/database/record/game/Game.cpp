@@ -111,6 +111,17 @@ namespace atlas::records
 		if ( atlas_id == INVALID_ATLAS_ID )
 			throw RecordException( format_ns::format( "Invalid atlas id: {}", atlas_id ).c_str() );
 
+		//Do we already have an id?
+		if ( ptr->atlas_data )
+		{
+			atlas::logging::warn(
+				"Game {} already has data, Is Same: {}, Set to: {} (Ignoring set)",
+				m_id,
+				ptr->atlas_data.value()->atlas_id == atlas_id,
+				atlas_id );
+			return;
+		}
+
 		AtlasID new_id { INVALID_ATLAS_ID };
 		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> new_id;
 		if ( new_id == INVALID_ATLAS_ID )

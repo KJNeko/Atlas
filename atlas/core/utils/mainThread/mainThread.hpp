@@ -20,52 +20,55 @@ namespace utils
 	QThread* mainThread();
 
 	template < typename Function, typename... Args >
-	FunctionReturn< Function > executeOnMain( Function&& func, Args... args )
+	FunctionReturn< Function > executeOnMain( Function&& func, Args&&... args )
 	{
-		auto main { mainThread() };
+		QThread* main { mainThread() };
 		if ( main == nullptr )
 			throw AtlasException( "Tried to run executeOnMain without setting a main thread first!" );
 
 		if ( QThread::currentThread() == mainThread() )
 		{
 			//Execute as normal
-			func( args... );
+			return func( std::forward< Args >( args )... );
 		}
 		else
 		{
-			QTimer timer;
-			timer.moveToThread( main );
-			//As long as we move the timer to the main thread it'll execute it's timeout on the main thread.
-			timer.setSingleShot( true );
-
-			using RetType = FunctionDecomp< Function >::ResultType;
-
-			std::promise< RetType > promise {};
-			std::future< RetType > future { promise.get_future() };
-
-			std::tuple< Args... > args_tpl { args... };
-
-			QObject::connect(
-				&timer,
-				&QTimer::timeout,
-				//Safe to ref args here since we copy them into our function AND block on the future for completion
-				[ &promise, func, &args_tpl ]()
-				{
-					if constexpr ( std::same_as< RetType, void > )
+			if constexpr ( std::same_as< FunctionReturn< Function >, void > )
+			{
+				//Fire and forget
+				QMetaObject::invokeMethod(
+					main,
+					[ func = std::forward< Function >( func ), args... ]() mutable -> void
 					{
-						std::apply( func, args_tpl );
-						promise.set_value();
-					}
-					else
+						try
+						{
+							func( std::forward< Args >( args )... );
+						}
+						catch ( ... )
+						{
+							//Eat and silence
+						}
+					},
+					Qt::QueuedConnection );
+				return;
+			}
+			else
+			{
+				auto promise { std::make_shared< QPromise< FunctionReturn< Function > > >() };
+
+				QMetaObject::invokeMethod(
+					main,
+					[ promise, func, args... ]() -> void
 					{
-						promise.set_value( std::apply( func, args_tpl ) );
-					}
-				} );
+						promise->addResult( func( std::forward< Args >( args )... ) );
+						promise->finish();
+					},
+					Qt::QueuedConnection );
 
-			QMetaObject::invokeMethod( &timer, "start", Qt::QueuedConnection, Q_ARG( int, 0 ) );
-
-			//Wait until the main thread executes what we asked.
-			future.wait();
+				auto future { promise->future() };
+				future.waitForFinished();
+				return future.result();
+			}
 		}
 	}
 

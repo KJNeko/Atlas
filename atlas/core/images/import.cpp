@@ -5,16 +5,17 @@
 #include "import.hpp"
 
 #include <QImage>
+#include <QNetworkAccessManager>
 #include <QtConcurrent>
 
 #include <fstream>
 
 #include "blurhash.hpp"
 #include "core/logging/logging.hpp"
+#include "core/network/NetworkManager.hpp"
 #include "core/utils/crypto.hpp"
 #include "core/utils/threading/pools.hpp"
 #include "images.hpp"
-#include "loader.hpp"
 
 namespace atlas::images
 {
@@ -51,7 +52,11 @@ namespace atlas::images
 
 	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		const QImage image { atlas::images::loadImage( path ) };
+		QString url = QString::fromStdString( path.string() );
+
+		QPixmap img( url );
+
+		const QImage image = img.toImage(); //{ atlas::images::loadImage( path ) };
 		const std::uint64_t original_file_size { std::filesystem::file_size( path ) };
 		const std::filesystem::path game_image_folder { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( game_image_folder );
@@ -88,8 +93,58 @@ namespace atlas::images
 		}
 	}
 
+	std::filesystem::path importPixmap( const QPixmap pixmap, const RecordID game_id )
+	{
+		const QImage image = pixmap.toImage();
+		const std::filesystem::path game_image_folder { config::paths::images::getPath() / std::to_string( game_id ) };
+		std::filesystem::create_directories( game_image_folder );
+
+		QByteArray webp_file_data;
+		QBuffer webp_file_buffer { &webp_file_data };
+		image.save( &webp_file_buffer, "webp", 95 );
+
+		//Create blurhash.
+		if ( config::experimental::use_blurhash::get() ) (void)createBlurhash( image );
+
+		const auto dest { game_image_folder / ( atlas::crypto::sha256::hash( webp_file_data ) + ".webp" ) };
+		saveImage( webp_file_data, dest );
+		return dest;
+	}
+
+	std::filesystem::path importImageFromURL( const QString url, const RecordID record_id )
+	{
+		atlas::logging::debug( "Importing image from url: \"{}\"", url );
+
+		auto future { atlas::network::NetworkManager::instance().getImage( url ) };
+
+		if ( future.isCanceled() )
+		{
+			throw AtlasException( format_ns::format( "Failed to download image from url: \"{}\".", url ).c_str() );
+		}
+
+		future.waitForFinished();
+		if ( !future.isValid() )
+			throw AtlasException( format_ns::
+			                          format( "Failed to download image from url: \"{}\".\nFuture was invalid!", url )
+			                              .c_str() );
+		QImage pixmap { future.result() };
+
+		if ( pixmap.isNull() )
+		{
+			throw AtlasException( format_ns::format( "Failed to download image from url: \"{}\".", url ).c_str() );
+		}
+
+		return importPixmap( QPixmap::fromImage( pixmap ), record_id );
+	}
+
 	namespace async
 	{
+		[[nodiscard]] QFuture< std::filesystem::path > importImageFromURL( const QString url, const RecordID record_id )
+		{
+			return QtConcurrent::
+				run( &( globalPools().image_importers ), &atlas::images::importImageFromURL, url, record_id );
+		}
+
 		[[nodiscard]] QFuture< std::filesystem::path >
 			importImage( const std::filesystem::path& path, const RecordID game_id )
 		{

@@ -4,6 +4,7 @@
 
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/images/import.hpp"
 #include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
@@ -93,7 +94,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSimpleImporter->setVisible( false );
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
-	ui->actionDownload->setVisible( false );
+	//ui->actionDownload->setVisible( false );
 
 	connect(
 		&atlas::import::internal::getNotifier(),
@@ -372,4 +373,83 @@ void MainWindow::on_actionUpdates_triggered()
 void MainWindow::on_actionConsoleWindow_triggered()
 {
 	console->exec();
+}
+
+void MainWindow::on_actionUpdateMeta_triggered()
+{
+	bool download_all_images = false;
+
+	QMessageBox msgBox;
+	msgBox.setWindowTitle( "Update Metadata/Images" );
+	msgBox.setText( tr( "Please select and update option below" ) );
+	QAbstractButton* pbutton1 = msgBox.addButton( tr( "All metadata" ), QMessageBox::YesRole );
+	QAbstractButton* pbutton2 = msgBox.addButton( tr( "Missing metadata" ), QMessageBox::YesRole );
+	pbutton1->setFixedSize( QSize( 150, 75 ) );
+	pbutton1->setToolTip( "This will update every game matched in the ATLAS database. All images will be replaced" );
+	pbutton2->setFixedSize( QSize( 150, 75 ) );
+
+	msgBox.exec();
+
+	if ( msgBox.clickedButton() == pbutton1 )
+	{
+		download_all_images = true;
+	}
+
+	//This will only update values that are already matched in the database.
+	atlas::logging::info( "Updating Meta and Downloading Images" );
+	//Get a list of every record id
+	std::vector< RecordID > record_ids;
+	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( RecordID record_id )
+	{ record_ids.push_back( record_id ); };
+
+	//Go through each record and runs checks based on user input
+	for ( auto& record_id : record_ids )
+	{
+		atlas::records::Game game { record_id };
+		std::optional< atlas::remote::AtlasRemoteData > atlas_data {
+			atlas::remote::findAtlasData( game->m_title, game->m_creator )
+		};
+		if ( atlas_data.has_value() )
+		{
+			//const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
+			const AtlasID atlas_id { atlas_data.value()->atlas_id };
+
+			std::optional< atlas::remote::F95RemoteData > f95_data {
+				atlas::remote::findF95Data( QString::number( atlas_id ) )
+			};
+
+			if ( !f95_data.has_value() ) continue;
+
+			const QUrl image_url( f95_data.value()->banner_url );
+			const F95ID f95_id { f95_data.value()->f95_id };
+
+			if ( image_url.isEmpty() ) continue; // No URL to import
+			//Check if we should download all images or not. Check if this is a new item and update the image if not
+			if ( download_all_images || !game->atlas_data.has_value() )
+			{
+				//Store data if this is a new entry
+				if ( !game->atlas_data.has_value() )
+				{
+					game.connectAtlasData( atlas_id );
+					game.connectF95Data( f95_id );
+				}
+				atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
+					.then(
+						[ record_id ]( std::filesystem::path path )
+						{
+							atlas::records::Game game_r { record_id };
+							if ( !path.empty() )
+							{
+								game_r.setBanner( path.string(), Normal );
+							}
+						}
+
+					);
+			}
+		}
+		else
+		{
+			qInfo() << game->m_title;
+		}
+	}
 }

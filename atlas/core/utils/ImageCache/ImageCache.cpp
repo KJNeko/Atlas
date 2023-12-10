@@ -101,8 +101,10 @@ namespace atlas::cache
 		if ( cache.contains( key ) ) return;
 
 		if ( pixmap.isNull() )
+		{
 			throw ImageManagerException( format_ns::format( "Attempted to insert a null pixmap with key {}", key )
 			                                 .c_str() );
+		}
 
 		PixmapItem item { std::move( pixmap ) };
 
