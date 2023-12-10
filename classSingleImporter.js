@@ -29,5 +29,6 @@ var classSingleImporter =
     [ "resizeEvent", "classSingleImporter.html#aebf15ec40cbaaff9290b4b9a2769be43", null ],
     [ "triggerImport", "classSingleImporter.html#a8114af7e46f95c95c7e187e7a23a95e6", null ],
     [ "verifyDataEntry", "classSingleImporter.html#a0905303449f8a93d90bc51f9b23832da", null ],
+    [ "m_movies", "classSingleImporter.html#a25459197d6f5aa3e59f959b4b61dfd3b", null ],
     [ "ui", "classSingleImporter.html#ad548e8ae504458a5677b29cc7ca8dd08", null ]
 ];

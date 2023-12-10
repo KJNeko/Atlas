@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,17 +103,23 @@ $(document).ready(function(){initNavTree('QueryBuilder_8hpp.html',''); initResiz
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">QueryBuilder.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging/logging.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="system_8hpp_source.html">core/system.hpp</a>&quot;</code><br />
 </div>
 <p><a href="QueryBuilder_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a0789349ed937cd787c7b2297853c7027" id="r_a0789349ed937cd787c7b2297853c7027"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a0789349ed937cd787c7b2297853c7027">ATLAS_QUERYBUILDER_HPP</a></td></tr>
+<tr class="separator:a0789349ed937cd787c7b2297853c7027"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ad9be72f666a31b4318bbc8e8a16a9472" id="r_ad9be72f666a31b4318bbc8e8a16a9472"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> { <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472a923b92502c8f8beef4a620fee49b89ae">Name</a>
@@ -128,24 +131,39 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aeb730847f6f92181de392e9ef2fccee2" id="r_aeb730847f6f92181de392e9ef2fccee2"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:aeb730847f6f92181de392e9ef2fccee2" id="r_aeb730847f6f92181de392e9ef2fccee2"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a> (std::string_view str)</td></tr>
 <tr class="separator:aeb730847f6f92181de392e9ef2fccee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4e89e20b7520731a65a58d104451dd0" id="r_af4e89e20b7520731a65a58d104451dd0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:af4e89e20b7520731a65a58d104451dd0" id="r_af4e89e20b7520731a65a58d104451dd0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a> (std::string_view str)</td></tr>
 <tr class="separator:af4e89e20b7520731a65a58d104451dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa11e679e1d1a99e925b03a0b97df0118" id="r_aa11e679e1d1a99e925b03a0b97df0118"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aa11e679e1d1a99e925b03a0b97df0118">generateQuery</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">order</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">asc</a>)</td></tr>
+<tr class="memitem:aa11e679e1d1a99e925b03a0b97df0118" id="r_aa11e679e1d1a99e925b03a0b97df0118"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aa11e679e1d1a99e925b03a0b97df0118">generateQuery</a> (const std::string str, const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> order, const bool asc)</td></tr>
 <tr class="separator:aa11e679e1d1a99e925b03a0b97df0118"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930902132bf2d664d7be518edbbe7174" id="r_a930902132bf2d664d7be518edbbe7174"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a930902132bf2d664d7be518edbbe7174" id="r_a930902132bf2d664d7be518edbbe7174"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string_view, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a> (const std::string_view str)</td></tr>
 <tr class="separator:a930902132bf2d664d7be518edbbe7174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208192a42d7e5a7b6b7cb117a915eed5" id="r_a208192a42d7e5a7b6b7cb117a915eed5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str_view</a>)</td></tr>
+<tr class="memitem:a208192a42d7e5a7b6b7cb117a915eed5" id="r_a208192a42d7e5a7b6b7cb117a915eed5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a> (std::string_view str_view)</td></tr>
 <tr class="separator:a208192a42d7e5a7b6b7cb117a915eed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf44bbf40ed07f66de7aaf797f5c542e" id="r_aaf44bbf40ed07f66de7aaf797f5c542e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:aaf44bbf40ed07f66de7aaf797f5c542e" id="r_aaf44bbf40ed07f66de7aaf797f5c542e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#aaf44bbf40ed07f66de7aaf797f5c542e">escape</a> (std::string_view str)</td></tr>
 <tr class="separator:aaf44bbf40ed07f66de7aaf797f5c542e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ab68a393fa7ef066d36f13d1821f5bf" id="r_a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a4ab68a393fa7ef066d36f13d1821f5bf">orderToStr</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">order</a>)</td></tr>
+<tr class="memitem:a4ab68a393fa7ef066d36f13d1821f5bf" id="r_a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a4ab68a393fa7ef066d36f13d1821f5bf">orderToStr</a> (const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> order)</td></tr>
 <tr class="separator:a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a065f3c3f0001421eb2cb9632bb821ce1" id="r_a065f3c3f0001421eb2cb9632bb821ce1"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a> (std::string_view &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a065f3c3f0001421eb2cb9632bb821ce1" id="r_a065f3c3f0001421eb2cb9632bb821ce1"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8hpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a> (std::string_view &amp;str)</td></tr>
 <tr class="memdesc:a065f3c3f0001421eb2cb9632bb821ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts characters until reaching a grouping operator or namespace or system tag.  <br /></td></tr>
 <tr class="separator:a065f3c3f0001421eb2cb9632bb821ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0789349ed937cd787c7b2297853c7027" name="a0789349ed937cd787c7b2297853c7027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0789349ed937cd787c7b2297853c7027">&#9670;&#160;</a></span>ATLAS_QUERYBUILDER_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLAS_QUERYBUILDER_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ad9be72f666a31b4318bbc8e8a16a9472" name="ad9be72f666a31b4318bbc8e8a16a9472"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9be72f666a31b4318bbc8e8a16a9472">&#9670;&#160;</a></span>SortOrder</h2>
@@ -154,10 +172,41 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">enum</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a></td>
+          <td class="memname">enum <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>@ page SearchParsing Searching In order to understand the basics of searching one concept has to be developed. The concept of <code>namespace:subsection</code>. Namespaces allow for the search parser to very easily determine what specific sections of text are. All strings must have a valid namespace. Lacking one is considered undefined behaviour. A full list of all the namespaces and what they do can be found in the Namespace List section and a list of valid operators in the Operator List section</p>
+<p>@ anchor NamespaceParsingList The following is a list of all valid namespaces currently implemented. </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Example   </th><th class="markdownTableHeadNone">Required Atlas version    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">system   </td><td class="markdownTableBodyNone">System specific tags that are used for more complicate searches. See SystemParsingList for all the valid subsections   </td><td class="markdownTableBodyNone">system:filesize   </td><td class="markdownTableBodyNone">v1.0.0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">title   </td><td class="markdownTableBodyNone">Searches for a specific title   </td><td class="markdownTableBodyNone">title:Haremon   </td><td class="markdownTableBodyNone">v1.0.0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">creator   </td><td class="markdownTableBodyNone">Searches for a specific creator/developer   </td><td class="markdownTableBodyNone">creator:TsunAmie   </td><td class="markdownTableBodyNone">v1.0.0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">version   </td><td class="markdownTableBodyNone">Searches for a specific version text   </td><td class="markdownTableBodyNone">version:v1.0   </td><td class="markdownTableBodyNone">v1.0.0   </td></tr>
+</table>
+<p>@ anchor SystemParsingList The following is a list of all valid <code>system:</code> subtags </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Example   </th><th class="markdownTableHeadNone">What it does    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">filesize   </td><td class="markdownTableBodyNone">Searches for a specific filesize (End in <code>B, K, M, G or T</code>)   </td><td class="markdownTableBodyNone">system:filesize &gt; 5G   </td><td class="markdownTableBodyNone">searches for all games that have a total size of above 5GB   </td></tr>
+</table>
+<p>@ anchor OperatorParsingList Operator List </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Symbol   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Example   </th><th class="markdownTableHeadNone">What it does    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">&amp;   </td><td class="markdownTableBodyNone">And   </td><td class="markdownTableBodyNone">title:Haremon &amp; creator:TsunAmie   </td><td class="markdownTableBodyNone">Searches for all records with the title Haremon AND creator TsunAmie    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">|   </td><td class="markdownTableBodyNone">Or   </td><td class="markdownTableBodyNone">title:Haremon | creator:TsunAmie   </td><td class="markdownTableBodyNone">Searches for all records with the title Haremon OR creator TsunAmie    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">!   </td><td class="markdownTableBodyNone">Not   </td><td class="markdownTableBodyNone">!title:Haremon   </td><td class="markdownTableBodyNone">Searches for all records with the title NOT being Haremon    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">()   </td><td class="markdownTableBodyNone">Group   </td><td class="markdownTableBodyNone">system:filesize &gt; 5G &amp; (title:FirstGame | title:SecondGame)   </td><td class="markdownTableBodyNone">Searches for all titles with the name <code>FirstGame</code> or <code>SecondGame</code> that also have a filesize above 5GB   </td></tr>
+</table>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad9be72f666a31b4318bbc8e8a16a9472a923b92502c8f8beef4a620fee49b89ae" name="ad9be72f666a31b4318bbc8e8a16a9472a923b92502c8f8beef4a620fee49b89ae"></a>Name&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ad9be72f666a31b4318bbc8e8a16a9472a4d4e457a794f607edc73f3e43d936651" name="ad9be72f666a31b4318bbc8e8a16a9472a4d4e457a794f607edc73f3e43d936651"></a>Creator&#160;</td><td class="fielddoc"></td></tr>
@@ -215,19 +264,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::string generateQuery </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string&#160;</td>
+          <td class="paramtype">const std::string&#160;</td>
           <td class="paramname"><em>str</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
           <td class="paramname"><em>order</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>asc</em>&#160;</td>
         </tr>
         <tr>
@@ -249,7 +298,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::string orderToStr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
           <td class="paramname"><em>order</em></td><td>)</td>
           <td></td>
         </tr>
@@ -301,9 +350,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, std::string_view &gt; seperateNamespace </td>
+          <td class="memname">std::pair&lt; std::string_view, std::string_view &gt; seperateNamespace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>

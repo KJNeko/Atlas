@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: atlas/core/logging.hpp Source File</title>
+<title>Atlas Game Manager: atlas/core/logging/logging.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,109 +114,296 @@ $(document).ready(function(){initNavTree('logging_8hpp_source.html',''); initRes
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 1/27/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_LOGGING_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_LOGGING_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QString&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifdef __GNUC__</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma GCC diagnostic push</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Weffc++&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wswitch-default&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wsign-conversion&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wstrict-overflow&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wctor-dtor-privacy&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wdeprecated-declarations&quot;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Warray-bounds&quot;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#ifndef __clang__</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wuseless-cast&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wstringop-overflow&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wsuggest-final-types&quot;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wsuggest-final-methods&quot;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif </span><span class="comment">// __clang__</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#if __GNUC__ &gt;= 13</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wdangling-reference&quot;</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif </span><span class="comment">// __GNUC__</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;spdlog/spdlog.h&gt;</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#ifdef __GNUC__</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">Types.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;<a class="code" href="notifications_8hpp.html">core/notifications/notifications.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &quot;<a class="code" href="dev_8hpp.html">logging/dev.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &quot;<a class="code" href="formatters_8hpp.html">logging/formatters.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLAS_LOGGING_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="logging_8hpp.html#aadd508594bec4adbf0f8151162ae6cdf">    7</a></span><span class="preprocessor">#define ATLAS_LOGGING_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;source_location&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">//Formatters needs to exist before we include the other things since notifications.hpp uses some formatters in here for it&#39;s own logging</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// clang-format: off</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="formatters_8hpp.html">formatters.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// clang-format: on</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">core/Types.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="notifications_8hpp.html">core/notifications/notifications.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="Console_8hpp.html">ui/dialog/console/Console.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceatlas_1_1logging.html">atlas::logging</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">init</a>();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#a40fafe65563c6a4fee2e6059c6b8eabe">setFormat</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">   30</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">initGUIHooks</a>();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    std::string <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( <span class="keyword">const</span> std::source_location loc, <span class="keyword">const</span> format_ns::string_view msg );</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="comment">//Everything in this namespace is defined in `spdlogHelpers.cpp`</span></div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging_1_1internal.html">   35</a></span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceinternal.html">internal</a></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e">logDebug</a>( <span class="keyword">const</span> std::string_view );</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863">logInfo</a>( <span class="keyword">const</span> std::string_view );</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630">logWarn</a>( <span class="keyword">const</span> std::string_view );</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">logError</a>( <span class="keyword">const</span> std::string_view );</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688">logCritical</a>( <span class="keyword">const</span> std::string_view );</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    } <span class="comment">// namespace internal</span></div>
+</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> <a class="code hl_function" href="logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a">initLogging</a>();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html">   46</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceatlas_1_1logging.html">atlas::logging</a></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>{</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">   49</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">init</a>();</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">   52</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">initGUIHooks</a>();</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a93a3c838c88af23f0955337538e700a1">   54</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#a93a3c838c88af23f0955337538e700a1">info</a>( std::string <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a> )</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        spdlog::info( <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a> );</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1debug.html">   45</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1debug.html">debug</a></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    {</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1debug.html#a361201b3c6afff6bdf0ad7f8a2b52310">   47</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1debug.html#a361201b3c6afff6bdf0ad7f8a2b52310">debug</a>(</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; format_string,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            Ts&amp;&amp;... ts,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keyword">const</span> std::source_location&amp; source_location = std::source_location::current() )</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( <span class="keyword">sizeof</span>...( Ts ) &gt; 0 )</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">const</span> std::string user_message { format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( source_location, user_message ) };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e">internal::logDebug</a>( full_message );</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( source_location, format_string.get() ) };</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e">internal::logDebug</a>( full_message );</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        }</div>
 </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a79a429084bf95e96754497c7e0e7ec82">   60</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#a79a429084bf95e96754497c7e0e7ec82">warn</a>( std::string <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a> )</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        spdlog::warn( <span class="stringliteral">&quot;userwarn: {}&quot;</span>, <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a> );</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a0b4cedfa5f8a2e02f202ec818d753c71">atlas::notifications::createMessage</a>( QString::fromStdString( <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a> ) );</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    };</div>
 </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">Ts</a> &gt;</div>
-<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#ad95c048669ce55f574e3c08c648f2a14">   67</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas_1_1logging.html#ad95c048669ce55f574e3c08c648f2a14">error</a>( std::string <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a>, <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">Ts</a>... <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">ts</a> )</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        spdlog::error( <span class="stringliteral">&quot;{}: {}&quot;</span>, <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a>, <a class="code hl_function" href="namespaceatlas_1_1logging_1_1dev.html#aa08fc6385429f1c038bd239254137eca">atlas::logging::dev::serializeObjects</a>( <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">ts</a>... ) );</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a79e12d88707a187548ec515cb73fe269">   69</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1debug.html">debug</a>( format_ns::format_string&lt; Ts... &gt;, Ts&amp;&amp;... ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1debug.html">debug</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00072" data-start="{" data-end="};">
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1info.html">   72</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1info.html">info</a></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    {</div>
+<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1info.html#a90e077b666d8c1c11214ac060d004de7">   74</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1info.html#a90e077b666d8c1c11214ac060d004de7">info</a>(</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; format_string,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            Ts&amp;&amp;... ts,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            [[maybe_unused]] <span class="keyword">const</span> std::source_location&amp; source_location = std::source_location::current() )</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keyword">const</span> std::string user_message { format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( source_location, user_message ) };</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863">internal::logInfo</a>( full_message );</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>( user_message, full_message, <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcad8d9e2757c15f6d34e1cc3ce4e6fbc68">MessageLevel::ATLAS_INFO</a> );</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        }</div>
 </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keyword">template</span> &lt;&gt;</div>
-<div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a5a466860a126c54bc59e2f127bf5eb86">   73</a></span>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">error&lt;&gt;</a>( std::string <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a> )</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        spdlog::error( <span class="stringliteral">&quot;{}&quot;</span>, <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a> );</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    };</div>
 </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>} <span class="comment">// namespace atlas::logging</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a5d0c63b1018610e86178916bc8813d84">   90</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1info.html">info</a>( format_ns::format_string&lt; Ts... &gt;, Ts&amp;&amp;... ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1info.html">info</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00093" data-start="{" data-end="};">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1warn.html">   93</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1warn.html">warn</a></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    {</div>
+<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1warn.html#a532f702db6880924912d8959e8efa0c2">   95</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1warn.html#a532f702db6880924912d8959e8efa0c2">warn</a>(</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; format_string,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            Ts&amp;&amp;... ts,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keyword">const</span> std::source_location&amp; source_location = std::source_location::current() )</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( <span class="keyword">sizeof</span>...( Ts ) &gt; 0 )</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                <span class="keyword">const</span> std::string user_message { format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( source_location, user_message ) };</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630">internal::logWarn</a>( full_message );</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>(</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                        format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ),</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                        full_message,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                        <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcac0be19f57ba3f457c0c820c4e2f06711">MessageLevel::ATLAS_WARNING</a> );</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( source_location, format_string.get() ) };</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630">internal::logWarn</a>( full_message );</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::</a></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">						createMessage</a>( format_string.get(), full_message, <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcac0be19f57ba3f457c0c820c4e2f06711">MessageLevel::ATLAS_WARNING</a> );</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
 </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_LOGGING_HPP</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    };</div>
+</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a202ea0294db1d74d0ce81b68c6495f66">  125</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1warn.html">warn</a>( format_ns::format_string&lt; Ts... &gt;, Ts&amp;&amp;... ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1warn.html">warn</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00128" data-start="{" data-end="};">
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1error.html">  128</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1error.html">error</a></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    {</div>
+<div class="foldopen" id="foldopen00130" data-start="{" data-end="}">
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1error.html#a1bcb2306ba2bf55dd6262fed6774b671">  130</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1error.html#a1bcb2306ba2bf55dd6262fed6774b671">error</a>(</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; body,</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            Ts&amp;&amp;... ts,</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="keyword">const</span> std::source_location&amp; loc = std::source_location::current() )</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        {</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( <span class="keyword">sizeof</span>...( Ts ) &gt; 0 )</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="keyword">const</span> std::string user_message { format_ns::format( body, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, user_message ) };</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">internal::logError</a>( full_message );</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>(</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                        format_ns::format( body, std::forward&lt; Ts &gt;( ts )... ),</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                        full_message,</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                        <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0">MessageLevel::ATLAS_ERROR</a> );</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            }</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, body.get() ) };</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">internal::logError</a>( full_message );</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>( body.get(), full_message, <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0">MessageLevel::ATLAS_ERROR</a> );</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        }</div>
+</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    };</div>
+</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#afd9cee4a43db20a268c574469e3bf92d">  159</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1error.html">error</a>( format_ns::format_string&lt; Ts... &gt;, Ts&amp;&amp;... a ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1error.html">error</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00162" data-start="{" data-end="};">
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1errorLoc.html">  162</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1errorLoc.html">errorLoc</a></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    {</div>
+<div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1errorLoc.html#aca5d09f52e7a68cd168d09f044ff68e7">  164</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1errorLoc.html#aca5d09f52e7a68cd168d09f044ff68e7">errorLoc</a>( <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; format_string, <span class="keyword">const</span> std::source_location&amp; loc, Ts&amp;... ts )</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( <span class="keyword">sizeof</span>...( Ts ) &gt; 0 )</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                <span class="keyword">const</span> std::string user_message { format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, user_message ) };</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">internal::logError</a>( full_message );</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>(</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                        format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ),</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                        full_message,</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                        <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0">MessageLevel::ATLAS_ERROR</a> );</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, format_string.get() ) };</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">internal::logError</a>( full_message );</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>( format_string.get(), full_message, <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0">MessageLevel::ATLAS_ERROR</a> );</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        }</div>
+</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    };</div>
+</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a855da1196f4e38c3042c8de28d08b377">  190</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1errorLoc.html">errorLoc</a>( format_ns::format_string&lt; Ts... &gt;, <span class="keyword">const</span> std::source_location&amp;, Ts&amp;&amp;... a ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1errorLoc.html">errorLoc</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="foldopen" id="foldopen00193" data-start="{" data-end="};">
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1critical.html">  193</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structatlas_1_1logging_1_1critical.html">critical</a></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    {</div>
+<div class="foldopen" id="foldopen00195" data-start="{" data-end="}">
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="structatlas_1_1logging_1_1critical.html#a1aca42a2879863773dcc7f882ddaca45">  195</a></span>        <a class="code hl_function" href="structatlas_1_1logging_1_1critical.html#a1aca42a2879863773dcc7f882ddaca45">critical</a>(</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keyword">const</span> format_ns::format_string&lt; Ts... &gt; format_string,</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            Ts&amp;&amp;... ts,</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keyword">const</span> std::source_location&amp; loc = std::source_location::current() )</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( <span class="keyword">sizeof</span>...( Ts ) &gt; 0 )</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                <span class="keyword">const</span> std::string user_message { format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ) };</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, user_message ) };</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688">internal::logCritical</a>( full_message );</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a>(</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                        format_ns::format( format_string, std::forward&lt; Ts &gt;( ts )... ),</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                        full_message,</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                        <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dca0f5428a48d93e1d63404ea821c4b90c4">MessageLevel::ATLAS_CRITICAL</a> );</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            {</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                <span class="keyword">const</span> std::string full_message { <a class="code hl_function" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">formatSourceLocation</a>( loc, format_string.get() ) };</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                <a class="code hl_function" href="namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688">internal::logCritical</a>( full_message );</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">notifications::isNotificationsReady</a>() )</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    <a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::</a></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><a class="code hl_function" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">						createMessage</a>( format_string.get(), full_message, <a class="code hl_enumvalue" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dca0f5428a48d93e1d63404ea821c4b90c4">MessageLevel::ATLAS_CRITICAL</a> );</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            }</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        }</div>
+</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    };</div>
+</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="namespaceatlas_1_1logging.html#a9b8ac5e7806f564f615119c9db4e11d7">  225</a></span>    <a class="code hl_struct" href="structatlas_1_1logging_1_1critical.html">critical</a>( format_ns::format_string&lt; Ts... &gt;, Ts&amp;&amp;... ) -&gt; <a class="code hl_struct" href="structatlas_1_1logging_1_1critical.html">critical</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>} <span class="comment">// namespace atlas::logging</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_LOGGING_HPP</span></div>
+<div class="ttc" id="aConsole_8hpp_html"><div class="ttname"><a href="Console_8hpp.html">Console.hpp</a></div></div>
+<div class="ttc" id="aMessageNotification_8hpp_html_aaf5eea9687ad679dc3e504d373e959dca0f5428a48d93e1d63404ea821c4b90c4"><div class="ttname"><a href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dca0f5428a48d93e1d63404ea821c4b90c4">MessageLevel::ATLAS_CRITICAL</a></div><div class="ttdeci">@ ATLAS_CRITICAL</div></div>
+<div class="ttc" id="aMessageNotification_8hpp_html_aaf5eea9687ad679dc3e504d373e959dcac0be19f57ba3f457c0c820c4e2f06711"><div class="ttname"><a href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcac0be19f57ba3f457c0c820c4e2f06711">MessageLevel::ATLAS_WARNING</a></div><div class="ttdeci">@ ATLAS_WARNING</div></div>
+<div class="ttc" id="aMessageNotification_8hpp_html_aaf5eea9687ad679dc3e504d373e959dcad8d9e2757c15f6d34e1cc3ce4e6fbc68"><div class="ttname"><a href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcad8d9e2757c15f6d34e1cc3ce4e6fbc68">MessageLevel::ATLAS_INFO</a></div><div class="ttdeci">@ ATLAS_INFO</div></div>
+<div class="ttc" id="aMessageNotification_8hpp_html_aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0"><div class="ttname"><a href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dcadf574534faae82d23530b19caeaea4c0">MessageLevel::ATLAS_ERROR</a></div><div class="ttdeci">@ ATLAS_ERROR</div></div>
 <div class="ttc" id="aTypes_8hpp_html"><div class="ttname"><a href="Types_8hpp.html">Types.hpp</a></div></div>
-<div class="ttc" id="adev_8hpp_html"><div class="ttname"><a href="dev_8hpp.html">dev.hpp</a></div></div>
 <div class="ttc" id="aformatters_8hpp_html"><div class="ttname"><a href="formatters_8hpp.html">formatters.hpp</a></div></div>
-<div class="ttc" id="alogging_8hpp_html_a5d0717fdf14f6c5bb900de985d2d653a"><div class="ttname"><a href="logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a">initLogging</a></div><div class="ttdeci">void initLogging()</div><div class="ttdef"><b>Definition</b> logging.cpp:36</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_1_1dev_html_aa08fc6385429f1c038bd239254137eca"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1dev.html#aa08fc6385429f1c038bd239254137eca">atlas::logging::dev::serializeObjects</a></div><div class="ttdeci">QJsonDocument serializeObjects(const Ts &amp;... items)</div><div class="ttdef"><b>Definition</b> dev.hpp:58</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_html"><div class="ttname"><a href="namespaceatlas_1_1logging.html">atlas::logging</a></div><div class="ttdef"><b>Definition</b> logging.hpp:47</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_html_a79a429084bf95e96754497c7e0e7ec82"><div class="ttname"><a href="namespaceatlas_1_1logging.html#a79a429084bf95e96754497c7e0e7ec82">atlas::logging::warn</a></div><div class="ttdeci">void warn(std::string message)</div><div class="ttdoc">Notifies the user of a warning.</div><div class="ttdef"><b>Definition</b> logging.hpp:60</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_html_a93a3c838c88af23f0955337538e700a1"><div class="ttname"><a href="namespaceatlas_1_1logging.html#a93a3c838c88af23f0955337538e700a1">atlas::logging::info</a></div><div class="ttdeci">void info(std::string message)</div><div class="ttdef"><b>Definition</b> logging.hpp:54</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_html_ab93baba09a13fcf83faa20c6f0b0e60e"><div class="ttname"><a href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">atlas::logging::init</a></div><div class="ttdeci">void init()</div><div class="ttdoc">Loads the spdlog interfaces for file rotations and logging without a GUI.</div></div>
-<div class="ttc" id="anamespaceatlas_1_1logging_html_ad95c048669ce55f574e3c08c648f2a14"><div class="ttname"><a href="namespaceatlas_1_1logging.html#ad95c048669ce55f574e3c08c648f2a14">atlas::logging::error</a></div><div class="ttdeci">void error(std::string body, Ts... ts)</div><div class="ttdef"><b>Definition</b> logging.hpp:67</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_1_1internal_html_a1a5737c806c36873efa200ee541f1e61"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">atlas::logging::internal::logError</a></div><div class="ttdeci">void logError(const std::string_view)</div><div class="ttdoc">Passes message to spdlog.</div><div class="ttdef"><b>Definition</b> spdlogHelpers.cpp:51</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_1_1internal_html_a2186ff828affd9945e9dd7085175f863"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863">atlas::logging::internal::logInfo</a></div><div class="ttdeci">void logInfo(const std::string_view)</div><div class="ttdoc">Passes message to spdlog.</div><div class="ttdef"><b>Definition</b> spdlogHelpers.cpp:34</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_1_1internal_html_acaed872857c4345e562a86cc9847d688"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688">atlas::logging::internal::logCritical</a></div><div class="ttdeci">void logCritical(const std::string_view)</div><div class="ttdoc">Passes message to spdlog.</div><div class="ttdef"><b>Definition</b> spdlogHelpers.cpp:60</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_1_1internal_html_ad4d62198db82accc7184f601d9dac630"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630">atlas::logging::internal::logWarn</a></div><div class="ttdeci">void logWarn(const std::string_view)</div><div class="ttdoc">Passes message to spdlog.</div><div class="ttdef"><b>Definition</b> spdlogHelpers.cpp:42</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_1_1internal_html_ae3137b59dbf5c428bfe0891483e47b1e"><div class="ttname"><a href="namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e">atlas::logging::internal::logDebug</a></div><div class="ttdeci">void logDebug(const std::string_view)</div><div class="ttdoc">Passes message to spdlog.</div><div class="ttdef"><b>Definition</b> spdlogHelpers.cpp:28</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_html"><div class="ttname"><a href="namespaceatlas_1_1logging.html">atlas::logging</a></div><div class="ttdef"><b>Definition</b> logging.cpp:37</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_html_a40fafe65563c6a4fee2e6059c6b8eabe"><div class="ttname"><a href="namespaceatlas_1_1logging.html#a40fafe65563c6a4fee2e6059c6b8eabe">atlas::logging::setFormat</a></div><div class="ttdeci">void setFormat()</div><div class="ttdef"><b>Definition</b> logging.cpp:76</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_html_a6ed299bcbc40ba9e45a84425b7c2d131"><div class="ttname"><a href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">atlas::logging::formatSourceLocation</a></div><div class="ttdeci">std::string formatSourceLocation(const std::source_location loc, const format_ns::string_view msg)</div><div class="ttdef"><b>Definition</b> logging.cpp:81</div></div>
+<div class="ttc" id="anamespaceatlas_1_1logging_html_ab93baba09a13fcf83faa20c6f0b0e60e"><div class="ttname"><a href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">atlas::logging::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition</b> logging.cpp:38</div></div>
 <div class="ttc" id="anamespaceatlas_1_1logging_html_ae802ade41b5102d457ff0e71ea296512"><div class="ttname"><a href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">atlas::logging::initGUIHooks</a></div><div class="ttdeci">void initGUIHooks()</div><div class="ttdoc">Loads the GUI hooks required for some warnings to display to the user.</div></div>
-<div class="ttc" id="anamespaceatlas_1_1notifications_html_a0b4cedfa5f8a2e02f202ec818d753c71"><div class="ttname"><a href="namespaceatlas_1_1notifications.html#a0b4cedfa5f8a2e02f202ec818d753c71">atlas::notifications::createMessage</a></div><div class="ttdeci">void createMessage(QString message)</div><div class="ttdef"><b>Definition</b> notifications.cpp:32</div></div>
-<div class="ttc" id="anamespaceatlas_html_ad879f37529f2fad323204059708b9361"><div class="ttname"><a href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">atlas::extract</a></div><div class="ttdeci">std::vector&lt; char &gt; extract(const std::filesystem::path path)</div><div class="ttdef"><b>Definition</b> extract.cpp:35</div></div>
+<div class="ttc" id="anamespaceatlas_1_1notifications_html_a8927fddfdf43f180604d12645ded17bb"><div class="ttname"><a href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a></div><div class="ttdeci">void createMessage(QString user_message, QString full_message, const MessageLevel level)</div><div class="ttdef"><b>Definition</b> notifications.cpp:36</div></div>
+<div class="ttc" id="anamespaceatlas_1_1notifications_html_a9738eafaf14c08d3fcd07e1ba1428fce"><div class="ttname"><a href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">atlas::notifications::isNotificationsReady</a></div><div class="ttdeci">bool isNotificationsReady()</div><div class="ttdef"><b>Definition</b> notifications.cpp:81</div></div>
+<div class="ttc" id="anamespaceinternal_html"><div class="ttname"><a href="namespaceinternal.html">internal</a></div><div class="ttdef"><b>Definition</b> Database.cpp:17</div></div>
 <div class="ttc" id="anotifications_8hpp_html"><div class="ttname"><a href="notifications_8hpp.html">notifications.hpp</a></div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1critical_html"><div class="ttname"><a href="structatlas_1_1logging_1_1critical.html">atlas::logging::critical</a></div><div class="ttdef"><b>Definition</b> logging.hpp:194</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1critical_html_a1aca42a2879863773dcc7f882ddaca45"><div class="ttname"><a href="structatlas_1_1logging_1_1critical.html#a1aca42a2879863773dcc7f882ddaca45">atlas::logging::critical::critical</a></div><div class="ttdeci">critical(const format_ns::format_string&lt; Ts... &gt; format_string, Ts &amp;&amp;... ts, const std::source_location &amp;loc=std::source_location::current())</div><div class="ttdef"><b>Definition</b> logging.hpp:195</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1debug_html"><div class="ttname"><a href="structatlas_1_1logging_1_1debug.html">atlas::logging::debug</a></div><div class="ttdef"><b>Definition</b> logging.hpp:46</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1debug_html_a361201b3c6afff6bdf0ad7f8a2b52310"><div class="ttname"><a href="structatlas_1_1logging_1_1debug.html#a361201b3c6afff6bdf0ad7f8a2b52310">atlas::logging::debug::debug</a></div><div class="ttdeci">debug(const format_ns::format_string&lt; Ts... &gt; format_string, Ts &amp;&amp;... ts, const std::source_location &amp;source_location=std::source_location::current())</div><div class="ttdef"><b>Definition</b> logging.hpp:47</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1errorLoc_html"><div class="ttname"><a href="structatlas_1_1logging_1_1errorLoc.html">atlas::logging::errorLoc</a></div><div class="ttdef"><b>Definition</b> logging.hpp:163</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1errorLoc_html_aca5d09f52e7a68cd168d09f044ff68e7"><div class="ttname"><a href="structatlas_1_1logging_1_1errorLoc.html#aca5d09f52e7a68cd168d09f044ff68e7">atlas::logging::errorLoc::errorLoc</a></div><div class="ttdeci">errorLoc(const format_ns::format_string&lt; Ts... &gt; format_string, const std::source_location &amp;loc, Ts &amp;... ts)</div><div class="ttdef"><b>Definition</b> logging.hpp:164</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1error_html"><div class="ttname"><a href="structatlas_1_1logging_1_1error.html">atlas::logging::error</a></div><div class="ttdef"><b>Definition</b> logging.hpp:129</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1error_html_a1bcb2306ba2bf55dd6262fed6774b671"><div class="ttname"><a href="structatlas_1_1logging_1_1error.html#a1bcb2306ba2bf55dd6262fed6774b671">atlas::logging::error::error</a></div><div class="ttdeci">error(const format_ns::format_string&lt; Ts... &gt; body, Ts &amp;&amp;... ts, const std::source_location &amp;loc=std::source_location::current())</div><div class="ttdef"><b>Definition</b> logging.hpp:130</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1info_html"><div class="ttname"><a href="structatlas_1_1logging_1_1info.html">atlas::logging::info</a></div><div class="ttdef"><b>Definition</b> logging.hpp:73</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1info_html_a90e077b666d8c1c11214ac060d004de7"><div class="ttname"><a href="structatlas_1_1logging_1_1info.html#a90e077b666d8c1c11214ac060d004de7">atlas::logging::info::info</a></div><div class="ttdeci">info(const format_ns::format_string&lt; Ts... &gt; format_string, Ts &amp;&amp;... ts, const std::source_location &amp;source_location=std::source_location::current())</div><div class="ttdef"><b>Definition</b> logging.hpp:74</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1warn_html"><div class="ttname"><a href="structatlas_1_1logging_1_1warn.html">atlas::logging::warn</a></div><div class="ttdef"><b>Definition</b> logging.hpp:94</div></div>
+<div class="ttc" id="astructatlas_1_1logging_1_1warn_html_a532f702db6880924912d8959e8efa0c2"><div class="ttname"><a href="structatlas_1_1logging_1_1warn.html#a532f702db6880924912d8959e8efa0c2">atlas::logging::warn::warn</a></div><div class="ttdeci">warn(const format_ns::format_string&lt; Ts... &gt; format_string, Ts &amp;&amp;... ts, const std::source_location &amp;source_location=std::source_location::current())</div><div class="ttdef"><b>Definition</b> logging.hpp:95</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="logging_8hpp.html">logging.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_b1e1d182c999906baefbdd7b60f828ad.html">logging</a></li><li class="navelem"><a class="el" href="logging_8hpp.html">logging.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

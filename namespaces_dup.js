@@ -2,16 +2,7 @@ var namespaces_dup =
 [
     [ "atlas", "namespaceatlas.html", "namespaceatlas" ],
     [ "config", "namespaceconfig.html", "namespaceconfig" ],
-    [ "fgl", "namespacefgl.html", "namespacefgl" ],
     [ "gl", "namespacegl.html", "namespacegl" ],
-    [ "imageManager", "namespaceimageManager.html", [
-      [ "cleanOrphans", "namespaceimageManager.html#a8ef0f334a8cd620bb535fb2e4b335fe8", null ],
-      [ "getDestFilePath", "namespaceimageManager.html#a8d9ab0a194542ad8944edd370da073a3", null ],
-      [ "hashData", "namespaceimageManager.html#a5907e7856f8e9cf5e081b59339b66e70", null ],
-      [ "importImage", "namespaceimageManager.html#a662b041f219a4d28e9db21d431a912df", null ],
-      [ "internalImportImage", "namespaceimageManager.html#ad898d700aa085e1ce81636a75d0456bf", null ],
-      [ "saveImage", "namespaceimageManager.html#ac02ff31cb42d47ec6f1715e8fe844414", null ]
-    ] ],
     [ "internal", "namespaceinternal.html", [
       [ "LockGuardType", "namespaceinternal.html#a9986a9e137877a9e729fac766d5c47b2", null ],
       [ "MtxType", "namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73", null ],

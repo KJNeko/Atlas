@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -107,6 +104,7 @@ $(document).ready(function(){initNavTree('mainThread_8hpp.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">mainThread.hpp File Reference</div></div>
 </div><!--header-->
@@ -116,6 +114,7 @@ $(document).ready(function(){initNavTree('mainThread_8hpp.html',''); initResizab
 <code>#include &lt;QThread&gt;</code><br />
 <code>#include &lt;QTimer&gt;</code><br />
 <code>#include &quot;<a class="el" href="FunctionDecomp_8hpp_source.html">core/database/FunctionDecomp.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="exceptions_8hpp_source.html">core/exceptions.hpp</a>&quot;</code><br />
 </div>
 <p><a href="mainThread_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -124,16 +123,36 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceutils" id="r_namespaceutils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html">utils</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa7dc560910abea948c14738f1b93cc27" id="r_aa7dc560910abea948c14738f1b93cc27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mainThread_8hpp.html#aa7dc560910abea948c14738f1b93cc27">ATLASGAMEMANAGER_MAINTHREAD_HPP</a></td></tr>
+<tr class="separator:aa7dc560910abea948c14738f1b93cc27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae0cef1eb0bb97bdaa3788a1fc5981093" id="r_ae0cef1eb0bb97bdaa3788a1fc5981093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#ae0cef1eb0bb97bdaa3788a1fc5981093">utils::setMainThread</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QThread</a> *ptr)</td></tr>
+<tr class="memitem:ae0cef1eb0bb97bdaa3788a1fc5981093" id="r_ae0cef1eb0bb97bdaa3788a1fc5981093"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#ae0cef1eb0bb97bdaa3788a1fc5981093">utils::setMainThread</a> (QThread *ptr)</td></tr>
 <tr class="separator:ae0cef1eb0bb97bdaa3788a1fc5981093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94b6aeeae51defdf59dbcbb6e9ac0447" id="r_a94b6aeeae51defdf59dbcbb6e9ac0447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a94b6aeeae51defdf59dbcbb6e9ac0447">utils::mainThread</a> ()</td></tr>
+<tr class="memitem:a94b6aeeae51defdf59dbcbb6e9ac0447" id="r_a94b6aeeae51defdf59dbcbb6e9ac0447"><td class="memItemLeft" align="right" valign="top">QThread *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a94b6aeeae51defdf59dbcbb6e9ac0447">utils::mainThread</a> ()</td></tr>
 <tr class="separator:a94b6aeeae51defdf59dbcbb6e9ac0447"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00cdabcb91ec7d760a1175113a78f54f" id="r_a00cdabcb91ec7d760a1175113a78f54f"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> , typename... Args&gt; </td></tr>
-<tr class="memitem:a00cdabcb91ec7d760a1175113a78f54f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="FunctionDecomp_8hpp.html#a1dc43f5d273189536206bda23486c51d">FunctionReturn</a>&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a00cdabcb91ec7d760a1175113a78f54f">utils::executeOnMain</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &amp;&amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">func</a>, Args... <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">args</a>)</td></tr>
-<tr class="separator:a00cdabcb91ec7d760a1175113a78f54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6497a7c1b77f417d5ded08ebe515e68a" id="r_a6497a7c1b77f417d5ded08ebe515e68a"><td class="memTemplParams" colspan="2">template&lt;typename Function , typename... Args&gt; </td></tr>
+<tr class="memitem:a6497a7c1b77f417d5ded08ebe515e68a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="FunctionDecomp_8hpp.html#a1dc43f5d273189536206bda23486c51d">FunctionReturn</a>&lt; Function &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a6497a7c1b77f417d5ded08ebe515e68a">utils::executeOnMain</a> (Function &amp;&amp;func, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a6497a7c1b77f417d5ded08ebe515e68a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa7dc560910abea948c14738f1b93cc27" name="aa7dc560910abea948c14738f1b93cc27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7dc560910abea948c14738f1b93cc27">&#9670;&#160;</a></span>ATLASGAMEMANAGER_MAINTHREAD_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLASGAMEMANAGER_MAINTHREAD_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

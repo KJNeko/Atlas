@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -105,88 +102,22 @@ $(document).ready(function(){initNavTree('RecordBannerDelegate_8cpp.html',''); i
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">RecordBannerDelegate.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="RecordBannerDelegate_8hpp_source.html">RecordBannerDelegate.hpp</a>&quot;</code><br />
 <code>#include &lt;moc_RecordBannerDelegate.cpp&gt;</code><br />
 <code>#include &lt;QPainter&gt;</code><br />
-<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/Game.hpp</a>&quot;</code><br />
+<code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config/config.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="GameData_8hpp_source.html">core/database/record/GameData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Version_8hpp_source.html">core/database/record/Version.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/game/Game.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="blurhash_8hpp_source.html">core/images/blurhash.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="images_8hpp_source.html">core/images/images.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="QImageBlur_8hpp_source.html">core/utils/QImageBlur.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="RecordListModel_8hpp_source.html">ui/models/RecordListModel.hpp</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:acce75771637fd96ecdabcce85e14f938" id="r_acce75771637fd96ecdabcce85e14f938"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_BEGIN_NAMESPACE</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_WIDGETS_EXPORT</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="RecordBannerDelegate_8cpp.html#acce75771637fd96ecdabcce85e14f938">qt_blurImage</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPainter</a> *<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">p</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QImage</a> &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">blurImage</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">qreal</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">radius</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">quality</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">alphaOnly</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">transposed</a>=0)</td></tr>
-<tr class="separator:acce75771637fd96ecdabcce85e14f938"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="acce75771637fd96ecdabcce85e14f938" name="acce75771637fd96ecdabcce85e14f938"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acce75771637fd96ecdabcce85e14f938">&#9670;&#160;</a></span>qt_blurImage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_BEGIN_NAMESPACE</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_WIDGETS_EXPORT</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> qt_blurImage </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPainter</a> *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QImage</a> &amp;&#160;</td>
-          <td class="paramname"><em>blurImage</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">qreal</a>&#160;</td>
-          <td class="paramname"><em>radius</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
-          <td class="paramname"><em>quality</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
-          <td class="paramname"><em>alphaOnly</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a>&#160;</td>
-          <td class="paramname"><em>transposed</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

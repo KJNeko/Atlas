@@ -9,5 +9,6 @@ var classRecordListView =
     [ "reloadConfig", "classRecordListView.html#ab9d61669c4bec3933c5ffe423e1b2b43", null ],
     [ "setRecords", "classRecordListView.html#a988bd3de9fbb7d682bd726ebe62a725b", null ],
     [ "setRenderMode", "classRecordListView.html#ad7facd2a02936928199b7f9f8527988f", null ],
+    [ "wheelEvent", "classRecordListView.html#a1d55824c30e7acb38a17b79936ee86b3", null ],
     [ "current_render_mode", "classRecordListView.html#aacabd80efd3b65a70b7b08ccd0f99d97", null ]
 ];

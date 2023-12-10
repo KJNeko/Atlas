@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -114,6 +111,7 @@ $(document).ready(function(){initNavTree('QueryBuilder_8cpp.html',''); initResiz
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="QueryBuilder_8hpp_source.html">QueryBuilder.hpp</a>&quot;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
+<code>#include &quot;<a class="el" href="exceptions_8hpp_source.html">core/exceptions.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -149,45 +147,45 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aeb730847f6f92181de392e9ef2fccee2" id="r_aeb730847f6f92181de392e9ef2fccee2"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:aeb730847f6f92181de392e9ef2fccee2" id="r_aeb730847f6f92181de392e9ef2fccee2"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aeb730847f6f92181de392e9ef2fccee2">trimSpaces</a> (std::string_view str)</td></tr>
 <tr class="separator:aeb730847f6f92181de392e9ef2fccee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4e89e20b7520731a65a58d104451dd0" id="r_af4e89e20b7520731a65a58d104451dd0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:af4e89e20b7520731a65a58d104451dd0" id="r_af4e89e20b7520731a65a58d104451dd0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#af4e89e20b7520731a65a58d104451dd0">parseBytesize</a> (std::string_view str)</td></tr>
 <tr class="separator:af4e89e20b7520731a65a58d104451dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0038c1472a142008c2555662001a3af" id="r_ae0038c1472a142008c2555662001a3af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#ae0038c1472a142008c2555662001a3af">isNamespace</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:ae0038c1472a142008c2555662001a3af" id="r_ae0038c1472a142008c2555662001a3af"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#ae0038c1472a142008c2555662001a3af">isNamespace</a> (const std::string_view str)</td></tr>
 <tr class="separator:ae0038c1472a142008c2555662001a3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0101bceb45e8b0cb191c4648b02c28a0" id="r_a0101bceb45e8b0cb191c4648b02c28a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a0101bceb45e8b0cb191c4648b02c28a0">isOperator</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a0101bceb45e8b0cb191c4648b02c28a0" id="r_a0101bceb45e8b0cb191c4648b02c28a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a0101bceb45e8b0cb191c4648b02c28a0">isOperator</a> (const std::string_view str)</td></tr>
 <tr class="separator:a0101bceb45e8b0cb191c4648b02c28a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa21e7036e8be5b4a72153b21b8abb3ad" id="r_aa21e7036e8be5b4a72153b21b8abb3ad"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aa21e7036e8be5b4a72153b21b8abb3ad">parseOperator</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:aa21e7036e8be5b4a72153b21b8abb3ad" id="r_aa21e7036e8be5b4a72153b21b8abb3ad"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aa21e7036e8be5b4a72153b21b8abb3ad">parseOperator</a> (const std::string_view str)</td></tr>
 <tr class="separator:aa21e7036e8be5b4a72153b21b8abb3ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f8cd3ac138c66139e192cfbcc9da4b9" id="r_a1f8cd3ac138c66139e192cfbcc9da4b9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a1f8cd3ac138c66139e192cfbcc9da4b9">parseSystem</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a1f8cd3ac138c66139e192cfbcc9da4b9" id="r_a1f8cd3ac138c66139e192cfbcc9da4b9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a1f8cd3ac138c66139e192cfbcc9da4b9">parseSystem</a> (const std::string_view str)</td></tr>
 <tr class="separator:a1f8cd3ac138c66139e192cfbcc9da4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930902132bf2d664d7be518edbbe7174" id="r_a930902132bf2d664d7be518edbbe7174"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a930902132bf2d664d7be518edbbe7174" id="r_a930902132bf2d664d7be518edbbe7174"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string_view, std::string_view &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a930902132bf2d664d7be518edbbe7174">seperateNamespace</a> (const std::string_view str)</td></tr>
 <tr class="separator:a930902132bf2d664d7be518edbbe7174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03ee80db4fcb0bfd78f7efba3a00f49d" id="r_a03ee80db4fcb0bfd78f7efba3a00f49d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a03ee80db4fcb0bfd78f7efba3a00f49d">parseNamespace</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
-<tr class="memdesc:a03ee80db4fcb0bfd78f7efba3a00f49d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a given <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">NamespaceParsing</a> from a string.  <br /></td></tr>
+<tr class="memitem:a03ee80db4fcb0bfd78f7efba3a00f49d" id="r_a03ee80db4fcb0bfd78f7efba3a00f49d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a03ee80db4fcb0bfd78f7efba3a00f49d">parseNamespace</a> (const std::string_view str)</td></tr>
+<tr class="memdesc:a03ee80db4fcb0bfd78f7efba3a00f49d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a given NamespaceParsing from a string.  <br /></td></tr>
 <tr class="separator:a03ee80db4fcb0bfd78f7efba3a00f49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc0e970faa68d82e5d6e1c3eaa65dcb8" id="r_afc0e970faa68d82e5d6e1c3eaa65dcb8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#afc0e970faa68d82e5d6e1c3eaa65dcb8">parse</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:afc0e970faa68d82e5d6e1c3eaa65dcb8" id="r_afc0e970faa68d82e5d6e1c3eaa65dcb8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#afc0e970faa68d82e5d6e1c3eaa65dcb8">parse</a> (const std::string_view str)</td></tr>
 <tr class="memdesc:afc0e970faa68d82e5d6e1c3eaa65dcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the string via <code><a class="el" href="QueryBuilder_8cpp.html#a03ee80db4fcb0bfd78f7efba3a00f49d" title="Parses a given NamespaceParsing from a string.">parseNamespace(const std::string_view)</a></code> or <code><a class="el" href="QueryBuilder_8cpp.html#aa21e7036e8be5b4a72153b21b8abb3ad">parseOperator(const std::string_view)</a></code>.  <br /></td></tr>
 <tr class="separator:afc0e970faa68d82e5d6e1c3eaa65dcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a065f3c3f0001421eb2cb9632bb821ce1" id="r_a065f3c3f0001421eb2cb9632bb821ce1"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a> (std::string_view &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>)</td></tr>
+<tr class="memitem:a065f3c3f0001421eb2cb9632bb821ce1" id="r_a065f3c3f0001421eb2cb9632bb821ce1"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a065f3c3f0001421eb2cb9632bb821ce1">extractUntilNext</a> (std::string_view &amp;str)</td></tr>
 <tr class="memdesc:a065f3c3f0001421eb2cb9632bb821ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts characters until reaching a grouping operator or namespace or system tag.  <br /></td></tr>
 <tr class="separator:a065f3c3f0001421eb2cb9632bb821ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208192a42d7e5a7b6b7cb117a915eed5" id="r_a208192a42d7e5a7b6b7cb117a915eed5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str_view</a>)</td></tr>
+<tr class="memitem:a208192a42d7e5a7b6b7cb117a915eed5" id="r_a208192a42d7e5a7b6b7cb117a915eed5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a208192a42d7e5a7b6b7cb117a915eed5">processString</a> (std::string_view str_view)</td></tr>
 <tr class="separator:a208192a42d7e5a7b6b7cb117a915eed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26966fefdacc71696b6ad170ec598e50" id="r_a26966fefdacc71696b6ad170ec598e50"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a26966fefdacc71696b6ad170ec598e50">escape</a> (std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">view</a>)</td></tr>
+<tr class="memitem:a26966fefdacc71696b6ad170ec598e50" id="r_a26966fefdacc71696b6ad170ec598e50"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a26966fefdacc71696b6ad170ec598e50">escape</a> (std::string_view view)</td></tr>
 <tr class="separator:a26966fefdacc71696b6ad170ec598e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ab68a393fa7ef066d36f13d1821f5bf" id="r_a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a4ab68a393fa7ef066d36f13d1821f5bf">orderToStr</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">order</a>)</td></tr>
+<tr class="memitem:a4ab68a393fa7ef066d36f13d1821f5bf" id="r_a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a4ab68a393fa7ef066d36f13d1821f5bf">orderToStr</a> (const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> order)</td></tr>
 <tr class="separator:a4ab68a393fa7ef066d36f13d1821f5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa11e679e1d1a99e925b03a0b97df0118" id="r_aa11e679e1d1a99e925b03a0b97df0118"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aa11e679e1d1a99e925b03a0b97df0118">generateQuery</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">str</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">order</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">asc</a>)</td></tr>
+<tr class="memitem:aa11e679e1d1a99e925b03a0b97df0118" id="r_aa11e679e1d1a99e925b03a0b97df0118"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#aa11e679e1d1a99e925b03a0b97df0118">generateQuery</a> (const std::string str, const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a> order, const bool asc)</td></tr>
 <tr class="separator:aa11e679e1d1a99e925b03a0b97df0118"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac6100d53a5a6e62d3f66811850e06e44" id="r_ac6100d53a5a6e62d3f66811850e06e44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">static</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da67f6c1094a2e21f79ed3c942aae206ec">OPERATOR_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#ac6100d53a5a6e62d3f66811850e06e44">operators</a></td></tr>
+<tr class="memitem:ac6100d53a5a6e62d3f66811850e06e44" id="r_ac6100d53a5a6e62d3f66811850e06e44"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da67f6c1094a2e21f79ed3c942aae206ec">OPERATOR_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#ac6100d53a5a6e62d3f66811850e06e44">operators</a></td></tr>
 <tr class="separator:ac6100d53a5a6e62d3f66811850e06e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a452217633b3e97c64209a2793906593c" id="r_a452217633b3e97c64209a2793906593c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">static</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99">NAMESPACE_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c">namespaces</a></td></tr>
+<tr class="memitem:a452217633b3e97c64209a2793906593c" id="r_a452217633b3e97c64209a2793906593c"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99">NAMESPACE_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c">namespaces</a></td></tr>
 <tr class="separator:a452217633b3e97c64209a2793906593c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54cd4cd49f5088a1710c34435107076b" id="r_a54cd4cd49f5088a1710c34435107076b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">static</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54abcc9e915459d1fb409a2ee3929b44863">SYSTEM_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a54cd4cd49f5088a1710c34435107076b">systems</a></td></tr>
+<tr class="memitem:a54cd4cd49f5088a1710c34435107076b" id="r_a54cd4cd49f5088a1710c34435107076b"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54abcc9e915459d1fb409a2ee3929b44863">SYSTEM_END</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="QueryBuilder_8cpp.html#a54cd4cd49f5088a1710c34435107076b">systems</a></td></tr>
 <tr class="separator:a54cd4cd49f5088a1710c34435107076b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -198,7 +196,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">enum</a> <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a></td>
+          <td class="memname">enum <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -221,7 +219,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">enum</a> <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a></td>
+          <td class="memname">enum <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -240,7 +238,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">enum</a> <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a></td>
+          <td class="memname">enum <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -304,19 +302,19 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string generateQuery </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string&#160;</td>
+          <td class="paramtype">const std::string&#160;</td>
           <td class="paramname"><em>str</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
           <td class="paramname"><em>order</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>asc</em>&#160;</td>
         </tr>
         <tr>
@@ -336,9 +334,9 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> isNamespace </td>
+          <td class="memname">bool isNamespace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -354,9 +352,9 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> isOperator </td>
+          <td class="memname">bool isOperator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -374,7 +372,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string orderToStr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472">SortOrder</a>&#160;</td>
           <td class="paramname"><em>order</em></td><td>)</td>
           <td></td>
         </tr>
@@ -392,7 +390,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string parse </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -443,14 +441,14 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string parseNamespace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Parses a given <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">NamespaceParsing</a> from a string. </p>
+<p>Parses a given NamespaceParsing from a string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td></td></tr>
@@ -470,7 +468,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string parseOperator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -488,7 +486,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">std::string parseSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -522,9 +520,9 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, std::string_view &gt; seperateNamespace </td>
+          <td class="memname">std::pair&lt; std::string_view, std::string_view &gt; seperateNamespace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -562,7 +560,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99">NAMESPACE_END</a> &gt; namespaces</td>
+          <td class="memname">constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe">Namespaces</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99">NAMESPACE_END</a> &gt; namespaces</td>
         </tr>
       </table>
   </td>
@@ -574,11 +572,11 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
 <div class="line">    { { <span class="stringliteral">&quot;system:&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea57cc238145ec1361c72c327674c0d754">SYSTEM</a> }, { <span class="stringliteral">&quot;creator:&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaba536f220fcdce44099ca558b2de668c">CREATOR</a> }, { <span class="stringliteral">&quot;engine:&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea92c3c18ecdc80cdb068c54b0a44009dc">ENGINE</a> }, { <span class="stringliteral">&quot;title:&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea0a041e18d712f7b239eac5375daf4a05">TITLE</a> }, { <span class="stringliteral">&quot;tag:&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeab0db3c4898b28269905a7a00a0133812">TAG</a> } }</div>
 <div class="line">}</div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea0a041e18d712f7b239eac5375daf4a05"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea0a041e18d712f7b239eac5375daf4a05">TITLE</a></div><div class="ttdeci">@ TITLE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:29</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea57cc238145ec1361c72c327674c0d754"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea57cc238145ec1361c72c327674c0d754">SYSTEM</a></div><div class="ttdeci">@ SYSTEM</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:26</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea92c3c18ecdc80cdb068c54b0a44009dc"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea92c3c18ecdc80cdb068c54b0a44009dc">ENGINE</a></div><div class="ttdeci">@ ENGINE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:28</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbeab0db3c4898b28269905a7a00a0133812"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeab0db3c4898b28269905a7a00a0133812">TAG</a></div><div class="ttdeci">@ TAG</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:30</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbeaba536f220fcdce44099ca558b2de668c"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaba536f220fcdce44099ca558b2de668c">CREATOR</a></div><div class="ttdeci">@ CREATOR</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:27</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea0a041e18d712f7b239eac5375daf4a05"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea0a041e18d712f7b239eac5375daf4a05">TITLE</a></div><div class="ttdeci">@ TITLE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:31</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea57cc238145ec1361c72c327674c0d754"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea57cc238145ec1361c72c327674c0d754">SYSTEM</a></div><div class="ttdeci">@ SYSTEM</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:28</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbea92c3c18ecdc80cdb068c54b0a44009dc"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbea92c3c18ecdc80cdb068c54b0a44009dc">ENGINE</a></div><div class="ttdeci">@ ENGINE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:30</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbeab0db3c4898b28269905a7a00a0133812"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeab0db3c4898b28269905a7a00a0133812">TAG</a></div><div class="ttdeci">@ TAG</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:32</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_adec0afb7463393ec7fbbf38fe634dcbeaba536f220fcdce44099ca558b2de668c"><div class="ttname"><a href="QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaba536f220fcdce44099ca558b2de668c">CREATOR</a></div><div class="ttdeci">@ CREATOR</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:29</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -592,7 +590,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da67f6c1094a2e21f79ed3c942aae206ec">OPERATOR_END</a> &gt; operators</td>
+          <td class="memname">constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9d">TokenOperators</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da67f6c1094a2e21f79ed3c942aae206ec">OPERATOR_END</a> &gt; operators</td>
         </tr>
       </table>
   </td>
@@ -604,11 +602,11 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
 <div class="line">    { { <span class="stringliteral">&quot;!&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6">NOT</a> }, { <span class="stringliteral">&quot;|&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da96727447c0ad447987df1c6415aef074">OR</a> }, { <span class="stringliteral">&quot;&amp;&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da865555c9f2e0458a7078486aa1b3254f">AND</a> }, { <span class="stringliteral">&quot;(&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f">BEGIN_GROUP</a> }, { <span class="stringliteral">&quot;)&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9dad8484e02f6123a1ce51bf55c92ab775c">END_GROUP</a> } }</div>
 <div class="line">}</div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6">NOT</a></div><div class="ttdeci">@ NOT</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:11</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f">BEGIN_GROUP</a></div><div class="ttdeci">@ BEGIN_GROUP</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:14</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da865555c9f2e0458a7078486aa1b3254f"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da865555c9f2e0458a7078486aa1b3254f">AND</a></div><div class="ttdeci">@ AND</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:13</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da96727447c0ad447987df1c6415aef074"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da96727447c0ad447987df1c6415aef074">OR</a></div><div class="ttdeci">@ OR</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:12</div></div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9dad8484e02f6123a1ce51bf55c92ab775c"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9dad8484e02f6123a1ce51bf55c92ab775c">END_GROUP</a></div><div class="ttdeci">@ END_GROUP</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:15</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da0378ebc895849163b249d0b330257dd6">NOT</a></div><div class="ttdeci">@ NOT</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:13</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da04bc111dd865aa7ee4650ead482dfc7f">BEGIN_GROUP</a></div><div class="ttdeci">@ BEGIN_GROUP</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:16</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da865555c9f2e0458a7078486aa1b3254f"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da865555c9f2e0458a7078486aa1b3254f">AND</a></div><div class="ttdeci">@ AND</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:15</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9da96727447c0ad447987df1c6415aef074"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da96727447c0ad447987df1c6415aef074">OR</a></div><div class="ttdeci">@ OR</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:14</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a595b7faa3808d957112ed6fe8b22cd9dad8484e02f6123a1ce51bf55c92ab775c"><div class="ttname"><a href="QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9dad8484e02f6123a1ce51bf55c92ab775c">END_GROUP</a></div><div class="ttdeci">@ END_GROUP</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:17</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -622,7 +620,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">constexpr</a> std::array&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::pair</a>&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54abcc9e915459d1fb409a2ee3929b44863">SYSTEM_END</a> &gt; systems</td>
+          <td class="memname">constexpr std::array&lt; std::pair&lt; std::string_view, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54">SystemTokens</a> &gt;, <a class="el" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54abcc9e915459d1fb409a2ee3929b44863">SYSTEM_END</a> &gt; systems</td>
         </tr>
       </table>
   </td>
@@ -634,7 +632,7 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
 <div class="line">    { { <span class="stringliteral">&quot;system:size&quot;</span>, <a class="code hl_enumvalue" href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a">FILESIZE</a> } }</div>
 <div class="line">}</div>
-<div class="ttc" id="aQueryBuilder_8cpp_html_a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a"><div class="ttname"><a href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a">FILESIZE</a></div><div class="ttdeci">@ FILESIZE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:41</div></div>
+<div class="ttc" id="aQueryBuilder_8cpp_html_a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a"><div class="ttname"><a href="QueryBuilder_8cpp.html#a0f94add9a5cc8e9cd31c0ccfddf79e54ada62ccafbdb709fa171098e5eae1ef4a">FILESIZE</a></div><div class="ttdeci">@ FILESIZE</div><div class="ttdef"><b>Definition</b> QueryBuilder.cpp:43</div></div>
 </div><!-- fragment -->
 </div>
 </div>

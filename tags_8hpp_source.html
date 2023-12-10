@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -122,22 +119,26 @@ $(document).ready(function(){initNavTree('tags_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span><a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span>QString;</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">   12</a></span><span class="keyword">using </span><a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> = std::uint64_t;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e">   13</a></span>[[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> <a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> <a class="code hl_variable" href="tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e">INVALID_TAG_ID</a> { 0 };</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e">   13</a></span>[[maybe_unused]] <span class="keyword">constexpr</span> <a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> <a class="code hl_variable" href="tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e">INVALID_TAG_ID</a> { 0 };</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceatlas_1_1tags.html">atlas::tags</a></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> <a class="code hl_function" href="namespaceatlas_1_1tags.html#a122e8c9407aac89b794c358cdee4f4a0">createTag</a>( <span class="keyword">const</span> <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a>&amp; <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">str</a> );</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> <a class="code hl_function" href="namespaceatlas_1_1tags.html#a122e8c9407aac89b794c358cdee4f4a0">createTag</a>( <span class="keyword">const</span> QString&amp; str );</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <span class="comment">// namespace atlas::tags</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_TAGS_HPP</span></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceatlas_1_1tags.html#af8755f82832719992f179662923dd5d7">exists</a>( <span class="keyword">const</span> QString&amp; str );</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <a class="code hl_typedef" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> <a class="code hl_function" href="namespaceatlas_1_1tags.html#a087888a0e405a9aca62f7329679a04a2">resolve</a>( <span class="keyword">const</span> QString&amp; str );</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>} <span class="comment">// namespace atlas::tags</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_TAGS_HPP</span></div>
 <div class="ttc" id="anamespaceatlas_1_1tags_html"><div class="ttname"><a href="namespaceatlas_1_1tags.html">atlas::tags</a></div><div class="ttdef"><b>Definition</b> tags.cpp:10</div></div>
+<div class="ttc" id="anamespaceatlas_1_1tags_html_a087888a0e405a9aca62f7329679a04a2"><div class="ttname"><a href="namespaceatlas_1_1tags.html#a087888a0e405a9aca62f7329679a04a2">atlas::tags::resolve</a></div><div class="ttdeci">TagID resolve(const QString &amp;str)</div><div class="ttdoc">Resolves a string to a TagID if it exists. Otherwise returns INVALID_TAG_ID.</div><div class="ttdef"><b>Definition</b> tags.cpp:33</div></div>
 <div class="ttc" id="anamespaceatlas_1_1tags_html_a122e8c9407aac89b794c358cdee4f4a0"><div class="ttname"><a href="namespaceatlas_1_1tags.html#a122e8c9407aac89b794c358cdee4f4a0">atlas::tags::createTag</a></div><div class="ttdeci">TagID createTag(const QString &amp;str)</div><div class="ttdoc">Creates a new tag (or returns an existing ID)</div><div class="ttdef"><b>Definition</b> tags.cpp:11</div></div>
-<div class="ttc" id="anamespaceatlas_html_ad879f37529f2fad323204059708b9361"><div class="ttname"><a href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">atlas::extract</a></div><div class="ttdeci">std::vector&lt; char &gt; extract(const std::filesystem::path path)</div><div class="ttdef"><b>Definition</b> extract.cpp:35</div></div>
+<div class="ttc" id="anamespaceatlas_1_1tags_html_af8755f82832719992f179662923dd5d7"><div class="ttname"><a href="namespaceatlas_1_1tags.html#af8755f82832719992f179662923dd5d7">atlas::tags::exists</a></div><div class="ttdeci">bool exists(const QString &amp;str)</div><div class="ttdoc">Checks if a tag exists.</div><div class="ttdef"><b>Definition</b> tags.cpp:28</div></div>
 <div class="ttc" id="atags_8hpp_html_a1b4aebd1a72b76efe9913d0c33243a4e"><div class="ttname"><a href="tags_8hpp.html#a1b4aebd1a72b76efe9913d0c33243a4e">INVALID_TAG_ID</a></div><div class="ttdeci">constexpr TagID INVALID_TAG_ID</div><div class="ttdef"><b>Definition</b> tags.hpp:13</div></div>
 <div class="ttc" id="atags_8hpp_html_a468c3d7a369222b60b221c1851825f96"><div class="ttname"><a href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a></div><div class="ttdeci">std::uint64_t TagID</div><div class="ttdef"><b>Definition</b> tags.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->

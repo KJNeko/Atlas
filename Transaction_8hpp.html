@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -108,6 +105,7 @@ $(document).ready(function(){initNavTree('Transaction_8hpp.html',''); initResiza
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">Transaction.hpp File Reference</div></div>
 </div><!--header-->
@@ -119,14 +117,12 @@ $(document).ready(function(){initNavTree('Transaction_8hpp.html',''); initResiza
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &quot;<a class="el" href="Binder_8hpp_source.html">Binder.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Database_8hpp_source.html">Database.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging/logging.hpp</a>&quot;</code><br />
 </div>
 <p><a href="Transaction_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1database_1_1TransactionInvalid.html">atlas::database::TransactionInvalid</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1database_1_1TransactionBase.html">atlas::database::TransactionBase&lt; is_commitable &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -137,11 +133,31 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceatlas_1_1database" id="r_namespaceatlas_1_1database"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database.html">atlas::database</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab93d5a3a0fc6607227bdee578bbe5b98" id="r_ab93d5a3a0fc6607227bdee578bbe5b98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Transaction_8hpp.html#ab93d5a3a0fc6607227bdee578bbe5b98">ATLASGAMEMANAGER_TRANSACTION_HPP</a></td></tr>
+<tr class="separator:ab93d5a3a0fc6607227bdee578bbe5b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a78e823c609e180aabf1ad428df6939e2" id="r_a78e823c609e180aabf1ad428df6939e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> = <a class="el" href="structatlas_1_1database_1_1TransactionBase.html">atlas::database::TransactionBase</a>&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">true</a> &gt;</td></tr>
+<tr class="memitem:a78e823c609e180aabf1ad428df6939e2" id="r_a78e823c609e180aabf1ad428df6939e2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> = <a class="el" href="structatlas_1_1database_1_1TransactionBase.html">atlas::database::TransactionBase</a>&lt; true &gt;</td></tr>
 <tr class="separator:a78e823c609e180aabf1ad428df6939e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ab93d5a3a0fc6607227bdee578bbe5b98" name="ab93d5a3a0fc6607227bdee578bbe5b98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab93d5a3a0fc6607227bdee578bbe5b98">&#9670;&#160;</a></span>ATLASGAMEMANAGER_TRANSACTION_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLASGAMEMANAGER_TRANSACTION_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a78e823c609e180aabf1ad428df6939e2" name="a78e823c609e180aabf1ad428df6939e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a78e823c609e180aabf1ad428df6939e2">&#9670;&#160;</a></span>Transaction</h2>
@@ -150,7 +166,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">using</a> <a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> =  <a class="el" href="structatlas_1_1database_1_1TransactionBase.html">atlas::database::TransactionBase</a>&lt; <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">true</a> &gt;</td>
+          <td class="memname">using <a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> =  <a class="el" href="structatlas_1_1database_1_1TransactionBase.html">atlas::database::TransactionBase</a>&lt; true &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">

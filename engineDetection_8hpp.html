@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -107,6 +104,7 @@ $(document).ready(function(){initNavTree('engineDetection_8hpp.html',''); initRe
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">engineDetection.hpp File Reference</div></div>
@@ -124,6 +122,11 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceatlas_1_1utils" id="r_namespaceatlas_1_1utils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1utils.html">atlas::utils</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa1b38ae7c706537913fe5fa94836176c" id="r_aa1b38ae7c706537913fe5fa94836176c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#aa1b38ae7c706537913fe5fa94836176c">ATLAS_ENGINEDETECTION_HPP</a></td></tr>
+<tr class="separator:aa1b38ae7c706537913fe5fa94836176c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -164,26 +167,41 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa742cac2f04f4b1138336b5bd6b3779d" id="r_aa742cac2f04f4b1138336b5bd6b3779d"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
-<tr class="memitem:aa742cac2f04f4b1138336b5bd6b3779d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#aa742cac2f04f4b1138336b5bd6b3779d">isEngineT</a> (<a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
+<tr class="memitem:aa742cac2f04f4b1138336b5bd6b3779d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#aa742cac2f04f4b1138336b5bd6b3779d">isEngineT</a> (<a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
 <tr class="memdesc:aa742cac2f04f4b1138336b5bd6b3779d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to be specialized for each Engine to return true if the engine is valid.  <br /></td></tr>
 <tr class="separator:aa742cac2f04f4b1138336b5bd6b3779d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fab1ffa25072fc682e5e6f6d720439" id="r_ae7fab1ffa25072fc682e5e6f6d720439"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#ae7fab1ffa25072fc682e5e6f6d720439">checkEngineType</a> (std::string engine, <a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
+<tr class="memitem:ae7fab1ffa25072fc682e5e6f6d720439" id="r_ae7fab1ffa25072fc682e5e6f6d720439"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#ae7fab1ffa25072fc682e5e6f6d720439">checkEngineType</a> (std::string engine, <a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
 <tr class="separator:ae7fab1ffa25072fc682e5e6f6d720439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69afb545d71b8d3717fa91f9bd5a05de" id="r_a69afb545d71b8d3717fa91f9bd5a05de"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </td></tr>
-<tr class="memitem:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a69afb545d71b8d3717fa91f9bd5a05de">engineNameT</a> ()</td></tr>
+<tr class="memitem:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a69afb545d71b8d3717fa91f9bd5a05de">engineNameT</a> ()</td></tr>
 <tr class="memdesc:a69afb545d71b8d3717fa91f9bd5a05de"><td class="mdescLeft">&#160;</td><td class="mdescRight">String name of the engine.  <br /></td></tr>
 <tr class="separator:a69afb545d71b8d3717fa91f9bd5a05de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8da71e8167257dd0990229352e53bdb" id="r_ac8da71e8167257dd0990229352e53bdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#ac8da71e8167257dd0990229352e53bdb">determineEngine</a> (<a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
 <tr class="memdesc:ac8da71e8167257dd0990229352e53bdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an engine type of ENGINES_END if no engine is determined.  <br /></td></tr>
 <tr class="separator:ac8da71e8167257dd0990229352e53bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28004db3f091ff409204e3e739461a25" id="r_a28004db3f091ff409204e3e739461a25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a28004db3f091ff409204e3e739461a25">engineName</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine)</td></tr>
+<tr class="memitem:a28004db3f091ff409204e3e739461a25" id="r_a28004db3f091ff409204e3e739461a25"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a28004db3f091ff409204e3e739461a25">engineName</a> (const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine)</td></tr>
 <tr class="memdesc:a28004db3f091ff409204e3e739461a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string name of the engine.  <br /></td></tr>
 <tr class="separator:a28004db3f091ff409204e3e739461a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fe1899eef27e0cad8a241c7b42e0937" id="r_a3fe1899eef27e0cad8a241c7b42e0937"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a3fe1899eef27e0cad8a241c7b42e0937">detectExecutables</a> (<a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;scanner)</td></tr>
 <tr class="separator:a3fe1899eef27e0cad8a241c7b42e0937"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2674fd47a277a212f401991e65116276" id="r_a2674fd47a277a212f401991e65116276"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a2674fd47a277a212f401991e65116276">scoreExecutables</a> (std::vector&lt; std::filesystem::path &gt; paths, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine=<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a6ce26a62afab55d7606ad4e92428b30c">UNKNOWN</a>)</td></tr>
+<tr class="memitem:a2674fd47a277a212f401991e65116276" id="r_a2674fd47a277a212f401991e65116276"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::filesystem::path &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engineDetection_8hpp.html#a2674fd47a277a212f401991e65116276">scoreExecutables</a> (std::vector&lt; std::filesystem::path &gt; paths, const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine=<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a6ce26a62afab55d7606ad4e92428b30c">UNKNOWN</a>)</td></tr>
 <tr class="separator:a2674fd47a277a212f401991e65116276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa1b38ae7c706537913fe5fa94836176c" name="aa1b38ae7c706537913fe5fa94836176c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1b38ae7c706537913fe5fa94836176c">&#9670;&#160;</a></span>ATLAS_ENGINEDETECTION_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLAS_ENGINEDETECTION_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a7d4793a9fb0ef783c8625122ac5a89b7" name="a7d4793a9fb0ef783c8625122ac5a89b7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d4793a9fb0ef783c8625122ac5a89b7">&#9670;&#160;</a></span>Engine</h2>
@@ -192,7 +210,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">enum</a> <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> : <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a></td>
+          <td class="memname">enum <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> : int</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -233,7 +251,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> checkEngineType </td>
+          <td class="memname">bool checkEngineType </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>engine</em>, </td>
@@ -299,9 +317,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> engineName </td>
+          <td class="memname">QString engineName </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td>
           <td class="paramname"><em>engine</em></td><td>)</td>
           <td></td>
         </tr>
@@ -321,7 +339,7 @@ Functions</h2></td></tr>
 template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> engineNameT </td>
+          <td class="memname">QString engineNameT </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -342,7 +360,7 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
 template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a> engine&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> isEngineT </td>
+          <td class="memname">bool isEngineT </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classatlas_1_1utils_1_1FileScanner.html">atlas::utils::FileScanner</a> &amp;&#160;</td>
           <td class="paramname"><em>scanner</em></td><td>)</td>
@@ -370,7 +388,7 @@ template&lt;<a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7">Engine</a>&#160;</td>
           <td class="paramname"><em>engine_type</em>&#160;</td>
         </tr>
         <tr>

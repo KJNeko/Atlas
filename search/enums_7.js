@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['recordlistmodelroles_0',['RecordListModelRoles',['../classRecordListModel.html#a8eb1a0b383f30b36384aaa1e1da1b4e9',1,'RecordListModel']]],
-  ['roles_1',['Roles',['../classBatchImportModel.html#a8fffacaa22866929cbf5d6af96082ec0',1,'BatchImportModel']]]
+  ['namespaces_0',['Namespaces',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe',1,'QueryBuilder.cpp']]]
 ];

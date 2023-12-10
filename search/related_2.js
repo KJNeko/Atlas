@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['game_0',['Game',['../structatlas_1_1records_1_1GameData.html#aa2fab026580d6f14280c2ffb8063a314',1,'atlas::records::GameData']]]
+  ['iterator_0',['iterator',['../classatlas_1_1utils_1_1FileScanner.html#a67171474c4da6cc8efe0c7fafefd2b2d',1,'atlas::utils::FileScanner']]]
 ];

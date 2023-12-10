@@ -5,5 +5,6 @@ var searchData=
   ['db_5fmtx_2',['db_mtx',['../namespaceinternal.html#a4660841261a4134fdc50bf8d7481d6a5',1,'internal']]],
   ['depth_3',['depth',['../structatlas_1_1utils_1_1FileInfo.html#aec9d3f31c95cb52d840b98e179169057',1,'atlas::utils::FileInfo']]],
   ['developer_4',['developer',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#acca578653af9558234bd1f3a101f218d',1,'atlas::remote::internal::AtlasData']]],
-  ['directories_5fleft_5',['directories_left',['../classGameScanner.html#a2400ac02beab3fb285ab0059713b335f',1,'GameScanner']]]
+  ['directories_5fleft_5',['directories_left',['../classGameScanner.html#a2400ac02beab3fb285ab0059713b335f',1,'GameScanner']]],
+  ['download_5fqueue_6',['download_queue',['../classatlas_1_1network_1_1NetworkManager.html#af086b7ae8761b936543cd715ec3e7ecd',1,'atlas::network::NetworkManager']]]
 ];

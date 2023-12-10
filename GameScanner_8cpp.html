@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -130,7 +127,7 @@ $(document).ready(function(){initNavTree('GameScanner_8cpp.html',''); initResiza
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a08205cc89d759cef0a5ed6c1f33c762c" id="r_a08205cc89d759cef0a5ed6c1f33c762c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameScanner_8cpp.html#a08205cc89d759cef0a5ed6c1f33c762c">runner</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPromise</a>&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">promise</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> regex, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">folder</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">base</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">size_files</a>)</td></tr>
+<tr class="memitem:a08205cc89d759cef0a5ed6c1f33c762c" id="r_a08205cc89d759cef0a5ed6c1f33c762c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GameScanner_8cpp.html#a08205cc89d759cef0a5ed6c1f33c762c">runner</a> (QPromise&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; &amp;promise, const QString regex, const std::filesystem::path folder, const std::filesystem::path base, const bool size_files)</td></tr>
 <tr class="separator:a08205cc89d759cef0a5ed6c1f33c762c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -141,33 +138,33 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> runner </td>
+          <td class="memname">void runner </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPromise</a>&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">QPromise&lt; <a class="el" href="structGameImportData.html">GameImportData</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>promise</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a>&#160;</td>
+          <td class="paramtype">const QString&#160;</td>
           <td class="paramname"><em>regex</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path&#160;</td>
+          <td class="paramtype">const std::filesystem::path&#160;</td>
           <td class="paramname"><em>folder</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path&#160;</td>
+          <td class="paramtype">const std::filesystem::path&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>size_files</em>&#160;</td>
         </tr>
         <tr>

@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -114,7 +111,8 @@ $(document).ready(function(){initNavTree('notifications_8cpp.html',''); initResi
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="notifications_8hpp_source.html">notifications.hpp</a>&quot;</code><br />
 <code>#include &lt;QPromise&gt;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="exceptions_8hpp_source.html">core/exceptions.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging/logging.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="mainThread_8hpp_source.html">core/utils/mainThread/mainThread.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -128,18 +126,18 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afa22ac32296b470179dc9bbf5af31ee5" id="r_afa22ac32296b470179dc9bbf5af31ee5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#afa22ac32296b470179dc9bbf5af31ee5">atlas::notifications::initNotifications</a> (QWidget *parent)</td></tr>
+<tr class="memitem:afa22ac32296b470179dc9bbf5af31ee5" id="r_afa22ac32296b470179dc9bbf5af31ee5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#afa22ac32296b470179dc9bbf5af31ee5">atlas::notifications::initNotifications</a> (QWidget *parent)</td></tr>
 <tr class="separator:afa22ac32296b470179dc9bbf5af31ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a883a276ae1d5da6f4962b378aeba97d4" id="r_a883a276ae1d5da6f4962b378aeba97d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNotificationManagerUI.html">NotificationManagerUI</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#a883a276ae1d5da6f4962b378aeba97d4">atlas::notifications::handle</a> ()</td></tr>
 <tr class="separator:a883a276ae1d5da6f4962b378aeba97d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b4cedfa5f8a2e02f202ec818d753c71" id="r_a0b4cedfa5f8a2e02f202ec818d753c71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#a0b4cedfa5f8a2e02f202ec818d753c71">atlas::notifications::createMessage</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a>)</td></tr>
-<tr class="separator:a0b4cedfa5f8a2e02f202ec818d753c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd4d80469334a204c63ac3174677e0b8" id="r_abd4d80469334a204c63ac3174677e0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications_1_1internal.html#abd4d80469334a204c63ac3174677e0b8">atlas::notifications::internal::createDevMessage</a> (std::string <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a>, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QJsonDocument</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">doc</a>)</td></tr>
-<tr class="separator:abd4d80469334a204c63ac3174677e0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8927fddfdf43f180604d12645ded17bb" id="r_a8927fddfdf43f180604d12645ded17bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb">atlas::notifications::createMessage</a> (QString user_message, QString full_message, const <a class="el" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dc">MessageLevel</a> level)</td></tr>
+<tr class="separator:a8927fddfdf43f180604d12645ded17bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9738eafaf14c08d3fcd07e1ba1428fce" id="r_a9738eafaf14c08d3fcd07e1ba1428fce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications.html#a9738eafaf14c08d3fcd07e1ba1428fce">atlas::notifications::isNotificationsReady</a> ()</td></tr>
+<tr class="separator:a9738eafaf14c08d3fcd07e1ba1428fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a940b446628166d8f20ce27b2d564faf8" id="r_a940b446628166d8f20ce27b2d564faf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> <a class="el" href="classNotificationManagerUI.html">NotificationManagerUI</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications_1_1internal.html#a940b446628166d8f20ce27b2d564faf8">atlas::notifications::internal::notification_manager</a> { <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">nullptr</a> }</td></tr>
+<tr class="memitem:a940b446628166d8f20ce27b2d564faf8" id="r_a940b446628166d8f20ce27b2d564faf8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classNotificationManagerUI.html">NotificationManagerUI</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1notifications_1_1internal.html#a940b446628166d8f20ce27b2d564faf8">atlas::notifications::internal::notification_manager</a> { nullptr }</td></tr>
 <tr class="separator:a940b446628166d8f20ce27b2d564faf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

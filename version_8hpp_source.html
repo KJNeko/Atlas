@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,90 +114,101 @@ $(document).ready(function(){initNavTree('version_8hpp_source.html',''); initRes
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 5/9/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_VERSION_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLASGAMEMANAGER_VERSION_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef BYPASS_ATLAS_VERSION_STRINGS_REQUIRED</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#ifndef ATLAS_GIT_REVISION</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#error &quot;No git commit specified. Specify the revision -DATLAS_GIT_REVISION&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_VERSION_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="version_8hpp.html#a82dcede6ab2681cf0dddba3c4ab02904">    7</a></span><span class="preprocessor">#define ATLASGAMEMANAGER_VERSION_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;locale&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifndef ATLAS_GIT_REVISION_BRIEF</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#error &quot;No git commit brief specified. Specify the revision -DATLAS_GIT_REVISION_BRIEF&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef ATLAS_GIT_BRANCH</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#error &quot;No git branch specified. Specify the branch via -DATLAS_GIT_BRANCH&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#ifndef ATLAS_GIT_TAG</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#error &quot;No git tag specified. Specify the tag with -DATLAS_GIT_TAG&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifndef BYPASS_ATLAS_VERSION_STRINGS_REQUIRED</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef ATLAS_GIT_REVISION</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#error &quot;No git commit specified. Specify the revision -DATLAS_GIT_REVISION&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifndef ATLAS_GIT_REVISION_BRIEF</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#error &quot;No git commit brief specified. Specify the revision -DATLAS_GIT_REVISION_BRIEF&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#ifndef ATLAS_GIT_BRANCH</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#error &quot;No git branch specified. Specify the branch via -DATLAS_GIT_BRANCH&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#define ATLAS_VERSION &quot;Debug Build. DO NOT REDISTRIBUTE&quot;</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define ATLAS_GIT_BRANCH &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define ATLAS_GIT_REVISION &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#define ATLAS_GIT_TAG &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="version_8hpp.html#aeddbb44c257870e9b294ddfe1e1a51aa">   35</a></span><span class="preprocessor">#define VAL( str ) #str</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="version_8hpp.html#a936059ff6981db7fe4eefa988f423d57">   36</a></span><span class="preprocessor">#define TOSTRING( str ) VAL( str )</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#ifndef ATLAS_GIT_TAG</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#error &quot;No git tag specified. Specify the tag with -DATLAS_GIT_TAG&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#ifndef ATLAS_GIT_CREATED_TIME</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#error &quot;Unable to get time. Specify the tag with -DATLAS_GIT_TIME&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#ifndef NDEBUG</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">//Tag-Brief | Branch</span></div>
-<div class="foldopen" id="foldopen00041" data-start="" data-end="">
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">   41</a></span><span class="preprocessor">#define ATLAS_VERSION_STRING                                                                                           \</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">    TOSTRING( ATLAS_GIT_TAG ) &quot;-&quot; TOSTRING( ATLAS_GIT_REVISION_BRIEF ) &quot; | &quot; TOSTRING( ATLAS_GIT_BRANCH )</span></div>
-</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#define ATLAS_VERSION &quot;Debug Build. DO NOT REDISTRIBUTE&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#define ATLAS_GIT_BRANCH &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#define ATLAS_GIT_REVISION &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#define ATLAS_GIT_TAG &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#define ATLAS_GIT_CREATED_TIME &quot;NOT SET DURING BUILD PROCESS&quot;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#define ATLAS_VERSION_STRING TOSTRING( ATLAS_GIT_TAG )</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#ifndef NDEBUG</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="version_8hpp.html#ae171c149b2fb8e212de1f3279197b3bb">   50</a></span><span class="preprocessor">#define ATLAS_GIT_BRANCH_STRING TOSTRING( ATLAS_GIT_BRANCH )</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="version_8hpp.html#aa7eee9538837ba4ec97e62b66d02c6c6">   51</a></span><span class="preprocessor">#define ATLAS_GIT_REVISION_STRING TOSTRING( ATLAS_GIT_REVISION )</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="version_8hpp.html#aeaa5231ad5f13959eae7d33617b5235b">   52</a></span><span class="preprocessor">#define ATLAS_GIT_REVISION_BRIEF_STRING TOSTRING( ATLAS_GIT_REVISION_BRIEF )</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="version_8hpp.html#a02723e0047b19732a97ee84620fa3e45">   53</a></span><span class="preprocessor">#define ATLAS_GIT_TAG_STRING TOSTRING( ATLAS_GIT_TAG )</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">//Tag-Brief | Branch</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">   49</a></span><span class="preprocessor">#define ATLAS_VERSION_STRING ATLAS_GIT_TAG &quot;-&quot; ATLAS_GIT_REVISION_BRIEF &quot; | &quot; ATLAS_GIT_BRANCH</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#define ATLAS_VERSION_STRING ATLAS_GIT_TAG</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">//#define ATLAS_VERSION_STR TOSTRING( ATLASVERSION )</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceutils.html">utils</a></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">   59</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">version_string</a> { <a class="code hl_define" href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">ATLAS_VERSION_STRING</a> };</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">   60</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">git_branch</a> { <a class="code hl_define" href="version_8hpp.html#ae171c149b2fb8e212de1f3279197b3bb">ATLAS_GIT_BRANCH_STRING</a> };</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">   61</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">git_revision</a> { <a class="code hl_define" href="version_8hpp.html#aa7eee9538837ba4ec97e62b66d02c6c6">ATLAS_GIT_REVISION_STRING</a> };</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">   62</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">git_rev_brief</a> { <a class="code hl_define" href="version_8hpp.html#aeaa5231ad5f13959eae7d33617b5235b">ATLAS_GIT_REVISION_BRIEF_STRING</a> };</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">   63</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">git_tag</a> { <a class="code hl_define" href="version_8hpp.html#a02723e0047b19732a97ee84620fa3e45">ATLAS_GIT_TAG_STRING</a> };</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">   65</a></span>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> <a class="code hl_function" href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">version_string_qt</a>()</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">return</span> QString::fromLocal8Bit( <a class="code hl_variable" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">version_string</a>.data(), <span class="keyword">static_cast&lt;</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">qsizetype</a> <span class="keyword">&gt;</span>( <a class="code hl_variable" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">version_string</a>.size() ) );</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment">//#define ATLAS_VERSION_STR TOSTRING( ATLASVERSION )</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceutils.html">utils</a></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>{</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">   61</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">version_string</a> { <a class="code hl_define" href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">ATLAS_VERSION_STRING</a> };</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">   62</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">git_branch</a> { ATLAS_GIT_BRANCH };</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">   63</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">git_revision</a> { ATLAS_GIT_REVISION };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">   64</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">git_rev_brief</a> { ATLAS_GIT_REVISION_BRIEF };</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">   65</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">git_tag</a> { ATLAS_GIT_TAG };</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="namespaceutils.html#accfdc6b76612b1e30df851ecbff680d2">   66</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> std::string_view <a class="code hl_variable" href="namespaceutils.html#accfdc6b76612b1e30df851ecbff680d2">git_time</a> { ATLAS_GIT_CREATED_TIME };</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="foldopen" id="foldopen00068" data-start="{" data-end="}">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">   68</a></span>    <span class="keyword">inline</span> <span class="keyword">const</span> QString <a class="code hl_function" href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">version_string_qt</a>()</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keyword">const</span> QString version {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            QString::fromLocal8Bit( <a class="code hl_variable" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">git_tag</a>.data(), <span class="keyword">static_cast&lt;</span> qsizetype <span class="keyword">&gt;</span>( <a class="code hl_variable" href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">git_tag</a>.size() ) )</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        };</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        QString branch {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            QString::fromLocal8Bit( <a class="code hl_variable" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">git_branch</a>.data(), <span class="keyword">static_cast&lt;</span> qsizetype <span class="keyword">&gt;</span>( <a class="code hl_variable" href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">git_branch</a>.size() ) )</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        };</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        branch = branch == <span class="stringliteral">&quot;staging&quot;</span> ? <span class="stringliteral">&quot;nightly&quot;</span> : branch;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keyword">const</span> QString sha_short {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            QString::fromLocal8Bit( <a class="code hl_variable" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">git_rev_brief</a>.data(), <span class="keyword">static_cast&lt;</span> qsizetype <span class="keyword">&gt;</span>( <a class="code hl_variable" href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">git_rev_brief</a>.size() ) )</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        };</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">return</span> version + <span class="stringliteral">&quot;-&quot;</span> + sha_short + <span class="stringliteral">&quot; | &quot;</span> + branch;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    }</div>
 </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>} <span class="comment">// namespace utils</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_VERSION_HPP</span></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>} <span class="comment">// namespace utils</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_VERSION_HPP</span></div>
 <div class="ttc" id="anamespaceutils_html"><div class="ttname"><a href="namespaceutils.html">utils</a></div><div class="ttdef"><b>Definition</b> mainThread.cpp:8</div></div>
-<div class="ttc" id="anamespaceutils_html_a2b610de3b4b26668e2aec62c4ab05d83"><div class="ttname"><a href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">utils::git_revision</a></div><div class="ttdeci">constexpr std::string_view git_revision</div><div class="ttdef"><b>Definition</b> version.hpp:61</div></div>
-<div class="ttc" id="anamespaceutils_html_a886419b680df243f8a6ad74e8f0e2a73"><div class="ttname"><a href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">utils::version_string</a></div><div class="ttdeci">constexpr std::string_view version_string</div><div class="ttdef"><b>Definition</b> version.hpp:59</div></div>
-<div class="ttc" id="anamespaceutils_html_a8f38bf5233b85c1be8629b80a90336c3"><div class="ttname"><a href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">utils::git_branch</a></div><div class="ttdeci">constexpr std::string_view git_branch</div><div class="ttdef"><b>Definition</b> version.hpp:60</div></div>
-<div class="ttc" id="anamespaceutils_html_aca80316f694d3a9800b4add18e5e99b9"><div class="ttname"><a href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">utils::git_rev_brief</a></div><div class="ttdeci">constexpr std::string_view git_rev_brief</div><div class="ttdef"><b>Definition</b> version.hpp:62</div></div>
-<div class="ttc" id="anamespaceutils_html_ae3503805c45478a87ee7f0dcfdd298d7"><div class="ttname"><a href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">utils::version_string_qt</a></div><div class="ttdeci">const QString version_string_qt()</div><div class="ttdef"><b>Definition</b> version.hpp:65</div></div>
-<div class="ttc" id="anamespaceutils_html_ae76f3b4d159a1877ce7b0de4c9be7d2c"><div class="ttname"><a href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">utils::git_tag</a></div><div class="ttdeci">constexpr std::string_view git_tag</div><div class="ttdef"><b>Definition</b> version.hpp:63</div></div>
-<div class="ttc" id="aversion_8hpp_html_a02723e0047b19732a97ee84620fa3e45"><div class="ttname"><a href="version_8hpp.html#a02723e0047b19732a97ee84620fa3e45">ATLAS_GIT_TAG_STRING</a></div><div class="ttdeci">#define ATLAS_GIT_TAG_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:53</div></div>
-<div class="ttc" id="aversion_8hpp_html_a563fed51ff1eb39db24bf584fc5e5294"><div class="ttname"><a href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">ATLAS_VERSION_STRING</a></div><div class="ttdeci">#define ATLAS_VERSION_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:41</div></div>
-<div class="ttc" id="aversion_8hpp_html_aa7eee9538837ba4ec97e62b66d02c6c6"><div class="ttname"><a href="version_8hpp.html#aa7eee9538837ba4ec97e62b66d02c6c6">ATLAS_GIT_REVISION_STRING</a></div><div class="ttdeci">#define ATLAS_GIT_REVISION_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:51</div></div>
-<div class="ttc" id="aversion_8hpp_html_ae171c149b2fb8e212de1f3279197b3bb"><div class="ttname"><a href="version_8hpp.html#ae171c149b2fb8e212de1f3279197b3bb">ATLAS_GIT_BRANCH_STRING</a></div><div class="ttdeci">#define ATLAS_GIT_BRANCH_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:50</div></div>
-<div class="ttc" id="aversion_8hpp_html_aeaa5231ad5f13959eae7d33617b5235b"><div class="ttname"><a href="version_8hpp.html#aeaa5231ad5f13959eae7d33617b5235b">ATLAS_GIT_REVISION_BRIEF_STRING</a></div><div class="ttdeci">#define ATLAS_GIT_REVISION_BRIEF_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:52</div></div>
+<div class="ttc" id="anamespaceutils_html_a2b610de3b4b26668e2aec62c4ab05d83"><div class="ttname"><a href="namespaceutils.html#a2b610de3b4b26668e2aec62c4ab05d83">utils::git_revision</a></div><div class="ttdeci">constexpr std::string_view git_revision</div><div class="ttdef"><b>Definition</b> version.hpp:63</div></div>
+<div class="ttc" id="anamespaceutils_html_a886419b680df243f8a6ad74e8f0e2a73"><div class="ttname"><a href="namespaceutils.html#a886419b680df243f8a6ad74e8f0e2a73">utils::version_string</a></div><div class="ttdeci">constexpr std::string_view version_string</div><div class="ttdef"><b>Definition</b> version.hpp:61</div></div>
+<div class="ttc" id="anamespaceutils_html_a8f38bf5233b85c1be8629b80a90336c3"><div class="ttname"><a href="namespaceutils.html#a8f38bf5233b85c1be8629b80a90336c3">utils::git_branch</a></div><div class="ttdeci">constexpr std::string_view git_branch</div><div class="ttdef"><b>Definition</b> version.hpp:62</div></div>
+<div class="ttc" id="anamespaceutils_html_aca80316f694d3a9800b4add18e5e99b9"><div class="ttname"><a href="namespaceutils.html#aca80316f694d3a9800b4add18e5e99b9">utils::git_rev_brief</a></div><div class="ttdeci">constexpr std::string_view git_rev_brief</div><div class="ttdef"><b>Definition</b> version.hpp:64</div></div>
+<div class="ttc" id="anamespaceutils_html_accfdc6b76612b1e30df851ecbff680d2"><div class="ttname"><a href="namespaceutils.html#accfdc6b76612b1e30df851ecbff680d2">utils::git_time</a></div><div class="ttdeci">constexpr std::string_view git_time</div><div class="ttdef"><b>Definition</b> version.hpp:66</div></div>
+<div class="ttc" id="anamespaceutils_html_ae3503805c45478a87ee7f0dcfdd298d7"><div class="ttname"><a href="namespaceutils.html#ae3503805c45478a87ee7f0dcfdd298d7">utils::version_string_qt</a></div><div class="ttdeci">const QString version_string_qt()</div><div class="ttdef"><b>Definition</b> version.hpp:68</div></div>
+<div class="ttc" id="anamespaceutils_html_ae76f3b4d159a1877ce7b0de4c9be7d2c"><div class="ttname"><a href="namespaceutils.html#ae76f3b4d159a1877ce7b0de4c9be7d2c">utils::git_tag</a></div><div class="ttdeci">constexpr std::string_view git_tag</div><div class="ttdef"><b>Definition</b> version.hpp:65</div></div>
+<div class="ttc" id="aversion_8hpp_html_a563fed51ff1eb39db24bf584fc5e5294"><div class="ttname"><a href="version_8hpp.html#a563fed51ff1eb39db24bf584fc5e5294">ATLAS_VERSION_STRING</a></div><div class="ttdeci">#define ATLAS_VERSION_STRING</div><div class="ttdef"><b>Definition</b> version.hpp:49</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

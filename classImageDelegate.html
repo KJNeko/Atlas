@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,7 +103,9 @@ $(document).ready(function(){initNavTree('classImageDelegate.html',''); initResi
 
 <div class="header">
   <div class="summary">
-<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classImageDelegate-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ImageDelegate Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
 </div><!--header-->
@@ -120,13 +119,62 @@ Inheritance diagram for ImageDelegate:</div>
   <img src="classImageDelegate.png" alt=""/>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a6e9b0fa158b6ba6bfe5fef7e9259bcd3" id="r_a6e9b0fa158b6ba6bfe5fef7e9259bcd3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a6e9b0fa158b6ba6bfe5fef7e9259bcd3">paint</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPainter</a> *<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">painter</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QStyleOptionViewItem</a> &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">item</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QModelIndex</a> &amp;index) <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">override</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a19daebae7a3952d1858496dadadece5b" id="r_a19daebae7a3952d1858496dadadece5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a19daebae7a3952d1858496dadadece5b">ImageDelegate</a> (<a class="el" href="classFilepathModel.html">FilepathModel</a> *model, QObject *parent=nullptr)</td></tr>
+<tr class="separator:a19daebae7a3952d1858496dadadece5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e9b0fa158b6ba6bfe5fef7e9259bcd3" id="r_a6e9b0fa158b6ba6bfe5fef7e9259bcd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a6e9b0fa158b6ba6bfe5fef7e9259bcd3">paint</a> (QPainter *painter, const QStyleOptionViewItem &amp;item, const QModelIndex &amp;index) const override</td></tr>
 <tr class="separator:a6e9b0fa158b6ba6bfe5fef7e9259bcd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c30403007bcd034ce68ca3da54da173" id="r_a5c30403007bcd034ce68ca3da54da173"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QSize</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a5c30403007bcd034ce68ca3da54da173">sizeHint</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QStyleOptionViewItem</a> &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">item</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QModelIndex</a> &amp;index) <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">override</a></td></tr>
+<tr class="memitem:a5c30403007bcd034ce68ca3da54da173" id="r_a5c30403007bcd034ce68ca3da54da173"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a5c30403007bcd034ce68ca3da54da173">sizeHint</a> (const QStyleOptionViewItem &amp;item, const QModelIndex &amp;index) const override</td></tr>
 <tr class="separator:a5c30403007bcd034ce68ca3da54da173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a019073aa3d7ef88386f5385e560494eb" id="r_a019073aa3d7ef88386f5385e560494eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#a019073aa3d7ef88386f5385e560494eb">use_thumbnils</a> { true }</td></tr>
+<tr class="separator:a019073aa3d7ef88386f5385e560494eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac6ddcfe3b694a8fc3a1888b6f5b18a43" id="r_ac6ddcfe3b694a8fc3a1888b6f5b18a43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFilepathModel.html">FilepathModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageDelegate.html#ac6ddcfe3b694a8fc3a1888b6f5b18a43">m_model</a></td></tr>
+<tr class="separator:ac6ddcfe3b694a8fc3a1888b6f5b18a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a19daebae7a3952d1858496dadadece5b" name="a19daebae7a3952d1858496dadadece5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19daebae7a3952d1858496dadadece5b">&#9670;&#160;</a></span>ImageDelegate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ImageDelegate::ImageDelegate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFilepathModel.html">FilepathModel</a> *&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6e9b0fa158b6ba6bfe5fef7e9259bcd3" name="a6e9b0fa158b6ba6bfe5fef7e9259bcd3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e9b0fa158b6ba6bfe5fef7e9259bcd3">&#9670;&#160;</a></span>paint()</h2>
@@ -138,21 +186,21 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> ImageDelegate::paint </td>
+          <td class="memname">void ImageDelegate::paint </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPainter</a> *&#160;</td>
+          <td class="paramtype">QPainter *&#160;</td>
           <td class="paramname"><em>painter</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QStyleOptionViewItem</a> &amp;&#160;</td>
+          <td class="paramtype">const QStyleOptionViewItem &amp;&#160;</td>
           <td class="paramname"><em>item</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QModelIndex</a> &amp;&#160;</td>
+          <td class="paramtype">const QModelIndex &amp;&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -163,7 +211,7 @@ Private Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -180,15 +228,15 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QSize</a> ImageDelegate::sizeHint </td>
+          <td class="memname">QSize ImageDelegate::sizeHint </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QStyleOptionViewItem</a> &amp;&#160;</td>
+          <td class="paramtype">const QStyleOptionViewItem &amp;&#160;</td>
           <td class="paramname"><em>item</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QModelIndex</a> &amp;&#160;</td>
+          <td class="paramtype">const QModelIndex &amp;&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -199,9 +247,46 @@ Private Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac6ddcfe3b694a8fc3a1888b6f5b18a43" name="ac6ddcfe3b694a8fc3a1888b6f5b18a43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ddcfe3b694a8fc3a1888b6f5b18a43">&#9670;&#160;</a></span>m_model</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFilepathModel.html">FilepathModel</a>* ImageDelegate::m_model</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a019073aa3d7ef88386f5385e560494eb" name="a019073aa3d7ef88386f5385e560494eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a019073aa3d7ef88386f5385e560494eb">&#9670;&#160;</a></span>use_thumbnils</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageDelegate::use_thumbnils { true }</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>

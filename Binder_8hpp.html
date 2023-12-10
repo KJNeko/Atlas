@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -107,6 +104,7 @@ $(document).ready(function(){initNavTree('Binder_8hpp.html',''); initResizable()
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">Binder.hpp File Reference</div></div>
 </div><!--header-->
@@ -116,7 +114,8 @@ $(document).ready(function(){initNavTree('Binder_8hpp.html',''); initResizable()
 <code>#include &quot;<a class="el" href="Database_8hpp_source.html">Database.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="FunctionDecomp_8hpp_source.html">FunctionDecomp.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="binders_8hpp_source.html">binders.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="exceptions_8hpp_source.html">core/exceptions.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging/logging.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="extractors_8hpp_source.html">extractors.hpp</a>&quot;</code><br />
 </div>
 <p><a href="Binder_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -126,9 +125,22 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html">Binder</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepthas__value.html">has_value</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepthas__value__check.html">has_value_check</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepthas__get.html">has_get</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptis__tuple.html">is_tuple</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptis__optional.html">is_optional</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8514cc33a4bbba4014d6bbf5f1e1d69" id="r_ad8514cc33a4bbba4014d6bbf5f1e1d69"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Binder_8hpp.html#ad8514cc33a4bbba4014d6bbf5f1e1d69">ATLASGAMEMANAGER_BINDER_HPP</a></td></tr>
+<tr class="memitem:ad8514cc33a4bbba4014d6bbf5f1e1d69" id="r_ad8514cc33a4bbba4014d6bbf5f1e1d69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Binder_8hpp.html#ad8514cc33a4bbba4014d6bbf5f1e1d69">ATLASGAMEMANAGER_BINDER_HPP</a></td></tr>
 <tr class="separator:ad8514cc33a4bbba4014d6bbf5f1e1d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -139,7 +151,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">define</a> ATLASGAMEMANAGER_BINDER_HPP</td>
+          <td class="memname">#define ATLASGAMEMANAGER_BINDER_HPP</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: atlas/core/logging.cpp File Reference</title>
+<title>Atlas Game Manager: atlas/core/logging/logging.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,46 +103,40 @@ $(document).ready(function(){initNavTree('logging_8cpp.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">logging.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
-<code>#include &lt;fmt/ranges.h&gt;</code><br />
-<code>#include &lt;spdlog/logger.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="logging_8hpp_source.html">logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config/config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ConsoleWriter_8hpp_source.html">ui/dialog/console/ConsoleWriter.hpp</a>&quot;</code><br />
 <code>#include &lt;spdlog/sinks/rotating_file_sink.h&gt;</code><br />
 <code>#include &lt;spdlog/sinks/stdout_color_sinks.h&gt;</code><br />
+<code>#include &lt;spdlog/spdlog.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceatlas" id="r_namespaceatlas"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas.html">atlas</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceatlas_1_1logging" id="r_namespaceatlas_1_1logging"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html">atlas::logging</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5d0717fdf14f6c5bb900de985d2d653a" id="r_a5d0717fdf14f6c5bb900de985d2d653a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8cpp.html#a5d0717fdf14f6c5bb900de985d2d653a">initLogging</a> ()</td></tr>
-<tr class="separator:a5d0717fdf14f6c5bb900de985d2d653a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab93baba09a13fcf83faa20c6f0b0e60e" id="r_ab93baba09a13fcf83faa20c6f0b0e60e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">atlas::logging::init</a> ()</td></tr>
+<tr class="separator:ab93baba09a13fcf83faa20c6f0b0e60e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40fafe65563c6a4fee2e6059c6b8eabe" id="r_a40fafe65563c6a4fee2e6059c6b8eabe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a40fafe65563c6a4fee2e6059c6b8eabe">atlas::logging::setFormat</a> ()</td></tr>
+<tr class="separator:a40fafe65563c6a4fee2e6059c6b8eabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed299bcbc40ba9e45a84425b7c2d131" id="r_a6ed299bcbc40ba9e45a84425b7c2d131"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">atlas::logging::formatSourceLocation</a> (const std::source_location loc, const format_ns::string_view msg)</td></tr>
+<tr class="separator:a6ed299bcbc40ba9e45a84425b7c2d131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a5d0717fdf14f6c5bb900de985d2d653a" name="a5d0717fdf14f6c5bb900de985d2d653a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d0717fdf14f6c5bb900de985d2d653a">&#9670;&#160;</a></span>initLogging()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> initLogging </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="logging_8cpp.html">logging.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_b1e1d182c999906baefbdd7b60f828ad.html">logging</a></li><li class="navelem"><a class="el" href="logging_8cpp.html">logging.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

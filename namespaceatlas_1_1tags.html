@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -113,9 +110,15 @@ $(document).ready(function(){initNavTree('namespaceatlas_1_1tags.html',''); init
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a122e8c9407aac89b794c358cdee4f4a0" id="r_a122e8c9407aac89b794c358cdee4f4a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1tags.html#a122e8c9407aac89b794c358cdee4f4a0">createTag</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> &amp;<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">str</a>)</td></tr>
+<tr class="memitem:a122e8c9407aac89b794c358cdee4f4a0" id="r_a122e8c9407aac89b794c358cdee4f4a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1tags.html#a122e8c9407aac89b794c358cdee4f4a0">createTag</a> (const QString &amp;str)</td></tr>
 <tr class="memdesc:a122e8c9407aac89b794c358cdee4f4a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new tag (or returns an existing ID)  <br /></td></tr>
 <tr class="separator:a122e8c9407aac89b794c358cdee4f4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8755f82832719992f179662923dd5d7" id="r_af8755f82832719992f179662923dd5d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1tags.html#af8755f82832719992f179662923dd5d7">exists</a> (const QString &amp;str)</td></tr>
+<tr class="memdesc:af8755f82832719992f179662923dd5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a tag exists.  <br /></td></tr>
+<tr class="separator:af8755f82832719992f179662923dd5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a087888a0e405a9aca62f7329679a04a2" id="r_a087888a0e405a9aca62f7329679a04a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1tags.html#a087888a0e405a9aca62f7329679a04a2">resolve</a> (const QString &amp;str)</td></tr>
+<tr class="memdesc:a087888a0e405a9aca62f7329679a04a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves a string to a TagID if it exists. Otherwise returns INVALID_TAG_ID.  <br /></td></tr>
+<tr class="separator:a087888a0e405a9aca62f7329679a04a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a122e8c9407aac89b794c358cdee4f4a0" name="a122e8c9407aac89b794c358cdee4f4a0"></a>
@@ -127,7 +130,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> atlas::tags::createTag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> &amp;&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
@@ -135,6 +138,46 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a new tag (or returns an existing ID) </p>
+
+</div>
+</div>
+<a id="af8755f82832719992f179662923dd5d7" name="af8755f82832719992f179662923dd5d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8755f82832719992f179662923dd5d7">&#9670;&#160;</a></span>exists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool atlas::tags::exists </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if a tag exists. </p>
+
+</div>
+</div>
+<a id="a087888a0e405a9aca62f7329679a04a2" name="a087888a0e405a9aca62f7329679a04a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087888a0e405a9aca62f7329679a04a2">&#9670;&#160;</a></span>resolve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tags_8hpp.html#a468c3d7a369222b60b221c1851825f96">TagID</a> atlas::tags::resolve </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resolves a string to a TagID if it exists. Otherwise returns INVALID_TAG_ID. </p>
 
 </div>
 </div>

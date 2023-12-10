@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: atlas/core/database/record/Game.cpp File Reference</title>
+<title>Atlas Game Manager: atlas/core/database/record/game/Game.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -113,13 +110,13 @@ $(document).ready(function(){initNavTree('Game_8cpp.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="Game_8hpp_source.html">Game.hpp</a>&quot;</code><br />
-<code>#include &lt;moc_Game.cpp&gt;</code><br />
 <code>#include &lt;QFuture&gt;</code><br />
 <code>#include &lt;tracy/Tracy.hpp&gt;</code><br />
-<code>#include &quot;<a class="el" href="GameData_8hpp_source.html">GameData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="RapidTransaction_8hpp_source.html">core/database/RapidTransaction.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="GameData_8hpp_source.html">core/database/record/GameData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="F95Data_8hpp_source.html">core/database/remote/F95Data.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="imageManager_8hpp_source.html">core/imageManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="images_8hpp_source.html">core/images/images.hpp</a>&quot;</code><br />
+<code>#include &quot;moc_Game.cpp&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -132,26 +129,24 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2623df0a80565f46e965a3c2beba4adb" id="r_a2623df0a80565f46e965a3c2beba4adb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a2623df0a80565f46e965a3c2beba4adb">atlas::records::internal::getPtr</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">key</a>)</td></tr>
+<tr class="memitem:a2623df0a80565f46e965a3c2beba4adb" id="r_a2623df0a80565f46e965a3c2beba4adb"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a2623df0a80565f46e965a3c2beba4adb">atlas::records::internal::getPtr</a> (const <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> key)</td></tr>
 <tr class="memdesc:a2623df0a80565f46e965a3c2beba4adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ptr for the given key. Returns nullptr if not found.  <br /></td></tr>
 <tr class="separator:a2623df0a80565f46e965a3c2beba4adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe47436fd3d7196cc18ad4919e79537f" id="r_afe47436fd3d7196cc18ad4919e79537f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#afe47436fd3d7196cc18ad4919e79537f">atlas::records::internal::movePtr</a> (<a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &amp;&amp;data)</td></tr>
-<tr class="separator:afe47436fd3d7196cc18ad4919e79537f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36c75a2598ab1f32b1a916cb4c78ecaa" id="r_a36c75a2598ab1f32b1a916cb4c78ecaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a36c75a2598ab1f32b1a916cb4c78ecaa">atlas::records::internal::releasePtr</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">idkey</a>)</td></tr>
+<tr class="memitem:a36c75a2598ab1f32b1a916cb4c78ecaa" id="r_a36c75a2598ab1f32b1a916cb4c78ecaa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a36c75a2598ab1f32b1a916cb4c78ecaa">atlas::records::internal::releasePtr</a> (const <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> idkey)</td></tr>
 <tr class="separator:a36c75a2598ab1f32b1a916cb4c78ecaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae107d8adba65822e460c527a9a1696a1" id="r_ae107d8adba65822e460c527a9a1696a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classatlas_1_1records_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#ae107d8adba65822e460c527a9a1696a1">atlas::records::importRecord</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:ae107d8adba65822e460c527a9a1696a1" id="r_ae107d8adba65822e460c527a9a1696a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classatlas_1_1records_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#ae107d8adba65822e460c527a9a1696a1">atlas::records::importRecord</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="memdesc:ae107d8adba65822e460c527a9a1696a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">imports a new record and returns it. Will return an existing record if the record already exists  <br /></td></tr>
 <tr class="separator:ae107d8adba65822e460c527a9a1696a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c2db5d1663bba7521b8028b116f02e0" id="r_a3c2db5d1663bba7521b8028b116f02e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a3c2db5d1663bba7521b8028b116f02e0">atlas::records::recordExists</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:a3c2db5d1663bba7521b8028b116f02e0" id="r_a3c2db5d1663bba7521b8028b116f02e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a3c2db5d1663bba7521b8028b116f02e0">atlas::records::recordExists</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="separator:a3c2db5d1663bba7521b8028b116f02e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f78f4f2f772d2aa85211dad08d26f7a" id="r_a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a6f78f4f2f772d2aa85211dad08d26f7a">atlas::records::fetchRecord</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:a6f78f4f2f772d2aa85211dad08d26f7a" id="r_a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a6f78f4f2f772d2aa85211dad08d26f7a">atlas::records::fetchRecord</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="separator:a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a8c47b33c1a030c04c381609cd9ada093" id="r_a8c47b33c1a030c04c381609cd9ada093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::unordered_map&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>, std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a8c47b33c1a030c04c381609cd9ada093">atlas::records::internal::map</a></td></tr>
+<tr class="memitem:a8c47b33c1a030c04c381609cd9ada093" id="r_a8c47b33c1a030c04c381609cd9ada093"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>, std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1GameData.html">GameData</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a8c47b33c1a030c04c381609cd9ada093">atlas::records::internal::map</a></td></tr>
 <tr class="separator:a8c47b33c1a030c04c381609cd9ada093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6e401f7960cf5d031adc4f66c86a14f" id="r_ab6e401f7960cf5d031adc4f66c86a14f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab6e401f7960cf5d031adc4f66c86a14f">atlas::records::internal::map_mtx</a></td></tr>
+<tr class="memitem:ab6e401f7960cf5d031adc4f66c86a14f" id="r_ab6e401f7960cf5d031adc4f66c86a14f"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab6e401f7960cf5d031adc4f66c86a14f">atlas::records::internal::map_mtx</a></td></tr>
 <tr class="separator:ab6e401f7960cf5d031adc4f66c86a14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -159,7 +154,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_13a6e4dde8394d479ebdd4b7753fd409.html">database</a></li><li class="navelem"><a class="el" href="dir_a6f1d8d5eaea4937c86afa0a36c4d33f.html">record</a></li><li class="navelem"><a class="el" href="Game_8cpp.html">Game.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_13a6e4dde8394d479ebdd4b7753fd409.html">database</a></li><li class="navelem"><a class="el" href="dir_a6f1d8d5eaea4937c86afa0a36c4d33f.html">record</a></li><li class="navelem"><a class="el" href="dir_5dda2f0fa445c7aca790cb6f7e08b47c.html">game</a></li><li class="navelem"><a class="el" href="Game_8cpp.html">Game.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

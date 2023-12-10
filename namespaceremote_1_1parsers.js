@@ -6,6 +6,8 @@ var namespaceremote_1_1parsers =
         [ "SetF95", "namespaceremote_1_1parsers_1_1v0.html#a8112840a2ee9f39397aa7e07960635e4ac5464f624f03cfeab5565961a78bc0e1", null ],
         [ "InvalidSet", "namespaceremote_1_1parsers_1_1v0.html#a8112840a2ee9f39397aa7e07960635e4a1d9a0bb58c6b7cd6d92546364f89d1da", null ]
       ] ],
+      [ "atlasIDExists", "namespaceremote_1_1parsers_1_1v0.html#a2a1849f4c6ab73010b035bb61a516b5c", null ],
+      [ "F95IDExists", "namespaceremote_1_1parsers_1_1v0.html#a4a201501434c5c677be46cdafdb4a965", null ],
       [ "insertAtlasData", "namespaceremote_1_1parsers_1_1v0.html#a91ca2b037bb0094ea2e40f28454567b0", null ],
       [ "insertF95Data", "namespaceremote_1_1parsers_1_1v0.html#af476362286f641c2a29773ab24ca3a67", null ],
       [ "nameToSet", "namespaceremote_1_1parsers_1_1v0.html#a7290c7aea83233d6dc09a9449df9adeb", null ],

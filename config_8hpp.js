@@ -1,5 +1,6 @@
 var config_8hpp =
 [
+    [ "ATLAS_CONFIG_HPP", "config_8hpp.html#a47f1273d138484352a90c489ee2a3ae5", null ],
     [ "CONFIG_ATTACH_THIS", "config_8hpp.html#a265a0c8d75047989ec607e1d47cc0a1c", null ],
     [ "KEY_VALUE", "config_8hpp.html#a556935838af6218d9004cddb65224f2f", null ],
     [ "SETTINGS", "config_8hpp.html#ab15e9adc66c24bd8b13cb15187cd85f5", null ],
@@ -9,6 +10,13 @@ var config_8hpp =
     [ "SETTINGS_GEO", "config_8hpp.html#a63ab33e715008314f6bfe86879c0b676", null ],
     [ "SETTINGS_PATH", "config_8hpp.html#a8841d1720125b3bb63e720fe9ca240f5", null ],
     [ "SETTINGS_STATE", "config_8hpp.html#a6e03e792ede621dcb1ddb595b258f76d", null ],
+    [ "STR", "config_8hpp.html#a1c5fa4e22b760427accced0c1a59156a", null ],
+    [ "BannerMask", "config_8hpp.html#a1f9b232c5535730395438d891a8140c6", [
+      [ "MASK_NORMAL", "config_8hpp.html#a1f9b232c5535730395438d891a8140c6aaeb51a7084338614962ea7f30cad0531", null ],
+      [ "MASK_WIDE", "config_8hpp.html#a1f9b232c5535730395438d891a8140c6a72fd9dee853ca2c05c649d7aaf9ab7d6", null ],
+      [ "MASK_COVER", "config_8hpp.html#a1f9b232c5535730395438d891a8140c6a577dbe0d56ac1264331c40c7ca70ada0", null ],
+      [ "MASK_LOGO", "config_8hpp.html#a1f9b232c5535730395438d891a8140c6ab9a24c8ebb69581baf3a0bdc71271c0a", null ]
+    ] ],
     [ "BannerType", "config_8hpp.html#a73bbc90ea0914f179933a80fa5744df7", [
       [ "Error", "config_8hpp.html#a73bbc90ea0914f179933a80fa5744df7a4dfd42ec49d09d8c6555c218301cc30f", null ],
       [ "Normal", "config_8hpp.html#a73bbc90ea0914f179933a80fa5744df7a5ecbcf0afce98b042f35ec71ba03fa4b", null ],

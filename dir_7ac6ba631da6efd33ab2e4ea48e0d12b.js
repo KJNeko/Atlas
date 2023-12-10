@@ -1,5 +1,6 @@
 var dir_7ac6ba631da6efd33ab2e4ea48e0d12b =
 [
+    [ "console", "dir_468822db835632ceae4bb47c597bd60b.html", "dir_468822db835632ceae4bb47c597bd60b" ],
     [ "AboutAtlas.cpp", "AboutAtlas_8cpp.html", null ],
     [ "AboutAtlas.hpp", "AboutAtlas_8hpp.html", "AboutAtlas_8hpp" ],
     [ "aboutqtdialog.cpp", "aboutqtdialog_8cpp.html", null ],
@@ -13,5 +14,7 @@ var dir_7ac6ba631da6efd33ab2e4ea48e0d12b =
     [ "SettingsDialog.cpp", "SettingsDialog_8cpp.html", "SettingsDialog_8cpp" ],
     [ "SettingsDialog.hpp", "SettingsDialog_8hpp.html", "SettingsDialog_8hpp" ],
     [ "StatsDialog.cpp", "StatsDialog_8cpp.html", null ],
-    [ "StatsDialog.hpp", "StatsDialog_8hpp.html", "StatsDialog_8hpp" ]
+    [ "StatsDialog.hpp", "StatsDialog_8hpp.html", "StatsDialog_8hpp" ],
+    [ "UpdateDialog.cpp", "UpdateDialog_8cpp.html", null ],
+    [ "UpdateDialog.h", "UpdateDialog_8h.html", "UpdateDialog_8h" ]
 ];

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: atlas/core/database/record/Game.hpp File Reference</title>
+<title>Atlas Game Manager: atlas/core/database/record/game/Game.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -108,15 +105,16 @@ $(document).ready(function(){initNavTree('Game_8hpp.html',''); initResizable(); 
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Game.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;QPixmap&gt;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &quot;<a class="el" href="Types_8hpp_source.html">core/Types.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="dev_8hpp_source.html">core/logging/dev.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config/config.hpp</a>&quot;</code><br />
 </div>
 <p><a href="Game_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -140,22 +138,94 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceatlas_1_1records" id="r_namespaceatlas_1_1records"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html">atlas::records</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a21990470b71649c71657226f045ab6c5" id="r_a21990470b71649c71657226f045ab6c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Game_8hpp.html#a21990470b71649c71657226f045ab6c5">ATLASGAMEMANAGER_GAME_HPP</a></td></tr>
+<tr class="separator:a21990470b71649c71657226f045ab6c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae107d8adba65822e460c527a9a1696a1" id="r_ae107d8adba65822e460c527a9a1696a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classatlas_1_1records_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#ae107d8adba65822e460c527a9a1696a1">atlas::records::importRecord</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:ae107d8adba65822e460c527a9a1696a1" id="r_ae107d8adba65822e460c527a9a1696a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classatlas_1_1records_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#ae107d8adba65822e460c527a9a1696a1">atlas::records::importRecord</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="memdesc:ae107d8adba65822e460c527a9a1696a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">imports a new record and returns it. Will return an existing record if the record already exists  <br /></td></tr>
 <tr class="separator:ae107d8adba65822e460c527a9a1696a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c2db5d1663bba7521b8028b116f02e0" id="r_a3c2db5d1663bba7521b8028b116f02e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a3c2db5d1663bba7521b8028b116f02e0">atlas::records::recordExists</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:a3c2db5d1663bba7521b8028b116f02e0" id="r_a3c2db5d1663bba7521b8028b116f02e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a3c2db5d1663bba7521b8028b116f02e0">atlas::records::recordExists</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="separator:a3c2db5d1663bba7521b8028b116f02e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f78f4f2f772d2aa85211dad08d26f7a" id="r_a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a6f78f4f2f772d2aa85211dad08d26f7a">atlas::records::fetchRecord</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> title, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> creator, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> engine)</td></tr>
+<tr class="memitem:a6f78f4f2f772d2aa85211dad08d26f7a" id="r_a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records.html#a6f78f4f2f772d2aa85211dad08d26f7a">atlas::records::fetchRecord</a> (QString title, QString creator, QString engine)</td></tr>
 <tr class="separator:a6f78f4f2f772d2aa85211dad08d26f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ae790c4906dd9c84f642d7fbc560b6fbb" id="r_ae790c4906dd9c84f642d7fbc560b6fbb"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Game_8hpp.html#ae790c4906dd9c84f642d7fbc560b6fbb">USE_THUMBNAIL</a> { true }</td></tr>
+<tr class="separator:ae790c4906dd9c84f642d7fbc560b6fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d7d4d769cc264b5d0dc8135825d427c" id="r_a2d7d4d769cc264b5d0dc8135825d427c"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Game_8hpp.html#a2d7d4d769cc264b5d0dc8135825d427c">USE_FULLSIZE</a> { false }</td></tr>
+<tr class="separator:a2d7d4d769cc264b5d0dc8135825d427c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a21990470b71649c71657226f045ab6c5" name="a21990470b71649c71657226f045ab6c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21990470b71649c71657226f045ab6c5">&#9670;&#160;</a></span>ATLASGAMEMANAGER_GAME_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLASGAMEMANAGER_GAME_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2d7d4d769cc264b5d0dc8135825d427c" name="a2d7d4d769cc264b5d0dc8135825d427c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d7d4d769cc264b5d0dc8135825d427c">&#9670;&#160;</a></span>USE_FULLSIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool USE_FULLSIZE { false }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae790c4906dd9c84f642d7fbc560b6fbb" name="ae790c4906dd9c84f642d7fbc560b6fbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae790c4906dd9c84f642d7fbc560b6fbb">&#9670;&#160;</a></span>USE_THUMBNAIL</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool USE_THUMBNAIL { true }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_13a6e4dde8394d479ebdd4b7753fd409.html">database</a></li><li class="navelem"><a class="el" href="dir_a6f1d8d5eaea4937c86afa0a36c4d33f.html">record</a></li><li class="navelem"><a class="el" href="Game_8hpp.html">Game.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_13a6e4dde8394d479ebdd4b7753fd409.html">database</a></li><li class="navelem"><a class="el" href="dir_a6f1d8d5eaea4937c86afa0a36c4d33f.html">record</a></li><li class="navelem"><a class="el" href="dir_5dda2f0fa445c7aca790cb6f7e08b47c.html">game</a></li><li class="navelem"><a class="el" href="Game_8hpp.html">Game.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

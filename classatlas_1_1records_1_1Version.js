@@ -25,7 +25,6 @@ var classatlas_1_1records_1_1Version =
     [ "setLastPlayed", "classatlas_1_1records_1_1Version.html#aaa059b388d911ec1e0ba45542004a33b", null ],
     [ "setRelativeExecPath", "classatlas_1_1records_1_1Version.html#a88f89fb979d481df645c55dc8a785b8b", null ],
     [ "setVersionName", "classatlas_1_1records_1_1Version.html#a427330eafef4215d5ac2e2ba8412bc2d", null ],
-    [ "atlas::logging::dev::internalSerializer", "classatlas_1_1records_1_1Version.html#aa2537bfec05d4b4776f34ad03ddd9688", null ],
     [ "data_ptr", "classatlas_1_1records_1_1Version.html#afa46c11a803a9f075b47b9c2ab77d99e", null ],
     [ "m_parent_id", "classatlas_1_1records_1_1Version.html#ad270f8ee606de6ccff8087dc7def54d4", null ],
     [ "m_version", "classatlas_1_1records_1_1Version.html#a62049672bc5ffa8598d3556a9a6a1426", null ]

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['batchimportdelegate_0',['BatchImportDelegate',['../classBatchImportModel.html#ac27de7694470a1239e48cc5db014e86f',1,'BatchImportModel']]],
-  ['binder_1',['Binder',['../classDatabase.html#ac1477f45573f7be56ec13bb35c0041b9',1,'Database']]]
+  ['game_0',['Game',['../structatlas_1_1records_1_1GameData.html#aa2fab026580d6f14280c2ffb8063a314',1,'atlas::records::GameData']]]
 ];

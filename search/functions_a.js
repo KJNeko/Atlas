@@ -2,10 +2,19 @@ var searchData=
 [
   ['loadbanners_0',['loadBanners',['../classRecordEditor.html#aaa5d276517e2b8d8944a5a0b9af7c689',1,'RecordEditor']]],
   ['loadconfig_1',['loadConfig',['../classBatchImportDialog.html#a8a1d99e6feb326842c27762daa7a837d',1,'BatchImportDialog']]],
-  ['loadimage_2',['loadImage',['../namespaceatlas_1_1records.html#a8a450e9df2c5ada04d16de73b4d114e9',1,'atlas::records']]],
-  ['loadpreviews_3',['loadPreviews',['../classRecordEditor.html#addbcd1536e16cee63bc01c86a2135a37',1,'RecordEditor']]],
-  ['loadrecordinfo_4',['loadRecordInfo',['../classRecordEditor.html#a09ebdb0567e94050b2e13372f7af2bc5',1,'RecordEditor']]],
-  ['loadtags_5',['loadTags',['../classRecordEditor.html#a44e6946e4cb7b3a354754b89bc76a8c0',1,'RecordEditor']]],
-  ['loadversions_6',['loadVersions',['../classRecordEditor.html#ae10f8c02abe40eb3f10ced70aca105d0',1,'RecordEditor']]],
-  ['lock_7',['lock',['../classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db',1,'Database']]]
+  ['loadimage_2',['loadImage',['../namespaceatlas_1_1images.html#a113fb18f823a967fa47da9c009db0979',1,'atlas::images']]],
+  ['loadpixmap_3',['loadpixmap',['../namespaceatlas_1_1images_1_1async.html#a94423b2cbeabb19a0855f3177eb17e91',1,'atlas::images::async::loadPixmap()'],['../namespaceatlas_1_1images_1_1internal.html#a9bc875285d3cad88281c015c3c038981',1,'atlas::images::internal::loadPixmap()'],['../namespaceatlas_1_1images.html#ab792de5f150654db95679f7ecf81246b',1,'atlas::images::loadPixmap()']]],
+  ['loadpreviews_4',['loadPreviews',['../classRecordEditor.html#addbcd1536e16cee63bc01c86a2135a37',1,'RecordEditor']]],
+  ['loadrecordinfo_5',['loadRecordInfo',['../classRecordEditor.html#a09ebdb0567e94050b2e13372f7af2bc5',1,'RecordEditor']]],
+  ['loadscaledpixmap_6',['loadscaledpixmap',['../namespaceatlas_1_1images.html#a3d98a7162398cce8bda7b34edc5563c0',1,'atlas::images::loadScaledPixmap()'],['../namespaceatlas_1_1images_1_1internal.html#a849d7df774eaf45dc6154bcd43cffca0',1,'atlas::images::internal::loadScaledPixmap()'],['../namespaceatlas_1_1images_1_1async.html#aaffa7c3048e6f0c08b6bfdbeacc4d932',1,'atlas::images::async::loadScaledPixmap()']]],
+  ['loadscaledthumb_7',['loadScaledThumb',['../namespaceatlas_1_1images_1_1async_1_1internal.html#a374361d5ed5cdc6e9b469b5f02522379',1,'atlas::images::async::internal']]],
+  ['loadtags_8',['loadTags',['../classRecordEditor.html#a44e6946e4cb7b3a354754b89bc76a8c0',1,'RecordEditor']]],
+  ['loadthumbnail_9',['loadThumbnail',['../namespaceatlas_1_1images_1_1async_1_1internal.html#abf5e2034b8500af36af34828c970a448',1,'atlas::images::async::internal']]],
+  ['loadversions_10',['loadVersions',['../classRecordEditor.html#ae10f8c02abe40eb3f10ced70aca105d0',1,'RecordEditor']]],
+  ['lock_11',['lock',['../classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db',1,'Database']]],
+  ['logcritical_12',['logCritical',['../namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688',1,'atlas::logging::internal']]],
+  ['logdebug_13',['logDebug',['../namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e',1,'atlas::logging::internal']]],
+  ['logerror_14',['logError',['../namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61',1,'atlas::logging::internal']]],
+  ['loginfo_15',['logInfo',['../namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863',1,'atlas::logging::internal']]],
+  ['logwarn_16',['logWarn',['../namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630',1,'atlas::logging::internal']]]
 ];

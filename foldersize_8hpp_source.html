@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,25 +114,25 @@ $(document).ready(function(){initNavTree('foldersize_8hpp_source.html',''); init
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 3/27/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_FOLDERSIZE_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_FOLDERSIZE_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span>FileScanner;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceatlas_1_1utils.html">atlas::utils</a></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    std::size_t <a class="code hl_function" href="namespaceatlas_1_1utils.html#ab04a9bbb699ffc5949808bc02a82b71c">folderSize</a>( FileScanner&amp; <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">folder</a> );</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    std::size_t <a class="code hl_function" href="namespaceatlas_1_1utils.html#ab04a9bbb699ffc5949808bc02a82b71c">folderSize</a>( <span class="keyword">const</span> std::filesystem::path&amp; path );</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace atlas::utils</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_FOLDERSIZE_HPP</span></div>
-<div class="ttc" id="anamespaceatlas_1_1utils_html"><div class="ttname"><a href="namespaceatlas_1_1utils.html">atlas::utils</a></div><div class="ttdef"><b>Definition</b> engineDetection.hpp:14</div></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLAS_FOLDERSIZE_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="foldersize_8hpp.html#a1ec0508be3e58ed77f44fa3cd35143fa">    7</a></span><span class="preprocessor">#define ATLAS_FOLDERSIZE_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span>FileScanner;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceatlas_1_1utils.html">atlas::utils</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    std::size_t <a class="code hl_function" href="namespaceatlas_1_1utils.html#ab04a9bbb699ffc5949808bc02a82b71c">folderSize</a>( FileScanner&amp; folder );</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    std::size_t <a class="code hl_function" href="namespaceatlas_1_1utils.html#ab04a9bbb699ffc5949808bc02a82b71c">folderSize</a>( <span class="keyword">const</span> std::filesystem::path&amp; path );</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <span class="comment">// namespace atlas::utils</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_FOLDERSIZE_HPP</span></div>
+<div class="ttc" id="anamespaceatlas_1_1utils_html"><div class="ttname"><a href="namespaceatlas_1_1utils.html">atlas::utils</a></div><div class="ttdef"><b>Definition</b> engineDetection.hpp:15</div></div>
 <div class="ttc" id="anamespaceatlas_1_1utils_html_ab04a9bbb699ffc5949808bc02a82b71c"><div class="ttname"><a href="namespaceatlas_1_1utils.html#ab04a9bbb699ffc5949808bc02a82b71c">atlas::utils::folderSize</a></div><div class="ttdeci">std::size_t folderSize(FileScanner &amp;folder)</div><div class="ttdoc">Returns the byte size of a folder.</div><div class="ttdef"><b>Definition</b> foldersize.cpp:15</div></div>
-<div class="ttc" id="anamespaceatlas_html_ad879f37529f2fad323204059708b9361"><div class="ttname"><a href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">atlas::extract</a></div><div class="ttdeci">std::vector&lt; char &gt; extract(const std::filesystem::path path)</div><div class="ttdef"><b>Definition</b> extract.cpp:35</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

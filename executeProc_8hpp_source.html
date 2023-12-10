@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,28 +114,28 @@ $(document).ready(function(){initNavTree('executeProc_8hpp_source.html',''); ini
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 2/20/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_EXECUTEPROC_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_EXECUTEPROC_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QFuture&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">core/Types.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a657276667d1f8b79579eb7f0b54a36aa">executeProc</a>( <span class="keyword">const</span> <a class="code hl_typedef" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> game_id, <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> version, <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a>&amp; path );</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">bool</span> <a class="code hl_function" href="executeProc_8hpp.html#a79d941e09ff475c82b26637a04091440">processIsRunning</a>();</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a48b9c3a915b4c2d36999eec94bffa7a0">softTerminateProcess</a>();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a84aa1dc3664e04f86ce4df1429da0074">hardTerminateProcess</a>();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_EXECUTEPROC_HPP</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLAS_EXECUTEPROC_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="executeProc_8hpp.html#a49ba7a6c00903da5a149198dba333588">    7</a></span><span class="preprocessor">#define ATLAS_EXECUTEPROC_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QFuture&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="Types_8hpp.html">core/Types.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a657276667d1f8b79579eb7f0b54a36aa">executeProc</a>( <span class="keyword">const</span> <a class="code hl_typedef" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> game_id, <span class="keyword">const</span> QString version, <span class="keyword">const</span> QString&amp; path );</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">bool</span> <a class="code hl_function" href="executeProc_8hpp.html#a79d941e09ff475c82b26637a04091440">processIsRunning</a>();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a48b9c3a915b4c2d36999eec94bffa7a0">softTerminateProcess</a>();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keywordtype">void</span> <a class="code hl_function" href="executeProc_8hpp.html#a84aa1dc3664e04f86ce4df1429da0074">hardTerminateProcess</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_EXECUTEPROC_HPP</span></div>
 <div class="ttc" id="aTypes_8hpp_html"><div class="ttname"><a href="Types_8hpp.html">Types.hpp</a></div></div>
-<div class="ttc" id="aTypes_8hpp_html_a315b4c5d81697de3a3cf46e8a82c3068"><div class="ttname"><a href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a></div><div class="ttdeci">std::uint32_t RecordID</div><div class="ttdef"><b>Definition</b> Types.hpp:10</div></div>
-<div class="ttc" id="aexecuteProc_8hpp_html_a48b9c3a915b4c2d36999eec94bffa7a0"><div class="ttname"><a href="executeProc_8hpp.html#a48b9c3a915b4c2d36999eec94bffa7a0">softTerminateProcess</a></div><div class="ttdeci">void softTerminateProcess()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:64</div></div>
+<div class="ttc" id="aTypes_8hpp_html_a315b4c5d81697de3a3cf46e8a82c3068"><div class="ttname"><a href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a></div><div class="ttdeci">std::uint32_t RecordID</div><div class="ttdef"><b>Definition</b> Types.hpp:11</div></div>
+<div class="ttc" id="aexecuteProc_8hpp_html_a48b9c3a915b4c2d36999eec94bffa7a0"><div class="ttname"><a href="executeProc_8hpp.html#a48b9c3a915b4c2d36999eec94bffa7a0">softTerminateProcess</a></div><div class="ttdeci">void softTerminateProcess()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:63</div></div>
 <div class="ttc" id="aexecuteProc_8hpp_html_a657276667d1f8b79579eb7f0b54a36aa"><div class="ttname"><a href="executeProc_8hpp.html#a657276667d1f8b79579eb7f0b54a36aa">executeProc</a></div><div class="ttdeci">void executeProc(const RecordID game_id, const QString version, const QString &amp;path)</div><div class="ttdoc">Executes the given path.</div><div class="ttdef"><b>Definition</b> executeProc.cpp:19</div></div>
-<div class="ttc" id="aexecuteProc_8hpp_html_a79d941e09ff475c82b26637a04091440"><div class="ttname"><a href="executeProc_8hpp.html#a79d941e09ff475c82b26637a04091440">processIsRunning</a></div><div class="ttdeci">bool processIsRunning()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:59</div></div>
-<div class="ttc" id="aexecuteProc_8hpp_html_a84aa1dc3664e04f86ce4df1429da0074"><div class="ttname"><a href="executeProc_8hpp.html#a84aa1dc3664e04f86ce4df1429da0074">hardTerminateProcess</a></div><div class="ttdeci">void hardTerminateProcess()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:70</div></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
+<div class="ttc" id="aexecuteProc_8hpp_html_a79d941e09ff475c82b26637a04091440"><div class="ttname"><a href="executeProc_8hpp.html#a79d941e09ff475c82b26637a04091440">processIsRunning</a></div><div class="ttdeci">bool processIsRunning()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:58</div></div>
+<div class="ttc" id="aexecuteProc_8hpp_html_a84aa1dc3664e04f86ce4df1429da0074"><div class="ttname"><a href="executeProc_8hpp.html#a84aa1dc3664e04f86ce4df1429da0074">hardTerminateProcess</a></div><div class="ttdeci">void hardTerminateProcess()</div><div class="ttdef"><b>Definition</b> executeProc.cpp:69</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

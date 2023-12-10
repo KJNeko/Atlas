@@ -9,6 +9,5 @@ var searchData=
   ['release_5fdate_6',['release_date',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a9e98cc52b95ae73b8d456e9a8a73aef9',1,'atlas::remote::internal::AtlasData']]],
   ['remote_7',['remote',['../namespaceatlas_1_1internal.html#adfec820c9764b84c6185f297339539f6',1,'atlas::internal']]],
   ['replies_8',['replies',['../structatlas_1_1remote_1_1internal_1_1F95Data.html#a133d2eba17f0c2fd43e0dc09b19c177f',1,'atlas::remote::internal::F95Data']]],
-  ['rows_5freturned_9',['rows_returned',['../structDbResults.html#ac21be7a84c2c2ea1a3291bea4a320900',1,'DbResults']]],
-  ['running_5fprocess_10',['running_process',['../executeProc_8cpp.html#abf71ab07198d99e01000830de92f577b',1,'executeProc.cpp']]]
+  ['running_5fprocess_9',['running_process',['../executeProc_8cpp.html#abf71ab07198d99e01000830de92f577b',1,'executeProc.cpp']]]
 ];

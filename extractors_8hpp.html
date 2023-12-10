@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -118,7 +115,7 @@ $(document).ready(function(){initNavTree('extractors_8hpp.html',''); initResizab
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a824a9ec5d13c722268cae79f8de0df50" id="r_a824a9ec5d13c722268cae79f8de0df50"><td class="memItemLeft" align="right" valign="top">#<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">define</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a824a9ec5d13c722268cae79f8de0df50">ATLASGAMEMANAGER_EXTRACTORS_HPP</a></td></tr>
+<tr class="memitem:a824a9ec5d13c722268cae79f8de0df50" id="r_a824a9ec5d13c722268cae79f8de0df50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a824a9ec5d13c722268cae79f8de0df50">ATLASGAMEMANAGER_EXTRACTORS_HPP</a></td></tr>
 <tr class="separator:a824a9ec5d13c722268cae79f8de0df50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -142,12 +139,16 @@ requires std::is_same_v&lt; T, QString &gt;</td></tr>
 requires std::is_same_v&lt; T, std::filesystem::path &gt;</td></tr>
 <tr class="memitem:aaf27a088885e7da533a51b848c93fb10"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#aaf27a088885e7da533a51b848c93fb10">extract</a> (sqlite3_stmt *stmt, std::filesystem::path &amp;t) noexcept</td></tr>
 <tr class="separator:aaf27a088885e7da533a51b848c93fb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275fff0680e87e0c0f0aaada27d440f2" id="r_a275fff0680e87e0c0f0aaada27d440f2"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t index, typename T &gt; <br />
+requires std::is_same_v&lt; T, std::string &gt;</td></tr>
+<tr class="memitem:a275fff0680e87e0c0f0aaada27d440f2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a275fff0680e87e0c0f0aaada27d440f2">extract</a> (sqlite3_stmt *stmt, std::string &amp;t) noexcept</td></tr>
+<tr class="separator:a275fff0680e87e0c0f0aaada27d440f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a596cb99ca9ff2ca6b917d1660f4e4cbb" id="r_a596cb99ca9ff2ca6b917d1660f4e4cbb"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t index, typename T &gt; <br />
 requires std::is_same_v&lt; T, std::vector&lt; std::byte &gt; &gt;</td></tr>
 <tr class="memitem:a596cb99ca9ff2ca6b917d1660f4e4cbb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a596cb99ca9ff2ca6b917d1660f4e4cbb">extract</a> (sqlite3_stmt *stmt, std::vector&lt; std::byte &gt; &amp;t) noexcept</td></tr>
 <tr class="separator:a596cb99ca9ff2ca6b917d1660f4e4cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e6894e7597a8c59dc21086070c593e1" id="r_a7e6894e7597a8c59dc21086070c593e1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::uint64_t</a> index, typename... Args&gt; </td></tr>
-<tr class="memitem:a7e6894e7597a8c59dc21086070c593e1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a7e6894e7597a8c59dc21086070c593e1">extractRow</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sqlite3_stmt</a> *stmt, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::tuple</a>&lt; Args... &gt; &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">tpl</a>) <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">noexcept</a></td></tr>
+<tr class="memitem:a7e6894e7597a8c59dc21086070c593e1" id="r_a7e6894e7597a8c59dc21086070c593e1"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t index, typename... Args&gt; </td></tr>
+<tr class="memitem:a7e6894e7597a8c59dc21086070c593e1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="extractors_8hpp.html#a7e6894e7597a8c59dc21086070c593e1">extractRow</a> (sqlite3_stmt *stmt, std::tuple&lt; Args... &gt; &amp;tpl) noexcept</td></tr>
 <tr class="separator:a7e6894e7597a8c59dc21086070c593e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -158,7 +159,7 @@ requires std::is_same_v&lt; T, std::vector&lt; std::byte &gt; &gt;</td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">define</a> ATLASGAMEMANAGER_EXTRACTORS_HPP</td>
+          <td class="memname">#define ATLASGAMEMANAGER_EXTRACTORS_HPP</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -167,7 +168,7 @@ requires std::is_same_v&lt; T, std::vector&lt; std::byte &gt; &gt;</td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8ab6bed9320aa2b01ebe634a87cfd0b3" name="a8ab6bed9320aa2b01ebe634a87cfd0b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ab6bed9320aa2b01ebe634a87cfd0b3">&#9670;&#160;</a></span>extract() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ab6bed9320aa2b01ebe634a87cfd0b3">&#9670;&#160;</a></span>extract() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +206,7 @@ template&lt;std::uint64_t , typename T &gt; </div>
 </div>
 </div>
 <a id="abff17205dbe401930c0c557ac1d6a1cd" name="abff17205dbe401930c0c557ac1d6a1cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abff17205dbe401930c0c557ac1d6a1cd">&#9670;&#160;</a></span>extract() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abff17205dbe401930c0c557ac1d6a1cd">&#9670;&#160;</a></span>extract() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,7 +245,7 @@ requires std::is_same_v&lt; T, QString &gt;</div>
 </div>
 </div>
 <a id="aaf27a088885e7da533a51b848c93fb10" name="aaf27a088885e7da533a51b848c93fb10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf27a088885e7da533a51b848c93fb10">&#9670;&#160;</a></span>extract() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf27a088885e7da533a51b848c93fb10">&#9670;&#160;</a></span>extract() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,8 +283,47 @@ requires std::is_same_v&lt; T, std::filesystem::path &gt;</div>
 
 </div>
 </div>
+<a id="a275fff0680e87e0c0f0aaada27d440f2" name="a275fff0680e87e0c0f0aaada27d440f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a275fff0680e87e0c0f0aaada27d440f2">&#9670;&#160;</a></span>extract() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::uint64_t index, typename T &gt; <br />
+requires std::is_same_v&lt; T, std::string &gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void extract </td>
+          <td>(</td>
+          <td class="paramtype">sqlite3_stmt *&#160;</td>
+          <td class="paramname"><em>stmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aaec39751d82881b8ccb9b2d16673f08d" name="aaec39751d82881b8ccb9b2d16673f08d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaec39751d82881b8ccb9b2d16673f08d">&#9670;&#160;</a></span>extract() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec39751d82881b8ccb9b2d16673f08d">&#9670;&#160;</a></span>extract() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +362,7 @@ requires std::is_same_v&lt; T, std::u8string &gt;</div>
 </div>
 </div>
 <a id="a596cb99ca9ff2ca6b917d1660f4e4cbb" name="a596cb99ca9ff2ca6b917d1660f4e4cbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a596cb99ca9ff2ca6b917d1660f4e4cbb">&#9670;&#160;</a></span>extract() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a596cb99ca9ff2ca6b917d1660f4e4cbb">&#9670;&#160;</a></span>extract() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,7 +401,7 @@ requires std::is_same_v&lt; T, std::vector&lt; std::byte &gt; &gt;</div>
 </div>
 </div>
 <a id="a2ba92359fa81183ae0cee0467a3350b9" name="a2ba92359fa81183ae0cee0467a3350b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ba92359fa81183ae0cee0467a3350b9">&#9670;&#160;</a></span>extract() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ba92359fa81183ae0cee0467a3350b9">&#9670;&#160;</a></span>extract() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,21 +445,21 @@ requires std::is_integral_v&lt; T &gt;</div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::uint64_t</a> index, typename... Args&gt; </div>
+template&lt;std::uint64_t index, typename... Args&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> extractRow </td>
+          <td class="memname">void extractRow </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sqlite3_stmt</a> *&#160;</td>
+          <td class="paramtype">sqlite3_stmt *&#160;</td>
           <td class="paramname"><em>stmt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">std::tuple</a>&lt; Args... &gt; &amp;&#160;</td>
+          <td class="paramtype">std::tuple&lt; Args... &gt; &amp;&#160;</td>
           <td class="paramname"><em>tpl</em>&#160;</td>
         </tr>
         <tr>

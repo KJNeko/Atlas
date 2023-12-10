@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,39 +114,39 @@ $(document).ready(function(){initNavTree('parser_8hpp_source.html',''); initResi
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 6/28/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_PARSER_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLASGAMEMANAGER_PARSER_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="foldopen" id="foldopen00010" data-start="{" data-end="}">
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="namespaceremote.html">   10</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceremote_1_1parsers.html">remote::parsers</a></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="comment">//This is clearly used. Yet gcc thinks it is not</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifdef __GNUC__</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#pragma GCC diagnostic push</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wunused-const-variable&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">constexpr</span> std::uint64_t <a class="code hl_variable" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">MAX_REMOTE_VERSION</a> { 0 };</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">   20</a></span>    <span class="keyword">constexpr</span> std::uint64_t <a class="code hl_variable" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">MAX_REMOTE_VERSION</a> { 0 };</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="namespaceremote_1_1parsers_1_1v0.html">   23</a></span>    <span class="keyword">namespace </span>v0</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    {</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceremote_1_1parsers_1_1v0.html#a0fe0d687528ed39e5b77f6880e2ce403">processJson</a>( <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QJsonObject</a>&amp; <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">json</a> );</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_PARSER_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="parser_8hpp.html#a715df3f8d8e0ea8da52c439cdafa9728">    7</a></span><span class="preprocessor">#define ATLASGAMEMANAGER_PARSER_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="namespaceremote.html">   11</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceremote_1_1parsers.html">remote::parsers</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">//This is clearly used. Yet gcc thinks it is not</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifdef __GNUC__</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#pragma GCC diagnostic push</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wunused-const-variable&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">constexpr</span> std::uint64_t <a class="code hl_variable" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">MAX_REMOTE_VERSION</a> { 0 };</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">   21</a></span>    <span class="keyword">constexpr</span> std::uint64_t <a class="code hl_variable" href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">MAX_REMOTE_VERSION</a> { 0 };</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="namespaceremote_1_1parsers_1_1v0.html">   24</a></span>    <span class="keyword">namespace </span>v0</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceremote_1_1parsers_1_1v0.html#a0fe0d687528ed39e5b77f6880e2ce403">processJson</a>( <span class="keyword">const</span> QJsonObject&amp; json );</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
 </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>} <span class="comment">// namespace remote::parsers</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>} <span class="comment">// namespace remote::parsers</span></div>
 </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_PARSER_HPP</span></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
-<div class="ttc" id="anamespaceremote_1_1parsers_1_1v0_html_a0fe0d687528ed39e5b77f6880e2ce403"><div class="ttname"><a href="namespaceremote_1_1parsers_1_1v0.html#a0fe0d687528ed39e5b77f6880e2ce403">remote::parsers::v0::processJson</a></div><div class="ttdeci">void processJson(const QJsonObject &amp;json)</div><div class="ttdef"><b>Definition</b> v0_parser.cpp:302</div></div>
-<div class="ttc" id="anamespaceremote_1_1parsers_html"><div class="ttname"><a href="namespaceremote_1_1parsers.html">remote::parsers</a></div><div class="ttdef"><b>Definition</b> parser.hpp:11</div></div>
-<div class="ttc" id="anamespaceremote_1_1parsers_html_a5d0483e6576298441d619d46721c8b92"><div class="ttname"><a href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">remote::parsers::MAX_REMOTE_VERSION</a></div><div class="ttdeci">constexpr std::uint64_t MAX_REMOTE_VERSION</div><div class="ttdef"><b>Definition</b> parser.hpp:20</div></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_PARSER_HPP</span></div>
+<div class="ttc" id="anamespaceremote_1_1parsers_1_1v0_html_a0fe0d687528ed39e5b77f6880e2ce403"><div class="ttname"><a href="namespaceremote_1_1parsers_1_1v0.html#a0fe0d687528ed39e5b77f6880e2ce403">remote::parsers::v0::processJson</a></div><div class="ttdeci">void processJson(const QJsonObject &amp;json)</div><div class="ttdef"><b>Definition</b> v0_parser.cpp:366</div></div>
+<div class="ttc" id="anamespaceremote_1_1parsers_html"><div class="ttname"><a href="namespaceremote_1_1parsers.html">remote::parsers</a></div><div class="ttdef"><b>Definition</b> parser.hpp:12</div></div>
+<div class="ttc" id="anamespaceremote_1_1parsers_html_a5d0483e6576298441d619d46721c8b92"><div class="ttname"><a href="namespaceremote_1_1parsers.html#a5d0483e6576298441d619d46721c8b92">remote::parsers::MAX_REMOTE_VERSION</a></div><div class="ttdeci">constexpr std::uint64_t MAX_REMOTE_VERSION</div><div class="ttdef"><b>Definition</b> parser.hpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

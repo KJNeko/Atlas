@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,30 +114,30 @@ $(document).ready(function(){initNavTree('operators_8hpp_source.html',''); initR
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 8/31/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QString&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifdef __linux__</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a>( <span class="keyword">const</span> std::filesystem::path path, <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">second</a> )</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> path / <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">second</a>.toStdString();</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#else</span></div>
-<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">   18</a></span><span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a>( <span class="keyword">const</span> std::filesystem::path path, <span class="keyword">const</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">second</a> )</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">return</span> path / <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">second</a>.toStdWString();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="operators_8hpp.html#a75c16cbed7604c2744edbb47871caf61">    7</a></span><span class="preprocessor">#define ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifdef __linux__</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a>( <span class="keyword">const</span> std::filesystem::path path, <span class="keyword">const</span> QString second )</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">return</span> path / second.toStdString();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#else</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">   19</a></span><span class="keyword">inline</span> std::filesystem::path <a class="code hl_function" href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a>( <span class="keyword">const</span> std::filesystem::path path, <span class="keyword">const</span> QString second )</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">return</span> path / second.toStdWString();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
 </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
-<div class="ttc" id="aoperators_8hpp_html_a056b86e9f7e5274b696479515f31d627"><div class="ttname"><a href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a></div><div class="ttdeci">std::filesystem::path operator/(const std::filesystem::path path, const QString second)</div><div class="ttdef"><b>Definition</b> operators.hpp:18</div></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_OPERATORS_HPP</span></div>
+<div class="ttc" id="aoperators_8hpp_html_a056b86e9f7e5274b696479515f31d627"><div class="ttname"><a href="operators_8hpp.html#a056b86e9f7e5274b696479515f31d627">operator/</a></div><div class="ttdeci">std::filesystem::path operator/(const std::filesystem::path path, const QString second)</div><div class="ttdef"><b>Definition</b> operators.hpp:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

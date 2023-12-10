@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -141,6 +138,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ad74f3abc90d78d332913b5c7cd3d177b" id="r_ad74f3abc90d78d332913b5c7cd3d177b"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:ad74f3abc90d78d332913b5c7cd3d177b"><td class="memTemplItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#ad74f3abc90d78d332913b5c7cd3d177b">migration&lt; 16 &gt;</a> ()</td></tr>
 <tr class="separator:ad74f3abc90d78d332913b5c7cd3d177b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6295585df1f221145365172e6dd282" id="r_a3b6295585df1f221145365172e6dd282"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a3b6295585df1f221145365172e6dd282"><td class="memTemplItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a3b6295585df1f221145365172e6dd282">migration&lt; 17 &gt;</a> ()</td></tr>
+<tr class="separator:a3b6295585df1f221145365172e6dd282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64c4d1d2110a593b46d2aecb00f50682" id="r_a64c4d1d2110a593b46d2aecb00f50682"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a64c4d1d2110a593b46d2aecb00f50682"><td class="memTemplItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a64c4d1d2110a593b46d2aecb00f50682">migration&lt; 2 &gt;</a> ()</td></tr>
 <tr class="separator:a64c4d1d2110a593b46d2aecb00f50682"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,12 +166,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ae081ccf2d42e7f80acae2e5860110dc8"><td class="memTemplItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#ae081ccf2d42e7f80acae2e5860110dc8">migration&lt; 9 &gt;</a> ()</td></tr>
 <tr class="separator:ae081ccf2d42e7f80acae2e5860110dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c0b2a8f57fa314a0e009f78b58a3d38" id="r_a3c0b2a8f57fa314a0e009f78b58a3d38"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t id&gt; </td></tr>
-<tr class="memitem:a3c0b2a8f57fa314a0e009f78b58a3d38"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a3c0b2a8f57fa314a0e009f78b58a3d38">runUp</a> (<a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> &amp;<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">trans</a>)</td></tr>
+<tr class="memitem:a3c0b2a8f57fa314a0e009f78b58a3d38"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a3c0b2a8f57fa314a0e009f78b58a3d38">runUp</a> (<a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> &amp;trans)</td></tr>
+<tr class="memdesc:a3c0b2a8f57fa314a0e009f78b58a3d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the transaction and marks it as complete in the migrations table.  <br /></td></tr>
 <tr class="separator:a3c0b2a8f57fa314a0e009f78b58a3d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4329d5ef612923f86da0cb2f674e4a5" id="r_ad4329d5ef612923f86da0cb2f674e4a5"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t idx&gt; </td></tr>
-<tr class="memitem:ad4329d5ef612923f86da0cb2f674e4a5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#ad4329d5ef612923f86da0cb2f674e4a5">runUpRecurse</a> ()</td></tr>
-<tr class="separator:ad4329d5ef612923f86da0cb2f674e4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e28b3108032905e140074b9f2d3e4a4" id="r_a9e28b3108032905e140074b9f2d3e4a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a9e28b3108032905e140074b9f2d3e4a4">runUp</a> ()</td></tr>
+<tr class="memitem:a9e28b3108032905e140074b9f2d3e4a4" id="r_a9e28b3108032905e140074b9f2d3e4a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a9e28b3108032905e140074b9f2d3e4a4">runUp</a> ()</td></tr>
+<tr class="memdesc:a9e28b3108032905e140074b9f2d3e4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs all transactions up until hitting MIGRATIONS_VERSION - 1.  <br /></td></tr>
 <tr class="separator:a9e28b3108032905e140074b9f2d3e4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e56b8b2517a5aa25b241e2779eb0b5c" id="r_a0e56b8b2517a5aa25b241e2779eb0b5c"><td class="memTemplParams" colspan="2">template&lt;std::uint64_t id&gt; </td></tr>
 <tr class="memitem:a0e56b8b2517a5aa25b241e2779eb0b5c"><td class="memTemplItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a0e56b8b2517a5aa25b241e2779eb0b5c">migration</a> ()</td></tr>
@@ -180,7 +179,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a7bb26f1bc602f69ecb93437a1da8a34e" id="r_a7bb26f1bc602f69ecb93437a1da8a34e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">constexpr</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a7bb26f1bc602f69ecb93437a1da8a34e">MIGRATIONS_VERSION</a> { 17 }</td></tr>
+<tr class="memitem:a7bb26f1bc602f69ecb93437a1da8a34e" id="r_a7bb26f1bc602f69ecb93437a1da8a34e"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a7bb26f1bc602f69ecb93437a1da8a34e">MIGRATIONS_VERSION</a> { 18 }</td></tr>
 <tr class="memdesc:a7bb26f1bc602f69ecb93437a1da8a34e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Int to represent what the highest migration is at (Starting at migration 0 we run until we are N &lt;= MIGRATIONS_VERSION)  <br /></td></tr>
 <tr class="separator:a7bb26f1bc602f69ecb93437a1da8a34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -203,6 +202,13 @@ template&lt;std::uint64_t id&gt; </div>
 </div><div class="memdoc">
 
 <p>Up must be defined to create/modify the tables that are required. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">id</td><td>ID of the migration to run </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the migration string. Must be a valid SQL query </dd></dl>
 
 </div>
 </div>
@@ -377,6 +383,25 @@ template&lt;&gt; </div>
 
 </div>
 </div>
+<a id="a3b6295585df1f221145365172e6dd282" name="a3b6295585df1f221145365172e6dd282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b6295585df1f221145365172e6dd282">&#9670;&#160;</a></span>migration&lt; 17 &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view <a class="el" href="namespaceatlas_1_1database_1_1migrations.html#a0e56b8b2517a5aa25b241e2779eb0b5c">atlas::database::migrations::migration</a>&lt; 17 &gt; </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a64c4d1d2110a593b46d2aecb00f50682" name="a64c4d1d2110a593b46d2aecb00f50682"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a64c4d1d2110a593b46d2aecb00f50682">&#9670;&#160;</a></span>migration&lt; 2 &gt;()</h2>
 
@@ -536,13 +561,21 @@ template&lt;&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a> atlas::database::migrations::runUp </td>
+          <td class="memname">void atlas::database::migrations::runUp </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Runs all transactions up until hitting MIGRATIONS_VERSION - 1. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">DatabaseException</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -555,7 +588,7 @@ template&lt;&gt; </div>
 template&lt;std::uint64_t id&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a> atlas::database::migrations::runUp </td>
+          <td class="memname">void atlas::database::migrations::runUp </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="Transaction_8hpp.html#a78e823c609e180aabf1ad428df6939e2">Transaction</a> &amp;&#160;</td>
           <td class="paramname"><em>trans</em></td><td>)</td>
@@ -564,24 +597,19 @@ template&lt;std::uint64_t id&gt; </div>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="ad4329d5ef612923f86da0cb2f674e4a5" name="ad4329d5ef612923f86da0cb2f674e4a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4329d5ef612923f86da0cb2f674e4a5">&#9670;&#160;</a></span>runUpRecurse()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::uint64_t idx&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a> atlas::database::migrations::runUpRecurse </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Runs the transaction and marks it as complete in the migrations table. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">id</td><td>ID of the migration to run. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trans</td><td>Transaction to perform the migration on </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -596,7 +624,7 @@ template&lt;std::uint64_t idx&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">constexpr</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">int</a> atlas::database::migrations::MIGRATIONS_VERSION { 17 }</td>
+          <td class="memname">constexpr int atlas::database::migrations::MIGRATIONS_VERSION { 18 }</td>
         </tr>
       </table>
   </td>

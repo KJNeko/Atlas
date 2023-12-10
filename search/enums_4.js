@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['location_0',['LOCATION',['../config_8hpp.html#a61bb4b823f9b89b5e9bb7c2b5a60d700',1,'config.hpp']]]
+  ['importcolumns_0',['ImportColumns',['../classBatchImportModel.html#a3ed58d3e7c2f7b1e4108e63eaf2c456e',1,'BatchImportModel']]]
 ];

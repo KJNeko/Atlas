@@ -1,6 +1,7 @@
 var regex_8hpp =
 [
     [ "regex::GroupsOutput", "structregex_1_1GroupsOutput.html", "structregex_1_1GroupsOutput" ],
+    [ "ATLAS_REGEX_HPP", "regex_8hpp.html#ad0e126f37ae6617881679f63bcf5065f", null ],
     [ "escapeStr", "regex_8hpp.html#ad8364e5c3b0ed385b423af3f87179b74", null ],
     [ "extractGroups", "regex_8hpp.html#ab72b29698c63d12c456317114bde574b", null ],
     [ "groupify", "regex_8hpp.html#aa2431163319f2b1b09d16fd83dc6a815", null ],

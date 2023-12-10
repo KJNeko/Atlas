@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,49 +114,54 @@ $(document).ready(function(){initNavTree('DevNotification_8hpp_source.html','');
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 7/21/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="Notification_8hpp.html">Notification.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_BEGIN_NAMESPACE</a></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="DevNotification_8hpp.html#abc34aca64a90919c0b2ed597243b12b3">    7</a></span><span class="preprocessor">#define ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="MessageNotification_8hpp.html">MessageNotification.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="Notification_8hpp.html">Notification.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">class </span><a class="code hl_class" href="classDevNotification.html">DevNotification</a>;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_END_NAMESPACE</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>QT_BEGIN_NAMESPACE</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">class </span><a class="code hl_class" href="classDevNotification.html">DevNotification</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classDevNotification.html">   19</a></span><span class="keyword">class </span><a class="code hl_class" href="classDevNotification.html">DevNotification</a> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">final</a> : <span class="keyword">public</span> <a class="code hl_class" href="classNotification.html">Notification</a></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_OBJECT</a></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_DISABLE_COPY_MOVE</a>( <a class="code hl_class" href="classDevNotification.html">DevNotification</a> )</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>QT_END_NAMESPACE</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classDevNotification.html">   21</a></span><span class="keyword">class </span><a class="code hl_class" href="classDevNotification.html">DevNotification</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classNotification.html">Notification</a></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    Q_OBJECT</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_class" href="classDevNotification.html">DevNotification</a> )</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classDevNotification.html">DevNotification</a>( std::string <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">msg</a>, <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QString</a> info, QWidget* parent = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="classDevNotification.html#a9a3a5f42d2c07b6de1d99d339027942a">~DevNotification</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">   31</a></span>    Ui::DevNotification* <a class="code hl_variable" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">ui</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classDevNotification.html#ab3c6d601b216aafd382ca09cbfbc5222">   26</a></span>    QString <a class="code hl_variable" href="classDevNotification.html#ab3c6d601b216aafd382ca09cbfbc5222">m_full_message</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  public:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    explicit <a class="code hl_class" href="classDevNotification.html">DevNotification</a>( const <a class="code hl_enumeration" href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dc">MessageLevel</a> level, QString msg, QString full_message, QWidget* parent = <span class="keywordtype">nullptr</span> );</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    ~<a class="code hl_class" href="classDevNotification.html">DevNotification</a>() override;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keyword">private</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">slots</a>:</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">on_copyError_pressed</a>();</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>};</div>
-</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  private:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">   35</a></span>    <a class="code hl_namespace" href="namespaceUi.html">Ui</a>::<a class="code hl_class" href="classDevNotification.html">DevNotification</a>* <a class="code hl_variable" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">ui</a>;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  private slots:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">on_copyError_pressed</a>();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
+</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_DEVNOTIFICATION_HPP</span></div>
+<div class="ttc" id="aMessageNotification_8hpp_html"><div class="ttname"><a href="MessageNotification_8hpp.html">MessageNotification.hpp</a></div></div>
+<div class="ttc" id="aMessageNotification_8hpp_html_aaf5eea9687ad679dc3e504d373e959dc"><div class="ttname"><a href="MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dc">MessageLevel</a></div><div class="ttdeci">MessageLevel</div><div class="ttdef"><b>Definition</b> MessageNotification.hpp:21</div></div>
 <div class="ttc" id="aNotification_8hpp_html"><div class="ttname"><a href="Notification_8hpp.html">Notification.hpp</a></div></div>
-<div class="ttc" id="aclassDevNotification_html"><div class="ttname"><a href="classDevNotification.html">DevNotification</a></div><div class="ttdef"><b>Definition</b> DevNotification.hpp:20</div></div>
-<div class="ttc" id="aclassDevNotification_html_a6acafb3414e93caf6d2306b95a26ab0a"><div class="ttname"><a href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">DevNotification::on_copyError_pressed</a></div><div class="ttdeci">void on_copyError_pressed()</div><div class="ttdef"><b>Definition</b> DevNotification.cpp:30</div></div>
-<div class="ttc" id="aclassDevNotification_html_a9a3a5f42d2c07b6de1d99d339027942a"><div class="ttname"><a href="classDevNotification.html#a9a3a5f42d2c07b6de1d99d339027942a">DevNotification::~DevNotification</a></div><div class="ttdeci">~DevNotification() override</div><div class="ttdef"><b>Definition</b> DevNotification.cpp:25</div></div>
-<div class="ttc" id="aclassDevNotification_html_abd40d0bcd8771b5280e111c3c457a689"><div class="ttname"><a href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">DevNotification::ui</a></div><div class="ttdeci">Ui::DevNotification * ui</div><div class="ttdef"><b>Definition</b> DevNotification.hpp:31</div></div>
-<div class="ttc" id="aclassNotification_html"><div class="ttname"><a href="classNotification.html">Notification</a></div><div class="ttdef"><b>Definition</b> Notification.hpp:18</div></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
-<div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition</b> AboutAtlas.hpp:7</div></div>
+<div class="ttc" id="aclassDevNotification_html"><div class="ttname"><a href="classDevNotification.html">DevNotification</a></div><div class="ttdef"><b>Definition</b> DevNotification.hpp:22</div></div>
+<div class="ttc" id="aclassDevNotification_html_a6acafb3414e93caf6d2306b95a26ab0a"><div class="ttname"><a href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">DevNotification::on_copyError_pressed</a></div><div class="ttdeci">void on_copyError_pressed()</div><div class="ttdef"><b>Definition</b> DevNotification.cpp:58</div></div>
+<div class="ttc" id="aclassDevNotification_html_ab3c6d601b216aafd382ca09cbfbc5222"><div class="ttname"><a href="classDevNotification.html#ab3c6d601b216aafd382ca09cbfbc5222">DevNotification::m_full_message</a></div><div class="ttdeci">QString m_full_message</div><div class="ttdef"><b>Definition</b> DevNotification.hpp:26</div></div>
+<div class="ttc" id="aclassDevNotification_html_abd40d0bcd8771b5280e111c3c457a689"><div class="ttname"><a href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">DevNotification::ui</a></div><div class="ttdeci">Ui::DevNotification * ui</div><div class="ttdef"><b>Definition</b> DevNotification.hpp:35</div></div>
+<div class="ttc" id="aclassNotification_html"><div class="ttname"><a href="classNotification.html">Notification</a></div><div class="ttdef"><b>Definition</b> Notification.hpp:19</div></div>
+<div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition</b> AboutAtlas.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -4,6 +4,7 @@ var SIModel_8hpp =
     [ "FileInfo", "structFileInfo.html", "structFileInfo" ],
     [ "Node", "structNode.html", "structNode" ],
     [ "SIModel", "classSIModel.html", "classSIModel" ],
+    [ "ATLASGAMEMANAGER_SIMODEL_HPP", "SIModel_8hpp.html#a7c23c8a4f8dab94cb869c9a003f34632", null ],
     [ "SupportingType", "SIModel_8hpp.html#aa04fd30c59c9ca60c741f23e4cca46ef", [
       [ "NoSupportingType", "SIModel_8hpp.html#aa04fd30c59c9ca60c741f23e4cca46efac7c74d8c98b706ce42d8b8f5cd56c370", null ],
       [ "TITLE", "SIModel_8hpp.html#aa04fd30c59c9ca60c741f23e4cca46efa6f9dccd85b2e0786c8d522045365eb48", null ],

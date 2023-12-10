@@ -24,6 +24,7 @@ var classBatchImportModel =
     [ "getData", "classBatchImportModel.html#a55262888ba6f0d2d8ec667f1e614e954", null ],
     [ "headerData", "classBatchImportModel.html#a47b5017b28e284531c37b09389daf7fd", null ],
     [ "isGood", "classBatchImportModel.html#a4db8142a7ff74d1184e8c7f146fd0631", null ],
+    [ "removeRows", "classBatchImportModel.html#ae50d6e5cf29ca857c105957da8497c1e", null ],
     [ "rowCount", "classBatchImportModel.html#a0a35ecf170d51c88e73dbe6d19100182", null ],
     [ "setData", "classBatchImportModel.html#aff5478855ca11eb2e9c83a84f259412b", null ],
     [ "sort", "classBatchImportModel.html#a7fe4f1a7cdfd1b11a69f918ae2494991", null ],

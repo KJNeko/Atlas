@@ -8,6 +8,7 @@ var classBatchImportDialog =
     [ "importComplete", "classBatchImportDialog.html#a04b7af1c07bb900476b9d9b1e410aaa3", null ],
     [ "importFailure", "classBatchImportDialog.html#a845f361b1917d64a551bd76c41e338aa", null ],
     [ "importFiles", "classBatchImportDialog.html#a111425f4ebdde4355acd5b38d6d85360", null ],
+    [ "keyPressEvent", "classBatchImportDialog.html#aed645650142c3c58a734599bbecec0a0", null ],
     [ "loadConfig", "classBatchImportDialog.html#a8a1d99e6feb326842c27762daa7a837d", null ],
     [ "modelChanged", "classBatchImportDialog.html#a2dc09848c1b774d4e9943ffec538eb4c", null ],
     [ "on_btnBack_pressed", "classBatchImportDialog.html#a993cefae57a96344c287b8de704e3536", null ],

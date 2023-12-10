@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iterator_0',['iterator',['../classatlas_1_1utils_1_1FileScanner.html#a67171474c4da6cc8efe0c7fafefd2b2d',1,'atlas::utils::FileScanner']]]
+  ['progresssignaler_0',['ProgressSignaler',['../classProgressNotification.html#a08119a739a17d76d9d8cc2650f6a7340',1,'ProgressNotification']]]
 ];

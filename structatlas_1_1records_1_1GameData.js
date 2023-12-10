@@ -1,7 +1,7 @@
 var structatlas_1_1records_1_1GameData =
 [
     [ "GameData", "structatlas_1_1records_1_1GameData.html#a9e379c53aed3f024961ece22e3d92cbc", null ],
-    [ "GameData", "structatlas_1_1records_1_1GameData.html#a24aaf90f4fff1372d02a8cc37366563a", null ],
+    [ "GameData", "structatlas_1_1records_1_1GameData.html#ad7d6e9649bb0806d066b9793f3f8ffd6", null ],
     [ "GameData", "structatlas_1_1records_1_1GameData.html#a0779bfca41588c4558c7bc61ad2ec27c", null ],
     [ "GameData", "structatlas_1_1records_1_1GameData.html#a39973d28a38a37928ac3d79c76a4daa5", null ],
     [ "getVersion", "structatlas_1_1records_1_1GameData.html#a0407d229a908c4b5a4c42a650261d16e", null ],
@@ -15,6 +15,7 @@ var structatlas_1_1records_1_1GameData =
     [ "m_engine", "structatlas_1_1records_1_1GameData.html#ac64764ec7f322075f61ac24bb9e632d0", null ],
     [ "m_game_id", "structatlas_1_1records_1_1GameData.html#a65b5559c49f33f545e8cb33019ab5a83", null ],
     [ "m_last_played", "structatlas_1_1records_1_1GameData.html#a71f3b9073110daa0e1161d903b519dfb", null ],
+    [ "m_mtx", "structatlas_1_1records_1_1GameData.html#a81e3da1cbd3bedef53687d1c2e826424", null ],
     [ "m_preview_count", "structatlas_1_1records_1_1GameData.html#acff018231cf77c03aa24237ff42b9ef5", null ],
     [ "m_preview_paths", "structatlas_1_1records_1_1GameData.html#a0eb5bc59f654e5e20843c1c12268856c", null ],
     [ "m_tags", "structatlas_1_1records_1_1GameData.html#a670ea617d995500e37148c49a86097e1", null ],

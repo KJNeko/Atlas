@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -107,6 +104,7 @@ $(document).ready(function(){initNavTree('classBinder.html',''); initResizable()
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classBinder-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Binder Class Reference</div></div>
@@ -117,36 +115,48 @@ $(document).ready(function(){initNavTree('classBinder.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab1e9712897aa8c31290ff7efa02c6c67" id="r_ab1e9712897aa8c31290ff7efa02c6c67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ab1e9712897aa8c31290ff7efa02c6c67">Binder</a> ()=<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">delete</a></td></tr>
+<tr class="memitem:ab1e9712897aa8c31290ff7efa02c6c67" id="r_ab1e9712897aa8c31290ff7efa02c6c67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ab1e9712897aa8c31290ff7efa02c6c67">Binder</a> ()=delete</td></tr>
 <tr class="separator:ab1e9712897aa8c31290ff7efa02c6c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab20a383e0ba9272509792587630983b7" id="r_ab20a383e0ba9272509792587630983b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ab20a383e0ba9272509792587630983b7">Binder</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sql</a>)</td></tr>
+<tr class="memitem:ab20a383e0ba9272509792587630983b7" id="r_ab20a383e0ba9272509792587630983b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ab20a383e0ba9272509792587630983b7">Binder</a> (const std::string_view sql)</td></tr>
 <tr class="separator:ab20a383e0ba9272509792587630983b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f72c9804010b8be1473ce4d3e57c945" id="r_a9f72c9804010b8be1473ce4d3e57c945"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> T &gt; <br />
-requires ( !std::is_same_v&lt; std::remove_reference_t&lt; T &gt;, std::string &gt; )</td></tr>
-<tr class="memitem:a9f72c9804010b8be1473ce4d3e57c945"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classBinder.html">Binder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a9f72c9804010b8be1473ce4d3e57c945">operator&lt;&lt;</a> (T <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">t</a>)</td></tr>
-<tr class="separator:a9f72c9804010b8be1473ce4d3e57c945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4e26576cc80a1ba4e217e8b695f2950" id="r_af4e26576cc80a1ba4e217e8b695f2950"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> T &gt; </td></tr>
-<tr class="memitem:af4e26576cc80a1ba4e217e8b695f2950"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#af4e26576cc80a1ba4e217e8b695f2950">operator&gt;&gt;</a> (T &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">t</a>)</td></tr>
-<tr class="separator:af4e26576cc80a1ba4e217e8b695f2950"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f988425e7e7626585b429cc7b4b7b76" id="r_a7f988425e7e7626585b429cc7b4b7b76"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &gt; </td></tr>
-<tr class="memitem:a7f988425e7e7626585b429cc7b4b7b76"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a7f988425e7e7626585b429cc7b4b7b76">operator&gt;&gt;</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &amp;&amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">func</a>)</td></tr>
-<tr class="separator:a7f988425e7e7626585b429cc7b4b7b76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5e035b27b9b004875e758b90afe0659" id="r_aa5e035b27b9b004875e758b90afe0659"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
-requires ( sizeof...( <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Ts</a> ) &gt; 1 )</td></tr>
-<tr class="memitem:aa5e035b27b9b004875e758b90afe0659"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#aa5e035b27b9b004875e758b90afe0659">operator&gt;&gt;</a> (std::tuple&lt; Ts... &gt; &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">tpl</a>)</td></tr>
-<tr class="separator:aa5e035b27b9b004875e758b90afe0659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5105a99df5f92da675f2c27826a2e86" id="r_ab5105a99df5f92da675f2c27826a2e86"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ab5105a99df5f92da675f2c27826a2e86">~Binder</a> ()</td></tr>
-<tr class="separator:ab5105a99df5f92da675f2c27826a2e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca610b3b06bba69ad1d8176210c2f78" id="r_a9ca610b3b06bba69ad1d8176210c2f78"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9ca610b3b06bba69ad1d8176210c2f78"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classBinder.html">Binder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a9ca610b3b06bba69ad1d8176210c2f78">operator&lt;&lt;</a> (T t)</td></tr>
+<tr class="separator:a9ca610b3b06bba69ad1d8176210c2f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d2bebe4483dab3bfc8672023958ec3" id="r_a12d2bebe4483dab3bfc8672023958ec3"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; <br />
+requires ( (!<a class="el" href="conceptis__optional.html">is_optional</a>&lt; T &gt;) &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; T &gt;))</td></tr>
+<tr class="memitem:a12d2bebe4483dab3bfc8672023958ec3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a12d2bebe4483dab3bfc8672023958ec3">operator&gt;&gt;</a> (T &amp;t)</td></tr>
+<tr class="separator:a12d2bebe4483dab3bfc8672023958ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a210aa42ef1146bcd37fbc8aff37985b3" id="r_a210aa42ef1146bcd37fbc8aff37985b3"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; <br />
+requires ( !<a class="el" href="conceptis__optional.html">is_optional</a>&lt; T &gt; &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; T &gt;))</td></tr>
+<tr class="memitem:a210aa42ef1146bcd37fbc8aff37985b3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a210aa42ef1146bcd37fbc8aff37985b3">operator&gt;&gt;</a> (std::optional&lt; T &gt; &amp;t)</td></tr>
+<tr class="separator:a210aa42ef1146bcd37fbc8aff37985b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1090f81fea9908bdb6aec2b703f5dc28" id="r_a1090f81fea9908bdb6aec2b703f5dc28"><td class="memTemplParams" colspan="2">template&lt;typename Function &gt; <br />
+requires ( (!<a class="el" href="conceptis__optional.html">is_optional</a>&lt; Function &gt;) &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Function &gt;))</td></tr>
+<tr class="memitem:a1090f81fea9908bdb6aec2b703f5dc28"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a1090f81fea9908bdb6aec2b703f5dc28">operator&gt;&gt;</a> (Function &amp;&amp;func)</td></tr>
+<tr class="separator:a1090f81fea9908bdb6aec2b703f5dc28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ae7382cc4689b7224909b0ada5b8dc" id="r_a33ae7382cc4689b7224909b0ada5b8dc"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires ( !( <a class="el" href="conceptis__optional.html">is_optional</a>&lt; Ts &gt; &amp;&amp; ... ) ) &amp;&amp; ( !( <a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Ts &gt; &amp;&amp; ... ) )</td></tr>
+<tr class="memitem:a33ae7382cc4689b7224909b0ada5b8dc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a33ae7382cc4689b7224909b0ada5b8dc">operator&gt;&gt;</a> (std::tuple&lt; Ts... &gt; &amp;tpl)</td></tr>
+<tr class="separator:a33ae7382cc4689b7224909b0ada5b8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6369aa737bf14a051a7a425008a5dc51" id="r_a6369aa737bf14a051a7a425008a5dc51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#a6369aa737bf14a051a7a425008a5dc51">~Binder</a> () noexcept(false)</td></tr>
+<tr class="separator:a6369aa737bf14a051a7a425008a5dc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a568fefea7bb7dde500f04ac1a8ae3641" id="r_a568fefea7bb7dde500f04ac1a8ae3641"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires ( !( <a class="el" href="conceptis__optional.html">is_optional</a>&lt; Ts &gt; || ... ) &amp;&amp; !( <a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Ts &gt; || ... ) )</td></tr>
+<tr class="memitem:a568fefea7bb7dde500f04ac1a8ae3641"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBinder.html#a568fefea7bb7dde500f04ac1a8ae3641">executeQuery</a> (std::optional&lt; std::tuple&lt; Ts... &gt; &gt; &amp;tpl_opt)</td></tr>
+<tr class="separator:a568fefea7bb7dde500f04ac1a8ae3641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a123262bc2289ecc95f5940bafc735d81" id="r_a123262bc2289ecc95f5940bafc735d81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sqlite3_stmt</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#a123262bc2289ecc95f5940bafc735d81">stmt</a> { <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">nullptr</a> }</td></tr>
+<tr class="memitem:a123262bc2289ecc95f5940bafc735d81" id="r_a123262bc2289ecc95f5940bafc735d81"><td class="memItemLeft" align="right" valign="top">sqlite3_stmt *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#a123262bc2289ecc95f5940bafc735d81">stmt</a> { nullptr }</td></tr>
 <tr class="separator:a123262bc2289ecc95f5940bafc735d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1e43e466113d86bc384a7803790953d" id="r_ac1e43e466113d86bc384a7803790953d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ac1e43e466113d86bc384a7803790953d">param_counter</a> { 0 }</td></tr>
+<tr class="memitem:ac1e43e466113d86bc384a7803790953d" id="r_ac1e43e466113d86bc384a7803790953d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#ac1e43e466113d86bc384a7803790953d">param_counter</a> { 0 }</td></tr>
 <tr class="separator:ac1e43e466113d86bc384a7803790953d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa457cbfcf2aff0262b9d616dff852766" id="r_aa457cbfcf2aff0262b9d616dff852766"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#aa457cbfcf2aff0262b9d616dff852766">max_param_count</a> { 0 }</td></tr>
+<tr class="memitem:aa457cbfcf2aff0262b9d616dff852766" id="r_aa457cbfcf2aff0262b9d616dff852766"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#aa457cbfcf2aff0262b9d616dff852766">max_param_count</a> { 0 }</td></tr>
 <tr class="separator:aa457cbfcf2aff0262b9d616dff852766"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aabff80186985728afe1b5760921853" id="r_a4aabff80186985728afe1b5760921853"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#a4aabff80186985728afe1b5760921853">ran</a> { <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">false</a> }</td></tr>
+<tr class="memitem:a4aabff80186985728afe1b5760921853" id="r_a4aabff80186985728afe1b5760921853"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBinder.html#a4aabff80186985728afe1b5760921853">ran</a> { false }</td></tr>
 <tr class="separator:a4aabff80186985728afe1b5760921853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -184,7 +194,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">Binder::Binder </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::string_view&#160;</td>
+          <td class="paramtype">const std::string_view&#160;</td>
           <td class="paramname"><em>sql</em></td><td>)</td>
           <td></td>
         </tr>
@@ -193,8 +203,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5105a99df5f92da675f2c27826a2e86" name="ab5105a99df5f92da675f2c27826a2e86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5105a99df5f92da675f2c27826a2e86">&#9670;&#160;</a></span>~Binder()</h2>
+<a id="a6369aa737bf14a051a7a425008a5dc51" name="a6369aa737bf14a051a7a425008a5dc51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6369aa737bf14a051a7a425008a5dc51">&#9670;&#160;</a></span>~Binder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,14 +221,42 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9f72c9804010b8be1473ce4d3e57c945" name="a9f72c9804010b8be1473ce4d3e57c945"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f72c9804010b8be1473ce4d3e57c945">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
+<a id="a568fefea7bb7dde500f04ac1a8ae3641" name="a568fefea7bb7dde500f04ac1a8ae3641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a568fefea7bb7dde500f04ac1a8ae3641">&#9670;&#160;</a></span>executeQuery()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> T &gt; <br />
-requires ( !std::is_same_v&lt; std::remove_reference_t&lt; T &gt;, std::string &gt; )</div>
+template&lt;typename... Ts&gt; <br />
+requires ( !( <a class="el" href="conceptis__optional.html">is_optional</a>&lt; Ts &gt; || ... ) &amp;&amp; !( <a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Ts &gt; || ... ) )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Binder::executeQuery </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; std::tuple&lt; Ts... &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>tpl_opt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9ca610b3b06bba69ad1d8176210c2f78" name="a9ca610b3b06bba69ad1d8176210c2f78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ca610b3b06bba69ad1d8176210c2f78">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -240,21 +278,22 @@ requires ( !std::is_same_v&lt; std::remove_reference_t&lt; T &gt;, std::string &
 
 </div>
 </div>
-<a id="a7f988425e7e7626585b429cc7b4b7b76" name="a7f988425e7e7626585b429cc7b4b7b76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f988425e7e7626585b429cc7b4b7b76">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[1/3]</span></h2>
+<a id="a1090f81fea9908bdb6aec2b703f5dc28" name="a1090f81fea9908bdb6aec2b703f5dc28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1090f81fea9908bdb6aec2b703f5dc28">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &gt; </div>
+template&lt;typename Function &gt; <br />
+requires ( (!<a class="el" href="conceptis__optional.html">is_optional</a>&lt; Function &gt;) &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Function &gt;))</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> Binder::operator&gt;&gt; </td>
+          <td class="memname">void Binder::operator&gt;&gt; </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Function</a> &amp;&amp;&#160;</td>
+          <td class="paramtype">Function &amp;&amp;&#160;</td>
           <td class="paramname"><em>func</em></td><td>)</td>
           <td></td>
         </tr>
@@ -268,20 +307,49 @@ template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87
 
 </div>
 </div>
-<a id="aa5e035b27b9b004875e758b90afe0659" name="aa5e035b27b9b004875e758b90afe0659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5e035b27b9b004875e758b90afe0659">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[2/3]</span></h2>
+<a id="a210aa42ef1146bcd37fbc8aff37985b3" name="a210aa42ef1146bcd37fbc8aff37985b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a210aa42ef1146bcd37fbc8aff37985b3">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; <br />
-requires ( sizeof...( <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Ts</a> ) &gt; 1 )</div>
+template&lt;typename T &gt; <br />
+requires ( !<a class="el" href="conceptis__optional.html">is_optional</a>&lt; T &gt; &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; T &gt;))</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> Binder::operator&gt;&gt; </td>
+          <td class="memname">void Binder::operator&gt;&gt; </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a33ae7382cc4689b7224909b0ada5b8dc" name="a33ae7382cc4689b7224909b0ada5b8dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33ae7382cc4689b7224909b0ada5b8dc">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; <br />
+requires ( !( <a class="el" href="conceptis__optional.html">is_optional</a>&lt; Ts &gt; &amp;&amp; ... ) ) &amp;&amp; ( !( <a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; Ts &gt; &amp;&amp; ... ) )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Binder::operator&gt;&gt; </td>
           <td>(</td>
           <td class="paramtype">std::tuple&lt; Ts... &gt; &amp;&#160;</td>
           <td class="paramname"><em>tpl</em></td><td>)</td>
@@ -297,19 +365,20 @@ requires ( sizeof...( <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b0
 
 </div>
 </div>
-<a id="af4e26576cc80a1ba4e217e8b695f2950" name="af4e26576cc80a1ba4e217e8b695f2950"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4e26576cc80a1ba4e217e8b695f2950">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[3/3]</span></h2>
+<a id="a12d2bebe4483dab3bfc8672023958ec3" name="a12d2bebe4483dab3bfc8672023958ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12d2bebe4483dab3bfc8672023958ec3">&#9670;&#160;</a></span>operator&gt;&gt;() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">typename</a> T &gt; </div>
+template&lt;typename T &gt; <br />
+requires ( (!<a class="el" href="conceptis__optional.html">is_optional</a>&lt; T &gt;) &amp;&amp; (!<a class="el" href="conceptis__tuple.html">is_tuple</a>&lt; T &gt;))</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> Binder::operator&gt;&gt; </td>
+          <td class="memname">void Binder::operator&gt;&gt; </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -336,7 +405,7 @@ template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a> Binder::max_param_count { 0 }</td>
+          <td class="memname">int Binder::max_param_count { 0 }</td>
         </tr>
       </table>
   </td>
@@ -358,7 +427,7 @@ template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">int</a> Binder::param_counter { 0 }</td>
+          <td class="memname">int Binder::param_counter { 0 }</td>
         </tr>
       </table>
   </td>
@@ -380,7 +449,7 @@ template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> Binder::ran { <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">false</a> }</td>
+          <td class="memname">bool Binder::ran { false }</td>
         </tr>
       </table>
   </td>
@@ -402,7 +471,7 @@ template&lt;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sqlite3_stmt</a>* Binder::stmt { <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">nullptr</a> }</td>
+          <td class="memname">sqlite3_stmt* Binder::stmt { nullptr }</td>
         </tr>
       </table>
   </td>

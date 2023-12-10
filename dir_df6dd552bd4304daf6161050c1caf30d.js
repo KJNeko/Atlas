@@ -9,6 +9,7 @@ var dir_df6dd552bd4304daf6161050c1caf30d =
     [ "14-banners.cpp", "14-banners_8cpp.html", "14-banners_8cpp" ],
     [ "15-data_change.cpp", "15-data__change_8cpp.html", "15-data__change_8cpp" ],
     [ "16-f95_zone_mapping.cpp", "16-f95__zone__mapping_8cpp.html", "16-f95__zone__mapping_8cpp" ],
+    [ "17-blurhash.cpp", "17-blurhash_8cpp.html", "17-blurhash_8cpp" ],
     [ "2-import_times.cpp", "2-import__times_8cpp.html", "2-import__times_8cpp" ],
     [ "3-atlas_data.cpp", "3-atlas__data_8cpp.html", "3-atlas__data_8cpp" ],
     [ "4-atlas_previews.cpp", "4-atlas__previews_8cpp.html", "4-atlas__previews_8cpp" ],

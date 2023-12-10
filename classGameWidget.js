@@ -16,6 +16,7 @@ var classGameWidget =
     [ "updateGameState", "classGameWidget.html#a8525fb0f788f7fdd067978cbee322210", null ],
     [ "lastState", "classGameWidget.html#af468df8f9f43aa5d7cf4951737e8403a", null ],
     [ "m_record", "classGameWidget.html#a246f41763f7ef48c5d10ebf5b26d14fd", null ],
+    [ "m_update_timer", "classGameWidget.html#a4d6ca1b7d963e2c0cd2a544209d4ca5d", null ],
     [ "selected_version_idx", "classGameWidget.html#a1c344323d746ad131d1d6fc17c857e6a", null ],
     [ "ui", "classGameWidget.html#acd461f017e55b67e40e7e26400e80c9b", null ]
 ];

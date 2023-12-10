@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -118,9 +115,10 @@ $(document).ready(function(){initNavTree('Importer_8cpp.html',''); initResizable
 <code>#include &lt;tracy/TracyC.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="GameImportData_8hpp_source.html">GameImportData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ImportNotifier_8hpp_source.html">ImportNotifier.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/Game.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="GameData_8hpp_source.html">core/database/record/GameData.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="imageManager_8hpp_source.html">core/imageManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/game/Game.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="images_8hpp_source.html">core/images/images.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="import_8hpp_source.html">core/images/import.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="notifications_8hpp_source.html">core/notifications/notifications.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="FileScanner_8hpp_source.html">core/utils/FileScanner.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="operators_8hpp_source.html">core/utils/operators.hpp</a>&quot;</code><br />
@@ -133,9 +131,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2a28bbada3282e828f81ac51eb044152" id="r_a2a28bbada3282e828f81ac51eb044152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a2a28bbada3282e828f81ac51eb044152">internal::importGame</a> (<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QPromise</a>&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt; &amp;<a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">promise</a>, <a class="el" href="structGameImportData.html">GameImportData</a> data, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">import_root</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">owning</a>)</td></tr>
+<tr class="memitem:a2a28bbada3282e828f81ac51eb044152" id="r_a2a28bbada3282e828f81ac51eb044152"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinternal.html#a2a28bbada3282e828f81ac51eb044152">internal::importGame</a> (QPromise&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt; &amp;promise, <a class="el" href="structGameImportData.html">GameImportData</a> data, const std::filesystem::path import_root, const bool owning)</td></tr>
 <tr class="separator:a2a28bbada3282e828f81ac51eb044152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af560bffe9a3881cb3199dfa7b3b6233d" id="r_af560bffe9a3881cb3199dfa7b3b6233d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQFuture.html">QFuture</a>&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Importer_8cpp.html#af560bffe9a3881cb3199dfa7b3b6233d">importGame</a> (<a class="el" href="structGameImportData.html">GameImportData</a> data, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">root</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">owning</a>)</td></tr>
+<tr class="memitem:af560bffe9a3881cb3199dfa7b3b6233d" id="r_af560bffe9a3881cb3199dfa7b3b6233d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQFuture.html">QFuture</a>&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Importer_8cpp.html#af560bffe9a3881cb3199dfa7b3b6233d">importGame</a> (<a class="el" href="structGameImportData.html">GameImportData</a> data, const std::filesystem::path root, const bool owning)</td></tr>
 <tr class="separator:af560bffe9a3881cb3199dfa7b3b6233d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -154,13 +152,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path&#160;</td>
+          <td class="paramtype">const std::filesystem::path&#160;</td>
           <td class="paramname"><em>root</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>owning</em>&#160;</td>
         </tr>
         <tr>

@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -114,10 +111,10 @@ $(document).ready(function(){initNavTree('Version_8cpp.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="Version_8hpp_source.html">Version.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8hpp_source.html">core/config/config.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="RapidTransaction_8hpp_source.html">core/database/RapidTransaction.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="GameData_8hpp_source.html">core/database/record/GameData.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logging_8hpp_source.html">core/logging/logging.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="executeProc_8hpp_source.html">core/utils/execute/executeProc.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="operators_8hpp_source.html">core/utils/operators.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
@@ -139,16 +136,16 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac0a65f0048f2ae5302a3ea94430693bc" id="r_ac0a65f0048f2ae5302a3ea94430693bc"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1VersionData.html">VersionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ac0a65f0048f2ae5302a3ea94430693bc">atlas::records::internal::getPtr</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> id, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> version)</td></tr>
+<tr class="memitem:ac0a65f0048f2ae5302a3ea94430693bc" id="r_ac0a65f0048f2ae5302a3ea94430693bc"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1VersionData.html">VersionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ac0a65f0048f2ae5302a3ea94430693bc">atlas::records::internal::getPtr</a> (const <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> id, const QString version)</td></tr>
 <tr class="separator:ac0a65f0048f2ae5302a3ea94430693bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab90a3165c97584b93b067af83fb7db63" id="r_ab90a3165c97584b93b067af83fb7db63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab90a3165c97584b93b067af83fb7db63">atlas::records::internal::releasePtr</a> (<a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> id, <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">const</a> <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">QString</a> version)</td></tr>
+<tr class="memitem:ab90a3165c97584b93b067af83fb7db63" id="r_ab90a3165c97584b93b067af83fb7db63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab90a3165c97584b93b067af83fb7db63">atlas::records::internal::releasePtr</a> (const <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> id, const QString version)</td></tr>
 <tr class="separator:ab90a3165c97584b93b067af83fb7db63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a043d70c61e666061310a0440e1ae1b44" id="r_a043d70c61e666061310a0440e1ae1b44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::unordered_map&lt; <a class="el" href="structatlas_1_1records_1_1VersionKey.html">VersionKey</a>, std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1VersionData.html">VersionData</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a043d70c61e666061310a0440e1ae1b44">atlas::records::internal::map</a></td></tr>
+<tr class="memitem:a043d70c61e666061310a0440e1ae1b44" id="r_a043d70c61e666061310a0440e1ae1b44"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; <a class="el" href="structatlas_1_1records_1_1VersionKey.html">VersionKey</a>, std::shared_ptr&lt; <a class="el" href="structatlas_1_1records_1_1VersionData.html">VersionData</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#a043d70c61e666061310a0440e1ae1b44">atlas::records::internal::map</a></td></tr>
 <tr class="separator:a043d70c61e666061310a0440e1ae1b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6e401f7960cf5d031adc4f66c86a14f" id="r_ab6e401f7960cf5d031adc4f66c86a14f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">static</a> std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab6e401f7960cf5d031adc4f66c86a14f">atlas::records::internal::map_mtx</a></td></tr>
+<tr class="memitem:ab6e401f7960cf5d031adc4f66c86a14f" id="r_ab6e401f7960cf5d031adc4f66c86a14f"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1records_1_1internal.html#ab6e401f7960cf5d031adc4f66c86a14f">atlas::records::internal::map_mtx</a></td></tr>
 <tr class="separator:ab6e401f7960cf5d031adc4f66c86a14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

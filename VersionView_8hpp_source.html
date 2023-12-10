@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,65 +114,65 @@ $(document).ready(function(){initNavTree('VersionView_8hpp_source.html',''); ini
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 4/19/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QWidget&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="Game_8hpp.html">core/database/record/Game.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="VersionView_8hpp.html#a745cefee2696f1b50e88ff0f25760b9f">    7</a></span><span class="preprocessor">#define ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QWidget&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="GameData_8hpp.html">core/database/record/GameData.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="Version_8hpp.html">core/database/record/Version.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_BEGIN_NAMESPACE</a></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">class </span><a class="code hl_class" href="classVersionView.html">VersionView</a>;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">QT_END_NAMESPACE</a></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classVersionView.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="classVersionView.html">VersionView</a> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">final</a> : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_DISABLE_COPY_MOVE</a>( <a class="code hl_class" href="classVersionView.html">VersionView</a> )</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">Q_OBJECT</a></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">   28</a></span>    std::optional&lt; atlas::records::Version &gt; <a class="code hl_variable" href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">m_metadata</a> { std::nullopt };</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classVersionView.html#abfd187c1c7f388a908e0fbf3dd12d3cb">reloadData</a>();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classVersionView.html">VersionView</a>( QWidget* parent = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_function" href="classVersionView.html#a33e99c87640a3d590ceda291fcc1f8d5">~VersionView</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classVersionView.html#a59ba4374d8bd27e7135a6e7719c5f316">setVersion</a>( <span class="keyword">const</span> std::optional&lt; atlas::records::Version &gt; <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">metadata</a> );</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">public</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">slots</a>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classVersionView.html#a6a970fc8b44ad1d2f46d2792a50950df">on_btnChangeVersion_pressed</a>();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classVersionView.html#aa064ef7e654ae6dfef34537816d3b008">on_btnChangeExec_pressed</a>();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">   45</a></span>    Ui::VersionView* <a class="code hl_variable" href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">ui</a>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="Game_8hpp.html">core/database/record/game/Game.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>QT_BEGIN_NAMESPACE</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceUi.html">Ui</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">class </span><a class="code hl_class" href="classVersionView.html">VersionView</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>QT_END_NAMESPACE</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classVersionView.html">   24</a></span><span class="keyword">class </span><a class="code hl_class" href="classVersionView.html">VersionView</a> final : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    Q_DISABLE_COPY_MOVE( <a class="code hl_class" href="classVersionView.html">VersionView</a> )</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    Q_OBJECT</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">   29</a></span>    std::optional&lt; atlas::records::Version &gt; <a class="code hl_variable" href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">m_metadata</a> { std::nullopt };</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classVersionView.html#abfd187c1c7f388a908e0fbf3dd12d3cb">reloadData</a>();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="classVersionView.html">VersionView</a>( QWidget* parent = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_function" href="classVersionView.html#a33e99c87640a3d590ceda291fcc1f8d5">~VersionView</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classVersionView.html#a59ba4374d8bd27e7135a6e7719c5f316">setVersion</a>( <span class="keyword">const</span> std::optional&lt; atlas::records::Version &gt; metadata );</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keyword">public</span> slots:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classVersionView.html#a6a970fc8b44ad1d2f46d2792a50950df">on_btnChangeVersion_pressed</a>();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="classVersionView.html#aa064ef7e654ae6dfef34537816d3b008">on_btnChangeExec_pressed</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">   46</a></span>    Ui::VersionView* <a class="code hl_variable" href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">ui</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
 </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif </span><span class="comment">//ATLASGAMEMANAGER_VERSIONVIEW_HPP</span></div>
 <div class="ttc" id="aGameData_8hpp_html"><div class="ttname"><a href="GameData_8hpp.html">GameData.hpp</a></div></div>
 <div class="ttc" id="aGame_8hpp_html"><div class="ttname"><a href="Game_8hpp.html">Game.hpp</a></div></div>
 <div class="ttc" id="aVersion_8hpp_html"><div class="ttname"><a href="Version_8hpp.html">Version.hpp</a></div></div>
-<div class="ttc" id="aclassVersionView_html"><div class="ttname"><a href="classVersionView.html">VersionView</a></div><div class="ttdef"><b>Definition</b> VersionView.hpp:24</div></div>
+<div class="ttc" id="aclassVersionView_html"><div class="ttname"><a href="classVersionView.html">VersionView</a></div><div class="ttdef"><b>Definition</b> VersionView.hpp:25</div></div>
 <div class="ttc" id="aclassVersionView_html_a33e99c87640a3d590ceda291fcc1f8d5"><div class="ttname"><a href="classVersionView.html#a33e99c87640a3d590ceda291fcc1f8d5">VersionView::~VersionView</a></div><div class="ttdeci">~VersionView() override</div><div class="ttdef"><b>Definition</b> VersionView.cpp:27</div></div>
-<div class="ttc" id="aclassVersionView_html_a4e31f9cb57ffe6e29fe804eef9fdbbc7"><div class="ttname"><a href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">VersionView::m_metadata</a></div><div class="ttdeci">std::optional&lt; atlas::records::Version &gt; m_metadata</div><div class="ttdef"><b>Definition</b> VersionView.hpp:28</div></div>
+<div class="ttc" id="aclassVersionView_html_a4e31f9cb57ffe6e29fe804eef9fdbbc7"><div class="ttname"><a href="classVersionView.html#a4e31f9cb57ffe6e29fe804eef9fdbbc7">VersionView::m_metadata</a></div><div class="ttdeci">std::optional&lt; atlas::records::Version &gt; m_metadata</div><div class="ttdef"><b>Definition</b> VersionView.hpp:29</div></div>
 <div class="ttc" id="aclassVersionView_html_a59ba4374d8bd27e7135a6e7719c5f316"><div class="ttname"><a href="classVersionView.html#a59ba4374d8bd27e7135a6e7719c5f316">VersionView::setVersion</a></div><div class="ttdeci">void setVersion(const std::optional&lt; atlas::records::Version &gt; metadata)</div><div class="ttdef"><b>Definition</b> VersionView.cpp:32</div></div>
 <div class="ttc" id="aclassVersionView_html_a6a970fc8b44ad1d2f46d2792a50950df"><div class="ttname"><a href="classVersionView.html#a6a970fc8b44ad1d2f46d2792a50950df">VersionView::on_btnChangeVersion_pressed</a></div><div class="ttdeci">void on_btnChangeVersion_pressed()</div><div class="ttdef"><b>Definition</b> VersionView.cpp:71</div></div>
 <div class="ttc" id="aclassVersionView_html_aa064ef7e654ae6dfef34537816d3b008"><div class="ttname"><a href="classVersionView.html#aa064ef7e654ae6dfef34537816d3b008">VersionView::on_btnChangeExec_pressed</a></div><div class="ttdeci">void on_btnChangeExec_pressed()</div><div class="ttdef"><b>Definition</b> VersionView.cpp:96</div></div>
 <div class="ttc" id="aclassVersionView_html_abfd187c1c7f388a908e0fbf3dd12d3cb"><div class="ttname"><a href="classVersionView.html#abfd187c1c7f388a908e0fbf3dd12d3cb">VersionView::reloadData</a></div><div class="ttdeci">void reloadData()</div><div class="ttdef"><b>Definition</b> VersionView.cpp:42</div></div>
-<div class="ttc" id="aclassVersionView_html_af923a1a1bb8b4dec7458dd30ad202ed0"><div class="ttname"><a href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">VersionView::ui</a></div><div class="ttdeci">Ui::VersionView * ui</div><div class="ttdef"><b>Definition</b> VersionView.hpp:45</div></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
-<div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition</b> AboutAtlas.hpp:7</div></div>
+<div class="ttc" id="aclassVersionView_html_af923a1a1bb8b4dec7458dd30ad202ed0"><div class="ttname"><a href="classVersionView.html#af923a1a1bb8b4dec7458dd30ad202ed0">VersionView::ui</a></div><div class="ttdeci">Ui::VersionView * ui</div><div class="ttdef"><b>Definition</b> VersionView.hpp:46</div></div>
+<div class="ttc" id="anamespaceUi_html"><div class="ttname"><a href="namespaceUi.html">Ui</a></div><div class="ttdef"><b>Definition</b> AboutAtlas.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

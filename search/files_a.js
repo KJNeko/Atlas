@@ -9,5 +9,7 @@ var searchData=
   ['atlasdata_2ecpp_6',['AtlasData.cpp',['../AtlasData_8cpp.html',1,'']]],
   ['atlasdata_2ehpp_7',['AtlasData.hpp',['../AtlasData_8hpp.html',1,'']]],
   ['atlasremote_2ecpp_8',['AtlasRemote.cpp',['../AtlasRemote_8cpp.html',1,'']]],
-  ['atlasremote_2ehpp_9',['AtlasRemote.hpp',['../AtlasRemote_8hpp.html',1,'']]]
+  ['atlasremote_2ehpp_9',['AtlasRemote.hpp',['../AtlasRemote_8hpp.html',1,'']]],
+  ['atlasupdater_2ecpp_10',['AtlasUpdater.cpp',['../AtlasUpdater_8cpp.html',1,'']]],
+  ['atlasupdater_2ehpp_11',['AtlasUpdater.hpp',['../AtlasUpdater_8hpp.html',1,'']]]
 ];

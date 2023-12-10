@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -112,13 +109,12 @@ $(document).ready(function(){initNavTree('conceptatlas_1_1notifications_1_1has__
 <p><code>#include &lt;<a class="el" href="NotificationSignalers_8hpp_source.html">NotificationSignalers.hpp</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptatlas_1_1notifications_1_1has__get__signaler.html">atlas::notifications::has_get_signaler</a> =  <span class="keyword">requires</span>( T <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">t</a> ) {</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptatlas_1_1notifications_1_1has__get__signaler.html">atlas::notifications::has_get_signaler</a> =  <span class="keyword">requires</span>( T t ) {</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">t</a>.getSignaler()</div>
+<div class="line">            t.getSignaler()</div>
 <div class="line">        } -&gt; std::same_as&lt; std::unique_ptr&lt; typename T::Signaler &gt; &gt;;</div>
 <div class="line">    }</div>
-<div class="ttc" id="aconceptatlas_1_1notifications_1_1has__get__signaler_html"><div class="ttname"><a href="conceptatlas_1_1notifications_1_1has__get__signaler.html">atlas::notifications::has_get_signaler</a></div><div class="ttdef"><b>Definition</b> NotificationSignalers.hpp:23</div></div>
-<div class="ttc" id="anamespaceatlas_html_ad879f37529f2fad323204059708b9361"><div class="ttname"><a href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">atlas::extract</a></div><div class="ttdeci">std::vector&lt; char &gt; extract(const std::filesystem::path path)</div><div class="ttdef"><b>Definition</b> extract.cpp:35</div></div>
+<div class="ttc" id="aconceptatlas_1_1notifications_1_1has__get__signaler_html"><div class="ttname"><a href="conceptatlas_1_1notifications_1_1has__get__signaler.html">atlas::notifications::has_get_signaler</a></div><div class="ttdef"><b>Definition</b> NotificationSignalers.hpp:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

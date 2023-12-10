@@ -9,5 +9,6 @@ var binders_8hpp =
     [ "bindParameter", "binders_8hpp.html#ae7439dbc2ec1ce32f07fbf05869fad37", null ],
     [ "bindParameter", "binders_8hpp.html#a21e343335fe4532a06027b4a083d7679", null ],
     [ "bindParameter", "binders_8hpp.html#afffb36e637791290cd83d9ada7bc50fc", null ],
-    [ "bindParameter", "binders_8hpp.html#ace02bf2356736860629953f20b04a00d", null ]
+    [ "bindParameter", "binders_8hpp.html#ace02bf2356736860629953f20b04a00d", null ],
+    [ "bindParameter", "binders_8hpp.html#a03d145553a50591c5c13c12cfd7572a7", null ]
 ];

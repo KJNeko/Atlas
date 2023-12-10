@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -117,33 +114,33 @@ $(document).ready(function(){initNavTree('system_8hpp_source.html',''); initResi
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by kj16609 on 4/4/23.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ATLAS_SYSTEM_HPP</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ATLAS_SYSTEM_HPP</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="}">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="namespacesys.html">    8</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacesys.html">sys</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifdef __linux__</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">is_linux</a> { <span class="keyword">true</span> };</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">   14</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">is_linux</a> { <span class="keyword">false</span> };</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">is_windows</a> { <span class="keyword">true</span> };</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">   20</a></span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">maybe_unused</a>]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">is_windows</a> { <span class="keyword">false</span> };</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <span class="comment">// namespace sys</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ATLAS_SYSTEM_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="system_8hpp.html#ad3d3f1379837b68e851ae03f41ddfec2">    7</a></span><span class="preprocessor">#define ATLAS_SYSTEM_HPP</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="}">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacesys.html">    9</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacesys.html">sys</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifdef __linux__</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    [[maybe_unused]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">is_linux</a> { <span class="keyword">true</span> };</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">   15</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">is_linux</a> { <span class="keyword">false</span> };</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    [[maybe_unused]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">is_windows</a> { <span class="keyword">true</span> };</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">   21</a></span>    [[maybe_unused]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">is_windows</a> { <span class="keyword">false</span> };</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>} <span class="comment">// namespace sys</span></div>
 </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_SYSTEM_HPP</span></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
-<div class="ttc" id="anamespacesys_html"><div class="ttname"><a href="namespacesys.html">sys</a></div><div class="ttdef"><b>Definition</b> system.hpp:9</div></div>
-<div class="ttc" id="anamespacesys_html_a5797826512ac565d31d1a6111e75f19e"><div class="ttname"><a href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">sys::is_windows</a></div><div class="ttdeci">constexpr bool is_windows</div><div class="ttdef"><b>Definition</b> system.hpp:20</div></div>
-<div class="ttc" id="anamespacesys_html_aa2ac265b71333afb5ee36da4910b0765"><div class="ttname"><a href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">sys::is_linux</a></div><div class="ttdeci">constexpr bool is_linux</div><div class="ttdef"><b>Definition</b> system.hpp:14</div></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_SYSTEM_HPP</span></div>
+<div class="ttc" id="anamespacesys_html"><div class="ttname"><a href="namespacesys.html">sys</a></div><div class="ttdef"><b>Definition</b> system.hpp:10</div></div>
+<div class="ttc" id="anamespacesys_html_a5797826512ac565d31d1a6111e75f19e"><div class="ttname"><a href="namespacesys.html#a5797826512ac565d31d1a6111e75f19e">sys::is_windows</a></div><div class="ttdeci">constexpr bool is_windows</div><div class="ttdef"><b>Definition</b> system.hpp:21</div></div>
+<div class="ttc" id="anamespacesys_html_aa2ac265b71333afb5ee36da4910b0765"><div class="ttname"><a href="namespacesys.html#aa2ac265b71333afb5ee36da4910b0765">sys::is_linux</a></div><div class="ttdeci">constexpr bool is_linux</div><div class="ttdef"><b>Definition</b> system.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

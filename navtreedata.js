@@ -25,17 +25,7 @@
 var NAVTREE =
 [
   [ "Atlas Game Manager", "index.html", [
-    [ "Settings list", "H95Settings.html", null ],
-    [ "Searching", "SearchParsing.html", null ],
-    [ "RegexGuide", "RegexGuide.html", [
-      [ "Getting Started", "RegexGuide.html#RegexGuideGettingStarted", null ]
-    ] ],
-    [ "AdvRegexGuide", "AdvRegexGuide.html", [
-      [ "Advanced Parsing", "AdvRegexGuide.html#AdvRegexGuideParsing", null ]
-    ] ],
     [ "README", "md_README.html", null ],
-    [ "Todo List", "todo.html", null ],
-    [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -73,23 +63,24 @@ var NAVTREE =
         [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
-    ] ],
-    [ "Examples", "examples.html", "examples" ]
+    ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
 "0-games_8cpp.html",
-"QueryBuilder_8cpp.html#a595b7faa3808d957112ed6fe8b22cd9da251b2fcc75842e5548b8544489bf7d22",
-"classExtractionImportDialog.html#abb4738aba63790b6ee2351598647ff42",
-"classRecordEditor.html#ad5a48ce8c937cd524965a3bd382b7556",
-"classatlas_1_1records_1_1Game.html#a3d286bdb6bb3c52c13b1b683447ef6ee",
-"dir_6573e4aa15e437c9152ace76936054f3.html",
-"globals_s.html",
-"namespacesys.html#a5797826512ac565d31d1a6111e75f19e",
-"structatlas_1_1records_1_1GameData.html#aa2fab026580d6f14280c2ffb8063a314",
-"structfmt_1_1formatter_3_01QString_01_4.html#ab79ec6281e18358bc440c4f25ea8bba2"
+"Importer_8cpp.html",
+"classBatchImportDelegate.html#a02603b34e5a8c7a428e9f28e87b4f4fb",
+"classMainWindow.html#ad28b2518d695c9f7d5c0ab0464001c0d",
+"classSimpleImporter.html#aed0ffb117df252bdde535c5c63dc5209",
+"classatlas_1_1records_1_1Game.html#a560e30d8373cd8ddb02b0f7d37918902",
+"dir_48b60028f9adc20050148e548c7fb266.html",
+"globals_e.html",
+"namespaceatlas_1_1notifications.html#a993edefe9901a63f9aa9fbb8ba7db994",
+"structImageSaveError.html",
+"structatlas_1_1records_1_1GameData.html#a0779bfca41588c4558c7bc61ad2ec27c",
+"structatlas_1_1utils_1_1FileScannerGenerator_1_1promise__type.html#a27295879b8419e227d5a486ecebf9ca3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

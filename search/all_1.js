@@ -7,5 +7,6 @@ var searchData=
   ['13_2dpreviews_2ecpp_4',['13-previews.cpp',['../13-previews_8cpp.html',1,'']]],
   ['14_2dbanners_2ecpp_5',['14-banners.cpp',['../14-banners_8cpp.html',1,'']]],
   ['15_2ddata_5fchange_2ecpp_6',['15-data_change.cpp',['../15-data__change_8cpp.html',1,'']]],
-  ['16_2df95_5fzone_5fmapping_2ecpp_7',['16-f95_zone_mapping.cpp',['../16-f95__zone__mapping_8cpp.html',1,'']]]
+  ['16_2df95_5fzone_5fmapping_2ecpp_7',['16-f95_zone_mapping.cpp',['../16-f95__zone__mapping_8cpp.html',1,'']]],
+  ['17_2dblurhash_2ecpp_8',['17-blurhash.cpp',['../17-blurhash_8cpp.html',1,'']]]
 ];

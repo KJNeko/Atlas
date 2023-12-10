@@ -1,5 +1,6 @@
 var Types_8hpp =
 [
+    [ "ATLAS_TYPES_HPP", "Types_8hpp.html#a9185f93c22b53e2afe7534ff4109db90", null ],
     [ "AtlasID", "Types_8hpp.html#a8a36bf0a32556e4254d3694988fa8166", null ],
     [ "F95ID", "Types_8hpp.html#a317824aa60c1e43a1baa9bf0468594c5", null ],
     [ "RecordID", "Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068", null ],

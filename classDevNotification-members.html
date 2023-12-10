@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -111,16 +108,17 @@ $(document).ready(function(){initNavTree('classDevNotification.html',''); initRe
 
 <p>This is the complete list of members for <a class="el" href="classDevNotification.html">DevNotification</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classDevNotification.html#a22dc998ab21e58b6f3406b2ae45dae8e">DevNotification</a>(std::string msg, QString info, QWidget *parent=nullptr)</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#ab5a69c8d73bdfb25be95f38df5276563">mousePressEvent</a>(QMouseEvent *event) override final</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#a392e85474c2fda67f20bd477703d110a">Notification</a>(QWidget *parent=nullptr)</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">on_copyError_pressed</a>()</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">slot</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#a25175a5d032138953b656967ca2ac77d">selfClose</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#af02872b1b9e8c05b1fc6ce86c906cd40">selfClosePtr</a>(Notification *ptr)</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#a7a2d9e021224e5578ec27f2b98ae9ccc">selfCloseTrigger</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">ui</a></td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classDevNotification.html#a9a3a5f42d2c07b6de1d99d339027942a">~DevNotification</a>() override</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#a46fd3a902eb1bc5e7edfdba2b2f8c392">~Notification</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDevNotification.html#ad74b060d11a4bcd2dd2e9cc5732c5694">DevNotification</a>(const MessageLevel level, QString msg, QString full_message, QWidget *parent=nullptr)</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classDevNotification.html#ab3c6d601b216aafd382ca09cbfbc5222">m_full_message</a></td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#ab5a69c8d73bdfb25be95f38df5276563">mousePressEvent</a>(QMouseEvent *event) override final</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#a392e85474c2fda67f20bd477703d110a">Notification</a>(QWidget *parent=nullptr)</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDevNotification.html#a6acafb3414e93caf6d2306b95a26ab0a">on_copyError_pressed</a>()</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">slot</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#a25175a5d032138953b656967ca2ac77d">selfClose</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#af02872b1b9e8c05b1fc6ce86c906cd40">selfClosePtr</a>(Notification *ptr)</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classNotification.html#a7a2d9e021224e5578ec27f2b98ae9ccc">selfCloseTrigger</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDevNotification.html#abd40d0bcd8771b5280e111c3c457a689">ui</a></td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classDevNotification.html#a9a3a5f42d2c07b6de1d99d339027942a">~DevNotification</a>() override</td><td class="entry"><a class="el" href="classDevNotification.html">DevNotification</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNotification.html#a46fd3a902eb1bc5e7edfdba2b2f8c392">~Notification</a>()</td><td class="entry"><a class="el" href="classNotification.html">Notification</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

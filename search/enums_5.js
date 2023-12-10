@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['namespaces_0',['Namespaces',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe',1,'QueryBuilder.cpp']]]
+  ['location_0',['LOCATION',['../config_8hpp.html#a61bb4b823f9b89b5e9bb7c2b5a60d700',1,'config.hpp']]]
 ];

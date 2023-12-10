@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Atlas Game Manager: atlas/core/logging.hpp File Reference</title>
+<title>Atlas Game Manager: atlas/core/logging/logging.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,62 +103,106 @@ $(document).ready(function(){initNavTree('logging_8hpp.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">logging.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;QString&gt;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
-<code>#include &lt;spdlog/spdlog.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="Types_8hpp_source.html">Types.hpp</a>&quot;</code><br />
+<code>#include &lt;source_location&gt;</code><br />
+<code>#include &quot;<a class="el" href="formatters_8hpp_source.html">formatters.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Types_8hpp_source.html">core/Types.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="notifications_8hpp_source.html">core/notifications/notifications.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="dev_8hpp_source.html">logging/dev.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="formatters_8hpp_source.html">logging/formatters.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Console_8hpp_source.html">ui/dialog/console/Console.hpp</a>&quot;</code><br />
 </div>
 <p><a href="logging_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1debug.html">atlas::logging::debug&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1info.html">atlas::logging::info&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1warn.html">atlas::logging::warn&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1error.html">atlas::logging::error&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1errorLoc.html">atlas::logging::errorLoc&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structatlas_1_1logging_1_1critical.html">atlas::logging::critical&lt; Ts &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceatlas" id="r_namespaceatlas"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas.html">atlas</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceatlas_1_1logging" id="r_namespaceatlas_1_1logging"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html">atlas::logging</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceatlas_1_1logging_1_1internal" id="r_namespaceatlas_1_1logging_1_1internal"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html">atlas::logging::internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aadd508594bec4adbf0f8151162ae6cdf" id="r_aadd508594bec4adbf0f8151162ae6cdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8hpp.html#aadd508594bec4adbf0f8151162ae6cdf">ATLAS_LOGGING_HPP</a></td></tr>
+<tr class="separator:aadd508594bec4adbf0f8151162ae6cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5d0717fdf14f6c5bb900de985d2d653a" id="r_a5d0717fdf14f6c5bb900de985d2d653a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a">initLogging</a> ()</td></tr>
-<tr class="separator:a5d0717fdf14f6c5bb900de985d2d653a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab93baba09a13fcf83faa20c6f0b0e60e" id="r_ab93baba09a13fcf83faa20c6f0b0e60e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">atlas::logging::init</a> ()</td></tr>
-<tr class="memdesc:ab93baba09a13fcf83faa20c6f0b0e60e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the spdlog interfaces for file rotations and logging without a GUI.  <br /></td></tr>
+<tr class="memitem:ab93baba09a13fcf83faa20c6f0b0e60e" id="r_ab93baba09a13fcf83faa20c6f0b0e60e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ab93baba09a13fcf83faa20c6f0b0e60e">atlas::logging::init</a> ()</td></tr>
 <tr class="separator:ab93baba09a13fcf83faa20c6f0b0e60e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae802ade41b5102d457ff0e71ea296512" id="r_ae802ade41b5102d457ff0e71ea296512"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">atlas::logging::initGUIHooks</a> ()</td></tr>
+<tr class="memitem:a40fafe65563c6a4fee2e6059c6b8eabe" id="r_a40fafe65563c6a4fee2e6059c6b8eabe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a40fafe65563c6a4fee2e6059c6b8eabe">atlas::logging::setFormat</a> ()</td></tr>
+<tr class="separator:a40fafe65563c6a4fee2e6059c6b8eabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae802ade41b5102d457ff0e71ea296512" id="r_ae802ade41b5102d457ff0e71ea296512"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ae802ade41b5102d457ff0e71ea296512">atlas::logging::initGUIHooks</a> ()</td></tr>
 <tr class="memdesc:ae802ade41b5102d457ff0e71ea296512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the GUI hooks required for some warnings to display to the user.  <br /></td></tr>
 <tr class="separator:ae802ade41b5102d457ff0e71ea296512"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93a3c838c88af23f0955337538e700a1" id="r_a93a3c838c88af23f0955337538e700a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a93a3c838c88af23f0955337538e700a1">atlas::logging::info</a> (std::string <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a>)</td></tr>
-<tr class="separator:a93a3c838c88af23f0955337538e700a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79a429084bf95e96754497c7e0e7ec82" id="r_a79a429084bf95e96754497c7e0e7ec82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a79a429084bf95e96754497c7e0e7ec82">atlas::logging::warn</a> (std::string <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">message</a>)</td></tr>
-<tr class="memdesc:a79a429084bf95e96754497c7e0e7ec82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the user of a warning.  <br /></td></tr>
-<tr class="separator:a79a429084bf95e96754497c7e0e7ec82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad95c048669ce55f574e3c08c648f2a14" id="r_ad95c048669ce55f574e3c08c648f2a14"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ad95c048669ce55f574e3c08c648f2a14"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#ad95c048669ce55f574e3c08c648f2a14">atlas::logging::error</a> (std::string <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a>, Ts... <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">ts</a>)</td></tr>
-<tr class="separator:ad95c048669ce55f574e3c08c648f2a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a466860a126c54bc59e2f127bf5eb86" id="r_a5a466860a126c54bc59e2f127bf5eb86"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a5a466860a126c54bc59e2f127bf5eb86"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a5a466860a126c54bc59e2f127bf5eb86">atlas::logging::error</a> (std::string <a class="el" href="namespaceatlas.html#ad879f37529f2fad323204059708b9361">body</a>)</td></tr>
-<tr class="separator:a5a466860a126c54bc59e2f127bf5eb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed299bcbc40ba9e45a84425b7c2d131" id="r_a6ed299bcbc40ba9e45a84425b7c2d131"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a6ed299bcbc40ba9e45a84425b7c2d131">atlas::logging::formatSourceLocation</a> (const std::source_location loc, const format_ns::string_view msg)</td></tr>
+<tr class="separator:a6ed299bcbc40ba9e45a84425b7c2d131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3137b59dbf5c428bfe0891483e47b1e" id="r_ae3137b59dbf5c428bfe0891483e47b1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e">atlas::logging::internal::logDebug</a> (const std::string_view msg)</td></tr>
+<tr class="memdesc:ae3137b59dbf5c428bfe0891483e47b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes message to spdlog.  <br /></td></tr>
+<tr class="separator:ae3137b59dbf5c428bfe0891483e47b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2186ff828affd9945e9dd7085175f863" id="r_a2186ff828affd9945e9dd7085175f863"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863">atlas::logging::internal::logInfo</a> (const std::string_view msg)</td></tr>
+<tr class="memdesc:a2186ff828affd9945e9dd7085175f863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes message to spdlog.  <br /></td></tr>
+<tr class="separator:a2186ff828affd9945e9dd7085175f863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d62198db82accc7184f601d9dac630" id="r_ad4d62198db82accc7184f601d9dac630"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630">atlas::logging::internal::logWarn</a> (const std::string_view msg)</td></tr>
+<tr class="memdesc:ad4d62198db82accc7184f601d9dac630"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes message to spdlog.  <br /></td></tr>
+<tr class="separator:ad4d62198db82accc7184f601d9dac630"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a5737c806c36873efa200ee541f1e61" id="r_a1a5737c806c36873efa200ee541f1e61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61">atlas::logging::internal::logError</a> (const std::string_view msg)</td></tr>
+<tr class="memdesc:a1a5737c806c36873efa200ee541f1e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes message to spdlog.  <br /></td></tr>
+<tr class="separator:a1a5737c806c36873efa200ee541f1e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaed872857c4345e562a86cc9847d688" id="r_acaed872857c4345e562a86cc9847d688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688">atlas::logging::internal::logCritical</a> (const std::string_view msg)</td></tr>
+<tr class="memdesc:acaed872857c4345e562a86cc9847d688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes message to spdlog.  <br /></td></tr>
+<tr class="separator:acaed872857c4345e562a86cc9847d688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79e12d88707a187548ec515cb73fe269" id="r_a79e12d88707a187548ec515cb73fe269"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a79e12d88707a187548ec515cb73fe269"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a79e12d88707a187548ec515cb73fe269">atlas::logging::debug</a> (format_ns::format_string&lt; Ts... &gt;, Ts &amp;&amp;...) -&gt; <a class="el" href="structatlas_1_1logging_1_1debug.html">debug</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a79e12d88707a187548ec515cb73fe269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d0c63b1018610e86178916bc8813d84" id="r_a5d0c63b1018610e86178916bc8813d84"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a5d0c63b1018610e86178916bc8813d84"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a5d0c63b1018610e86178916bc8813d84">atlas::logging::info</a> (format_ns::format_string&lt; Ts... &gt;, Ts &amp;&amp;...) -&gt; <a class="el" href="structatlas_1_1logging_1_1info.html">info</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a5d0c63b1018610e86178916bc8813d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202ea0294db1d74d0ce81b68c6495f66" id="r_a202ea0294db1d74d0ce81b68c6495f66"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a202ea0294db1d74d0ce81b68c6495f66"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a202ea0294db1d74d0ce81b68c6495f66">atlas::logging::warn</a> (format_ns::format_string&lt; Ts... &gt;, Ts &amp;&amp;...) -&gt; <a class="el" href="structatlas_1_1logging_1_1warn.html">warn</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a202ea0294db1d74d0ce81b68c6495f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd9cee4a43db20a268c574469e3bf92d" id="r_afd9cee4a43db20a268c574469e3bf92d"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:afd9cee4a43db20a268c574469e3bf92d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#afd9cee4a43db20a268c574469e3bf92d">atlas::logging::error</a> (format_ns::format_string&lt; Ts... &gt;, Ts &amp;&amp;... a) -&gt; <a class="el" href="structatlas_1_1logging_1_1error.html">error</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:afd9cee4a43db20a268c574469e3bf92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855da1196f4e38c3042c8de28d08b377" id="r_a855da1196f4e38c3042c8de28d08b377"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a855da1196f4e38c3042c8de28d08b377"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a855da1196f4e38c3042c8de28d08b377">atlas::logging::errorLoc</a> (format_ns::format_string&lt; Ts... &gt;, const std::source_location &amp;, Ts &amp;&amp;... a) -&gt; <a class="el" href="structatlas_1_1logging_1_1errorLoc.html">errorLoc</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a855da1196f4e38c3042c8de28d08b377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b8ac5e7806f564f615119c9db4e11d7" id="r_a9b8ac5e7806f564f615119c9db4e11d7"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a9b8ac5e7806f564f615119c9db4e11d7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceatlas_1_1logging.html#a9b8ac5e7806f564f615119c9db4e11d7">atlas::logging::critical</a> (format_ns::format_string&lt; Ts... &gt;, Ts &amp;&amp;...) -&gt; <a class="el" href="structatlas_1_1logging_1_1critical.html">critical</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a9b8ac5e7806f564f615119c9db4e11d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a5d0717fdf14f6c5bb900de985d2d653a" name="a5d0717fdf14f6c5bb900de985d2d653a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d0717fdf14f6c5bb900de985d2d653a">&#9670;&#160;</a></span>initLogging()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aadd508594bec4adbf0f8151162ae6cdf" name="aadd508594bec4adbf0f8151162ae6cdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd508594bec4adbf0f8151162ae6cdf">&#9670;&#160;</a></span>ATLAS_LOGGING_HPP</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">void</a> initLogging </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">#define ATLAS_LOGGING_HPP</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -173,7 +214,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="logging_8hpp.html">logging.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_422c72efb5a1b463044a904d174dcfb2.html">atlas</a></li><li class="navelem"><a class="el" href="dir_613d23a2c57d8e9ad3c4a38972cb2edf.html">core</a></li><li class="navelem"><a class="el" href="dir_b1e1d182c999906baefbdd7b60f828ad.html">logging</a></li><li class="navelem"><a class="el" href="logging_8hpp.html">logging.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

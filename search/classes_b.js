@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['pixmapitem_0',['PixmapItem',['../structatlas_1_1records_1_1internal_1_1PixmapItem.html',1,'atlas::records::internal']]],
+  ['pixmapitem_0',['PixmapItem',['../structatlas_1_1cache_1_1ImageCache_1_1PixmapItem.html',1,'atlas::cache::ImageCache']]],
   ['progressbardialog_1',['ProgressBarDialog',['../classProgressBarDialog.html',1,'']]],
   ['progressnotification_2',['ProgressNotification',['../classProgressNotification.html',1,'']]],
   ['progresssignaler_3',['ProgressSignaler',['../classProgressSignaler.html',1,'']]],

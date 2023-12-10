@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,23 +103,52 @@ $(document).ready(function(){initNavTree('formatters_8hpp.html',''); initResizab
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">formatters.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;QString&gt;</code><br />
-<code>#include &lt;filesystem&gt;</code><br />
+<code>#include &lt;fmt/format.h&gt;</code><br />
 </div>
 <p><a href="formatters_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01QString_01_4.html">fmt::formatter&lt; QString &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formatter for QString in fmt::format.  <a href="structfmt_1_1formatter_3_01QString_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01QString_01_4.html">format_ns::formatter&lt; QString &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formatter for QString in format_ns::format.  <a href="structformat__ns_1_1formatter_3_01QString_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html">fmt::formatter&lt; std::filesystem::path &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html">format_ns::formatter&lt; std::filesystem::path &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01std_1_1source__location_01_4.html">format_ns::formatter&lt; std::source_location &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01format__ns_1_1format__string_3_4_01_4.html">format_ns::formatter&lt; format_ns::format_string&lt;&gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01QSize_01_4.html">format_ns::formatter&lt; QSize &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structformat__ns_1_1formatter_3_01QUrl_01_4.html">format_ns::formatter&lt; QUrl &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a80d5310ccb9e3f031e95a19e6b0e9fd1" id="r_a80d5310ccb9e3f031e95a19e6b0e9fd1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="formatters_8hpp.html#a80d5310ccb9e3f031e95a19e6b0e9fd1">ATLASGAMEMANAGER_FORMATTERS_HPP</a></td></tr>
+<tr class="separator:a80d5310ccb9e3f031e95a19e6b0e9fd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a80d5310ccb9e3f031e95a19e6b0e9fd1" name="a80d5310ccb9e3f031e95a19e6b0e9fd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80d5310ccb9e3f031e95a19e6b0e9fd1">&#9670;&#160;</a></span>ATLASGAMEMANAGER_FORMATTERS_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLASGAMEMANAGER_FORMATTERS_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

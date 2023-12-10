@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -134,16 +131,16 @@ $(document).ready(function(){initNavTree('Database_8hpp_source.html',''); initRe
 <div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classDatabase.html">   19</a></span><span class="keyword">class </span><a class="code hl_class" href="classDatabase.html">Database</a></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    [[<a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">nodiscard</a>]] <span class="keyword">static</span> <a class="code hl_typedef" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a>&amp; <a class="code hl_function" href="classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db">lock</a>();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_typedef" href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a>&amp; <a class="code hl_function" href="classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db">lock</a>();</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">initalize</a>( <span class="keyword">const</span> std::filesystem::path <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">init_path</a> );</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">initalize</a>( <span class="keyword">const</span> std::filesystem::path init_path );</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">deinit</a>();</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="comment">//static void update();</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">static</span> <a class="code hl_function" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">sqlite3</a>&amp; <a class="code hl_function" href="classDatabase.html#af46d853231537ed1c3521f2d720ef7d6">ref</a>();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">static</span> sqlite3&amp; <a class="code hl_function" href="classDatabase.html#af46d853231537ed1c3521f2d720ef7d6">ref</a>();</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
@@ -151,38 +148,16 @@ $(document).ready(function(){initNavTree('Database_8hpp_source.html',''); initRe
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
 </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="foldopen" id="foldopen00041" data-start="{" data-end="};">
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structDbResults.html">   41</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structDbResults.html">DbResults</a></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structDbResults.html#ac21be7a84c2c2ea1a3291bea4a320900">   43</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structDbResults.html#ac21be7a84c2c2ea1a3291bea4a320900">rows_returned</a> { 0 };</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
-</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="};">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structDbException.html">   46</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structDbException.html">DbException</a> : <span class="keyword">public</span> std::runtime_error</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>{};</div>
-</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="foldopen" id="foldopen00049" data-start="{" data-end="};">
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="structNoRows.html">   49</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structNoRows.html">NoRows</a> : <span class="keyword">public</span> <a class="code hl_struct" href="structDbException.html">DbException</a></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{};</div>
-</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_DATABASE_HPP</span></div>
-<div class="ttc" id="aclassBinder_html"><div class="ttname"><a href="classBinder.html">Binder</a></div><div class="ttdef"><b>Definition</b> Binder.hpp:19</div></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif </span><span class="comment">//ATLAS_DATABASE_HPP</span></div>
+<div class="ttc" id="aclassBinder_html"><div class="ttname"><a href="classBinder.html">Binder</a></div><div class="ttdef"><b>Definition</b> Binder.hpp:46</div></div>
 <div class="ttc" id="aclassDatabase_html"><div class="ttname"><a href="classDatabase.html">Database</a></div><div class="ttdef"><b>Definition</b> Database.hpp:20</div></div>
 <div class="ttc" id="aclassDatabase_html_a5a078650d45ee5e164a5d8d27a9569db"><div class="ttname"><a href="classDatabase.html#a5a078650d45ee5e164a5d8d27a9569db">Database::lock</a></div><div class="ttdeci">static internal::MtxType &amp; lock()</div><div class="ttdoc">Returns a ref to the global DB lock.</div><div class="ttdef"><b>Definition</b> Database.cpp:30</div></div>
-<div class="ttc" id="aclassDatabase_html_a95da77a6408fed05dfd75efa87400a2e"><div class="ttname"><a href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">Database::deinit</a></div><div class="ttdeci">static void deinit()</div><div class="ttdoc">Deinitalizes the DB.</div><div class="ttdef"><b>Definition</b> Database.cpp:83</div></div>
+<div class="ttc" id="aclassDatabase_html_a95da77a6408fed05dfd75efa87400a2e"><div class="ttname"><a href="classDatabase.html#a95da77a6408fed05dfd75efa87400a2e">Database::deinit</a></div><div class="ttdeci">static void deinit()</div><div class="ttdoc">Deinitalizes the DB.</div><div class="ttdef"><b>Definition</b> Database.cpp:79</div></div>
 <div class="ttc" id="aclassDatabase_html_ae81f8f9992ec7c99d97b46153c67773f"><div class="ttname"><a href="classDatabase.html#ae81f8f9992ec7c99d97b46153c67773f">Database::initalize</a></div><div class="ttdeci">static void initalize(const std::filesystem::path init_path)</div><div class="ttdoc">Initalizes the database with init_path. Does not have to be caonical.</div><div class="ttdef"><b>Definition</b> Database.cpp:35</div></div>
 <div class="ttc" id="aclassDatabase_html_af46d853231537ed1c3521f2d720ef7d6"><div class="ttname"><a href="classDatabase.html#af46d853231537ed1c3521f2d720ef7d6">Database::ref</a></div><div class="ttdeci">static sqlite3 &amp; ref()</div><div class="ttdoc">Returns a ref to the sqlite DB.</div><div class="ttdef"><b>Definition</b> Database.cpp:22</div></div>
-<div class="ttc" id="aextractors_8hpp_html_a8ab6bed9320aa2b01ebe634a87cfd0b3"><div class="ttname"><a href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">extract</a></div><div class="ttdeci">void extract(sqlite3_stmt *, T &amp;)=delete</div><div class="ttdef"><b>Definition</b> extractors.hpp:17</div></div>
 <div class="ttc" id="anamespaceinternal_html"><div class="ttname"><a href="namespaceinternal.html">internal</a></div><div class="ttdef"><b>Definition</b> Database.cpp:17</div></div>
 <div class="ttc" id="anamespaceinternal_html_a337683e9c7c25e1bbc6c59356459fa73"><div class="ttname"><a href="namespaceinternal.html#a337683e9c7c25e1bbc6c59356459fa73">internal::MtxType</a></div><div class="ttdeci">std::mutex MtxType</div><div class="ttdef"><b>Definition</b> Database.hpp:15</div></div>
 <div class="ttc" id="anamespaceinternal_html_a9986a9e137877a9e729fac766d5c47b2"><div class="ttname"><a href="namespaceinternal.html#a9986a9e137877a9e729fac766d5c47b2">internal::LockGuardType</a></div><div class="ttdeci">std::lock_guard&lt; std::mutex &gt; LockGuardType</div><div class="ttdef"><b>Definition</b> Database.hpp:16</div></div>
-<div class="ttc" id="astructDbException_html"><div class="ttname"><a href="structDbException.html">DbException</a></div><div class="ttdef"><b>Definition</b> Database.hpp:47</div></div>
-<div class="ttc" id="astructDbResults_html"><div class="ttname"><a href="structDbResults.html">DbResults</a></div><div class="ttdef"><b>Definition</b> Database.hpp:42</div></div>
-<div class="ttc" id="astructDbResults_html_ac21be7a84c2c2ea1a3291bea4a320900"><div class="ttname"><a href="structDbResults.html#ac21be7a84c2c2ea1a3291bea4a320900">DbResults::rows_returned</a></div><div class="ttdeci">int rows_returned</div><div class="ttdef"><b>Definition</b> Database.hpp:43</div></div>
-<div class="ttc" id="astructNoRows_html"><div class="ttname"><a href="structNoRows.html">NoRows</a></div><div class="ttdef"><b>Definition</b> Database.hpp:50</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

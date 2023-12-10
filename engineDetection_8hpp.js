@@ -1,5 +1,6 @@
 var engineDetection_8hpp =
 [
+    [ "ATLAS_ENGINEDETECTION_HPP", "engineDetection_8hpp.html#aa1b38ae7c706537913fe5fa94836176c", null ],
     [ "Engine", "engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7", [
       [ "ENGINES_BEGIN", "engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a535d14f0b874a9122213cc909a31c72d", null ],
       [ "RenPy", "engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a4c685edfcb36d8566d120e3750575306", null ],

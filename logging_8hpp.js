@@ -1,10 +1,25 @@
 var logging_8hpp =
 [
-    [ "error", "logging_8hpp.html#a5a466860a126c54bc59e2f127bf5eb86", null ],
-    [ "error", "logging_8hpp.html#ad95c048669ce55f574e3c08c648f2a14", null ],
-    [ "info", "logging_8hpp.html#a93a3c838c88af23f0955337538e700a1", null ],
+    [ "atlas::logging::debug< Ts >", "structatlas_1_1logging_1_1debug.html", "structatlas_1_1logging_1_1debug" ],
+    [ "atlas::logging::info< Ts >", "structatlas_1_1logging_1_1info.html", "structatlas_1_1logging_1_1info" ],
+    [ "atlas::logging::warn< Ts >", "structatlas_1_1logging_1_1warn.html", "structatlas_1_1logging_1_1warn" ],
+    [ "atlas::logging::error< Ts >", "structatlas_1_1logging_1_1error.html", "structatlas_1_1logging_1_1error" ],
+    [ "atlas::logging::errorLoc< Ts >", "structatlas_1_1logging_1_1errorLoc.html", "structatlas_1_1logging_1_1errorLoc" ],
+    [ "atlas::logging::critical< Ts >", "structatlas_1_1logging_1_1critical.html", "structatlas_1_1logging_1_1critical" ],
+    [ "ATLAS_LOGGING_HPP", "logging_8hpp.html#aadd508594bec4adbf0f8151162ae6cdf", null ],
+    [ "critical", "logging_8hpp.html#a9b8ac5e7806f564f615119c9db4e11d7", null ],
+    [ "debug", "logging_8hpp.html#a79e12d88707a187548ec515cb73fe269", null ],
+    [ "error", "logging_8hpp.html#afd9cee4a43db20a268c574469e3bf92d", null ],
+    [ "errorLoc", "logging_8hpp.html#a855da1196f4e38c3042c8de28d08b377", null ],
+    [ "formatSourceLocation", "logging_8hpp.html#a6ed299bcbc40ba9e45a84425b7c2d131", null ],
+    [ "info", "logging_8hpp.html#a5d0c63b1018610e86178916bc8813d84", null ],
     [ "init", "logging_8hpp.html#ab93baba09a13fcf83faa20c6f0b0e60e", null ],
     [ "initGUIHooks", "logging_8hpp.html#ae802ade41b5102d457ff0e71ea296512", null ],
-    [ "initLogging", "logging_8hpp.html#a5d0717fdf14f6c5bb900de985d2d653a", null ],
-    [ "warn", "logging_8hpp.html#a79a429084bf95e96754497c7e0e7ec82", null ]
+    [ "logCritical", "logging_8hpp.html#acaed872857c4345e562a86cc9847d688", null ],
+    [ "logDebug", "logging_8hpp.html#ae3137b59dbf5c428bfe0891483e47b1e", null ],
+    [ "logError", "logging_8hpp.html#a1a5737c806c36873efa200ee541f1e61", null ],
+    [ "logInfo", "logging_8hpp.html#a2186ff828affd9945e9dd7085175f863", null ],
+    [ "logWarn", "logging_8hpp.html#ad4d62198db82accc7184f601d9dac630", null ],
+    [ "setFormat", "logging_8hpp.html#a40fafe65563c6a4fee2e6059c6b8eabe", null ],
+    [ "warn", "logging_8hpp.html#a202ea0294db1d74d0ce81b68c6495f66", null ]
 ];

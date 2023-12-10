@@ -19,7 +19,7 @@ var classRecordListModel =
     [ "removeRecord", "classRecordListModel.html#aa26b0792e25f3c77eceb453f35c0728e", null ],
     [ "rowCount", "classRecordListModel.html#a9aef273f374af24da709783dc7721776", null ],
     [ "setRecords", "classRecordListModel.html#a491b1e090b7a8c06e7d450481d75c9f3", null ],
-    [ "loaders", "classRecordListModel.html#a913b1b843391d348d4ab0264bef38f2c", null ],
+    [ "loaders", "classRecordListModel.html#ac6a6473292c81dc50d3b8f145869e0df", null ],
     [ "loading_thread", "classRecordListModel.html#aac6f51d9610f0e71bb0af3c1f72624e7", null ],
     [ "m_records", "classRecordListModel.html#a04f3d6b374bf42f192cb6ea2c2a93906", null ]
 ];

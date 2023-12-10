@@ -19,9 +19,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="tempus.ico" type="image/x-icon" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN CUSTOMIZATIONS -->
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
@@ -106,6 +103,7 @@ $(document).ready(function(){initNavTree('Importer_8hpp.html',''); initResizable
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Importer.hpp File Reference</div></div>
 </div><!--header-->
@@ -115,15 +113,35 @@ $(document).ready(function(){initNavTree('Importer_8hpp.html',''); initResizable
 <code>#include &lt;QPromise&gt;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &quot;<a class="el" href="Types_8hpp_source.html">core/Types.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/Game.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Game_8hpp_source.html">core/database/record/game/Game.hpp</a>&quot;</code><br />
 </div>
 <p><a href="Importer_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a85c8711779e113a6f943c196c7e3df6a" id="r_a85c8711779e113a6f943c196c7e3df6a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Importer_8hpp.html#a85c8711779e113a6f943c196c7e3df6a">ATLASGAMEMANAGER_IMPORTER_HPP</a></td></tr>
+<tr class="separator:a85c8711779e113a6f943c196c7e3df6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af560bffe9a3881cb3199dfa7b3b6233d" id="r_af560bffe9a3881cb3199dfa7b3b6233d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQFuture.html">QFuture</a>&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Importer_8hpp.html#af560bffe9a3881cb3199dfa7b3b6233d">importGame</a> (<a class="el" href="structGameImportData.html">GameImportData</a> data, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">root</a>, <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">owning</a>)</td></tr>
+<tr class="memitem:af560bffe9a3881cb3199dfa7b3b6233d" id="r_af560bffe9a3881cb3199dfa7b3b6233d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQFuture.html">QFuture</a>&lt; <a class="el" href="Types_8hpp.html#a315b4c5d81697de3a3cf46e8a82c3068">RecordID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Importer_8hpp.html#af560bffe9a3881cb3199dfa7b3b6233d">importGame</a> (<a class="el" href="structGameImportData.html">GameImportData</a> data, const std::filesystem::path root, const bool owning)</td></tr>
 <tr class="separator:af560bffe9a3881cb3199dfa7b3b6233d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a85c8711779e113a6f943c196c7e3df6a" name="a85c8711779e113a6f943c196c7e3df6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85c8711779e113a6f943c196c7e3df6a">&#9670;&#160;</a></span>ATLASGAMEMANAGER_IMPORTER_HPP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATLASGAMEMANAGER_IMPORTER_HPP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="af560bffe9a3881cb3199dfa7b3b6233d" name="af560bffe9a3881cb3199dfa7b3b6233d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af560bffe9a3881cb3199dfa7b3b6233d">&#9670;&#160;</a></span>importGame()</h2>
@@ -140,13 +158,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> std::filesystem::path&#160;</td>
+          <td class="paramtype">const std::filesystem::path&#160;</td>
           <td class="paramname"><em>root</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">const</a> <a class="el" href="extractors_8hpp.html#a8ab6bed9320aa2b01ebe634a87cfd0b3">bool</a>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>owning</em>&#160;</td>
         </tr>
         <tr>
