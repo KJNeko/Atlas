@@ -1,13 +1,20 @@
 
+#pragma once
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDebug>
 #include <QMainWindow>
 #include <QThread>
 #include <QTimer>
 #include <QTreeWidget>
 
 #include "core/database/Search.hpp"
+
+#ifdef _WIN32
+#include "core/updater/AtlasUpdater.hpp"
+#include "ui/dialog/console/Console.hpp"
+#endif
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -28,6 +35,7 @@ class MainWindow final : public QMainWindow
   public:
 
 	MainWindow( QWidget* parent = nullptr );
+	std::unique_ptr< Console > console { std::make_unique< Console >() };
 	~MainWindow();
 
   private:
@@ -51,9 +59,11 @@ class MainWindow final : public QMainWindow
 	void on_actionBulkImporter_triggered();
 	void on_actionSingleImporter_triggered();
 	void on_actionExtractionImporter_triggered();
-	//void on_actionImport_triggered();
+	void on_actionUpdates_triggered();
 	void on_actionOptions_triggered();
 	void on_actionExit_triggered();
+	void on_actionConsoleWindow_triggered();
+	void on_actionUpdateMeta_triggered();
 	//void on_actionDownload_triggered();
 	//void on_actionManage_triggered();
 	//void on_actionArrangeBy_triggered();
@@ -66,6 +76,7 @@ class MainWindow final : public QMainWindow
 	void on_actionViewFileHistory_triggered();
 	void on_btnAddGame_pressed();
 	void on_btnFilter_pressed();
+	void on_btnLog_pressed();
 	void searchTextChanged( const QString str );
 	//void on_sortOrderButton_clicked();
 	//void on_sortSelection_currentIndexChanged( int index );

@@ -2,6 +2,7 @@
 // Created by kj16609 on 5/26/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_SINGLEIMPORTER_HPP
 #define ATLASGAMEMANAGER_SINGLEIMPORTER_HPP
 
@@ -20,6 +21,8 @@ class SingleImporter final : public QDialog
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE( SingleImporter )
+
+	std::vector< std::unique_ptr< QMovie > > m_movies {};
 
   public:
 

@@ -12,9 +12,10 @@
 
 #include "GameImportData.hpp"
 #include "ImportNotifier.hpp"
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
-#include "core/imageManager.hpp"
+#include "core/database/record/game/Game.hpp"
+#include "core/images/images.hpp"
+#include "core/images/import.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/utils/FileScanner.hpp"
 #include "core/utils/operators.hpp"
@@ -49,18 +50,19 @@ namespace internal
 
 		promise.start();
 
-		const auto game_root { import_root / relative_path };
+		// If the import_root is empty then we should consider relative_path as the true path
+		const auto game_root { import_root.empty() ? relative_path : import_root / relative_path };
 		const auto executable_path { game_root / relative_executable };
 
 		TracyCZoneN( tracy_checkZone, "Check", true );
 		//Verify that everything is valid
 		if ( !std::filesystem::exists( game_root ) )
-			throw std::runtime_error( fmt::format( "Root path {:ce} does not exist", game_root ) );
+			throw AtlasException( format_ns::format( "Root path {:ce} does not exist", game_root ) );
 		if ( !std::filesystem::exists( executable_path ) )
-			throw std::runtime_error( fmt::format( "Executable {:ce} does not exist", executable_path ) );
-		if ( title.isEmpty() ) throw std::runtime_error( "Title is empty" );
-		if ( creator.isEmpty() ) throw std::runtime_error( "Creator is empty" );
-		if ( version.isEmpty() ) throw std::runtime_error( "Version is empty" );
+			throw AtlasException( format_ns::format( "Executable {:ce} does not exist", executable_path ) );
+		if ( title.isEmpty() ) throw AtlasException( "Title is empty" );
+		if ( creator.isEmpty() ) throw AtlasException( "Creator is empty" );
+		if ( version.isEmpty() ) throw AtlasException( "Version is empty" );
 		TracyCZoneEnd( tracy_checkZone );
 
 		TracyCZoneN( tracy_FileScanner, "File scan", true );
@@ -102,6 +104,7 @@ namespace internal
 		if ( owning )
 		{
 			ZoneScopedN( "Copying files" );
+			//TODO: Calculate filesize first THEN move files. Abort if we think there is not enough space. Prompt user
 			signaler.setMax( static_cast< int >( file_count ) );
 
 			std::size_t i { 0 };
@@ -119,18 +122,35 @@ namespace internal
 
 				if ( !std::filesystem::copy_file( source, dest, std::filesystem::copy_options::overwrite_existing ) )
 				{
-					atlas::logging::error(
-						fmt::format( "importGame: Failed to copy file {} to {}", source.string(), dest.string() ) );
-					throw std::runtime_error( "Failed to copy file" );
+					//TODO: Ask the user if they wish to continue or abort the entire import.
+					throw AtlasException( format_ns::format( "Failed to copy file {} -> {}", source, dest ) );
 				}
 			}
 
-			record.addVersion( version, dest_root, relative_executable, game_size, owning );
+			record.addVersion( version, dest_root, relative_executable, game_size, !owning );
 		}
 		else
-			record.addVersion( version, game_root, relative_executable, game_size, owning );
+			record.addVersion( version, game_root, relative_executable, game_size, !owning );
 
-		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
+		//Try to get id using name and creator
+		if ( atlas_id != INVALID_ATLAS_ID )
+		{
+			record.connectAtlasData( atlas_id );
+		}
+		else
+		{
+			std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, creator );
+			if ( atlas_data.has_value() )
+			{
+				atlas_id = atlas_data.value()->atlas_id;
+				std::optional< atlas::remote::F95RemoteData > f95_data =
+					atlas::remote::findF95Data( QString::number( atlas_data.value()->atlas_id ) );
+				gl_infos.f95_thread_id = f95_data.value()->f95_id;
+
+				record.connectAtlasData( atlas_id );
+			}
+		}
+
 		if ( gl_infos.f95_thread_id != INVALID_F95_ID ) record.connectF95Data( gl_infos.f95_thread_id );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
@@ -141,7 +161,16 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				const std::filesystem::path banner_path { path.toStdWString() };
-				banner_futures[ i ] = imageManager::importImage( banner_path, record->m_game_id );
+				//Check if path is actually a url
+				if ( QString::fromStdString( path.toStdString() ).contains( "http" ) )
+				{
+					banner_futures[ i ] = atlas::images::async::importImageFromURL( path, record->m_game_id );
+					//banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
+				else
+				{
+					banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -161,8 +190,8 @@ namespace internal
 		for ( const auto& path : previews )
 		{
 			signaler.setSubMessage( QString( "Importing preview %1" ).arg( path ) );
-			preview_futures.emplace_back( imageManager::importImage( { path.toStdWString() }, record->m_game_id ) );
-			//record.addPreview( { path.toStdString() } );
+			preview_futures
+				.emplace_back( atlas::images::async::importImage( { path.toStdWString() }, record->m_game_id ) );
 
 			if ( owning ) //If we own it then we should delete the path from our directory
 			{
@@ -197,13 +226,11 @@ namespace internal
 					try
 					{
 						if ( qt_e.exception() ) std::rethrow_exception( qt_e.exception() );
+						//TODO: Ask the user if they wish to continue or abort the entire import.
 					}
 					catch ( std::exception& e )
 					{
-						spdlog::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
-						atlas::notifications::createDevMessage(
-							fmt::format( "Failed to add banner to record {}:{}: ", record->m_game_id, record->m_title ),
-							e );
+						atlas::logging::warn( "Failed to add banner to record {}: {}", record->m_game_id, e.what() );
 					}
 				}
 			}
@@ -229,22 +256,13 @@ namespace internal
 				//Qt is fucking stupid.
 				try
 				{
+					//TODO: Ask the user if they wish to continue or abort the entire import.
 					if ( e.exception() ) std::rethrow_exception( e.exception() );
 				}
-				catch ( std::exception& e_n )
+				catch ( AtlasException& e_n )
 				{
-					atlas::notifications::createMessage( QString::fromStdString(
-						fmt::format( "Failed to add preview to {} ({}): \n{}", title, version, e_n.what() ) ) );
-					spdlog::warn( "Failed to add preview from future: {}", e_n.what() );
+					atlas::logging::error( "Failed to add preview from future: \n{}", e_n.what() );
 				}
-			}
-			catch ( std::runtime_error& e )
-			{
-				spdlog::warn( "Failed to add preview from future: {}", e.what() );
-			}
-			catch ( std::exception& e )
-			{
-				spdlog::warn( "Failed to add preview from future: {}", e.what() );
 			}
 		}
 
@@ -254,12 +272,6 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
-		spdlog::error( "importGame: {}", e.what() );
-		promise.setException( std::current_exception() );
-	}
-	catch ( ... )
-	{
-		spdlog::error( "importGame: {}", "Fuck" );
 		promise.setException( std::current_exception() );
 	}
 

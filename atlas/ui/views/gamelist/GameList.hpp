@@ -2,12 +2,13 @@
 // Created by kj16609 on 5/25/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_GAMELIST_HPP
 #define ATLASGAMEMANAGER_GAMELIST_HPP
 
 #include <QListView>
 
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "ui/models/RecordListModel.hpp"
 
 //! A list that displays a list of games.

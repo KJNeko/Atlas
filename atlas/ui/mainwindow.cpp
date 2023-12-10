@@ -2,8 +2,9 @@
 
 #include <moc_mainwindow.cpp>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
+#include "core/images/import.hpp"
 #include "core/import/ImportNotifier.hpp"
 #include "core/notifications/notifications.hpp"
 #include "core/remote/AtlasRemote.hpp"
@@ -35,9 +36,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( &record_search, &Search::searchCompleted, ui->recordView, &RecordListView::setRecords );
 
 	connect( ui->recordView, &RecordListView::openDetailedView, this, &MainWindow::switchToDetailed );
-	connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
-	connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
-	connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
+	//connect( ui->homeButton, &QToolButton::clicked, this, &MainWindow::on_homeButton_pressed );
+	//connect( ui->btnAddGame, &QPushButton::clicked, this, &MainWindow::on_btnAddGame_pressed );
+	//connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
 	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
@@ -56,20 +57,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
 												 config::application::font::get() );
 
-	try
-	{
-		QApplication::setFont( font );
-		//throw 505;
-	}
-	catch ( int num )
-	{
-		spdlog::error( "Unable to load default font. Verify system font available" );
-	}
+	QApplication::setFont( font );
 
+	//Notification Stuff
 	config::notify();
 
 	atlas::notifications::initNotifications( this );
 	connect( &atlas::notifications::handle(), &NotificationManagerUI::requestMove, this, &MainWindow::movePopup );
+	ui->btnLog->setText( "Hide Log" );
 
 	//Share the recordView's model to gameList
 	//NEED TO OVERIDE THIS TO SET HEADER DATA
@@ -84,7 +79,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//Init remote system
 	atlas::initRemoteHandler();
 
-	atlas::notifications::createMessage( QString( "Welcome to atlas! Version: %1" ).arg( utils::version_string_qt() ) );
+	atlas::notifications::createUserMessage( QString( "Welcome to atlas! Version: %1" )
+	                                             .arg( utils::version_string_qt() ) );
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -98,12 +94,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSimpleImporter->setVisible( false );
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
-	ui->actionDownload->setVisible( false );
-	ui->actionUpdates->setEnabled( false );
-	ui->actionUpdates->setVisible( false );
+	//ui->actionDownload->setVisible( false );
 
-	//Used to keep games list centered
-	ui->dummy_button->setHidden( true );
 	connect(
 		&atlas::import::internal::getNotifier(),
 		&atlas::import::ImportNotifier::notification,
@@ -118,8 +110,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	setBottomGameCounter();
 	refreshSearch();
 
-	const QString windowTitle = QString::fromStdString("ATLAS ") + utils::version_string_qt() ;
-	MainWindow::setWindowTitle(windowTitle);
+	const QString windowTitle = QString::fromStdString( "ATLAS " ) + utils::version_string_qt();
+	MainWindow::setWindowTitle( windowTitle );
+
+	console->setModal( true );
 }
 
 MainWindow::~MainWindow()
@@ -184,6 +178,7 @@ void MainWindow::on_btnFilter_pressed()
 
 void MainWindow::on_actionOptions_triggered()
 {
+	atlas::logging::debug( "Settings menu requested" );
 	SettingsDialog settingsDialog { this };
 	settingsDialog.setModal( true );
 	settingsDialog.exec();
@@ -195,6 +190,7 @@ void MainWindow::on_actionOptions_triggered()
 
 void MainWindow::switchToDetailed( const atlas::records::Game record )
 {
+	atlas::logging::debug( "Switched to detailed view for game {}", record->m_title );
 	ui->detailedRecordView->setRecord( record );
 	ui->stackedWidget->setCurrentIndex( 1 );
 }
@@ -206,7 +202,7 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::on_btnAddGame_pressed()
 {
-	BatchImportDialog importer { this };
+	SingleImporter importer { this };
 	importer.exec();
 }
 
@@ -263,6 +259,7 @@ void MainWindow::on_actionViewFileHistory_triggered()
 
 void MainWindow::searchTextChanged( [[maybe_unused]] const QString str )
 {
+	atlas::logging::debug( "Search text changed to {}", str );
 	/*const auto search_type = [ & ]()
 	{
 		switch ( ui->sortSelection->currentIndex() )
@@ -320,6 +317,10 @@ void MainWindow::movePopup()
 	const auto point { ui->recordView->mapToGlobal( ui->recordView->rect().bottomRight() ) - QPoint { x, y } };
 
 	task_popup.move( point );
+
+	//Check if the popup is hidden since we call this once when we turn visible <=> invisible.
+	ui->btnLog->setText( task_popup.isVisible() ? "Hide Log" : "Show Log" );
+
 	//spdlog::info( "Max height of popup{}", ui->recordView->height() );
 	//task_popup.setMaximumHeight( ui->recordView->height() );
 }
@@ -353,4 +354,102 @@ void MainWindow::refreshSearch()
 void MainWindow::on_stackedWidget_currentChanged( const int idx )
 {
 	if ( idx == 0 ) ui->detailedRecordView->clearRecord();
+}
+
+void MainWindow::on_btnLog_pressed()
+{
+	auto& task_popup { atlas::notifications::handle() };
+	task_popup.setHidden( !task_popup.isHidden() );
+	ui->btnLog->setText( task_popup.isHidden() ? "Show Log" : "Hide Log" );
+}
+
+void MainWindow::on_actionUpdates_triggered()
+{
+#ifdef _WIN32
+	atlas::initUpdateHandler( true );
+#endif
+}
+
+void MainWindow::on_actionConsoleWindow_triggered()
+{
+	console->exec();
+}
+
+void MainWindow::on_actionUpdateMeta_triggered()
+{
+	bool download_all_images = false;
+
+	QMessageBox msgBox;
+	msgBox.setWindowTitle( "Update Metadata/Images" );
+	msgBox.setText( tr( "Please select and update option below" ) );
+	QAbstractButton* pbutton1 = msgBox.addButton( tr( "All metadata" ), QMessageBox::YesRole );
+	QAbstractButton* pbutton2 = msgBox.addButton( tr( "Missing metadata" ), QMessageBox::YesRole );
+	pbutton1->setFixedSize( QSize( 150, 75 ) );
+	pbutton1->setToolTip( "This will update every game matched in the ATLAS database. All images will be replaced" );
+	pbutton2->setFixedSize( QSize( 150, 75 ) );
+
+	msgBox.exec();
+
+	if ( msgBox.clickedButton() == pbutton1 )
+	{
+		download_all_images = true;
+	}
+
+	//This will only update values that are already matched in the database.
+	atlas::logging::info( "Updating Meta and Downloading Images" );
+	//Get a list of every record id
+	std::vector< RecordID > record_ids;
+	RapidTransaction() << "SELECT record_id FROM games" >> [ &record_ids ]( RecordID record_id )
+	{ record_ids.push_back( record_id ); };
+
+	//Go through each record and runs checks based on user input
+	for ( auto& record_id : record_ids )
+	{
+		atlas::records::Game game { record_id };
+		std::optional< atlas::remote::AtlasRemoteData > atlas_data {
+			atlas::remote::findAtlasData( game->m_title, game->m_creator )
+		};
+		if ( atlas_data.has_value() )
+		{
+			//const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
+			const AtlasID atlas_id { atlas_data.value()->atlas_id };
+
+			std::optional< atlas::remote::F95RemoteData > f95_data {
+				atlas::remote::findF95Data( QString::number( atlas_id ) )
+			};
+
+			if ( !f95_data.has_value() ) continue;
+
+			const QUrl image_url( f95_data.value()->banner_url );
+			const F95ID f95_id { f95_data.value()->f95_id };
+
+			if ( image_url.isEmpty() ) continue; // No URL to import
+			//Check if we should download all images or not. Check if this is a new item and update the image if not
+			if ( download_all_images || !game->atlas_data.has_value() )
+			{
+				//Store data if this is a new entry
+				if ( !game->atlas_data.has_value() )
+				{
+					game.connectAtlasData( atlas_id );
+					game.connectF95Data( f95_id );
+				}
+				atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
+					.then(
+						[ record_id ]( std::filesystem::path path )
+						{
+							atlas::records::Game game_r { record_id };
+							if ( !path.empty() )
+							{
+								game_r.setBanner( path.string(), Normal );
+							}
+						}
+
+					);
+			}
+		}
+		else
+		{
+			qInfo() << game->m_title;
+		}
+	}
 }

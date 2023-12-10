@@ -4,6 +4,7 @@
 
 #include <QAbstractItemView>
 #include <QFileDialog>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QMimeDatabase>
 #include <QtConcurrent>
@@ -12,7 +13,7 @@
 
 #include "BatchImportDelegate.hpp"
 #include "BatchImportModel.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/import/Importer.hpp"
 #include "core/utils/regex/regex.hpp"
 #include "ui_BatchImportDialog.h"
@@ -44,6 +45,8 @@ BatchImportDialog::BatchImportDialog( QWidget* parent ) : QDialog( parent ), ui(
 		this,
 		&BatchImportDialog::modelChanged );
 
+	ui->twGames->setEditTriggers( QAbstractItemView::DoubleClicked );
+
 	loadConfig();
 }
 
@@ -52,7 +55,7 @@ void BatchImportDialog::loadConfig()
 	ZoneScoped;
 	ui->tbFormat->setText( config::importer::pathparse::get() );
 
-	ui->cbCheckLocal->setChecked( config::importer::searchGameInfo::get() );
+	ui->cbCheckDownloadImages->setChecked( config::importer::searchGameInfo::get() );
 	ui->cbMoveImported->setChecked( config::importer::moveImported::get() );
 }
 
@@ -61,7 +64,7 @@ void BatchImportDialog::saveConfig()
 	ZoneScoped;
 	config::importer::pathparse::set( ui->tbFormat->text() );
 
-	config::importer::searchGameInfo::set( ui->cbCheckLocal->isChecked() );
+	config::importer::searchGameInfo::set( ui->cbCheckDownloadImages->isChecked() );
 	config::importer::moveImported::set( ui->cbMoveImported->isChecked() );
 }
 
@@ -116,7 +119,7 @@ void BatchImportDialog::processFiles()
 		regex::regexify( regex::escapeStr( QString::fromStdString( ( base / search ).string() ) ) )
 	};
 
-	spdlog::debug( "Scanning {} for games", base );
+	atlas::logging::debug( "Scanning {} for games", base );
 
 	scanner.start( base, cleaned_regex, ui->cbScanFilesize->isChecked() );
 
@@ -145,12 +148,12 @@ void BatchImportDialog::importFiles()
 	(void)QtConcurrent::run(
 		[ games, owning, root ]()
 		{
+			atlas::logging::debug( "Starting to fill import queue" );
 			for ( auto game : games )
 			{
-				spdlog::debug( "Triggering import game for {}", game.title );
 				(void)importGame( std::move( game ), root, owning );
 			}
-			spdlog::debug( "Finished queueing imports" );
+			atlas::logging::debug( "Finished queueing imports" );
 		} );
 
 	accept();
@@ -162,7 +165,7 @@ void BatchImportDialog::on_btnNext_pressed()
 
 	if ( import_triggered ) return;
 
-	spdlog::debug( "next pressed" );
+	atlas::logging::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
 		import_triggered = true;
@@ -212,7 +215,7 @@ void BatchImportDialog::on_btnNext_pressed()
 void BatchImportDialog::on_btnBack_pressed()
 {
 	ZoneScoped;
-	spdlog::debug( "Back pressed" );
+	atlas::logging::debug( "Back pressed" );
 	//Clear the model
 	dynamic_cast< BatchImportModel* >( ui->twGames->model() )->clearData();
 
@@ -243,7 +246,16 @@ void BatchImportDialog::processFinishedDirectory( const GameImportData game_data
 	ZoneScoped;
 	emit addToModel( game_data );
 
-	if ( ui->twGames->model()->rowCount() % 64 == 0 ) ui->twGames->resizeColumnsToContents();
+	static std::chrono::time_point< std::chrono::steady_clock > last_update { std::chrono::steady_clock::now() };
+
+	// Once we get to a certain point we should stop resizing the columns
+	const bool is_record_in_view { ui->twGames->model()->rowCount() < 50 };
+
+	if ( std::chrono::steady_clock::now() - last_update > std::chrono::milliseconds( 250 ) && is_record_in_view )
+	{
+		ui->twGames->resizeColumnsToContents();
+		last_update = std::chrono::steady_clock::now();
+	}
 
 	if ( !import_waiting )
 		ui->statusLabel->setText(
@@ -287,7 +299,7 @@ void BatchImportDialog::reject()
 void BatchImportDialog::importFailure( const QString top, const QString bottom )
 {
 	ZoneScoped;
-	spdlog::warn( "An import failure signal was detected" );
+	atlas::logging::warn( "An import failure signal was detected" );
 	if ( QMessageBox::warning(
 			 this,
 			 top,
@@ -307,4 +319,39 @@ void BatchImportDialog::importFailure( const QString top, const QString bottom )
 void BatchImportDialog::waitingOnThreads()
 {
 	import_waiting = true;
+}
+
+void BatchImportDialog::keyPressEvent( QKeyEvent* event )
+{
+	if ( event->matches( QKeySequence::StandardKey::Delete ) )
+	{
+		const auto selection_model { ui->twGames->selectionModel() };
+
+		// Get list of all rows
+		const QModelIndexList selected { selection_model->selectedIndexes() };
+
+		std::vector< int > rows;
+		rows.reserve( selected.size() );
+		for ( const auto& index : selected ) rows.push_back( index.row() );
+		// Remove duplicates
+		std::sort( rows.begin(), rows.end() );
+		rows.erase( std::unique( rows.begin(), rows.end() ), rows.end() );
+
+		// Prompt to user if they really want to remove these rows
+		if ( QMessageBox::
+		         question( this, "Remove Games", "Are you sure you want to remove these games from being imported?" )
+		     == QMessageBox::Yes )
+		{
+			int offset { 0 };
+
+			// Remove the rows
+			for ( const auto& row : rows )
+			{
+				ui->twGames->model()->removeRow( row - offset );
+				offset += 1;
+			}
+		}
+	}
+	else
+		QDialog::keyPressEvent( event );
 }

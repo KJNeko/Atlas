@@ -2,12 +2,13 @@
 // Created by kj16609 on 3/10/23.
 //
 
+#pragma once
 #ifndef ATLAS_SEARCH_HPP
 #define ATLAS_SEARCH_HPP
 
 #include <vector>
 
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 
 class QString;
 

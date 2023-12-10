@@ -2,13 +2,14 @@
 // Created by kj16609 on 7/21/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_NOTIFICATIONS_HPP
 #define ATLASGAMEMANAGER_NOTIFICATIONS_HPP
 
 #include <QJsonArray>
 #include <QString>
 
-#include "core/logging/dev.hpp"
+#include "core/logging/formatters.hpp"
 #include "ui/notifications/DevNotification.hpp"
 #include "ui/notifications/MessageNotification.hpp"
 #include "ui/notifications/NotificationManagerUI.hpp"
@@ -20,32 +21,31 @@ namespace atlas::notifications
 	void initNotifications( QWidget* parent );
 	NotificationManagerUI& handle();
 
-	void createMessage( QString message );
+	/**
+	 * @param user_message The abbreviated message sent to the user
+	 * @param full_message The full message sent to the log
+	 * @param level
+	 */
+	void createMessage(
+		QString user_message, QString full_message, const MessageLevel level = MessageLevel::ATLAS_INFO );
 
-	template < std::uint64_t idx, typename T, typename... Ts >
-	void serializeInto( QJsonArray& array, const T& t, const Ts&... ts )
+	inline void createMessage(
+		const format_ns::string_view user_message,
+		const std::string_view full_message,
+		const MessageLevel level = MessageLevel::ATLAS_INFO )
 	{
-		array.append( atlas::logging::dev::internalSerializer< T >( t ) );
-		if constexpr ( sizeof...( Ts ) > 0 ) serializeInto< idx + 1, Ts... >( array, ts... );
+		createMessage(
+			QString::fromLocal8Bit( user_message.data(), static_cast< qsizetype >( user_message.size() ) ),
+			QString::fromLocal8Bit( full_message.data(), static_cast< qsizetype >( full_message.size() ) ),
+			level );
 	}
 
-	namespace internal
+	inline void createUserMessage( const QString str )
 	{
-		void createDevMessage( std::string body, QJsonDocument doc );
+		createMessage( str, {} );
 	}
 
-	template < typename... Ts >
-	void createDevMessage( std::string message_body, const Ts&... objs )
-	{
-		//Serialize objs into a single json object
-		using namespace atlas::logging::dev;
-
-		QJsonDocument doc;
-		QJsonArray array;
-		serializeInto< 0, Ts... >( array, objs... );
-		doc.setArray( std::move( array ) );
-		internal::createDevMessage( std::move( message_body ), std::move( doc ) );
-	}
+	bool isNotificationsReady();
 
 } // namespace atlas::notifications
 

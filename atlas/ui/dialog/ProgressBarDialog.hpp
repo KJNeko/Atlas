@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/25/23.
 //
 
+#pragma once
 #ifndef ATLAS_PROGRESSBARDIALOG_HPP
 #define ATLAS_PROGRESSBARDIALOG_HPP
 

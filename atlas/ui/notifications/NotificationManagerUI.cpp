@@ -8,7 +8,9 @@
 
 #include <moc_NotificationManagerUI.cpp>
 
-#include "core/logging.hpp"
+#include <QObject>
+
+#include "core/logging/logging.hpp"
 #include "ui/notifications/Notification.hpp"
 #include "ui_NotificationManagerUI.h"
 
@@ -66,34 +68,40 @@ void NotificationManagerUI::addNotification( Notification* notif )
 
 void NotificationManagerUI::setHeight()
 {
-	if ( ui->scrollArea->isHidden() )
-	{
-		setFixedHeight( ui->NotificationFrame->height() );
-		emit requestMove();
-		return;
-	}
-	else
-	{
-		//Accumulate child size
-		int height { 0 };
-		height += ui->NotificationFrame->height();
-		height += ui->notifications->layout()->contentsMargins().bottom();
+	int height { 0 };
+	int scroll_Area { 0 };
+	int clamp_max { 550 };
+	height += ui->NotificationFrame->height();
+	height += NotificationManagerUI::layout()->contentsMargins().bottom()
+	        + NotificationManagerUI::layout()->contentsMargins().top();
 
-		for ( auto* notif : notifications() )
+	if ( ui->scrollArea->isVisible() )
+	{
+		//setFixedHeight( ui->NotificationFrame->height() );
+		if ( ui->notifications->children().size() > 1 )
 		{
-			height += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+			for ( auto* notif : notifications() )
+			{
+				scroll_Area += notif->sizeHint().height() + ui->notifications->layout()->spacing();
+				if ( scroll_Area > clamp_max )
+				{
+					scroll_Area = clamp_max;
+					break;
+				}
+			}
+			scroll_Area += NotificationManagerUI::layout()->contentsMargins().bottom()
+			             + NotificationManagerUI::layout()->contentsMargins().top();
+			//This is to fix padding that was added in qss for horizontal bar. Do not remove. Will work with all other QSS
+			scroll_Area += 9;
 		}
-
-		constexpr int MAX_HEIGHT { 500 };
-		constexpr int MIN_HEIGHT { 0 };
-
-		//Clamp it down
-		height = std::clamp( height + ui->notifications->layout()->spacing(), MIN_HEIGHT, MAX_HEIGHT );
-
-		this->setHidden( notifications().size() == 0 );
-		setFixedHeight( height );
-		emit requestMove();
+		else
+		{
+			height += 2;
+		}
 	}
+	ui->scrollArea->setFixedHeight( scroll_Area );
+	setFixedHeight( height + scroll_Area );
+	emit requestMove();
 }
 
 void NotificationManagerUI::resizeEvent( QResizeEvent* event )
@@ -119,23 +127,26 @@ void NotificationManagerUI::deleteNotification( Notification* ptr )
 }
 
 //Buttons
-void NotificationManagerUI::on_btnClose_pressed()
+void NotificationManagerUI::on_btnClearNotifications_pressed()
 {
 	// Close anything that ***CAN*** be closed.
 
 	auto children { ui->notifications->children() };
-	spdlog::info( "Attempting to close {} notifications", children.size() - 1 );
+
 	for ( auto* child : children )
 	{
-		if ( child->objectName() != "verticalLayout" )
+		if ( child->objectName() == "MessageNotification" )
 		{
 			Notification* notif { dynamic_cast< Notification* >( child ) };
-			notif->selfCloseTrigger();
+			deleteNotification( notif );
 		}
 	}
+
+	ui->label->setText( QString( "%1 notifications" ).arg( active_notifications ) );
+	setHeight();
 }
 
-void NotificationManagerUI::on_btnHideShow_pressed()
+void NotificationManagerUI::on_btnMinimize_pressed()
 {
 	//Set to inverse
 	ui->scrollArea->setVisible( !ui->scrollArea->isVisible() );

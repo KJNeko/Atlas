@@ -11,12 +11,12 @@
 #include <catch2/generators/catch_generators_all.hpp>
 #pragma GCC diagnostic pop
 
+#include <QImage>
+
 #include <filesystem>
 #include <iostream>
 
-#include <QImage>
-
-#include "core/imageManager.hpp"
+#include "core/images/images.hpp"
 
 TEST_CASE( "Image import test", "[import]" )
 {

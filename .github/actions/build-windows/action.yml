@@ -76,21 +76,21 @@ runs:
     - name: CMake Release
       shell: powershell
       if: ${{inputs.build-release == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+      run: cmake -S . -B ${{github.workspace}}\builds\build-r -DCMAKE_BUILD_TYPE=Release -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -DATLAS_GIT_REVISION_BRIEF='${{github.run_number}}' -G "MinGW Makefiles"
 
     - name: CMake Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true'}}
-      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -G "MinGW Makefiles"
+      run: cmake -S . -B ${{github.workspace}}\builds\build-d -DCMAKE_BUILD_TYPE=Debug -DATLASVERSION='${{inputs.version-string}}' -DSQL_PATH='${{github.workspace}}\sqlite' -DATLAS_GIT_REVISION_BRIEF='${{github.run_number}}' -G "MinGW Makefiles"
 
     - name: Build Target Atlas Release
       shell: powershell
       if: ${{inputs.build-release == 'true' && inputs.build-atlas == 'true'}}
       run: |
-        cmake --build ${{github.workspace}}\builds\build-r -j8 --target Atlas
+        cmake --build ${{github.workspace}}\builds\build-r -j8 
 
     - name: Build Target Atlas Debug
       shell: powershell
       if: ${{inputs.build-debug == 'true' && inputs.build-atlas == 'true'}}
       run: |
-        cmake --build ${{github.workspace}}\builds\build-d -j8 --target Atlas
+        cmake --build ${{github.workspace}}\builds\build-d -j8

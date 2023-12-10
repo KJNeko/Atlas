@@ -2,14 +2,16 @@
 // Created by kj16609 on 3/29/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDVIEW_HPP
 #define ATLAS_RECORDVIEW_HPP
 
 #include <QListView>
+#include <QScrollEvent>
 
 #include "core/Types.hpp"
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 
 enum DelegateType
 {
@@ -34,6 +36,7 @@ class RecordListView final : public QListView
 	void reloadConfig();
 
 	void paintEvent( QPaintEvent* event ) override;
+	void wheelEvent( QWheelEvent* event ) override;
 
   signals:
 	void openDetailedView( const atlas::records::Game record );

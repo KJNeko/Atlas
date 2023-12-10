@@ -2,6 +2,7 @@
 // Created by kj16609 on 3/26/23.
 //
 
+#pragma once
 #ifndef ATLAS_BATCHIMPORTMODEL_HPP
 #define ATLAS_BATCHIMPORTMODEL_HPP
 
@@ -45,6 +46,8 @@ class BatchImportModel final : public QAbstractTableModel
 	Qt::ItemFlags flags( const QModelIndex& index ) const override;
 	bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole ) override;
 	void sort( int idx, Qt::SortOrder order = Qt::AscendingOrder ) override;
+
+	bool removeRows( int row, int count, const QModelIndex& parent = {} ) override;
 
 	void clearData();
 

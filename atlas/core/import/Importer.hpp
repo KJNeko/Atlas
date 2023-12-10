@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/2/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_IMPORTER_HPP
 #define ATLASGAMEMANAGER_IMPORTER_HPP
 
@@ -12,7 +13,7 @@
 #include <filesystem>
 
 #include "core/Types.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 
 struct GameImportData;
 

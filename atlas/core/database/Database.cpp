@@ -9,9 +9,9 @@
 #include <sqlite3.h>
 
 #include "RapidTransaction.hpp"
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/migrations/templates.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/database/record/game/Game.hpp"
 
 namespace internal
 {
@@ -24,7 +24,7 @@ namespace internal
 	if ( internal::db_handle != nullptr )
 		return *internal::db_handle;
 	else
-		throw std::runtime_error( "ref: Database was not initalized!" );
+		throw DatabaseException( "Database was not initalized!" );
 }
 
 [[nodiscard]] internal::MtxType& Database::lock()
@@ -35,8 +35,6 @@ namespace internal
 void Database::initalize( const std::filesystem::path init_path )
 {
 	ZoneScoped;
-	initLogging();
-
 	if ( init_path.parent_path() != "" && !std::filesystem::exists( init_path.parent_path() ) )
 		std::filesystem::create_directories( init_path.parent_path() );
 
@@ -45,7 +43,7 @@ void Database::initalize( const std::filesystem::path init_path )
 
 	if ( ret_code != SQLITE_OK )
 	{
-		spdlog::critical( "Failed to load sqlite!" );
+		atlas::logging::critical( "Failed to load sqlite!" );
 		std::abort();
 	}
 
@@ -69,15 +67,13 @@ void Database::initalize( const std::filesystem::path init_path )
 			true );
 
 		QImage banner_image { ":/images/assets/Grid_Capsule_Default.webp" };
-		if ( banner_image.isNull() ) throw std::runtime_error( "Failed to open image asset for Grid Capsule Default" );
+		if ( banner_image.isNull() ) throw AtlasException( "Failed to open image asset for Grid Capsule Default" );
 		std::filesystem::create_directories( "./data/images" );
 		if ( !banner_image.save( "./data/images/config_image.webp" ) )
-			throw std::runtime_error( "Failed to save Grid Capsule Default image to temporary location" );
+			throw AtlasException( "Failed to save Grid Capsule Default image to temporary location" );
 
 		game.setBanner( "./data/images/config_image.webp", Normal );
 	}
-
-	config::db::first_start::set( false );
 }
 
 void Database::deinit()

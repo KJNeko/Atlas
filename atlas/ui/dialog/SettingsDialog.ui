@@ -340,7 +340,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -454,6 +454,26 @@ border-right:none;
        <item row="1" column="1">
         <widget class="QWidget" name="widget" native="true">
          <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>When game starts:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>After game closes:</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="comboBox">
             <property name="enabled">
@@ -511,26 +531,6 @@ border-right:none;
             </item>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>After game closes:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>When game starts:</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="2">
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
@@ -543,6 +543,32 @@ border-right:none;
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_48">
+            <property name="text">
+             <string>Update Channel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="cbUpdateChannel">
+            <item>
+             <property name="text">
+              <string>stable</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>nightly</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>off</string>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -2405,6 +2431,9 @@ padding:10x;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
                <property name="maximum">
                 <number>1500</number>
                </property>
@@ -2434,6 +2463,9 @@ padding:10x;</string>
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="minimum">
+                <number>1</number>
                </property>
                <property name="maximum">
                 <number>1500</number>

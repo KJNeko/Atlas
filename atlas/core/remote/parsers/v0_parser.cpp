@@ -67,21 +67,41 @@ namespace remote::parsers::v0
 	{
 		const auto keys { obj.keys() };
 
-		if ( !obj.contains( "atlas_id" ) ) throw std::runtime_error( "Atlas data did not contain it's pkey!" );
+		if ( !obj.contains( "atlas_id" ) ) throw AtlasException( "Atlas data did not contain it's pkey!" );
 
 		const auto pkey { obj[ "atlas_id" ].toInteger() };
 
 		for ( const auto& key : keys )
 		{
 			const auto& data { obj[ key ] };
-			if ( data.isString() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toString()
-					  << pkey;
-			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << data.toInteger()
-					  << pkey;
-			else
-				throw std::runtime_error( "Unexpected type when parsing atlas data!" );
+
+			switch ( data.type() )
+			{
+				case QJsonValue::Bool:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toBool() << pkey;
+					break;
+				case QJsonValue::Double:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toInteger() << pkey;
+					break;
+				case QJsonValue::String:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key )
+						  << data.toString() << pkey;
+					break;
+				case QJsonValue::Null:
+					trans << format_ns::format( "UPDATE atlas_data SET {} = ? WHERE atlas_id = ?", key ) << std::nullopt
+						  << pkey;
+					continue;
+				case QJsonValue::Array:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was array" );
+				case QJsonValue::Object:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was object" );
+				case QJsonValue::Undefined:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was undefined" );
+				default:
+					throw AtlasException( "Unexpected type when parsing atlas data: Was default case" );
+			}
 		}
 	}
 
@@ -153,21 +173,37 @@ namespace remote::parsers::v0
 		}
 	}
 
+	bool atlasIDExists( Transaction& trans, const AtlasID atlas_id )
+	{
+		std::optional< AtlasID > id { std::nullopt };
+		trans << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >> id;
+		return id.has_value();
+	}
+
 	void parseAtlasArray( const QJsonArray& data, Transaction& trans )
 	{
 		ProgressSignaler signaler {};
 
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler.setMax( max );
+
+		signaler.setMessage( "Updating/Adding Atlas records" );
+
 		int counter { 0 };
 		for ( const auto& obj_data : data )
 		{
 			const auto& obj { obj_data.toObject() };
 
-			if ( !validateAtlasKeys( obj ) )
-				updateAtlasData( obj, trans ); //This is probably an update
-			else
+			if ( !obj.contains( ( "atlas_id" ) ) )
+				throw AtlasException( "Expected atlas_id. Got nothing in obj for update" );
+
+			if ( validateAtlasKeys( obj ) && !atlasIDExists( trans, obj[ "atlas_id" ].toInteger() ) )
 				insertAtlasData( obj, trans );
+			else if ( atlasIDExists( trans, obj[ "atlas_id" ].toInteger() ) )
+				updateAtlasData( obj, trans );
+			else
+				throw AtlasException( "Failed to update record. Record incomplete and did not exist" );
+
 			++counter;
 			signaler.setProgress( counter );
 			signaler.setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
@@ -197,31 +233,49 @@ namespace remote::parsers::v0
 	{
 		const auto keys { obj.keys() };
 
-		if ( !obj.contains( "f95_id" ) ) throw std::runtime_error( "F95 data did not contain it's pkey!" );
+		if ( !obj.contains( "f95_id" ) ) throw AtlasException( "F95 data did not contain it's pkey!" );
 
 		const auto pkey { obj[ "f95_id" ].toInteger() };
 
 		for ( const auto& key : keys )
 		{
 			const auto& data { obj[ key ] };
-			if ( data.isString() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toString()
-					  << pkey;
-			else if ( data.isDouble() )
-				trans << fmt::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key ) << data.toInteger()
-					  << pkey;
-			else
-				throw std::runtime_error( "Unexpected type when parsing f95zone data!" );
+
+			switch ( data.type() )
+			{
+				case QJsonValue::Null:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << std::nullopt << pkey;
+					break;
+				case QJsonValue::Bool:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toBool() << pkey;
+					break;
+				case QJsonValue::Double:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toInteger() << pkey;
+					break;
+				case QJsonValue::String:
+					trans << format_ns::format( "UPDATE f95_zone_data SET {} = ? WHERE f95_id = ?", key )
+						  << data.toString() << pkey;
+					break;
+				case QJsonValue::Array:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was array" );
+				case QJsonValue::Object:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was object" );
+				case QJsonValue::Undefined:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was undefined" );
+				default:
+					throw AtlasException( "Unexpected type when parsing f95 data: Was default case" );
+			}
 		}
 	}
 
 	void insertF95Data( const QJsonObject& obj, Transaction& trans )
 	{
-		constexpr std::string_view query {
-			"INSERT INTO f95_zone_data (f95_id, atlas_id, banner_url, site_url, "
-			"last_thread_comment, thread_publish_date, last_record_update, views, "
-			"likes, tags, rating, screens, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
-		};
+		constexpr std::string_view query { "INSERT INTO f95_zone_data (f95_id, atlas_id, banner_url, site_url, "
+			                               "last_thread_comment, thread_publish_date, last_record_update, views, "
+			                               "likes, rating, replies) VALUES (?,?,?,?,?,?,?,?,?,?,?)" };
 
 		trans << query << obj[ "f95_id" ].toInteger() << obj[ "atlas_id" ].toInteger() << obj[ "banner_url" ].toString()
 			  << obj[ "site_url" ].toString() << obj[ "last_thread_comment" ].toInteger()
@@ -278,9 +332,17 @@ namespace remote::parsers::v0
 		}
 	}
 
+	bool F95IDExists( const F95ID f95_id, Transaction& trans )
+	{
+		std::optional< F95ID > id;
+		trans << "SELECT f95_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> id;
+		return id.has_value();
+	}
+
 	void parseF95Array( const QJsonArray& data, Transaction& trans )
 	{
-		ProgressSignaler signaler { QString( "Processing update for F95 data" ) };
+		ProgressSignaler signaler {};
+		signaler.setMessage( "Inserting/Updating data for F95Zone" );
 		const int max { static_cast< int >( data.size() - 1 ) };
 		signaler.setMax( max );
 		int counter { 0 };
@@ -288,14 +350,16 @@ namespace remote::parsers::v0
 		{
 			const auto& obj { obj_data.toObject() };
 
-			if ( !validateF95Keys( obj ) )
+			if ( validateF95Keys( obj ) && !F95IDExists( obj[ "f95_id" ].toInteger(), trans ) )
+				insertF95Data( obj, trans );
+			else if ( F95IDExists( obj[ "f95_id" ].toInteger(), trans ) )
 				updateF95Data( obj, trans );
 			else
-				insertF95Data( obj, trans );
+				throw AtlasException( "Failed to update record. Record incomplete and did not exist" );
 
 			++counter;
 			signaler.setProgress( counter );
-			signaler.setMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
+			signaler.setSubMessage( QString( "%1/%2" ).arg( counter ).arg( max ) );
 		}
 	}
 
@@ -312,7 +376,7 @@ namespace remote::parsers::v0
 				const auto set { nameToSet( table_key ) };
 				if ( set == InvalidSet )
 				{
-					throw std::runtime_error( fmt::format( "Unexpected data in set! Key = {}", table_key ) );
+					throw AtlasException( format_ns::format( "Unexpected data in set! Key = {}", table_key ) );
 				}
 
 				ZoneScopedN( "Process set" );
@@ -328,8 +392,10 @@ namespace remote::parsers::v0
 					case SetF95:
 						parseF95Array( data, transaction );
 						break;
+					case InvalidSet:
+						[[fallthrough]];
 					default:
-						throw std::runtime_error( "Unexpected set!" );
+						throw AtlasException( "Unexpected set!" );
 				}
 			}
 

@@ -2,14 +2,15 @@
 // Created by kj16609 on 3/29/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDBANNERDELEGATE_HPP
 #define ATLAS_RECORDBANNERDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
 #include <QtCore/QModelIndex>
 
-#include "core/config.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/config/config.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/utils/QImageBlur.hpp"
 class RecordListModel;
 
@@ -52,7 +53,6 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
-	QString toCamelCase( const QString& s );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	void drawText(
 		QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str ) const;

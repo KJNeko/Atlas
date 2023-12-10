@@ -4,7 +4,7 @@
 
 #include "pools.hpp"
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 namespace internal
 {
@@ -13,7 +13,7 @@ namespace internal
 
 void ThreadPools::reloadConfig()
 {
-	spdlog::info( "Reloading threading config" );
+	atlas::logging::info( "Reloading threading config" );
 	image_loaders.setMaxThreadCount( config::threads::image_loader_threads::get() );
 	image_importers.setMaxThreadCount( config::threads::image_import_threads::get() );
 	importers.setMaxThreadCount( config::threads::import_threads::get() );

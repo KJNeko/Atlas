@@ -203,6 +203,69 @@
          <property name="verticalSpacing">
           <number>0</number>
          </property>
+         <item row="3" column="0" colspan="5">
+          <widget class="QFrame" name="frame_6">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>23</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="maximumSize">
+               <size>
+                <width>55</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Branch:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="lblGitBranch">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item row="1" column="0" colspan="5">
           <widget class="QTextEdit" name="textEdit">
            <property name="styleSheet">
@@ -225,16 +288,16 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Atlas is an open-source game manager with a primary goal of organizing your NSFW game libary. It is written in C++ for Windows and Linux. We currently support adding games from F95Zone and DLSite.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Atlas is for the user that wants ease of use, quality of life and have the software do the heavy lifting for you.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our developers and contributors are always working hard to ensure this project is the best that it can be. There are still plenty of implementations to make and optimizations to do. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;Atlas is an open-source game manager with a primary goal of organizing your NSFW game libary. It is written in C++ for Windows and Linux. We currently support adding games from F95Zone and DLSite.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;Atlas is for the user that wants ease of use, quality of life and have the software do the heavy lifting for you.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;Our developers and contributors are always working hard to ensure this project is the best that it can be. There are still plenty of implementations to make and optimizations to do. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="0" colspan="5">
+         <item row="5" column="0" colspan="5">
           <widget class="QFrame" name="frame_4">
            <property name="minimumSize">
             <size>
@@ -265,7 +328,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="lbUsingVers">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
@@ -273,75 +336,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </property>
               <property name="text">
                <string>Using:  </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbQt6Ver">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Qt6: </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>  |  </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbSqlite3Ver">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Sqlite3: </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>  |  </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbLZ4Ver">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>LZ4:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>  |  </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbSPDLogVer">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>spdlog:</string>
               </property>
              </widget>
             </item>
@@ -361,7 +355,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </layout>
           </widget>
          </item>
-         <item row="3" column="0" colspan="5">
+         <item row="4" column="0" colspan="5">
           <widget class="QFrame" name="frame_5">
            <property name="minimumSize">
             <size>
@@ -401,7 +395,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </property>
               <property name="maximumSize">
                <size>
-                <width>50</width>
+                <width>55</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -430,6 +424,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </layout>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="lblGitVersion">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="font">
@@ -444,7 +450,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </widget>
          </item>
          <item row="2" column="0" colspan="5">
-          <widget class="QFrame" name="frame_6">
+          <widget class="QFrame" name="frame_7">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -457,7 +463,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_6">
+           <layout class="QGridLayout" name="gridLayout_7">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -474,10 +480,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <number>0</number>
             </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_8">
               <property name="maximumSize">
                <size>
-                <width>50</width>
+                <width>55</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -487,12 +493,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                </font>
               </property>
               <property name="text">
-               <string>Branch:</string>
+               <string>Compiler:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="lblGitBranch">
+             <widget class="QLabel" name="lblCompiler">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
@@ -504,18 +510,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="lblGitVersion">
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
           </widget>
          </item>
         </layout>

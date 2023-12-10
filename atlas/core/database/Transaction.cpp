@@ -15,7 +15,7 @@ namespace atlas::database
 		if ( last_locked == std::this_thread::get_id() )
 		{
 			//Deadlock
-			throw std::runtime_error( "Deadlock detected!" );
+			throw DatabaseException( "Deadlock detected!" );
 		}
 		else
 		{
@@ -34,8 +34,8 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			Binder( "ROLLBACK TRANSACTION" );
-			throw std::runtime_error( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
+			*this << "ROLLBACK TRANSACTION";
+			throw DatabaseException( "Allowed falloff via dtor in TransactionBase<true>!. Rolling back and failing." );
 		}
 
 		last_locked = std::thread::id();
@@ -46,8 +46,10 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
+			//sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
+			*this << "COMMIT TRANSACTION";
 			m_finished = true;
+			atlas::logging::debug( "Commit called" );
 		}
 		else
 			throw TransactionInvalid( "Attempted to commit a finished transaction" );
@@ -58,10 +60,13 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
+			*this << "ROLLBACK TRANSACTION";
+			//sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
 			m_finished = true;
+			atlas::logging::debug( "Abort called" );
 		}
 		else
 			throw TransactionInvalid( "Attempted to abort a finished transaction" );
 	}
+
 } // namespace atlas::database

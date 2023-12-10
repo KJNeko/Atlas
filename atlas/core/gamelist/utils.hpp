@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/4/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_UTILS_HPP
 #define ATLASGAMEMANAGER_UTILS_HPP
 

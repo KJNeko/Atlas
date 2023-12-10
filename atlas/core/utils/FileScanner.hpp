@@ -2,6 +2,7 @@
 // Created by kj16609 on 4/9/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_FILESCANNER_HPP
 #define ATLASGAMEMANAGER_FILESCANNER_HPP
 
@@ -10,7 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "core/logging.hpp"
+#include "core/exceptions.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::utils
 {
@@ -59,32 +61,12 @@ namespace atlas::utils
 
 			std::suspend_always final_suspend() noexcept { return {}; }
 
-			void unhandled_exception()
-			{
-				if ( exception )
-				{
-					try
-					{
-						std::rethrow_exception( exception );
-					}
-					catch ( std::exception& e )
-					{
-						spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! {}", e.what() );
-					}
-					catch ( ... )
-					{
-						spdlog::critical( "FileScannerGenerator: Unhandled exception in coroutine! FUCK!" );
-					}
-				}
-				else
-					spdlog::critical( "FileScannerGenerator: Unhandled exception but no value!" );
-				std::terminate();
-			}
+			void unhandled_exception() { std::rethrow_exception( exception ); }
 
 			void return_value( FileInfo&& from )
 			{
 				if ( from.filename == "" )
-					throw std::runtime_error( "FileScannerGenerator: return value had no filename!" );
+					throw AtlasException( "FileScannerGenerator: return value had no filename!" );
 
 				value = std::move( from );
 			}
@@ -92,7 +74,7 @@ namespace atlas::utils
 			std::suspend_always yield_value( FileInfo from )
 			{
 				if ( from.filename == "" )
-					throw std::runtime_error( "FromScannerGenerator:: yield value had no filename!" );
+					throw AtlasException( "FromScannerGenerator:: yield value had no filename!" );
 
 				value = std::move( from );
 				return {};

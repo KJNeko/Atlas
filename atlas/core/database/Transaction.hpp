@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/23/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_TRANSACTION_HPP
 #define ATLASGAMEMANAGER_TRANSACTION_HPP
 
@@ -14,16 +15,10 @@
 
 #include "Binder.hpp"
 #include "Database.hpp"
-#include "core/logging.hpp"
+#include "core/logging/logging.hpp"
 
 namespace atlas::database
 {
-	struct TransactionInvalid : public std::runtime_error
-	{
-		TransactionInvalid( std::string m_sql_string ) :
-		  std::runtime_error( fmt::format( "Transaction accessed while invalid: Last executed: {}", m_sql_string ) )
-		{}
-	};
 
 	template < bool is_commitable = false >
 	struct TransactionBase

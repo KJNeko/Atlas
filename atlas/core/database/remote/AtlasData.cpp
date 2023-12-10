@@ -79,7 +79,7 @@ namespace atlas::remote
 				last_db_update = last_db_update_in;
 			};
 
-			if ( atlas_id == INVALID_ATLAS_ID ) throw std::runtime_error( "Invalid atlas id" );
+			if ( atlas_id == INVALID_ATLAS_ID ) throw AtlasException( "Invalid atlas id" );
 		}
 
 		std::shared_ptr< AtlasData > get( const AtlasID id )
@@ -121,6 +121,42 @@ namespace atlas::remote
 		AtlasID id { INVALID_ATLAS_ID };
 		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << thread_id >> id;
 		return id;
+	}
+
+	// Find Altas ID from Record Title and Creator name. Only use first letter from creator
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString creator )
+	{
+		//REPLACE ' from query. Not done yet
+		std::optional< atlas::remote::AtlasRemoteData > data;
+		title = title.toUtf8()
+		            .toUpper()
+		            .replace( " ", "" )
+		            .replace( "'", "" )
+		            .replace( ".", "" )
+		            .replace( "-", "" )
+		            .replace( ":", "" ); //Convert to caps and remove spaces
+		QString creator_fl = creator.toUpper().replace( " ", "" ).mid( 0, 1 ); //Get first letter and convert to caps
+		//std::string query count = "";
+
+		std::string query =
+			"Select * from atlas_data WHERE UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE( title, ' ',''),'''', '' ),'.',''),'-',''),':','')) like '%"
+			+ title.toStdString()
+			+ "%' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE( creator, ' ',''),'''', '' ),'.',''),'-',''),':','')) like '%"
+			+ creator_fl.toStdString()
+			+ "%' Order By LENGTH( UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE( title, ' ',''),'''', '' ),'.',''),'-',''),':',''))) - LENGTH( '"
+			+ title.toStdString() + "' ) DESC ";
+
+		//Check if creator is empty
+		//RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title << creator >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+
+		RapidTransaction() << query >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+
+		if ( !data.has_value() )
+		{
+			qInfo() << QString::fromStdString( query );
+		}
+
+		return data;
 	}
 
 } // namespace atlas::remote

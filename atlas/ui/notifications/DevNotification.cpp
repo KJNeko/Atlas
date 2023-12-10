@@ -13,13 +13,41 @@
 
 #include "ui_DevNotification.h"
 
-DevNotification::DevNotification( std::string body, QString info, QWidget* parent ) :
+DevNotification::DevNotification( const MessageLevel level, QString msg, QString full_message, QWidget* parent ) :
   Notification( parent ),
+  m_full_message( std::move( full_message ) ),
   ui( new Ui::DevNotification )
 {
 	ui->setupUi( this );
-	ui->errorMessage->setText( QString::fromStdString( body ) );
-	ui->errorData->setText( std::move( info ) );
+
+	ui->errorData->setText( std::move( msg ) );
+
+	switch ( level )
+	{
+		default:
+			[[fallthrough]];
+		case MessageLevel::ATLAS_DEBUG:
+			[[fallthrough]];
+		case MessageLevel::ATLAS_INFO_SELFCLOSE:
+			[[fallthrough]];
+		case MessageLevel::ATLAS_INFO:
+			[[fallthrough]];
+		case MessageLevel::ATLAS_WARNING:
+			{
+				ui->errorType->setText( "Warning" );
+				break;
+			}
+		case MessageLevel::ATLAS_ERROR:
+			{
+				ui->errorType->setText( "Error" );
+				break;
+			}
+		case MessageLevel::ATLAS_CRITICAL:
+			{
+				ui->errorType->setText( "Critical" );
+				break;
+			}
+	}
 }
 
 DevNotification::~DevNotification()
@@ -30,5 +58,5 @@ DevNotification::~DevNotification()
 void DevNotification::on_copyError_pressed()
 {
 	QClipboard* clip { QGuiApplication::clipboard() };
-	clip->setText( ui->errorData->text() );
+	clip->setText( m_full_message );
 }

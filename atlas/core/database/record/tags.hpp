@@ -17,6 +17,12 @@ namespace atlas::tags
 	//! Creates a new tag (or returns an existing ID)
 	TagID createTag( const QString& str );
 
+	//! Checks if a tag exists
+	bool exists( const QString& str );
+
+	//! Resolves a string to a TagID if it exists. Otherwise returns INVALID_TAG_ID
+	TagID resolve( const QString& str );
+
 } // namespace atlas::tags
 
 #endif //ATLASGAMEMANAGER_TAGS_HPP

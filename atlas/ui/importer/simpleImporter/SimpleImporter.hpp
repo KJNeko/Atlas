@@ -2,6 +2,7 @@
 // Created by kj16609 on 5/24/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_SIMPLEIMPORTER_HPP
 #define ATLASGAMEMANAGER_SIMPLEIMPORTER_HPP
 
@@ -18,7 +19,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class Node;
+struct Node;
 
 class SimpleImporter final : public QDialog
 {

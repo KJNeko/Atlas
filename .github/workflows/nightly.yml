@@ -2,7 +2,7 @@ name: Release Nightly
 on:
   push:
     branches:
-      - nightly
+      - staging
   workflow_dispatch:
 
 jobs:
@@ -11,12 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'true'
-          ref: nightly
+          submodules: 'recursive'
+          ref: staging
+
+      - name: Version Increment
+        id: version
+        run: echo "current_version=$(git ls-remote --tags --sort="v:refname"  https://github.com/KJNeko/Atlas.git "v*.*.?" | tail -n1 | sed 's/.*\///; s/\^{}//')" >> $env:GITHUB_ENV
 
       - name: Prepare version string
         run: |
-          echo "ATLAS_VERSION_STR=nightly-${{github.sha}}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "ATLAS_VERSION_STR=${{env.current_version}}-${{ github.run_number }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
           env
 
       - uses: ./.github/actions/build-windows
@@ -29,8 +33,9 @@ jobs:
         run: |
           env
           cd ${{github.workspace}}
-          move ${{github.workspace}}\builds\build-r\bin Atlas-GameManager-Nightly-Release
-          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release
+          move ${{github.workspace}}\builds\build-r\bin\* Atlas-GameManager-Nightly-Release
+
+          7z.exe a -tzip -mm=Deflate -mx=5 ${{github.workspace}}\Atlas-GameManager-${{ env.ATLAS_VERSION_STR }}-windows.zip ${{github.workspace}}\Atlas-GameManager-Nightly-Release\*
 
       - name: Create release
         uses: softprops/action-gh-release@v1

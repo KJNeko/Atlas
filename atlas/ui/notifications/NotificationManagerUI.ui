@@ -110,6 +110,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -150,7 +156,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btnClose">
+       <widget class="QPushButton" name="btnClearNotifications">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -158,12 +164,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Close all messages</string>
+         <string>Clear Notifications</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnHideShow">
+       <widget class="QPushButton" name="btnMinimize">
         <property name="maximumSize">
          <size>
           <width>24</width>
@@ -180,8 +186,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>18</width>
-          <height>18</height>
+          <width>14</width>
+          <height>14</height>
          </size>
         </property>
         <property name="checkable">

@@ -2,13 +2,14 @@
 // Created by kj16609 on 4/4/23.
 //
 
+#pragma once
 #ifndef ATLAS_RECORDEDITOR_HPP
 #define ATLAS_RECORDEDITOR_HPP
 
 #include <QDialog>
 
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 
 QT_BEGIN_NAMESPACE
 

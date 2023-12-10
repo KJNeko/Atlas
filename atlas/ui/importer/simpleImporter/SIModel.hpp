@@ -2,14 +2,15 @@
 // Created by kj16609 on 5/24/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_SIMODEL_HPP
 #define ATLASGAMEMANAGER_SIMODEL_HPP
 
 #include <QAbstractItemModel>
 #include <QDir>
 
-#include "core/config.hpp"
-#include "core/logging.hpp"
+#include "core/config/config.hpp"
+#include "core/logging/logging.hpp"
 
 enum class SupportingType
 {

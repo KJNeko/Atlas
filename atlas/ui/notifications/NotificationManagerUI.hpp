@@ -2,6 +2,7 @@
 // Created by kj16609 on 7/21/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_NOTIFICATIONMANAGERUI_HPP
 #define ATLASGAMEMANAGER_NOTIFICATIONMANAGERUI_HPP
 
@@ -47,8 +48,8 @@ class NotificationManagerUI final : public QDialog
 
   private slots:
 	void deleteNotification( Notification* ptr );
-	void on_btnClose_pressed();
-	void on_btnHideShow_pressed();
+	void on_btnClearNotifications_pressed();
+	void on_btnMinimize_pressed();
 
   signals:
 	void requestMove();

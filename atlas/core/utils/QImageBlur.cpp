@@ -13,25 +13,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/config.hpp"
-
-QPixmap blurPixmap( const QPixmap& pixmap, qreal radius, bool quality )
-{
-	ZoneScoped;
-	QGraphicsScene scene;
-	QGraphicsPixmapItem item;
-	item.setPixmap( pixmap );
-	scene.addItem( &item );
-	QGraphicsBlurEffect* blur_effect { new QGraphicsBlurEffect };
-	blur_effect->setBlurRadius( radius );
-	blur_effect->setBlurHints( quality ? QGraphicsBlurEffect::QualityHint : QGraphicsBlurEffect::PerformanceHint );
-	item.setGraphicsEffect( blur_effect );
-	QPixmap result { pixmap.size() };
-	result.fill( Qt::transparent );
-	QPainter painter { &result };
-	scene.render( &painter );
-	return result;
-}
+#include "core/config/config.hpp"
+#include "core/images/images.hpp"
 
 QPixmap blurToSize(
 	const QPixmap& pixmap,
@@ -52,7 +35,7 @@ QPixmap blurToSize(
 	const auto blur_size { QSize { width, height } };
 	const auto blur_x { blur_center.x() - blur_size.width() / 2 };
 	const auto blur_y { blur_center.y() - blur_size.height() / 2 };
-	auto blurred_image { pixmap.copy( blur_x, blur_y, blur_size.width(), blur_size.height() ) };
+	QPixmap blurred_image { pixmap.copy( blur_x, blur_y, blur_size.width(), blur_size.height() ) };
 
 	const QRect total_rect { QRect { QPoint { 0, 0 }, QSize { width, height } } };
 	const QRect img_rect { total_rect.center() - QPoint { resized.width() / 2, resized.height() / 2 }, resized.size() };
@@ -102,14 +85,18 @@ QPixmap blurToSize(
 		if ( !alpha_mask.isNull() )
 		{
 			painter.drawPixmap(
-				total_rect.intersected( blur_rect ), blurPixmap( blurred_image, image_blur_radius, true ) );
+				total_rect.intersected( blur_rect ),
+				atlas::images::blurPixmap( blurred_image, image_blur_radius, true, false ) );
 
 			switch ( image_blur_type )
 			{
 				case FEATHER_IMAGE:
 					resized.setAlphaChannel( alpha_mask );
 					break;
-
+				case SQUARE: //TODO: Figure out what this should do
+					break;
+				case BACKGROUND_ONLY: // TODO: Implement
+					break;
 				default:
 					break;
 			}

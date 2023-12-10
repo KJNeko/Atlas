@@ -2,13 +2,14 @@
 // Created by kj16609 on 4/14/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_QIMAGEBLUR_HPP
 #define ATLASGAMEMANAGER_QIMAGEBLUR_HPP
 
 #include <QImage>
 #include <QPixmap>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 
 QPixmap blurToSize(
 	const QPixmap& pixmap,

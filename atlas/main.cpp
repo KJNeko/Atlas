@@ -13,7 +13,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include "core/config.hpp"
+#include "core/config/config.hpp"
 #include "core/database/Database.hpp"
 #include "core/version.hpp"
 #include "ui/mainwindow.h"
@@ -28,6 +28,9 @@
 #endif
 // clang-format on
 
+#include "core/exceptions.hpp"
+#include "ui/dialog/console/ConsoleWriter.hpp"
+
 void clear_lock()
 {
 	std::filesystem::remove( "atlas_lock" );
@@ -35,9 +38,14 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
-	//spdlog::info( "EntryPoint" );
-	//initLogging();
+	//Set format for any logging done before the sinks are ready.
+	atlas::logging::setFormat();
+
 	QApplication app { argc, argv };
+
+	//Logger should be ready now.
+	atlas::logging::init();
+
 	QPixmap splashscreen( ":/images/assets/Atlas_logo_v2.svg" );
 
 	QSplashScreen splash( splashscreen.scaled( QSize( 200, 200 ), Qt::KeepAspectRatio ) );
@@ -48,12 +56,17 @@ int main( int argc, char** argv )
 	setlocale( LC_ALL, ".UTF8" );
 #endif
 
-	spdlog::info( "Booting Atlas version {}", utils::version_string );
+	atlas::logging::info( "Booting Atlas version {}", utils::version_string );
 
 #ifdef _WIN32
 	CreateMutexA( nullptr, FALSE, "Local\\$myprogram$" ); // try to create a named mutex
 	if ( GetLastError() == ERROR_ALREADY_EXISTS ) // did the mutex already exist?
 		return -1; // quit; mutex is released automatically
+
+		//Check for updates | Windows only
+#ifdef _WIN32
+	atlas::initUpdateHandler( false );
+#endif
 
 #else
 	if ( std::filesystem::exists( "atlas_lock" ) )
@@ -71,7 +84,7 @@ int main( int argc, char** argv )
 			if ( kill( pid, 0 ) == -1 && errno == ESRCH )
 			{
 				//Process doesn't exist
-				spdlog::info( "App is dead but didn't clean up it's own lock, removing lock" );
+				atlas::logging::info( "App is dead but didn't clean up it's own lock, removing lock" );
 				std::filesystem::remove( "atlas_lock" );
 			}
 			else if ( stat( str.c_str(), &sts ) == 0 && errno == ENOENT )
@@ -138,6 +151,7 @@ int main( int argc, char** argv )
 	std::filesystem::path db_path = config::paths::database::getPath() / "atlas.db";
 	Database::initalize( db_path );
 
+	//Do not increase
 	QPixmapCache::setCacheLimit( 1024 * 512 );
 
 	MainWindow window;

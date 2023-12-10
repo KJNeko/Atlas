@@ -2,6 +2,7 @@
 // Created by kj16609 on 6/5/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP
 #define ATLASGAMEMANAGER_GAMEIMPORTDATA_HPP
 
@@ -9,9 +10,9 @@
 
 #include <filesystem>
 
-#include "core/config.hpp"
-#include "core/database/record/Game.hpp"
+#include "core/config/config.hpp"
 #include "core/database/record/GameData.hpp"
+#include "core/database/record/game/Game.hpp"
 #include "core/gamelist/utils.hpp"
 
 struct GameImportData
@@ -23,7 +24,9 @@ struct GameImportData
 	QString version;
 	std::size_t size;
 	std::uint64_t file_count;
+	//! Non relative path to possible executables
 	std::vector< std::filesystem::path > executables;
+	//! Non relative path to executable
 	std::filesystem::path executable;
 	std::array< QString, BannerType::SENTINEL > banners;
 	std::vector< QString > previews;

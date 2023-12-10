@@ -64,6 +64,8 @@ namespace atlas::remote
 
 		const internal::AtlasData* operator->() const { return data_ptr.get(); }
 	};
+
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
 } // namespace atlas::remote
 
 #endif //ATLASGAMEMANAGER_ATLASDATA_HPP

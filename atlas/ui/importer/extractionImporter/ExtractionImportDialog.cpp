@@ -12,8 +12,8 @@
 
 #include <tracy/Tracy.hpp>
 
-#include "core/database/record/Game.hpp"
-#include "core/logging.hpp"
+#include "core/database/record/game/Game.hpp"
+#include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
 
 ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
@@ -61,7 +61,6 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 	//if ( import_triggered ) return;
 
-	spdlog::debug( "next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
 		//import_triggered = true;
@@ -96,7 +95,7 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 void ExtractionImportDialog::parseFiles( const QString& path )
 {
-	constexpr std::array< std::string_view, 3 > exts { ".zip", ".rar", ".7z" };
+	constexpr std::array< std::string_view, 3 > exts { { ".zip", ".rar", ".7z" } };
 	int row { 0 };
 	for ( const auto& p : std::filesystem::recursive_directory_iterator( path.toStdWString() ) )
 	{
@@ -127,13 +126,13 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 
 bool checkOsNames( QString s )
 {
-	constexpr std::array< std::string_view, 6 > arr { "pc", "win", "linux", "windows", "unc", "win64" };
+	constexpr std::array< std::string_view, 6 > arr { { "pc", "win", "linux", "windows", "unc", "win64" } };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
 bool checkLanguages( QString s )
 {
-	constexpr std::array< std::string_view, 2 > arr { "japanese", "english" };
+	constexpr std::array< std::string_view, 2 > arr { { "japanese", "english" } };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
@@ -171,13 +170,13 @@ QStringList findVersionType( QString s )
 
 			if ( slist.length() > 1 )
 			{
-				spdlog::info( "{}, {}", slist[ 0 ], slist[ 1 ] );
+				atlas::logging::debug( "{}, {}", slist[ 0 ], slist[ 1 ] );
 				version += delimiter + slist[ 1 ];
 				title += slist[ 0 ];
 			}
 			else
 			{
-				spdlog::info( "{}", slist[ 0 ] );
+				atlas::logging::debug( "{}", slist[ 0 ] );
 				version += delimiter;
 				title += slist[ 0 ];
 			}

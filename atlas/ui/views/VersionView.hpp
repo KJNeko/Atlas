@@ -2,14 +2,15 @@
 // Created by kj16609 on 4/19/23.
 //
 
+#pragma once
 #ifndef ATLASGAMEMANAGER_VERSIONVIEW_HPP
 #define ATLASGAMEMANAGER_VERSIONVIEW_HPP
 
 #include <QWidget>
 
-#include "core/database/record/Game.hpp"
 #include "core/database/record/GameData.hpp"
 #include "core/database/record/Version.hpp"
+#include "core/database/record/game/Game.hpp"
 
 QT_BEGIN_NAMESPACE
 
