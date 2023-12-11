@@ -340,7 +340,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -1476,8 +1476,28 @@ padding:10x;</string>
           <string>Overlay Details</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_40">
-          <item row="3" column="1">
-           <widget class="QComboBox" name="cbCreator">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Title</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="7">
+           <spacer name="horizontalSpacer_43">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbTitle">
             <item>
              <property name="text">
               <string>None</string>
@@ -1544,10 +1564,93 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Favorite Icon</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QSpinBox" name="sp_xtitle">
+            <property name="minimumSize">
+             <size>
+              <width>45</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QSpinBox" name="sp_ytitle">
+            <property name="minimumSize">
+             <size>
+              <width>45</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cbGameIcon">
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_49">
+            <property name="text">
+             <string>x:</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_15">
             <property name="text">
              <string>Version</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="label_51">
+            <property name="text">
+             <string>y:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Engine</string>
             </property>
            </widget>
           </item>
@@ -1558,11 +1661,33 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Title</string>
-            </property>
+          <item row="8" column="1">
+           <widget class="QComboBox" name="cbFavIcon">
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Right</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="7" column="1">
@@ -1594,62 +1719,11 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cbRatingIcon">
-            <item>
-             <property name="text">
-              <string>None</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="cbGameIcon">
-            <item>
-             <property name="text">
-              <string>None</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Right</string>
-             </property>
-            </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>Game Icon</string>
+            </property>
            </widget>
           </item>
           <item row="2" column="1">
@@ -1698,78 +1772,11 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_34">
-            <property name="text">
-             <string>Game Icon</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_35">
-            <property name="text">
-             <string>Download Icon</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Engine</string>
-            </property>
-           </widget>
-          </item>
           <item row="7" column="0">
            <widget class="QLabel" name="label_36">
             <property name="text">
              <string>Engine Icon</string>
             </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_37">
-            <property name="text">
-             <string>Favorite Icon</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbTitle">
-            <item>
-             <property name="text">
-              <string>None</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Center</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Top Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Center</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bottom Right</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item row="1" column="1">
@@ -1811,8 +1818,47 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="8" column="1">
-           <widget class="QComboBox" name="cbFavIcon">
+          <item row="3" column="1">
+           <widget class="QComboBox" name="cbCreator">
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Top Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bottom Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="cbRatingIcon">
             <item>
              <property name="text">
               <string>None</string>
@@ -1840,18 +1886,25 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="3" column="2">
-           <spacer name="horizontalSpacer_43">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="0" column="6">
+           <widget class="QToolButton" name="pbTitleBColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
+            <property name="text">
+             <string>Background Color</string>
             </property>
-           </spacer>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>Download Icon</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

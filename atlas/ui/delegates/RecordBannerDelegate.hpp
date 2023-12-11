@@ -37,6 +37,12 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	LOCATION m_engine_location;
 	LOCATION m_version_location;
 	LOCATION m_creator_location;
+	int m_title_x;
+	int m_title_y;
+	QColor m_title_bcolor;
+	int m_engine_x;
+	int m_engine_y;
+	QColor m_engine_bcolor;
 	int m_grid_spacing;
 	QSize m_banner_size;
 	int m_window_height;
@@ -54,8 +60,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
-	void drawText(
-		QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str ) const;
+	void drawText( QPainter* painter, const int x, const int y, const QRect rect, const QString& str ) const;
 
   public slots:
 	void reloadConfig();

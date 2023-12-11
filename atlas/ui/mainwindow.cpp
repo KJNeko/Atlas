@@ -59,6 +59,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	QApplication::setFont( font );
 
+	//IMPORTANT set the font for banner images here if it was never set
+	config::grid_ui::font::
+		set( config::grid_ui::font::get() == "" ? QApplication::font().defaultFamily() : config::grid_ui::font::get() );
+
 	//Notification Stuff
 	config::notify();
 

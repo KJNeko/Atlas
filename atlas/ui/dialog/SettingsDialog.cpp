@@ -161,6 +161,8 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
 
 	//Text & Icon Locations
+	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
+	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
 	ui->cbTitle->setCurrentIndex( config::grid_ui::titleLocation::get() );
 	ui->cbEngine->setCurrentIndex( config::grid_ui::engineLocation::get() );
 	ui->cbVersion->setCurrentIndex( config::grid_ui::versionLocation::get() );
@@ -182,6 +184,7 @@ void SettingsDialog::prepareGridViewerSettings()
 
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
+	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 
 	//Experimental Settings
 	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
@@ -221,6 +224,11 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engineLocation::set( static_cast< LOCATION >( ui->cbEngine->currentIndex() ) );
 	config::grid_ui::versionLocation::set( static_cast< LOCATION >( ui->cbVersion->currentIndex() ) );
 	config::grid_ui::creatorLocation::set( static_cast< LOCATION >( ui->cbCreator->currentIndex() ) );
+
+	//x_y for all text and image locations
+	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
+	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
+	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name().toLower() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -640,6 +648,18 @@ void SettingsDialog::on_sbBannerX_valueChanged( int num )
 	qlv->repaint();
 }
 
+void SettingsDialog::on_sp_xtitle_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_ytitle_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_y = num;
+	qlv->repaint();
+}
+
 void SettingsDialog::on_sbBannerY_valueChanged( int num )
 {
 	//config::grid_ui::banner_y::set(num);
@@ -731,4 +751,13 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 {
 	QFont font { ui->cbAppFont->currentText(), num };
 	ui->lbSampleText->setFont( font );
+}
+
+void SettingsDialog::on_pbTitleBColor_pressed()
+{
+	QColorDialog colorDialog( this );
+	colorDialog.setOptions( QColorDialog::ShowAlphaChannel );
+	QColor backgroundColor = colorDialog.getColor( gridPreviewDelegate->m_title_bcolor );
+	gridPreviewDelegate->m_title_bcolor = backgroundColor;
+	qlv->repaint();
 }

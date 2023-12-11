@@ -283,6 +283,14 @@ SETTINGS_D( grid_ui, windowWidth, int, 1520 )
 SETTINGS_D( grid_ui, itemViewWidth, int, 1266 )
 SETTINGS_D( grid_ui, itemViewHeight, int, 694 )
 
+//FOR BANNER ITEM LOCATION
+SETTINGS_D( grid_ui, title_x, int, 10 )
+SETTINGS_D( grid_ui, title_y, int, 10 )
+SETTINGS_D( grid_ui, title_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, engine_x, int, 10 )
+SETTINGS_D( grid_ui, engine_y, int, 10 )
+SETTINGS_D( grid_ui, engine_bcolor, int, 10 )
+
 enum LOCATION : int
 {
 	NONE = 0,

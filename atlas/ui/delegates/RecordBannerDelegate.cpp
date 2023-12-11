@@ -128,30 +128,32 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	painter->fillRect( bottom_rect, QColor( 0, 0, 0, enable_bottom_overlay ? overlay_opacity : 0 ) );
 
+	//Check if font was ever set. If not, Use system default
+
 	//set Pen and Font for default text
 	QFont font;
-	font.setPixelSize( m_font_size );
 	font.setFamily( m_font_family );
+	font.setPixelSize( m_font_size );
 	painter->setFont( font );
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
 	//Draw Title
-	this->drawText( painter, options_rect, stripe_height, m_title_location, record->m_title );
+	this->drawText( painter, m_title_x, m_title_y, options_rect, record->m_title );
 	//Draw Engine
-	this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
+	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version
 	if ( record->m_versions.size() )
 	{
 		const atlas::records::Version latest { record->m_versions.at( 0 ) };
-		this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
+		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
 	}
 	else
-		this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
-	//Draw Creator
-	this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
+		//this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
+		//Draw Creator
+		//this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
 
-	painter->restore();
+		painter->restore();
 }
 
 QSize RecordBannerDelegate::
@@ -161,11 +163,32 @@ QSize RecordBannerDelegate::
 	return m_grid_size;
 }
 
-void RecordBannerDelegate::
-	drawText( QPainter* painter, const QRect& rect, const int strip_size, const LOCATION location, const QString& str )
-		const
+//painter, text x loc, text y loc, rect of relative banner, string
+void RecordBannerDelegate::drawText( QPainter* painter, const int x, const int y, const QRect rect, const QString& str )
+	const
 {
-	ZoneScoped;
+	//Calculate rect size for text
+	QFont font;
+	font.setPixelSize( m_font_size );
+	font.setFamily( m_font_family );
+	//const QString& title { record->m_title };
+	QFontMetrics fm( font );
+	int t_width = fm.horizontalAdvance( str );
+	int t_height = fm.height();
+
+	//Create rec with 10px margin, rect is relative to current banner rect
+	QRect text_rect { QPoint( rect.topLeft() + QPoint( x, y ) ), QSize( t_width, t_height ) };
+	painter->fillRect( text_rect, m_title_bcolor );
+	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
+
+	//qInfo() << "STATS: " << str << " x_loc:" << text_rect.x() << " y_loc:" << text_rect.y();
+	//const QSize size { rect.width(), strip_size };
+	//const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };
+
+	//painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
+	return;
+
+	/*ZoneScoped;
 	if ( location != NONE )
 	{
 		const QSize size { rect.width(), strip_size };
@@ -213,7 +236,7 @@ void RecordBannerDelegate::
 			default:
 				break;
 		}
-	}
+	}*/
 }
 
 void RecordBannerDelegate::reloadConfig()
@@ -239,6 +262,9 @@ void RecordBannerDelegate::reloadConfig()
 	m_engine_location = config::grid_ui::engineLocation::get();
 	m_version_location = config::grid_ui::versionLocation::get();
 	m_creator_location = config::grid_ui::creatorLocation::get();
+	m_title_x = config::grid_ui::title_x::get();
+	m_title_y = config::grid_ui::title_y::get();
+	m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 	m_grid_spacing = config::grid_ui::bannerSpacing::get();
 	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 	m_window_height = config::grid_ui::windowHeight::get();
@@ -268,11 +294,15 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_engine_location { config::grid_ui::engineLocation::get() },
   m_version_location { config::grid_ui::versionLocation::get() },
   m_creator_location { config::grid_ui::creatorLocation::get() },
+  m_title_x { config::grid_ui::title_x::get() },
+  m_title_y { config::grid_ui::title_y::get() },
+  m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
   m_grid_spacing { config::grid_ui::bannerSpacing::get() },
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },
   m_window_width { config::grid_ui::windowWidth::get() },
   m_center_widgets { config::grid_ui::centerWidgets::get() },
+
   m_model( model )
 
 {

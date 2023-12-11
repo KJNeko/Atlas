@@ -79,6 +79,9 @@ class SettingsDialog final : public QDialog
 	void on_sbOverlayOpacity_valueChanged( int num );
 	void on_sbCapsuleSpace_valueChanged( int num );
 	void on_cbCenterItems_stateChanged( int state );
+	void on_sp_xtitle_valueChanged( int num );
+	void on_sp_ytitle_valueChanged( int num );
+	void on_pbTitleBColor_pressed();
 
 	void on_cbFont_currentTextChanged( const QString& text );
 	void on_sbFontSize_valueChanged( int num );
