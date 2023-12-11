@@ -36,7 +36,7 @@ namespace atlas::images
 			img.size().width(),
 			img.size().height() );
 
-		img = img.scaled( target_size, Qt::AspectRatioMode( scale_type ) );
+		img = img.scaled( target_size, Qt::AspectRatioMode( scale_type ), Qt::SmoothTransformation );
 
 		if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
 		{
@@ -120,6 +120,7 @@ namespace atlas::images
 		else
 		{
 			reader.setScaledSize( scaled_size );
+			reader.setQuality( 100 );
 
 			auto image { reader.read() };
 

@@ -30,33 +30,14 @@ namespace atlas::images
 			throw AtlasException( format_ns::format( "Failed to open file to write at: {}", dest ) );
 	}
 
-	void saveImage( const QImage& img, const std::filesystem::path& dest )
-	{
-		if ( img.isNull() || img.size() == QSize( 0, 0 ) )
-		{
-			throw ImageSaveError( format_ns::format( "QImage came back as null" ).c_str() );
-		}
-
-		const QImage thumb { img.scaled( 200, 94, Qt::KeepAspectRatio ) };
-		const std::string thumb_file { dest.parent_path().string() + "//" + dest.stem().string() + "_thumb"
-			                           + dest.extension().string() };
-		//img.save( QString::fromStdString( dest.string() ) );
-		thumb.save( QString::fromStdString( thumb_file ) );
-		if ( !img.save( QString::fromStdString( dest.string() ) ) )
-		{
-			throw ImageSaveError( format_ns::format( "Failed to save image to location: {}", std::move( dest ) )
-			                          .c_str() );
-		}
-		//Try to save thumbnail
-	}
-
 	std::filesystem::path importImage( const std::filesystem::path& path, const RecordID game_id )
 	{
-		QString url = QString::fromStdString( path.string() );
+		if ( !std::filesystem::exists( path ) )
+			throw AtlasException( format_ns::format( "Invalid path: {} does not exist", path ) );
 
-		QPixmap img( url );
+		const QPixmap img( QString::fromStdString( path.string() ) );
 
-		const QImage image = img.toImage(); //{ atlas::images::loadImage( path ) };
+		const QImage image { img.toImage() };
 		const std::uint64_t original_file_size { std::filesystem::file_size( path ) };
 		const std::filesystem::path game_image_folder { config::paths::images::getPath() / std::to_string( game_id ) };
 		std::filesystem::create_directories( game_image_folder );
