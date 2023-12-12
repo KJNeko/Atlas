@@ -203,8 +203,10 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
+	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
 
-	//x_y for all text and image locations
+	//Overlay settings
+	config::grid_ui::title_enable::set( ui->cbTitleEnable->checkState() );
 	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
 	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
 	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name().toLower() );
@@ -627,18 +629,6 @@ void SettingsDialog::on_sbBannerX_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sp_xtitle_valueChanged( int num )
-{
-	gridPreviewDelegate->m_title_x = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_sp_ytitle_valueChanged( int num )
-{
-	gridPreviewDelegate->m_title_y = num;
-	qlv->repaint();
-}
-
 void SettingsDialog::on_sbBannerY_valueChanged( int num )
 {
 	//config::grid_ui::banner_y::set(num);
@@ -708,11 +698,56 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 	ui->lbSampleText->setFont( font );
 }
 
+//Overlay Settings
+//title
+void SettingsDialog::on_cbTitleEnable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_title_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_xtitle_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_ytitle_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_y = num;
+	qlv->repaint();
+}
+
 void SettingsDialog::on_pbTitleBColor_pressed()
 {
 	QColorDialog colorDialog( this );
-	colorDialog.setOptions( QColorDialog::ShowAlphaChannel );
+	colorDialog.setOption( QColorDialog::ShowAlphaChannel, true );
 	QColor backgroundColor = colorDialog.getColor( gridPreviewDelegate->m_title_bcolor );
 	gridPreviewDelegate->m_title_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+//engine
+void SettingsDialog::on_cbEngineEnable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_engine_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_xengine_valueChanged( int num )
+{
+	gridPreviewDelegate->m_engine_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_yengine_valueChanged( int num )
+{
+	gridPreviewDelegate->m_engine_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbEnableEngineColors_stateChanged( int state )
+{
+	gridPreviewDelegate->m_enable_engine_color = state;
 	qlv->repaint();
 }

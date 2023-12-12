@@ -180,63 +180,13 @@ void RecordBannerDelegate::drawText( QPainter* painter, const int x, const int y
 	QRect text_rect { QPoint( rect.topLeft() + QPoint( x, y ) ), QSize( t_width, t_height ) };
 	painter->fillRect( text_rect, m_title_bcolor );
 	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
-
+	painter->restore();
 	//qInfo() << "STATS: " << str << " x_loc:" << text_rect.x() << " y_loc:" << text_rect.y();
 	//const QSize size { rect.width(), strip_size };
 	//const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };
 
 	//painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
 	return;
-
-	/*ZoneScoped;
-	if ( location != NONE )
-	{
-		const QSize size { rect.width(), strip_size };
-
-		switch ( location )
-		{
-			case NONE:
-				[[fallthrough]];
-			case TOP_LEFT:
-				{
-					const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };
-					painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
-					return;
-				}
-			case TOP_CENTER:
-				{
-					const QRect text_rect { rect.topLeft(), size };
-					painter->drawText( text_rect, Qt::AlignCenter, str );
-					return;
-				}
-			case TOP_RIGHT:
-				{
-					const QRect text_rect { rect.topLeft() + QPoint( -10, 0 ), size };
-					painter->drawText( text_rect, Qt::AlignRight | Qt::AlignVCenter, str );
-					return;
-				}
-			case BOTTOM_LEFT:
-				{
-					const QRect text_rect { rect.bottomLeft() + QPoint( 10, -strip_size ), size };
-					painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
-					return;
-				}
-			case BOTTOM_CENTER:
-				{
-					const QRect text_rect { rect.bottomLeft() + QPoint( 0, -strip_size ), size };
-					painter->drawText( text_rect, Qt::AlignCenter, str );
-					return;
-				}
-			case BOTTOM_RIGHT:
-				{
-					const QRect text_rect { rect.bottomLeft() + QPoint( -10, -strip_size ), size };
-					painter->drawText( text_rect, Qt::AlignRight | Qt::AlignVCenter, str );
-					return;
-				}
-			default:
-				break;
-		}
-	}*/
 }
 
 void RecordBannerDelegate::reloadConfig()
@@ -258,10 +208,6 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_capsule_border = config::grid_ui::enableCapsuleBorder::get();
 	m_font_size = config::grid_ui::fontSize::get();
 	m_font_family = config::grid_ui::font::get();
-	m_title_location = config::grid_ui::titleLocation::get();
-	m_engine_location = config::grid_ui::engineLocation::get();
-	m_version_location = config::grid_ui::versionLocation::get();
-	m_creator_location = config::grid_ui::creatorLocation::get();
 	m_title_x = config::grid_ui::title_x::get();
 	m_title_y = config::grid_ui::title_y::get();
 	m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
@@ -290,10 +236,6 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_capsule_border { config::grid_ui::enableCapsuleBorder::get() },
   m_font_size { config::grid_ui::fontSize::get() },
   m_font_family { config::grid_ui::font::get() },
-  m_title_location { config::grid_ui::titleLocation::get() },
-  m_engine_location { config::grid_ui::engineLocation::get() },
-  m_version_location { config::grid_ui::versionLocation::get() },
-  m_creator_location { config::grid_ui::creatorLocation::get() },
   m_title_x { config::grid_ui::title_x::get() },
   m_title_y { config::grid_ui::title_y::get() },
   m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },

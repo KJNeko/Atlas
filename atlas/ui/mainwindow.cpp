@@ -454,7 +454,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 		}
 		else
 		{
-			qInfo() << game->m_title;
+			//qInfo() << game->m_title;
 		}
 	}
 }

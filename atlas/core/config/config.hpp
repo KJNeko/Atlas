@@ -282,14 +282,45 @@ SETTINGS_D( grid_ui, windowHeight, int, 780 )
 SETTINGS_D( grid_ui, windowWidth, int, 1520 )
 SETTINGS_D( grid_ui, itemViewWidth, int, 1266 )
 SETTINGS_D( grid_ui, itemViewHeight, int, 694 )
+SETTINGS_D( grid_ui, overlayLayout, int, 0 )
 
 //FOR BANNER ITEM LOCATION
+SETTINGS_D( grid_ui, title_enable, bool, true )
 SETTINGS_D( grid_ui, title_x, int, 10 )
 SETTINGS_D( grid_ui, title_y, int, 10 )
 SETTINGS_D( grid_ui, title_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, engine_enable, bool, true )
 SETTINGS_D( grid_ui, engine_x, int, 10 )
 SETTINGS_D( grid_ui, engine_y, int, 10 )
-SETTINGS_D( grid_ui, engine_bcolor, int, 10 )
+SETTINGS_D( grid_ui, engine_bcolor, bool, false )
+SETTINGS_D( grid_ui, version_enable, bool, true )
+SETTINGS_D( grid_ui, version_x, int, 10 )
+SETTINGS_D( grid_ui, version_y, int, 10 )
+SETTINGS_D( grid_ui, version_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, creator_enable, bool, true )
+SETTINGS_D( grid_ui, creator_x, int, 10 )
+SETTINGS_D( grid_ui, creator_y, int, 10 )
+SETTINGS_D( grid_ui, creator_bcolor, QString, "transparent" )
+
+SETTINGS_D( grid_ui, rating_enable, bool, true )
+SETTINGS_D( grid_ui, rating_x, int, 10 )
+SETTINGS_D( grid_ui, rating_y, int, 10 )
+
+SETTINGS_D( grid_ui, views_enable, bool, true )
+SETTINGS_D( grid_ui, views_x, int, 10 )
+SETTINGS_D( grid_ui, views_y, int, 10 )
+
+SETTINGS_D( grid_ui, likes_enable, bool, true )
+SETTINGS_D( grid_ui, likes_x, int, 10 )
+SETTINGS_D( grid_ui, likes_y, int, 10 )
+
+SETTINGS_D( grid_ui, favorite_enable, bool, true )
+SETTINGS_D( grid_ui, favorite_x, int, 10 )
+SETTINGS_D( grid_ui, favorite_y, int, 10 )
+
+SETTINGS_D( grid_ui, lastupdate_enable, bool, true )
+SETTINGS_D( grid_ui, lastupdate_x, int, 10 )
+SETTINGS_D( grid_ui, lastupdate_y, int, 10 )
 
 enum LOCATION : int
 {

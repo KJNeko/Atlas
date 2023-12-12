@@ -2233,7 +2233,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="checkBox_6">
+           <widget class="QCheckBox" name="cbEngineEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2250,7 +2250,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="5">
-           <widget class="QSpinBox" name="spinBox_14"/>
+           <widget class="QSpinBox" name="sp_yfavorite"/>
           </item>
           <item row="3" column="4">
            <widget class="QLabel" name="label_59">
@@ -2260,7 +2260,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QCheckBox" name="checkBox_7">
+           <widget class="QCheckBox" name="cbVersionEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2296,29 +2296,29 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QSpinBox" name="spinBox_11"/>
+           <widget class="QSpinBox" name="sp_yrating"/>
           </item>
           <item row="5" column="5">
-           <widget class="QSpinBox" name="spinBox_12"/>
+           <widget class="QSpinBox" name="sp_yviews"/>
           </item>
           <item row="3" column="5">
-           <widget class="QSpinBox" name="spinBox_10"/>
+           <widget class="QSpinBox" name="sp_ycreator"/>
           </item>
           <item row="7" column="1">
-           <widget class="QCheckBox" name="checkBox_12">
+           <widget class="QCheckBox" name="cbFavoriteEnable">
             <property name="text">
              <string>Enable</string>
             </property>
            </widget>
           </item>
           <item row="4" column="3">
-           <widget class="QSpinBox" name="spinBox_4"/>
+           <widget class="QSpinBox" name="sp_xrating"/>
           </item>
           <item row="5" column="3">
-           <widget class="QSpinBox" name="spinBox_5"/>
+           <widget class="QSpinBox" name="sp_xviews"/>
           </item>
           <item row="6" column="5">
-           <widget class="QSpinBox" name="spinBox_13"/>
+           <widget class="QSpinBox" name="sp_ylikes"/>
           </item>
           <item row="0" column="3">
            <widget class="QSpinBox" name="sp_xtitle">
@@ -2371,10 +2371,10 @@ padding:10x;</string>
            <widget class="QSpinBox" name="sp_xengine"/>
           </item>
           <item row="2" column="5">
-           <widget class="QSpinBox" name="spinBox_9"/>
+           <widget class="QSpinBox" name="sp_yversion"/>
           </item>
           <item row="3" column="1">
-           <widget class="QCheckBox" name="checkBox_8">
+           <widget class="QCheckBox" name="cbCreatorEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2388,7 +2388,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QCheckBox" name="checkBox_10">
+           <widget class="QCheckBox" name="cb_viewEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2409,7 +2409,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="3">
-           <widget class="QSpinBox" name="spinBox_7"/>
+           <widget class="QSpinBox" name="sp_xfavorite"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_14">
@@ -2435,7 +2435,7 @@ padding:10x;</string>
           <item row="5" column="0">
            <widget class="QLabel" name="label_34">
             <property name="text">
-             <string>Game</string>
+             <string>Views</string>
             </property>
            </widget>
           </item>
@@ -2447,7 +2447,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="3">
-           <widget class="QSpinBox" name="spinBox_6"/>
+           <widget class="QSpinBox" name="sp_xlikes"/>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_16">
@@ -2478,14 +2478,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QCheckBox" name="checkBox_9">
+           <widget class="QCheckBox" name="cbRatingEnable">
             <property name="text">
              <string>Enable</string>
             </property>
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QCheckBox" name="checkBox_11">
+           <widget class="QCheckBox" name="cbLikesEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2499,7 +2499,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="3">
-           <widget class="QSpinBox" name="spinBox_3"/>
+           <widget class="QSpinBox" name="sp_xcreator"/>
           </item>
           <item row="4" column="4">
            <widget class="QLabel" name="label_60">
@@ -2532,12 +2532,12 @@ padding:10x;</string>
           <item row="6" column="0">
            <widget class="QLabel" name="label_35">
             <property name="text">
-             <string>Update</string>
+             <string>Likes</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QCheckBox" name="checkBox_5">
+           <widget class="QCheckBox" name="cbTitleEnable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2568,17 +2568,17 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="8" column="1">
-           <widget class="QCheckBox" name="checkBox_14">
+           <widget class="QCheckBox" name="cbLastUpdateEnable">
             <property name="text">
              <string>Enable</string>
             </property>
            </widget>
           </item>
           <item row="8" column="3">
-           <widget class="QSpinBox" name="spinBox_15"/>
+           <widget class="QSpinBox" name="sp_xupdate"/>
           </item>
           <item row="8" column="5">
-           <widget class="QSpinBox" name="spinBox_16"/>
+           <widget class="QSpinBox" name="sp_yupdate"/>
           </item>
           <item row="0" column="6">
            <widget class="QPushButton" name="pbTitleBColor">

@@ -26,6 +26,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_strip_height;
 	int m_overlay_opacity;
 	bool m_enable_top_overlay;
+	int m_overlay_layout;
 	bool m_enable_bottom_overlay;
 	int m_feather_radius;
 	int m_blur_radius;
@@ -33,16 +34,31 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	bool m_enable_capsule_border;
 	int m_font_size;
 	QString m_font_family;
-	LOCATION m_title_location;
+	/*LOCATION m_title_location;
 	LOCATION m_engine_location;
 	LOCATION m_version_location;
-	LOCATION m_creator_location;
+	LOCATION m_creator_location;*/
+	//title
+	bool m_title_enable;
 	int m_title_x;
 	int m_title_y;
 	QColor m_title_bcolor;
+	//engine
+	bool m_engine_enable;
 	int m_engine_x;
 	int m_engine_y;
-	QColor m_engine_bcolor;
+	bool m_enable_engine_color;
+	//version
+	bool m_version_enable;
+	int m_version_x;
+	int m_version_y;
+	QColor m_version_bcolor;
+	//creator
+	bool m_creator_enable;
+	int m_creator_x;
+	int m_creator_y;
+	QColor m_creator_bcolor;
+
 	int m_grid_spacing;
 	QSize m_banner_size;
 	int m_window_height;
