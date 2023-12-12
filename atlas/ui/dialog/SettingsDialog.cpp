@@ -158,9 +158,12 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
 	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
 
-	//Text & Icon Locations
+	//Overlay Settings
+	ui->cbTitleEnable->setChecked( config::grid_ui::title_enable::get() );
 	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
 	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
+	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
+
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
@@ -170,7 +173,6 @@ void SettingsDialog::prepareGridViewerSettings()
 
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
-	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 
 	//Experimental Settings
 	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
@@ -209,7 +211,9 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_enable::set( ui->cbTitleEnable->checkState() );
 	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
 	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
-	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name().toLower() );
+	config::grid_ui::title_bcolor::
+		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
+	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -721,8 +725,8 @@ void SettingsDialog::on_sp_ytitle_valueChanged( int num )
 void SettingsDialog::on_pbTitleBColor_pressed()
 {
 	QColorDialog colorDialog( this );
-	colorDialog.setOption( QColorDialog::ShowAlphaChannel, true );
-	QColor backgroundColor = colorDialog.getColor( gridPreviewDelegate->m_title_bcolor );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color", QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_title_bcolor = backgroundColor;
 	qlv->repaint();
 }

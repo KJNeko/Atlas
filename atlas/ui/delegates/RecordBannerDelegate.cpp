@@ -139,7 +139,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
 	//Draw Title
-	this->drawText( painter, m_title_x, m_title_y, options_rect, record->m_title );
+	if ( m_title_enable )
+	{
+		this->drawText( painter, m_title_x, m_title_y, options_rect, record->m_title );
+	}
 	//Draw Engine
 	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version
