@@ -86,11 +86,6 @@ class SettingsDialog final : public QDialog
 	void on_cbFont_currentTextChanged( const QString& text );
 	void on_sbFontSize_valueChanged( int num );
 
-	void on_cbTitle_currentIndexChanged( int idx );
-	void on_cbEngine_currentIndexChanged( int idx );
-	void on_cbVersion_currentIndexChanged( int idx );
-	void on_cbCreator_currentIndexChanged( int idx );
-
 	void on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx );
 	void on_sbAppFontSize_valueChanged( [[maybe_unused]] int num );
 };

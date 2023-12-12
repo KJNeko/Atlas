@@ -147,10 +147,8 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sbBannerX->setValue( config::grid_ui::bannerSizeX::get() );
 	ui->sbBannerY->setValue( config::grid_ui::bannerSizeY::get() );
 	ui->sbCapsuleSpace->setValue( config::grid_ui::bannerSpacing::get() );
-	ui->leSelectedColor->setText( config::grid_ui::selectedColor::get() );
 	ui->sbSelectedOpacity->setValue( config::grid_ui::selectedOpacity::get() );
 	ui->cbCapsuleBorder->setChecked( config::grid_ui::enableCapsuleBorder::get() );
-	ui->leBorderColor->setText( config::grid_ui::borderColor::get() );
 
 	ui->cbTopOverlay->setChecked( config::grid_ui::enableTopOverlay::get() );
 	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
@@ -163,23 +161,11 @@ void SettingsDialog::prepareGridViewerSettings()
 	//Text & Icon Locations
 	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
 	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
-	ui->cbTitle->setCurrentIndex( config::grid_ui::titleLocation::get() );
-	ui->cbEngine->setCurrentIndex( config::grid_ui::engineLocation::get() );
-	ui->cbVersion->setCurrentIndex( config::grid_ui::versionLocation::get() );
-	ui->cbCreator->setCurrentIndex( config::grid_ui::creatorLocation::get() );
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
 	//ui->sbCapsuleSpace->setEnabled( false ); //Feature Not Enabled
-	ui->leSelectedColor->setEnabled( false );
 	ui->sbSelectedOpacity->setEnabled( false );
-	ui->leBorderColor->setEnabled( false );
-	ui->leOverlayColor->setEnabled( false );
-	ui->cbRatingIcon->setEnabled( false );
-	ui->cbGameIcon->setEnabled( false );
-	ui->cbFavIcon->setEnabled( false );
-	ui->cbEngineIcon->setEnabled( false );
-	ui->cbDownloadIcon->setEnabled( false );
 	ui->cbLockY->setEnabled( false );
 
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
@@ -206,10 +192,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::bannerSizeX::set( ui->sbBannerX->value() );
 	config::grid_ui::bannerSizeY::set( ui->sbBannerY->value() );
 	config::grid_ui::bannerSpacing::set( ui->sbCapsuleSpace->value() );
-	config::grid_ui::selectedColor::set( ui->leSelectedColor->text() );
 	config::grid_ui::selectedOpacity::set( ui->sbSelectedOpacity->value() );
 	config::grid_ui::enableCapsuleBorder::set( ui->cbCapsuleBorder->checkState() );
-	config::grid_ui::borderColor::set( ui->leBorderColor->text() );
 
 	config::grid_ui::enableTopOverlay::set( ui->cbTopOverlay->checkState() );
 	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
@@ -219,11 +203,6 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
-
-	config::grid_ui::titleLocation::set( static_cast< LOCATION >( ui->cbTitle->currentIndex() ) );
-	config::grid_ui::engineLocation::set( static_cast< LOCATION >( ui->cbEngine->currentIndex() ) );
-	config::grid_ui::versionLocation::set( static_cast< LOCATION >( ui->cbVersion->currentIndex() ) );
-	config::grid_ui::creatorLocation::set( static_cast< LOCATION >( ui->cbCreator->currentIndex() ) );
 
 	//x_y for all text and image locations
 	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
@@ -695,30 +674,6 @@ void SettingsDialog::on_cbFont_currentTextChanged( const QString& text )
 void SettingsDialog::on_sbFontSize_valueChanged( int num )
 {
 	gridPreviewDelegate->m_font_size = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbTitle_currentIndexChanged( int idx )
-{
-	gridPreviewDelegate->m_title_location = static_cast< LOCATION >( idx );
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbEngine_currentIndexChanged( int idx )
-{
-	gridPreviewDelegate->m_engine_location = static_cast< LOCATION >( idx );
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbVersion_currentIndexChanged( int idx )
-{
-	gridPreviewDelegate->m_version_location = static_cast< LOCATION >( idx );
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbCreator_currentIndexChanged( int idx )
-{
-	gridPreviewDelegate->m_creator_location = static_cast< LOCATION >( idx );
 	qlv->repaint();
 }
 
