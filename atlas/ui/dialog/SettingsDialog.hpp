@@ -84,14 +84,20 @@ class SettingsDialog final : public QDialog
 	void on_cbTitleEnable_stateChanged( int state );
 	void on_sp_xtitle_valueChanged( int num );
 	void on_sp_ytitle_valueChanged( int num );
+	void on_sp_title_fontsize_valueChanged( int num );
 	void on_pbTitleBColor_pressed();
 	//engine
 	void on_cbEngineEnable_stateChanged( int state );
 	void on_sp_xengine_valueChanged( int num );
 	void on_sp_yengine_valueChanged( int num );
 	void on_cbEnableEngineColors_stateChanged( int state );
+	//Version
+	void on_cbversionEnable_stateChanged( int state );
+	void on_sp_xversion_valueChanged( int num );
+	void on_sp_yversion_valueChanged( int num );
+	void on_pbversionBColor_pressed();
 
-	//void on_cbOverlayLayout_stateChanged( int state );
+	void on_cbOverlayLayout_currentIndexChanged( int index );
 
 	void on_cbFont_currentTextChanged( const QString& text );
 	void on_sbFontSize_valueChanged( int num );
