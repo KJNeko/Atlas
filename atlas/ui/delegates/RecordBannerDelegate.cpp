@@ -167,7 +167,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//Draw Engine
 	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version
-	if ( record->m_versions.size() )
+	if ( record->m_versions.size() && m_version_enable )
 	{
 		const atlas::records::Version latest { record->m_versions.at( 0 ) };
 		this->drawText(
