@@ -95,7 +95,7 @@ class SettingsDialog final : public QDialog
 	void on_cbversionEnable_stateChanged( int state );
 	void on_sp_xversion_valueChanged( int num );
 	void on_sp_yversion_valueChanged( int num );
-	void on_pbversionBColor_pressed();
+	void on_pbVersionBColor_pressed();
 
 	void on_cbOverlayLayout_currentIndexChanged( int index );
 

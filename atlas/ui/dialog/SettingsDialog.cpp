@@ -154,17 +154,23 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
 	ui->sbOverlayHeight->setValue( config::grid_ui::overlayHeight::get() );
 	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
-	ui->leOverlayColor->setText( config::grid_ui::overlayColor::get() );
+	ui->pbOverlayColor->setText( config::grid_ui::overlayColor::get() );
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
 	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
 	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlayLayout::get() );
 
 	//Overlay Settings
+	//Title
 	ui->cbTitleEnable->setChecked( config::grid_ui::title_enable::get() );
 	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
 	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
 	ui->sp_title_fontsize->setValue( config::grid_ui::title_font_size::get() );
 	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
+	//Version
+	ui->cbVersionEnable->setChecked( config::grid_ui::version_enable::get() );
+	ui->sp_xversion->setValue( config::grid_ui::version_x::get() );
+	ui->sp_yversion->setValue( config::grid_ui::version_y::get() );
+	gridPreviewDelegate->m_version_bcolor = QColor::fromString( config::grid_ui::version_bcolor::get() );
 
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
@@ -203,13 +209,14 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
 	config::grid_ui::overlayHeight::set( ui->sbOverlayHeight->value() );
 	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
-	config::grid_ui::overlayColor::set( ui->leOverlayColor->text() );
+	config::grid_ui::overlayColor::set( ui->pbOverlayColor->text() );
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
 	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
 
 	//Overlay settings
+	//Title
 	config::grid_ui::title_enable::set( ui->cbTitleEnable->checkState() );
 	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
 	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
@@ -217,6 +224,14 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_bcolor::
 		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
 	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
+	//Version
+	config::grid_ui::version_enable::set( ui->cbVersionEnable->checkState() );
+	config::grid_ui::version_x::set( ui->sp_xversion->value() );
+	config::grid_ui::version_y::set( ui->sp_yversion->value() );
+	config::grid_ui::version_bcolor::
+		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_version_bcolor.name().toLower() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -790,7 +805,7 @@ void SettingsDialog::on_sp_yversion_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_pbversionBColor_pressed()
+void SettingsDialog::on_pbVersionBColor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(

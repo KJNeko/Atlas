@@ -1283,7 +1283,7 @@ border-right:none;
               </spacer>
              </item>
              <item row="1" column="0">
-              <widget class="QPushButton" name="pushButton_6">
+              <widget class="QPushButton" name="pbOverlayColor">
                <property name="text">
                 <string>PushButton</string>
                </property>
