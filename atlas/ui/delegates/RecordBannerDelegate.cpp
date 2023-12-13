@@ -7,6 +7,7 @@
 #include <moc_RecordBannerDelegate.cpp>
 
 #include <QPainter>
+#include <QPainterPath>
 
 #include <tracy/Tracy.hpp>
 
@@ -136,9 +137,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//Draw top
 
-	painter->fillRect( top_rect, QColor( 0, 0, 0, enable_top_overlay ? overlay_opacity : 0 ) );
+	painter->fillRect( top_rect, enable_top_overlay ? m_overlay_color : "transparent" );
 
-	painter->fillRect( bottom_rect, QColor( 0, 0, 0, enable_bottom_overlay ? overlay_opacity : 0 ) );
+	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_overlay_color : "transparent" );
 
 	//Check if font was ever set. If not, Use system default
 
@@ -178,7 +179,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			latest->m_version,
 			m_font_size,
 			m_font_family,
-			5,
+			10,
 			m_version_bcolor );
 		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
 	}
@@ -209,6 +210,7 @@ void RecordBannerDelegate::drawText(
 	const int padding,
 	QColor backgroundColor ) const
 {
+	painter->save();
 	//Calculate rect size for text
 	QFont font;
 	font.setPixelSize( font_size );
@@ -218,10 +220,18 @@ void RecordBannerDelegate::drawText(
 	int t_height = fm.height() + padding;
 
 	painter->setFont( font ); //Override default
+	painter->setRenderHint( QPainter::Antialiasing ); //Set so pixels look better
 
 	//Create rec with 10px margin, rect is relative to current banner rect
-	QRect text_rect { QPoint( rect.topLeft() + QPoint( x, y ) ), QSize( t_width, t_height ) };
-	painter->fillRect( text_rect, backgroundColor );
+	QRectF text_rect { rect.topLeft() + QPoint( x, y ), QSize( t_width, t_height ) };
+	//QPainterPath path;
+	//Draw Bounding Rect
+	painter->setPen( QPen( backgroundColor ) ); //no pen
+	painter->setBrush( QBrush( backgroundColor ) );
+	painter->drawRoundedRect( text_rect, 5, 5 );
+	//Reset pet to draw text
+	painter->setPen( qRgb( 210, 210, 210 ) );
+	//Alight text in center of Rect
 	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
 	painter->restore();
 
@@ -246,6 +256,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_top_overlay = config::grid_ui::enableTopOverlay::get();
 	m_enable_bottom_overlay = config::grid_ui::enableBottomOverlay::get();
 	m_overlay_layout = config::grid_ui::overlayLayout::get();
+	m_overlay_color = config::grid_ui::overlayColor::get();
 	m_feather_radius = config::grid_ui::featherRadius::get();
 	m_blur_radius = config::grid_ui::blurRadius::get();
 	m_blur_type = config::grid_ui::blurType::get();
@@ -258,9 +269,9 @@ void RecordBannerDelegate::reloadConfig()
 	m_title_fontsize = config::grid_ui::title_font_size::get();
 	m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 	m_version_enable = { config::grid_ui::version_enable::get() };
-	m_version_x = { config::grid_ui::title_x::get() };
-	m_version_y = { config::grid_ui::title_y::get() };
-	m_version_bcolor = { QColor::fromString( config::grid_ui::title_bcolor::get() ) };
+	m_version_x = { config::grid_ui::version_x::get() };
+	m_version_y = { config::grid_ui::version_y::get() };
+	m_version_bcolor = { QColor::fromString( config::grid_ui::version_bcolor::get() ) };
 	m_grid_spacing = config::grid_ui::bannerSpacing::get();
 	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 	m_window_height = config::grid_ui::windowHeight::get();
@@ -281,6 +292,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_top_overlay { config::grid_ui::enableTopOverlay::get() },
   m_enable_bottom_overlay { config::grid_ui::enableBottomOverlay::get() },
   m_overlay_layout { config::grid_ui::overlayLayout::get() },
+  m_overlay_color { config::grid_ui::overlayColor::get() },
   m_feather_radius { config::grid_ui::featherRadius::get() },
   m_blur_radius { config::grid_ui::blurRadius::get() },
   m_blur_type { config::grid_ui::blurType::get() },
@@ -293,9 +305,9 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_title_fontsize { config::grid_ui::title_font_size::get() },
   m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
   m_version_enable { config::grid_ui::version_enable::get() },
-  m_version_x { config::grid_ui::title_x::get() },
-  m_version_y { config::grid_ui::title_y::get() },
-  m_version_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
+  m_version_x { config::grid_ui::version_x::get() },
+  m_version_y { config::grid_ui::version_y::get() },
+  m_version_bcolor { QColor::fromString( config::grid_ui::version_bcolor::get() ) },
   m_grid_spacing { config::grid_ui::bannerSpacing::get() },
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },

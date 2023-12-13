@@ -214,6 +214,10 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
 	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
+	config::grid_ui::overlayColor::
+		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_overlay_color.name().toLower() );
 
 	//Overlay settings
 	//Title
@@ -721,6 +725,16 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 }
 
 //Overlay Settings
+//Overlay
+void SettingsDialog::on_pbOverlayColor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_overlay_color, nullptr, "Overlay Background Color", QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_overlay_color = backgroundColor;
+	qlv->repaint();
+}
+
 //title
 void SettingsDialog::on_cbTitleEnable_stateChanged( int state )
 {

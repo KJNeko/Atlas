@@ -1285,7 +1285,7 @@ border-right:none;
              <item row="1" column="0">
               <widget class="QPushButton" name="pbOverlayColor">
                <property name="text">
-                <string>PushButton</string>
+                <string>Background Color</string>
                </property>
               </widget>
              </item>
@@ -2700,7 +2700,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="8">
-           <widget class="QSpinBox" name="sp_title_fontsize"/>
+           <widget class="QSpinBox" name="sp_title_fontsize">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

@@ -80,6 +80,8 @@ class SettingsDialog final : public QDialog
 	void on_sbCapsuleSpace_valueChanged( int num );
 	void on_cbCenterItems_stateChanged( int state );
 	//Overlay Details
+	//overlay
+	void on_pbOverlayColor_pressed();
 	//title
 	void on_cbTitleEnable_stateChanged( int state );
 	void on_sp_xtitle_valueChanged( int num );
