@@ -2236,10 +2236,18 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="5">
-           <widget class="QSpinBox" name="sp_ylikes"/>
+           <widget class="QSpinBox" name="sp_ylikes">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QSpinBox" name="sp_xengine"/>
+           <widget class="QSpinBox" name="sp_xengine">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1">
            <widget class="QCheckBox" name="cbRatingEnable">
@@ -2263,7 +2271,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QSpinBox" name="sp_yengine"/>
+           <widget class="QSpinBox" name="sp_yengine">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="1" column="1">
            <widget class="QCheckBox" name="cbEngineEnable">
@@ -2312,7 +2324,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QSpinBox" name="sp_yrating"/>
+           <widget class="QSpinBox" name="sp_yrating">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="5" column="1">
            <widget class="QCheckBox" name="cb_viewEnable">
@@ -2346,7 +2362,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="3">
-           <widget class="QSpinBox" name="sp_xlikes"/>
+           <widget class="QSpinBox" name="sp_xlikes">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="6" column="2">
            <widget class="QLabel" name="label_55">
@@ -2363,7 +2383,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QSpinBox" name="sp_xversion"/>
+           <widget class="QSpinBox" name="sp_xversion">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="6" column="4">
            <widget class="QLabel" name="label_62">
@@ -2373,13 +2397,25 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QSpinBox" name="sp_yversion"/>
+           <widget class="QSpinBox" name="sp_yversion">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="3" column="5">
-           <widget class="QSpinBox" name="sp_ycreator"/>
+           <widget class="QSpinBox" name="sp_ycreator">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="8" column="5">
-           <widget class="QSpinBox" name="sp_yupdate"/>
+           <widget class="QSpinBox" name="sp_yupdate">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="0" column="3">
            <widget class="QSpinBox" name="sp_xtitle">
@@ -2395,10 +2431,18 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="8" column="3">
-           <widget class="QSpinBox" name="sp_xupdate"/>
+           <widget class="QSpinBox" name="sp_xupdate">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="3" column="3">
-           <widget class="QSpinBox" name="sp_xcreator"/>
+           <widget class="QSpinBox" name="sp_xcreator">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_14">
@@ -2422,7 +2466,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="5">
-           <widget class="QSpinBox" name="sp_yfavorite"/>
+           <widget class="QSpinBox" name="sp_yfavorite">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_49">
@@ -2467,7 +2515,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="5">
-           <widget class="QSpinBox" name="sp_yviews"/>
+           <widget class="QSpinBox" name="sp_yviews">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="3" column="2">
            <widget class="QLabel" name="label_52">
@@ -2518,7 +2570,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="3">
-           <widget class="QSpinBox" name="sp_xrating"/>
+           <widget class="QSpinBox" name="sp_xrating">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_33">
@@ -2616,7 +2672,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="3">
-           <widget class="QSpinBox" name="sp_xviews"/>
+           <widget class="QSpinBox" name="sp_xviews">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_34">
@@ -2633,7 +2693,11 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="3">
-           <widget class="QSpinBox" name="sp_xfavorite"/>
+           <widget class="QSpinBox" name="sp_xfavorite">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="0" column="8">
            <widget class="QSpinBox" name="sp_title_fontsize"/>
