@@ -173,7 +173,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_size,
 			m_font_family,
 			10,
-			getEngineColor(record->m_engine, m_enable_engine_color));
+			getEngineColor( record->m_engine, m_enable_engine_color ) );
 	}
 	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
 	//Draw Version : Use default font
@@ -322,10 +322,10 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_title_fontsize { config::grid_ui::title_font_size::get() },
   m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
   //engine
-  m_engine_enable {config::grid_ui::engine_enable::get()},
-  m_engine_x {config::grid_ui::engine_x::get()},
-  m_engine_y {config::grid_ui::engine_y::get()},
-  m_enable_engine_color {config::grid_ui::engine_bcolor::get()},
+  m_engine_enable { config::grid_ui::engine_enable::get() },
+  m_engine_x { config::grid_ui::engine_x::get() },
+  m_engine_y { config::grid_ui::engine_y::get() },
+  m_enable_engine_color { config::grid_ui::engine_bcolor::get() },
   //version
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },
@@ -367,10 +367,85 @@ QSize RecordBannerDelegate::
 	return qsize;
 }
 
-QColor RecordBannerDelegate::getEngineColor(QString engine, bool isEnabled) const
+QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) const
 {
 	QColor backgroundColor;
-	
+	const QString ename = engine.toUpper();
+
+	if ( ename == "ADRIFT" )
+	{
+		backgroundColor = "#0b77cd";
+	}
+	if ( ename == "FLASH" )
+	{
+		backgroundColor = "#616161";
+	}
+	if ( ename == "HTML" )
+	{
+		backgroundColor = "#54812d";
+	}
+	if ( ename == "JAVA" )
+	{
+		backgroundColor = "#52a6b0";
+	}
+	if ( ename == "OTHER" || ename == "OTHERS" )
+	{
+		backgroundColor = "#6c9c34";
+	}
+	if ( ename == "QSP" )
+	{
+		backgroundColor = "#d22f2f";
+	}
+	if ( ename == "RAGS" )
+	{
+		backgroundColor = "#c77700";
+	}
+	if ( ename == "RPGM" || ename == "RPG Maker" )
+	{
+		backgroundColor = "#0b79d1";
+	}
+	if ( ename == "REN'PY" )
+	{
+		backgroundColor = "#9d46e3";
+	}
+	if ( ename == "TADS" )
+	{
+		backgroundColor = "#0b79d1";
+	}
+	if ( ename == "UNITY" )
+	{
+		backgroundColor = "#ea5201";
+	}
+	if ( ename == "UNREAL" || ename == "UNREAL ENGINE" )
+	{
+		backgroundColor = "#0d47a1";
+	}
+	if ( ename == "WEBGL" )
+	{
+		backgroundColor = "#fe5901";
+	}
+	if ( ename == "WOLF RPG" )
+	{
+		backgroundColor = "#39843c";
+	}
+	//NON F95
+	if ( ename == "KIRIKIRI" )
+	{
+		backgroundColor = "#5550ed";
+	}
+	if ( ename == "TYANOBUILDER" )
+	{
+		backgroundColor = "#3e8baf";
+	}
+	if ( ename == "VISUAL NOVEL MAKER" )
+	{
+		backgroundColor = "#26ade4";
+	}
+	if ( ename == "NSCRIPTER" )
+	{
+		backgroundColor = "#4646ff";
+	}
+
 	//Return a color if enabled. If not, return transparent
 	return isEnabled ? backgroundColor : "transparent";
 }
