@@ -120,6 +120,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	}
 
 	//Set hover color
+	//Set hover color
 	if ( options.state & QStyle::State_MouseOver )
 	{
 		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
