@@ -34,7 +34,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//TODO: add strip height for both top and bottom. Right now they share.
 	const int x_strip_height { m_strip_height };
 	const int y_strip_height( m_strip_height );
-	const int overlay_opacity { m_overlay_opacity };
+	//const int overlay_opacity { m_overlay_opacity };
 	const bool enable_top_overlay { m_enable_top_overlay };
 	const bool enable_bottom_overlay { m_enable_bottom_overlay };
 
@@ -135,13 +135,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	painter->setPen( pen );
 	painter->drawRect( options_rect );
 
-	//Draw top
-
+	//Draw Overlay
 	painter->fillRect( top_rect, enable_top_overlay ? m_overlay_color : "transparent" );
-
 	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_overlay_color : "transparent" );
-
-	//Check if font was ever set. If not, Use system default
 
 	//set Pen and Font for default text
 	QFont font;
@@ -165,9 +161,22 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			0,
 			m_title_bcolor );
 	}
-	//Draw Engine
+	//Draw Engine : Use default font
+	if ( m_engine_enable )
+	{
+		this->drawText(
+			painter,
+			m_engine_x,
+			m_engine_y,
+			options_rect,
+			record->m_engine,
+			m_font_size,
+			m_font_family,
+			10,
+			getEngineColor(record->m_engine, m_enable_engine_color));
+	}
 	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
-	//Draw Version
+	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
 	{
 		const atlas::records::Version latest { record->m_versions.at( 0 ) };
@@ -210,7 +219,7 @@ void RecordBannerDelegate::drawText(
 	const int padding,
 	QColor backgroundColor ) const
 {
-	painter->save();
+	//painter->save();
 	//Calculate rect size for text
 	QFont font;
 	font.setPixelSize( font_size );
@@ -233,7 +242,7 @@ void RecordBannerDelegate::drawText(
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//Alight text in center of Rect
 	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
-	painter->restore();
+	//painter->restore();
 
 	//qInfo() << "STATS: " << str << " x_loc:" << text_rect.x() << " y_loc:" << text_rect.y();
 	//const QSize size { rect.width(), strip_size };
@@ -263,11 +272,18 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_capsule_border = config::grid_ui::enableCapsuleBorder::get();
 	m_font_size = config::grid_ui::fontSize::get();
 	m_font_family = config::grid_ui::font::get();
+	//title
 	m_title_enable = config::grid_ui::title_enable::get();
 	m_title_x = config::grid_ui::title_x::get();
 	m_title_y = config::grid_ui::title_y::get();
 	m_title_fontsize = config::grid_ui::title_font_size::get();
 	m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
+	//engine
+	m_engine_enable = config::grid_ui::engine_enable::get();
+	m_engine_x = config::grid_ui::engine_x::get();
+	m_engine_y = config::grid_ui::engine_y::get();
+	m_enable_engine_color = config::grid_ui::engine_bcolor::get();
+	//version
 	m_version_enable = { config::grid_ui::version_enable::get() };
 	m_version_x = { config::grid_ui::version_x::get() };
 	m_version_y = { config::grid_ui::version_y::get() };
@@ -299,11 +315,18 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_capsule_border { config::grid_ui::enableCapsuleBorder::get() },
   m_font_size { config::grid_ui::fontSize::get() },
   m_font_family { config::grid_ui::font::get() },
+  //title
   m_title_enable { config::grid_ui::title_enable::get() },
   m_title_x { config::grid_ui::title_x::get() },
   m_title_y { config::grid_ui::title_y::get() },
   m_title_fontsize { config::grid_ui::title_font_size::get() },
   m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
+  //engine
+  m_engine_enable {config::grid_ui::engine_enable::get()},
+  m_engine_x {config::grid_ui::engine_x::get()},
+  m_engine_y {config::grid_ui::engine_y::get()},
+  m_enable_engine_color {config::grid_ui::engine_bcolor::get()},
+  //version
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },
   m_version_y { config::grid_ui::version_y::get() },
@@ -342,4 +365,12 @@ QSize RecordBannerDelegate::
 		          banner_height + banner_spacing };
 
 	return qsize;
+}
+
+QColor RecordBannerDelegate::getEngineColor(QString engine, bool isEnabled) const
+{
+	QColor backgroundColor;
+	
+	//Return a color if enabled. If not, return transparent
+	return isEnabled ? backgroundColor : "transparent";
 }

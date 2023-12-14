@@ -35,10 +35,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	bool m_enable_capsule_border;
 	int m_font_size;
 	QString m_font_family;
-	/*LOCATION m_title_location;
-	LOCATION m_engine_location;
-	LOCATION m_version_location;
-	LOCATION m_creator_location;*/
+
 	//title
 	bool m_title_enable;
 	int m_title_x;
@@ -88,6 +85,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const QString font_family,
 		const int padding,
 		QColor backgroundColor ) const;
+	QColor getEngineColor(QString engine, bool isEnabled) const;
 
   public slots:
 	void reloadConfig();
