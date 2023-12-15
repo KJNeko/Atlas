@@ -81,7 +81,7 @@ namespace atlas::records
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
 		future.onFailed(
-			[ id, banner_path, type ]( const AtlasException& e )
+			[ id, banner_path, type ]( [[maybe_unused]] const AtlasException& e )
 			{
 				Game game { id };
 
