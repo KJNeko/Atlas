@@ -8,6 +8,7 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <QColor>
 
 #include <tracy/Tracy.hpp>
 
