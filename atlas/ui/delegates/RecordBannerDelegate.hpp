@@ -8,6 +8,7 @@
 
 #include <QAbstractItemDelegate>
 #include <QtCore/QModelIndex>
+#include <QColor>
 
 #include "core/config/config.hpp"
 #include "core/database/record/game/Game.hpp"
@@ -75,6 +76,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
+	QColor colorFromString(QString str);
 	void drawText(
 		QPainter* painter,
 		const int x,

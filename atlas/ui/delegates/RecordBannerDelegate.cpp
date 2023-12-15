@@ -8,7 +8,6 @@
 
 #include <QPainter>
 #include <QPainterPath>
-#include <QColor>
 
 #include <tracy/Tracy.hpp>
 
@@ -279,7 +278,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_title_x = config::grid_ui::title_x::get();
 	m_title_y = config::grid_ui::title_y::get();
 	m_title_fontsize = config::grid_ui::title_font_size::get();
-	m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
+	m_title_bcolor = colorFromString( config::grid_ui::title_bcolor::get() );
 	//engine
 	m_engine_enable = config::grid_ui::engine_enable::get();
 	m_engine_x = config::grid_ui::engine_x::get();
@@ -289,7 +288,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_version_enable = { config::grid_ui::version_enable::get() };
 	m_version_x = { config::grid_ui::version_x::get() };
 	m_version_y = { config::grid_ui::version_y::get() };
-	m_version_bcolor = { QColor::fromString( config::grid_ui::version_bcolor::get() ) };
+	m_version_bcolor = { colorFromString( config::grid_ui::version_bcolor::get() ) };
 	m_grid_spacing = config::grid_ui::bannerSpacing::get();
 	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 	m_window_height = config::grid_ui::windowHeight::get();
@@ -322,7 +321,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_title_x { config::grid_ui::title_x::get() },
   m_title_y { config::grid_ui::title_y::get() },
   m_title_fontsize { config::grid_ui::title_font_size::get() },
-  m_title_bcolor { QColor::fromString( config::grid_ui::title_bcolor::get() ) },
+  m_title_bcolor { colorFromString( config::grid_ui::title_bcolor::get() ) },
   //engine
   m_engine_enable { config::grid_ui::engine_enable::get() },
   m_engine_x { config::grid_ui::engine_x::get() },
@@ -332,7 +331,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },
   m_version_y { config::grid_ui::version_y::get() },
-  m_version_bcolor { QColor::fromString( config::grid_ui::version_bcolor::get() ) },
+  m_version_bcolor { colorFromString( config::grid_ui::version_bcolor::get() ) },
   m_grid_spacing { config::grid_ui::bannerSpacing::get() },
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },
@@ -450,4 +449,14 @@ QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) co
 
 	//Return a color if enabled. If not, return transparent
 	return isEnabled ? backgroundColor : "transparent";
+}
+
+QColor RecordBannerDelegate::colorFromString(QString str)
+{
+	QColor color;
+	#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
+    	return QColor::fromString( config::grid_ui::title_bcolor::get() );
+	#else
+		return color.setNamedColor( config::grid_ui::title_bcolor::get() );
+	#endif
 }
