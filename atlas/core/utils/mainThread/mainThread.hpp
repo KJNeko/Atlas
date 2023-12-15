@@ -44,9 +44,13 @@ namespace utils
 						{
 							func( std::forward< Args >( args )... );
 						}
+						catch ( std::exception& e )
+						{
+							atlas::logging::error( "Exception caught in executeOnMain: {}", e.what() );
+						}
 						catch ( ... )
 						{
-							//Eat and silence
+							atlas::logging::error( "Unknown exception caught in executeOnMain" );
 						}
 					},
 					Qt::QueuedConnection );

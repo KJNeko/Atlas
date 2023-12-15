@@ -189,14 +189,22 @@ namespace atlas::images
 			atlas::logging::debug( "Loading image: {}", path );
 
 			if ( !std::filesystem::exists( path ) )
-				throw ImageLoadError( format_ns::format( "Failed to find image at path {}", path ).c_str() );
+			{
+				promise.setException( std::make_exception_ptr(
+					ImageLoadError( format_ns::format( "Failed to find image at path {}", path ).c_str() ) ) );
+			}
 
 			if ( std::filesystem::file_size( path ) == 0 )
-				throw ImageLoadError( format_ns::format( "Image at path {} was empty", path ).c_str() );
+			{
+				promise.setException( std::make_exception_ptr(
+					ImageLoadError( format_ns::format( "Image at path {} was empty", path ).c_str() ) ) );
+			}
 
 			QImageReader reader { QString::fromStdString( path.string() ) };
 			const QSize image_size { reader.size() };
 			const auto key { pixmapKey( target_size, scale_type, path ) };
+
+			if ( promise.isCanceled() ) return;
 
 			//Default to the other loader if the image size is invalid
 			if ( image_size == QSize() )
@@ -232,7 +240,9 @@ namespace atlas::images
 			const auto key { pixmapKey( target_size, scale_type, path ) };
 
 			if ( auto pixmap_opt = scale_cache.find( key ); pixmap_opt.has_value() )
+			{
 				return QtFuture::makeReadyFuture( pixmap_opt.value() );
+			}
 			else
 			{
 				return QtConcurrent::

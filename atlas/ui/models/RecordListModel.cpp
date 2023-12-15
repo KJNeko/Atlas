@@ -71,11 +71,8 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 
 void RecordListModel::reloadRecord( QPersistentModelIndex index )
 {
-	if ( index.isValid() )
-	{
-		loaders.erase( index.row() );
-		emit dataChanged( index, index );
-	}
+	loaders.erase( index.row() );
+	emit dataChanged( index, index );
 }
 
 void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future )
@@ -85,34 +82,25 @@ void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPi
 	{
 		// Optimistic checking
 		emit dataChanged( index, index );
+		return;
 	}
-	else
+
+	//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
+	if ( loaders.contains( index.row() ) )
 	{
-		//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
-		if ( future.isValid() )
-		{
-			if ( !loaders.contains( index.row() ) )
-			{
-				auto* loader { new atlas::images::ImageLoader( index, std::move( future ) ) };
-				connect(
-					loader,
-					&atlas::images::ImageLoader::imageReady,
-					this,
-					&RecordListModel::reloadRecord,
-					Qt::SingleShotConnection );
-				loader->moveToThread( &loading_thread );
-				loaders.insert( std::make_pair( index.row(), loader ) );
-			}
-			else
-				future.cancel();
-			//Image is already loading. So cancel this one
-		}
-		else
-		{
-			//Even if the future is valid. It might mean that it completed before we were ready?
-			emit dataChanged( index, index );
-		}
+		future.cancel();
+		return;
 	}
+
+	auto* loader { new atlas::images::ImageLoader( index, future ) };
+	connect(
+		loader,
+		&atlas::images::ImageLoader::imageReady,
+		this,
+		&RecordListModel::reloadRecord,
+		Qt::SingleShotConnection );
+	loader->moveToThread( &loading_thread );
+	loaders.insert( std::make_pair( index.row(), loader ) );
 }
 
 void RecordListModel::killLoaders()
