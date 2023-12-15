@@ -8,6 +8,9 @@ endif ()
 
 find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
 
+#Echo Qt version
+message("-- Qt version: ${Qt6_VERSION}")
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
