@@ -154,13 +154,29 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
 	ui->sbOverlayHeight->setValue( config::grid_ui::overlayHeight::get() );
 	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
-	ui->leOverlayColor->setText( config::grid_ui::overlayColor::get() );
+	ui->pbOverlayColor->setText( config::grid_ui::overlayColor::get() );
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
 	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
+	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlayLayout::get() );
 
-	//Text & Icon Locations
+	//Overlay Settings
+	//Title
+	ui->cbTitleEnable->setChecked( config::grid_ui::title_enable::get() );
 	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
 	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
+	ui->sp_title_fontsize->setValue( config::grid_ui::title_font_size::get() );
+	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
+	//Engine
+	ui->cbEngineEnable->setChecked(config::grid_ui::engine_enable::get());
+	ui->sp_xengine->setValue(config::grid_ui::engine_x::get());
+	ui->sp_yengine->setValue(config::grid_ui::engine_y::get());
+	ui->cbEnableEngineColors->setChecked(config::grid_ui::engine_bcolor::get());
+	//Version
+	ui->cbVersionEnable->setChecked( config::grid_ui::version_enable::get() );
+	ui->sp_xversion->setValue( config::grid_ui::version_x::get() );
+	ui->sp_yversion->setValue( config::grid_ui::version_y::get() );
+	gridPreviewDelegate->m_version_bcolor = QColor::fromString( config::grid_ui::version_bcolor::get() );
+
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
@@ -170,7 +186,6 @@ void SettingsDialog::prepareGridViewerSettings()
 
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
-	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 
 	//Experimental Settings
 	ui->cbExpFindAtlData->setChecked( config::experimental::local_match::get() );
@@ -199,17 +214,38 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
 	config::grid_ui::overlayHeight::set( ui->sbOverlayHeight->value() );
 	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
-	config::grid_ui::overlayColor::set( ui->leOverlayColor->text() );
+	config::grid_ui::overlayColor::set( ui->pbOverlayColor->text() );
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
 	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
+	config::grid_ui::overlayColor::
+		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_overlay_color.name().toLower() );
 
 	//Overlay settings
+	//Title
 	config::grid_ui::title_enable::set( ui->cbTitleEnable->checkState() );
 	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
 	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
-	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name().toLower() );
+	config::grid_ui::title_font_size::set( ui->sp_title_fontsize->value() );
+	config::grid_ui::title_bcolor::
+		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
+	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
+	//Engine
+	config::grid_ui::engine_enable::set(ui->cbEngineEnable->checkState());
+	config::grid_ui::engine_x::set(ui->sp_xengine->value());
+	config::grid_ui::engine_y::set(ui->sp_yengine->value());
+	config::grid_ui::engine_bcolor::set(ui->cbEnableEngineColors->checkState());
+	//Version
+	config::grid_ui::version_enable::set( ui->cbVersionEnable->checkState() );
+	config::grid_ui::version_x::set( ui->sp_xversion->value() );
+	config::grid_ui::version_y::set( ui->sp_yversion->value() );
+	config::grid_ui::version_bcolor::
+		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_version_bcolor.name().toLower() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -699,6 +735,16 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 }
 
 //Overlay Settings
+//Overlay
+void SettingsDialog::on_pbOverlayColor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_overlay_color, nullptr, "Overlay Background Color", QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_overlay_color = backgroundColor;
+	qlv->repaint();
+}
+
 //title
 void SettingsDialog::on_cbTitleEnable_stateChanged( int state )
 {
@@ -721,9 +767,15 @@ void SettingsDialog::on_sp_ytitle_valueChanged( int num )
 void SettingsDialog::on_pbTitleBColor_pressed()
 {
 	QColorDialog colorDialog( this );
-	colorDialog.setOption( QColorDialog::ShowAlphaChannel, true );
-	QColor backgroundColor = colorDialog.getColor( gridPreviewDelegate->m_title_bcolor );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color", QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_title_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_title_fontsize_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_fontsize = num;
 	qlv->repaint();
 }
 
@@ -749,5 +801,39 @@ void SettingsDialog::on_sp_yengine_valueChanged( int num )
 void SettingsDialog::on_cbEnableEngineColors_stateChanged( int state )
 {
 	gridPreviewDelegate->m_enable_engine_color = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cbOverlayLayout_currentIndexChanged( int index )
+{
+	gridPreviewDelegate->m_overlay_layout = index;
+	qlv->repaint();
+}
+
+//VERSION
+void SettingsDialog::on_cbversionEnable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_version_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_xversion_valueChanged( int num )
+{
+	gridPreviewDelegate->m_version_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_yversion_valueChanged( int num )
+{
+	gridPreviewDelegate->m_version_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pbVersionBColor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_version_bcolor, nullptr, "Version Background Color", QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_version_bcolor = backgroundColor;
 	qlv->repaint();
 }

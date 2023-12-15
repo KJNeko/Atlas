@@ -259,6 +259,12 @@ enum BannerMask
 	MASK_LOGO = 1 << 3,
 };
 
+enum OverlayType
+{
+	ON_TOP = 0,
+	IN_LINE = 1
+};
+
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
 SETTINGS_DE( grid_ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
 SETTINGS_D( grid_ui, blurRadius, int, 30 )
@@ -266,16 +272,16 @@ SETTINGS_D( grid_ui, featherRadius, int, 30 )
 SETTINGS_D( grid_ui, bannerSizeX, int, 537 )
 SETTINGS_D( grid_ui, bannerSizeY, int, 251 )
 SETTINGS_D( grid_ui, bannerSpacing, int, 5 )
-SETTINGS_D( grid_ui, selectedColor, QString, "0,0,255" )
+SETTINGS_D( grid_ui, selectedColor, QString, "transparent" )
 SETTINGS_D( grid_ui, selectedOpacity, int, 50 )
 SETTINGS_D( grid_ui, enableCapsuleBorder, bool, true )
-SETTINGS_D( grid_ui, borderColor, QString, "180,180,180" )
+SETTINGS_D( grid_ui, borderColor, QString, "transparent" )
 
 SETTINGS_D( grid_ui, enableTopOverlay, bool, true )
 SETTINGS_D( grid_ui, enableBottomOverlay, bool, true )
 SETTINGS_D( grid_ui, overlayHeight, int, 26 )
 SETTINGS_D( grid_ui, overlayOpacity, int, 200 )
-SETTINGS_D( grid_ui, overlayColor, QString, "0,0,0" )
+SETTINGS_D( grid_ui, overlayColor, QString, "transparent" )
 SETTINGS_D( grid_ui, font, QString, "" )
 SETTINGS_D( grid_ui, fontSize, int, 10 )
 SETTINGS_D( grid_ui, windowHeight, int, 780 )
@@ -288,6 +294,7 @@ SETTINGS_D( grid_ui, overlayLayout, int, 0 )
 SETTINGS_D( grid_ui, title_enable, bool, true )
 SETTINGS_D( grid_ui, title_x, int, 10 )
 SETTINGS_D( grid_ui, title_y, int, 10 )
+SETTINGS_D( grid_ui, title_font_size, int, 10 )
 SETTINGS_D( grid_ui, title_bcolor, QString, "transparent" )
 SETTINGS_D( grid_ui, engine_enable, bool, true )
 SETTINGS_D( grid_ui, engine_x, int, 10 )
