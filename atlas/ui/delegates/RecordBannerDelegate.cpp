@@ -170,7 +170,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_engine_x,
 			m_engine_y,
 			options_rect,
-			record->m_engine,
+			record->atlas_data.has_value() ? record->atlas_data.value()->engine : record->m_engine,
 			m_font_size,
 			m_font_family,
 			10,
