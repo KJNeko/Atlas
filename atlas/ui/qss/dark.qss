@@ -31,7 +31,8 @@ QStackedWidget>QWidget>QFrame>QFrame,
     border: none;
 }
 
-QStackedWidget>QWidget>QGroupBox>QFrame {
+QStackedWidget>QWidget>QGroupBox>QFrame,
+QStackedWidget>QWidget>QFrame>QGroupBox>QFrame {
     background-color: none;
 }
 
@@ -331,18 +332,21 @@ QCheckBox::indicator {
     background-color: rgb(210, 210, 210);
 }
 */
-QStackedWidget>QWidget>QGroupBox {
+QStackedWidget>QWidget>QGroupBox,
+QStackedWidget>QWidget>QFrame>QGroupBox {
     background-color: none;
     border: 1px solid rgb(81, 83, 90);
     border-radius: 10px;
     margin-top: 2ex;
 }
 
-QStackedWidget>QWidget>QGroupBox>QLabel {
+QStackedWidget>QWidget>QGroupBox>QLabel,
+QStackedWidget>QWidget>QFrame>QGroupBox>QLabel {
     background-color: none;
 }
 
-QStackedWidget>QWidget>QGroupBox::title {
+QStackedWidget>QWidget>QGroupBox::title,
+QStackedWidget>QWidget>QFrame>QGroupBox::title {
     subcontrol-origin: margin;
     color: rgb(255, 255, 255);
     left: 7px;

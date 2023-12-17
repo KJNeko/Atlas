@@ -283,7 +283,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_engine_enable = config::grid_ui::engine_enable::get();
 	m_engine_x = config::grid_ui::engine_x::get();
 	m_engine_y = config::grid_ui::engine_y::get();
-	m_enable_engine_color = config::grid_ui::engine_bcolor::get();
+	m_enable_engine_color = config::grid_ui::engine_default_color::get();
 	//version
 	m_version_enable = { config::grid_ui::version_enable::get() };
 	m_version_x = { config::grid_ui::version_x::get() };
@@ -326,7 +326,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_engine_enable { config::grid_ui::engine_enable::get() },
   m_engine_x { config::grid_ui::engine_x::get() },
   m_engine_y { config::grid_ui::engine_y::get() },
-  m_enable_engine_color { config::grid_ui::engine_bcolor::get() },
+  m_enable_engine_color { config::grid_ui::engine_default_color::get() },
   //version
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },
@@ -451,12 +451,12 @@ QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) co
 	return isEnabled ? backgroundColor : "transparent";
 }
 
-QColor RecordBannerDelegate::colorFromString(QString str)
+QColor RecordBannerDelegate::colorFromString( QString str )
 {
 	QColor color;
-	#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
-    	return QColor::fromString( config::grid_ui::title_bcolor::get() );
-	#else
-		return color.setNamedColor( config::grid_ui::title_bcolor::get() );
-	#endif
+#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
+	return QColor::fromString( config::grid_ui::title_bcolor::get() );
+#else
+	return color.setNamedColor( config::grid_ui::title_bcolor::get() );
+#endif
 }

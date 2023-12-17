@@ -167,10 +167,10 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sp_title_fontsize->setValue( config::grid_ui::title_font_size::get() );
 	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
 	//Engine
-	ui->cbEngineEnable->setChecked(config::grid_ui::engine_enable::get());
-	ui->sp_xengine->setValue(config::grid_ui::engine_x::get());
-	ui->sp_yengine->setValue(config::grid_ui::engine_y::get());
-	ui->cbEnableEngineColors->setChecked(config::grid_ui::engine_bcolor::get());
+	ui->cbEngineEnable->setChecked( config::grid_ui::engine_enable::get() );
+	ui->sp_xengine->setValue( config::grid_ui::engine_x::get() );
+	ui->sp_yengine->setValue( config::grid_ui::engine_y::get() );
+	ui->cbEnableEngineColors->setChecked( config::grid_ui::engine_default_color::get() );
 	//Version
 	ui->cbVersionEnable->setChecked( config::grid_ui::version_enable::get() );
 	ui->sp_xversion->setValue( config::grid_ui::version_x::get() );
@@ -234,10 +234,10 @@ void SettingsDialog::saveBannerViewerSettings()
 		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
 	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
 	//Engine
-	config::grid_ui::engine_enable::set(ui->cbEngineEnable->checkState());
-	config::grid_ui::engine_x::set(ui->sp_xengine->value());
-	config::grid_ui::engine_y::set(ui->sp_yengine->value());
-	config::grid_ui::engine_bcolor::set(ui->cbEnableEngineColors->checkState());
+	config::grid_ui::engine_enable::set( ui->cbEngineEnable->checkState() );
+	config::grid_ui::engine_x::set( ui->sp_xengine->value() );
+	config::grid_ui::engine_y::set( ui->sp_yengine->value() );
+	config::grid_ui::engine_default_color::set( ui->cbEnableEngineColors->checkState() );
 	//Version
 	config::grid_ui::version_enable::set( ui->cbVersionEnable->checkState() );
 	config::grid_ui::version_x::set( ui->sp_xversion->value() );
