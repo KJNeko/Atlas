@@ -165,7 +165,7 @@ void BatchImportDialog::on_btnNext_pressed()
 
 	if ( import_triggered ) return;
 
-	atlas::logging::debug( "next pressed" );
+	atlas::logging::debug( "Next pressed" );
 	if ( ui->btnNext->text() == "Import" )
 	{
 		import_triggered = true;
@@ -173,9 +173,8 @@ void BatchImportDialog::on_btnNext_pressed()
 	}
 	else
 	{
-		if ( search_started ) return;
+		atlas::logging::debug( "Checking validity of data" );
 
-		search_started = true;
 		//Verify that the path is set
 		const auto& path { ui->tbPath->text() };
 		if ( path.isEmpty() || !QFile::exists( path ) )
@@ -199,6 +198,12 @@ void BatchImportDialog::on_btnNext_pressed()
 		if ( !ui->tbFormat->text().contains( "{version}" ) )
 		{
 			ui->statusLabel->setText( "Autofill missing \"{version}\" which is required" );
+			return;
+		}
+
+		if ( search_started )
+		{
+			atlas::logging::error( "Search already running. Possibly a bug" );
 			return;
 		}
 
