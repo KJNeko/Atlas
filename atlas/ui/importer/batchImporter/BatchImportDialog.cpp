@@ -296,9 +296,20 @@ void BatchImportDialog::reject()
 	     == QMessageBox::Yes )
 	{
 		scanner.abort();
-	}
 
-	QDialog::reject();
+		QMessageBox box { this };
+		box.setText( "Cancelling import" );
+		box.setInformativeText( "Please wait while we cancel the import" );
+		box.show();
+
+		while ( scanner.isRunning() ) QApplication::processEvents();
+
+		box.close();
+
+		QDialog::reject();
+	}
+	else
+		return;
 }
 
 void BatchImportDialog::importFailure( const QString top, const QString bottom )

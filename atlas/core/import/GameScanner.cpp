@@ -224,7 +224,10 @@ try
 		ZoneScopedN( "Process directory" );
 
 		promise.suspendIfRequested();
-		if ( promise.isCanceled() ) return;
+		if ( promise.isCanceled() )
+		{
+			break;
+		}
 
 		if ( itter->is_directory() )
 		{
@@ -266,13 +269,13 @@ try
 
 	for ( auto& future : futures | std::views::reverse )
 	{
+		if ( promise.isCanceled() ) break;
+
 		while ( true )
 		{
 			promise.suspendIfRequested();
 			if ( promise.isCanceled() )
 			{
-				future.cancel();
-				future.waitForFinished();
 				break;
 			}
 
@@ -281,6 +284,37 @@ try
 			using namespace std::chrono_literals;
 			std::this_thread::sleep_for( 10ms );
 		}
+	}
+
+	if ( promise.isCanceled() )
+	{
+		//We need to cancel all the futures we have running
+		for ( auto& future : futures | std::views::reverse )
+		{
+			future.cancel();
+		}
+
+		//Wait for them to finish
+		for ( auto& future : futures )
+		{
+			future.waitForFinished();
+		}
+	}
+
+	done = true;
+}
+catch ( QUnhandledException& e )
+{
+	if ( promise.isCanceled() ) //We don't care about the error if we're canceled
+		return;
+
+	try
+	{
+		std::rethrow_exception( e.exception() );
+	}
+	catch ( std::exception& e_2 )
+	{
+		atlas::logging::error( "Main runner ate error before entering Qt space! {}", e_2.what() );
 	}
 }
 catch ( std::exception& e )
@@ -324,7 +358,7 @@ void GameScanner::abort()
 
 bool GameScanner::isRunning()
 {
-	return m_runner_future.isRunning();
+	return m_runner_future.isRunning() || !done;
 }
 
 bool GameScanner::isPaused()
