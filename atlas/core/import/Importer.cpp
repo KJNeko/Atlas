@@ -132,7 +132,25 @@ namespace internal
 		else
 			record.addVersion( version, game_root, relative_executable, game_size, !owning );
 
-		if ( atlas_id != INVALID_ATLAS_ID ) record.connectAtlasData( atlas_id );
+		//Try to get id using name and creator
+		if ( atlas_id != INVALID_ATLAS_ID )
+		{
+			record.connectAtlasData( atlas_id );
+		}
+		else
+		{
+			std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, creator );
+			if ( atlas_data.has_value() )
+			{
+				atlas_id = atlas_data.value()->atlas_id;
+				std::optional< atlas::remote::F95RemoteData > f95_data =
+					atlas::remote::findF95Data( QString::number( atlas_data.value()->atlas_id ) );
+				gl_infos.f95_thread_id = f95_data.value()->f95_id;
+
+				record.connectAtlasData( atlas_id );
+			}
+		}
+
 		if ( gl_infos.f95_thread_id != INVALID_F95_ID ) record.connectF95Data( gl_infos.f95_thread_id );
 
 		std::array< std::optional< QFuture< std::filesystem::path > >, BannerType::SENTINEL > banner_futures {};
@@ -143,7 +161,16 @@ namespace internal
 			if ( !path.isEmpty() )
 			{
 				const std::filesystem::path banner_path { path.toStdWString() };
-				banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				//Check if path is actually a url
+				if ( QString::fromStdString( path.toStdString() ).contains( "http" ) )
+				{
+					banner_futures[ i ] = atlas::images::async::importImageFromURL( path, record->m_game_id );
+					//banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
+				else
+				{
+					banner_futures[ i ] = atlas::images::async::importImage( banner_path, record->m_game_id );
+				}
 			}
 			else
 				banner_futures[ i ] = { std::nullopt };
@@ -245,7 +272,6 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
-		atlas::logging::error( "{}", e.what() );
 		promise.setException( std::current_exception() );
 	}
 

@@ -57,11 +57,12 @@ ProgressSignaler::ProgressSignaler()
 {
 	ZoneScoped;
 	utils::executeOnMain(
-		[ this ]()
+		[ this ]() -> int
 		{
 			auto* ptr { new ProgressNotification() };
 			hookSignaler( ptr );
 			atlas::notifications::handle().addNotification( ptr );
+			return 0;
 		} );
 }
 

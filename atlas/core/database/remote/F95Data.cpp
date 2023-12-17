@@ -101,9 +101,8 @@ namespace atlas::remote
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::F95RemoteData > data;
 		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=(UPPER(REPLACE(?,' ','') || \"_\" || ?))"
-						   << atlas_id
-			>> [ &data ]( const F95ID f95_id ) { data = { f95_id }; };
+		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=?" << atlas_id >>
+			[ &data ]( const F95ID f95_id ) { data = { f95_id }; };
 		return data;
 	}
 

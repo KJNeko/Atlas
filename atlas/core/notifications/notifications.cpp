@@ -38,7 +38,7 @@ namespace atlas::notifications
 		if ( internal::notification_manager == nullptr )
 			throw AtlasException( "Notification manage not initalized before notification!" );
 		utils::executeOnMain(
-			[ &user_message, level, &full_message ]() -> void
+			[ user_message = std::move( user_message ), level, full_message = std::move( full_message ) ]() -> void
 			{
 				switch ( level )
 				{

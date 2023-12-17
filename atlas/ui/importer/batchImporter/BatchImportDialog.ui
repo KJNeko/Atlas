@@ -208,9 +208,9 @@ somecreator/somegame/v1.0: {creator}/{title}/{version}</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QCheckBox" name="cbCheckLocal">
+              <widget class="QCheckBox" name="cbCheckDownloadImages">
                <property name="text">
-                <string>Search for game information in the local metadata datbase (recommended)</string>
+                <string>Download Images if match found in Atlas Database (recommended)</string>
                </property>
                <property name="checked">
                 <bool>true</bool>

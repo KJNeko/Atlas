@@ -7,9 +7,9 @@ file(GLOB_RECURSE UI_SOURCES
 
 #WIN32
 if (WIN32)
-	add_executable(Atlas WIN32 ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+	add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 else ()
-	add_executable(Atlas WIN32 ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
+	add_executable(Atlas ${UI_SOURCES} ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
 target_precompile_headers(Atlas PUBLIC
@@ -54,9 +54,10 @@ if (HAVE_STD_BACKTRACE)
 	target_compile_definitions(Atlas PRIVATE HAVE_STD_BACKTRACE=1)
 endif ()
 
+target_compile_definitions(Atlas PRIVATE ATLAS_CMAKE_SOURCE_LOCATION="${CMAKE_SOURCE_DIR}")
 
-if (${UPPER_BUILD_TYPE} STREQUAL "RELEASE")
-	target_compile_definitions(Atlas PRIVATE ATLAS_SANITIZE_SOURCE_LOC="${CMAKE_SOURCE_DIR}")
+if (DEFINED ATLAS_EMBED_FULL_SOURCE_LOCATION)
+	target_compile_definitions(Atlas PRIVATE ATLAS_EMBED_FULL_SOURCE_LOCATION=1)
 endif ()
 
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/themes COMMENT " Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/themes")

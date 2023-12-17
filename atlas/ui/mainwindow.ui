@@ -765,9 +765,15 @@ margin-right:5px;</string>
      <addaction name="actionSingleImporter"/>
      <addaction name="actionExtractionImporter"/>
     </widget>
+    <widget class="QMenu" name="menuDownload">
+     <property name="title">
+      <string>Download</string>
+     </property>
+     <addaction name="actionUpdateMeta"/>
+    </widget>
     <addaction name="menuImport"/>
     <addaction name="actionManage"/>
-    <addaction name="actionDownload"/>
+    <addaction name="menuDownload"/>
     <addaction name="actionOptions"/>
     <addaction name="actionConsoleWindow"/>
    </widget>
@@ -791,11 +797,6 @@ margin-right:5px;</string>
   <action name="actionManage">
    <property name="text">
     <string>Mange</string>
-   </property>
-  </action>
-  <action name="actionDownload">
-   <property name="text">
-    <string>Download</string>
    </property>
   </action>
   <action name="actionOptions">
@@ -884,6 +885,11 @@ margin-right:5px;</string>
   <action name="actionConsoleWindow">
    <property name="text">
     <string>Console Window</string>
+   </property>
+  </action>
+  <action name="actionUpdateMeta">
+   <property name="text">
+    <string>Update metadata &amp; media</string>
    </property>
   </action>
  </widget>

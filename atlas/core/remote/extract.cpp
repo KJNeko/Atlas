@@ -63,8 +63,9 @@ namespace atlas
 
 			const auto block_size { get_block_size( &info ) };
 
-			char* const decompression_buffer = new char[ block_size ];
-			std::memset( decompression_buffer, 0, block_size );
+			std::vector< char > decompression_buffer;
+			decompression_buffer.resize( block_size );
+			std::memset( decompression_buffer.data(), 0, block_size );
 
 			//Rewind file
 			ifs.seekg( static_cast< long long >( processed_bytes ), std::ios::beg );
@@ -91,7 +92,7 @@ namespace atlas
 
 				if ( bytes_left == 0 ) break;
 				ret = LZ4F_decompress(
-					dctx, decompression_buffer, &out_buffer_bytes, buffer.data(), &in_buffer_bytes, nullptr );
+					dctx, decompression_buffer.data(), &out_buffer_bytes, buffer.data(), &in_buffer_bytes, nullptr );
 				const auto bytes_processed { in_buffer_bytes };
 
 				if ( LZ4F_isError( ret ) )
@@ -107,7 +108,7 @@ namespace atlas
 				//Copy into out buffer
 				const auto pre_size { out_data.size() };
 				out_data.resize( out_data.size() + out_buffer_bytes );
-				std::memcpy( out_data.data() + pre_size, decompression_buffer, out_buffer_bytes );
+				std::memcpy( out_data.data() + pre_size, decompression_buffer.data(), out_buffer_bytes );
 			}
 		}
 		else
