@@ -2756,7 +2756,7 @@ padding:10x;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_40">
           <item row="1" column="1">
-           <widget class="QCheckBox" name="cbEngineEnable">
+           <widget class="QCheckBox" name="cb_engine_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2780,14 +2780,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="3">
-           <widget class="QSpinBox" name="sp_xcreator">
+           <widget class="QSpinBox" name="sp_creator_x">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
           <item row="8" column="3">
-           <widget class="QSpinBox" name="sp_xlikes">
+           <widget class="QSpinBox" name="sp_likes_x">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -2808,7 +2808,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_17">
+           <widget class="QComboBox" name="cb_status_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -2817,7 +2817,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="10" column="5">
-           <widget class="QSpinBox" name="sp_yupdate">
+           <widget class="QSpinBox" name="sp_updateicon_y">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2827,7 +2827,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QSpinBox" name="sp_xversion">
+           <widget class="QSpinBox" name="sp_version_x">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -2841,7 +2841,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="QSpinBox" name="sp_xtitle">
+           <widget class="QSpinBox" name="sp_title_x">
             <property name="minimumSize">
              <size>
               <width>45</width>
@@ -2854,14 +2854,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="3">
-           <widget class="QSpinBox" name="sp_xrating">
+           <widget class="QSpinBox" name="sp_rating_x">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
           <item row="5" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_18">
+           <widget class="QComboBox" name="cb_gametype_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -2877,7 +2877,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="10" column="3">
-           <widget class="QSpinBox" name="sp_xupdate">
+           <widget class="QSpinBox" name="sp_updateicon_x">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2911,7 +2911,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="5">
-           <widget class="QSpinBox" name="spinBox_6"/>
+           <widget class="QSpinBox" name="sp_gametype_y"/>
           </item>
           <item row="6" column="4">
            <widget class="QLabel" name="label_60">
@@ -2921,7 +2921,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="9" column="3">
-           <widget class="QSpinBox" name="sp_xfavorite">
+           <widget class="QSpinBox" name="sp_favorite_x">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2931,7 +2931,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="9" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_16">
+           <widget class="QComboBox" name="cb_favorite_link">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2943,7 +2943,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="8" column="5">
-           <widget class="QSpinBox" name="sp_ylikes">
+           <widget class="QSpinBox" name="sp_likes_y">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -2960,7 +2960,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QCheckBox" name="cbVersionEnable">
+           <widget class="QCheckBox" name="cb_version_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2970,14 +2970,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="3">
-           <widget class="QSpinBox" name="sp_xviews">
+           <widget class="QSpinBox" name="sp_views_x">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QCheckBox" name="cb_viewEnable">
+           <widget class="QCheckBox" name="cb_views_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -2991,7 +2991,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QCheckBox" name="checkBox_5">
+           <widget class="QCheckBox" name="cb_status_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -3038,10 +3038,10 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="5">
-           <widget class="QSpinBox" name="spinBox_5"/>
+           <widget class="QSpinBox" name="sp_status_y"/>
           </item>
           <item row="8" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_15">
+           <widget class="QComboBox" name="cb_likes_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -3050,7 +3050,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_13">
+           <widget class="QComboBox" name="cb_rating_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -3069,14 +3069,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QCheckBox" name="cbRatingEnable">
+           <widget class="QCheckBox" name="cb_rating_enable">
             <property name="text">
              <string>Enable</string>
             </property>
            </widget>
           </item>
           <item row="7" column="8" colspan="2">
-           <widget class="QComboBox" name="comboBox_14">
+           <widget class="QComboBox" name="cb_views_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -3085,7 +3085,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="9" column="5">
-           <widget class="QSpinBox" name="sp_yfavorite">
+           <widget class="QSpinBox" name="sp_favorite_y">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3095,7 +3095,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="10" column="1">
-           <widget class="QCheckBox" name="cbLastUpdateEnable">
+           <widget class="QCheckBox" name="cb_updateicon_enable">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3112,7 +3112,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="3">
-           <widget class="QSpinBox" name="spinBox_4"/>
+           <widget class="QSpinBox" name="sp_gametype_x"/>
           </item>
           <item row="4" column="7">
            <widget class="QLabel" name="label_76">
@@ -3122,7 +3122,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="5">
-           <widget class="QSpinBox" name="sp_yrating">
+           <widget class="QSpinBox" name="sp_rating_y">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -3143,7 +3143,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QSpinBox" name="sp_xengine">
+           <widget class="QSpinBox" name="sp_engine_x">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -3181,7 +3181,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="9" column="1">
-           <widget class="QCheckBox" name="cbFavoriteEnable">
+           <widget class="QCheckBox" name="cb_favorite_enable">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3191,14 +3191,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="5">
-           <widget class="QSpinBox" name="sp_ycreator">
+           <widget class="QSpinBox" name="sp_creator_y">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
           <item row="0" column="12">
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="pb_title_bold">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3226,14 +3226,14 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="10" colspan="2">
-           <widget class="QCheckBox" name="cbEnableEngineColors">
+           <widget class="QCheckBox" name="cb_engine_default_colors">
             <property name="text">
              <string>Engine Colors</string>
             </property>
            </widget>
           </item>
           <item row="0" column="13">
-           <widget class="QPushButton" name="pushButton_13">
+           <widget class="QPushButton" name="pb_title_italics">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3254,7 +3254,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QCheckBox" name="checkBox_6">
+           <widget class="QCheckBox" name="cb_gametype_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -3278,7 +3278,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="8" column="1">
-           <widget class="QCheckBox" name="cbLikesEnable">
+           <widget class="QCheckBox" name="cb_likes_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -3292,10 +3292,10 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="3">
-           <widget class="QSpinBox" name="spinBox_3"/>
+           <widget class="QSpinBox" name="sp_status_x"/>
           </item>
           <item row="0" column="1">
-           <widget class="QCheckBox" name="cbTitleEnable">
+           <widget class="QCheckBox" name="cb_title_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -3329,7 +3329,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QSpinBox" name="sp_yengine">
+           <widget class="QSpinBox" name="sp_engine_y">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -3350,7 +3350,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QSpinBox" name="sp_yversion">
+           <widget class="QSpinBox" name="sp_version_y">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -3391,7 +3391,7 @@ padding:10x;</string>
            </spacer>
           </item>
           <item row="3" column="1">
-           <widget class="QCheckBox" name="cbCreatorEnable">
+           <widget class="QCheckBox" name="cb_creator_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -3405,7 +3405,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="5">
-           <widget class="QSpinBox" name="sp_yviews">
+           <widget class="QSpinBox" name="sp_views_y">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -3436,7 +3436,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="5">
-           <widget class="QSpinBox" name="sp_ytitle">
+           <widget class="QSpinBox" name="sp_title_y">
             <property name="minimumSize">
              <size>
               <width>45</width>
@@ -3456,7 +3456,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="6">
-           <widget class="QComboBox" name="comboBox_19">
+           <widget class="QComboBox" name="cb_status_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -3470,7 +3470,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="6">
-           <widget class="QComboBox" name="comboBox_12">
+           <widget class="QComboBox" name="cb_creator_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3490,7 +3490,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="6">
-           <widget class="QComboBox" name="comboBox_11">
+           <widget class="QComboBox" name="cb_version_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3510,7 +3510,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="6">
-           <widget class="QComboBox" name="comboBox_10">
+           <widget class="QComboBox" name="cb_engine_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3530,7 +3530,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="6">
-           <widget class="QComboBox" name="comboBox_8">
+           <widget class="QComboBox" name="cb_title_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3550,7 +3550,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="7">
-           <widget class="QPushButton" name="pbTitleBColor">
+           <widget class="QPushButton" name="pb_title_bcolor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3575,7 +3575,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="7">
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="pb_engine_bcolor">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -3594,7 +3594,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="7">
-           <widget class="QPushButton" name="pbVersionBColor">
+           <widget class="QPushButton" name="pb_version_bcolor">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -3613,7 +3613,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="7">
-           <widget class="QPushButton" name="pbCreatorBColor">
+           <widget class="QPushButton" name="pb_creator_bcolor">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -3632,7 +3632,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="0" column="8">
-           <widget class="QPushButton" name="pushButton_7">
+           <widget class="QPushButton" name="pb_title_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3654,7 +3654,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="8">
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="pb_engine_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3676,7 +3676,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="8">
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="pb_version_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3698,7 +3698,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="8">
-           <widget class="QPushButton" name="pushButton_10">
+           <widget class="QPushButton" name="pb_creator_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3720,7 +3720,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="5" column="6">
-           <widget class="QComboBox" name="comboBox_20">
+           <widget class="QComboBox" name="cb_gametype_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -3734,7 +3734,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="6" column="6">
-           <widget class="QComboBox" name="comboBox_21">
+           <widget class="QComboBox" name="cb_rating_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -3748,7 +3748,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="7" column="6">
-           <widget class="QComboBox" name="comboBox_22">
+           <widget class="QComboBox" name="cb_views_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -3762,7 +3762,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="8" column="6">
-           <widget class="QComboBox" name="comboBox_23">
+           <widget class="QComboBox" name="cb_likes_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -3776,7 +3776,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="9" column="6">
-           <widget class="QComboBox" name="comboBox_24">
+           <widget class="QComboBox" name="cb_favorite_align">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3793,7 +3793,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="10" column="6">
-           <widget class="QComboBox" name="comboBox_25">
+           <widget class="QComboBox" name="cb_updateicon_align">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3810,7 +3810,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="12">
-           <widget class="QPushButton" name="pushButton_14">
+           <widget class="QPushButton" name="pb_engine_bold">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3831,7 +3831,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="1" column="13">
-           <widget class="QPushButton" name="pushButton_15">
+           <widget class="QPushButton" name="pb_engine_italics">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3852,7 +3852,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="12">
-           <widget class="QPushButton" name="pushButton_16">
+           <widget class="QPushButton" name="pn_version_bold">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3873,7 +3873,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="12">
-           <widget class="QPushButton" name="pushButton_17">
+           <widget class="QPushButton" name="pb_creator_bold">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3894,7 +3894,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="12">
-           <widget class="QPushButton" name="pushButton_18">
+           <widget class="QPushButton" name="pb_status_bold">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3915,7 +3915,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="2" column="13">
-           <widget class="QPushButton" name="pushButton_19">
+           <widget class="QPushButton" name="pb_version_italics">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3936,7 +3936,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="3" column="13">
-           <widget class="QPushButton" name="pushButton_20">
+           <widget class="QPushButton" name="pb_creator_italics">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3957,7 +3957,7 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="4" column="13">
-           <widget class="QPushButton" name="pushButton_21">
+           <widget class="QPushButton" name="pb_status_italics">
             <property name="enabled">
              <bool>false</bool>
             </property>
