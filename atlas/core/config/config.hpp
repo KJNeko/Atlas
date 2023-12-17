@@ -381,10 +381,14 @@ SETTINGS_D( grid_ui, likes_link, Link, DISABLED )
 SETTINGS_D( grid_ui, favorite_enable, bool, true )
 SETTINGS_D( grid_ui, favorite_x, int, 10 )
 SETTINGS_D( grid_ui, favorite_y, int, 10 )
+SETTINGS_D( grid_ui, favorite_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, favorite_link, Link, DISABLED )
 //UPDATE ICON
-SETTINGS_D( grid_ui, lastupdate_enable, bool, true )
-SETTINGS_D( grid_ui, lastupdate_x, int, 10 )
-SETTINGS_D( grid_ui, lastupdate_y, int, 10 )
+SETTINGS_D( grid_ui, updateicon_enable, bool, true )
+SETTINGS_D( grid_ui, updateicon_x, int, 10 )
+SETTINGS_D( grid_ui, updateicon_y, int, 10 )
+SETTINGS_D( grid_ui, updateicon_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, updateicon_link, Link, DISABLED )
 
 enum LOCATION : int
 {

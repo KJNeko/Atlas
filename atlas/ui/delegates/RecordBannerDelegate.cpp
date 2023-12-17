@@ -377,74 +377,78 @@ QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) co
 	{
 		backgroundColor = "#0b77cd";
 	}
-	if ( ename == "FLASH" )
+	else if ( ename == "FLASH" )
 	{
 		backgroundColor = "#616161";
 	}
-	if ( ename == "HTML" )
+	else if ( ename == "HTML" )
 	{
 		backgroundColor = "#54812d";
 	}
-	if ( ename == "JAVA" )
+	else if ( ename == "JAVA" )
 	{
 		backgroundColor = "#52a6b0";
 	}
-	if ( ename == "OTHER" || ename == "OTHERS" )
+	else if ( ename == "OTHER" || ename == "OTHERS" )
 	{
 		backgroundColor = "#6c9c34";
 	}
-	if ( ename == "QSP" )
+	else if ( ename == "QSP" )
 	{
 		backgroundColor = "#d22f2f";
 	}
-	if ( ename == "RAGS" )
+	else if ( ename == "RAGS" )
 	{
 		backgroundColor = "#c77700";
 	}
-	if ( ename == "RPGM" || ename == "RPG Maker" )
+	else if ( ename == "RPGM" || ename == "RPG Maker" )
 	{
 		backgroundColor = "#0b79d1";
 	}
-	if ( ename == "REN'PY" )
+	else if ( ename == "REN'PY" )
 	{
 		backgroundColor = "#9d46e3";
 	}
-	if ( ename == "TADS" )
+	else if ( ename == "TADS" )
 	{
 		backgroundColor = "#0b79d1";
 	}
-	if ( ename == "UNITY" )
+	else if ( ename == "UNITY" )
 	{
 		backgroundColor = "#ea5201";
 	}
-	if ( ename == "UNREAL" || ename == "UNREAL ENGINE" )
+	else if ( ename == "UNREAL" || ename == "UNREAL ENGINE" )
 	{
 		backgroundColor = "#0d47a1";
 	}
-	if ( ename == "WEBGL" )
+	else if ( ename == "WEBGL" )
 	{
 		backgroundColor = "#fe5901";
 	}
-	if ( ename == "WOLF RPG" )
+	else if ( ename == "WOLF RPG" )
 	{
 		backgroundColor = "#39843c";
 	}
 	//NON F95
-	if ( ename == "KIRIKIRI" )
+	else if ( ename == "KIRIKIRI" )
 	{
 		backgroundColor = "#5550ed";
 	}
-	if ( ename == "TYANOBUILDER" )
+	else if ( ename == "TYANOBUILDER" )
 	{
 		backgroundColor = "#3e8baf";
 	}
-	if ( ename == "VISUAL NOVEL MAKER" )
+	else if ( ename == "VISUAL NOVEL MAKER" )
 	{
 		backgroundColor = "#26ade4";
 	}
-	if ( ename == "NSCRIPTER" )
+	else if ( ename == "NSCRIPTER" )
 	{
 		backgroundColor = "#4646ff";
+	}
+	else
+	{
+		backgroundColor = "#3f4043";
 	}
 
 	//Return a color if enabled. If not, return transparent
