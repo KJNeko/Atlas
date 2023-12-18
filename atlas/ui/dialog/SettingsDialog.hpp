@@ -75,7 +75,8 @@ class SettingsDialog final : public QDialog
 	void on_cbLockY_stateChanged( int state );
 	void on_cbBottomOverlay_stateChanged( int state );
 	void on_cbCapsuleBorder_stateChanged( int state );
-	void on_sbOverlayHeight_valueChanged( int num );
+	void on_sb_top_overlay_h_valueChanged( int num );
+	void on_sb_bottom_overlay_h_valueChanged( int num );
 	void on_sbOverlayOpacity_valueChanged( int num );
 	void on_sbCapsuleSpace_valueChanged( int num );
 	void on_cbCenterItems_stateChanged( int state );

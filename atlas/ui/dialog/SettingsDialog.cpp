@@ -152,7 +152,8 @@ void SettingsDialog::prepareGridViewerSettings()
 
 	ui->cbTopOverlay->setChecked( config::grid_ui::enableTopOverlay::get() );
 	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
-	ui->sbOverlayHeight->setValue( config::grid_ui::overlayHeight::get() );
+	ui->sb_top_overlay_h->setValue( config::grid_ui::top_overlay_height::get() );
+	ui->sb_bottom_overlay_h->setValue( config::grid_ui::bottom_overlay_height::get() );
 	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
 	ui->pbOverlayColor->setText( config::grid_ui::overlayColor::get() );
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
@@ -204,6 +205,7 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sp_status_x->setValue( config::grid_ui::status_x::get() );
 	ui->sp_status_y->setValue( config::grid_ui::status_y::get() );
 	ui->cb_status_align->setCurrentIndex( config::grid_ui::status_align::get() );
+	ui->cb_status_link->setCurrentIndex( config::grid_ui::status_link::get() );
 	//gridPreviewDelegate->m_status_bcolor = colorFromString( config::grid_ui::status_bcolor::get() );
 	//gridPreviewDelegate->m_status_fcolor = colorFromString( config::grid_ui::status_fcolor::get() );
 	//gridPreviewDelegate->m_status_bold = config::grid_ui::status_bold_enable::get();
@@ -214,6 +216,8 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sp_gametype_x->setValue( config::grid_ui::gametype_x::get() );
 	ui->sp_gametype_y->setValue( config::grid_ui::gametype_y::get() );
 	ui->cb_gametype_align->setCurrentIndex( config::grid_ui::gametype_align::get() );
+	ui->cb_gametype_link->setCurrentIndex( config::grid_ui::gametype_link::get() );
+
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
@@ -249,7 +253,8 @@ void SettingsDialog::saveBannerViewerSettings()
 
 	config::grid_ui::enableTopOverlay::set( ui->cbTopOverlay->checkState() );
 	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
-	config::grid_ui::overlayHeight::set( ui->sbOverlayHeight->value() );
+	config::grid_ui::top_overlay_height::set( ui->sb_top_overlay_h->value() );
+	config::grid_ui::bottom_overlay_height::set( ui->sb_bottom_overlay_h->value() );
 	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
 	config::grid_ui::overlayColor::set( ui->pbOverlayColor->text() );
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
@@ -259,7 +264,7 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::overlayColor::
 		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_overlay_color.name().toLower() );
+	             gridPreviewDelegate->m_overlay_color.name( QColor::HexArgb ).toLower() );
 
 	//Overlay settings
 	//Title
@@ -269,11 +274,13 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_align::set( ui->cb_title_align->currentIndex() );
 	config::grid_ui::title_font_size::set( ui->sp_title_fontsize->value() );
 	config::grid_ui::title_bcolor::
-		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
-	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
+		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_title_bcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::title_fcolor::
-		set( gridPreviewDelegate->m_title_fcolor.alpha() == 0 ? "transparent" :
-	                                                            gridPreviewDelegate->m_title_fcolor.name().toLower() );
+		set( gridPreviewDelegate->m_title_fcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_title_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::title_bold_enable::set( gridPreviewDelegate->m_title_bold );
 	config::grid_ui::title_italics_enable::set( gridPreviewDelegate->m_title_italics );
 	//Engine
@@ -285,11 +292,11 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_bcolor::
 		set( gridPreviewDelegate->m_engine_bcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_engine_bcolor.name().toLower() );
+	             gridPreviewDelegate->m_engine_bcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::title_fcolor::
 		set( gridPreviewDelegate->m_engine_fcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_engine_fcolor.name().toLower() );
+	             gridPreviewDelegate->m_engine_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::title_bold_enable::set( gridPreviewDelegate->m_engine_bold );
 	config::grid_ui::title_italics_enable::set( gridPreviewDelegate->m_engine_italics );
 	//Version
@@ -300,11 +307,11 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::version_bcolor::
 		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_version_bcolor.name().toLower() );
+	             gridPreviewDelegate->m_version_bcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::version_fcolor::
 		set( gridPreviewDelegate->m_version_fcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_version_fcolor.name().toLower() );
+	             gridPreviewDelegate->m_version_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::version_bold_enable::set( gridPreviewDelegate->m_version_bold );
 	config::grid_ui::version_italics_enable::set( gridPreviewDelegate->m_version_italics );
 	//Creator
@@ -315,23 +322,25 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::creator_bcolor::
 		set( gridPreviewDelegate->m_creator_bcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_creator_bcolor.name().toLower() );
+	             gridPreviewDelegate->m_creator_bcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::creator_fcolor::
 		set( gridPreviewDelegate->m_creator_fcolor.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_creator_fcolor.name().toLower() );
+	             gridPreviewDelegate->m_creator_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::creator_bold_enable::set( gridPreviewDelegate->m_creator_bold );
 	config::grid_ui::creator_italics_enable::set( gridPreviewDelegate->m_creator_italics );
 	//Status
 	config::grid_ui::status_enable::set( ui->cb_status_enable->checkState() );
 	config::grid_ui::status_x::set( ui->sp_status_x->value() );
 	config::grid_ui::status_y::set( ui->sp_status_y->value() );
-	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::status_align::set( ui->cb_status_align->currentIndex() );
+	config::grid_ui::status_link::set( ui->cb_status_link->currentIndex() );
 	//gametype
 	config::grid_ui::gametype_enable::set( ui->cb_gametype_enable->checkState() );
 	config::grid_ui::gametype_x::set( ui->sp_gametype_x->value() );
 	config::grid_ui::gametype_y::set( ui->sp_gametype_y->value() );
-	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::gametype_align::set( ui->cb_gametype_align->currentIndex() );
+	config::grid_ui::gametype_link::set( ui->cb_gametype_link->currentIndex() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -776,9 +785,15 @@ void SettingsDialog::on_cbCapsuleBorder_stateChanged( int state )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sbOverlayHeight_valueChanged( int num )
+void SettingsDialog::on_sb_top_overlay_h_valueChanged( int num )
 {
-	gridPreviewDelegate->m_strip_height = num;
+	gridPreviewDelegate->m_top_overlay_height = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sb_bottom_overlay_h_valueChanged( int num )
+{
+	gridPreviewDelegate->m_bottom_overlay_height = num;
 	qlv->repaint();
 }
 

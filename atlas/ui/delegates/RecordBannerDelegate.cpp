@@ -32,8 +32,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const auto banner_size { m_banner_size };
 	const SCALE_TYPE aspect_ratio { m_scale_type };
 	//TODO: add strip height for both top and bottom. Right now they share.
-	const int x_strip_height { m_strip_height };
-	const int y_strip_height( m_strip_height );
+	const int top_overlay_height { m_top_overlay_height };
+	const int bottom_overlay_height( m_bottom_overlay_height );
 	//const int overlay_opacity { m_overlay_opacity };
 	const bool enable_top_overlay { m_enable_top_overlay };
 	const bool enable_bottom_overlay { m_enable_bottom_overlay };
@@ -49,13 +49,13 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	const QRect options_rect { x_offset, y_offset, banner_size.width() + x_shadow, banner_size.height() + y_shadow };
 	//Top overlay QRect
 	const QRect top_rect {
-		options_rect.topLeft().x(), options_rect.topLeft().y(), banner_size.width(), x_strip_height
+		options_rect.topLeft().x(), options_rect.topLeft().y(), banner_size.width(), top_overlay_height
 	};
 	//Bottom overlay QRect
 	const QRect bottom_rect { options_rect.bottomLeft().x(),
-		                      options_rect.bottomLeft().y() - y_strip_height + 1,
+		                      options_rect.bottomLeft().y() - bottom_overlay_height + 1,
 		                      banner_size.width(),
-		                      y_strip_height };
+		                      bottom_overlay_height };
 
 	//We need to set the correct banner size based on if the overlay is in-line or on-top of the image. If
 	//overlay is disabled then dont use it int he calculation
@@ -109,8 +109,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		}
 
 		//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
-		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - pixmap.width() ) / 2 : 0 };
-		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - pixmap.height() ) / 2 : 0 };
+		const int x_m {
+			0
+		}; // aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - pixmap.width() ) / 2 : 0 };
+		const int y_m {
+			0
+		}; // aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - pixmap.height() ) / 2 : 0 };
 		//Check if overlay is on top or in-line with banner
 		const QRect pixmap_rect {
 			options_rect.x() + x_m, options_rect.y() + y_m + xtop_overlay_margin, pixmap.width(), pixmap.height()
@@ -292,6 +296,10 @@ QRect RecordBannerDelegate::drawText(
 	painter->setPen( QPen( backgroundColor ) ); //no pen
 	painter->setBrush( QBrush( backgroundColor ) );
 	painter->drawRoundedRect( text_rect, 5, 5 );
+	//Text shadown
+	//painter->setRenderHint( QPainter::Antialiasing );
+	//painter->setPen( Qt::black );
+	//painter->drawText( text_rect.adjusted( 1, 1, 1, 1 ), Qt::AlignHCenter | Qt::AlignVCenter, str );
 	//Reset pet to draw text
 	painter->setPen( qRgb( 210, 210, 210 ) );
 	//Alight text in center of Rect
@@ -315,7 +323,8 @@ void RecordBannerDelegate::reloadConfig()
 		config::grid_ui::bannerSpacing::get() );
 	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 	m_scale_type = config::grid_ui::imageLayout::get();
-	m_strip_height = config::grid_ui::overlayHeight::get();
+	m_top_overlay_height = config::grid_ui::top_overlay_height::get();
+	m_bottom_overlay_height = config::grid_ui::bottom_overlay_height::get();
 	m_overlay_opacity = config::grid_ui::overlayOpacity::get();
 	m_enable_top_overlay = config::grid_ui::enableTopOverlay::get();
 	m_enable_bottom_overlay = config::grid_ui::enableBottomOverlay::get();
@@ -390,7 +399,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
 	  config::grid_ui::bannerSizeY::get(),
 	  config::grid_ui::bannerSpacing::get() ) },
   m_scale_type { config::grid_ui::imageLayout::get() },
-  m_strip_height { config::grid_ui::overlayHeight::get() },
+  m_top_overlay_height { config::grid_ui::top_overlay_height::get() },
+  m_bottom_overlay_height { config::grid_ui::bottom_overlay_height::get() },
   m_overlay_opacity { config::grid_ui::overlayOpacity::get() },
   m_enable_top_overlay { config::grid_ui::enableTopOverlay::get() },
   m_enable_bottom_overlay { config::grid_ui::enableBottomOverlay::get() },

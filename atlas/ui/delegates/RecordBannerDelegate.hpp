@@ -25,7 +25,9 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 
 	QSize m_grid_size;
 	SCALE_TYPE m_scale_type;
-	int m_strip_height;
+	//overlay
+	int m_top_overlay_height;
+	int m_bottom_overlay_height;
 	int m_overlay_opacity;
 	bool m_enable_top_overlay;
 	bool m_enable_bottom_overlay;
