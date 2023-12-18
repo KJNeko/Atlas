@@ -867,7 +867,7 @@ void SettingsDialog::on_sp_title_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_title_align_stateChanged( int state )
+void SettingsDialog::on_cb_title_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_title_align = state;
 	qlv->repaint();
@@ -926,7 +926,7 @@ void SettingsDialog::on_sp_engine_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_engine_align_stateChanged( int state )
+void SettingsDialog::on_cb_engine_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_engine_align = state;
 	qlv->repaint();
@@ -985,7 +985,7 @@ void SettingsDialog::on_sp_version_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_version_align_stateChanged( int state )
+void SettingsDialog::on_cb_version_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_version_align = state;
 	qlv->repaint();
@@ -1038,7 +1038,7 @@ void SettingsDialog::on_sp_creator_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_creator_align_stateChanged( int state )
+void SettingsDialog::on_cb_creator_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_creator_align = state;
 	qlv->repaint();
@@ -1091,13 +1091,13 @@ void SettingsDialog::on_sp_status_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_status_align_stateChanged( int state )
+void SettingsDialog::on_cb_status_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_status_align = state;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_status_link_stateChanged( int state )
+void SettingsDialog::on_cb_status_link_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_status_link = state;
 }
@@ -1128,13 +1128,13 @@ void SettingsDialog::on_sp_gametype_y_valueChanged( int num )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_gametype_align_stateChanged( int state )
+void SettingsDialog::on_cb_gametype_align_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_gametype_align = state;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cb_gametype_link_stateChanged( int state )
+void SettingsDialog::on_cb_gametype_link_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_gametype_link = state;
 }
@@ -1156,10 +1156,10 @@ void SettingsDialog::on_sp_rating_x_valueChanged( int num )
 void SettingsDialog::on_sp_rating_y_valueChanged( int num )
 {}
 
-void SettingsDialog::on_cb_rating_align_stateChanged( int state )
+void SettingsDialog::on_cb_rating_align_currentIndexChanged( int state )
 {}
 
-void SettingsDialog::on_cb_rating_link_stateChanged( int state )
+void SettingsDialog::on_cb_rating_link_currentIndexChanged( int state )
 {}
 
 //Views
@@ -1172,10 +1172,10 @@ void SettingsDialog::on_sp_views_x_valueChanged( int num )
 void SettingsDialog::on_sp_views_y_valueChanged( int num )
 {}
 
-void SettingsDialog::on_cb_views_align_stateChanged( int state )
+void SettingsDialog::on_cb_views_align_currentIndexChanged( int state )
 {}
 
-void SettingsDialog::on_cb_views_link_stateChanged( int state )
+void SettingsDialog::on_cb_views_link_currentIndexChanged( int state )
 {}
 
 //Likes
@@ -1188,10 +1188,10 @@ void SettingsDialog::on_sp_likes_x_valueChanged( int num )
 void SettingsDialog::on_sp_likes_y_valueChanged( int num )
 {}
 
-void SettingsDialog::on_cb_likes_align_stateChanged( int state )
+void SettingsDialog::on_cb_likes_align_currentIndexChanged( int state )
 {}
 
-void SettingsDialog::on_cb_likes_link_stateChanged( int state )
+void SettingsDialog::on_cb_likes_link_currentIndexChanged( int state )
 {}
 
 //Favorite
@@ -1204,10 +1204,10 @@ void SettingsDialog::on_sp_favorite_x_valueChanged( int num )
 void SettingsDialog::on_sp_favorite_y_valueChanged( int num )
 {}
 
-void SettingsDialog::on_cb_favorite_align_stateChanged( int state )
+void SettingsDialog::on_cb_favorite_align_currentIndexChanged( int state )
 {}
 
-void SettingsDialog::on_cb_favorite_link_stateChanged( int state )
+void SettingsDialog::on_cb_favorite_link_currentIndexChanged( int state )
 {}
 
 //UpdateIcon
@@ -1220,6 +1220,6 @@ void SettingsDialog::on_sp_updateicon_x_valueChanged( int num )
 void SettingsDialog::on_sp_updateicon_y_valueChanged( int num )
 {}
 
-void SettingsDialog::on_cb_updateicon_align_stateChanged( int state )
+void SettingsDialog::on_cb_updateicon_align_currentIndexChanged( int state )
 {}
 */
