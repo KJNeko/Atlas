@@ -44,6 +44,7 @@ void runner(
 
 	auto gl_info { [ &folder ]() -> gl::GameListInfos
 		           {
+					   ZoneScopedN( "Scan for GL data" );
 					   //Check if we have a GL_Infos.ini file
 					   if ( gl::dirHasGLInfo( folder ) )
 					   {
@@ -57,6 +58,7 @@ void runner(
 
 	auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
 	{
+		ZoneScopedN( "Scan for Remote data" );
 		if ( gl_info.f95_thread_id == INVALID_F95_ID )
 		{
 			//atlas::logging::warn( "Found GL info but it had an invalid F95 id!" );
