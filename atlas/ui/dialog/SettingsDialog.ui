@@ -2255,13 +2255,6 @@ border-right:none;
             </property>
            </widget>
           </item>
-          <item row="5" column="6">
-           <widget class="QCheckBox" name="checkBox_8">
-            <property name="text">
-             <string>Default</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="3">
            <widget class="QSpinBox" name="sp_creator_x">
             <property name="maximum">
@@ -2310,13 +2303,6 @@ border-right:none;
               <string>Right</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item row="1" column="6">
-           <widget class="QCheckBox" name="checkBox_5">
-            <property name="text">
-             <string>Default</string>
-            </property>
            </widget>
           </item>
           <item row="1" column="0">
@@ -2424,7 +2410,11 @@ border-right:none;
            </widget>
           </item>
           <item row="6" column="4">
-           <widget class="QSpinBox" name="sp_gametype_y"/>
+           <widget class="QSpinBox" name="sp_gametype_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_70">
@@ -2580,7 +2570,11 @@ border-right:none;
            </spacer>
           </item>
           <item row="5" column="4">
-           <widget class="QSpinBox" name="sp_status_y"/>
+           <widget class="QSpinBox" name="sp_status_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_15">
@@ -2807,7 +2801,11 @@ border-right:none;
            </widget>
           </item>
           <item row="6" column="3">
-           <widget class="QSpinBox" name="sp_gametype_x"/>
+           <widget class="QSpinBox" name="sp_gametype_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="2" column="8">
            <widget class="QPushButton" name="pb_engine_fcolor">
@@ -2938,13 +2936,6 @@ border-right:none;
            <widget class="QLabel" name="label_14">
             <property name="text">
              <string>Engine</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="6">
-           <widget class="QCheckBox" name="checkBox_6">
-            <property name="text">
-             <string>Default</string>
             </property>
            </widget>
           </item>
@@ -3190,7 +3181,11 @@ border-right:none;
            </widget>
           </item>
           <item row="5" column="3">
-           <widget class="QSpinBox" name="sp_status_x"/>
+           <widget class="QSpinBox" name="sp_status_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
           </item>
           <item row="6" column="5">
            <widget class="QComboBox" name="cb_gametype_align">
@@ -3218,13 +3213,6 @@ border-right:none;
             </property>
             <property name="checked">
              <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="6">
-           <widget class="QCheckBox" name="checkBox_7">
-            <property name="text">
-             <string>Default</string>
             </property>
            </widget>
           </item>
