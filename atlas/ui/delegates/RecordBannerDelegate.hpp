@@ -126,6 +126,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const int font_size,
 		const QString font_family,
 		const int padding,
+		const int Alignment,
 		QColor backgroundColor ) const;
 	QColor getEngineColor( QString engine, bool isEnabled ) const;
 	QColor getStatusColor( QString status, bool isEnabled ) const;

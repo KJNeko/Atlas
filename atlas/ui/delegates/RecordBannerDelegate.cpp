@@ -173,7 +173,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_font_size,
 				m_font_family,
 				10,
-				"transparent" );
+				m_status_align,
+				getStatusColor( record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status, true ) );
 		}
 		//Draw Game Type
 		if ( m_gametype_enable )
@@ -187,6 +188,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_font_size,
 				m_font_family,
 				10,
+				m_gametype_align,
 				getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, true ) );
 		}
 	}
@@ -202,6 +204,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_title_fontsize,
 			m_font_family,
 			0,
+			m_title_align,
 			m_title_bcolor );
 	}
 	//Draw Engine : Use default font
@@ -216,6 +219,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_size,
 			m_font_family,
 			10,
+			m_engine_align,
 			getEngineColor( record->m_engine, m_engine_default_colors ) );
 	}
 	//Draw Version : Use default font
@@ -231,6 +235,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_size,
 			m_font_family,
 			10,
+			m_version_align,
 			m_version_bcolor );
 		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
 	}
@@ -252,6 +257,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_size,
 			m_font_family,
 			10,
+			m_creator_align,
 			m_creator_bcolor );
 	}
 
@@ -275,6 +281,7 @@ QRect RecordBannerDelegate::drawText(
 	const int font_size,
 	const QString font_family,
 	const int padding,
+	const int align,
 	QColor backgroundColor ) const
 {
 	//painter->save();
@@ -285,12 +292,14 @@ QRect RecordBannerDelegate::drawText(
 	QFontMetrics fm( font );
 	int t_width = fm.horizontalAdvance( str ) + padding;
 	int t_height = fm.height() + padding;
+	//The align overload picks which side of the rect to draw from
+	int align_overload = align == LEFT ? 0 : align == RIGHT ? -t_width : -t_width / 2;
 
 	painter->setFont( font ); //Override default
 	painter->setRenderHint( QPainter::Antialiasing ); //Set so pixels look better
 
 	//Create rec with 10px margin, rect is relative to current banner rect
-	QRect text_rect { rect.topLeft() + QPoint( x, y ), QSize( t_width, t_height ) };
+	QRect text_rect { rect.topLeft() + QPoint( x + align_overload, y ), QSize( t_width, t_height ) };
 	//QPainterPath path;
 	//Draw Bounding Rect
 	painter->setPen( QPen( backgroundColor ) ); //no pen
@@ -597,6 +606,19 @@ QColor RecordBannerDelegate::getStatusColor( QString str, bool isEnabled ) const
 {
 	QColor color;
 	const QString ename = str.toUpper();
+	if ( ename == "COMPLETED" )
+	{
+		color = "#0b79d1";
+	}
+	else if ( ename == "ABANDONED" )
+	{
+		color = "#c77700";
+	}
+	else if ( ename == "ON HOLD" )
+	{
+		color = "#03a9f4";
+	}
+	return color;
 
 	return color;
 }
