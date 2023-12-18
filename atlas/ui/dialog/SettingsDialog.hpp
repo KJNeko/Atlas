@@ -79,6 +79,8 @@ class SettingsDialog final : public QDialog
 	void on_sbOverlayOpacity_valueChanged( int num );
 	void on_sbCapsuleSpace_valueChanged( int num );
 	void on_cbCenterItems_stateChanged( int state );
+
+	QColor colorFromString( QString str );
 	//Overlay Details
 	//Overlay
 	void on_pbOverlayColor_pressed();

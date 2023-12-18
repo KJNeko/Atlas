@@ -156,7 +156,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_title_x,
 			m_title_y,
 			options_rect,
-			record->m_title,
+			record->atlas_data.has_value() ? record->atlas_data.value()->title : record->m_title,
 			m_title_fontsize,
 			m_font_family,
 			0,
@@ -174,9 +174,21 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_size,
 			m_font_family,
 			10,
-			getEngineColor( record->m_engine, m_enable_engine_color ) );
+			getEngineColor( record->m_engine, m_engine_default_colors ) );
 	}
-	//this->drawText( painter, options_rect, stripe_height, m_engine_location, record->m_engine );
+	if ( m_creator_enable )
+	{
+		this->drawText(
+			painter,
+			m_creator_x,
+			m_creator_y,
+			options_rect,
+			record->atlas_data.has_value() ? record->atlas_data.value()->creator : record->m_creator,
+			m_font_size,
+			m_font_family,
+			10,
+			m_creator_bcolor );
+	}
 	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
 	{
@@ -194,11 +206,13 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
 	}
 	else
+	{
 		//this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
 		//Draw Creator
 		//this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
+	}
 
-		painter->restore();
+	painter->restore();
 }
 
 QSize RecordBannerDelegate::
@@ -273,27 +287,59 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_capsule_border = config::grid_ui::enableCapsuleBorder::get();
 	m_font_size = config::grid_ui::fontSize::get();
 	m_font_family = config::grid_ui::font::get();
+	//BANNER START
 	//title
-	m_title_enable = config::grid_ui::title_enable::get();
-	m_title_x = config::grid_ui::title_x::get();
-	m_title_y = config::grid_ui::title_y::get();
-	m_title_fontsize = config::grid_ui::title_font_size::get();
-	m_title_bcolor = colorFromString( config::grid_ui::title_bcolor::get() );
+	m_title_enable = { config::grid_ui::title_enable::get() };
+	m_title_x = { config::grid_ui::title_x::get() };
+	m_title_y = { config::grid_ui::title_y::get() };
+	m_title_align = { config::grid_ui::title_align::get() };
+	m_title_bcolor = { colorFromString( config::grid_ui::title_bcolor::get() ) };
+	m_title_fcolor = { colorFromString( config::grid_ui::title_fcolor::get() ) };
+	m_title_fontsize = { config::grid_ui::title_font_size::get() };
+	m_title_bold = { config::grid_ui::title_bold_enable::get() };
+	m_title_italics = { config::grid_ui::title_italics_enable::get() };
 	//engine
-	m_engine_enable = config::grid_ui::engine_enable::get();
-	m_engine_x = config::grid_ui::engine_x::get();
-	m_engine_y = config::grid_ui::engine_y::get();
-	m_enable_engine_color = config::grid_ui::engine_default_color::get();
+	m_engine_enable = { config::grid_ui::engine_enable::get() };
+	m_engine_x = { config::grid_ui::engine_x::get() };
+	m_engine_y = { config::grid_ui::engine_y::get() };
+	m_engine_align = { config::grid_ui::engine_align::get() };
+	m_engine_bcolor = { colorFromString( config::grid_ui::engine_bcolor::get() ) };
+	m_engine_fcolor = { colorFromString( config::grid_ui::engine_fcolor::get() ) };
+	m_engine_default_colors = { config::grid_ui::engine_default_color::get() };
+	m_engine_bold = { config::grid_ui::engine_bold_enable::get() };
+	m_engine_italics = { config::grid_ui::engine_italics_enable::get() };
 	//version
 	m_version_enable = { config::grid_ui::version_enable::get() };
 	m_version_x = { config::grid_ui::version_x::get() };
 	m_version_y = { config::grid_ui::version_y::get() };
+	m_version_align = { config::grid_ui::version_align::get() };
 	m_version_bcolor = { colorFromString( config::grid_ui::version_bcolor::get() ) };
-	m_grid_spacing = config::grid_ui::bannerSpacing::get();
-	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
-	m_window_height = config::grid_ui::windowHeight::get();
-	m_window_width = config::grid_ui::windowWidth::get();
-	m_center_widgets = config::grid_ui::centerWidgets::get();
+	m_version_fcolor = { colorFromString( config::grid_ui::version_fcolor::get() ) };
+	m_version_bold = { config::grid_ui::version_bold_enable::get() };
+	m_version_italics = { config::grid_ui::version_italics_enable::get() };
+	//creator
+	m_creator_enable = { config::grid_ui::creator_enable::get() };
+	m_creator_x = { config::grid_ui::creator_x::get() };
+	m_creator_y = { config::grid_ui::creator_y::get() };
+	m_creator_align = { config::grid_ui::creator_align::get() };
+	m_creator_bcolor = { colorFromString( config::grid_ui::creator_bcolor::get() ) };
+	m_creator_fcolor = { colorFromString( config::grid_ui::creator_fcolor::get() ) };
+	m_creator_bold = { config::grid_ui::creator_bold_enable::get() };
+	m_creator_italics = { config::grid_ui::creator_italics_enable::get() };
+	//status
+	m_status_enable = { config::grid_ui::status_enable::get() };
+	m_status_x = { config::grid_ui::status_x::get() };
+	m_status_y = { config::grid_ui::status_y::get() };
+	m_status_align = { config::grid_ui::status_align::get() };
+	m_status_link = { config::grid_ui::status_link::get() };
+	//m_status_bold { config::grid_ui::status_bold_enable::get() };
+	//m_status_italics { config::grid_ui::status_italics_enable::get() };
+	//gametype
+	m_gametype_enable = { config::grid_ui::gametype_enable::get() };
+	m_gametype_x = { config::grid_ui::gametype_x::get() };
+	m_gametype_y = { config::grid_ui::gametype_y::get() };
+	m_gametype_align = { config::grid_ui::gametype_align::get() };
+	m_gametype_link = { config::grid_ui::status_link::get() };
 }
 
 RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
@@ -316,22 +362,64 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_capsule_border { config::grid_ui::enableCapsuleBorder::get() },
   m_font_size { config::grid_ui::fontSize::get() },
   m_font_family { config::grid_ui::font::get() },
+  //START BANNER
   //title
   m_title_enable { config::grid_ui::title_enable::get() },
   m_title_x { config::grid_ui::title_x::get() },
   m_title_y { config::grid_ui::title_y::get() },
-  m_title_fontsize { config::grid_ui::title_font_size::get() },
+  m_title_align { config::grid_ui::title_align::get() },
   m_title_bcolor { colorFromString( config::grid_ui::title_bcolor::get() ) },
+  m_title_fcolor { colorFromString( config::grid_ui::title_fcolor::get() ) },
+  m_title_fontsize { config::grid_ui::title_font_size::get() },
+  m_title_bold { config::grid_ui::title_bold_enable::get() },
+  m_title_italics { config::grid_ui::title_italics_enable::get() },
   //engine
   m_engine_enable { config::grid_ui::engine_enable::get() },
   m_engine_x { config::grid_ui::engine_x::get() },
   m_engine_y { config::grid_ui::engine_y::get() },
-  m_enable_engine_color { config::grid_ui::engine_default_color::get() },
+  m_engine_align { config::grid_ui::engine_align::get() },
+  m_engine_bcolor { colorFromString( config::grid_ui::engine_bcolor::get() ) },
+  m_engine_fcolor { colorFromString( config::grid_ui::engine_fcolor::get() ) },
+  m_engine_default_colors { config::grid_ui::engine_default_color::get() },
+  m_engine_bold { config::grid_ui::engine_bold_enable::get() },
+  m_engine_italics { config::grid_ui::engine_italics_enable::get() },
   //version
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },
   m_version_y { config::grid_ui::version_y::get() },
+  m_version_align { config::grid_ui::version_align::get() },
   m_version_bcolor { colorFromString( config::grid_ui::version_bcolor::get() ) },
+  m_version_fcolor { colorFromString( config::grid_ui::version_fcolor::get() ) },
+  m_version_bold { config::grid_ui::version_bold_enable::get() },
+  m_version_italics { config::grid_ui::version_italics_enable::get() },
+  //creator
+  m_creator_enable { config::grid_ui::creator_enable::get() },
+  m_creator_x { config::grid_ui::creator_x::get() },
+  m_creator_y { config::grid_ui::creator_y::get() },
+  m_creator_align { config::grid_ui::creator_align::get() },
+  m_creator_bcolor { colorFromString( config::grid_ui::creator_bcolor::get() ) },
+  m_creator_fcolor { colorFromString( config::grid_ui::creator_fcolor::get() ) },
+  m_creator_bold { config::grid_ui::creator_bold_enable::get() },
+  m_creator_italics { config::grid_ui::creator_italics_enable::get() },
+  //status
+  m_status_enable { config::grid_ui::status_enable::get() },
+  m_status_x { config::grid_ui::status_x::get() },
+  m_status_y { config::grid_ui::status_y::get() },
+  m_status_align { config::grid_ui::status_align::get() },
+  m_status_link { config::grid_ui::status_link::get() },
+  //m_status_bold { config::grid_ui::status_bold_enable::get() },
+  //m_status_italics { config::grid_ui::status_italics_enable::get() },
+  //gametype
+  m_gametype_enable { config::grid_ui::gametype_enable::get() },
+  m_gametype_x { config::grid_ui::gametype_x::get() },
+  m_gametype_y { config::grid_ui::gametype_y::get() },
+  m_gametype_align { config::grid_ui::gametype_align::get() },
+  m_gametype_link { config::grid_ui::status_link::get() },
+
+  //m_gametype_bold { config::grid_ui::gametype_bold_enable::get() },
+  //m_gametype_italics { config::grid_ui::gametype_italics_enable::get() },
+
+  //END BANNER
   m_grid_spacing { config::grid_ui::bannerSpacing::get() },
   m_banner_size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() },
   m_window_height { config::grid_ui::windowHeight::get() },
@@ -459,8 +547,8 @@ QColor RecordBannerDelegate::colorFromString( QString str )
 {
 	QColor color;
 #if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
-	return QColor::fromString( config::grid_ui::title_bcolor::get() );
+	return QColor::fromString( str );
 #else
-	return color.setNamedColor( config::grid_ui::title_bcolor::get() );
+	return color.setNamedColor( str );
 #endif
 }

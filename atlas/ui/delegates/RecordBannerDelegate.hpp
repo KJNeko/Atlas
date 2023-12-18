@@ -7,12 +7,13 @@
 #define ATLAS_RECORDBANNERDELEGATE_HPP
 
 #include <QAbstractItemDelegate>
-#include <QtCore/QModelIndex>
 #include <QColor>
+#include <QtCore/QModelIndex>
 
 #include "core/config/config.hpp"
 #include "core/database/record/game/Game.hpp"
 #include "core/utils/QImageBlur.hpp"
+
 class RecordListModel;
 
 class RecordBannerDelegate final : public QAbstractItemDelegate
@@ -41,23 +42,60 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	bool m_title_enable;
 	int m_title_x;
 	int m_title_y;
-	int m_title_fontsize;
+	int m_title_align;
 	QColor m_title_bcolor;
+	QColor m_title_fcolor;
+	int m_title_fontsize;
+	bool m_title_bold;
+	bool m_title_italics;
 	//engine
 	bool m_engine_enable;
 	int m_engine_x;
 	int m_engine_y;
-	bool m_enable_engine_color;
+	int m_engine_align;
+	QColor m_engine_bcolor;
+	QColor m_engine_fcolor;
+	bool m_engine_default_colors;
+	bool m_engine_bold;
+	bool m_engine_italics;
 	//version
 	bool m_version_enable;
 	int m_version_x;
 	int m_version_y;
+	int m_version_align;
 	QColor m_version_bcolor;
+	QColor m_version_fcolor;
+	bool m_version_bold;
+	bool m_version_italics;
 	//creator
 	bool m_creator_enable;
 	int m_creator_x;
 	int m_creator_y;
+	int m_creator_align;
 	QColor m_creator_bcolor;
+	QColor m_creator_fcolor;
+	bool m_creator_bold;
+	bool m_creator_italics;
+	//status
+	bool m_status_enable;
+	int m_status_x;
+	int m_status_y;
+	int m_status_align;
+	int m_status_link;
+	//QColor m_status_bcolor;
+	//QColor m_status_fcolor;
+	//bool m_status_bold;
+	//bool m_status_italics;
+	//gametype
+	bool m_gametype_enable;
+	int m_gametype_x;
+	int m_gametype_y;
+	int m_gametype_align;
+	int m_gametype_link;
+	//QColor m_gametype_bcolor;
+	//QColor m_gametype_fcolor;
+	//bool m_gametype_bold;
+	//bool m_gametype_italics;
 
 	int m_grid_spacing;
 	QSize m_banner_size;
@@ -76,7 +114,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	void paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
-	QColor colorFromString(QString str);
+	QColor colorFromString( QString str );
 	void drawText(
 		QPainter* painter,
 		const int x,
@@ -87,7 +125,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const QString font_family,
 		const int padding,
 		QColor backgroundColor ) const;
-	QColor getEngineColor(QString engine, bool isEnabled) const;
+	QColor getEngineColor( QString engine, bool isEnabled ) const;
 
   public slots:
 	void reloadConfig();

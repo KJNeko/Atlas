@@ -265,14 +265,14 @@ enum OverlayType
 	IN_LINE = 1
 };
 
-enum Alignment
+enum Alignment : int
 {
 	LEFT = 0,
 	RIGHT = 1,
 	CENTER = 2
 };
 
-enum Link
+enum Link : int
 {
 	DISABLED = 0,
 	TITLE = 1,
@@ -311,7 +311,7 @@ SETTINGS_D( grid_ui, overlayLayout, int, 0 )
 SETTINGS_D( grid_ui, title_enable, bool, true )
 SETTINGS_D( grid_ui, title_x, int, 10 )
 SETTINGS_D( grid_ui, title_y, int, 10 )
-SETTINGS_D( grid_ui, title_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, title_align, int, LEFT )
 SETTINGS_D( grid_ui, title_bcolor, QString, "transparent" )
 SETTINGS_D( grid_ui, title_fcolor, QString, "#d2d2d2" )
 SETTINGS_D( grid_ui, title_font_size, int, 10 )
@@ -321,7 +321,7 @@ SETTINGS_D( grid_ui, title_italics_enable, bool, false )
 SETTINGS_D( grid_ui, engine_enable, bool, true )
 SETTINGS_D( grid_ui, engine_x, int, 10 )
 SETTINGS_D( grid_ui, engine_y, int, 10 )
-SETTINGS_D( grid_ui, engine_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, engine_align, int, LEFT )
 SETTINGS_D( grid_ui, engine_bcolor, QString, "transparent" )
 SETTINGS_D( grid_ui, engine_fcolor, QString, "#d2d2d2" )
 SETTINGS_D( grid_ui, engine_default_color, bool, false )
@@ -331,7 +331,7 @@ SETTINGS_D( grid_ui, engine_italics_enable, bool, false )
 SETTINGS_D( grid_ui, version_enable, bool, true )
 SETTINGS_D( grid_ui, version_x, int, 10 )
 SETTINGS_D( grid_ui, version_y, int, 10 )
-SETTINGS_D( grid_ui, version_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, version_align, int, LEFT )
 SETTINGS_D( grid_ui, version_bcolor, QString, "transparent" )
 SETTINGS_D( grid_ui, version_fcolor, QString, "#d2d2d2" )
 SETTINGS_D( grid_ui, version_font_size, int, 10 )
@@ -341,7 +341,7 @@ SETTINGS_D( grid_ui, version_italics_enable, bool, false )
 SETTINGS_D( grid_ui, creator_enable, bool, true )
 SETTINGS_D( grid_ui, creator_x, int, 10 )
 SETTINGS_D( grid_ui, creator_y, int, 10 )
-SETTINGS_D( grid_ui, creator_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, creator_align, int, LEFT )
 SETTINGS_D( grid_ui, creator_bcolor, QString, "transparent" )
 SETTINGS_D( grid_ui, creator_fcolor, QString, "#d2d2d2" )
 SETTINGS_D( grid_ui, creator_font_size, int, 10 )
@@ -351,43 +351,43 @@ SETTINGS_D( grid_ui, creator_italics_enable, bool, false )
 SETTINGS_D( grid_ui, status_enable, bool, true )
 SETTINGS_D( grid_ui, status_x, int, 10 )
 SETTINGS_D( grid_ui, status_y, int, 10 )
-SETTINGS_D( grid_ui, status_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, status_align, int, LEFT )
 SETTINGS_D( grid_ui, status_link, Link, DISABLED )
 //GAME TYPE
 SETTINGS_D( grid_ui, gametype_enable, bool, true )
 SETTINGS_D( grid_ui, gametype_x, int, 10 )
 SETTINGS_D( grid_ui, gametype_y, int, 10 )
-SETTINGS_D( grid_ui, gametype_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, gametype_align, int, LEFT )
 SETTINGS_D( grid_ui, gametype_link, Link, DISABLED )
 //RATING
 SETTINGS_D( grid_ui, rating_enable, bool, true )
 SETTINGS_D( grid_ui, rating_x, int, 10 )
 SETTINGS_D( grid_ui, rating_y, int, 10 )
-SETTINGS_D( grid_ui, rating_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, rating_align, int, LEFT )
 SETTINGS_D( grid_ui, rating_link, Link, DISABLED )
 //VIEWS
 SETTINGS_D( grid_ui, views_enable, bool, true )
 SETTINGS_D( grid_ui, views_x, int, 10 )
 SETTINGS_D( grid_ui, views_y, int, 10 )
-SETTINGS_D( grid_ui, views_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, views_align, int, LEFT )
 SETTINGS_D( grid_ui, views_link, Link, DISABLED )
 //LIKES
 SETTINGS_D( grid_ui, likes_enable, bool, true )
 SETTINGS_D( grid_ui, likes_x, int, 10 )
 SETTINGS_D( grid_ui, likes_y, int, 10 )
-SETTINGS_D( grid_ui, likes_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, likes_align, int, LEFT )
 SETTINGS_D( grid_ui, likes_link, Link, DISABLED )
 //FAVORITE
 SETTINGS_D( grid_ui, favorite_enable, bool, true )
 SETTINGS_D( grid_ui, favorite_x, int, 10 )
 SETTINGS_D( grid_ui, favorite_y, int, 10 )
-SETTINGS_D( grid_ui, favorite_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, favorite_align, int, LEFT )
 SETTINGS_D( grid_ui, favorite_link, Link, DISABLED )
 //UPDATE ICON
 SETTINGS_D( grid_ui, updateicon_enable, bool, true )
 SETTINGS_D( grid_ui, updateicon_x, int, 10 )
 SETTINGS_D( grid_ui, updateicon_y, int, 10 )
-SETTINGS_D( grid_ui, updateicon_align, Alignment, LEFT )
+SETTINGS_D( grid_ui, updateicon_align, int, LEFT )
 SETTINGS_D( grid_ui, updateicon_link, Link, DISABLED )
 
 enum LOCATION : int

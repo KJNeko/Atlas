@@ -2755,6 +2755,41 @@ padding:10x;</string>
           <string>Overlay Details</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_40">
+          <item row="7" column="6">
+           <widget class="QComboBox" name="cb_views_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="14">
+           <widget class="QPushButton" name="pb_creator_bold">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>B</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
            <widget class="QCheckBox" name="cb_engine_enable">
             <property name="text">
@@ -2779,6 +2814,51 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
+          <item row="0" column="6">
+           <widget class="QComboBox" name="cb_title_align">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QPushButton" name="pb_title_bcolor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="3">
            <widget class="QSpinBox" name="sp_creator_x">
             <property name="maximum">
@@ -2791,6 +2871,20 @@ padding:10x;</string>
             <property name="maximum">
              <number>999</number>
             </property>
+           </widget>
+          </item>
+          <item row="8" column="6">
+           <widget class="QComboBox" name="cb_likes_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="0" column="0">
@@ -2807,11 +2901,31 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="8" colspan="2">
+          <item row="4" column="10" colspan="2">
            <widget class="QComboBox" name="cb_status_link">
             <item>
              <property name="text">
               <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
              </property>
             </item>
            </widget>
@@ -2828,13 +2942,6 @@ padding:10x;</string>
           </item>
           <item row="2" column="3">
            <widget class="QSpinBox" name="sp_version_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="11">
-           <widget class="QSpinBox" name="sp_title_fontsize">
             <property name="maximum">
              <number>999</number>
             </property>
@@ -2860,13 +2967,52 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="8" colspan="2">
+          <item row="5" column="10" colspan="2">
            <widget class="QComboBox" name="cb_gametype_link">
             <item>
              <property name="text">
               <string>none</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="7">
+           <widget class="QPushButton" name="pb_creator_bcolor">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
            </widget>
           </item>
           <item row="8" column="2">
@@ -2883,6 +3029,27 @@ padding:10x;</string>
             </property>
             <property name="maximum">
              <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="14">
+           <widget class="QPushButton" name="pb_engine_bold">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>B</string>
             </property>
            </widget>
           </item>
@@ -2920,6 +3087,67 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
+          <item row="4" column="14">
+           <widget class="QPushButton" name="pb_status_bold">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>B</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="15">
+           <widget class="QPushButton" name="pb_creator_italics">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>I</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QPushButton" name="pb_version_bcolor">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
           <item row="9" column="3">
            <widget class="QSpinBox" name="sp_favorite_x">
             <property name="enabled">
@@ -2930,7 +3158,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="8" colspan="2">
+          <item row="9" column="10" colspan="2">
            <widget class="QComboBox" name="cb_favorite_link">
             <property name="enabled">
              <bool>false</bool>
@@ -2938,6 +3166,26 @@ padding:10x;</string>
             <item>
              <property name="text">
               <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
              </property>
             </item>
            </widget>
@@ -3010,19 +3258,6 @@ padding:10x;</string>
             </property>
            </spacer>
           </item>
-          <item row="0" column="10">
-           <widget class="QLabel" name="label_19">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Font Size</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_15">
             <property name="text">
@@ -3040,20 +3275,80 @@ padding:10x;</string>
           <item row="4" column="5">
            <widget class="QSpinBox" name="sp_status_y"/>
           </item>
-          <item row="8" column="8" colspan="2">
+          <item row="1" column="6">
+           <widget class="QComboBox" name="cb_engine_align">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="10" colspan="2">
            <widget class="QComboBox" name="cb_likes_link">
             <item>
              <property name="text">
               <string>none</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
+             </property>
+            </item>
            </widget>
           </item>
-          <item row="6" column="8" colspan="2">
+          <item row="6" column="10" colspan="2">
            <widget class="QComboBox" name="cb_rating_link">
             <item>
              <property name="text">
               <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
              </property>
             </item>
            </widget>
@@ -3068,6 +3363,23 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
+          <item row="10" column="6">
+           <widget class="QComboBox" name="cb_updateicon_align">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
           <item row="6" column="1">
            <widget class="QCheckBox" name="cb_rating_enable">
             <property name="text">
@@ -3075,11 +3387,31 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="8" colspan="2">
+          <item row="7" column="10" colspan="2">
            <widget class="QComboBox" name="cb_views_link">
             <item>
              <property name="text">
               <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
              </property>
             </item>
            </widget>
@@ -3091,6 +3423,27 @@ padding:10x;</string>
             </property>
             <property name="maximum">
              <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="15">
+           <widget class="QPushButton" name="pb_engine_italics">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>I</string>
             </property>
            </widget>
           </item>
@@ -3111,10 +3464,78 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
+          <item row="4" column="7">
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="14">
+           <widget class="QPushButton" name="pn_version_bold">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>B</string>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="3">
            <widget class="QSpinBox" name="sp_gametype_x"/>
           </item>
-          <item row="4" column="7">
+          <item row="6" column="6">
+           <widget class="QComboBox" name="cb_rating_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="6">
+           <widget class="QComboBox" name="cb_status_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="9">
            <widget class="QLabel" name="label_76">
             <property name="text">
              <string>Link to:</string>
@@ -3125,6 +3546,25 @@ padding:10x;</string>
            <widget class="QSpinBox" name="sp_rating_y">
             <property name="maximum">
              <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QPushButton" name="pb_engine_bcolor">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
             </property>
            </widget>
           </item>
@@ -3140,6 +3580,44 @@ padding:10x;</string>
             <property name="text">
              <string>y:</string>
             </property>
+           </widget>
+          </item>
+          <item row="4" column="15">
+           <widget class="QPushButton" name="pb_status_italics">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>I</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="6">
+           <widget class="QComboBox" name="cb_favorite_align">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="3">
@@ -3163,13 +3641,34 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="7">
+          <item row="9" column="9">
            <widget class="QLabel" name="label_69">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
              <string>Link to:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="15">
+           <widget class="QPushButton" name="pb_version_italics">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>I</string>
             </property>
            </widget>
           </item>
@@ -3197,7 +3696,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="12">
+          <item row="0" column="14">
            <widget class="QPushButton" name="pb_title_bold">
             <property name="enabled">
              <bool>false</bool>
@@ -3225,14 +3724,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="10" colspan="2">
-           <widget class="QCheckBox" name="cb_engine_default_colors">
-            <property name="text">
-             <string>Engine Colors</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="13">
+          <item row="0" column="15">
            <widget class="QPushButton" name="pb_title_italics">
             <property name="enabled">
              <bool>false</bool>
@@ -3284,7 +3776,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="7">
+          <item row="7" column="9">
            <widget class="QLabel" name="label_23">
             <property name="text">
              <string>Link to:</string>
@@ -3293,6 +3785,20 @@ padding:10x;</string>
           </item>
           <item row="4" column="3">
            <widget class="QSpinBox" name="sp_status_x"/>
+          </item>
+          <item row="5" column="6">
+           <widget class="QComboBox" name="cb_gametype_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
           </item>
           <item row="0" column="1">
            <widget class="QCheckBox" name="cb_title_enable">
@@ -3314,7 +3820,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="7">
+          <item row="8" column="9">
            <widget class="QLabel" name="label_68">
             <property name="text">
              <string>Link to:</string>
@@ -3377,7 +3883,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="14">
+          <item row="0" column="16">
            <spacer name="horizontalSpacer_43">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -3397,7 +3903,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="7">
+          <item row="5" column="9">
            <widget class="QLabel" name="label_78">
             <property name="text">
              <string>Link to:</string>
@@ -3411,7 +3917,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="7">
+          <item row="6" column="9">
            <widget class="QLabel" name="label_20">
             <property name="text">
              <string>Link to:</string>
@@ -3455,8 +3961,14 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="6">
-           <widget class="QComboBox" name="cb_status_align">
+          <item row="2" column="6">
+           <widget class="QComboBox" name="cb_version_align">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <item>
              <property name="text">
               <string>Left</string>
@@ -3489,153 +4001,8 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="6">
-           <widget class="QComboBox" name="cb_version_align">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="6">
-           <widget class="QComboBox" name="cb_engine_align">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="6">
-           <widget class="QComboBox" name="cb_title_align">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="7">
-           <widget class="QPushButton" name="pb_title_bcolor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="7">
-           <widget class="QPushButton" name="pb_engine_bcolor">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="7">
-           <widget class="QPushButton" name="pb_version_bcolor">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="7">
-           <widget class="QPushButton" name="pb_creator_bcolor">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="8">
-           <widget class="QPushButton" name="pb_title_fcolor">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="4" column="8">
+           <widget class="QPushButton" name="pushButton_7">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -3653,8 +4020,8 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="8">
-           <widget class="QPushButton" name="pb_engine_fcolor">
+          <item row="3" column="8">
+           <widget class="QPushButton" name="pb_creator_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3697,8 +4064,8 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="8">
-           <widget class="QPushButton" name="pb_creator_fcolor">
+          <item row="1" column="8">
+           <widget class="QPushButton" name="pb_engine_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3719,261 +4086,52 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="6">
-           <widget class="QComboBox" name="cb_gametype_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="6">
-           <widget class="QComboBox" name="cb_rating_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="7" column="6">
-           <widget class="QComboBox" name="cb_views_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="8" column="6">
-           <widget class="QComboBox" name="cb_likes_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="9" column="6">
-           <widget class="QComboBox" name="cb_favorite_align">
+          <item row="0" column="8">
+           <widget class="QPushButton" name="pb_title_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="10" column="6">
-           <widget class="QComboBox" name="cb_updateicon_align">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="12">
-           <widget class="QPushButton" name="pb_engine_bold">
-            <property name="enabled">
-             <bool>false</bool>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>20</width>
+              <width>30</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="text">
-             <string>B</string>
+             <string>fgc</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="13">
-           <widget class="QPushButton" name="pb_engine_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
+          <item row="3" column="9" colspan="3">
+           <widget class="QCheckBox" name="cb_engine_default_colors">
             <property name="text">
-             <string>I</string>
+             <string>Engine Colors</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="12">
-           <widget class="QPushButton" name="pn_version_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
+          <item row="0" column="9">
+           <widget class="QLabel" name="label_19">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
-             <string>B</string>
+             <string>Font Size</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="12">
-           <widget class="QPushButton" name="pb_creator_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>B</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="12">
-           <widget class="QPushButton" name="pb_status_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>B</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="13">
-           <widget class="QPushButton" name="pb_version_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="13">
-           <widget class="QPushButton" name="pb_creator_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="13">
-           <widget class="QPushButton" name="pb_status_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
+          <item row="0" column="10">
+           <widget class="QSpinBox" name="sp_title_fontsize">
+            <property name="maximum">
+             <number>999</number>
             </property>
            </widget>
           </item>
