@@ -328,7 +328,7 @@ SETTINGS_D(
 SETTINGS_D( threads, import_threads, int, 2 )
 SETTINGS_D( threads, image_import_threads, int, 4 )
 SETTINGS_D( threads, image_loader_threads, int, 2 )
-SETTINGS_D( threads, import_pre_loader_threads, int, 4 )
+SETTINGS_D( threads, import_pre_loader_threads, int, 8 )
 
 SETTINGS_D( experimental, local_match, bool, false )
 SETTINGS_D( experimental, loading_preview, bool, false )
