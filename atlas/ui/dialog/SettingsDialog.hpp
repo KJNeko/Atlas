@@ -133,18 +133,18 @@ class SettingsDialog final : public QDialog
 	void on_sp_status_y_valueChanged( int num );
 	void on_cb_status_align_stateChanged( int state );
 	void on_cb_status_link_stateChanged( int state );
-	void on_pb_status_bold_pressed();
-	void on_pb_status_italics_pressed();
+	/*void on_pb_status_bold_pressed();
+	void on_pb_status_italics_pressed();*/
 	//GameType
 	void on_cb_gametype_enable_stateChanged( int state );
 	void on_sp_gametype_x_valueChanged( int num );
 	void on_sp_gametype_y_valueChanged( int num );
 	void on_cb_gametype_align_stateChanged( int state );
 	void on_cb_gametype_link_stateChanged( int state );
-	void on_pb_gametype_bold_pressed();
-	void on_pb_gametype_italics_pressed();
+	/*void on_pb_gametype_bold_pressed();
+	void on_pb_gametype_italics_pressed();*/
 	//Rating
-	void on_cb_rating_enable_stateChanged( int state );
+	/*void on_cb_rating_enable_stateChanged( int state );
 	void on_sp_rating_x_valueChanged( int num );
 	void on_sp_rating_y_valueChanged( int num );
 	void on_cb_rating_align_stateChanged( int state );
@@ -171,7 +171,7 @@ class SettingsDialog final : public QDialog
 	void on_cb_updateicon_enable_stateChanged( int state );
 	void on_sp_updateicon_x_valueChanged( int num );
 	void on_sp_updateicon_y_valueChanged( int num );
-	void on_cb_updateicon_align_stateChanged( int state );
+	void on_cb_updateicon_align_stateChanged( int state );*/
 };
 
 #endif //ATLAS_SETTINGSDIALOG_HPP

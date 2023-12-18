@@ -209,7 +209,11 @@ void SettingsDialog::prepareGridViewerSettings()
 	//gridPreviewDelegate->m_status_bold = config::grid_ui::status_bold_enable::get();
 	//gridPreviewDelegate->m_status_italics = config::grid_ui::status_italics_enable::get();
 	//END BANNER SETTINGS
-
+	//GemeType
+	ui->cb_gametype_enable->setChecked( config::grid_ui::gametype_enable::get() );
+	ui->sp_gametype_x->setValue( config::grid_ui::gametype_x::get() );
+	ui->sp_gametype_y->setValue( config::grid_ui::gametype_y::get() );
+	ui->cb_gametype_align->setCurrentIndex( config::grid_ui::gametype_align::get() );
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
@@ -278,14 +282,56 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engine_y::set( ui->sp_engine_y->value() );
 	config::grid_ui::engine_default_color::set( ui->cb_engine_default_colors->checkState() );
 	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::title_bcolor::
+		set( gridPreviewDelegate->m_engine_bcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_engine_bcolor.name().toLower() );
+	config::grid_ui::title_fcolor::
+		set( gridPreviewDelegate->m_engine_fcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_engine_fcolor.name().toLower() );
+	config::grid_ui::title_bold_enable::set( gridPreviewDelegate->m_engine_bold );
+	config::grid_ui::title_italics_enable::set( gridPreviewDelegate->m_engine_italics );
 	//Version
 	config::grid_ui::version_enable::set( ui->cb_version_enable->checkState() );
 	config::grid_ui::version_x::set( ui->sp_version_x->value() );
 	config::grid_ui::version_y::set( ui->sp_version_y->value() );
+	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
 	config::grid_ui::version_bcolor::
 		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
 	             "transparent" :
 	             gridPreviewDelegate->m_version_bcolor.name().toLower() );
+	config::grid_ui::version_fcolor::
+		set( gridPreviewDelegate->m_version_fcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_version_fcolor.name().toLower() );
+	config::grid_ui::version_bold_enable::set( gridPreviewDelegate->m_version_bold );
+	config::grid_ui::version_italics_enable::set( gridPreviewDelegate->m_version_italics );
+	//Creator
+	config::grid_ui::creator_enable::set( ui->cb_creator_enable->checkState() );
+	config::grid_ui::creator_x::set( ui->sp_creator_x->value() );
+	config::grid_ui::creator_y::set( ui->sp_creator_y->value() );
+	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::creator_bcolor::
+		set( gridPreviewDelegate->m_creator_bcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_creator_bcolor.name().toLower() );
+	config::grid_ui::creator_fcolor::
+		set( gridPreviewDelegate->m_creator_fcolor.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_creator_fcolor.name().toLower() );
+	config::grid_ui::creator_bold_enable::set( gridPreviewDelegate->m_creator_bold );
+	config::grid_ui::creator_italics_enable::set( gridPreviewDelegate->m_creator_italics );
+	//Status
+	config::grid_ui::status_enable::set( ui->cb_status_enable->checkState() );
+	config::grid_ui::status_x::set( ui->sp_status_x->value() );
+	config::grid_ui::status_y::set( ui->sp_status_y->value() );
+	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	//gametype
+	config::grid_ui::gametype_enable::set( ui->cb_gametype_enable->checkState() );
+	config::grid_ui::gametype_x::set( ui->sp_gametype_x->value() );
+	config::grid_ui::gametype_y::set( ui->sp_gametype_y->value() );
+	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -1028,42 +1074,72 @@ void SettingsDialog::on_pb_creator_italics_pressed()
 
 //Status
 void SettingsDialog::on_cb_status_enable_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_status_enable = state;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_sp_status_x_valueChanged( int num )
-{}
+{
+	gridPreviewDelegate->m_status_x = num;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_sp_status_y_valueChanged( int num )
-{}
+{
+	gridPreviewDelegate->m_status_y = num;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_cb_status_align_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_status_align = state;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_cb_status_link_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_status_link = state;
+}
 
+/*
 void SettingsDialog::on_pb_status_bold_pressed()
 {}
 
 void SettingsDialog::on_pb_status_italics_pressed()
 {}
-
+*/
 //GameType
 void SettingsDialog::on_cb_gametype_enable_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_gametype_enable = state;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_sp_gametype_x_valueChanged( int num )
-{}
+{
+	gridPreviewDelegate->m_gametype_x = num;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_sp_gametype_y_valueChanged( int num )
-{}
+{
+	gridPreviewDelegate->m_gametype_y = num;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_cb_gametype_align_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_gametype_align = state;
+	qlv->repaint();
+}
 
 void SettingsDialog::on_cb_gametype_link_stateChanged( int state )
-{}
+{
+	gridPreviewDelegate->m_gametype_link = state;
+}
 
+/*
 void SettingsDialog::on_pb_gametype_bold_pressed()
 {}
 
@@ -1146,3 +1222,4 @@ void SettingsDialog::on_sp_updateicon_y_valueChanged( int num )
 
 void SettingsDialog::on_cb_updateicon_align_stateChanged( int state )
 {}
+*/

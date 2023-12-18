@@ -115,7 +115,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	QSize calculateSize( const int w_width, const int b_width, const int b_height, const int spacing );
 	QSize sizeHint( const QStyleOptionViewItem& item, const QModelIndex& index ) const override;
 	QColor colorFromString( QString str );
-	void drawText(
+	QRect drawText(
 		QPainter* painter,
 		const int x,
 		const int y,
@@ -126,6 +126,8 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const int padding,
 		QColor backgroundColor ) const;
 	QColor getEngineColor( QString engine, bool isEnabled ) const;
+	QColor getStatusColor( QString status, bool isEnabled ) const;
+	QColor getGameTypeColor( QString status, bool isEnabled ) const;
 
   public slots:
 	void reloadConfig();

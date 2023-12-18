@@ -146,8 +146,46 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	font.setPixelSize( m_font_size );
 	painter->setFont( font );
 	painter->setPen( qRgb( 210, 210, 210 ) );
-	//TODO: Add so the user will be able to change the color. This is the default for all pallets
 
+	//All text items need to be stored in a QRect. This makes it easier to detect edge cases and link items together
+	//Draw all linkable items first
+	QRect m_title_rect;
+	QRect m_engine_rect;
+	QRect m_gametype_rect;
+	QRect m_status_rect;
+	//ONLY DRAW ITEMS BELOW IF ATLAS DATA IS AVAILABLE
+	//If Record == 1 continue: base record
+	if ( record->atlas_data.has_value() || record->m_game_id == 1 )
+	{
+		//Draw Game Status
+		if ( m_status_enable )
+		{
+			m_status_rect = this->drawText(
+				painter,
+				m_status_x,
+				m_status_y,
+				options_rect,
+				record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status,
+				m_font_size,
+				m_font_family,
+				10,
+				"transparent" );
+		}
+		//Draw Game Type
+		if ( m_gametype_enable )
+		{
+			m_gametype_rect = this->drawText(
+				painter,
+				m_gametype_x,
+				m_gametype_y,
+				options_rect,
+				record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category,
+				m_font_size,
+				m_font_family,
+				10,
+				getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, true ) );
+		}
+	}
 	//Draw Title
 	if ( m_title_enable )
 	{
@@ -176,19 +214,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			10,
 			getEngineColor( record->m_engine, m_engine_default_colors ) );
 	}
-	if ( m_creator_enable )
-	{
-		this->drawText(
-			painter,
-			m_creator_x,
-			m_creator_y,
-			options_rect,
-			record->atlas_data.has_value() ? record->atlas_data.value()->creator : record->m_creator,
-			m_font_size,
-			m_font_family,
-			10,
-			m_creator_bcolor );
-	}
 	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
 	{
@@ -211,6 +236,20 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		//Draw Creator
 		//this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
 	}
+	//Draw Creator
+	if ( m_creator_enable )
+	{
+		this->drawText(
+			painter,
+			m_creator_x,
+			m_creator_y,
+			options_rect,
+			record->atlas_data.has_value() ? record->atlas_data.value()->creator : record->m_creator,
+			m_font_size,
+			m_font_family,
+			10,
+			m_creator_bcolor );
+	}
 
 	painter->restore();
 }
@@ -223,7 +262,7 @@ QSize RecordBannerDelegate::
 }
 
 //painter, text x loc, text y loc, rect of relative banner, string
-void RecordBannerDelegate::drawText(
+QRect RecordBannerDelegate::drawText(
 	QPainter* painter,
 	const int x,
 	const int y,
@@ -247,7 +286,7 @@ void RecordBannerDelegate::drawText(
 	painter->setRenderHint( QPainter::Antialiasing ); //Set so pixels look better
 
 	//Create rec with 10px margin, rect is relative to current banner rect
-	QRectF text_rect { rect.topLeft() + QPoint( x, y ), QSize( t_width, t_height ) };
+	QRect text_rect { rect.topLeft() + QPoint( x, y ), QSize( t_width, t_height ) };
 	//QPainterPath path;
 	//Draw Bounding Rect
 	painter->setPen( QPen( backgroundColor ) ); //no pen
@@ -263,7 +302,7 @@ void RecordBannerDelegate::drawText(
 	//const QSize size { rect.width(), strip_size };
 	//const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };
 	//painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
-	return;
+	return text_rect;
 }
 
 void RecordBannerDelegate::reloadConfig()
@@ -274,6 +313,7 @@ void RecordBannerDelegate::reloadConfig()
 		config::grid_ui::bannerSizeX::get(),
 		config::grid_ui::bannerSizeY::get(),
 		config::grid_ui::bannerSpacing::get() );
+	m_banner_size = { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
 	m_scale_type = config::grid_ui::imageLayout::get();
 	m_strip_height = config::grid_ui::overlayHeight::get();
 	m_overlay_opacity = config::grid_ui::overlayOpacity::get();
@@ -456,10 +496,10 @@ QSize RecordBannerDelegate::
 	return qsize;
 }
 
-QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) const
+QColor RecordBannerDelegate::getEngineColor( QString str, bool isEnabled ) const
 {
 	QColor backgroundColor;
-	const QString ename = engine.toUpper();
+	const QString ename = str.toUpper();
 
 	if ( ename == "ADRIFT" )
 	{
@@ -541,6 +581,29 @@ QColor RecordBannerDelegate::getEngineColor( QString engine, bool isEnabled ) co
 
 	//Return a color if enabled. If not, return transparent
 	return isEnabled ? backgroundColor : "transparent";
+}
+
+QColor RecordBannerDelegate::getStatusColor( QString str, bool isEnabled ) const
+{
+	QColor color;
+	const QString ename = str.toUpper();
+
+	return color;
+}
+
+QColor RecordBannerDelegate::getGameTypeColor( QString str, bool isEnabled ) const
+{
+	QColor color;
+	const QString ename = str.toUpper();
+	if ( ename == "VN" )
+	{
+		color = "#d32f2f";
+	}
+	else if ( ename == "OTHERS" )
+	{
+		color = "#3f4043";
+	}
+	return color;
 }
 
 QColor RecordBannerDelegate::colorFromString( QString str )
