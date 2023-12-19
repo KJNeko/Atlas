@@ -303,7 +303,7 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::version_enable::set( ui->cb_version_enable->checkState() );
 	config::grid_ui::version_x::set( ui->sp_version_x->value() );
 	config::grid_ui::version_y::set( ui->sp_version_y->value() );
-	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::version_align::set( ui->cb_version_align->currentIndex() );
 	config::grid_ui::version_bcolor::
 		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
 	             "transparent" :
@@ -318,7 +318,7 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::creator_enable::set( ui->cb_creator_enable->checkState() );
 	config::grid_ui::creator_x::set( ui->sp_creator_x->value() );
 	config::grid_ui::creator_y::set( ui->sp_creator_y->value() );
-	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::creator_align::set( ui->cb_creator_align->currentIndex() );
 	config::grid_ui::creator_bcolor::
 		set( gridPreviewDelegate->m_creator_bcolor.alpha() == 0 ?
 	             "transparent" :
