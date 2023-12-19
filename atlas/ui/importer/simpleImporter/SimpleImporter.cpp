@@ -12,6 +12,10 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QProgressDialog>
+#include <QtConcurrent>
+
+#include <core/utils/threading/pools.hpp>
+#include <tracy/Tracy.hpp>
 
 #include "SIModel.hpp"
 #include "core/utils/FileScanner.hpp"
@@ -72,6 +76,7 @@ int depthOfIndex( const QModelIndex& index )
 
 void SimpleImporter::setGameRoot( Node* node )
 {
+	ZoneScoped;
 	if ( node && node->isFolder() )
 	{
 		auto& node_info { node->dirInfo() };
@@ -134,6 +139,7 @@ void SimpleImporter::setGameRoot( Node* node )
 
 void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint& point )
 {
+	ZoneScoped;
 	QMenu menu;
 
 	const QModelIndex item { ui->dirView->indexAt( point ) };
@@ -235,20 +241,21 @@ void SimpleImporter::onCustomContextMenuRequested( [[maybe_unused]] const QPoint
 			"Set game root",
 			[ idx_depth, root, this ]()
 			{
+				ZoneScopedN( "Set game root" );
 				auto children { root->childrenAtDepth( idx_depth ) };
 
 				QProgressDialog prog_dialog { this };
 				prog_dialog.setLabelText( "Setting game root(s)" );
-				prog_dialog.setRange( 0, static_cast< int >( children.size() ) );
+				prog_dialog.setRange( 0, 0 );
 				prog_dialog.show();
 
-				for ( auto child : children )
-				{
-					prog_dialog.setLabelText( "Setting game root(s)\n" + child->pathStr() );
-					prog_dialog.setValue( prog_dialog.value() + 1 );
-					QApplication::processEvents();
-					setGameRoot( child );
-				}
+				auto& pool { ThreadPools::getInstance().pre_importers };
+
+				QtConcurrent::blockingMap(
+					&pool,
+					children.begin(),
+					children.end(),
+					[ this ]( Node* child ) -> void { setGameRoot( child ); } );
 			} );
 
 		auto this_level_supporting_menu { this_level->addMenu( "Set supporting" ) };

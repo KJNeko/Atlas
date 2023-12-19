@@ -9,6 +9,8 @@
 #include <QAbstractItemModel>
 #include <QDir>
 
+#include <tracy/Tracy.hpp>
+
 #include <queue>
 
 #include "core/config/config.hpp"
@@ -75,6 +77,7 @@ struct Node
 
 	DirInfo filledInfo() const
 	{
+		ZoneScoped;
 		if ( !std::holds_alternative< DirInfo >( m_info ) )
 		{
 			atlas::logging::error( "Attempted to get dir info from a file node!" );
@@ -162,6 +165,7 @@ struct Node
 	//! Returns any node marked as a 'game root'
 	std::vector< Node* > findGameRoots()
 	{
+		ZoneScoped;
 		if ( this->isFolder() && this->dirInfo().is_game_dir )
 			return { this };
 		else
@@ -192,12 +196,11 @@ struct Node
 	QString name() const
 	{
 		return m_name;
-		//const auto split_pos { m_path.lastIndexOf( QDir::separator() ) };
-		//return m_path.mid( split_pos + 1 );
 	}
 
 	void scan()
 	{
+		ZoneScoped;
 		const QString path_str { this->pathStr() };
 		QFileInfo info { path_str };
 
@@ -217,6 +220,7 @@ struct Node
 
 	int row() const
 	{
+		ZoneScoped;
 		if ( m_parent )
 		{
 			const auto& parent_children { m_parent->m_children };
@@ -229,6 +233,7 @@ struct Node
 
 	Node* root()
 	{
+		ZoneScoped;
 		Node* ptr { this };
 
 		if ( this->parent() == nullptr ) return ptr;
@@ -243,6 +248,7 @@ struct Node
 
 	const Node* root() const
 	{
+		ZoneScoped;
 		const Node* ptr { this };
 		if ( this->parent() == nullptr ) return ptr;
 
@@ -256,6 +262,7 @@ struct Node
 
 	int depth() const
 	{
+		ZoneScoped;
 		int counter { 0 };
 		const Node* ptr { this };
 
@@ -272,6 +279,7 @@ struct Node
 
 	std::vector< Node* > childrenAtDepth( const int target_depth )
 	{
+		ZoneScoped;
 		if ( target_depth == 0 )
 			return { this };
 		else if ( target_depth > 0 )
@@ -298,6 +306,7 @@ struct Node
 
 	const Node* child( const int idx ) const
 	{
+		ZoneScoped;
 		if ( !m_scanned ) return nullptr;
 
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
@@ -312,6 +321,7 @@ struct Node
 
 	Node* child( const int idx )
 	{
+		ZoneScoped;
 		if ( !m_scanned ) scan();
 
 		if ( m_children.size() < static_cast< std::size_t >( idx ) || idx < 0 )
@@ -348,6 +358,7 @@ struct Node
 
 	std::filesystem::path path() const
 	{
+		ZoneScoped;
 		if ( m_parent == nullptr )
 			return std::filesystem::path( name().toStdString() );
 		else
@@ -363,6 +374,7 @@ struct Node
 	 */
 	QString pathStr( const Node* target ) const
 	{
+		ZoneScoped;
 		if ( m_parent == nullptr || target == m_parent )
 			return name();
 		else
@@ -373,6 +385,7 @@ struct Node
 
 	QString pathStr() const
 	{
+		ZoneScoped;
 		if ( m_parent == nullptr )
 			return name();
 		else
