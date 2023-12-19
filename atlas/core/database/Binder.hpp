@@ -6,6 +6,8 @@
 #ifndef ATLASGAMEMANAGER_BINDER_HPP
 #define ATLASGAMEMANAGER_BINDER_HPP
 
+#include <tracy/Tracy.hpp>
+
 #include <sqlite3.h>
 #include <string>
 
@@ -159,6 +161,7 @@ class Binder
 		requires( !( is_optional< Ts > || ... ) && !( is_tuple< Ts > || ... ) )
 	void executeQuery( [[maybe_unused]] std::optional< std::tuple< Ts... > >& tpl_opt )
 	{
+		ZoneScoped;
 		if ( param_counter != max_param_count )
 			throw AtlasException( format_ns::format(
 				"Not enough parameters given for query! Given {}, Expected {}. param_counter != max_param_count = {} != {} for query \"{}\"",

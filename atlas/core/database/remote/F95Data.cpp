@@ -78,6 +78,7 @@ namespace atlas::remote
 
 	bool hasF95DataFor( const F95ID f95_id )
 	{
+		ZoneScoped;
 		std::optional< F95ID > id;
 		RapidTransaction() << "SELECT f95_id FROM f95_zone_data WHERE f95_id = ?" << f95_id >> id;
 		return id.has_value();
@@ -96,12 +97,13 @@ namespace atlas::remote
 		internal::releasePtr( id );
 	}
 
-	std::optional< atlas::remote::F95RemoteData > findF95Data( QString atlas_id )
+	std::optional< atlas::remote::F95RemoteData > findF95Data( AtlasID atlas_id )
 	{
+		ZoneScoped;
 		//std::vector< std::string > data;
 		std::optional< atlas::remote::F95RemoteData > data;
 		//spdlog::info( "{}{}", title, developer );
-		RapidTransaction() << "SELECT * FROM f95_zone_data WHERE atlas_id=?" << atlas_id >>
+		RapidTransaction() << "SELECT f95_id FROM f95_zone_data WHERE atlas_id = ?" << atlas_id >>
 			[ &data ]( const F95ID f95_id ) { data = { f95_id }; };
 		return data;
 	}

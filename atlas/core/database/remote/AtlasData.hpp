@@ -65,6 +65,8 @@ namespace atlas::remote
 		const internal::AtlasData* operator->() const { return data_ptr.get(); }
 	};
 
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( const AtlasID atlas_id );
+
 	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
 } // namespace atlas::remote
 

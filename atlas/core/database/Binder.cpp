@@ -8,6 +8,7 @@
 
 Binder::Binder( const std::string_view sql )
 {
+	ZoneScoped;
 	const auto prepare_ret {
 		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
 	};
@@ -27,6 +28,7 @@ Binder::Binder( const std::string_view sql )
 
 Binder::~Binder()
 {
+	ZoneScoped;
 	try
 	{
 		if ( !ran )

@@ -417,9 +417,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			//const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
 			const AtlasID atlas_id { atlas_data.value()->atlas_id };
 
-			std::optional< atlas::remote::F95RemoteData > f95_data {
-				atlas::remote::findF95Data( QString::number( atlas_id ) )
-			};
+			std::optional< atlas::remote::F95RemoteData > f95_data { atlas::remote::findF95Data( atlas_id ) };
 
 			if ( !f95_data.has_value() ) continue;
 

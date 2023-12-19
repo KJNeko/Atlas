@@ -35,6 +35,7 @@ namespace atlas::database
 
 		inline Binder operator<<( std::string_view sql )
 		{
+			ZoneScopedN( "TransactionBase::operator<<" );
 			if constexpr ( is_commitable )
 				sqlite3_exec( &Database::ref(), "BEGIN TRANSACTION;", nullptr, nullptr, nullptr );
 
@@ -44,6 +45,7 @@ namespace atlas::database
 		template < std::uint64_t size >
 		inline Binder operator<<( const char ( &raw_str )[ size - 1 ] )
 		{
+			ZoneScopedN( "TransactionBase::operator<<" );
 			const std::string_view str_view { std::string_view( raw_str, size - 1 ) };
 			return *this << str_view;
 		}
