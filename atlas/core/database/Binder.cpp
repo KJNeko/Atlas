@@ -9,9 +9,14 @@
 Binder::Binder( const std::string_view sql )
 {
 	ZoneScoped;
+	const char* unused { nullptr };
 	const auto prepare_ret {
-		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
+		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, &unused )
 	};
+
+	if ( unused != nullptr && strlen( unused ) > 0 )
+		throw DatabaseException( format_ns::
+		                             format( "Query had unused portions of the input. Unused: \"{}\"", unused ) );
 
 	if ( stmt == nullptr )
 		throw DatabaseException( format_ns::
