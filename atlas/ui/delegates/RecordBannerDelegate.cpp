@@ -109,12 +109,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		}
 
 		//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
-		const int x_m {
-			0
-		}; // aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - pixmap.width() ) / 2 : 0 };
-		const int y_m {
-			0
-		}; // aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - pixmap.height() ) / 2 : 0 };
+		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - pixmap.width() ) / 2 : 0 };
+		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - pixmap.height() ) / 2 : 0 };
 		//Check if overlay is on top or in-line with banner
 		const QRect pixmap_rect {
 			options_rect.x() + x_m, options_rect.y() + y_m + xtop_overlay_margin, pixmap.width(), pixmap.height()

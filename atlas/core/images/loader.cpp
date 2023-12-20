@@ -37,21 +37,22 @@ namespace atlas::images
 			img.size().height() );
 
 		img = img.scaled( target_size, Qt::AspectRatioMode( scale_type ), Qt::SmoothTransformation );
+		QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
 		//Align image inside of the target_size
-		if ( align_type == CENTER )
+		if ( scale_type != SCALE_TYPE::FIT_BLUR_EXPANDING )
 		{
-			QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
-			crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
-			//qInfo() << "t_width" << target_size.width() << "i_width" << img.width();
-			img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
+			if ( align_type == CENTER )
+			{
+				crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
+				img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
+			}
 		}
 
-		if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
+		/*if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
 		{
-			QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
 			crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
 			img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
-		}
+		}*/
 
 		return img;
 	}
