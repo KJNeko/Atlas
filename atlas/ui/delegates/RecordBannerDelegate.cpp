@@ -69,7 +69,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	if ( record.hasBanner( Normal ) )
 	{
-		QFuture< QPixmap > banner { record.requestBanner( c_banner_size, aspect_ratio, Normal, USE_THUMBNAIL ) };
+		QFuture< QPixmap > banner { record.requestBanner( c_banner_size, aspect_ratio, CENTER, Normal, USE_FULLSIZE ) };
 
 		QPixmap pixmap;
 		if ( banner.isFinished() )

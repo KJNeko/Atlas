@@ -76,8 +76,12 @@ namespace atlas::records
 			return atlas::images::async::loadPixmap( path );
 	}
 
-	QFuture< QPixmap > Game::
-		requestBanner( const QSize size, const SCALE_TYPE scale_type, const BannerType type, const bool use_thumbnail )
+	QFuture< QPixmap > Game::requestBanner(
+		const QSize size,
+		const SCALE_TYPE scale_type,
+		const Alignment align_type,
+		const BannerType type,
+		const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& banner_path { bannerPath( type ) };
@@ -90,7 +94,7 @@ namespace atlas::records
 			//Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() );
 		else if ( use_thumbnail )
-			return atlas::images::async::scaledThumbnail( size, scale_type, banner_path )
+			return atlas::images::async::scaledThumbnail( size, scale_type, Alignment::CENTER, banner_path )
 			    .onFailed(
 					[ id, banner_path, type ]( const AtlasException& e )
 					{
@@ -127,7 +131,7 @@ namespace atlas::records
 
 				);
 		else
-			return atlas::images::async::loadScaledPixmap( size, scale_type, banner_path )
+			return atlas::images::async::loadScaledPixmap( size, scale_type, align_type, banner_path )
 			    .onFailed(
 					[ id, banner_path, type ]( const AtlasException& e )
 					{
@@ -176,11 +180,12 @@ namespace atlas::records
 		const int width,
 		const int height,
 		const SCALE_TYPE scale_type,
+		const Alignment align_type,
 		const BannerType type,
 		const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
-		return requestBanner( { width, height }, scale_type, type, use_thumbnail );
+		return requestBanner( { width, height }, scale_type, align_type, type, use_thumbnail );
 	}
 
 	QFuture< QPixmap > Game::requestPreview( const std::uint64_t index, const bool use_thumbnail ) const

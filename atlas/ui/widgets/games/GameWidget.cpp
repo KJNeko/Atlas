@@ -78,6 +78,7 @@ void GameWidget::reloadRecord()
 		ui->coverImage->width() - cover_offset,
 		ui->coverImage->height() - cover_offset,
 		SCALE_TYPE::KEEP_ASPECT_RATIO,
+		Alignment::CENTER,
 		BannerType::Cover ) };
 
 	if ( record->m_last_played == 0 )
@@ -253,48 +254,52 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 		const int logo_width = 600;
 
 		//Get Logo
-		auto logo_future {
-			record.requestBanner( logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, BannerType::Logo )
-		};
+		auto logo_future { record.requestBanner(
+			logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER, BannerType::Logo ) };
 
 		//spdlog::info( "height:{} width:{}", logo_height, logo_width );
 		//spdlog::info( ui->bannerFrame->width() );
 
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
-		auto banner_future {
-			record.requestBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
-				.then(
-					QtFuture::Launch::Async,
-					[ &banner_size, &record ]( QPixmap banner )
-					{
-						// if the banner is null then we probably don't have a wide banner and should try the normal banner instead
-						if ( banner.isNull() )
-						{
-							ZoneScopedN( "Load alternative image" );
-							banner = record
-				                         .requestBanner(
-											 banner_size.width(),
-											 image_height,
-											 SCALE_TYPE::FIT_BLUR_EXPANDING,
-											 BannerType::Normal )
-				                         .result();
-							if ( banner.isNull() ) return QPixmap();
-						}
+		auto banner_future { record
+			                     .requestBanner(
+									 banner_size.width(),
+									 image_height,
+									 SCALE_TYPE::FIT_BLUR_EXPANDING,
+									 Alignment::CENTER,
+									 BannerType::Wide )
+			                     .then(
+									 QtFuture::Launch::Async,
+									 [ &banner_size, &record ]( QPixmap banner )
+									 {
+										 // if the banner is null then we probably don't have a wide banner and should try the normal banner instead
+										 if ( banner.isNull() )
+										 {
+											 ZoneScopedN( "Load alternative image" );
+											 banner = record
+				                                          .requestBanner(
+															  banner_size.width(),
+															  image_height,
+															  SCALE_TYPE::FIT_BLUR_EXPANDING,
+															  Alignment::CENTER,
+															  BannerType::Normal )
+				                                          .result();
+											 if ( banner.isNull() ) return QPixmap();
+										 }
 
-						{
-							ZoneScopedN( "Blur image" );
-							//TODO: Replace this with the new `atlas::images::blurPixmap` instead. Also resize it first then blur.
-							return blurToSize(
-								std::move( banner ),
-								banner_size.width(),
-								image_height,
-								image_feather,
-								image_blur,
-								FEATHER_IMAGE );
-						}
-					} )
-		};
+										 {
+											 ZoneScopedN( "Blur image" );
+											 //TODO: Replace this with the new `atlas::images::blurPixmap` instead. Also resize it first then blur.
+											 return blurToSize(
+												 std::move( banner ),
+												 banner_size.width(),
+												 image_height,
+												 image_feather,
+												 image_blur,
+												 FEATHER_IMAGE );
+										 }
+									 } ) };
 
 		/*
 		QPixmap banner {

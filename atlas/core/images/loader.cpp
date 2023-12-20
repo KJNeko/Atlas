@@ -25,7 +25,7 @@ namespace atlas::images
 			format( "{}x{}:{}:{}", target_size.width(), target_size.height(), static_cast< int >( scale_type ), path );
 	}
 
-	QPixmap scalePixmap( QPixmap img, const QSize target_size, const SCALE_TYPE scale_type )
+	QPixmap scalePixmap( QPixmap img, const QSize target_size, const SCALE_TYPE scale_type, const Alignment align_type )
 	{
 		if ( img.isNull() ) throw AtlasException( "Attempted to scale a null pixmap!" );
 
@@ -37,10 +37,19 @@ namespace atlas::images
 			img.size().height() );
 
 		img = img.scaled( target_size, Qt::AspectRatioMode( scale_type ), Qt::SmoothTransformation );
+		//Align image inside of the target_size
+		if ( align_type == CENTER )
+		{
+			QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
+			crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
+			//qInfo() << "t_width" << target_size.width() << "i_width" << img.width();
+			img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
+		}
 
 		if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
 		{
-			const QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
+			QRect crop_rect { 0, 0, target_size.width(), target_size.height() };
+			crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
 			img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
 		}
 
@@ -69,7 +78,11 @@ namespace atlas::images
 		}
 	}
 
-	QPixmap loadScaledPixmap( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
+	QPixmap loadScaledPixmap(
+		const QSize target_size,
+		const SCALE_TYPE scale_type,
+		const Alignment align_type,
+		const std::filesystem::path& path )
 	{
 		atlas::logging::debug( "Loading image: {}", path );
 
@@ -78,7 +91,12 @@ namespace atlas::images
 		QSize scaled_size { 0, 0 };
 
 		//Default to the other loader if the image size is invalid
-		if ( image_size == QSize() ) return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type );
+		//Default to the other loader if the image size is invalid
+		if ( image_size == QSize() )
+		{
+			qInfo() << "Using default image method";
+			return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type, align_type );
+		}
 
 		//Calculate the size we need to load for each scaling tyle
 		switch ( scale_type )
@@ -180,6 +198,7 @@ namespace atlas::images
 			QPromise< QPixmap >& promise,
 			const QSize target_size,
 			const SCALE_TYPE scale_type,
+			const Alignment align_type,
 			const std::filesystem::path& path )
 		{
 			if ( promise.isCanceled() ) return;
@@ -197,12 +216,14 @@ namespace atlas::images
 			{
 				atlas::logging::
 					warn( "Image was not readable by QImageReader. Falling back to alternative loading method" );
-				const auto pixmap { scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type ) };
+				const auto pixmap {
+					scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type, align_type )
+				};
 				scale_cache.insert( key, pixmap );
 				promise.addResult( std::move( pixmap ) );
 			}
 
-			QPixmap pixmap { atlas::images::loadScaledPixmap( target_size, scale_type, path ) };
+			QPixmap pixmap { atlas::images::loadScaledPixmap( target_size, scale_type, align_type, path ) };
 			scale_cache.insert( key, pixmap );
 
 			promise.addResult( std::move( pixmap ) );
@@ -212,8 +233,11 @@ namespace atlas::images
 
 	namespace async
 	{
-		QFuture< QPixmap >
-			loadScaledPixmap( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
+		QFuture< QPixmap > loadScaledPixmap(
+			const QSize target_size,
+			const SCALE_TYPE scale_type,
+			const Alignment align_type,
+			const std::filesystem::path& path )
 		{
 			using namespace std::chrono_literals;
 			if ( path.empty() ) throw ImageLoadError( "Failed to load image. Path empty" );
@@ -229,6 +253,7 @@ namespace atlas::images
 				         &atlas::images::internal::loadScaledPixmap,
 				         target_size,
 				         scale_type,
+				         align_type,
 				         path );
 			}
 		}

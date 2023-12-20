@@ -131,6 +131,7 @@ namespace atlas::images
 				QPromise< QPixmap >& promise,
 				const QSize size,
 				const SCALE_TYPE scale_type,
+				const Alignment align_type,
 				const std::filesystem::path origin_path )
 			{
 				try
@@ -142,7 +143,7 @@ namespace atlas::images
 					else
 						verifyThumbnail( origin_path );
 
-					QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, thumb_path ) };
+					QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, align_type, thumb_path ) };
 					atlas::logging::debug(
 						"Loaded thumb {} with size of {}x{}",
 						thumb_path,
@@ -173,8 +174,11 @@ namespace atlas::images
 				return QtConcurrent::run( &globalPools().image_loaders, &internal::loadThumbnail, path );
 		}
 
-		QFuture< QPixmap >
-			scaledThumbnail( const QSize size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
+		QFuture< QPixmap > scaledThumbnail(
+			const QSize size,
+			const SCALE_TYPE scale_type,
+			const Alignment align_type,
+			const std::filesystem::path& path )
 		{
 			const auto thumb_path { atlas::images::thumbnailPath( path ) };
 			const auto key {
@@ -186,7 +190,7 @@ namespace atlas::images
 				return QtFuture::makeReadyFuture( std::move( opt.value() ) );
 			else
 				return QtConcurrent::
-					run( &globalPools().image_loaders, &internal::loadScaledThumb, size, scale_type, path );
+					run( &globalPools().image_loaders, &internal::loadScaledThumb, size, scale_type, align_type, path );
 		}
 
 	} // namespace async
