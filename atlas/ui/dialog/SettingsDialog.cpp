@@ -524,7 +524,8 @@ QColor SettingsDialog::colorFromString( QString str )
 #if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
 	return QColor::fromString( str );
 #else
-	return color.setNamedColor( str );
+	color.setNamedColor( str );
+	return color;
 #endif
 }
 

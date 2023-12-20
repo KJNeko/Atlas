@@ -620,7 +620,7 @@ QColor RecordBannerDelegate::getStatusColor( QString str, bool isEnabled ) const
 	}
 	return color;
 
-	return color;
+	return isEnabled ? color : "transparent";
 }
 
 QColor RecordBannerDelegate::getGameTypeColor( QString str, bool isEnabled ) const
@@ -644,6 +644,7 @@ QColor RecordBannerDelegate::colorFromString( QString str )
 #if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
 	return QColor::fromString( str );
 #else
-	return color.setNamedColor( str );
+	color.setNamedColor( str );
+	return color;
 #endif
 }
