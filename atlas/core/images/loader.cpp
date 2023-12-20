@@ -95,7 +95,7 @@ namespace atlas::images
 		//Default to the other loader if the image size is invalid
 		if ( image_size == QSize() )
 		{
-			qInfo() << "Using default image method";
+			//qInfo() << "Using default image method";
 			return scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type, align_type );
 		}
 
