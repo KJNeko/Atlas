@@ -175,7 +175,7 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sp_engine_x->setValue( config::grid_ui::engine_x::get() );
 	ui->sp_engine_y->setValue( config::grid_ui::engine_y::get() );
 	ui->cb_engine_align->setCurrentIndex( config::grid_ui::engine_align::get() );
-	ui->cb_engine_default_colors->setChecked( config::grid_ui::engine_default_color::get() );
+	ui->cb_engine_default->setChecked( config::grid_ui::engine_default_color::get() );
 	gridPreviewDelegate->m_engine_bcolor = colorFromString( config::grid_ui::engine_bcolor::get() );
 	gridPreviewDelegate->m_engine_fcolor = colorFromString( config::grid_ui::engine_fcolor::get() );
 	gridPreviewDelegate->m_engine_bold = config::grid_ui::engine_bold_enable::get();
@@ -283,7 +283,7 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engine_enable::set( ui->cb_engine_enable->checkState() );
 	config::grid_ui::engine_x::set( ui->sp_engine_x->value() );
 	config::grid_ui::engine_y::set( ui->sp_engine_y->value() );
-	config::grid_ui::engine_default_color::set( ui->cb_engine_default_colors->checkState() );
+	config::grid_ui::engine_default_color::set( ui->cb_engine_default->checkState() );
 	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
 	config::grid_ui::title_bcolor::
 		set( gridPreviewDelegate->m_engine_bcolor.alpha() == 0 ?
