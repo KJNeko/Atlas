@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1180</width>
-    <height>875</height>
+    <width>1280</width>
+    <height>874</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1050,7 +1050,7 @@ border-right:none;
          </property>
          <property name="minimumSize">
           <size>
-           <width>652</width>
+           <width>680</width>
            <height>366</height>
           </size>
          </property>
@@ -1132,6 +1132,12 @@ padding:10x;</string>
            <height>25</height>
           </size>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>334</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -1166,6 +1172,89 @@ padding:10x;</string>
              <property name="topMargin">
               <number>15</number>
              </property>
+             <item row="2" column="0">
+              <widget class="QFrame" name="frame_2">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_25">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_67">
+                  <property name="text">
+                   <string>Layout</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer_58">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="6">
+                 <spacer name="horizontalSpacer_57">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QComboBox" name="cbOverlayLayout">
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>On Top</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>In Line</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QFrame" name="frame">
                <property name="frameShape">
@@ -1194,7 +1283,7 @@ padding:10x;</string>
                  <widget class="QPushButton" name="pbOverlayColor">
                   <property name="minimumSize">
                    <size>
-                    <width>110</width>
+                    <width>120</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -1397,7 +1486,7 @@ padding:10x;</string>
                  <widget class="QPushButton" name="pushButton_8">
                   <property name="minimumSize">
                    <size>
-                    <width>110</width>
+                    <width>120</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -1425,89 +1514,6 @@ padding:10x;</string>
                </layout>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QFrame" name="frame_2">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_25">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_67">
-                  <property name="text">
-                   <string>Layout</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <spacer name="horizontalSpacer_58">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>10</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="6">
-                 <spacer name="horizontalSpacer_57">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QComboBox" name="cbOverlayLayout">
-                  <property name="minimumSize">
-                   <size>
-                    <width>60</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>On Top</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>In Line</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
              <item row="3" column="0">
               <spacer name="verticalSpacer_11">
                <property name="orientation">
@@ -1530,6 +1536,109 @@ padding:10x;</string>
              <string>Font Settings</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_45">
+             <item row="2" column="0">
+              <spacer name="verticalSpacer_12">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_4">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_27">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_32">
+                  <property name="text">
+                   <string>Font</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <spacer name="horizontalSpacer_28">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Maximum</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QComboBox" name="cbFont">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>1</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="5">
+                 <widget class="QCheckBox" name="checkBox_16">
+                  <property name="text">
+                   <string>Italic</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QCheckBox" name="checkBox_15">
+                  <property name="text">
+                   <string>Bold</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_27">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>5</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QFrame" name="frame_5">
                <property name="frameShape">
@@ -1667,79 +1776,6 @@ padding:10x;</string>
                </layout>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QFrame" name="frame_4">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_27">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_32">
-                  <property name="text">
-                   <string>Font</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QComboBox" name="cbFont">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>1</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <spacer name="horizontalSpacer_28">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Maximum</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>10</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <spacer name="verticalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
             </layout>
            </widget>
           </item>
@@ -1837,217 +1873,28 @@ padding:10x;</string>
            <height>334</height>
           </size>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>334</height>
+          </size>
+         </property>
          <property name="title">
           <string>Overlay Details</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_40">
-          <item row="8" column="5">
-           <widget class="QComboBox" name="cb_views_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="14">
-           <widget class="QPushButton" name="pb_creator_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
+          <item row="0" column="5" colspan="3">
+           <widget class="QLabel" name="label_36">
             <property name="text">
-             <string>B</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_79">
-            <property name="text">
-             <string>X Axis</string>
+             <string>Item Color Settings</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="cb_engine_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_33">
-            <property name="text">
-             <string>Rating</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_71">
-            <property name="text">
-             <string>Game Type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QComboBox" name="cb_title_align">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="7">
-           <widget class="QPushButton" name="pb_title_bcolor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QSpinBox" name="sp_creator_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="8">
-           <widget class="QPushButton" name="pushButton_7">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>fgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3">
-           <widget class="QSpinBox" name="sp_likes_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="5">
-           <widget class="QComboBox" name="cb_likes_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Game Title</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Creator</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="4">
-           <widget class="QSpinBox" name="sp_updateicon_y">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QSpinBox" name="sp_version_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="3">
-           <widget class="QSpinBox" name="sp_title_x">
+           <widget class="QSpinBox" name="sp_title_y">
             <property name="minimumSize">
              <size>
               <width>45</width>
@@ -2059,199 +1906,6 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="3">
-           <widget class="QSpinBox" name="sp_rating_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="7">
-           <widget class="QPushButton" name="pb_creator_bcolor">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="3">
-           <widget class="QSpinBox" name="sp_updateicon_x">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="14">
-           <widget class="QPushButton" name="pb_engine_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>B</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="4">
-           <widget class="QSpinBox" name="sp_gametype_y">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_70">
-            <property name="text">
-             <string>Status</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="14">
-           <widget class="QPushButton" name="pb_status_bold">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>B</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="15">
-           <widget class="QPushButton" name="pb_creator_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="7">
-           <widget class="QPushButton" name="pb_version_bcolor">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>bgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="3">
-           <widget class="QSpinBox" name="sp_favorite_x">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="6">
-           <widget class="QCheckBox" name="cb_engine_default_colors">
-            <property name="text">
-             <string>Default</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="4">
-           <widget class="QSpinBox" name="sp_likes_y">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_37">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Favorite</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="cb_version_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QSpinBox" name="sp_views_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QCheckBox" name="cb_views_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
           <item row="8" column="0">
            <widget class="QLabel" name="label_34">
             <property name="text">
@@ -2259,145 +1913,10 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QCheckBox" name="cb_status_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
+          <item row="7" column="11">
+           <widget class="QSpinBox" name="spinBox_8"/>
           </item>
-          <item row="12" column="0" colspan="4">
-           <spacer name="verticalSpacer_13">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="5" column="4">
-           <widget class="QSpinBox" name="sp_status_y">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Version</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="5">
-           <widget class="QComboBox" name="cb_engine_align">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="11">
-           <widget class="QComboBox" name="cb_status_link">
-            <item>
-             <property name="text">
-              <string>none</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>title</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>engine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>version</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>creator</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="11">
-           <widget class="QComboBox" name="cb_gametype_link">
-            <item>
-             <property name="text">
-              <string>none</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>title</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>engine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>version</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>creator</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="15">
-           <widget class="QPushButton" name="pb_title_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="5">
+          <item row="11" column="4">
            <widget class="QComboBox" name="cb_updateicon_align">
             <property name="enabled">
              <bool>false</bool>
@@ -2419,58 +1938,16 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QCheckBox" name="cb_rating_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="4">
-           <widget class="QSpinBox" name="sp_favorite_y">
+          <item row="6" column="6">
+           <widget class="QPushButton" name="pushButton_9">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="15">
-           <widget class="QPushButton" name="pb_engine_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QCheckBox" name="cb_updateicon_enable">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="7">
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="enabled">
-             <bool>false</bool>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
@@ -2489,36 +1966,53 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="14">
-           <widget class="QPushButton" name="pn_version_bold">
+          <item row="10" column="6">
+           <widget class="QPushButton" name="pushButton_14">
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>20</width>
+              <width>30</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="text">
-             <string>B</string>
+             <string>bgc</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="3">
-           <widget class="QSpinBox" name="sp_gametype_x">
+          <item row="2" column="3">
+           <widget class="QSpinBox" name="sp_engine_y">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
-          <item row="2" column="8">
-           <widget class="QPushButton" name="pb_engine_fcolor">
+          <item row="6" column="11">
+           <widget class="QSpinBox" name="spinBox_7"/>
+          </item>
+          <item row="7" column="2">
+           <widget class="QSpinBox" name="sp_rating_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="7">
+           <widget class="QPushButton" name="pb_version_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2539,26 +2033,23 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="5">
-           <widget class="QComboBox" name="cb_rating_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
+          <item row="6" column="7">
+           <widget class="QPushButton" name="pushButton_16">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
            </widget>
           </item>
-          <item row="8" column="11">
+          <item row="8" column="10">
            <widget class="QComboBox" name="cb_views_link">
             <item>
              <property name="text">
@@ -2587,44 +2078,31 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="5" column="5">
-           <widget class="QComboBox" name="cb_status_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Game Title</string>
+            </property>
            </widget>
           </item>
-          <item row="7" column="4">
-           <widget class="QSpinBox" name="sp_rating_y">
+          <item row="9" column="3">
+           <widget class="QSpinBox" name="sp_likes_y">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
-          <item row="0" column="6" colspan="3">
-           <widget class="QLabel" name="label_36">
-            <property name="text">
-             <string>Color</string>
+          <item row="9" column="6">
+           <widget class="QPushButton" name="pushButton_13">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="7">
-           <widget class="QPushButton" name="pb_engine_bcolor">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -2642,14 +2120,7 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Engine</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="11">
+          <item row="7" column="10">
            <widget class="QComboBox" name="cb_rating_link">
             <item>
              <property name="text">
@@ -2678,32 +2149,15 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="5" column="15">
-           <widget class="QPushButton" name="pb_status_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_70">
             <property name="text">
-             <string>I</string>
+             <string>Status</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="5">
-           <widget class="QComboBox" name="cb_favorite_align">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="7" column="4">
+           <widget class="QComboBox" name="cb_rating_align">
             <item>
              <property name="text">
               <string>Left</string>
@@ -2721,74 +2175,10 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QSpinBox" name="sp_engine_x">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
+          <item row="8" column="12">
+           <widget class="QSpinBox" name="spinBox_20"/>
           </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_35">
-            <property name="text">
-             <string>Likes</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="15">
-           <widget class="QPushButton" name="pb_version_italics">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <italic>true</italic>
-             </font>
-            </property>
-            <property name="text">
-             <string>I</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Y Axis</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="8">
-           <widget class="QPushButton" name="pb_creator_fcolor">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>fgc</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="8">
+          <item row="1" column="7">
            <widget class="QPushButton" name="pb_title_fcolor">
             <property name="enabled">
              <bool>false</bool>
@@ -2810,35 +2200,139 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
-           <widget class="QCheckBox" name="cb_favorite_enable">
+          <item row="11" column="5">
+           <widget class="QCheckBox" name="checkBox_14">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Enable</string>
+             <string>Default</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="4">
+          <item row="11" column="2">
+           <widget class="QSpinBox" name="sp_updateicon_x">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="4">
+           <widget class="QComboBox" name="cb_favorite_align">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="12">
+           <widget class="QSpinBox" name="spinBox_17"/>
+          </item>
+          <item row="5" column="7">
+           <widget class="QPushButton" name="pushButton_7">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="6">
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QSpinBox" name="sp_status_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
            <widget class="QSpinBox" name="sp_creator_y">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
-          <item row="0" column="5">
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>Alignment</string>
+          <item row="2" column="6">
+           <widget class="QPushButton" name="pb_engine_bcolor">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="11">
-           <widget class="QComboBox" name="cb_likes_link">
+          <item row="10" column="10">
+           <widget class="QComboBox" name="cb_favorite_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -2873,91 +2367,25 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_64">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Update Icon</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QCheckBox" name="cb_likes_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="3">
-           <widget class="QSpinBox" name="sp_status_x">
+           <widget class="QSpinBox" name="sp_status_y">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
-          <item row="6" column="5">
-           <widget class="QComboBox" name="cb_gametype_align">
-            <item>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Right</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Center</string>
-             </property>
-            </item>
-           </widget>
+          <item row="3" column="12">
+           <widget class="QSpinBox" name="spinBox_15"/>
           </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="cb_title_enable">
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="cb_creator_enable">
             <property name="text">
              <string>Enable</string>
             </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
-          <item row="2" column="4">
-           <widget class="QSpinBox" name="sp_engine_y">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QSpinBox" name="sp_version_y">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="16">
-           <spacer name="horizontalSpacer_43">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="10" column="11">
-           <widget class="QComboBox" name="cb_favorite_link">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="9" column="10">
+           <widget class="QComboBox" name="cb_likes_link">
             <item>
              <property name="text">
               <string>none</string>
@@ -2985,22 +2413,192 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QCheckBox" name="cb_creator_enable">
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="cb_engine_enable">
             <property name="text">
              <string>Enable</string>
             </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
-          <item row="8" column="4">
-           <widget class="QSpinBox" name="sp_views_y">
+          <item row="11" column="6">
+           <widget class="QPushButton" name="pushButton_15">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <widget class="QComboBox" name="cb_gametype_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="10">
+           <widget class="QComboBox" name="cb_status_link">
+            <item>
+             <property name="text">
+              <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="cb_version_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Y Axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Creator</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="5">
+           <widget class="QCheckBox" name="checkBox_7">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="10">
+           <widget class="QComboBox" name="comboBox_9">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_79">
+            <property name="text">
+             <string>X Axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="7">
+           <widget class="QPushButton" name="pushButton_21">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="4">
+           <widget class="QComboBox" name="cb_likes_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QSpinBox" name="sp_gametype_x">
             <property name="maximum">
              <number>999</number>
             </property>
            </widget>
           </item>
-          <item row="3" column="8">
-           <widget class="QPushButton" name="pb_version_fcolor">
+          <item row="4" column="2">
+           <widget class="QSpinBox" name="sp_creator_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="7">
+           <widget class="QPushButton" name="pb_creator_fcolor">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3021,8 +2619,154 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="4">
-           <widget class="QSpinBox" name="sp_title_y">
+          <item row="7" column="3">
+           <widget class="QSpinBox" name="sp_rating_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="10">
+           <widget class="QComboBox" name="comboBox_8">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Version</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>Likes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QSpinBox" name="sp_gametype_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_64">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Update Icon</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="2">
+           <widget class="QSpinBox" name="sp_favorite_x">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="5">
+           <widget class="QCheckBox" name="checkBox_10">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QCheckBox" name="checkBox_5">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="12">
+           <widget class="QSpinBox" name="spinBox_16"/>
+          </item>
+          <item row="7" column="7">
+           <widget class="QPushButton" name="pushButton_17">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="5">
+           <widget class="QCheckBox" name="checkBox_8">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QPushButton" name="pb_engine_fcolor">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="11">
+           <widget class="QSpinBox" name="spinBox_12"/>
+          </item>
+          <item row="11" column="10">
+           <widget class="QComboBox" name="comboBox_12"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QSpinBox" name="sp_version_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="5">
+           <widget class="QCheckBox" name="checkBox_11">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSpinBox" name="sp_title_x">
             <property name="minimumSize">
              <size>
               <width>45</width>
@@ -3034,7 +2778,340 @@ padding:10x;</string>
             </property>
            </widget>
           </item>
+          <item row="9" column="11">
+           <widget class="QSpinBox" name="spinBox_10"/>
+          </item>
+          <item row="9" column="12">
+           <widget class="QSpinBox" name="spinBox_21"/>
+          </item>
+          <item row="8" column="11">
+           <widget class="QSpinBox" name="spinBox_9"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="cb_title_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="10">
+           <widget class="QComboBox" name="comboBox_11">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="10">
+           <widget class="QComboBox" name="comboBox_10">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="cb_status_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="10">
+           <widget class="QComboBox" name="cb_gametype_link">
+            <item>
+             <property name="text">
+              <string>none</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>title</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>engine</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>version</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>creator</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="10">
+           <widget class="QLabel" name="label_49">
+            <property name="text">
+             <string>Link</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="7">
+           <widget class="QPushButton" name="pushButton_18">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>Rating</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QSpinBox" name="sp_version_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="5">
+           <widget class="QCheckBox" name="checkBox_6">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="3">
+           <widget class="QSpinBox" name="sp_favorite_y">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6">
+           <widget class="QPushButton" name="pb_creator_bcolor">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QCheckBox" name="cb_rating_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Favorite</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="5">
+           <widget class="QCheckBox" name="checkBox_13">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>Alignment</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QCheckBox" name="cb_favorite_enable">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="12">
+           <widget class="QSpinBox" name="spinBox_23"/>
+          </item>
+          <item row="2" column="5">
+           <widget class="QCheckBox" name="cb_engine_default_colors">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="sp_engine_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="6">
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="7">
+           <widget class="QPushButton" name="pushButton_19">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="12">
+           <widget class="QSpinBox" name="spinBox_14"/>
+          </item>
+          <item row="1" column="6">
+           <widget class="QPushButton" name="pb_title_bcolor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="2">
+           <widget class="QSpinBox" name="sp_likes_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="11">
+           <widget class="QSpinBox" name="spinBox_3"/>
+          </item>
+          <item row="10" column="12">
+           <widget class="QSpinBox" name="spinBox_22"/>
+          </item>
+          <item row="0" column="12">
+           <widget class="QLabel" name="label_51">
+            <property name="text">
+             <string>Radius</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="11">
+           <widget class="QSpinBox" name="spinBox_11"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_71">
+            <property name="text">
+             <string>Game Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="4">
+           <widget class="QComboBox" name="cb_views_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="4">
            <widget class="QComboBox" name="cb_version_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -3059,7 +3136,61 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="4" column="5">
+          <item row="5" column="6">
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="11">
+           <widget class="QSpinBox" name="spinBox_6"/>
+          </item>
+          <item row="4" column="11">
+           <widget class="QSpinBox" name="spinBox_5"/>
+          </item>
+          <item row="10" column="7">
+           <widget class="QPushButton" name="pushButton_20">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>fgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="5">
+           <widget class="QCheckBox" name="checkBox_12">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
            <widget class="QComboBox" name="cb_creator_align">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -3084,34 +3215,178 @@ padding:10x;</string>
             </item>
            </widget>
           </item>
-          <item row="1" column="14">
-           <widget class="QPushButton" name="pb_title_bold">
+          <item row="1" column="11">
+           <widget class="QSpinBox" name="spinBox_2"/>
+          </item>
+          <item row="6" column="5">
+           <widget class="QCheckBox" name="checkBox_9">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="text">
-             <string>B</string>
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Engine</string>
             </property>
            </widget>
           </item>
           <item row="0" column="11">
-           <widget class="QLabel" name="label_49">
+           <widget class="QLabel" name="label_50">
             <property name="text">
-             <string>Link</string>
+             <string>Padding</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+           </widget>
+          </item>
+          <item row="6" column="12">
+           <widget class="QSpinBox" name="spinBox_18"/>
+          </item>
+          <item row="5" column="4">
+           <widget class="QComboBox" name="cb_status_align">
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="11">
+           <widget class="QSpinBox" name="spinBox_4"/>
+          </item>
+          <item row="3" column="6">
+           <widget class="QPushButton" name="pb_version_bcolor">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>bgc</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3">
+           <widget class="QSpinBox" name="sp_views_y">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="12">
+           <widget class="QSpinBox" name="spinBox_19"/>
+          </item>
+          <item row="8" column="2">
+           <widget class="QSpinBox" name="sp_views_x">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="3">
+           <widget class="QSpinBox" name="sp_updateicon_y">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="12">
+           <widget class="QSpinBox" name="spinBox_13"/>
+          </item>
+          <item row="2" column="4">
+           <widget class="QComboBox" name="cb_engine_align">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QCheckBox" name="cb_views_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QComboBox" name="cb_title_align">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QCheckBox" name="cb_updateicon_enable">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="cb_likes_enable">
+            <property name="text">
+             <string>Enable</string>
             </property>
            </widget>
           </item>
@@ -3129,7 +3404,7 @@ padding:10x;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>365</height>
+           <height>366</height>
           </size>
          </property>
          <property name="frameShape">
@@ -3343,7 +3618,7 @@ padding:10x;</string>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>100</width>
+                    <width>120</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -3444,7 +3719,7 @@ padding:10x;</string>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>100</width>
+                    <width>120</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -3513,7 +3788,7 @@ padding:10x;</string>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>110</width>
+                    <width>120</width>
                     <height>0</height>
                    </size>
                   </property>
@@ -3653,7 +3928,7 @@ padding:10x;</string>
                 <item row="1" column="1">
                  <widget class="QLabel" name="label_8">
                   <property name="text">
-                   <string> size:</string>
+                   <string>Size:</string>
                   </property>
                  </widget>
                 </item>
@@ -3932,6 +4207,19 @@ padding:10x;</string>
                </layout>
               </widget>
              </item>
+             <item row="3" column="0">
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="2" column="0">
               <widget class="QFrame" name="frame_8">
                <property name="frameShape">
@@ -4058,83 +4346,6 @@ padding:10x;</string>
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>10</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QFrame" name="frame_11">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_35">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="pushButton_11">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>TEMP PB</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QFrame" name="frame_7">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_31">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_54">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
                     <height>20</height>
                    </size>
                   </property>
