@@ -129,16 +129,17 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//Reset the current brush
 	painter->setBrush( Qt::NoBrush );
 	QPen pen;
+
+	//Draw Overlay
+	painter->fillRect( top_rect, enable_top_overlay ? m_overlay_color : "transparent" );
+	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_overlay_color : "transparent" );
+
 	//Used for border around the grid capsule
 	pen.setBrush( m_enable_capsule_border ? Qt::black : Qt::transparent );
 	pen.setWidth( 1 );
 	pen.setStyle( Qt::SolidLine );
 	painter->setPen( pen );
 	painter->drawRect( options_rect );
-
-	//Draw Overlay
-	painter->fillRect( top_rect, enable_top_overlay ? m_overlay_color : "transparent" );
-	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_overlay_color : "transparent" );
 
 	//set Pen and Font for default text
 	QFont font;
@@ -330,7 +331,6 @@ void RecordBannerDelegate::reloadConfig()
 	m_scale_type = config::grid_ui::imageLayout::get();
 	m_top_overlay_height = config::grid_ui::top_overlay_height::get();
 	m_bottom_overlay_height = config::grid_ui::bottom_overlay_height::get();
-	m_overlay_opacity = config::grid_ui::overlayOpacity::get();
 	m_enable_top_overlay = config::grid_ui::enableTopOverlay::get();
 	m_enable_bottom_overlay = config::grid_ui::enableBottomOverlay::get();
 	m_overlay_layout = config::grid_ui::overlayLayout::get();
@@ -406,7 +406,6 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_scale_type { config::grid_ui::imageLayout::get() },
   m_top_overlay_height { config::grid_ui::top_overlay_height::get() },
   m_bottom_overlay_height { config::grid_ui::bottom_overlay_height::get() },
-  m_overlay_opacity { config::grid_ui::overlayOpacity::get() },
   m_enable_top_overlay { config::grid_ui::enableTopOverlay::get() },
   m_enable_bottom_overlay { config::grid_ui::enableBottomOverlay::get() },
   m_overlay_layout { config::grid_ui::overlayLayout::get() },

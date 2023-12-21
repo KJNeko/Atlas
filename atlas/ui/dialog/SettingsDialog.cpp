@@ -154,8 +154,6 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
 	ui->sb_top_overlay_h->setValue( config::grid_ui::top_overlay_height::get() );
 	ui->sb_bottom_overlay_h->setValue( config::grid_ui::bottom_overlay_height::get() );
-	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
-	ui->pbOverlayColor->setText( config::grid_ui::overlayColor::get() );
 	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
 	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
 	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlayLayout::get() );
@@ -255,8 +253,6 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
 	config::grid_ui::top_overlay_height::set( ui->sb_top_overlay_h->value() );
 	config::grid_ui::bottom_overlay_height::set( ui->sb_bottom_overlay_h->value() );
-	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
-	config::grid_ui::overlayColor::set( ui->pbOverlayColor->text() );
 	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
 	config::grid_ui::font::set( ui->cbFont->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );

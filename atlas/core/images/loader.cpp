@@ -48,12 +48,6 @@ namespace atlas::images
 			}
 		}
 
-		/*if ( scale_type == SCALE_TYPE::KEEP_ASPECT_RATIO_BY_EXPANDING )
-		{
-			crop_rect.moveCenter( QPoint( img.size().width() / 2, img.size().height() / 2 ) );
-			img = img.copy( crop_rect ); //Crop banner when using the fill scaling option
-		}*/
-
 		return img;
 	}
 

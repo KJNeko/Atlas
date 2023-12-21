@@ -269,7 +269,9 @@ enum Alignment : int
 {
 	LEFT = 0,
 	RIGHT = 1,
-	CENTER = 2
+	CENTER = 2,
+	TOP = 3,
+	BOTTOM = 4,
 };
 
 enum Link : int
@@ -297,7 +299,6 @@ SETTINGS_D( grid_ui, enableTopOverlay, bool, true )
 SETTINGS_D( grid_ui, enableBottomOverlay, bool, true )
 SETTINGS_D( grid_ui, bottom_overlay_height, int, 26 )
 SETTINGS_D( grid_ui, top_overlay_height, int, 26 )
-SETTINGS_D( grid_ui, overlayOpacity, int, 200 )
 SETTINGS_D( grid_ui, overlayColor, QString, "#c8000000" )
 SETTINGS_D( grid_ui, font, QString, "" )
 SETTINGS_D( grid_ui, fontSize, int, 10 )
