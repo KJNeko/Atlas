@@ -1095,7 +1095,7 @@ void SettingsDialog::on_pb_title_fcolor_pressed()
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sb_title_fontsize_valueChanged( int num )
+void SettingsDialog::on_sb_title_font_size_valueChanged( int num )
 {
 	gridPreviewDelegate->m_title_fontsize = num;
 	qlv->repaint();
