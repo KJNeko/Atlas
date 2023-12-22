@@ -38,8 +38,14 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_blur_radius;
 	BLUR_TYPE m_blur_type;
 	bool m_enable_capsule_border;
+	//font
 	int m_font_size;
 	QString m_font_family;
+	bool m_font_bold;
+	bool m_font_italic;
+	bool m_font_shadow;
+	int m_padding;
+	int m_corner_radius;
 
 	//title
 	bool m_title_enable;
@@ -49,8 +55,8 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	QColor m_title_bcolor;
 	QColor m_title_fcolor;
 	int m_title_fontsize;
-	bool m_title_bold;
-	bool m_title_italics;
+	bool m_title_default;
+	int m_title_link;
 	//engine
 	bool m_engine_enable;
 	int m_engine_x;
@@ -59,8 +65,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	QColor m_engine_bcolor;
 	QColor m_engine_fcolor;
 	bool m_engine_default;
-	bool m_engine_bold;
-	bool m_engine_italics;
+	int m_engine_link;
 	//version
 	bool m_version_enable;
 	int m_version_x;
@@ -68,8 +73,8 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_version_align;
 	QColor m_version_bcolor;
 	QColor m_version_fcolor;
-	bool m_version_bold;
-	bool m_version_italics;
+	bool m_version_default;
+	int m_version_link;
 	//creator
 	bool m_creator_enable;
 	int m_creator_x;
@@ -77,28 +82,71 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_creator_align;
 	QColor m_creator_bcolor;
 	QColor m_creator_fcolor;
-	bool m_creator_bold;
-	bool m_creator_italics;
+	bool m_creator_default;
+	int m_creator_link;
 	//status
 	bool m_status_enable;
 	int m_status_x;
 	int m_status_y;
 	int m_status_align;
+	QColor m_status_bcolor;
+	QColor m_status_fcolor;
+	bool m_status_default;
 	int m_status_link;
-	//QColor m_status_bcolor;
-	//QColor m_status_fcolor;
-	//bool m_status_bold;
-	//bool m_status_italics;
 	//gametype
 	bool m_gametype_enable;
 	int m_gametype_x;
 	int m_gametype_y;
 	int m_gametype_align;
+	QColor m_gametype_bcolor;
+	QColor m_gametype_fcolor;
+	bool m_gametype_default;
 	int m_gametype_link;
-	//QColor m_gametype_bcolor;
-	//QColor m_gametype_fcolor;
-	//bool m_gametype_bold;
-	//bool m_gametype_italics;
+	//rating
+	bool m_rating_enable;
+	int m_rating_x;
+	int m_rating_y;
+	int m_rating_align;
+	QColor m_rating_bcolor;
+	QColor m_rating_fcolor;
+	bool m_rating_default;
+	int m_rating_link;
+	//views
+	bool m_views_enable;
+	int m_views_x;
+	int m_views_y;
+	int m_views_align;
+	QColor m_views_bcolor;
+	QColor m_views_fcolor;
+	bool m_views_default;
+	int m_views_link;
+	//likes
+	bool m_likes_enable;
+	int m_likes_x;
+	int m_likes_y;
+	int m_likes_align;
+	QColor m_likes_bcolor;
+	QColor m_likes_fcolor;
+	bool m_likes_default;
+	int m_likes_link;
+	//favorite
+	bool m_favorite_enable;
+	int m_favorite_x;
+	int m_favorite_y;
+	int m_favorite_align;
+	QColor m_favorite_bcolor;
+	QColor m_favorite_fcolor;
+	bool m_favorite_default;
+	int m_favorite_link;
+	//updateicon
+	bool m_updateicon_enable;
+	int m_updateicon_x;
+	int m_updateicon_y;
+	int m_updateicon_align;
+	QColor m_updateicon_bcolor;
+	QColor m_updateicon_fcolor;
+	bool m_updateicon_default;
+	int m_updateicon_link;
 
 	int m_grid_spacing;
 	QSize m_banner_size;

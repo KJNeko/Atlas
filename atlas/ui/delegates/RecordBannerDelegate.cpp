@@ -342,6 +342,11 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_capsule_border = config::grid_ui::enableCapsuleBorder::get();
 	m_font_size = config::grid_ui::font_size::get();
 	m_font_family = config::grid_ui::font::get();
+	m_font_bold = config::grid_ui::font_bold::get();
+	m_font_italic = config::grid_ui::font_italic::get();
+	m_font_shadow = config::grid_ui::font_shadow::get();
+	m_padding = config::grid_ui::padding::get();
+	m_corner_radius = config::grid_ui::corner_radius::get();
 	//BANNER START
 	//title
 	m_title_enable = { config::grid_ui::title_enable::get() };
@@ -351,6 +356,8 @@ void RecordBannerDelegate::reloadConfig()
 	m_title_bcolor = { colorFromString( config::grid_ui::title_bcolor::get() ) };
 	m_title_fcolor = { colorFromString( config::grid_ui::title_fcolor::get() ) };
 	m_title_fontsize = { config::grid_ui::title_font_size::get() };
+	m_title_default = { config::grid_ui::title_default::get() };
+	m_title_link = { config::grid_ui::title_link::get() };
 	//engine
 	m_engine_enable = { config::grid_ui::engine_enable::get() };
 	m_engine_x = { config::grid_ui::engine_x::get() };
@@ -366,8 +373,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_version_align = { config::grid_ui::version_align::get() };
 	m_version_bcolor = { colorFromString( config::grid_ui::version_bcolor::get() ) };
 	m_version_fcolor = { colorFromString( config::grid_ui::version_fcolor::get() ) };
-	m_version_bold = { config::grid_ui::version_bold_enable::get() };
-	m_version_italics = { config::grid_ui::version_italics_enable::get() };
+	m_version_default = { config::grid_ui::version_default::get() };
 	//creator
 	m_creator_enable = { config::grid_ui::creator_enable::get() };
 	m_creator_x = { config::grid_ui::creator_x::get() };
@@ -375,22 +381,63 @@ void RecordBannerDelegate::reloadConfig()
 	m_creator_align = { config::grid_ui::creator_align::get() };
 	m_creator_bcolor = { colorFromString( config::grid_ui::creator_bcolor::get() ) };
 	m_creator_fcolor = { colorFromString( config::grid_ui::creator_fcolor::get() ) };
-	m_creator_bold = { config::grid_ui::creator_bold_enable::get() };
-	m_creator_italics = { config::grid_ui::creator_italics_enable::get() };
+	m_creator_default = { config::grid_ui::creator_default::get() };
 	//status
 	m_status_enable = { config::grid_ui::status_enable::get() };
 	m_status_x = { config::grid_ui::status_x::get() };
 	m_status_y = { config::grid_ui::status_y::get() };
 	m_status_align = { config::grid_ui::status_align::get() };
-	m_status_link = { config::grid_ui::status_link::get() };
-	//m_status_bold { config::grid_ui::status_bold_enable::get() };
-	//m_status_italics { config::grid_ui::status_italics_enable::get() };
+	m_status_bcolor = { colorFromString( config::grid_ui::status_bcolor::get() ) };
+	m_status_fcolor = { colorFromString( config::grid_ui::status_fcolor::get() ) };
+	m_status_default = { config::grid_ui::status_default::get() };
 	//gametype
 	m_gametype_enable = { config::grid_ui::gametype_enable::get() };
 	m_gametype_x = { config::grid_ui::gametype_x::get() };
 	m_gametype_y = { config::grid_ui::gametype_y::get() };
 	m_gametype_align = { config::grid_ui::gametype_align::get() };
-	m_gametype_link = { config::grid_ui::status_link::get() };
+	m_gametype_bcolor = { colorFromString( config::grid_ui::gametype_bcolor::get() ) };
+	m_gametype_fcolor = { colorFromString( config::grid_ui::gametype_fcolor::get() ) };
+	m_gametype_default = { config::grid_ui::gametype_default::get() };
+	//rating
+	m_rating_enable = { config::grid_ui::rating_enable::get() };
+	m_rating_x = { config::grid_ui::rating_x::get() };
+	m_rating_y = { config::grid_ui::rating_y::get() };
+	m_rating_align = { config::grid_ui::rating_align::get() };
+	m_rating_bcolor = { colorFromString( config::grid_ui::rating_bcolor::get() ) };
+	m_rating_fcolor = { colorFromString( config::grid_ui::rating_fcolor::get() ) };
+	m_rating_default = { config::grid_ui::rating_default::get() };
+	//views
+	m_views_enable = { config::grid_ui::views_enable::get() };
+	m_views_x = { config::grid_ui::views_x::get() };
+	m_views_y = { config::grid_ui::views_y::get() };
+	m_views_align = { config::grid_ui::views_align::get() };
+	m_views_bcolor = { colorFromString( config::grid_ui::views_bcolor::get() ) };
+	m_views_fcolor = { colorFromString( config::grid_ui::views_fcolor::get() ) };
+	m_views_default = { config::grid_ui::views_default::get() };
+	//likes
+	m_likes_enable = { config::grid_ui::likes_enable::get() };
+	m_likes_x = { config::grid_ui::likes_x::get() };
+	m_likes_y = { config::grid_ui::likes_y::get() };
+	m_likes_align = { config::grid_ui::likes_align::get() };
+	m_likes_bcolor = { colorFromString( config::grid_ui::likes_bcolor::get() ) };
+	m_likes_fcolor = { colorFromString( config::grid_ui::likes_fcolor::get() ) };
+	m_likes_default = { config::grid_ui::likes_default::get() };
+	//favorite
+	m_favorite_enable = { config::grid_ui::favorite_enable::get() };
+	m_favorite_x = { config::grid_ui::favorite_x::get() };
+	m_favorite_y = { config::grid_ui::favorite_y::get() };
+	m_favorite_align = { config::grid_ui::favorite_align::get() };
+	m_favorite_bcolor = { colorFromString( config::grid_ui::favorite_bcolor::get() ) };
+	m_favorite_fcolor = { colorFromString( config::grid_ui::favorite_fcolor::get() ) };
+	m_favorite_default = { config::grid_ui::favorite_default::get() };
+	//updateicon
+	m_updateicon_enable = { config::grid_ui::updateicon_enable::get() };
+	m_updateicon_x = { config::grid_ui::updateicon_x::get() };
+	m_updateicon_y = { config::grid_ui::updateicon_y::get() };
+	m_updateicon_align = { config::grid_ui::updateicon_align::get() };
+	m_updateicon_bcolor = { colorFromString( config::grid_ui::updateicon_bcolor::get() ) };
+	m_updateicon_fcolor = { colorFromString( config::grid_ui::updateicon_fcolor::get() ) };
+	m_updateicon_default = { config::grid_ui::updateicon_default::get() };
 }
 
 RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
@@ -414,7 +461,13 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_capsule_border { config::grid_ui::enableCapsuleBorder::get() },
   m_font_size { config::grid_ui::font_size::get() },
   m_font_family { config::grid_ui::font::get() },
+  m_font_bold { config::grid_ui::font_bold::get() },
+  m_font_italic { config::grid_ui::font_italic::get() },
+  m_font_shadow { config::grid_ui::font_shadow::get() },
+  m_padding { config::grid_ui::padding::get() },
+  m_corner_radius { config::grid_ui::corner_radius::get() },
   //START BANNER
+  //title
   //title
   m_title_enable { config::grid_ui::title_enable::get() },
   m_title_x { config::grid_ui::title_x::get() },
@@ -423,6 +476,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_title_bcolor { colorFromString( config::grid_ui::title_bcolor::get() ) },
   m_title_fcolor { colorFromString( config::grid_ui::title_fcolor::get() ) },
   m_title_fontsize { config::grid_ui::title_font_size::get() },
+  m_title_default { config::grid_ui::title_default::get() },
+  m_title_link { config::grid_ui::title_link::get() },
   //engine
   m_engine_enable { config::grid_ui::engine_enable::get() },
   m_engine_x { config::grid_ui::engine_x::get() },
@@ -438,8 +493,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_version_align { config::grid_ui::version_align::get() },
   m_version_bcolor { colorFromString( config::grid_ui::version_bcolor::get() ) },
   m_version_fcolor { colorFromString( config::grid_ui::version_fcolor::get() ) },
-  m_version_bold { config::grid_ui::version_bold_enable::get() },
-  m_version_italics { config::grid_ui::version_italics_enable::get() },
+  m_version_default { config::grid_ui::version_default::get() },
   //creator
   m_creator_enable { config::grid_ui::creator_enable::get() },
   m_creator_x { config::grid_ui::creator_x::get() },
@@ -447,25 +501,63 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_creator_align { config::grid_ui::creator_align::get() },
   m_creator_bcolor { colorFromString( config::grid_ui::creator_bcolor::get() ) },
   m_creator_fcolor { colorFromString( config::grid_ui::creator_fcolor::get() ) },
-  m_creator_bold { config::grid_ui::creator_bold_enable::get() },
-  m_creator_italics { config::grid_ui::creator_italics_enable::get() },
+  m_creator_default { config::grid_ui::creator_default::get() },
   //status
   m_status_enable { config::grid_ui::status_enable::get() },
   m_status_x { config::grid_ui::status_x::get() },
   m_status_y { config::grid_ui::status_y::get() },
   m_status_align { config::grid_ui::status_align::get() },
-  m_status_link { config::grid_ui::status_link::get() },
-  //m_status_bold { config::grid_ui::status_bold_enable::get() },
-  //m_status_italics { config::grid_ui::status_italics_enable::get() },
+  m_status_bcolor { colorFromString( config::grid_ui::status_bcolor::get() ) },
+  m_status_fcolor { colorFromString( config::grid_ui::status_fcolor::get() ) },
+  m_status_default { config::grid_ui::status_default::get() },
   //gametype
   m_gametype_enable { config::grid_ui::gametype_enable::get() },
   m_gametype_x { config::grid_ui::gametype_x::get() },
   m_gametype_y { config::grid_ui::gametype_y::get() },
   m_gametype_align { config::grid_ui::gametype_align::get() },
-  m_gametype_link { config::grid_ui::status_link::get() },
-
-  //m_gametype_bold { config::grid_ui::gametype_bold_enable::get() },
-  //m_gametype_italics { config::grid_ui::gametype_italics_enable::get() },
+  m_gametype_bcolor { colorFromString( config::grid_ui::gametype_bcolor::get() ) },
+  m_gametype_fcolor { colorFromString( config::grid_ui::gametype_fcolor::get() ) },
+  m_gametype_default { config::grid_ui::gametype_default::get() },
+  //rating
+  m_rating_enable { config::grid_ui::rating_enable::get() },
+  m_rating_x { config::grid_ui::rating_x::get() },
+  m_rating_y { config::grid_ui::rating_y::get() },
+  m_rating_align { config::grid_ui::rating_align::get() },
+  m_rating_bcolor { colorFromString( config::grid_ui::rating_bcolor::get() ) },
+  m_rating_fcolor { colorFromString( config::grid_ui::rating_fcolor::get() ) },
+  m_rating_default { config::grid_ui::rating_default::get() },
+  //views
+  m_views_enable { config::grid_ui::views_enable::get() },
+  m_views_x { config::grid_ui::views_x::get() },
+  m_views_y { config::grid_ui::views_y::get() },
+  m_views_align { config::grid_ui::views_align::get() },
+  m_views_bcolor { colorFromString( config::grid_ui::views_bcolor::get() ) },
+  m_views_fcolor { colorFromString( config::grid_ui::views_fcolor::get() ) },
+  m_views_default { config::grid_ui::views_default::get() },
+  //likes
+  m_likes_enable { config::grid_ui::likes_enable::get() },
+  m_likes_x { config::grid_ui::likes_x::get() },
+  m_likes_y { config::grid_ui::likes_y::get() },
+  m_likes_align { config::grid_ui::likes_align::get() },
+  m_likes_bcolor { colorFromString( config::grid_ui::likes_bcolor::get() ) },
+  m_likes_fcolor { colorFromString( config::grid_ui::likes_fcolor::get() ) },
+  m_likes_default { config::grid_ui::likes_default::get() },
+  //favorite
+  m_favorite_enable { config::grid_ui::favorite_enable::get() },
+  m_favorite_x { config::grid_ui::favorite_x::get() },
+  m_favorite_y { config::grid_ui::favorite_y::get() },
+  m_favorite_align { config::grid_ui::favorite_align::get() },
+  m_favorite_bcolor { colorFromString( config::grid_ui::favorite_bcolor::get() ) },
+  m_favorite_fcolor { colorFromString( config::grid_ui::favorite_fcolor::get() ) },
+  m_favorite_default { config::grid_ui::favorite_default::get() },
+  //updateicon
+  m_updateicon_enable { config::grid_ui::updateicon_enable::get() },
+  m_updateicon_x { config::grid_ui::updateicon_x::get() },
+  m_updateicon_y { config::grid_ui::updateicon_y::get() },
+  m_updateicon_align { config::grid_ui::updateicon_align::get() },
+  m_updateicon_bcolor { colorFromString( config::grid_ui::updateicon_bcolor::get() ) },
+  m_updateicon_fcolor { colorFromString( config::grid_ui::updateicon_fcolor::get() ) },
+  m_updateicon_default { config::grid_ui::updateicon_default::get() },
 
   //END BANNER
   m_grid_spacing { config::grid_ui::bannerSpacing::get() },

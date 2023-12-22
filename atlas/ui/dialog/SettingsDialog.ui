@@ -1222,7 +1222,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="0" column="3">
-                 <widget class="QComboBox" name="cbOverlayLayout">
+                 <widget class="QComboBox" name="cb_overlay_layout">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -1750,14 +1750,14 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="1" column="6">
-                 <widget class="QSpinBox" name="cb_title_font_size">
+                 <widget class="QSpinBox" name="sb_title_font_size">
                   <property name="maximum">
                    <number>30</number>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QSpinBox" name="cb_font_size">
+                 <widget class="QSpinBox" name="sb_font_size">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -2710,7 +2710,7 @@ border-right:none;
           <item row="14" column="0">
            <widget class="QLabel" name="label_64">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Update Icon</string>
@@ -2994,7 +2994,7 @@ border-right:none;
           <item row="13" column="0">
            <widget class="QLabel" name="label_37">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Favorite</string>
