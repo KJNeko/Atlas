@@ -136,4 +136,20 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	void reloadConfig();
 };
 
+namespace atlas::banner
+{
+	struct BannerData
+	{
+		int x {};
+		int y {};
+		QRect rect {};
+		QString& str {};
+		int font_size {};
+		QString font_family {};
+		int padding {};
+		int Alignment {};
+		Color backgroundColor {};
+	};
+} // namespace atlas::banner
+
 #endif //ATLAS_RECORDBANNERDELEGATE_HPP

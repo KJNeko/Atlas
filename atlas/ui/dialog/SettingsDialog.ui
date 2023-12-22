@@ -1598,7 +1598,23 @@ padding:10x;</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="5">
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_27">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>5</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="6">
                  <widget class="QCheckBox" name="checkBox_16">
                   <property name="text">
                    <string>Italic</string>
@@ -1612,8 +1628,8 @@ padding:10x;</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_27">
+                <item row="0" column="5">
+                 <spacer name="horizontalSpacer_70">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -2053,7 +2069,7 @@ padding:10x;</string>
           <item row="14" column="4">
            <widget class="QComboBox" name="cb_updateicon_align">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <item>
              <property name="text">
@@ -2138,7 +2154,7 @@ padding:10x;</string>
           <item row="2" column="5">
            <widget class="QCheckBox" name="cb_creator_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2170,6 +2186,9 @@ padding:10x;</string>
           </item>
           <item row="11" column="10">
            <widget class="QComboBox" name="cb_views_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -2251,6 +2270,9 @@ padding:10x;</string>
           </item>
           <item row="10" column="10">
            <widget class="QComboBox" name="cb_rating_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -2329,7 +2351,7 @@ padding:10x;</string>
           <item row="14" column="5">
            <widget class="QCheckBox" name="cb_updateicon_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2339,7 +2361,7 @@ padding:10x;</string>
           <item row="14" column="2">
            <widget class="QSpinBox" name="sp_updateicon_x">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -2349,7 +2371,7 @@ padding:10x;</string>
           <item row="13" column="4">
            <widget class="QComboBox" name="cb_favorite_align">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <item>
              <property name="text">
@@ -2393,7 +2415,7 @@ padding:10x;</string>
           <item row="2" column="6">
            <widget class="QPushButton" name="pb_creator_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2540,6 +2562,9 @@ padding:10x;</string>
           </item>
           <item row="12" column="10">
            <widget class="QComboBox" name="cb_likes_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -2633,6 +2658,9 @@ padding:10x;</string>
           </item>
           <item row="8" column="10">
            <widget class="QComboBox" name="cb_status_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -2772,7 +2800,7 @@ padding:10x;</string>
           <item row="13" column="2">
            <widget class="QSpinBox" name="sp_favorite_x">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -2782,7 +2810,7 @@ padding:10x;</string>
           <item row="10" column="5">
            <widget class="QCheckBox" name="cb_rating_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2840,7 +2868,7 @@ padding:10x;</string>
           <item row="8" column="5">
            <widget class="QCheckBox" name="cb_status_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2870,12 +2898,16 @@ padding:10x;</string>
            </widget>
           </item>
           <item row="14" column="10">
-           <widget class="QComboBox" name="cb_updateicon_link"/>
+           <widget class="QComboBox" name="cb_updateicon_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
           <item row="11" column="5">
            <widget class="QCheckBox" name="cb_views_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2949,6 +2981,9 @@ padding:10x;</string>
           </item>
           <item row="9" column="10">
            <widget class="QComboBox" name="cb_gametype_link">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>none</string>
@@ -3012,7 +3047,7 @@ padding:10x;</string>
           <item row="13" column="1">
            <widget class="QCheckBox" name="cb_favorite_enable">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Enable</string>
@@ -3022,7 +3057,7 @@ padding:10x;</string>
           <item row="13" column="3">
            <widget class="QSpinBox" name="sp_favorite_y">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -3049,7 +3084,7 @@ padding:10x;</string>
           <item row="13" column="5">
            <widget class="QCheckBox" name="cb_favorite_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -3249,7 +3284,7 @@ padding:10x;</string>
           <item row="12" column="5">
            <widget class="QCheckBox" name="cb_likes_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -3259,7 +3294,7 @@ padding:10x;</string>
           <item row="9" column="5">
            <widget class="QCheckBox" name="cb_gametype_default">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -3345,7 +3380,7 @@ padding:10x;</string>
           <item row="14" column="3">
            <widget class="QSpinBox" name="sp_updateicon_y">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -3419,7 +3454,7 @@ padding:10x;</string>
           <item row="14" column="1">
            <widget class="QCheckBox" name="cb_updateicon_enable">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Enable</string>

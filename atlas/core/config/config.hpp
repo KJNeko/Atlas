@@ -278,9 +278,16 @@ enum Link : int
 {
 	DISABLED = 0,
 	TITLE = 1,
-	ENGINE = 2,
+	CREATOR = 2,
 	VERSION = 3,
-	CREATOR = 4
+	ENGINE = 4,
+	STATUS = 5,
+	GAMETYPE = 6,
+	RATING = 7,
+	VIEWS = 8,
+	LIKES = 9,
+	FAVORITE = 10,
+	UPDATEICON = 11
 };
 
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
