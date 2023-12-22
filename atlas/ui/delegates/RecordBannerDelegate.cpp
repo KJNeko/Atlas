@@ -169,7 +169,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status,
 				m_font_size,
 				m_font_family,
-				10,
+				m_padding,
 				m_status_align,
 				getStatusColor( record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status, true ) );
 		}
@@ -184,7 +184,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category,
 				m_font_size,
 				m_font_family,
-				10,
+				m_padding,
 				m_gametype_align,
 				getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, true ) );
 		}
@@ -200,7 +200,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->title : record->m_title,
 			m_title_fontsize,
 			m_font_family,
-			0,
+			m_padding,
 			m_title_align,
 			m_title_bcolor );
 	}
@@ -215,7 +215,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->engine : record->m_engine,
 			m_font_size,
 			m_font_family,
-			10,
+			m_padding,
 			m_engine_align,
 			getEngineColor( record->m_engine, m_engine_default ) );
 	}
@@ -231,7 +231,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			latest->m_version,
 			m_font_size,
 			m_font_family,
-			10,
+			m_padding,
 			m_version_align,
 			m_version_bcolor );
 		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
@@ -253,7 +253,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->creator : record->m_creator,
 			m_font_size,
 			m_font_family,
-			10,
+			m_padding,
 			m_creator_align,
 			m_creator_bcolor );
 	}

@@ -90,6 +90,7 @@ class SettingsDialog final : public QDialog
 	//font
 	void on_cb_font_currentTextChanged( const QString& text );
 	void on_sb_font_size_valueChanged( int num );
+	void on_sb_title_font_size_valueChanged( int num );
 	void on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx );
 	void on_sbAppFontSize_valueChanged( [[maybe_unused]] int num );
 	void on_cb_font_bold_stateChanged( int state );
