@@ -105,7 +105,6 @@ class SettingsDialog final : public QDialog
 	void on_cb_title_align_currentIndexChanged( int state );
 	void on_pb_title_bcolor_pressed();
 	void on_pb_title_fcolor_pressed();
-	void on_sb_title_fontsize_valueChanged( int num );
 	void on_cb_title_default_stateChanged( int state );
 	void on_cb_title_link_currentIndexChanged( int state );
 	//Engine
