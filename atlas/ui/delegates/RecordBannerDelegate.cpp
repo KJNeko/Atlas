@@ -131,8 +131,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	QPen pen;
 
 	//Draw Overlay
-	painter->fillRect( top_rect, enable_top_overlay ? m_overlay_color : "transparent" );
-	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_overlay_color : "transparent" );
+	painter->fillRect( top_rect, enable_top_overlay ? m_top_overlay_color : "transparent" );
+	painter->fillRect( bottom_rect, enable_bottom_overlay ? m_bottom_overlay_color : "transparent" );
 
 	//Used for border around the grid capsule
 	pen.setBrush( m_enable_capsule_border ? Qt::black : Qt::transparent );
@@ -334,7 +334,8 @@ void RecordBannerDelegate::reloadConfig()
 	m_enable_top_overlay = config::grid_ui::enable_top_overlay::get();
 	m_enable_bottom_overlay = config::grid_ui::enable_top_overlay::get();
 	m_overlay_layout = config::grid_ui::overlay_layout::get();
-	m_overlay_color = config::grid_ui::overlay_color::get();
+	m_top_overlay_color = config::grid_ui::top_overlay_bcolor::get();
+	m_bottom_overlay_color = config::grid_ui::bottom_overlay_bcolor::get();
 	m_feather_radius = config::grid_ui::featherRadius::get();
 	m_blur_radius = config::grid_ui::blurRadius::get();
 	m_blur_type = config::grid_ui::blurType::get();
@@ -405,7 +406,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_enable_top_overlay { config::grid_ui::enable_top_overlay::get() },
   m_enable_bottom_overlay { config::grid_ui::enable_bottom_overlay::get() },
   m_overlay_layout { config::grid_ui::overlay_layout::get() },
-  m_overlay_color { config::grid_ui::overlay_color::get() },
+  m_top_overlay_color { config::grid_ui::top_overlay_bcolor::get() },
+  m_bottom_overlay_color { config::grid_ui::bottom_overlay_bcolor::get() },
   m_feather_radius { config::grid_ui::featherRadius::get() },
   m_blur_radius { config::grid_ui::blurRadius::get() },
   m_blur_type { config::grid_ui::blurType::get() },

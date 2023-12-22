@@ -84,7 +84,8 @@ class SettingsDialog final : public QDialog
 	QColor colorFromString( QString str );
 	//Overlay Details
 	//Overlay
-	void on_pbOverlayColor_pressed();
+	void on_pb_top_overlay_bcolor_pressed();
+	void on_pb_bottom_overlay_bcolor_pressed();
 	void on_cbOverlayLayout_currentIndexChanged( int index );
 	void on_cbFont_currentTextChanged( const QString& text );
 	void on_sbFontSize_valueChanged( int num );

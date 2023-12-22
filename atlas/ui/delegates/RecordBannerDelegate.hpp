@@ -32,7 +32,8 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	bool m_enable_top_overlay;
 	bool m_enable_bottom_overlay;
 	int m_overlay_layout;
-	QColor m_overlay_color;
+	QColor m_top_overlay_color;
+	QColor m_bottom_overlay_color;
 	int m_feather_radius;
 	int m_blur_radius;
 	BLUR_TYPE m_blur_type;

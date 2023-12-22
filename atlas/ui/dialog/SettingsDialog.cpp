@@ -253,10 +253,14 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::font::set( ui->cb_font->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
 	config::grid_ui::overlay_layout::set( ui->cbOverlayLayout->currentIndex() );
-	config::grid_ui::overlay_color::
-		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
+	config::grid_ui::top_overlay_bcolor::
+		set( gridPreviewDelegate->m_top_overlay_color.alpha() == 0 ?
 	             "transparent" :
-	             gridPreviewDelegate->m_overlay_color.name( QColor::HexArgb ).toLower() );
+	             gridPreviewDelegate->m_top_overlay_color.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::bottom_overlay_bcolor::
+		set( gridPreviewDelegate->m_bottom_overlay_color.alpha() == 0 ?
+	             "transparent" :
+	             gridPreviewDelegate->m_bottom_overlay_color.name( QColor::HexArgb ).toLower() );
 
 	//Overlay settings
 	//Title
@@ -837,12 +841,27 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 
 //Overlay Settings
 //Overlay
-void SettingsDialog::on_pbOverlayColor_pressed()
+void SettingsDialog::on_pb_top_overlay_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_overlay_color, nullptr, "Overlay Background Color", QColorDialog::ShowAlphaChannel );
-	gridPreviewDelegate->m_overlay_color = backgroundColor;
+		gridPreviewDelegate->m_top_overlay_color,
+		nullptr,
+		"Overlay Top Background Color",
+		QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_top_overlay_color = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_bottom_overlay_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_bottom_overlay_color,
+		nullptr,
+		"Overlay Bottom Background Color",
+		QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_bottom_overlay_color = backgroundColor;
 	qlv->repaint();
 }
 
