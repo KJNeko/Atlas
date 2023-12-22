@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>SettingsDialog</class>
  <widget class="QDialog" name="SettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1263</width>
+    <height>886</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
@@ -1272,7 +1280,7 @@ padding:10x;</string>
                  <number>0</number>
                 </property>
                 <item row="0" column="6">
-                 <widget class="QPushButton" name="pbOverlayColor">
+                 <widget class="QPushButton" name="pb_top_overlay_bcolor">
                   <property name="minimumSize">
                    <size>
                     <width>120</width>
@@ -1475,7 +1483,7 @@ padding:10x;</string>
                  </widget>
                 </item>
                 <item row="1" column="6">
-                 <widget class="QPushButton" name="pushButton_8">
+                 <widget class="QPushButton" name="pb_bottom_overlay_bcolor">
                   <property name="minimumSize">
                    <size>
                     <width>120</width>
@@ -1589,7 +1597,7 @@ padding:10x;</string>
                  </spacer>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QComboBox" name="cbFont">
+                 <widget class="QComboBox" name="cb_font">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>1</horstretch>
@@ -1615,14 +1623,14 @@ padding:10x;</string>
                  </spacer>
                 </item>
                 <item row="0" column="6">
-                 <widget class="QCheckBox" name="checkBox_16">
+                 <widget class="QCheckBox" name="cb_font_italic">
                   <property name="text">
                    <string>Italic</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="4">
-                 <widget class="QCheckBox" name="checkBox_15">
+                 <widget class="QCheckBox" name="cb_font_bold">
                   <property name="text">
                    <string>Bold</string>
                   </property>
@@ -1714,7 +1722,7 @@ padding:10x;</string>
                  </spacer>
                 </item>
                 <item row="1" column="8">
-                 <widget class="QCheckBox" name="checkBox_5">
+                 <widget class="QCheckBox" name="cb_text_shadow">
                   <property name="text">
                    <string>Text Shadow</string>
                   </property>
@@ -1753,14 +1761,14 @@ padding:10x;</string>
                  </spacer>
                 </item>
                 <item row="1" column="6">
-                 <widget class="QSpinBox" name="sp_title_fontsize">
+                 <widget class="QSpinBox" name="cb_title_font_size">
                   <property name="maximum">
                    <number>30</number>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QSpinBox" name="sbFontSize">
+                 <widget class="QSpinBox" name="cb_font_size">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -1832,7 +1840,7 @@ padding:10x;</string>
                  <number>0</number>
                 </property>
                 <item row="0" column="2">
-                 <widget class="QSpinBox" name="spinBox_24"/>
+                 <widget class="QSpinBox" name="sp_bounding_box"/>
                 </item>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_52">
@@ -1849,7 +1857,7 @@ padding:10x;</string>
                  </widget>
                 </item>
                 <item row="0" column="6">
-                 <widget class="QSpinBox" name="spinBox_25"/>
+                 <widget class="QSpinBox" name="sp_corner_radius"/>
                 </item>
                 <item row="0" column="1">
                  <spacer name="horizontalSpacer_43">

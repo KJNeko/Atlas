@@ -143,12 +143,12 @@ namespace atlas::banner
 		int x {};
 		int y {};
 		QRect rect {};
-		QString& str {};
+		QString str {};
 		int font_size {};
 		QString font_family {};
 		int padding {};
 		int Alignment {};
-		Color backgroundColor {};
+		QColor backgroundColor {};
 	};
 } // namespace atlas::banner
 
