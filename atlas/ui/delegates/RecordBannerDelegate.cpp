@@ -217,7 +217,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_font_family,
 			10,
 			m_engine_align,
-			getEngineColor( record->m_engine, m_engine_default_colors ) );
+			getEngineColor( record->m_engine, m_engine_default ) );
 	}
 	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
@@ -331,15 +331,15 @@ void RecordBannerDelegate::reloadConfig()
 	m_scale_type = config::grid_ui::imageLayout::get();
 	m_top_overlay_height = config::grid_ui::top_overlay_height::get();
 	m_bottom_overlay_height = config::grid_ui::bottom_overlay_height::get();
-	m_enable_top_overlay = config::grid_ui::enableTopOverlay::get();
-	m_enable_bottom_overlay = config::grid_ui::enableBottomOverlay::get();
-	m_overlay_layout = config::grid_ui::overlayLayout::get();
-	m_overlay_color = config::grid_ui::overlayColor::get();
+	m_enable_top_overlay = config::grid_ui::enable_top_overlay::get();
+	m_enable_bottom_overlay = config::grid_ui::enable_top_overlay::get();
+	m_overlay_layout = config::grid_ui::overlay_layout::get();
+	m_overlay_color = config::grid_ui::overlay_color::get();
 	m_feather_radius = config::grid_ui::featherRadius::get();
 	m_blur_radius = config::grid_ui::blurRadius::get();
 	m_blur_type = config::grid_ui::blurType::get();
 	m_enable_capsule_border = config::grid_ui::enableCapsuleBorder::get();
-	m_font_size = config::grid_ui::fontSize::get();
+	m_font_size = config::grid_ui::font_size::get();
 	m_font_family = config::grid_ui::font::get();
 	//BANNER START
 	//title
@@ -350,8 +350,6 @@ void RecordBannerDelegate::reloadConfig()
 	m_title_bcolor = { colorFromString( config::grid_ui::title_bcolor::get() ) };
 	m_title_fcolor = { colorFromString( config::grid_ui::title_fcolor::get() ) };
 	m_title_fontsize = { config::grid_ui::title_font_size::get() };
-	m_title_bold = { config::grid_ui::title_bold_enable::get() };
-	m_title_italics = { config::grid_ui::title_italics_enable::get() };
 	//engine
 	m_engine_enable = { config::grid_ui::engine_enable::get() };
 	m_engine_x = { config::grid_ui::engine_x::get() };
@@ -359,9 +357,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_engine_align = { config::grid_ui::engine_align::get() };
 	m_engine_bcolor = { colorFromString( config::grid_ui::engine_bcolor::get() ) };
 	m_engine_fcolor = { colorFromString( config::grid_ui::engine_fcolor::get() ) };
-	m_engine_default_colors = { config::grid_ui::engine_default_color::get() };
-	m_engine_bold = { config::grid_ui::engine_bold_enable::get() };
-	m_engine_italics = { config::grid_ui::engine_italics_enable::get() };
+	m_engine_default = { config::grid_ui::engine_default::get() };
 	//version
 	m_version_enable = { config::grid_ui::version_enable::get() };
 	m_version_x = { config::grid_ui::version_x::get() };
@@ -406,15 +402,15 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_scale_type { config::grid_ui::imageLayout::get() },
   m_top_overlay_height { config::grid_ui::top_overlay_height::get() },
   m_bottom_overlay_height { config::grid_ui::bottom_overlay_height::get() },
-  m_enable_top_overlay { config::grid_ui::enableTopOverlay::get() },
-  m_enable_bottom_overlay { config::grid_ui::enableBottomOverlay::get() },
-  m_overlay_layout { config::grid_ui::overlayLayout::get() },
-  m_overlay_color { config::grid_ui::overlayColor::get() },
+  m_enable_top_overlay { config::grid_ui::enable_top_overlay::get() },
+  m_enable_bottom_overlay { config::grid_ui::enable_bottom_overlay::get() },
+  m_overlay_layout { config::grid_ui::overlay_layout::get() },
+  m_overlay_color { config::grid_ui::overlay_color::get() },
   m_feather_radius { config::grid_ui::featherRadius::get() },
   m_blur_radius { config::grid_ui::blurRadius::get() },
   m_blur_type { config::grid_ui::blurType::get() },
   m_enable_capsule_border { config::grid_ui::enableCapsuleBorder::get() },
-  m_font_size { config::grid_ui::fontSize::get() },
+  m_font_size { config::grid_ui::font_size::get() },
   m_font_family { config::grid_ui::font::get() },
   //START BANNER
   //title
@@ -425,8 +421,6 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_title_bcolor { colorFromString( config::grid_ui::title_bcolor::get() ) },
   m_title_fcolor { colorFromString( config::grid_ui::title_fcolor::get() ) },
   m_title_fontsize { config::grid_ui::title_font_size::get() },
-  m_title_bold { config::grid_ui::title_bold_enable::get() },
-  m_title_italics { config::grid_ui::title_italics_enable::get() },
   //engine
   m_engine_enable { config::grid_ui::engine_enable::get() },
   m_engine_x { config::grid_ui::engine_x::get() },
@@ -434,9 +428,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_engine_align { config::grid_ui::engine_align::get() },
   m_engine_bcolor { colorFromString( config::grid_ui::engine_bcolor::get() ) },
   m_engine_fcolor { colorFromString( config::grid_ui::engine_fcolor::get() ) },
-  m_engine_default_colors { config::grid_ui::engine_default_color::get() },
-  m_engine_bold { config::grid_ui::engine_bold_enable::get() },
-  m_engine_italics { config::grid_ui::engine_italics_enable::get() },
+  m_engine_default { config::grid_ui::engine_default::get() },
   //version
   m_version_enable { config::grid_ui::version_enable::get() },
   m_version_x { config::grid_ui::version_x::get() },

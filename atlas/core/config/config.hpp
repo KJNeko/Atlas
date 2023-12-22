@@ -290,6 +290,7 @@ enum Link : int
 	UPDATEICON = 11
 };
 
+//Images
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
 SETTINGS_DE( grid_ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
 SETTINGS_D( grid_ui, blurRadius, int, 30 )
@@ -302,20 +303,21 @@ SETTINGS_D( grid_ui, selectedOpacity, int, 50 )
 SETTINGS_D( grid_ui, enableCapsuleBorder, bool, true )
 SETTINGS_D( grid_ui, borderColor, QString, "transparent" )
 
-SETTINGS_D( grid_ui, enableTopOverlay, bool, true )
-SETTINGS_D( grid_ui, enableBottomOverlay, bool, true )
-SETTINGS_D( grid_ui, bottom_overlay_height, int, 26 )
-SETTINGS_D( grid_ui, top_overlay_height, int, 26 )
-SETTINGS_D( grid_ui, overlayColor, QString, "#c8000000" )
+SETTINGS_D( grid_ui, overlay_color, QString, "#c8000000" )
 SETTINGS_D( grid_ui, font, QString, "" )
-SETTINGS_D( grid_ui, fontSize, int, 10 )
+SETTINGS_D( grid_ui, font_size, int, 10 )
 SETTINGS_D( grid_ui, windowHeight, int, 780 )
 SETTINGS_D( grid_ui, windowWidth, int, 1520 )
 SETTINGS_D( grid_ui, itemViewWidth, int, 1266 )
 SETTINGS_D( grid_ui, itemViewHeight, int, 694 )
-SETTINGS_D( grid_ui, overlayLayout, int, 0 )
 
 //FOR BANNER
+//Overlay
+SETTINGS_D( grid_ui, enable_top_overlay, bool, true )
+SETTINGS_D( grid_ui, enable_bottom_overlay, bool, true )
+SETTINGS_D( grid_ui, bottom_overlay_height, int, 26 )
+SETTINGS_D( grid_ui, top_overlay_height, int, 26 )
+SETTINGS_D( grid_ui, overlay_layout, int, 0 )
 //TITLE
 SETTINGS_D( grid_ui, title_enable, bool, true )
 SETTINGS_D( grid_ui, title_x, int, 268 )

@@ -57,7 +57,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 	int m_engine_align;
 	QColor m_engine_bcolor;
 	QColor m_engine_fcolor;
-	bool m_engine_default_colors;
+	bool m_engine_default;
 	bool m_engine_bold;
 	bool m_engine_italics;
 	//version

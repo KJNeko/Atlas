@@ -48,7 +48,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setModel( gridPreviewModel );
 
 	//Add full list of fonts to comboBox.
-	ui->cbFont->addItems( QFontDatabase::families() );
+	ui->cb_font->addItems( QFontDatabase::families() );
 	ui->cbAppFont->addItems( QFontDatabase::families() );
 
 	//Set Fonts
@@ -59,8 +59,8 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 			config::application::font::get() );
 
-	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
-	ui->cbFont->setCurrentText(
+	ui->cb_font_size->setValue( config::grid_ui::font_size::get() );
+	ui->cb_font->setCurrentText(
 		config::grid_ui::font::get() == "" ?
 			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 			config::application::font::get() );
@@ -150,13 +150,13 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sbSelectedOpacity->setValue( config::grid_ui::selectedOpacity::get() );
 	ui->cbCapsuleBorder->setChecked( config::grid_ui::enableCapsuleBorder::get() );
 
-	ui->cbTopOverlay->setChecked( config::grid_ui::enableTopOverlay::get() );
-	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
+	ui->cb_top_overlay->setChecked( config::grid_ui::enable_top_overlay::get() );
+	ui->cb_bottom_overlay->setChecked( config::grid_ui::enable_bottom_overlay::get() );
 	ui->sb_top_overlay_h->setValue( config::grid_ui::top_overlay_height::get() );
 	ui->sb_bottom_overlay_h->setValue( config::grid_ui::bottom_overlay_height::get() );
-	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
-	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
-	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlayLayout::get() );
+	ui->cb_font_size->setValue( config::grid_ui::font_size::get() );
+	ui->cb_font->setCurrentText( config::grid_ui::font::get() );
+	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlay_layout::get() );
 
 	//START BANNER SETTINGS
 	//Title
@@ -166,20 +166,16 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->cb_title_align->setCurrentIndex( config::grid_ui::title_align::get() );
 	gridPreviewDelegate->m_title_bcolor = colorFromString( config::grid_ui::title_bcolor::get() );
 	gridPreviewDelegate->m_title_fcolor = colorFromString( config::grid_ui::title_fcolor::get() );
-	ui->sp_title_fontsize->setValue( config::grid_ui::title_font_size::get() );
-	gridPreviewDelegate->m_title_bold = config::grid_ui::title_bold_enable::get();
-	gridPreviewDelegate->m_title_italics = config::grid_ui::title_italics_enable::get();
+	ui->cb_title_font_size->setValue( config::grid_ui::title_font_size::get() );
 
 	//Engine
 	ui->cb_engine_enable->setChecked( config::grid_ui::engine_enable::get() );
 	ui->sp_engine_x->setValue( config::grid_ui::engine_x::get() );
 	ui->sp_engine_y->setValue( config::grid_ui::engine_y::get() );
 	ui->cb_engine_align->setCurrentIndex( config::grid_ui::engine_align::get() );
-	ui->cb_engine_default->setChecked( config::grid_ui::engine_default_color::get() );
+	ui->cb_engine_default->setChecked( config::grid_ui::engine_default::get() );
 	gridPreviewDelegate->m_engine_bcolor = colorFromString( config::grid_ui::engine_bcolor::get() );
 	gridPreviewDelegate->m_engine_fcolor = colorFromString( config::grid_ui::engine_fcolor::get() );
-	gridPreviewDelegate->m_engine_bold = config::grid_ui::engine_bold_enable::get();
-	gridPreviewDelegate->m_engine_italics = config::grid_ui::engine_italics_enable::get();
 	//Version
 	ui->cb_version_enable->setChecked( config::grid_ui::version_enable::get() );
 	ui->sp_version_x->setValue( config::grid_ui::version_x::get() );
@@ -249,15 +245,15 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::selectedOpacity::set( ui->sbSelectedOpacity->value() );
 	config::grid_ui::enableCapsuleBorder::set( ui->cbCapsuleBorder->checkState() );
 
-	config::grid_ui::enableTopOverlay::set( ui->cbTopOverlay->checkState() );
-	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
+	config::grid_ui::enable_top_overlay::set( ui->cb_top_overlay->checkState() );
+	config::grid_ui::enable_bottom_overlay::set( ui->cb_bottom_overlay->checkState() );
 	config::grid_ui::top_overlay_height::set( ui->sb_top_overlay_h->value() );
 	config::grid_ui::bottom_overlay_height::set( ui->sb_bottom_overlay_h->value() );
-	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
-	config::grid_ui::font::set( ui->cbFont->currentText() );
+	config::grid_ui::font_size::set( ui->cb_font_size->value() );
+	config::grid_ui::font::set( ui->cb_font->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
-	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
-	config::grid_ui::overlayColor::
+	config::grid_ui::overlay_layout::set( ui->cbOverlayLayout->currentIndex() );
+	config::grid_ui::overlay_color::
 		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
 	             "transparent" :
 	             gridPreviewDelegate->m_overlay_color.name( QColor::HexArgb ).toLower() );
@@ -268,7 +264,7 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_x::set( ui->sp_title_x->value() );
 	config::grid_ui::title_y::set( ui->sp_title_y->value() );
 	config::grid_ui::title_align::set( ui->cb_title_align->currentIndex() );
-	config::grid_ui::title_font_size::set( ui->sp_title_fontsize->value() );
+	config::grid_ui::title_font_size::set( ui->cb_title_font_size->value() );
 	config::grid_ui::title_bcolor::
 		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ?
 	             "transparent" :
@@ -277,13 +273,11 @@ void SettingsDialog::saveBannerViewerSettings()
 		set( gridPreviewDelegate->m_title_fcolor.alpha() == 0 ?
 	             "transparent" :
 	             gridPreviewDelegate->m_title_fcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::title_bold_enable::set( gridPreviewDelegate->m_title_bold );
-	config::grid_ui::title_italics_enable::set( gridPreviewDelegate->m_title_italics );
 	//Engine
 	config::grid_ui::engine_enable::set( ui->cb_engine_enable->checkState() );
 	config::grid_ui::engine_x::set( ui->sp_engine_x->value() );
 	config::grid_ui::engine_y::set( ui->sp_engine_y->value() );
-	config::grid_ui::engine_default_color::set( ui->cb_engine_default->checkState() );
+	config::grid_ui::engine_default::set( ui->cb_engine_default->checkState() );
 	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
 	config::grid_ui::title_bcolor::
 		set( gridPreviewDelegate->m_engine_bcolor.alpha() == 0 ?
@@ -293,8 +287,6 @@ void SettingsDialog::saveBannerViewerSettings()
 		set( gridPreviewDelegate->m_engine_fcolor.alpha() == 0 ?
 	             "transparent" :
 	             gridPreviewDelegate->m_engine_fcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::title_bold_enable::set( gridPreviewDelegate->m_engine_bold );
-	config::grid_ui::title_italics_enable::set( gridPreviewDelegate->m_engine_italics );
 	//Version
 	config::grid_ui::version_enable::set( ui->cb_version_enable->checkState() );
 	config::grid_ui::version_x::set( ui->sp_version_x->value() );
@@ -705,14 +697,14 @@ void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1
 //Grid Layout UI
 void SettingsDialog::on_cbTopOverlay_stateChanged( [[maybe_unused]] int state )
 {
-	ui->cbTopOverlay->setChecked( static_cast< bool >( state ) );
+	ui->cb_top_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_top_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
 
 void SettingsDialog::on_cbBottomOverlay_stateChanged( [[maybe_unused]] int state )
 {
-	ui->cbBottomOverlay->setChecked( static_cast< bool >( state ) );
+	ui->cb_bottom_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_bottom_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
@@ -964,7 +956,7 @@ void SettingsDialog::on_pb_engine_fcolor_pressed()
 
 void SettingsDialog::on_cb_engine_default_colors_stateChanged( int state )
 {
-	gridPreviewDelegate->m_engine_default_colors = state;
+	gridPreviewDelegate->m_engine_default = state;
 	qlv->repaint();
 }
 
