@@ -16,6 +16,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>892</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
@@ -2011,7 +2017,7 @@ border-right:none;
           <item row="9" column="6">
            <widget class="QPushButton" name="pb_gametype_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2039,7 +2045,7 @@ border-right:none;
           <item row="13" column="6">
            <widget class="QPushButton" name="pb_favorite_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2091,7 +2097,7 @@ border-right:none;
           <item row="9" column="7">
            <widget class="QPushButton" name="pb_gametype_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -2163,7 +2169,7 @@ border-right:none;
           <item row="12" column="6">
            <widget class="QPushButton" name="pb_likes_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2249,7 +2255,7 @@ border-right:none;
           <item row="1" column="7">
            <widget class="QPushButton" name="pb_title_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2313,7 +2319,7 @@ border-right:none;
           <item row="8" column="7">
            <widget class="QPushButton" name="pb_status_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2357,7 +2363,7 @@ border-right:none;
           <item row="10" column="6">
            <widget class="QPushButton" name="pb_rating_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2532,7 +2538,7 @@ border-right:none;
           <item row="14" column="6">
            <widget class="QPushButton" name="pb_updateicon_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2645,7 +2651,7 @@ border-right:none;
           <item row="14" column="7">
            <widget class="QPushButton" name="pb_updateicon_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -2772,7 +2778,7 @@ border-right:none;
           <item row="10" column="7">
            <widget class="QPushButton" name="pb_rating_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -2798,7 +2804,7 @@ border-right:none;
           <item row="4" column="7">
            <widget class="QPushButton" name="pb_engine_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2934,7 +2940,7 @@ border-right:none;
           <item row="11" column="7">
            <widget class="QPushButton" name="pb_views_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -3014,7 +3020,7 @@ border-right:none;
           <item row="3" column="7">
            <widget class="QPushButton" name="pb_version_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -3057,7 +3063,7 @@ border-right:none;
           <item row="11" column="6">
            <widget class="QPushButton" name="pb_views_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -3085,7 +3091,7 @@ border-right:none;
           <item row="12" column="7">
            <widget class="QPushButton" name="pb_likes_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -3159,7 +3165,7 @@ border-right:none;
           <item row="8" column="6">
            <widget class="QPushButton" name="pb_status_bcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -3181,7 +3187,7 @@ border-right:none;
           <item row="13" column="7">
            <widget class="QPushButton" name="pb_favorite_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -3238,7 +3244,7 @@ border-right:none;
           <item row="2" column="7">
            <widget class="QPushButton" name="pb_creator_fcolor">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="minimumSize">
              <size>

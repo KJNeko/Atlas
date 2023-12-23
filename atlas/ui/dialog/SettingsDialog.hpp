@@ -85,8 +85,8 @@ class SettingsDialog final : public QDialog
 	void on_pb_top_overlay_bcolor_pressed();
 	void on_pb_bottom_overlay_bcolor_pressed();
 	void on_cb_overlay_layout_currentIndexChanged( int index );
-	void cb_top_overlay_stateChanged( int state );
-	void cb_bottom_overlay_stateChanged( int state );
+	void on_cb_top_overlay_stateChanged( int state );
+	void on_cb_bottom_overlay_stateChanged( int state );
 	//font
 	void on_cb_font_currentTextChanged( const QString& text );
 	void on_sb_font_size_valueChanged( int num );

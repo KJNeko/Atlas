@@ -307,14 +307,10 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::font::set( ui->cb_font->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
 	config::grid_ui::overlay_layout::set( ui->cb_overlay_layout->currentIndex() );
-	config::grid_ui::top_overlay_bcolor::
-		set( gridPreviewDelegate->m_top_overlay_color.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_top_overlay_color.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::bottom_overlay_bcolor::
-		set( gridPreviewDelegate->m_bottom_overlay_color.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_bottom_overlay_color.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::top_overlay_bcolor::set( gridPreviewDelegate->m_top_overlay_color.name( QColor::HexArgb )
+	                                              .toLower() );
+	config::grid_ui::bottom_overlay_bcolor::set( gridPreviewDelegate->m_bottom_overlay_color.name( QColor::HexArgb )
+	                                                 .toLower() );
 
 	config::grid_ui::font_bold::set( ui->cb_font_bold->checkState() );
 	config::grid_ui::font_italic::set( ui->cb_font_italic->checkState() );
@@ -329,14 +325,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::title_y::set( ui->sp_title_y->value() );
 	config::grid_ui::title_align::set( ui->cb_title_align->currentIndex() );
 	config::grid_ui::title_font_size::set( ui->sb_title_font_size->value() );
-	config::grid_ui::title_bcolor::
-		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_title_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::title_fcolor::
-		set( gridPreviewDelegate->m_title_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_title_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::title_fcolor::set( gridPreviewDelegate->m_title_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::title_default::set( ui->cb_title_default->checkState() );
 	config::grid_ui::title_link::set( ui->cb_title_link->currentIndex() );
 
@@ -345,14 +335,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::engine_x::set( ui->sp_engine_x->value() );
 	config::grid_ui::engine_y::set( ui->sp_engine_y->value() );
 	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
-	config::grid_ui::title_bcolor::
-		set( gridPreviewDelegate->m_engine_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_engine_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::title_fcolor::
-		set( gridPreviewDelegate->m_engine_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_engine_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::engine_bcolor::set( gridPreviewDelegate->m_engine_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::engine_fcolor::set( gridPreviewDelegate->m_engine_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::engine_default::set( ui->cb_engine_default->checkState() );
 	config::grid_ui::engine_link::set( ui->cb_engine_link->currentIndex() );
 	//Version
@@ -360,14 +344,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::version_x::set( ui->sp_version_x->value() );
 	config::grid_ui::version_y::set( ui->sp_version_y->value() );
 	config::grid_ui::version_align::set( ui->cb_version_align->currentIndex() );
-	config::grid_ui::version_bcolor::
-		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_version_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::version_fcolor::
-		set( gridPreviewDelegate->m_version_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_version_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::version_bcolor::set( gridPreviewDelegate->m_version_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::version_fcolor::set( gridPreviewDelegate->m_version_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::version_default::set( ui->cb_version_default->checkState() );
 	config::grid_ui::version_link::set( ui->cb_version_link->currentIndex() );
 	//Creator
@@ -375,14 +353,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::creator_x::set( ui->sp_creator_x->value() );
 	config::grid_ui::creator_y::set( ui->sp_creator_y->value() );
 	config::grid_ui::creator_align::set( ui->cb_creator_align->currentIndex() );
-	config::grid_ui::creator_bcolor::
-		set( gridPreviewDelegate->m_creator_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_creator_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::creator_fcolor::
-		set( gridPreviewDelegate->m_creator_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_creator_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::creator_bcolor::set( gridPreviewDelegate->m_creator_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::creator_fcolor::set( gridPreviewDelegate->m_creator_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::creator_default::set( ui->cb_creator_default->checkState() );
 	config::grid_ui::creator_link::set( ui->cb_creator_link->currentIndex() );
 	//Status
@@ -390,14 +362,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::status_x::set( ui->sp_status_x->value() );
 	config::grid_ui::status_y::set( ui->sp_status_y->value() );
 	config::grid_ui::status_align::set( ui->cb_status_align->currentIndex() );
-	config::grid_ui::status_bcolor::
-		set( gridPreviewDelegate->m_status_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_status_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::status_fcolor::
-		set( gridPreviewDelegate->m_status_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_status_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::status_bcolor::set( gridPreviewDelegate->m_status_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::status_fcolor::set( gridPreviewDelegate->m_status_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::status_default::set( ui->cb_status_default->checkState() );
 	config::grid_ui::status_link::set( ui->cb_status_link->currentIndex() );
 	//gametype
@@ -405,14 +371,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::gametype_x::set( ui->sp_gametype_x->value() );
 	config::grid_ui::gametype_y::set( ui->sp_gametype_y->value() );
 	config::grid_ui::gametype_align::set( ui->cb_gametype_align->currentIndex() );
-	config::grid_ui::gametype_bcolor::
-		set( gridPreviewDelegate->m_gametype_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_gametype_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::gametype_fcolor::
-		set( gridPreviewDelegate->m_gametype_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_gametype_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::gametype_bcolor::set( gridPreviewDelegate->m_gametype_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::gametype_fcolor::set( gridPreviewDelegate->m_gametype_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::gametype_default::set( ui->cb_gametype_default->checkState() );
 	config::grid_ui::gametype_link::set( ui->cb_gametype_link->currentIndex() );
 	//rating
@@ -420,14 +380,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::rating_x::set( ui->sp_rating_x->value() );
 	config::grid_ui::rating_y::set( ui->sp_rating_y->value() );
 	config::grid_ui::rating_align::set( ui->cb_rating_align->currentIndex() );
-	config::grid_ui::rating_bcolor::
-		set( gridPreviewDelegate->m_rating_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_rating_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::rating_fcolor::
-		set( gridPreviewDelegate->m_rating_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_rating_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::rating_bcolor::set( gridPreviewDelegate->m_rating_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::rating_fcolor::set( gridPreviewDelegate->m_rating_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::rating_default::set( ui->cb_rating_default->checkState() );
 	config::grid_ui::rating_link::set( ui->cb_rating_link->currentIndex() );
 	//views
@@ -435,14 +389,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::views_x::set( ui->sp_views_x->value() );
 	config::grid_ui::views_y::set( ui->sp_views_y->value() );
 	config::grid_ui::views_align::set( ui->cb_views_align->currentIndex() );
-	config::grid_ui::views_bcolor::
-		set( gridPreviewDelegate->m_views_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_views_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::views_fcolor::
-		set( gridPreviewDelegate->m_views_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_views_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::views_bcolor::set( gridPreviewDelegate->m_views_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::views_fcolor::set( gridPreviewDelegate->m_views_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::views_default::set( ui->cb_views_default->checkState() );
 	config::grid_ui::views_link::set( ui->cb_views_link->currentIndex() );
 	//likes
@@ -450,14 +398,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::likes_x::set( ui->sp_likes_x->value() );
 	config::grid_ui::likes_y::set( ui->sp_likes_y->value() );
 	config::grid_ui::likes_align::set( ui->cb_likes_align->currentIndex() );
-	config::grid_ui::likes_bcolor::
-		set( gridPreviewDelegate->m_likes_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_likes_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::likes_fcolor::
-		set( gridPreviewDelegate->m_likes_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_likes_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::likes_bcolor::set( gridPreviewDelegate->m_likes_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::likes_fcolor::set( gridPreviewDelegate->m_likes_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::likes_default::set( ui->cb_likes_default->checkState() );
 	config::grid_ui::likes_link::set( ui->cb_likes_link->currentIndex() );
 	//favorite
@@ -465,14 +407,8 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::favorite_x::set( ui->sp_favorite_x->value() );
 	config::grid_ui::favorite_y::set( ui->sp_favorite_y->value() );
 	config::grid_ui::favorite_align::set( ui->cb_favorite_align->currentIndex() );
-	config::grid_ui::favorite_bcolor::
-		set( gridPreviewDelegate->m_favorite_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_favorite_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::favorite_fcolor::
-		set( gridPreviewDelegate->m_favorite_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_favorite_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::favorite_bcolor::set( gridPreviewDelegate->m_favorite_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::favorite_fcolor::set( gridPreviewDelegate->m_favorite_fcolor.name( QColor::HexArgb ).toLower() );
 	config::grid_ui::favorite_default::set( ui->cb_favorite_default->checkState() );
 	config::grid_ui::favorite_link::set( ui->cb_favorite_link->currentIndex() );
 	//updateicon
@@ -480,14 +416,10 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::updateicon_x::set( ui->sp_updateicon_x->value() );
 	config::grid_ui::updateicon_y::set( ui->sp_updateicon_y->value() );
 	config::grid_ui::updateicon_align::set( ui->cb_updateicon_align->currentIndex() );
-	config::grid_ui::updateicon_bcolor::
-		set( gridPreviewDelegate->m_updateicon_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_updateicon_bcolor.name( QColor::HexArgb ).toLower() );
-	config::grid_ui::updateicon_fcolor::
-		set( gridPreviewDelegate->m_updateicon_fcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_updateicon_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::updateicon_bcolor::set( gridPreviewDelegate->m_updateicon_bcolor.name( QColor::HexArgb )
+	                                             .toLower() );
+	config::grid_ui::updateicon_fcolor::set( gridPreviewDelegate->m_updateicon_fcolor.name( QColor::HexArgb )
+	                                             .toLower() );
 	config::grid_ui::updateicon_default::set( ui->cb_updateicon_default->checkState() );
 	config::grid_ui::updateicon_link::set( ui->cb_updateicon_link->currentIndex() );
 
@@ -856,16 +788,16 @@ void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1
 }
 
 //Grid Layout UI
-void SettingsDialog::cb_top_overlay_stateChanged( int state )
+void SettingsDialog::on_cb_top_overlay_stateChanged( int state )
 {
-	ui->cb_top_overlay->setChecked( static_cast< bool >( state ) );
+	//ui->cb_top_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_top_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
 
-void SettingsDialog::cb_bottom_overlay_stateChanged( int state )
+void SettingsDialog::on_cb_bottom_overlay_stateChanged( int state )
 {
-	ui->cb_bottom_overlay->setChecked( static_cast< bool >( state ) );
+	//ui->cb_bottom_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_bottom_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
@@ -1081,7 +1013,7 @@ void SettingsDialog::on_pb_title_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_title_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1090,7 +1022,7 @@ void SettingsDialog::on_pb_title_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_title_fcolor, nullptr, "Title Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_title_fcolor, nullptr, "Title Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_title_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1104,6 +1036,7 @@ void SettingsDialog::on_sb_title_font_size_valueChanged( int num )
 void SettingsDialog::on_cb_title_default_stateChanged( int state )
 {
 	gridPreviewDelegate->m_title_default = state;
+	qlv->repaint();
 }
 
 void SettingsDialog::on_cb_title_link_currentIndexChanged( int state )
@@ -1140,7 +1073,9 @@ void SettingsDialog::on_pb_engine_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_engine_bcolor, nullptr, "Engine Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_engine_bcolor,
+		nullptr,
+		"Engine Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_engine_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1149,7 +1084,9 @@ void SettingsDialog::on_pb_engine_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_engine_fcolor, nullptr, "Engine Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_engine_fcolor,
+		nullptr,
+		"Engine Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_engine_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1194,7 +1131,9 @@ void SettingsDialog::on_pb_version_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_version_bcolor, nullptr, "Version Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_version_bcolor,
+		nullptr,
+		"Version Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_version_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1203,7 +1142,9 @@ void SettingsDialog::on_pb_version_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_version_fcolor, nullptr, "Version Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_version_fcolor,
+		nullptr,
+		"Version Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_version_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1248,7 +1189,9 @@ void SettingsDialog::on_pb_creator_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_creator_bcolor, nullptr, "Creator Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_creator_bcolor,
+		nullptr,
+		"Creator Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_creator_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1257,7 +1200,9 @@ void SettingsDialog::on_pb_creator_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_creator_fcolor, nullptr, "Creator Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_creator_fcolor,
+		nullptr,
+		"Creator Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_creator_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1303,7 +1248,9 @@ void SettingsDialog::on_pb_status_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_status_bcolor, nullptr, "status Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_status_bcolor,
+		nullptr,
+		"status Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_status_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1312,7 +1259,9 @@ void SettingsDialog::on_pb_status_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_status_fcolor, nullptr, "status Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_status_fcolor,
+		nullptr,
+		"status Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_status_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1326,6 +1275,7 @@ void SettingsDialog::on_cb_status_default_stateChanged( int state )
 void SettingsDialog::on_cb_status_link_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_status_link = state;
+	qlv->repaint();
 }
 
 //GameType
@@ -1357,7 +1307,9 @@ void SettingsDialog::on_pb_gametype_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_gametype_bcolor, nullptr, "gametype Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_gametype_bcolor,
+		nullptr,
+		"Gametype Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_gametype_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1366,7 +1318,9 @@ void SettingsDialog::on_pb_gametype_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_gametype_fcolor, nullptr, "gametype Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_gametype_fcolor,
+		nullptr,
+		"Gametype Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_gametype_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1411,7 +1365,9 @@ void SettingsDialog::on_pb_rating_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_rating_bcolor, nullptr, "rating Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_rating_bcolor,
+		nullptr,
+		"Rating Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_rating_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1420,7 +1376,9 @@ void SettingsDialog::on_pb_rating_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_rating_fcolor, nullptr, "rating Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_rating_fcolor,
+		nullptr,
+		"Rating Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_rating_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1465,7 +1423,7 @@ void SettingsDialog::on_pb_views_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_views_bcolor, nullptr, "views Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_views_bcolor, nullptr, "Views Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_views_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1474,7 +1432,7 @@ void SettingsDialog::on_pb_views_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_views_fcolor, nullptr, "views Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_views_fcolor, nullptr, "Views Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_views_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1519,7 +1477,7 @@ void SettingsDialog::on_pb_likes_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_likes_bcolor, nullptr, "likes Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_likes_bcolor, nullptr, "Likes Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_likes_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1528,7 +1486,7 @@ void SettingsDialog::on_pb_likes_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_likes_fcolor, nullptr, "likes Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_likes_fcolor, nullptr, "Likes Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_likes_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1573,7 +1531,9 @@ void SettingsDialog::on_pb_favorite_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_favorite_bcolor, nullptr, "favorite Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_favorite_bcolor,
+		nullptr,
+		"Favorite Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_favorite_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1582,7 +1542,9 @@ void SettingsDialog::on_pb_favorite_fcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_favorite_fcolor, nullptr, "favorite Foreground Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_favorite_fcolor,
+		nullptr,
+		"Favorite Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_favorite_fcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1629,8 +1591,7 @@ void SettingsDialog::on_pb_updateicon_bcolor_pressed()
 	QColor backgroundColor = colorDialog.getColor(
 		gridPreviewDelegate->m_updateicon_bcolor,
 		nullptr,
-		"updateicon Background Color",
-		QColorDialog::ShowAlphaChannel );
+		"updateicon Background Color" ); //,QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_updateicon_bcolor = backgroundColor;
 	qlv->repaint();
 }
@@ -1641,8 +1602,7 @@ void SettingsDialog::on_pb_updateicon_fcolor_pressed()
 	QColor backgroundColor = colorDialog.getColor(
 		gridPreviewDelegate->m_updateicon_fcolor,
 		nullptr,
-		"updateicon Foreground Color",
-		QColorDialog::ShowAlphaChannel );
+		"updateicon Foreground Color" ); //,QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_updateicon_fcolor = backgroundColor;
 	qlv->repaint();
 }

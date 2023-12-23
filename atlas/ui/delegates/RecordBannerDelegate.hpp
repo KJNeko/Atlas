@@ -174,9 +174,15 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const QString& str,
 		const int font_size,
 		const QString font_family,
+		const QFont::Weight font_weight,
+		const QFont::Style font_style,
+		const bool text_shadow,
 		const int padding,
+		const int corner_radius,
 		const int Alignment,
-		QColor backgroundColor ) const;
+		const int link,
+		QColor backgroundColor,
+		QColor foregroundColor ) const;
 	QColor getEngineColor( QString engine, bool isEnabled ) const;
 	QColor getStatusColor( QString status, bool isEnabled ) const;
 	QColor getGameTypeColor( QString status, bool isEnabled ) const;

@@ -169,9 +169,16 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status,
 				m_font_size,
 				m_font_family,
+				m_font_bold ? QFont::Bold : QFont::Normal,
+				m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+				m_font_shadow,
 				m_padding,
+				m_corner_radius,
 				m_status_align,
-				getStatusColor( record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status, true ) );
+				m_status_link,
+				getStatusColor(
+					record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status, m_status_default ),
+				m_status_default ? qRgb( 210, 210, 210 ) : m_status_fcolor );
 		}
 		//Draw Game Type
 		if ( m_gametype_enable )
@@ -184,9 +191,16 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category,
 				m_font_size,
 				m_font_family,
+				m_font_bold ? QFont::Bold : QFont::Normal,
+				m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+				m_font_shadow,
 				m_padding,
+				m_corner_radius,
 				m_gametype_align,
-				getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, true ) );
+				m_gametype_link,
+				getGameTypeColor(
+					record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, m_gametype_default ),
+				m_gametype_default ? qRgb( 210, 210, 210 ) : m_gametype_fcolor );
 		}
 	}
 	//Draw Title
@@ -200,9 +214,15 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->title : record->m_title,
 			m_title_fontsize,
 			m_font_family,
+			m_font_bold ? QFont::Bold : QFont::Normal,
+			m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+			m_font_shadow,
 			m_padding,
+			m_corner_radius,
 			m_title_align,
-			m_title_bcolor );
+			m_title_link,
+			m_title_default ? "transparent" : m_title_bcolor,
+			m_title_default ? qRgb( 210, 210, 210 ) : m_title_fcolor );
 	}
 	//Draw Engine : Use default font
 	if ( m_engine_enable )
@@ -215,9 +235,15 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->engine : record->m_engine,
 			m_font_size,
 			m_font_family,
+			m_font_bold ? QFont::Bold : QFont::Normal,
+			m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+			m_font_shadow,
 			m_padding,
+			m_corner_radius,
 			m_engine_align,
-			getEngineColor( record->m_engine, m_engine_default ) );
+			m_engine_link,
+			getEngineColor( record->m_engine, m_engine_default ),
+			m_engine_default ? qRgb( 210, 210, 210 ) : m_engine_fcolor );
 	}
 	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
@@ -231,18 +257,17 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			latest->m_version,
 			m_font_size,
 			m_font_family,
+			m_font_bold ? QFont::Bold : QFont::Normal,
+			m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+			m_font_shadow,
 			m_padding,
+			m_corner_radius,
 			m_version_align,
-			m_version_bcolor );
-		//this->drawText( painter, options_rect, stripe_height, m_version_location, latest->m_version );
+			m_version_link,
+			m_version_default ? "transparent" : m_version_bcolor,
+			m_version_default ? qRgb( 210, 210, 210 ) : m_version_fcolor );
 	}
-	else
-	{
-		//this->drawText( painter, options_rect, stripe_height, m_version_location, "No Version" );
-		//Draw Creator
-		//this->drawText( painter, options_rect, stripe_height, m_creator_location, record->m_creator );
-	}
-	//Draw Creator
+
 	if ( m_creator_enable )
 	{
 		this->drawText(
@@ -253,9 +278,15 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			record->atlas_data.has_value() ? record->atlas_data.value()->creator : record->m_creator,
 			m_font_size,
 			m_font_family,
+			m_font_bold ? QFont::Bold : QFont::Normal,
+			m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+			m_font_shadow,
 			m_padding,
+			m_corner_radius,
 			m_creator_align,
-			m_creator_bcolor );
+			m_creator_link,
+			m_creator_default ? "transparent" : m_creator_bcolor,
+			m_creator_default ? qRgb( 210, 210, 210 ) : m_creator_fcolor );
 	}
 
 	painter->restore();
@@ -277,15 +308,21 @@ QRect RecordBannerDelegate::drawText(
 	const QString& str,
 	const int font_size,
 	const QString font_family,
+	const QFont::Weight font_weight,
+	const QFont::Style font_style,
+	const bool text_shadow,
 	const int padding,
+	const int corner_radius,
 	const int align,
-	QColor backgroundColor ) const
+	const int link,
+	QColor backgroundColor,
+	QColor foregroundColor ) const
 {
-	//painter->save();
 	//Calculate rect size for text
 	QFont font;
 	font.setPixelSize( font_size );
 	font.setFamily( font_family );
+	font.setWeight( font_weight );
 	QFontMetrics fm( font );
 	int t_width = fm.horizontalAdvance( str ) + padding;
 	int t_height = fm.height() + padding;
@@ -301,21 +338,19 @@ QRect RecordBannerDelegate::drawText(
 	//Draw Bounding Rect
 	painter->setPen( QPen( backgroundColor ) ); //no pen
 	painter->setBrush( QBrush( backgroundColor ) );
-	painter->drawRoundedRect( text_rect, 5, 5 );
-	//Text shadown
-	//painter->setRenderHint( QPainter::Antialiasing );
-	//painter->setPen( Qt::black );
-	//painter->drawText( text_rect.adjusted( 1, 1, 1, 1 ), Qt::AlignHCenter | Qt::AlignVCenter, str );
+	painter->drawRoundedRect( text_rect, corner_radius, corner_radius );
+	//Text shadow
+	if ( text_shadow )
+	{
+		painter->setRenderHint( QPainter::Antialiasing );
+		painter->setPen( Qt::black );
+		painter->drawText( text_rect.adjusted( 1, 1, 1, 1 ), Qt::AlignHCenter | Qt::AlignVCenter, str );
+	}
 	//Reset pet to draw text
-	painter->setPen( qRgb( 210, 210, 210 ) );
+	painter->setPen( foregroundColor );
 	//Alight text in center of Rect
 	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
-	//painter->restore();
 
-	//qInfo() << "STATS: " << str << " x_loc:" << text_rect.x() << " y_loc:" << text_rect.y();
-	//const QSize size { rect.width(), strip_size };
-	//const QRect text_rect { rect.topLeft() + QPoint( 10, 0 ), size };
-	//painter->drawText( text_rect, Qt::AlignLeft | Qt::AlignVCenter, str );
 	return text_rect;
 }
 
@@ -332,7 +367,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_top_overlay_height = config::grid_ui::top_overlay_height::get();
 	m_bottom_overlay_height = config::grid_ui::bottom_overlay_height::get();
 	m_enable_top_overlay = config::grid_ui::enable_top_overlay::get();
-	m_enable_bottom_overlay = config::grid_ui::enable_top_overlay::get();
+	m_enable_bottom_overlay = config::grid_ui::enable_bottom_overlay::get();
 	m_overlay_layout = config::grid_ui::overlay_layout::get();
 	m_top_overlay_color = config::grid_ui::top_overlay_bcolor::get();
 	m_bottom_overlay_color = config::grid_ui::bottom_overlay_bcolor::get();
@@ -716,7 +751,7 @@ QColor RecordBannerDelegate::getGameTypeColor( QString str, bool isEnabled ) con
 	{
 		color = "#3f4043";
 	}
-	return color;
+	return isEnabled ? color : "transparent";
 }
 
 QColor RecordBannerDelegate::colorFromString( QString str )
