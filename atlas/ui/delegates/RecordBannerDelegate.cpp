@@ -176,8 +176,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_corner_radius,
 				m_status_align,
 				m_status_link,
-				getStatusColor(
-					record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status, m_status_default ),
+				m_status_default ?
+					getStatusColor( record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status ) :
+					m_status_bcolor,
 				m_status_default ? qRgb( 210, 210, 210 ) : m_status_fcolor );
 		}
 		//Draw Game Type
@@ -198,8 +199,9 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_corner_radius,
 				m_gametype_align,
 				m_gametype_link,
-				getGameTypeColor(
-					record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category, m_gametype_default ),
+				m_gametype_default ?
+					getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category ) :
+					m_gametype_bcolor,
 				m_gametype_default ? qRgb( 210, 210, 210 ) : m_gametype_fcolor );
 		}
 	}
@@ -242,7 +244,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_corner_radius,
 			m_engine_align,
 			m_engine_link,
-			getEngineColor( record->m_engine, m_engine_default ),
+			m_engine_default ? getEngineColor( record->m_engine ) : m_engine_bcolor,
 			m_engine_default ? qRgb( 210, 210, 210 ) : m_engine_fcolor );
 	}
 	//Draw Version : Use default font
@@ -631,7 +633,7 @@ QSize RecordBannerDelegate::
 	return qsize;
 }
 
-QColor RecordBannerDelegate::getEngineColor( QString str, bool isEnabled ) const
+QColor RecordBannerDelegate::getEngineColor( QString str ) const
 {
 	QColor backgroundColor;
 	const QString ename = str.toUpper();
@@ -715,10 +717,10 @@ QColor RecordBannerDelegate::getEngineColor( QString str, bool isEnabled ) const
 	}
 
 	//Return a color if enabled. If not, return transparent
-	return isEnabled ? backgroundColor : "transparent";
+	return backgroundColor;
 }
 
-QColor RecordBannerDelegate::getStatusColor( QString str, bool isEnabled ) const
+QColor RecordBannerDelegate::getStatusColor( QString str ) const
 {
 	QColor color;
 	const QString ename = str.toUpper();
@@ -736,10 +738,10 @@ QColor RecordBannerDelegate::getStatusColor( QString str, bool isEnabled ) const
 	}
 	return color;
 
-	return isEnabled ? color : "transparent";
+	return color;
 }
 
-QColor RecordBannerDelegate::getGameTypeColor( QString str, bool isEnabled ) const
+QColor RecordBannerDelegate::getGameTypeColor( QString str ) const
 {
 	QColor color;
 	const QString ename = str.toUpper();
@@ -751,7 +753,7 @@ QColor RecordBannerDelegate::getGameTypeColor( QString str, bool isEnabled ) con
 	{
 		color = "#3f4043";
 	}
-	return isEnabled ? color : "transparent";
+	return color;
 }
 
 QColor RecordBannerDelegate::colorFromString( QString str )

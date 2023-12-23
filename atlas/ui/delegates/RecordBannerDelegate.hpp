@@ -183,9 +183,9 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const int link,
 		QColor backgroundColor,
 		QColor foregroundColor ) const;
-	QColor getEngineColor( QString engine, bool isEnabled ) const;
-	QColor getStatusColor( QString status, bool isEnabled ) const;
-	QColor getGameTypeColor( QString status, bool isEnabled ) const;
+	QColor getEngineColor( QString engine ) const;
+	QColor getStatusColor( QString status ) const;
+	QColor getGameTypeColor( QString status ) const;
 
   public slots:
 	void reloadConfig();
