@@ -182,7 +182,19 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 		const int Alignment,
 		const int link,
 		QColor backgroundColor,
-		QColor foregroundColor ) const;
+		QColor foregroundColor,
+		QString pixmap_str ) const;
+
+	void drawIcon(
+		QPainter* painter,
+		const int x,
+		const int y,
+		const QRect rect,
+		const int size,
+		const int align,
+		const int link,
+		QString pixmap_str ) const;
+
 	QColor getEngineColor( QString engine ) const;
 	QColor getStatusColor( QString status ) const;
 	QColor getGameTypeColor( QString status ) const;

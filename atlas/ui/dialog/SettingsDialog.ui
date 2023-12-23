@@ -1995,7 +1995,7 @@ border-right:none;
           <item row="14" column="4">
            <widget class="QComboBox" name="cb_updateicon_align">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -2045,7 +2045,7 @@ border-right:none;
           <item row="13" column="6">
            <widget class="QPushButton" name="pb_favorite_bcolor">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2277,7 +2277,7 @@ border-right:none;
           <item row="14" column="5">
            <widget class="QCheckBox" name="cb_updateicon_default">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -2287,7 +2287,7 @@ border-right:none;
           <item row="14" column="2">
            <widget class="QSpinBox" name="sp_updateicon_x">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -2538,7 +2538,7 @@ border-right:none;
           <item row="14" column="6">
            <widget class="QPushButton" name="pb_updateicon_bcolor">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2651,7 +2651,7 @@ border-right:none;
           <item row="14" column="7">
            <widget class="QPushButton" name="pb_updateicon_fcolor">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -2716,7 +2716,7 @@ border-right:none;
           <item row="14" column="0">
            <widget class="QLabel" name="label_64">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Update Icon</string>
@@ -3010,7 +3010,7 @@ border-right:none;
           <item row="13" column="5">
            <widget class="QCheckBox" name="cb_favorite_default">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Default</string>
@@ -3187,7 +3187,7 @@ border-right:none;
           <item row="13" column="7">
            <widget class="QPushButton" name="pb_favorite_fcolor">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -3306,7 +3306,7 @@ border-right:none;
           <item row="14" column="3">
            <widget class="QSpinBox" name="sp_updateicon_y">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximum">
              <number>999</number>
@@ -3380,7 +3380,7 @@ border-right:none;
           <item row="14" column="1">
            <widget class="QCheckBox" name="cb_updateicon_enable">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Enable</string>

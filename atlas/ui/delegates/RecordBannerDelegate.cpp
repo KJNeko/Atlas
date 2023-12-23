@@ -154,6 +154,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	QRect m_engine_rect;
 	QRect m_gametype_rect;
 	QRect m_status_rect;
+	QRect m_rating_rect;
 	//ONLY DRAW ITEMS BELOW IF ATLAS DATA IS AVAILABLE
 	//If Record == 1 continue: base record
 	if ( record->atlas_data.has_value() || record->m_game_id == 1 )
@@ -179,7 +180,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_status_default ?
 					getStatusColor( record->m_game_id == 1 ? "Completed" : record->atlas_data.value()->status ) :
 					m_status_bcolor,
-				m_status_default ? qRgb( 210, 210, 210 ) : m_status_fcolor );
+				m_status_default ? qRgb( 210, 210, 210 ) : m_status_fcolor,
+				"" );
 		}
 		//Draw Game Type
 		if ( m_gametype_enable )
@@ -202,7 +204,76 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 				m_gametype_default ?
 					getGameTypeColor( record->m_game_id == 1 ? "VN" : record->atlas_data.value()->category ) :
 					m_gametype_bcolor,
-				m_gametype_default ? qRgb( 210, 210, 210 ) : m_gametype_fcolor );
+				m_gametype_default ? qRgb( 210, 210, 210 ) : m_gametype_fcolor,
+				"" );
+		}
+	}
+	//These are f95 data Specific items
+	if ( record->f95_data.has_value() || record->m_game_id == 1 )
+	{
+		//Rating
+		if ( m_rating_enable )
+		{
+			m_rating_rect = this->drawText(
+				painter,
+				m_rating_x,
+				m_rating_y,
+				options_rect,
+				record->m_game_id == 1 ? "5.0" : record->f95_data.value()->rating,
+				m_font_size,
+				m_font_family,
+				m_font_bold ? QFont::Bold : QFont::Normal,
+				m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+				m_font_shadow,
+				m_padding,
+				m_corner_radius,
+				m_rating_align,
+				m_rating_link,
+				m_rating_default ? "transparent" : m_rating_bcolor,
+				m_rating_default ? qRgb( 210, 210, 210 ) : m_rating_fcolor,
+				":/images/assets/rating_icon_blank.svg" );
+		}
+		if ( m_views_enable )
+		{
+			this->drawText(
+				painter,
+				m_views_x,
+				m_views_y,
+				options_rect,
+				record->m_game_id == 1 ? "100" : record->f95_data.value()->views,
+				m_font_size,
+				m_font_family,
+				m_font_bold ? QFont::Bold : QFont::Normal,
+				m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+				m_font_shadow,
+				m_padding,
+				m_corner_radius,
+				m_views_align,
+				m_views_link,
+				m_views_default ? "transparent" : m_views_bcolor,
+				m_views_default ? qRgb( 210, 210, 210 ) : m_views_fcolor,
+				":/images/assets/views_icon.svg" );
+		}
+		if ( m_likes_enable )
+		{
+			this->drawText(
+				painter,
+				m_likes_x,
+				m_likes_y,
+				options_rect,
+				record->m_game_id == 1 ? "150" : record->f95_data.value()->likes,
+				m_font_size,
+				m_font_family,
+				m_font_bold ? QFont::Bold : QFont::Normal,
+				m_font_italic ? QFont::StyleItalic : QFont::StyleNormal,
+				m_font_shadow,
+				m_padding,
+				m_corner_radius,
+				m_likes_align,
+				m_likes_link,
+				m_likes_default ? "transparent" : m_likes_bcolor,
+				m_likes_default ? qRgb( 210, 210, 210 ) : m_likes_fcolor,
+				":/images/assets/likes_white.svg" );
 		}
 	}
 	//Draw Title
@@ -224,7 +295,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_title_align,
 			m_title_link,
 			m_title_default ? "transparent" : m_title_bcolor,
-			m_title_default ? qRgb( 210, 210, 210 ) : m_title_fcolor );
+			m_title_default ? qRgb( 210, 210, 210 ) : m_title_fcolor,
+			"" );
 	}
 	//Draw Engine : Use default font
 	if ( m_engine_enable )
@@ -245,7 +317,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_engine_align,
 			m_engine_link,
 			m_engine_default ? getEngineColor( record->m_engine ) : m_engine_bcolor,
-			m_engine_default ? qRgb( 210, 210, 210 ) : m_engine_fcolor );
+			m_engine_default ? qRgb( 210, 210, 210 ) : m_engine_fcolor,
+			"" );
 	}
 	//Draw Version : Use default font
 	if ( record->m_versions.size() && m_version_enable )
@@ -267,7 +340,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_version_align,
 			m_version_link,
 			m_version_default ? "transparent" : m_version_bcolor,
-			m_version_default ? qRgb( 210, 210, 210 ) : m_version_fcolor );
+			m_version_default ? qRgb( 210, 210, 210 ) : m_version_fcolor,
+			"" );
 	}
 
 	if ( m_creator_enable )
@@ -288,7 +362,20 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_creator_align,
 			m_creator_link,
 			m_creator_default ? "transparent" : m_creator_bcolor,
-			m_creator_default ? qRgb( 210, 210, 210 ) : m_creator_fcolor );
+			m_creator_default ? qRgb( 210, 210, 210 ) : m_creator_fcolor,
+			"" );
+	}
+	if ( m_favorite_enable )
+	{
+		this->drawIcon(
+			painter,
+			m_favorite_x,
+			m_favorite_y,
+			options_rect,
+			20,
+			m_corner_radius,
+			m_favorite_align,
+			":/images/assets/fav_icon.svg" );
 	}
 
 	painter->restore();
@@ -318,7 +405,8 @@ QRect RecordBannerDelegate::drawText(
 	const int align,
 	const int link,
 	QColor backgroundColor,
-	QColor foregroundColor ) const
+	QColor foregroundColor,
+	QString pixmap_str ) const
 {
 	//Calculate rect size for text
 	QFont font;
@@ -353,7 +441,38 @@ QRect RecordBannerDelegate::drawText(
 	//Alight text in center of Rect
 	painter->drawText( text_rect, Qt::AlignHCenter | Qt::AlignVCenter, str );
 
+	//If an image is available then draw it. TODO: NEED TO FIX THIS SO ITS PART OF THE MAIN RECT
+	QPixmap pixmap;
+	if ( pixmap_str != "" )
+	{
+		pixmap = QPixmap( pixmap_str );
+		QRect pixmap_rect { rect.topLeft() + QPoint( x + align_overload - t_height + -4, y ),
+			                QSize( t_height, t_height ) };
+		painter->drawPixmap(
+			pixmap_rect, pixmap.scaled( t_height - 5, t_height - 5, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
+	}
 	return text_rect;
+}
+
+void RecordBannerDelegate::drawIcon(
+	QPainter* painter,
+	const int x,
+	const int y,
+	const QRect rect,
+	const int size,
+	const int align,
+	const int link,
+	QString pixmap_str ) const
+{
+	const QPixmap pixmap { pixmap_str };
+
+	//The align overload picks which side of the rect to draw from
+	int align_overload = align == LEFT ? 0 : align == RIGHT ? size : size / 2;
+
+	painter->setRenderHint( QPainter::Antialiasing ); //Set so pixels look better
+
+	QRect pixmap_rect { rect.topLeft() + QPoint( x + align_overload, y ), QSize( size, size ) };
+	painter->drawPixmap( pixmap_rect, pixmap.scaled( size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
 }
 
 void RecordBannerDelegate::reloadConfig()
