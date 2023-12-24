@@ -58,6 +58,9 @@ namespace atlas::images
 		if ( !std::filesystem::exists( path ) )
 			throw ImageLoadError( format_ns::format( "Invalid path {} does not exist", path ).c_str() );
 
+		if ( std::filesystem::file_size( path ) == 0 )
+			throw ImageLoadError( format_ns::format( "Image at path {} was empty", path ).c_str() );
+
 		if ( auto opt = pixmap_cache.find( path.string() ); opt.has_value() )
 			return opt.value();
 		else
@@ -65,7 +68,7 @@ namespace atlas::images
 			QPixmap pixmap;
 			pixmap.load( QString::fromStdString( path.string() ) );
 
-			if ( pixmap.isNull() )
+			if ( pixmap.isNull() || pixmap.size() == QSize( 0, 0 ) )
 				throw ImageLoadError( format_ns::format( "Failed to load pixmap for {}", path ).c_str() );
 
 			pixmap_cache.insert( path.string(), pixmap );
@@ -200,11 +203,22 @@ namespace atlas::images
 			atlas::logging::debug( "Loading image: {}", path );
 
 			if ( !std::filesystem::exists( path ) )
-				throw AtlasException( format_ns::format( "Failed to find image at path {}", path ) );
+			{
+				promise.setException( std::make_exception_ptr(
+					ImageLoadError( format_ns::format( "Failed to find image at path {}", path ).c_str() ) ) );
+			}
+
+			if ( std::filesystem::file_size( path ) == 0 )
+			{
+				promise.setException( std::make_exception_ptr(
+					ImageLoadError( format_ns::format( "Image at path {} was empty", path ).c_str() ) ) );
+			}
 
 			QImageReader reader { QString::fromStdString( path.string() ) };
 			const QSize image_size { reader.size() };
 			const auto key { pixmapKey( target_size, scale_type, path ) };
+
+			if ( promise.isCanceled() ) return;
 
 			//Default to the other loader if the image size is invalid
 			if ( image_size == QSize() )
@@ -216,12 +230,17 @@ namespace atlas::images
 				};
 				scale_cache.insert( key, pixmap );
 				promise.addResult( std::move( pixmap ) );
+				return;
 			}
+			else
+			{
+				// Can load the pixmap with the reader
+				QPixmap pixmap { atlas::images::loadScaledPixmap( target_size, scale_type, align_type, path ) };
+				scale_cache.insert( key, pixmap );
 
-			QPixmap pixmap { atlas::images::loadScaledPixmap( target_size, scale_type, align_type, path ) };
-			scale_cache.insert( key, pixmap );
-
-			promise.addResult( std::move( pixmap ) );
+				promise.addResult( std::move( pixmap ) );
+				return;
+			}
 		}
 
 	} // namespace internal
@@ -240,7 +259,9 @@ namespace atlas::images
 			const auto key { pixmapKey( target_size, scale_type, path ) };
 
 			if ( auto pixmap_opt = scale_cache.find( key ); pixmap_opt.has_value() )
+			{
 				return QtFuture::makeReadyFuture( pixmap_opt.value() );
+			}
 			else
 			{
 				return QtConcurrent::

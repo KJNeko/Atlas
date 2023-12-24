@@ -212,6 +212,8 @@ try
 	using namespace std::chrono_literals;
 	std::this_thread::sleep_for( 10ms );
 
+	if ( promise.isCanceled() ) return;
+
 	std::vector< QFuture< void > > futures;
 
 	if ( pattern.contains( '{' ) && pattern.contains( '}' ) ) pattern = regex::regexify( std::move( pattern ) );

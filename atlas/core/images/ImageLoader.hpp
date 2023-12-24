@@ -18,17 +18,23 @@ namespace atlas::images
 	{
 		Q_OBJECT
 
+	  public:
+
 		QPersistentModelIndex m_index;
 		QFuture< QPixmap > m_future;
 		QFutureWatcher< QPixmap > watcher {};
 
-	  public:
-
-		ImageLoader( QPersistentModelIndex index, const QFuture< QPixmap > future );
+		ImageLoader( QPersistentModelIndex index, QFuture< QPixmap > future );
 
 		void triggerReady();
 
-		~ImageLoader() { m_future.cancel(); }
+		void cancel()
+		{
+			watcher.cancel();
+			m_future.cancel();
+		}
+
+		~ImageLoader() { cancel(); }
 
 	  signals:
 		void imageReady( QPersistentModelIndex index );
