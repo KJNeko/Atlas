@@ -48,7 +48,7 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setModel( gridPreviewModel );
 
 	//Add full list of fonts to comboBox.
-	ui->cbFont->addItems( QFontDatabase::families() );
+	ui->cb_font->addItems( QFontDatabase::families() );
 	ui->cbAppFont->addItems( QFontDatabase::families() );
 
 	//Set Fonts
@@ -59,8 +59,8 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 			config::application::font::get() );
 
-	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
-	ui->cbFont->setCurrentText(
+	ui->sb_font_size->setValue( config::grid_ui::font_size::get() );
+	ui->cb_font->setCurrentText(
 		config::grid_ui::font::get() == "" ?
 			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 			config::application::font::get() );
@@ -150,33 +150,122 @@ void SettingsDialog::prepareGridViewerSettings()
 	ui->sbSelectedOpacity->setValue( config::grid_ui::selectedOpacity::get() );
 	ui->cbCapsuleBorder->setChecked( config::grid_ui::enableCapsuleBorder::get() );
 
-	ui->cbTopOverlay->setChecked( config::grid_ui::enableTopOverlay::get() );
-	ui->cbBottomOverlay->setChecked( config::grid_ui::enableBottomOverlay::get() );
-	ui->sbOverlayHeight->setValue( config::grid_ui::overlayHeight::get() );
-	ui->sbOverlayOpacity->setValue( config::grid_ui::overlayOpacity::get() );
-	ui->pbOverlayColor->setText( config::grid_ui::overlayColor::get() );
-	ui->sbFontSize->setValue( config::grid_ui::fontSize::get() );
-	ui->cbFont->setCurrentText( config::grid_ui::font::get() );
-	ui->cbOverlayLayout->setCurrentIndex( config::grid_ui::overlayLayout::get() );
+	ui->cb_top_overlay->setChecked( config::grid_ui::enable_top_overlay::get() );
+	ui->cb_bottom_overlay->setChecked( config::grid_ui::enable_bottom_overlay::get() );
+	ui->sb_top_overlay_h->setValue( config::grid_ui::top_overlay_height::get() );
+	ui->sb_bottom_overlay_h->setValue( config::grid_ui::bottom_overlay_height::get() );
+	ui->sb_font_size->setValue( config::grid_ui::font_size::get() );
+	ui->cb_font->setCurrentText( config::grid_ui::font::get() );
+	ui->cb_overlay_layout->setCurrentIndex( config::grid_ui::overlay_layout::get() );
+	ui->cb_font_bold->setChecked( config::grid_ui::font_bold::get() );
+	ui->cb_font_italic->setChecked( config::grid_ui::font_italic::get() );
+	ui->cb_text_shadow->setChecked( config::grid_ui::font_shadow::get() );
+	ui->sp_bounding_box->setValue( config::grid_ui::padding::get() );
+	ui->sp_corner_radius->setValue( config::grid_ui::corner_radius::get() );
 
-	//Overlay Settings
+	//START BANNER SETTINGS
 	//Title
-	ui->cbTitleEnable->setChecked( config::grid_ui::title_enable::get() );
-	ui->sp_xtitle->setValue( config::grid_ui::title_x::get() );
-	ui->sp_ytitle->setValue( config::grid_ui::title_y::get() );
-	ui->sp_title_fontsize->setValue( config::grid_ui::title_font_size::get() );
-	gridPreviewDelegate->m_title_bcolor = QColor::fromString( config::grid_ui::title_bcolor::get() );
-	//Engine
-	ui->cbEngineEnable->setChecked(config::grid_ui::engine_enable::get());
-	ui->sp_xengine->setValue(config::grid_ui::engine_x::get());
-	ui->sp_yengine->setValue(config::grid_ui::engine_y::get());
-	ui->cbEnableEngineColors->setChecked(config::grid_ui::engine_bcolor::get());
-	//Version
-	ui->cbVersionEnable->setChecked( config::grid_ui::version_enable::get() );
-	ui->sp_xversion->setValue( config::grid_ui::version_x::get() );
-	ui->sp_yversion->setValue( config::grid_ui::version_y::get() );
-	gridPreviewDelegate->m_version_bcolor = QColor::fromString( config::grid_ui::version_bcolor::get() );
+	ui->cb_title_enable->setChecked( config::grid_ui::title_enable::get() );
+	ui->sp_title_x->setValue( config::grid_ui::title_x::get() );
+	ui->sp_title_y->setValue( config::grid_ui::title_y::get() );
+	ui->cb_title_align->setCurrentIndex( config::grid_ui::title_align::get() );
+	gridPreviewDelegate->m_title_bcolor = colorFromString( config::grid_ui::title_bcolor::get() );
+	gridPreviewDelegate->m_title_fcolor = colorFromString( config::grid_ui::title_fcolor::get() );
+	ui->sb_title_font_size->setValue( config::grid_ui::title_font_size::get() );
+	ui->cb_title_default->setChecked( config::grid_ui::title_default::get() );
+	ui->cb_title_link->setCurrentIndex( config::grid_ui::title_link::get() );
 
+	//Engine
+	ui->cb_engine_enable->setChecked( config::grid_ui::engine_enable::get() );
+	ui->sp_engine_x->setValue( config::grid_ui::engine_x::get() );
+	ui->sp_engine_y->setValue( config::grid_ui::engine_y::get() );
+	ui->cb_engine_align->setCurrentIndex( config::grid_ui::engine_align::get() );
+	ui->cb_engine_default->setChecked( config::grid_ui::engine_default::get() );
+	gridPreviewDelegate->m_engine_bcolor = colorFromString( config::grid_ui::engine_bcolor::get() );
+	gridPreviewDelegate->m_engine_fcolor = colorFromString( config::grid_ui::engine_fcolor::get() );
+	ui->cb_engine_link->setCurrentIndex( config::grid_ui::engine_link::get() );
+	//Version
+	ui->cb_version_enable->setChecked( config::grid_ui::version_enable::get() );
+	ui->sp_version_x->setValue( config::grid_ui::version_x::get() );
+	ui->sp_version_y->setValue( config::grid_ui::version_y::get() );
+	ui->cb_version_align->setCurrentIndex( config::grid_ui::version_align::get() );
+	ui->cb_version_default->setChecked( config::grid_ui::version_default::get() );
+	gridPreviewDelegate->m_version_bcolor = colorFromString( config::grid_ui::version_bcolor::get() );
+	gridPreviewDelegate->m_version_fcolor = colorFromString( config::grid_ui::version_fcolor::get() );
+	ui->cb_version_link->setCurrentIndex( config::grid_ui::version_link::get() );
+	//CREATOR
+	ui->cb_creator_enable->setChecked( config::grid_ui::creator_enable::get() );
+	ui->sp_creator_x->setValue( config::grid_ui::creator_x::get() );
+	ui->sp_creator_y->setValue( config::grid_ui::creator_y::get() );
+	ui->cb_creator_align->setCurrentIndex( config::grid_ui::creator_align::get() );
+	ui->cb_creator_default->setChecked( config::grid_ui::creator_default::get() );
+	gridPreviewDelegate->m_creator_bcolor = colorFromString( config::grid_ui::creator_bcolor::get() );
+	gridPreviewDelegate->m_creator_fcolor = colorFromString( config::grid_ui::creator_fcolor::get() );
+	ui->cb_creator_link->setCurrentIndex( config::grid_ui::creator_link::get() );
+	//STATUS
+	ui->cb_status_enable->setChecked( config::grid_ui::status_enable::get() );
+	ui->sp_status_x->setValue( config::grid_ui::status_x::get() );
+	ui->sp_status_y->setValue( config::grid_ui::status_y::get() );
+	ui->cb_status_align->setCurrentIndex( config::grid_ui::status_align::get() );
+	ui->cb_status_default->setChecked( config::grid_ui::status_default::get() );
+	gridPreviewDelegate->m_status_bcolor = colorFromString( config::grid_ui::status_bcolor::get() );
+	gridPreviewDelegate->m_status_fcolor = colorFromString( config::grid_ui::status_fcolor::get() );
+	ui->cb_status_link->setCurrentIndex( config::grid_ui::status_link::get() );
+	//GameType
+	ui->cb_gametype_enable->setChecked( config::grid_ui::gametype_enable::get() );
+	ui->sp_gametype_x->setValue( config::grid_ui::gametype_x::get() );
+	ui->sp_gametype_y->setValue( config::grid_ui::gametype_y::get() );
+	ui->cb_gametype_align->setCurrentIndex( config::grid_ui::gametype_align::get() );
+	ui->cb_gametype_default->setChecked( config::grid_ui::gametype_default::get() );
+	gridPreviewDelegate->m_gametype_bcolor = colorFromString( config::grid_ui::gametype_bcolor::get() );
+	gridPreviewDelegate->m_gametype_fcolor = colorFromString( config::grid_ui::gametype_fcolor::get() );
+	ui->cb_gametype_link->setCurrentIndex( config::grid_ui::gametype_link::get() );
+	//rating
+	ui->cb_rating_enable->setChecked( config::grid_ui::rating_enable::get() );
+	ui->sp_rating_x->setValue( config::grid_ui::rating_x::get() );
+	ui->sp_rating_y->setValue( config::grid_ui::rating_y::get() );
+	ui->cb_rating_align->setCurrentIndex( config::grid_ui::rating_align::get() );
+	ui->cb_rating_default->setChecked( config::grid_ui::rating_default::get() );
+	gridPreviewDelegate->m_rating_bcolor = colorFromString( config::grid_ui::rating_bcolor::get() );
+	gridPreviewDelegate->m_rating_fcolor = colorFromString( config::grid_ui::rating_fcolor::get() );
+	ui->cb_rating_link->setCurrentIndex( config::grid_ui::rating_link::get() );
+	//views
+	ui->cb_views_enable->setChecked( config::grid_ui::views_enable::get() );
+	ui->sp_views_x->setValue( config::grid_ui::views_x::get() );
+	ui->sp_views_y->setValue( config::grid_ui::views_y::get() );
+	ui->cb_views_align->setCurrentIndex( config::grid_ui::views_align::get() );
+	ui->cb_views_default->setChecked( config::grid_ui::views_default::get() );
+	gridPreviewDelegate->m_views_bcolor = colorFromString( config::grid_ui::views_bcolor::get() );
+	gridPreviewDelegate->m_views_fcolor = colorFromString( config::grid_ui::views_fcolor::get() );
+	ui->cb_views_link->setCurrentIndex( config::grid_ui::views_link::get() );
+	//likes
+	ui->cb_likes_enable->setChecked( config::grid_ui::likes_enable::get() );
+	ui->sp_likes_x->setValue( config::grid_ui::likes_x::get() );
+	ui->sp_likes_y->setValue( config::grid_ui::likes_y::get() );
+	ui->cb_likes_align->setCurrentIndex( config::grid_ui::likes_align::get() );
+	ui->cb_likes_default->setChecked( config::grid_ui::likes_default::get() );
+	gridPreviewDelegate->m_likes_bcolor = colorFromString( config::grid_ui::likes_bcolor::get() );
+	gridPreviewDelegate->m_likes_fcolor = colorFromString( config::grid_ui::likes_fcolor::get() );
+	ui->cb_likes_link->setCurrentIndex( config::grid_ui::likes_link::get() );
+	//favorite
+	ui->cb_favorite_enable->setChecked( config::grid_ui::favorite_enable::get() );
+	ui->sp_favorite_x->setValue( config::grid_ui::favorite_x::get() );
+	ui->sp_favorite_y->setValue( config::grid_ui::favorite_y::get() );
+	ui->cb_favorite_align->setCurrentIndex( config::grid_ui::favorite_align::get() );
+	ui->cb_favorite_default->setChecked( config::grid_ui::favorite_default::get() );
+	gridPreviewDelegate->m_favorite_bcolor = colorFromString( config::grid_ui::favorite_bcolor::get() );
+	gridPreviewDelegate->m_favorite_fcolor = colorFromString( config::grid_ui::favorite_fcolor::get() );
+	ui->cb_favorite_link->setCurrentIndex( config::grid_ui::favorite_link::get() );
+	//updateicon
+	ui->cb_updateicon_enable->setChecked( config::grid_ui::updateicon_enable::get() );
+	ui->sp_updateicon_x->setValue( config::grid_ui::updateicon_x::get() );
+	ui->sp_updateicon_y->setValue( config::grid_ui::updateicon_y::get() );
+	ui->cb_updateicon_align->setCurrentIndex( config::grid_ui::updateicon_align::get() );
+	ui->cb_updateicon_default->setChecked( config::grid_ui::updateicon_default::get() );
+	gridPreviewDelegate->m_updateicon_bcolor = colorFromString( config::grid_ui::updateicon_bcolor::get() );
+	gridPreviewDelegate->m_updateicon_fcolor = colorFromString( config::grid_ui::updateicon_fcolor::get() );
+	ui->cb_updateicon_link->setCurrentIndex( config::grid_ui::updateicon_link::get() );
+	//END BANNER SETTINGS
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
 	//Disable ui elements for future implementations
@@ -210,42 +299,129 @@ void SettingsDialog::saveBannerViewerSettings()
 	config::grid_ui::selectedOpacity::set( ui->sbSelectedOpacity->value() );
 	config::grid_ui::enableCapsuleBorder::set( ui->cbCapsuleBorder->checkState() );
 
-	config::grid_ui::enableTopOverlay::set( ui->cbTopOverlay->checkState() );
-	config::grid_ui::enableBottomOverlay::set( ui->cbBottomOverlay->checkState() );
-	config::grid_ui::overlayHeight::set( ui->sbOverlayHeight->value() );
-	config::grid_ui::overlayOpacity::set( ui->sbOverlayOpacity->value() );
-	config::grid_ui::overlayColor::set( ui->pbOverlayColor->text() );
-	config::grid_ui::fontSize::set( ui->sbFontSize->value() );
-	config::grid_ui::font::set( ui->cbFont->currentText() );
+	config::grid_ui::enable_top_overlay::set( ui->cb_top_overlay->checkState() );
+	config::grid_ui::enable_bottom_overlay::set( ui->cb_bottom_overlay->checkState() );
+	config::grid_ui::top_overlay_height::set( ui->sb_top_overlay_h->value() );
+	config::grid_ui::bottom_overlay_height::set( ui->sb_bottom_overlay_h->value() );
+	config::grid_ui::font_size::set( ui->sb_font_size->value() );
+	config::grid_ui::font::set( ui->cb_font->currentText() );
 	config::grid_ui::centerWidgets::set( ui->cbCenterItems->checkState() );
-	config::grid_ui::overlayLayout::set( ui->cbOverlayLayout->currentIndex() );
-	config::grid_ui::overlayColor::
-		set( gridPreviewDelegate->m_overlay_color.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_overlay_color.name().toLower() );
+	config::grid_ui::overlay_layout::set( ui->cb_overlay_layout->currentIndex() );
+	config::grid_ui::top_overlay_bcolor::set( gridPreviewDelegate->m_top_overlay_color.name( QColor::HexArgb )
+	                                              .toLower() );
+	config::grid_ui::bottom_overlay_bcolor::set( gridPreviewDelegate->m_bottom_overlay_color.name( QColor::HexArgb )
+	                                                 .toLower() );
+
+	config::grid_ui::font_bold::set( ui->cb_font_bold->checkState() );
+	config::grid_ui::font_italic::set( ui->cb_font_italic->checkState() );
+	config::grid_ui::font_shadow::set( ui->cb_text_shadow->checkState() );
+	config::grid_ui::padding::set( ui->sp_bounding_box->value() );
+	config::grid_ui::corner_radius::set( ui->sp_corner_radius->value() );
 
 	//Overlay settings
 	//Title
-	config::grid_ui::title_enable::set( ui->cbTitleEnable->checkState() );
-	config::grid_ui::title_x::set( ui->sp_xtitle->value() );
-	config::grid_ui::title_y::set( ui->sp_ytitle->value() );
-	config::grid_ui::title_font_size::set( ui->sp_title_fontsize->value() );
-	config::grid_ui::title_bcolor::
-		set( gridPreviewDelegate->m_title_bcolor.alpha() == 0 ? "transparent" :
-	                                                            gridPreviewDelegate->m_title_bcolor.name().toLower() );
+	config::grid_ui::title_enable::set( ui->cb_title_enable->checkState() );
+	config::grid_ui::title_x::set( ui->sp_title_x->value() );
+	config::grid_ui::title_y::set( ui->sp_title_y->value() );
+	config::grid_ui::title_align::set( ui->cb_title_align->currentIndex() );
+	config::grid_ui::title_font_size::set( ui->sb_title_font_size->value() );
+	config::grid_ui::title_bcolor::set( gridPreviewDelegate->m_title_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::title_fcolor::set( gridPreviewDelegate->m_title_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::title_default::set( ui->cb_title_default->checkState() );
+	config::grid_ui::title_link::set( ui->cb_title_link->currentIndex() );
+
 	//Engine
-	config::grid_ui::engine_enable::set(ui->cbEngineEnable->checkState());
-	config::grid_ui::engine_x::set(ui->sp_xengine->value());
-	config::grid_ui::engine_y::set(ui->sp_yengine->value());
-	config::grid_ui::engine_bcolor::set(ui->cbEnableEngineColors->checkState());
+	config::grid_ui::engine_enable::set( ui->cb_engine_enable->checkState() );
+	config::grid_ui::engine_x::set( ui->sp_engine_x->value() );
+	config::grid_ui::engine_y::set( ui->sp_engine_y->value() );
+	config::grid_ui::engine_align::set( ui->cb_engine_align->currentIndex() );
+	config::grid_ui::engine_bcolor::set( gridPreviewDelegate->m_engine_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::engine_fcolor::set( gridPreviewDelegate->m_engine_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::engine_default::set( ui->cb_engine_default->checkState() );
+	config::grid_ui::engine_link::set( ui->cb_engine_link->currentIndex() );
 	//Version
-	config::grid_ui::version_enable::set( ui->cbVersionEnable->checkState() );
-	config::grid_ui::version_x::set( ui->sp_xversion->value() );
-	config::grid_ui::version_y::set( ui->sp_yversion->value() );
-	config::grid_ui::version_bcolor::
-		set( gridPreviewDelegate->m_version_bcolor.alpha() == 0 ?
-	             "transparent" :
-	             gridPreviewDelegate->m_version_bcolor.name().toLower() );
+	config::grid_ui::version_enable::set( ui->cb_version_enable->checkState() );
+	config::grid_ui::version_x::set( ui->sp_version_x->value() );
+	config::grid_ui::version_y::set( ui->sp_version_y->value() );
+	config::grid_ui::version_align::set( ui->cb_version_align->currentIndex() );
+	config::grid_ui::version_bcolor::set( gridPreviewDelegate->m_version_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::version_fcolor::set( gridPreviewDelegate->m_version_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::version_default::set( ui->cb_version_default->checkState() );
+	config::grid_ui::version_link::set( ui->cb_version_link->currentIndex() );
+	//Creator
+	config::grid_ui::creator_enable::set( ui->cb_creator_enable->checkState() );
+	config::grid_ui::creator_x::set( ui->sp_creator_x->value() );
+	config::grid_ui::creator_y::set( ui->sp_creator_y->value() );
+	config::grid_ui::creator_align::set( ui->cb_creator_align->currentIndex() );
+	config::grid_ui::creator_bcolor::set( gridPreviewDelegate->m_creator_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::creator_fcolor::set( gridPreviewDelegate->m_creator_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::creator_default::set( ui->cb_creator_default->checkState() );
+	config::grid_ui::creator_link::set( ui->cb_creator_link->currentIndex() );
+	//Status
+	config::grid_ui::status_enable::set( ui->cb_status_enable->checkState() );
+	config::grid_ui::status_x::set( ui->sp_status_x->value() );
+	config::grid_ui::status_y::set( ui->sp_status_y->value() );
+	config::grid_ui::status_align::set( ui->cb_status_align->currentIndex() );
+	config::grid_ui::status_bcolor::set( gridPreviewDelegate->m_status_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::status_fcolor::set( gridPreviewDelegate->m_status_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::status_default::set( ui->cb_status_default->checkState() );
+	config::grid_ui::status_link::set( ui->cb_status_link->currentIndex() );
+	//gametype
+	config::grid_ui::gametype_enable::set( ui->cb_gametype_enable->checkState() );
+	config::grid_ui::gametype_x::set( ui->sp_gametype_x->value() );
+	config::grid_ui::gametype_y::set( ui->sp_gametype_y->value() );
+	config::grid_ui::gametype_align::set( ui->cb_gametype_align->currentIndex() );
+	config::grid_ui::gametype_bcolor::set( gridPreviewDelegate->m_gametype_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::gametype_fcolor::set( gridPreviewDelegate->m_gametype_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::gametype_default::set( ui->cb_gametype_default->checkState() );
+	config::grid_ui::gametype_link::set( ui->cb_gametype_link->currentIndex() );
+	//rating
+	config::grid_ui::rating_enable::set( ui->cb_rating_enable->checkState() );
+	config::grid_ui::rating_x::set( ui->sp_rating_x->value() );
+	config::grid_ui::rating_y::set( ui->sp_rating_y->value() );
+	config::grid_ui::rating_align::set( ui->cb_rating_align->currentIndex() );
+	config::grid_ui::rating_bcolor::set( gridPreviewDelegate->m_rating_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::rating_fcolor::set( gridPreviewDelegate->m_rating_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::rating_default::set( ui->cb_rating_default->checkState() );
+	config::grid_ui::rating_link::set( ui->cb_rating_link->currentIndex() );
+	//views
+	config::grid_ui::views_enable::set( ui->cb_views_enable->checkState() );
+	config::grid_ui::views_x::set( ui->sp_views_x->value() );
+	config::grid_ui::views_y::set( ui->sp_views_y->value() );
+	config::grid_ui::views_align::set( ui->cb_views_align->currentIndex() );
+	config::grid_ui::views_bcolor::set( gridPreviewDelegate->m_views_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::views_fcolor::set( gridPreviewDelegate->m_views_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::views_default::set( ui->cb_views_default->checkState() );
+	config::grid_ui::views_link::set( ui->cb_views_link->currentIndex() );
+	//likes
+	config::grid_ui::likes_enable::set( ui->cb_likes_enable->checkState() );
+	config::grid_ui::likes_x::set( ui->sp_likes_x->value() );
+	config::grid_ui::likes_y::set( ui->sp_likes_y->value() );
+	config::grid_ui::likes_align::set( ui->cb_likes_align->currentIndex() );
+	config::grid_ui::likes_bcolor::set( gridPreviewDelegate->m_likes_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::likes_fcolor::set( gridPreviewDelegate->m_likes_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::likes_default::set( ui->cb_likes_default->checkState() );
+	config::grid_ui::likes_link::set( ui->cb_likes_link->currentIndex() );
+	//favorite
+	config::grid_ui::favorite_enable::set( ui->cb_favorite_enable->checkState() );
+	config::grid_ui::favorite_x::set( ui->sp_favorite_x->value() );
+	config::grid_ui::favorite_y::set( ui->sp_favorite_y->value() );
+	config::grid_ui::favorite_align::set( ui->cb_favorite_align->currentIndex() );
+	config::grid_ui::favorite_bcolor::set( gridPreviewDelegate->m_favorite_bcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::favorite_fcolor::set( gridPreviewDelegate->m_favorite_fcolor.name( QColor::HexArgb ).toLower() );
+	config::grid_ui::favorite_default::set( ui->cb_favorite_default->checkState() );
+	config::grid_ui::favorite_link::set( ui->cb_favorite_link->currentIndex() );
+	//updateicon
+	config::grid_ui::updateicon_enable::set( ui->cb_updateicon_enable->checkState() );
+	config::grid_ui::updateicon_x::set( ui->sp_updateicon_x->value() );
+	config::grid_ui::updateicon_y::set( ui->sp_updateicon_y->value() );
+	config::grid_ui::updateicon_align::set( ui->cb_updateicon_align->currentIndex() );
+	config::grid_ui::updateicon_bcolor::set( gridPreviewDelegate->m_updateicon_bcolor.name( QColor::HexArgb )
+	                                             .toLower() );
+	config::grid_ui::updateicon_fcolor::set( gridPreviewDelegate->m_updateicon_fcolor.name( QColor::HexArgb )
+	                                             .toLower() );
+	config::grid_ui::updateicon_default::set( ui->cb_updateicon_default->checkState() );
+	config::grid_ui::updateicon_link::set( ui->cb_updateicon_link->currentIndex() );
 
 	//Save experimental settings
 	config::experimental::local_match::set( ui->cbExpFindAtlData->checkState() );
@@ -420,6 +596,18 @@ void SettingsDialog::saveExperimentalSettings()
 	atlas::logging::debug( "Saving experimental settings" );
 	config::experimental::local_match::set( ui->cbExpFindAtlData->isChecked() );
 	atlas::logging::debug( "Finished saving experimental settings" );
+}
+
+//Fix for Linux QT ISSUE
+QColor SettingsDialog::colorFromString( QString str )
+{
+	QColor color;
+#if ( QT_VERSION >= QT_VERSION_CHECK( 6, 4, 0 ) )
+	return QColor::fromString( str );
+#else
+	color.setNamedColor( str );
+	return color;
+#endif
 }
 
 //USED TO CHANGE STACKED WIDGET INDEX
@@ -600,16 +788,16 @@ void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1
 }
 
 //Grid Layout UI
-void SettingsDialog::on_cbTopOverlay_stateChanged( [[maybe_unused]] int state )
+void SettingsDialog::on_cb_top_overlay_stateChanged( int state )
 {
-	ui->cbTopOverlay->setChecked( static_cast< bool >( state ) );
+	//ui->cb_top_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_top_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cbBottomOverlay_stateChanged( [[maybe_unused]] int state )
+void SettingsDialog::on_cb_bottom_overlay_stateChanged( int state )
 {
-	ui->cbBottomOverlay->setChecked( static_cast< bool >( state ) );
+	//ui->cb_bottom_overlay->setChecked( static_cast< bool >( state ) );
 	gridPreviewDelegate->m_enable_bottom_overlay = static_cast< bool >( state );
 	qlv->repaint();
 }
@@ -679,25 +867,25 @@ void SettingsDialog::on_cbCapsuleBorder_stateChanged( int state )
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sbOverlayHeight_valueChanged( int num )
+void SettingsDialog::on_sb_top_overlay_h_valueChanged( int num )
 {
-	gridPreviewDelegate->m_strip_height = num;
+	gridPreviewDelegate->m_top_overlay_height = num;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sbOverlayOpacity_valueChanged( int num )
+void SettingsDialog::on_sb_bottom_overlay_h_valueChanged( int num )
 {
-	gridPreviewDelegate->m_overlay_opacity = num;
+	gridPreviewDelegate->m_bottom_overlay_height = num;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_cbFont_currentTextChanged( const QString& text )
+void SettingsDialog::on_cb_font_currentTextChanged( const QString& text )
 {
 	gridPreviewDelegate->m_font_family = text;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sbFontSize_valueChanged( int num )
+void SettingsDialog::on_sb_font_size_valueChanged( int num )
 {
 	gridPreviewDelegate->m_font_size = num;
 	qlv->repaint();
@@ -734,106 +922,698 @@ void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 	ui->lbSampleText->setFont( font );
 }
 
+void SettingsDialog::on_cb_font_bold_stateChanged( int state )
+{
+	gridPreviewDelegate->m_font_bold = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_font_italic_stateChanged( int state )
+{
+	gridPreviewDelegate->m_font_italic = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_text_shadow_stateChanged( int state )
+{
+	gridPreviewDelegate->m_font_shadow = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_bounding_box_valueChanged( int value )
+{
+	gridPreviewDelegate->m_padding = value;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_corner_radius_valueChanged( int value )
+{
+	gridPreviewDelegate->m_corner_radius = value;
+	qlv->repaint();
+}
+
 //Overlay Settings
 //Overlay
-void SettingsDialog::on_pbOverlayColor_pressed()
+void SettingsDialog::on_pb_top_overlay_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_overlay_color, nullptr, "Overlay Background Color", QColorDialog::ShowAlphaChannel );
-	gridPreviewDelegate->m_overlay_color = backgroundColor;
+		gridPreviewDelegate->m_top_overlay_color,
+		nullptr,
+		"Overlay Top Background Color",
+		QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_top_overlay_color = backgroundColor;
 	qlv->repaint();
 }
 
-//title
-void SettingsDialog::on_cbTitleEnable_stateChanged( int state )
-{
-	gridPreviewDelegate->m_title_enable = state;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_sp_xtitle_valueChanged( int num )
-{
-	gridPreviewDelegate->m_title_x = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_sp_ytitle_valueChanged( int num )
-{
-	gridPreviewDelegate->m_title_y = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_pbTitleBColor_pressed()
+void SettingsDialog::on_pb_bottom_overlay_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color", QColorDialog::ShowAlphaChannel );
-	gridPreviewDelegate->m_title_bcolor = backgroundColor;
+		gridPreviewDelegate->m_bottom_overlay_color,
+		nullptr,
+		"Overlay Bottom Background Color",
+		QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_bottom_overlay_color = backgroundColor;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sp_title_fontsize_valueChanged( int num )
-{
-	gridPreviewDelegate->m_title_fontsize = num;
-	qlv->repaint();
-}
-
-//engine
-void SettingsDialog::on_cbEngineEnable_stateChanged( int state )
-{
-	gridPreviewDelegate->m_engine_enable = state;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_sp_xengine_valueChanged( int num )
-{
-	gridPreviewDelegate->m_engine_x = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_sp_yengine_valueChanged( int num )
-{
-	gridPreviewDelegate->m_engine_y = num;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbEnableEngineColors_stateChanged( int state )
-{
-	gridPreviewDelegate->m_enable_engine_color = state;
-	qlv->repaint();
-}
-
-void SettingsDialog::on_cbOverlayLayout_currentIndexChanged( int index )
+void SettingsDialog::on_cb_overlay_layout_currentIndexChanged( int index )
 {
 	gridPreviewDelegate->m_overlay_layout = index;
 	qlv->repaint();
 }
 
+//TITLE
+void SettingsDialog::on_cb_title_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_title_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_title_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_title_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_title_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_title_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_title_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_title_bcolor, nullptr, "Title Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_title_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_title_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_title_fcolor, nullptr, "Title Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_title_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sb_title_font_size_valueChanged( int num )
+{
+	gridPreviewDelegate->m_title_fontsize = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_title_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_title_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_title_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_title_link = state;
+}
+
+//ENGINE
+void SettingsDialog::on_cb_engine_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_engine_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_engine_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_engine_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_engine_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_engine_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_engine_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_engine_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_engine_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_engine_bcolor,
+		nullptr,
+		"Engine Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_engine_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_engine_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_engine_fcolor,
+		nullptr,
+		"Engine Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_engine_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_engine_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_engine_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_engine_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_engine_link = state;
+}
+
 //VERSION
-void SettingsDialog::on_cbversionEnable_stateChanged( int state )
+void SettingsDialog::on_cb_version_enable_stateChanged( int state )
 {
 	gridPreviewDelegate->m_version_enable = state;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sp_xversion_valueChanged( int num )
+void SettingsDialog::on_sp_version_x_valueChanged( int num )
 {
 	gridPreviewDelegate->m_version_x = num;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_sp_yversion_valueChanged( int num )
+void SettingsDialog::on_sp_version_y_valueChanged( int num )
 {
 	gridPreviewDelegate->m_version_y = num;
 	qlv->repaint();
 }
 
-void SettingsDialog::on_pbVersionBColor_pressed()
+void SettingsDialog::on_cb_version_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_version_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_version_bcolor_pressed()
 {
 	QColorDialog colorDialog( this );
 	QColor backgroundColor = colorDialog.getColor(
-		gridPreviewDelegate->m_version_bcolor, nullptr, "Version Background Color", QColorDialog::ShowAlphaChannel );
+		gridPreviewDelegate->m_version_bcolor,
+		nullptr,
+		"Version Background Color" ); //, QColorDialog::ShowAlphaChannel );
 	gridPreviewDelegate->m_version_bcolor = backgroundColor;
 	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_version_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_version_fcolor,
+		nullptr,
+		"Version Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_version_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_version_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_version_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_version_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_version_link = state;
+}
+
+//Creator
+void SettingsDialog::on_cb_creator_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_creator_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_creator_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_creator_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_creator_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_creator_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_creator_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_creator_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_creator_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_creator_bcolor,
+		nullptr,
+		"Creator Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_creator_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_creator_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_creator_fcolor,
+		nullptr,
+		"Creator Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_creator_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_creator_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_creator_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_creator_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_creator_link = state;
+}
+
+//Status
+
+void SettingsDialog::on_cb_status_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_status_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_status_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_status_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_status_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_status_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_status_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_status_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_status_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_status_bcolor,
+		nullptr,
+		"status Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_status_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_status_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_status_fcolor,
+		nullptr,
+		"status Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_status_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_status_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_status_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_status_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_status_link = state;
+	qlv->repaint();
+}
+
+//GameType
+void SettingsDialog::on_cb_gametype_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_gametype_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_gametype_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_gametype_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_gametype_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_gametype_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_gametype_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_gametype_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_gametype_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_gametype_bcolor,
+		nullptr,
+		"Gametype Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_gametype_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_gametype_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_gametype_fcolor,
+		nullptr,
+		"Gametype Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_gametype_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_gametype_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_gametype_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_gametype_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_gametype_link = state;
+}
+
+//rating
+void SettingsDialog::on_cb_rating_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_rating_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_rating_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_rating_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_rating_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_rating_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_rating_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_rating_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_rating_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_rating_bcolor,
+		nullptr,
+		"Rating Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_rating_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_rating_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_rating_fcolor,
+		nullptr,
+		"Rating Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_rating_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_rating_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_rating_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_rating_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_rating_link = state;
+}
+
+//views
+void SettingsDialog::on_cb_views_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_views_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_views_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_views_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_views_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_views_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_views_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_views_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_views_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_views_bcolor, nullptr, "Views Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_views_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_views_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_views_fcolor, nullptr, "Views Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_views_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_views_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_views_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_views_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_views_link = state;
+}
+
+//likes
+void SettingsDialog::on_cb_likes_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_likes_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_likes_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_likes_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_likes_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_likes_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_likes_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_likes_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_likes_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_likes_bcolor, nullptr, "Likes Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_likes_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_likes_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_likes_fcolor, nullptr, "Likes Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_likes_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_likes_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_likes_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_likes_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_likes_link = state;
+}
+
+//favorite
+void SettingsDialog::on_cb_favorite_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_favorite_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_favorite_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_favorite_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_favorite_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_favorite_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_favorite_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_favorite_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_favorite_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_favorite_bcolor,
+		nullptr,
+		"Favorite Background Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_favorite_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_favorite_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_favorite_fcolor,
+		nullptr,
+		"Favorite Foreground Color" ); //, QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_favorite_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_favorite_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_favorite_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_favorite_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_favorite_link = state;
+}
+
+//updateicon
+void SettingsDialog::on_cb_updateicon_enable_stateChanged( int state )
+{
+	gridPreviewDelegate->m_updateicon_enable = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_updateicon_x_valueChanged( int num )
+{
+	gridPreviewDelegate->m_updateicon_x = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_sp_updateicon_y_valueChanged( int num )
+{
+	gridPreviewDelegate->m_updateicon_y = num;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_updateicon_align_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_updateicon_align = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_updateicon_bcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_updateicon_bcolor,
+		nullptr,
+		"updateicon Background Color" ); //,QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_updateicon_bcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_pb_updateicon_fcolor_pressed()
+{
+	QColorDialog colorDialog( this );
+	QColor backgroundColor = colorDialog.getColor(
+		gridPreviewDelegate->m_updateicon_fcolor,
+		nullptr,
+		"updateicon Foreground Color" ); //,QColorDialog::ShowAlphaChannel );
+	gridPreviewDelegate->m_updateicon_fcolor = backgroundColor;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_updateicon_default_stateChanged( int state )
+{
+	gridPreviewDelegate->m_updateicon_default = state;
+	qlv->repaint();
+}
+
+void SettingsDialog::on_cb_updateicon_link_currentIndexChanged( int state )
+{
+	gridPreviewDelegate->m_updateicon_link = state;
 }

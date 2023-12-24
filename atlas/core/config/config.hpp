@@ -265,6 +265,32 @@ enum OverlayType
 	IN_LINE = 1
 };
 
+enum Alignment : int
+{
+	LEFT = 0,
+	RIGHT = 1,
+	CENTER = 2,
+	TOP = 3,
+	BOTTOM = 4,
+};
+
+enum Link : int
+{
+	DISABLED = 0,
+	TITLE = 1,
+	CREATOR = 2,
+	VERSION = 3,
+	ENGINE = 4,
+	STATUS = 5,
+	GAMETYPE = 6,
+	RATING = 7,
+	VIEWS = 8,
+	LIKES = 9,
+	FAVORITE = 10,
+	UPDATEICON = 11
+};
+
+//Images
 SETTINGS_DE( grid_ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO ) // Default is keep aspect ratio
 SETTINGS_DE( grid_ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
 SETTINGS_D( grid_ui, blurRadius, int, 30 )
@@ -277,57 +303,129 @@ SETTINGS_D( grid_ui, selectedOpacity, int, 50 )
 SETTINGS_D( grid_ui, enableCapsuleBorder, bool, true )
 SETTINGS_D( grid_ui, borderColor, QString, "transparent" )
 
-SETTINGS_D( grid_ui, enableTopOverlay, bool, true )
-SETTINGS_D( grid_ui, enableBottomOverlay, bool, true )
-SETTINGS_D( grid_ui, overlayHeight, int, 26 )
-SETTINGS_D( grid_ui, overlayOpacity, int, 200 )
-SETTINGS_D( grid_ui, overlayColor, QString, "transparent" )
-SETTINGS_D( grid_ui, font, QString, "" )
-SETTINGS_D( grid_ui, fontSize, int, 10 )
 SETTINGS_D( grid_ui, windowHeight, int, 780 )
 SETTINGS_D( grid_ui, windowWidth, int, 1520 )
 SETTINGS_D( grid_ui, itemViewWidth, int, 1266 )
 SETTINGS_D( grid_ui, itemViewHeight, int, 694 )
-SETTINGS_D( grid_ui, overlayLayout, int, 0 )
+//Font
+SETTINGS_D( grid_ui, font, QString, "" )
+SETTINGS_D( grid_ui, font_size, int, 10 )
+SETTINGS_D( grid_ui, font_bold, bool, false )
+SETTINGS_D( grid_ui, font_italic, bool, false )
+SETTINGS_D( grid_ui, font_shadow, bool, false )
+SETTINGS_D( grid_ui, padding, int, 0 )
+SETTINGS_D( grid_ui, corner_radius, int, 0 )
 
-//FOR BANNER ITEM LOCATION
+//FOR BANNER
+//Overlay
+SETTINGS_D( grid_ui, enable_top_overlay, bool, true )
+SETTINGS_D( grid_ui, enable_bottom_overlay, bool, true )
+SETTINGS_D( grid_ui, bottom_overlay_height, int, 26 )
+SETTINGS_D( grid_ui, top_overlay_height, int, 26 )
+SETTINGS_D( grid_ui, overlay_layout, int, 0 )
+SETTINGS_D( grid_ui, top_overlay_bcolor, QString, "#c8000000" )
+SETTINGS_D( grid_ui, bottom_overlay_bcolor, QString, "#c8000000" )
+//TITLE
 SETTINGS_D( grid_ui, title_enable, bool, true )
-SETTINGS_D( grid_ui, title_x, int, 10 )
-SETTINGS_D( grid_ui, title_y, int, 10 )
-SETTINGS_D( grid_ui, title_font_size, int, 10 )
+SETTINGS_D( grid_ui, title_x, int, 268 )
+SETTINGS_D( grid_ui, title_y, int, 232 )
+SETTINGS_D( grid_ui, title_align, int, CENTER )
+SETTINGS_D( grid_ui, title_default, bool, true )
 SETTINGS_D( grid_ui, title_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, title_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, title_font_size, int, 12 )
+SETTINGS_D( grid_ui, title_link, int_fast8_t, DISABLED )
+//ENGINE
 SETTINGS_D( grid_ui, engine_enable, bool, true )
-SETTINGS_D( grid_ui, engine_x, int, 10 )
-SETTINGS_D( grid_ui, engine_y, int, 10 )
-SETTINGS_D( grid_ui, engine_bcolor, bool, false )
+SETTINGS_D( grid_ui, engine_x, int, 35 )
+SETTINGS_D( grid_ui, engine_y, int, 227 )
+SETTINGS_D( grid_ui, engine_align, int, LEFT )
+SETTINGS_D( grid_ui, engine_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, engine_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, engine_default, bool, true )
+SETTINGS_D( grid_ui, engine_link, int, DISABLED )
+//VERSION
 SETTINGS_D( grid_ui, version_enable, bool, true )
-SETTINGS_D( grid_ui, version_x, int, 10 )
-SETTINGS_D( grid_ui, version_y, int, 10 )
+SETTINGS_D( grid_ui, version_x, int, 527 )
+SETTINGS_D( grid_ui, version_y, int, 2 )
+SETTINGS_D( grid_ui, version_align, int, RIGHT )
 SETTINGS_D( grid_ui, version_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, version_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, version_default, bool, true )
+SETTINGS_D( grid_ui, version_link, int, DISABLED )
+
+//CREATOR
 SETTINGS_D( grid_ui, creator_enable, bool, true )
 SETTINGS_D( grid_ui, creator_x, int, 10 )
-SETTINGS_D( grid_ui, creator_y, int, 10 )
+SETTINGS_D( grid_ui, creator_y, int, 2 )
+SETTINGS_D( grid_ui, creator_align, int, LEFT )
 SETTINGS_D( grid_ui, creator_bcolor, QString, "transparent" )
-
+SETTINGS_D( grid_ui, creator_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, creator_default, bool, true )
+SETTINGS_D( grid_ui, creator_link, int, DISABLED )
+//STATUS
+SETTINGS_D( grid_ui, status_enable, bool, true )
+SETTINGS_D( grid_ui, status_x, int, 10 )
+SETTINGS_D( grid_ui, status_y, int, 2 )
+SETTINGS_D( grid_ui, status_align, int, LEFT )
+SETTINGS_D( grid_ui, status_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, status_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, status_default, bool, true )
+SETTINGS_D( grid_ui, status_link, int, DISABLED )
+//GAME TYPE
+SETTINGS_D( grid_ui, gametype_enable, bool, true )
+SETTINGS_D( grid_ui, gametype_x, int, 10 )
+SETTINGS_D( grid_ui, gametype_y, int, 2 )
+SETTINGS_D( grid_ui, gametype_align, int, LEFT )
+SETTINGS_D( grid_ui, gametype_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, gametype_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, gametype_default, bool, true )
+SETTINGS_D( grid_ui, gametype_link, int, DISABLED )
+//RATING
 SETTINGS_D( grid_ui, rating_enable, bool, true )
 SETTINGS_D( grid_ui, rating_x, int, 10 )
-SETTINGS_D( grid_ui, rating_y, int, 10 )
-
+SETTINGS_D( grid_ui, rating_y, int, 2 )
+SETTINGS_D( grid_ui, rating_align, int, LEFT )
+SETTINGS_D( grid_ui, rating_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, rating_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, rating_default, bool, true )
+SETTINGS_D( grid_ui, rating_link, int, DISABLED )
+//VIEWS
 SETTINGS_D( grid_ui, views_enable, bool, true )
 SETTINGS_D( grid_ui, views_x, int, 10 )
-SETTINGS_D( grid_ui, views_y, int, 10 )
-
+SETTINGS_D( grid_ui, views_y, int, 2 )
+SETTINGS_D( grid_ui, views_align, int, LEFT )
+SETTINGS_D( grid_ui, views_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, views_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, views_default, bool, true )
+SETTINGS_D( grid_ui, views_link, int, DISABLED )
+//LIKES
 SETTINGS_D( grid_ui, likes_enable, bool, true )
 SETTINGS_D( grid_ui, likes_x, int, 10 )
-SETTINGS_D( grid_ui, likes_y, int, 10 )
-
+SETTINGS_D( grid_ui, likes_y, int, 2 )
+SETTINGS_D( grid_ui, likes_align, int, LEFT )
+SETTINGS_D( grid_ui, likes_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, likes_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, likes_default, bool, true )
+SETTINGS_D( grid_ui, likes_link, int, DISABLED )
+//FAVORITE
 SETTINGS_D( grid_ui, favorite_enable, bool, true )
 SETTINGS_D( grid_ui, favorite_x, int, 10 )
-SETTINGS_D( grid_ui, favorite_y, int, 10 )
-
-SETTINGS_D( grid_ui, lastupdate_enable, bool, true )
-SETTINGS_D( grid_ui, lastupdate_x, int, 10 )
-SETTINGS_D( grid_ui, lastupdate_y, int, 10 )
+SETTINGS_D( grid_ui, favorite_y, int, 2 )
+SETTINGS_D( grid_ui, favorite_align, int, LEFT )
+SETTINGS_D( grid_ui, favorite_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, favorite_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, favorite_default, bool, true )
+SETTINGS_D( grid_ui, favorite_link, int, DISABLED )
+//UPDATE ICON
+SETTINGS_D( grid_ui, updateicon_enable, bool, true )
+SETTINGS_D( grid_ui, updateicon_x, int, 10 )
+SETTINGS_D( grid_ui, updateicon_y, int, 2 )
+SETTINGS_D( grid_ui, updateicon_align, int, LEFT )
+SETTINGS_D( grid_ui, updateicon_bcolor, QString, "transparent" )
+SETTINGS_D( grid_ui, updateicon_fcolor, QString, "#d2d2d2" )
+SETTINGS_D( grid_ui, updateicon_default, bool, true )
+SETTINGS_D( grid_ui, updateicon_link, int, DISABLED )
 
 enum LOCATION : int
 {

@@ -53,8 +53,9 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 		case FilepathModel::PixmapRole:
 			{
 				const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
-				return QVariant::fromStdVariant( std::variant< QFuture< QPixmap > >(
-					atlas::images::async::loadScaledPixmap( size, SCALE_TYPE::KEEP_ASPECT_RATIO, path ) ) );
+				return QVariant::fromStdVariant( std::variant<
+												 QFuture< QPixmap > >( atlas::images::async::loadScaledPixmap(
+					size, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER, path ) ) );
 				break;
 			}
 		case FilepathRole:

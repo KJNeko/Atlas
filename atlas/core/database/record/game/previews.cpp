@@ -90,7 +90,11 @@ namespace atlas::records
 	}
 
 	QFuture< QPixmap > Game::scaledPreview(
-		const QSize size, const SCALE_TYPE scale_type, const std::uint64_t index, const bool use_thumbnail )
+		const QSize size,
+		const SCALE_TYPE scale_type,
+		const Alignment align_type,
+		const std::uint64_t index,
+		const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
 		const auto& previews { ptr->m_preview_paths };
@@ -105,7 +109,7 @@ namespace atlas::records
 		if ( use_thumbnail )
 			return atlas::images::async::thumbnail( path );
 		else
-			return atlas::images::async::loadScaledPixmap( size, scale_type, path );
+			return atlas::images::async::loadScaledPixmap( size, scale_type, align_type, path );
 	}
 
 	void Game::removePreview( const std::uint64_t index )

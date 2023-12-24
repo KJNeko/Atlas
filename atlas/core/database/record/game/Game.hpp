@@ -126,6 +126,7 @@ namespace atlas::records
 		[[nodiscard]] QFuture< QPixmap > scaledPreview(
 			const QSize size,
 			const SCALE_TYPE scale_type,
+			const Alignment align_type,
 			const std::uint64_t index,
 			const bool use_thumbnail = false );
 
@@ -139,10 +140,15 @@ namespace atlas::records
 			const int width,
 			const int height,
 			const SCALE_TYPE scale_type,
+			const Alignment align_type,
 			const BannerType type,
 			const bool use_thumbnail = false );
 		[[nodiscard]] QFuture< QPixmap > requestBanner(
-			const QSize size, const SCALE_TYPE scale_type, const BannerType type, const bool use_thumbnail = false );
+			const QSize size,
+			const SCALE_TYPE scale_type,
+			const Alignment align_type,
+			const BannerType type,
+			const bool use_thumbnail = false );
 		bool hasBanner( const BannerType type ) const;
 
 		//=============== Remote connection ====================================

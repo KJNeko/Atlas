@@ -32,8 +32,11 @@ namespace atlas::images
 	namespace async
 	{
 		QFuture< QPixmap > thumbnail( const std::filesystem::path& path );
-		QFuture< QPixmap >
-			scaledThumbnail( const QSize size, const SCALE_TYPE scale_type, const std::filesystem::path& path );
+		QFuture< QPixmap > scaledThumbnail(
+			const QSize size,
+			const SCALE_TYPE scale_type,
+			const Alignment align_type,
+			const std::filesystem::path& path );
 	} // namespace async
 
 } // namespace atlas::images
