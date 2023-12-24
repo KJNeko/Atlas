@@ -114,6 +114,7 @@ namespace atlas::images
 		{
 			void loadThumbnail( QPromise< QPixmap >& promise, const std::filesystem::path origin_path )
 			{
+				if ( promise.isCanceled() ) return;
 				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
 
 				if ( !std::filesystem::exists( thumb_path ) )
@@ -134,6 +135,7 @@ namespace atlas::images
 				const Alignment align_type,
 				const std::filesystem::path origin_path )
 			{
+				if ( promise.isCanceled() ) return;
 				try
 				{
 					const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };

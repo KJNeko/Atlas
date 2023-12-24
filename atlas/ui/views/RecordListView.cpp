@@ -245,3 +245,9 @@ void RecordListView::wheelEvent( QWheelEvent* event )
 	QListView::wheelEvent( event );
 	static_cast< RecordListModel* >( this->model() )->killLoaders();
 }
+
+void RecordListView::scrollContentsBy( int dx, int dy )
+{
+	static_cast< RecordListModel* >( this->model() )->killLoaders();
+	QListView::scrollContentsBy( dx, dy );
+}
