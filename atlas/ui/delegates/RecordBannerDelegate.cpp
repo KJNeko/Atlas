@@ -416,6 +416,7 @@ QRect RecordBannerDelegate::drawText(
 	QFontMetrics fm( font );
 	int t_width = fm.horizontalAdvance( str ) + padding;
 	int t_height = fm.height() + padding;
+	int icon_size = fm.height();
 	//The align overload picks which side of the rect to draw from
 	int align_overload = align == LEFT ? 0 : align == RIGHT ? -t_width : -t_width / 2;
 
@@ -424,11 +425,14 @@ QRect RecordBannerDelegate::drawText(
 
 	//Create rec with 10px margin, rect is relative to current banner rect
 	QRect text_rect { rect.topLeft() + QPoint( x + align_overload, y ), QSize( t_width, t_height ) };
+	//To print color behind image
+	QRect text_rect_ext { rect.topLeft() + QPoint( x + align_overload - icon_size - 4, y ),
+		                  QSize( t_width + icon_size, t_height ) };
 	//QPainterPath path;
 	//Draw Bounding Rect
 	painter->setPen( QPen( backgroundColor ) ); //no pen
 	painter->setBrush( QBrush( backgroundColor ) );
-	painter->drawRoundedRect( text_rect, corner_radius, corner_radius );
+	painter->drawRoundedRect( pixmap_str != "" ? text_rect_ext : text_rect, corner_radius, corner_radius );
 	//Text shadow
 	if ( text_shadow )
 	{
@@ -446,10 +450,11 @@ QRect RecordBannerDelegate::drawText(
 	if ( pixmap_str != "" )
 	{
 		pixmap = QPixmap( pixmap_str );
-		QRect pixmap_rect { rect.topLeft() + QPoint( x + align_overload - t_height + -4, y ),
-			                QSize( t_height, t_height ) };
+		QRect pixmap_rect { rect.topLeft()
+			                    + QPoint( x + align_overload - icon_size - 4, y + padding > 0 ? padding : 0 ),
+			                QSize( icon_size, icon_size ) };
 		painter->drawPixmap(
-			pixmap_rect, pixmap.scaled( t_height - 5, t_height - 5, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
+			pixmap_rect, pixmap.scaled( icon_size, icon_size, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
 	}
 	return text_rect;
 }
