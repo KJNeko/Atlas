@@ -84,7 +84,9 @@ namespace atlas::records
 		const bool use_thumbnail )
 	{
 		std::lock_guard guard { this->ptr->m_mtx };
-		const auto& banner_path { bannerPath( type ) };
+		const auto& banner_path = std::filesystem::exists( "./data/images/test_banner.webp" ) ?
+		                              "./data/images/test_banner.webp" :
+		                              bannerPath( type );
 
 		const auto id { m_id };
 
