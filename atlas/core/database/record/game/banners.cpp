@@ -115,7 +115,7 @@ namespace atlas::records
 					return QPixmap();
 				} )
 			.onCanceled(
-				[ id, banner_path, type ]() -> QPixmap
+				[ banner_path ]() -> QPixmap
 				{
 					atlas::logging::debug( "Canceling future for loading of {}", banner_path );
 					return {};
