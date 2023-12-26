@@ -270,8 +270,14 @@ namespace internal
 		promise.finish();
 		atlas::import::notifyImportComplete();
 	}
+	catch ( std::exception& e )
+	{
+		atlas::logging::error( "Runner failed. Exception msg: \"{}\"", e.what() );
+		promise.setException( std::current_exception() );
+	}
 	catch ( ... )
 	{
+		atlas::logging::error( "Exception failed with unknown exception" );
 		promise.setException( std::current_exception() );
 	}
 
