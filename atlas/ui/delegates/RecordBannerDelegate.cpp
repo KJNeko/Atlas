@@ -119,13 +119,6 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 		painter->drawPixmap( pixmap_rect, pixmap );
 	}
 
-	//Set hover color
-	//Set hover color
-	if ( options.state & QStyle::State_MouseOver )
-	{
-		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
-	}
-
 	//Reset the current brush
 	painter->setBrush( Qt::NoBrush );
 	QPen pen;
@@ -151,9 +144,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	//All text items need to be stored in a QRect. This makes it easier to detect edge cases and link items together
 	//Draw all linkable items first
 	QRect m_title_rect;
+	QRect m_creator_rect;
+	QRect m_version_rect;
 	QRect m_engine_rect;
-	QRect m_gametype_rect;
 	QRect m_status_rect;
+	QRect m_gametype_rect;
+
 	QRect m_rating_rect;
 	//ONLY DRAW ITEMS BELOW IF ATLAS DATA IS AVAILABLE
 	//If Record == 1 continue: base record
@@ -376,6 +372,12 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			m_corner_radius,
 			m_favorite_align,
 			":/images/assets/fav_icon.svg" );
+	}
+
+	//Set hover color. Must be drawn last
+	if ( options.state & QStyle::State_MouseOver )
+	{
+		painter->fillRect( options_rect, QColor( 0, 0, 255, 50 ) );
 	}
 
 	painter->restore();
