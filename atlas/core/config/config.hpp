@@ -204,7 +204,7 @@ SETTINGS_D( importer, skipFilesize, bool, false )
 SETTINGS_D( importer, searchGameInfo, bool, true )
 SETTINGS_D( importer, downloadBanner, bool, false )
 SETTINGS_D( importer, downloadVNDB, bool, false )
-SETTINGS_D( importer, moveImported, bool, true )
+SETTINGS_D( importer, moveImported, bool, false )
 
 SETTINGS_D( logging, level, int, 2 )
 
