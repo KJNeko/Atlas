@@ -270,7 +270,7 @@ namespace internal
 		promise.finish();
 		atlas::import::notifyImportComplete();
 	}
-	catch ( std::exception& e )
+	catch ( ... )
 	{
 		promise.setException( std::current_exception() );
 	}
