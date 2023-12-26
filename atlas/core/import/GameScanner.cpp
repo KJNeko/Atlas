@@ -31,6 +31,7 @@ void runner(
 	const std::filesystem::path folder,
 	const std::filesystem::path base,
 	const bool size_files )
+try
 {
 	ZoneScoped;
 	if ( promise.isCanceled() ) return;
@@ -202,6 +203,10 @@ void runner(
 	};
 
 	promise.addResult( std::move( data ) );
+}
+catch ( ... )
+{
+	promise.setException( std::current_exception() );
 }
 
 void GameScanner::
