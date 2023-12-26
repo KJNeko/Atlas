@@ -29,6 +29,12 @@ bool isEngineT< ENGINES_BEGIN >( [[maybe_unused]] atlas::utils::FileScanner& sca
 }
 
 template <>
+bool isEngineT< Engine::UNKNOWN >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
+{
+	return true;
+}
+
+template <>
 bool isEngineT< ENGINES_END >( [[maybe_unused]] atlas::utils::FileScanner& scanner )
 {
 	return true;
@@ -48,14 +54,16 @@ constexpr std::tuple blacklist_execs { std::string_view( "UnityCrashHandler32.ex
 	                                   std::string_view( "python.exe" ),
 	                                   std::string_view( "dxwebsetup" ),
 	                                   std::string_view( "UE4PrereqSetup_X64.exe" ),
-	                                   std::string_view( "UEPrereqSetup_x64.exe" ) };
+	                                   std::string_view( "UEPrereqSetup_x64.exe" ),
+	                                   std::string_view( "dxwebsetup.exe" ) };
 
 bool isBlacklistT( const std::string& name, const std::string_view comp )
 {
 	return name == comp;
 }
 
-bool isBlacklistT( const std::string& name, std::string_view comp, std::same_as< std::string_view > auto... comps )
+bool isBlacklistT(
+	const std::string& name, const std::string_view comp, const std::same_as< std::string_view > auto... comps )
 {
 	return name == comp || isBlacklistT( name, comps... );
 }
@@ -74,13 +82,12 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
-	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
+	const std::vector< std::string_view > extensions { ".exe", ".html", ".sh",  ".swf", ".flv",
+		                                               ".jar", ".qsp",  ".bat", ".rag", ".ps1" };
 
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
-		ZoneScopedN( "Process file" );
-
 		if ( depth > 1 ) break;
 
 		if ( std::filesystem::is_regular_file( path ) )
@@ -92,21 +99,15 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 					 extensions.end(),
 					 QString::fromStdString( path.extension().string() ).toLower().toStdString() )
 			     != extensions.end() )
-
 			{
-				TracyCZoneN( mimeInfo_Tracy, "Mime info gathering", true );
 				QMimeDatabase mime_db;
 				const auto type { mime_db.mimeTypeForFile( QString::fromStdString( path.string() ) ) };
-				TracyCZoneEnd( mimeInfo_Tracy );
 
 				//General executables
 				//.exe
 				if ( type.inherits( "application/x-ms-dos-executable" ) )
 				{
-					//prioritize AMD64
-					path.string().find( "32" ) ?
-						potential_executables.insert( potential_executables.begin(), relative ) :
-						potential_executables.insert( potential_executables.end(), relative );
+					potential_executables.push_back( relative );
 					continue;
 				}
 				//.html
@@ -154,6 +155,8 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 		}
 	}
 
+	atlas::logging::debug( "Found {} executables at {}", potential_executables.size(), scanner.path() );
+
 	return scoreExecutables( std::move( potential_executables ) );
 }
 
@@ -165,23 +168,25 @@ std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanne
 std::vector< std::filesystem::path >
 	scoreExecutables( std::vector< std::filesystem::path > paths, [[maybe_unused]] const Engine engine_type )
 {
-	ZoneScoped;
 	std::vector< std::pair< std::filesystem::path, int > > execs;
 
 	for ( auto& path : paths )
 	{
-		std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
+		const std::string extension { QString::fromStdString( path.extension().string() ).toLower().toStdString() };
 
-		if constexpr ( sys::is_linux )
-			if ( extension == ".sh" ) execs.emplace_back( std::move( path ), 20 );
-
-		if ( extension == ".exe" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".html" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".swf" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".qsp" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".jar" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".bat" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
-		if ( extension == ".rag" ) execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		if ( extension == ".exe" )
+		{
+			if ( std::find( path.begin(), path.end(), "32" ) != path.end() ) // Executable is likely 32 bit
+				execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 15 );
+			else
+				execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 20 );
+		}
+		else if ( extension == ".bat" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 10 : 25 );
+		else if ( extension == ".sh" )
+			execs.emplace_back( std::move( path ), sys::is_linux ? 25 : 10 );
+		else
+			execs.emplace_back( std::move( path ), 10 );
 	}
 
 	std::sort(
@@ -504,9 +509,9 @@ QString engineNameT< BAT >()
 bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 {
 	//get current directory
-	bool isEngine = false;
-	std::filesystem::path engine_path =
-		std::filesystem::current_path() / "engine" / "types" / ( "Engine." + engine + ".txt" );
+	bool isEngine { false };
+	const std::filesystem::path engine_path { std::filesystem::current_path() / "engine" / "types"
+		                                      / ( "Engine." + engine + ".txt" ) };
 
 	if ( std::ifstream ifs( engine_path ); ifs )
 	{
@@ -516,9 +521,9 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 		while ( getline( ifs, line ) )
 		{
 			//Check if first item in string is a period for a file type
-			std::vector< char > charArry;
-			std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
-			if ( charArry[ 0 ] == '.' ) //file type check
+			//std::vector< char > charArry;
+			//std::copy( line.begin(), line.end(), std::back_inserter( charArry ) );
+			if ( line[ 0 ] == '.' ) //file type check
 			{
 				//Go through all files and check if extention exist
 				for ( const auto& file : scanner )
@@ -534,7 +539,7 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 			else
 			{
 				//Check if there is a / at begining of string. add if missing
-				if ( charArry[ 0 ] != '/' )
+				if ( line[ 0 ] != '/' )
 				{
 					line = "\\" + line;
 				}
@@ -552,8 +557,9 @@ bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner )
 				}
 			}
 		};
-		ifs.close();
-	}
 
-	return isEngine;
+		return isEngine;
+	}
+	else
+		return false;
 }

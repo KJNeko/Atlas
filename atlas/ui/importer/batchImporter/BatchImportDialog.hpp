@@ -25,6 +25,8 @@ class BatchImportDialog final : public QDialog
 	explicit BatchImportDialog( QWidget* parent = nullptr );
 	~BatchImportDialog();
 
+	void setPath( const QString& str );
+
   private:
 
 	GameScanner scanner {};

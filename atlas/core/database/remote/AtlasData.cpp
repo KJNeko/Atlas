@@ -4,6 +4,8 @@
 
 #include "AtlasData.hpp"
 
+#include <tracy/TracyC.h>
+
 #include "core/database/RapidTransaction.hpp"
 
 namespace atlas::remote
@@ -118,24 +120,42 @@ namespace atlas::remote
 
 	[[nodiscard]] AtlasID atlasIDFromF95Thread( const F95ID thread_id )
 	{
-		AtlasID id { INVALID_ATLAS_ID };
+		std::optional< AtlasID > id;
 		RapidTransaction() << "SELECT atlas_id FROM f95_zone_data WHERE f95_id = ?" << thread_id >> id;
-		return id;
+		if ( id.has_value() )
+			return id.value();
+		else
+			return INVALID_ATLAS_ID;
+	}
+
+	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( const AtlasID atlas_id )
+	{
+		ZoneScoped;
+		std::optional< atlas::remote::AtlasRemoteData > data;
+		RapidTransaction() << "SELECT atlas_id FROM atlas_data WHERE atlas_id = ?" << atlas_id >>
+			[ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
+		return data;
 	}
 
 	// Find Altas ID from Record Title and Creator name. Only use first letter from creator
 	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString creator )
 	{
+		ZoneScoped;
+
+		TracyCZoneN( generate_zone, "Generate query", true );
+
 		//REPLACE ' from query. Not done yet
-		std::optional< atlas::remote::AtlasRemoteData > data;
-		title = title.toUtf8()
-		            .toUpper()
-		            .replace( " ", "" )
-		            .replace( "'", "" )
-		            .replace( ".", "" )
-		            .replace( "-", "" )
-		            .replace( ":", "" ); //Convert to caps and remove spaces
-		QString creator_fl = creator.toUpper().replace( " ", "" ).mid( 0, 1 ); //Get first letter and convert to caps
+		std::optional< atlas::remote::AtlasRemoteData > data { std::nullopt };
+
+		//Blacklisted characters
+		constexpr std::array< QChar, 5 > blacklist { ' ', '\'', '.', '-', ':' };
+
+		title = title.toUtf8().toUpper();
+		title.removeIf( [ &blacklist ]( const QChar c )
+		                { return std::find( blacklist.begin(), blacklist.end(), c ) != blacklist.end(); } );
+
+		const QString creator_fl =
+			creator.toUpper().replace( " ", "" ).mid( 0, 1 ); //Get first letter and convert to caps
 		//std::string query count = "";
 
 		std::string query =
@@ -149,12 +169,14 @@ namespace atlas::remote
 		//Check if creator is empty
 		//RapidTransaction() << "SELECT * FROM atlas_data WHERE id_name=(UPPER(REPLACE(?,' ','') || \"_\" || ?))" << title << creator >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 
+		TracyCZoneEnd( generate_zone );
+
 		RapidTransaction() << query >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 
-		if ( !data.has_value() )
-		{
-			qInfo() << QString::fromStdString( query );
-		}
+		//if ( !data.has_value() )
+		//{
+		//	qInfo() << QString::fromStdString( query );
+		//}
 
 		return data;
 	}

@@ -29,6 +29,8 @@ class SingleImporter final : public QDialog
 	explicit SingleImporter( QWidget* parent = nullptr );
 	~SingleImporter() override;
 
+	void setPath( const QString& path );
+
   private:
 
 	Ui::SingleImporter* ui;

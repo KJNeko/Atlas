@@ -18,6 +18,8 @@ struct ThreadPools
 	ThreadPools() { reloadConfig(); }
 
 	void reloadConfig();
+
+	static ThreadPools& getInstance();
 };
 
 ThreadPools& globalPools();

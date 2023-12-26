@@ -2,6 +2,8 @@
 
 #include <moc_mainwindow.cpp>
 
+#include <ui/dialog/importBasicDialog/ImportSelectionPopup.hpp>
+
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/images/import.hpp"
@@ -91,10 +93,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionCoverView->setVisible( false );
 	ui->actionListView->setVisible( false );
 	ui->actionManage->setVisible( false );
-	ui->actionSimpleImporter->setVisible( false );
-	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
 	//ui->actionDownload->setVisible( false );
+
+	//ui->actionSimpleImporter->setVisible( false );
+	//ui->actionSingleImporter->setVisible( false );
 
 	connect(
 		&atlas::import::internal::getNotifier(),
@@ -138,7 +141,7 @@ void MainWindow::readSettings()
 
 void MainWindow::on_actionSimpleImporter_triggered()
 {
-	QMessageBox::information( this, "Importer", "Please select the game directory" );
+	QMessageBox::information( this, "Importer", "Please select the directory where your games are located" );
 	if ( const auto dir = QFileDialog::getExistingDirectory(
 			 this, "Open directory", QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks );
 	     !dir.isEmpty() )
@@ -202,8 +205,8 @@ void MainWindow::on_homeButton_pressed()
 
 void MainWindow::on_btnAddGame_pressed()
 {
-	SingleImporter importer { this };
-	importer.exec();
+	atlas::ui::imports::ImportSelectionPopup popup { this };
+	popup.exec();
 }
 
 void MainWindow::resizeEvent( QResizeEvent* event )
@@ -414,9 +417,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			//const atlas::remote::AtlasRemoteData& atlas_data { game->atlas_data.value() };
 			const AtlasID atlas_id { atlas_data.value()->atlas_id };
 
-			std::optional< atlas::remote::F95RemoteData > f95_data {
-				atlas::remote::findF95Data( QString::number( atlas_id ) )
-			};
+			std::optional< atlas::remote::F95RemoteData > f95_data { atlas::remote::findF95Data( atlas_id ) };
 
 			if ( !f95_data.has_value() ) continue;
 

@@ -20,6 +20,11 @@ void ThreadPools::reloadConfig()
 	pre_importers.setMaxThreadCount( config::threads::import_pre_loader_threads::get() );
 }
 
+ThreadPools& ThreadPools::getInstance()
+{
+	return internal::global_pools;
+}
+
 ThreadPools& globalPools()
 {
 	return internal::global_pools;

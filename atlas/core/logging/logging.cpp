@@ -66,8 +66,14 @@ namespace atlas::logging
 
 		logger->debug( "Logger setup" );
 
-		spdlog::set_default_logger( logger );
+		spdlog::set_default_logger( std::move( logger ) );
 		setFormat();
+
+		spdlog::flush_on( spdlog::level::warn );
+
+#ifndef NDEBUG
+		spdlog::set_level( spdlog::level::debug );
+#endif
 
 		spdlog::enable_backtrace( 32 );
 		spdlog::debug( "Default logger set" );

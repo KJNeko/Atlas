@@ -29,7 +29,7 @@ namespace atlas::utils
 		FileInfo() = delete;
 
 		FileInfo(
-			std::filesystem::path path_in,
+			const std::filesystem::path& path_in,
 			const std::filesystem::path& source,
 			const std::size_t filesize,
 			const std::uint8_t file_depth ) :
@@ -38,7 +38,7 @@ namespace atlas::utils
 		  path( path_in ),
 		  size( filesize ),
 		  depth( file_depth ),
-		  relative( std::filesystem::relative( std::move( path_in ), source ) )
+		  relative( std::filesystem::relative( path_in, source ) )
 		{}
 	};
 
@@ -92,8 +92,6 @@ namespace atlas::utils
 
 	class FileScanner
 	{
-	  private:
-
 		std::filesystem::path m_path;
 		FileScannerGenerator file_scanner;
 		std::vector< FileInfo > files;

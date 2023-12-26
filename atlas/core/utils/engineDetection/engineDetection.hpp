@@ -36,12 +36,13 @@ enum Engine : int
 	HTML,
 	QSP,
 	BAT,
-	ENGINES_END,
 	MonoGame,
-	GamesforLive,
+	//GamesforLive,
 	XNA,
 	Adobe_AIR,
-	UNKNOWN
+
+	UNKNOWN, // This needs to stay as the 2nd to last
+	ENGINES_END, // This stays as the last item
 };
 
 //! Function to be specialized for each Engine to return true if the engine is valid.

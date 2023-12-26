@@ -8,9 +8,19 @@
 
 Binder::Binder( const std::string_view sql )
 {
+	ZoneScoped;
+	const char* unused { nullptr };
 	const auto prepare_ret {
-		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, nullptr )
+		sqlite3_prepare_v2( &Database::ref(), sql.data(), static_cast< int >( sql.size() + 1 ), &stmt, &unused )
 	};
+
+	if ( unused != nullptr && strlen( unused ) > 0 )
+		throw DatabaseException( format_ns::
+		                             format( "Query had unused portions of the input. Unused: \"{}\"", unused ) );
+
+	if ( stmt == nullptr )
+		throw DatabaseException( format_ns::
+		                             format( "Failed to prepare stmt, {}", sqlite3_errmsg( &Database::ref() ) ) );
 
 	if ( prepare_ret != SQLITE_OK )
 	{
@@ -21,14 +31,25 @@ Binder::Binder( const std::string_view sql )
 	max_param_count = sqlite3_bind_parameter_count( stmt );
 }
 
-Binder::~Binder() noexcept( false )
+Binder::~Binder()
 {
-	if ( !ran ) [[unlikely]]
+	ZoneScoped;
+	try
 	{
-		atlas::logging::debug( "Binder falloff. Running query" );
-		std::optional< std::tuple<> > tpl;
-		executeQuery( tpl );
-	}
+		if ( !ran )
+		{
+			std::optional< std::tuple<> > tpl;
+			executeQuery( tpl );
+		}
 
-	sqlite3_finalize( stmt );
+		sqlite3_finalize( stmt );
+	}
+	catch ( std::exception& e )
+	{
+		atlas::logging::critical( "Binder's dtor has thrown!, {}", e.what() );
+	}
+	catch ( ... )
+	{
+		atlas::logging::critical( "Binder's dtor has thrown!, ..." );
+	}
 }

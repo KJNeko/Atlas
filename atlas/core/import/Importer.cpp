@@ -144,7 +144,7 @@ namespace internal
 			{
 				atlas_id = atlas_data.value()->atlas_id;
 				std::optional< atlas::remote::F95RemoteData > f95_data =
-					atlas::remote::findF95Data( QString::number( atlas_data.value()->atlas_id ) );
+					atlas::remote::findF95Data( atlas_data.value()->atlas_id );
 				gl_infos.f95_thread_id = f95_data.value()->f95_id;
 
 				record.connectAtlasData( atlas_id );

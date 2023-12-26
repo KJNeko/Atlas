@@ -42,9 +42,16 @@ class SimpleImporter final : public QDialog
 
 	bool no_modification { false };
 
+	void setGameRoot( Node* node );
+
+	void verifyGames();
+	Node* root();
+	QModelIndex indexFromNode( Node* node );
+
   private slots:
 	void onCustomContextMenuRequested( const QPoint& point );
 	void dirView_itemSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );
+	void on_btnImport_clicked();
 
 	//Dir page
 	void on_cIsGameRoot_toggled( bool checked );

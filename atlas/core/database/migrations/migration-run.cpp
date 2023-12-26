@@ -52,8 +52,10 @@ namespace atlas::database::migrations
 		}
 
 		int current_migration { -1 };
+		std::optional< int > last_migration;
 		RapidTransaction() << "SELECT migration_id FROM migrations ORDER BY migration_id DESC limit 1"
-			>> current_migration;
+			>> last_migration;
+		if ( last_migration.has_value() ) current_migration = last_migration.value();
 
 		try
 		{

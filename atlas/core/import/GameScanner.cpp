@@ -25,6 +25,20 @@
 #include "core/utils/regex/regex.hpp"
 #include "core/utils/threading/pools.hpp"
 
+std::optional< gl::GameListInfos > findGLInfo( std::filesystem::path folder )
+{
+	ZoneScopedN( "Scan for GL data" );
+	//Check if we have a GL_Infos.ini file
+	if ( gl::dirHasGLInfo( folder ) )
+	{
+		atlas::logging::debug( "Found GL info for {}", folder );
+		//We have one.
+		return gl::parse( folder / GL_INFO_FILENAME );
+	}
+	else
+		return {};
+}
+
 void runner(
 	QPromise< GameImportData >& promise,
 	const QString regex,
@@ -35,64 +49,52 @@ void runner(
 	ZoneScoped;
 	if ( promise.isCanceled() ) return;
 	atlas::utils::FileScanner scanner { folder };
-	std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
+	const std::vector< std::filesystem::path > potential_executables { detectExecutables( scanner ) };
 
 	atlas::logging::debug( "Importing folder {} with base {} using regex {}", folder, base, regex );
 
 	if ( promise.isCanceled() ) return;
 	if ( potential_executables.size() <= 0 ) throw NoExecutablesFound( folder );
 
-	auto gl_info { [ &folder ]() -> gl::GameListInfos
-		           {
-					   //Check if we have a GL_Infos.ini file
-					   if ( gl::dirHasGLInfo( folder ) )
-					   {
-						   atlas::logging::debug( "Found GL info for {}", folder );
-						   //We have one.
-						   return gl::parse( folder / GL_INFO_FILENAME );
-					   }
-					   else
-						   return {};
-				   }() };
+	const auto gl_info { findGLInfo( folder ) };
+	const auto regex_output { regex::extractGroups( regex, QString::fromStdString( folder.string() ) ) };
 
-	auto [ title, creator, version, engine ] = [ & ]() -> regex::GroupsOutput
+	const bool gl_has_f95_thread { gl_info.has_value() && gl_info->f95_thread_id != INVALID_F95_ID };
+
+	std::optional< atlas::remote::F95RemoteData > f95_data { std::nullopt };
+	std::optional< atlas::remote::AtlasRemoteData > atlas_data { std::nullopt };
+
+	if ( gl_has_f95_thread )
 	{
-		if ( gl_info.f95_thread_id == INVALID_F95_ID )
-		{
-			//atlas::logging::warn( "Found GL info but it had an invalid F95 id!" );
-			//Unable to do anything with this
-			//TODO: Try the SHORT_ID from the atlas_id stuff to see if we can get a name match from the title.
-			return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-		}
-		else
-		{
-			//Try to find the thread info
-			if ( !atlas::remote::hasF95DataFor( gl_info.f95_thread_id ) )
-			{
-				return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-			}
-			else
-			{
-				try
-				{
-					atlas::remote::F95RemoteData f95_data { gl_info.f95_thread_id };
-					atlas::remote::AtlasRemoteData atlas_data { f95_data->atlas_id };
+		ZoneScopedN( "Check for remote data - GLInfos.ini" );
+		const F95ID f95_id { gl_info->f95_thread_id };
 
-					//Grab version info from gl_infos directly
-					regex::GroupsOutput output {
-						atlas_data->title, atlas_data->creator, gl_info.version, atlas_data->engine
-					};
+		f95_data = atlas::remote::findF95Data( f95_id );
 
-					return output;
-				}
-				catch ( std::exception& e )
-				{
-					atlas::logging::warn( "Failed to get remote data in scanner: {}", e.what() );
-					return regex::extractGroups( regex, QString::fromStdString( folder.string() ) );
-				}
-			}
-		}
-	}();
+		if ( f95_data.has_value() ) atlas_data = atlas::remote::findAtlasData( f95_data.value()->atlas_id );
+	}
+
+	//Did GL have a f95 thread id?
+	if ( !atlas_data.has_value() )
+	{
+		ZoneScopedN( "Check for remote data" );
+		//Nope. Try the alternative search method.
+		const auto& [ title, creator, version, engine ] = regex_output;
+		atlas_data = atlas::remote::findAtlasData( title, creator );
+	}
+
+	regex::GroupsOutput final_output { regex_output };
+
+	auto& [ title, creator, version, engine ] = final_output;
+
+	if ( atlas_data.has_value() )
+	{
+		auto& a_data { atlas_data.value() };
+		title = a_data->title;
+		creator = a_data->creator;
+		version = a_data->version;
+		engine = a_data->engine;
+	}
 
 	//Search for banners
 	std::array< QString, BannerType::SENTINEL > banners {};
@@ -130,11 +132,8 @@ void runner(
 		//Check if images are available locally, if not, get the url
 		//Download image so we can store it later
 
-		std::optional< atlas::remote::AtlasRemoteData > atlas_data = atlas::remote::findAtlasData( title, creator );
 		if ( atlas_data.has_value() )
 		{
-			std::optional< atlas::remote::F95RemoteData > f95_data =
-				atlas::remote::findF95Data( QString::number( atlas_data.value()->atlas_id ) );
 			banners[ Normal ] = f95_data.value()->banner_url;
 		}
 	}
@@ -171,12 +170,6 @@ void runner(
 	//If the gl_info has a f95_id then we can use that.
 	auto atlas_id { INVALID_ATLAS_ID };
 
-	if ( gl_info.f95_thread_id != INVALID_F95_ID )
-	{
-		//We can try to get the atlas_id from the f95 thread if it's valid.
-		atlas_id = atlas::remote::atlasIDFromF95Thread( gl_info.f95_thread_id );
-	}
-
 	if ( engine.isEmpty() )
 	{
 		//Set engine if it's not set already via the regex
@@ -196,7 +189,7 @@ void runner(
 		potential_executables.at( 0 ),
 		std::move( banners ),
 		std::move( previews ),
-		std::move( gl_info ),
+		gl_info.has_value() ? std::move( gl_info.value() ) : gl::GameListInfos(),
 		game_id,
 		atlas_id,
 	};
@@ -224,7 +217,10 @@ try
 		ZoneScopedN( "Process directory" );
 
 		promise.suspendIfRequested();
-		if ( promise.isCanceled() ) return;
+		if ( promise.isCanceled() )
+		{
+			break;
+		}
 
 		if ( itter->is_directory() )
 		{
@@ -233,12 +229,13 @@ try
 			TracyCZoneEnd( regex_Tracy );
 
 			//Is the directory we just found already in the database?
-			RecordID path_id { INVALID_RECORD_ID };
-			RapidTransaction() << "SELECT record_id FROM versions WHERE game_path = ?" << itter->path() >> path_id;
-			if ( path_id != INVALID_RECORD_ID ) continue;
 
 			if ( result )
 			{
+				std::optional< RecordID > path_id;
+				RapidTransaction() << "SELECT record_id FROM versions WHERE game_path = ?" << itter->path() >> path_id;
+				if ( path_id.has_value() ) continue;
+
 				++directories_left;
 				//The regex was a match. We can now process this directory further
 				futures.emplace_back( QtConcurrent::
@@ -266,13 +263,13 @@ try
 
 	for ( auto& future : futures | std::views::reverse )
 	{
+		if ( promise.isCanceled() ) break;
+
 		while ( true )
 		{
 			promise.suspendIfRequested();
 			if ( promise.isCanceled() )
 			{
-				future.cancel();
-				future.waitForFinished();
 				break;
 			}
 
@@ -281,6 +278,37 @@ try
 			using namespace std::chrono_literals;
 			std::this_thread::sleep_for( 10ms );
 		}
+	}
+
+	if ( promise.isCanceled() )
+	{
+		//We need to cancel all the futures we have running
+		for ( auto& future : futures | std::views::reverse )
+		{
+			future.cancel();
+		}
+
+		//Wait for them to finish
+		for ( auto& future : futures )
+		{
+			future.waitForFinished();
+		}
+	}
+
+	done = true;
+}
+catch ( QUnhandledException& e )
+{
+	if ( promise.isCanceled() ) //We don't care about the error if we're canceled
+		return;
+
+	try
+	{
+		std::rethrow_exception( e.exception() );
+	}
+	catch ( std::exception& e_2 )
+	{
+		atlas::logging::error( "Main runner ate error before entering Qt space! {}", e_2.what() );
 	}
 }
 catch ( std::exception& e )
@@ -324,7 +352,7 @@ void GameScanner::abort()
 
 bool GameScanner::isRunning()
 {
-	return m_runner_future.isRunning();
+	return m_runner_future.isRunning() || !done;
 }
 
 bool GameScanner::isPaused()
