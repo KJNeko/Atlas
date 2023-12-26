@@ -290,13 +290,9 @@ try
 		}
 	}
 }
-catch ( std::exception& e )
-{
-	atlas::logging::error( "Main runner ate error before entering Qt space! {}", e.what() );
-}
 catch ( ... )
 {
-	atlas::logging::error( "Main runner fucking died" );
+	promise.setException( std::current_exception() );
 }
 
 void GameScanner::start( const std::filesystem::path path, const QString regex, const bool size_folders )
