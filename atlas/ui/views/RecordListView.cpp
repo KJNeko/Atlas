@@ -32,6 +32,11 @@ RecordListView::RecordListView( QWidget* parent ) : QListView( parent )
 	CONFIG_ATTACH_THIS;
 }
 
+RecordListView::~RecordListView() noexcept
+{
+	delete QListView::itemDelegate();
+}
+
 void RecordListView::setRenderMode( const DelegateType type )
 {
 	ZoneScoped;

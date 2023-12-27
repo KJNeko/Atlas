@@ -164,7 +164,7 @@ class Binder
 
 		if ( stmt == nullptr ) throw DatabaseException( "stmt was nullptr" );
 
-		atlas::logging::debug( "Executing query {}", sqlite3_expanded_sql( stmt ) );
+		atlas::logging::debug( "Executing query {}", stmt );
 
 		const auto step_ret { sqlite3_step( stmt ) };
 
