@@ -80,6 +80,7 @@ namespace atlas::records
 	void createFailureHandler(
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
+		if ( !future.isValid() ) return;
 		future
 			.onFailed(
 				[ id, banner_path, type ]( [[maybe_unused]] const AtlasException& e )
