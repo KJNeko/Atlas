@@ -83,7 +83,8 @@ namespace atlas::records
 	QFuture< QPixmap > createFailureHandler(
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
-		if ( !future.isValid() || future.isFinished() ) throw AtlasException( "Future is invalid or finished" );
+		if ( !future.isValid() || future.isFinished() || future.isCanceled() )
+			throw AtlasException( "Future is invalid or finished" );
 
 		struct
 		{
