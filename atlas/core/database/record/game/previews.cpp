@@ -43,7 +43,10 @@ namespace atlas::records
 		{
 			try
 			{
-				path = atlas::images::async::importImage( path, m_id ).result();
+				auto path_future { atlas::images::async::importImage( path, m_id ) };
+				path_future.waitForFinished();
+				if ( !path_future.isValid() ) throw AtlasException( "Path future invalid" );
+				path = path_future.result();
 			}
 			catch ( QUnhandledException& e )
 			{
