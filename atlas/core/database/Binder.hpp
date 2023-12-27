@@ -167,7 +167,7 @@ class Binder
 #ifndef NDEBUG
 		char* query_text { sqlite3_expanded_sql( stmt ) };
 		atlas::logging::debug( "Executing query {}", std::string_view( query_text, strlen( query_text ) ) );
-		delete query_text;
+		sqlite3_free( query_text );
 #endif
 
 		const auto step_ret { sqlite3_step( stmt ) };
