@@ -80,11 +80,12 @@ namespace atlas::records
 			return atlas::images::async::loadPixmap( path );
 	}
 
-	QFuture< QPixmap > createFailureHandler(
+	void createFailureHandler(
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
-		if ( !future.isValid() || future.isFinished() || future.isCanceled() )
-			throw AtlasException( "Future is invalid or finished" );
+		if ( future.isFinished() || future.isCanceled() ) return;
+
+		if ( !future.isValid() ) throw AtlasException( "Future is invalid" );
 
 		struct
 		{
@@ -93,8 +94,8 @@ namespace atlas::records
 			BannerType type;
 		} closure { id, banner_path, type };
 
-		return future
-		    .onFailed(
+		future
+			.onFailed(
 				[ info = std::move( closure ) ]( [[maybe_unused]] const std::exception& e ) -> QPixmap
 				{
 					atlas::logging::error(
@@ -134,7 +135,7 @@ namespace atlas::records
 
 					return pixmap;
 				} )
-		    .onFailed(
+			.onFailed(
 				[]() -> QPixmap
 				{
 					atlas::logging::critical( "Something went wrong with the banner request for record: {}", 0 );
