@@ -175,7 +175,7 @@ namespace atlas::images
 				return QtConcurrent::run( &globalPools().image_loaders, &internal::loadThumbnail, path );
 		}
 
-		QFuture< QPixmap > scaledThumbnail(
+		QFuture< QPixmap > loadScaledThumbnail(
 			const QSize size,
 			const SCALE_TYPE scale_type,
 			const Alignment align_type,
