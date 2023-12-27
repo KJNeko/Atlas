@@ -90,6 +90,8 @@ namespace atlas::records
 				{
 					Game game { id };
 
+					QPixmap pixmap {};
+
 					atlas::logging::debug( "Doing error handling for failed banner request" );
 					//Check if the banner path exists
 					if ( !std::filesystem::exists( banner_path ) )
@@ -101,12 +103,12 @@ namespace atlas::records
 							static_cast< int >( type ) );
 
 						game.setBanner( "", type );
+						return pixmap;
 					}
 
 					atlas::logging::debug( "Image exists. Attempting to load it" );
 					//It exists. Let's try loading it
 
-					QPixmap pixmap;
 					pixmap.load( QString::fromStdString( banner_path.string() ) );
 					if ( pixmap.isNull() )
 					{
@@ -114,9 +116,10 @@ namespace atlas::records
 							"An image is possibly corrupt. Removing it from the record's path list. Location is at {}",
 							banner_path );
 						game.setBanner( "", type );
+						return pixmap;
 					}
 
-					return QPixmap();
+					return pixmap;
 				} )
 			.onCanceled(
 				[ banner_path ]() -> QPixmap
