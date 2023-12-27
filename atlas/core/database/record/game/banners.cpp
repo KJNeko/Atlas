@@ -80,7 +80,7 @@ namespace atlas::records
 	void createFailureHandler(
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
-		if ( !future.isValid() ) return;
+		if ( !future.isValid() || future.isFinished() ) return;
 		future
 			.onFailed(
 				[ id, banner_path, type ]( [[maybe_unused]] const AtlasException& e )
@@ -142,7 +142,8 @@ namespace atlas::records
 		if ( banner_path.empty() )
 			//Ideally we would check if the path exists too but it's too expensive do to during a paint
 			return QtFuture::makeReadyFuture( QPixmap() );
-		else if ( use_thumbnail )
+
+		if ( use_thumbnail )
 		{
 			QFuture< QPixmap > future {
 				atlas::images::async::scaledThumbnail( size, scale_type, align_type, banner_path )
