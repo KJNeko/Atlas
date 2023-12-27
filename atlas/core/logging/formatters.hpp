@@ -108,12 +108,4 @@ struct format_ns::formatter< QUrl >
 	format_context::iterator format( const QUrl& url, format_context& ctx ) const;
 };
 
-template <>
-struct format_ns::formatter< sqlite3_stmt* >
-{
-	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
-
-	format_context::iterator format( sqlite3_stmt* stmt, format_context& ctx ) const;
-};
-
 #endif //ATLASGAMEMANAGER_FORMATTERS_HPP
