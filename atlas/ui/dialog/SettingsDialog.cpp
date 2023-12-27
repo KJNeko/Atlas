@@ -268,11 +268,6 @@ void SettingsDialog::prepareGridViewerSettings()
 	//END BANNER SETTINGS
 	ui->cbCenterItems->setChecked( config::grid_ui::centerWidgets::get() );
 
-	//Disable ui elements for future implementations
-	//ui->sbCapsuleSpace->setEnabled( false ); //Feature Not Enabled
-	ui->sbSelectedOpacity->setEnabled( false );
-	ui->cbLockY->setEnabled( false );
-
 	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
 	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
 
