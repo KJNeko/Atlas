@@ -116,6 +116,7 @@ namespace atlas::records
 							static_cast< int >( info.type ) );
 
 						game.setBanner( "", info.type );
+						return pixmap;
 					}
 
 					atlas::logging::debug( "Image exists. Attempting to load it" );
@@ -129,7 +130,8 @@ namespace atlas::records
 							info.banner_path );
 						game.setBanner( "", info.type );
 					}
-					return {};
+
+					return pixmap;
 				} )
 		    .onFailed(
 				[]() -> QPixmap
