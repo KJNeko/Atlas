@@ -211,7 +211,7 @@ border-bottom-left-radius:5px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+             <pixmap>:/images/assets/search.svg</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -254,7 +254,7 @@ margin-left: 2px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
+             <iconset>
               <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
             </property>
             <property name="iconSize">
@@ -288,7 +288,7 @@ border-top-left-radius:0px;</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
+             <iconset>
               <normaloff>:/images/assets/setting_filter.svg</normaloff>:/images/assets/setting_filter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -373,7 +373,7 @@ border-top-left-radius:0px;</string>
           <string>Add Game</string>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/addgame.svg</normaloff>:/images/assets/addgame.svg</iconset>
          </property>
         </widget>
@@ -489,7 +489,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../resources.qrc">
+          <iconset>
            <normaloff>:/images/assets/Atlas_logo_v2.svg</normaloff>:/images/assets/Atlas_logo_v2.svg</iconset>
          </property>
          <property name="iconSize">
@@ -550,7 +550,7 @@ border-bottom-left-radius:5px;</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../resources.qrc">:/images/assets/search.svg</pixmap>
+          <pixmap>:/images/assets/search.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -626,6 +626,18 @@ margin-right:5px;</string>
          <widget class="RecordListView" name="recordView">
           <property name="styleSheet">
            <string notr="true"/>
+          </property>
+          <property name="autoScroll">
+           <bool>false</bool>
+          </property>
+          <property name="autoScrollMargin">
+           <number>10</number>
+          </property>
+          <property name="verticalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
           <property name="movement">
            <enum>QListView::Free</enum>
@@ -906,9 +918,7 @@ margin-right:5px;</string>
    <header>ui/views/RecordListView.hpp</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <designerdata>
   <property name="gridDeltaX">

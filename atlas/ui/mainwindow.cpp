@@ -98,7 +98,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSimpleImporter->setVisible( false );
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
-	//ui->actionDownload->setVisible( false );
+
+	//Fix scrolling
+	ui->recordView->verticalScrollBar()->setSingleStep( 25 );
 
 	connect(
 		&atlas::import::internal::getNotifier(),

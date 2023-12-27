@@ -146,7 +146,7 @@ namespace atlas::records
 			QFuture< QPixmap > future {
 				atlas::images::async::scaledThumbnail( size, scale_type, align_type, banner_path )
 			};
-			createFailureHandler( future, id, banner_path, type );
+			//createFailureHandler( future, id, banner_path, type );
 			return future;
 		}
 		else
@@ -154,7 +154,7 @@ namespace atlas::records
 			QFuture< QPixmap > future {
 				atlas::images::async::loadScaledPixmap( size, scale_type, align_type, banner_path )
 			};
-			createFailureHandler( future, id, banner_path, type );
+			//createFailureHandler( future, id, banner_path, type );
 			return future;
 		}
 	}
