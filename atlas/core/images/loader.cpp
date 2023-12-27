@@ -225,7 +225,7 @@ namespace atlas::images
 			{
 				atlas::logging::
 					warn( "Image was not readable by QImageReader. Falling back to alternative loading method" );
-				const auto pixmap {
+				QPixmap pixmap {
 					scalePixmap( atlas::images::loadPixmap( path ), target_size, scale_type, align_type )
 				};
 				scale_cache.insert( key, pixmap );
