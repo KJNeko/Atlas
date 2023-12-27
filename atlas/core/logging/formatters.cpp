@@ -70,7 +70,7 @@ auto format_ns::formatter<
 	return format_ns::format_to( ctx.out(), "{}", str.get() );
 }
 
-auto fornat_ns::formatter< sqlite3_stmt* >::format( sqlite3_stmt* stmt, format_context& ctx ) const
+auto format_ns::formatter< sqlite3_stmt* >::format( sqlite3_stmt* stmt, format_context& ctx ) const
 	-> decltype( ctx.out() )
 {
 	char* ptr { sqlite3_expanded_sql( stmt ) };
