@@ -131,6 +131,7 @@ namespace atlas::images
 			catch ( ... )
 			{
 				promise.setException( std::current_exception() );
+				promise.addResult( {} );
 			}
 
 			void loadScaledThumb(
@@ -162,6 +163,7 @@ namespace atlas::images
 			catch ( ... )
 			{
 				promise.setException( std::current_exception() );
+				promise.addResult( {} );
 			}
 
 		} // namespace internal
