@@ -113,6 +113,7 @@ namespace atlas::images
 		namespace internal
 		{
 			void loadThumbnail( QPromise< QPixmap >& promise, const std::filesystem::path origin_path )
+			try
 			{
 				if ( promise.isCanceled() ) return;
 				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
@@ -127,6 +128,10 @@ namespace atlas::images
 				thumb_cache.insert( thumb_path.string(), pixmap );
 				promise.addResult( std::move( pixmap ) );
 			}
+			catch ( ... )
+			{
+				promise.setException( std::current_exception() );
+			}
 
 			void loadScaledThumb(
 				QPromise< QPixmap >& promise,
@@ -134,35 +139,29 @@ namespace atlas::images
 				const SCALE_TYPE scale_type,
 				const Alignment align_type,
 				const std::filesystem::path origin_path )
+			try
 			{
 				if ( promise.isCanceled() ) return;
-				try
-				{
-					const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
+				const auto thumb_path { atlas::images::thumbnailPath( origin_path ) };
 
-					if ( !std::filesystem::exists( thumb_path ) )
-						(void)createThumbnail( origin_path );
-					else
-						verifyThumbnail( origin_path );
+				if ( !std::filesystem::exists( thumb_path ) )
+					(void)createThumbnail( origin_path );
+				else
+					verifyThumbnail( origin_path );
 
-					QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, align_type, thumb_path ) };
-					atlas::logging::debug(
-						"Loaded thumb {} with size of {}x{}",
-						thumb_path,
-						pixmap.size().width(),
-						pixmap.size().height() );
+				QPixmap pixmap { atlas::images::loadScaledPixmap( size, scale_type, align_type, thumb_path ) };
+				atlas::logging::debug(
+					"Loaded thumb {} with size of {}x{}", thumb_path, pixmap.size().width(), pixmap.size().height() );
 
-					const auto key { format_ns::format(
-						"{}x{}-{}-{}", size.width(), size.height(), static_cast< int >( scale_type ), thumb_path ) };
+				const auto key { format_ns::format(
+					"{}x{}-{}-{}", size.width(), size.height(), static_cast< int >( scale_type ), thumb_path ) };
 
-					thumb_cache.insert( key, pixmap );
-					promise.addResult( std::move( pixmap ) );
-				}
-				catch ( ... )
-				{
-					promise.setException( std::current_exception() );
-					return;
-				}
+				thumb_cache.insert( key, pixmap );
+				promise.addResult( std::move( pixmap ) );
+			}
+			catch ( ... )
+			{
+				promise.setException( std::current_exception() );
 			}
 
 		} // namespace internal

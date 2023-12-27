@@ -172,6 +172,7 @@ namespace atlas::images
 	namespace internal
 	{
 		void loadPixmap( QPromise< QPixmap >& promise, const std::filesystem::path& path )
+		try
 		{
 			if ( promise.isCanceled() ) return;
 			if ( path.empty() ) throw ImageLoadError( "Path was empty!" );
@@ -191,6 +192,10 @@ namespace atlas::images
 				promise.addResult( std::move( pixmap ) );
 			}
 		}
+		catch ( ... )
+		{
+			promise.setException( std::current_exception() );
+		}
 
 		void loadScaledPixmap(
 			QPromise< QPixmap >& promise,
@@ -198,6 +203,7 @@ namespace atlas::images
 			const SCALE_TYPE scale_type,
 			const Alignment align_type,
 			const std::filesystem::path& path )
+		try
 		{
 			if ( promise.isCanceled() ) return;
 			atlas::logging::debug( "Loading image: {}", path );
@@ -241,6 +247,10 @@ namespace atlas::images
 				promise.addResult( std::move( pixmap ) );
 				return;
 			}
+		}
+		catch ( ... )
+		{
+			promise.setException( std::current_exception() );
 		}
 
 	} // namespace internal
