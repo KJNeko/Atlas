@@ -32,8 +32,8 @@ jobs:
           submodules: 'recursive'
       - uses: ./.github/actions/build-windows
         with:
-          build-release: true
-          build-debug: false
+          build-release: false
+          build-debug: true
           # Swap build-atlas and build-tests once tests are runnable
           build-atlas: true
           # build-tests: true
