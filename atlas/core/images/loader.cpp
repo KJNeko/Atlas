@@ -194,8 +194,8 @@ namespace atlas::images
 		}
 		catch ( ... )
 		{
+			promise.addResult( QPixmap() );
 			promise.setException( std::current_exception() );
-			promise.addResult( {} );
 		}
 
 		void loadScaledPixmap(
@@ -251,8 +251,8 @@ namespace atlas::images
 		}
 		catch ( ... )
 		{
+			promise.addResult( QPixmap() );
 			promise.setException( std::current_exception() );
-			promise.addResult( {} );
 		}
 
 	} // namespace internal

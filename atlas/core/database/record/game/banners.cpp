@@ -97,7 +97,9 @@ namespace atlas::records
 				[ info = std::move( closure ) ]( const std::exception& e )
 				{
 					atlas::logging::error(
-						"Something went wrong with the banner request for record: {}. What: \"{}\"", id, e.what() );
+						"Something went wrong with the banner request for record: {}. What: \"{}\"",
+						info.id,
+						e.what() );
 
 					Game game { info.id };
 
