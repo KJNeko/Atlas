@@ -86,7 +86,7 @@ namespace atlas::records
 		if ( !future.isValid() || future.isFinished() ) return;
 		future
 			.onFailed(
-				[ id, banner_path, type ]( [[maybe_unused]] const AtlasException& e )
+				[ id, banner_path, type ]
 				{
 					Game game { id };
 
