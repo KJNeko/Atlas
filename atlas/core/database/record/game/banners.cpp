@@ -85,21 +85,25 @@ namespace atlas::records
 	{
 		if ( !future.isValid() || future.isFinished() ) return;
 
+		/*
 		struct
 		{
 			RecordID id;
 			std::filesystem::path banner_path;
 			BannerType type;
 		} closure { id, banner_path, type };
+		*/
 
 		future
 			.onFailed(
-				[ info = std::move( closure ) ]( const std::exception& e )
+				[]( [[maybe_unused]] const std::exception& e ) -> QPixmap
 				{
 					atlas::logging::error(
 						"Something went wrong with the banner request for record: {}. What: \"{}\"",
-						info.id,
+						0,
+						//info.id,
 						e.what() );
+					/*
 
 					Game game { info.id };
 
@@ -116,7 +120,6 @@ namespace atlas::records
 							static_cast< int >( info.type ) );
 
 						game.setBanner( "", info.type );
-						return pixmap;
 					}
 
 					atlas::logging::debug( "Image exists. Attempting to load it" );
@@ -129,15 +132,14 @@ namespace atlas::records
 							"An image is possibly corrupt. Removing it from the record's path list. Location is at {}",
 							info.banner_path );
 						game.setBanner( "", info.type );
-						return pixmap;
 					}
-
-					return pixmap;
+					 */
+					return {};
 				} )
 			.onFailed(
-				[ id, banner_path ]() -> QPixmap
+				[]() -> QPixmap
 				{
-					atlas::logging::critical( "Something went wrong with the banner request for record: {}", id );
+					atlas::logging::critical( "Something went wrong with the banner request for record: {}", 0 );
 					return {};
 				} );
 	}
