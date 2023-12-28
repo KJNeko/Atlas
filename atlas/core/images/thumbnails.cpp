@@ -127,11 +127,12 @@ namespace atlas::images
 
 				thumb_cache.insert( thumb_path.string(), pixmap );
 				promise.addResult( std::move( pixmap ) );
+				return;
 			}
 			catch ( ... )
 			{
-				promise.addResult( QPixmap() );
 				promise.setException( std::current_exception() );
+				return;
 			}
 
 			void loadScaledThumb(
@@ -159,11 +160,12 @@ namespace atlas::images
 
 				thumb_cache.insert( key, pixmap );
 				promise.addResult( std::move( pixmap ) );
+				return;
 			}
 			catch ( ... )
 			{
-				promise.addResult( QPixmap() );
 				promise.setException( std::current_exception() );
+				return;
 			}
 
 		} // namespace internal

@@ -80,10 +80,10 @@ namespace atlas::records
 			return atlas::images::async::loadPixmap( path );
 	}
 
-	void createFailureHandler(
+	QFuture< QPixmap > createFailureHandler(
 		QFuture< QPixmap >& future, const RecordID id, const std::filesystem::path& banner_path, const BannerType type )
 	{
-		if ( future.isFinished() || future.isCanceled() ) return;
+		if ( future.isFinished() || future.isCanceled() ) return future;
 
 		if ( !future.isValid() ) throw AtlasException( "Future is invalid" );
 
@@ -94,58 +94,53 @@ namespace atlas::records
 			BannerType type;
 		} closure { id, banner_path, type };
 
-		struct Temp
-		{
-			QFuture< QPixmap > one;
-			QFuture< QPixmap > two;
-		};
-
-		Temp* temp = new Temp();
-
-		temp->one = future.onFailed(
-			[ info = std::move( closure ) ]( [[maybe_unused]] const std::exception& e ) -> QPixmap
-			{
-				atlas::logging::error(
-					"Something went wrong with the banner request for record: {}. What: \"{}\"", info.id, e.what() );
-
-				Game game { info.id };
-
-				QPixmap pixmap {};
-
-				atlas::logging::debug( "Doing error handling for failed banner request" );
-				//Check if the banner path exists
-				if ( !std::filesystem::exists( info.banner_path ) )
+		return future
+		    .onFailed(
+				[ info = std::move( closure ) ]( [[maybe_unused]] const std::exception& e ) -> QPixmap
 				{
-					//If it doesn't then we can set the banner path to empty
-					//This will prevent us from trying to load the banner again
 					atlas::logging::error(
-						"A path that was expected to exist did not exist! Record has been updated to an empty path for the banner type: {}",
-						static_cast< int >( info.type ) );
+						"Something went wrong with the banner request for record: {}. What: \"{}\"",
+						info.id,
+						e.what() );
 
-					game.setBanner( "", info.type );
+					Game game { info.id };
+
+					QPixmap pixmap {};
+
+					atlas::logging::debug( "Doing error handling for failed banner request" );
+					//Check if the banner path exists
+					if ( !std::filesystem::exists( info.banner_path ) )
+					{
+						//If it doesn't then we can set the banner path to empty
+						//This will prevent us from trying to load the banner again
+						atlas::logging::error(
+							"A path that was expected to exist did not exist! Record has been updated to an empty path for the banner type: {}",
+							static_cast< int >( info.type ) );
+
+						game.setBanner( "", info.type );
+						return pixmap;
+					}
+
+					atlas::logging::debug( "Image exists. Attempting to load it" );
+					//It exists. Let's try loading it
+
+					pixmap.load( QString::fromStdString( info.banner_path.string() ) );
+					if ( pixmap.isNull() )
+					{
+						atlas::logging::error(
+							"An image is possibly corrupt. Removing it from the record's path list. Location is at {}",
+							info.banner_path );
+						game.setBanner( "", info.type );
+					}
+
 					return pixmap;
-				}
-
-				atlas::logging::debug( "Image exists. Attempting to load it" );
-				//It exists. Let's try loading it
-
-				pixmap.load( QString::fromStdString( info.banner_path.string() ) );
-				if ( pixmap.isNull() )
+				} )
+		    .onFailed(
+				[]() -> QPixmap
 				{
-					atlas::logging::error(
-						"An image is possibly corrupt. Removing it from the record's path list. Location is at {}",
-						info.banner_path );
-					game.setBanner( "", info.type );
-				}
-
-				return pixmap;
-			} );
-		temp->two = temp->one.onFailed(
-			[]() -> QPixmap
-			{
-				atlas::logging::critical( "Something went wrong with the banner request for record: {}", 0 );
-				return {};
-			} );
+					atlas::logging::critical( "Something went wrong with the banner request for record: {}", 0 );
+					return {};
+				} );
 	}
 
 	QFuture< QPixmap > Game::requestBanner(

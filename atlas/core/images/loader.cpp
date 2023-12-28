@@ -194,7 +194,6 @@ namespace atlas::images
 		}
 		catch ( ... )
 		{
-			promise.addResult( QPixmap() );
 			promise.setException( std::current_exception() );
 		}
 
@@ -251,7 +250,6 @@ namespace atlas::images
 		}
 		catch ( ... )
 		{
-			promise.addResult( QPixmap() );
 			promise.setException( std::current_exception() );
 		}
 
