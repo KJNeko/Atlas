@@ -56,13 +56,28 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 	{
 		case Qt::DisplayRole:
 			[[fallthrough]];
-		case RecordListModelRoles::Raw:
+		case Roles::Raw:
 			return QVariant::fromStdVariant( std::variant< atlas::records::Game >( game ) );
 		case Qt::ToolTipRole:
 			[[fallthrough]];
 		case Qt::StatusTipRole:
 			{
 				return QString( "Game: %1" ).arg( m_records.at( static_cast< std::size_t >( index.row() ) )->m_title );
+			}
+		case Roles::Banner:
+			{
+				//See if we have a loader cached for this
+				if ( auto itter = loaders.find( index.row() ); itter != loaders.end() )
+				{
+					if ( itter->second->isFinished() )
+					{
+						return itter->second->future().result();
+					}
+					else
+						return {};
+				}
+				else
+					return {};
 			}
 		default:
 			return { "UNHANDLED ROLE IN RecordListModel::data" };
@@ -71,36 +86,36 @@ QVariant RecordListModel::data( const QModelIndex& index, int role ) const
 
 void RecordListModel::reloadRecord( QPersistentModelIndex index )
 {
-	loaders.erase( index.row() );
 	emit dataChanged( index, index );
 }
 
-void RecordListModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future )
+void RecordListModel::
+	refreshOnLoader( QPersistentModelIndex index, std::unique_ptr< atlas::images::ImageLoader > loader )
 {
-	//Upon future finishing we signal `dataChanged` in order to get Qt to repaint the specific item. Repaint is luckly not called if it's off screen. Meaning we don't 'waste' paints by responding to off-screen futures finally finishing
-	if ( future.isFinished() )
-	{
-		// Optimistic checking
-		emit dataChanged( index, index );
-		return;
-	}
+	if ( loader->isFinished() ) emit dataChanged( index, index );
 
-	//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
-	if ( loaders.contains( index.row() ) )
-	{
-		future.cancel();
-		return;
-	}
+	auto lamda = [ this, index ]() mutable { this->reloadRecord( index ); };
 
-	auto* loader { new atlas::images::ImageLoader( index, future ) };
-	connect(
-		loader,
-		&atlas::images::ImageLoader::imageReady,
-		this,
-		&RecordListModel::reloadRecord,
-		Qt::SingleShotConnection );
-	loader->moveToThread( &loading_thread );
-	loaders.insert( std::make_pair( index.row(), loader ) );
+	QObject::connect( loader.get(), &atlas::images::ImageLoader::finished, lamda );
+
+	if ( auto itter = loaders.find( index.row() ); itter != loaders.end() )
+	{
+		if ( !itter->second->isFinished() )
+		{
+			//Cancel the new loader
+			loader->cancel();
+		}
+		else
+		{
+			//Replace the old loader
+			itter->second = std::move( loader );
+		}
+	}
+	else
+	{
+		//Add the new loader
+		loaders.emplace( index.row(), std::move( loader ) );
+	}
 }
 
 void RecordListModel::killLoaders()
@@ -125,5 +140,20 @@ QVariant RecordListModel::headerData( int i, Qt::Orientation orientation, int ro
 	else
 	{
 		return QVariant( "Error" );
+	}
+}
+
+void RecordListModel::killOutOfView( const int first, const int last )
+{
+	//Kill loaders that are out of view
+	for ( auto itter = loaders.begin(); itter != loaders.end(); )
+	{
+		if ( itter->first < first || itter->first > last )
+		{
+			itter->second->cancel();
+			itter = loaders.erase( itter );
+		}
+		else
+			++itter;
 	}
 }

@@ -10,21 +10,17 @@
 #include <QMimeData>
 
 #include "core/images/loader.hpp"
-#include "core/images/thumbnails.hpp"
 #include "core/logging/logging.hpp"
 
 void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& filepaths )
 {
 	beginResetModel();
-	killLoaders();
 	this->m_paths = filepaths;
 	endResetModel();
 }
 
 FilepathModel::FilepathModel( QObject* parent ) : QAbstractListModel( parent )
-{
-	loading_thread.start();
-}
+{}
 
 QModelIndex FilepathModel::index( int row, int column, const QModelIndex& parent ) const
 {
@@ -50,15 +46,17 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 
 	switch ( role )
 	{
-		case FilepathModel::PixmapRole:
+		case Roles::Pixmap:
 			{
 				const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
-				return QVariant::fromStdVariant( std::variant<
-												 QFuture< QPixmap > >( atlas::images::async::loadScaledPixmap(
-					size, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER, path ) ) );
+
+				auto future { atlas::images::ImageLoader::loadPixmap( path )
+					              ->scaleTo( size, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER ) };
+
+				return QVariant::fromValue( std::move( future ) );
 				break;
 			}
-		case FilepathRole:
+		case Roles::Filepath:
 			return QVariant::fromValue( path );
 		case Qt::StatusTipRole:
 			[[fallthrough]];
@@ -79,7 +77,6 @@ bool FilepathModel::removeRows( int row, int count, const QModelIndex& parent )
 	if ( row < 0 || static_cast< std::size_t >( row + count ) > m_paths.size() ) return false;
 
 	beginRemoveRows( parent, row, row + count - 1 );
-	killLoaders();
 
 	for ( int i = 0; i < count; ++i ) m_paths.erase( m_paths.begin() + row );
 
@@ -102,7 +99,6 @@ bool FilepathModel::insertRows( int row, int col, const QModelIndex& parent )
 	if ( row > rowCount( {} ) ) return false;
 
 	beginInsertRows( parent, row, row + col - 1 );
-	killLoaders();
 
 	if ( row == rowCount() )
 	{
@@ -158,7 +154,6 @@ bool FilepathModel::moveRows(
 	const std::vector< std::filesystem::path > data { s_beg, s_end };
 
 	beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild );
-	killLoaders();
 
 	m_paths.erase( s_beg, s_end );
 
@@ -179,53 +174,35 @@ std::vector< std::filesystem::path > FilepathModel::getFilepaths() const
 	return m_paths;
 }
 
-void FilepathModel::refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future )
+void FilepathModel::reloadRecord( QPersistentModelIndex index )
 {
-	//Upon future finishing we signal `dataChanged` in order to get Qt to repaint the specific item. Repaint is luckly not called if it's off screen. Meaning we don't 'waste' paints by responding to off-screen futures finally finishing
-	if ( future.isFinished() )
+	emit dataChanged( index, index );
+}
+
+void FilepathModel::refreshOnLoader( QPersistentModelIndex index, std::unique_ptr< atlas::images::ImageLoader > loader )
+{
+	if ( loader->isFinished() ) emit dataChanged( index, index );
+
+	auto lamda = [ this, index ]() mutable { this->reloadRecord( index ); };
+
+	QObject::connect( loader.get(), &atlas::images::ImageLoader::finished, lamda );
+
+	if ( auto itter = loaders.find( index.row() ); itter != loaders.end() )
 	{
-		// Optimistic checking
-		emit dataChanged( index, index );
-	}
-	else
-	{
-		//In some case the future might not be valid anymore. Unsure why this happens. But we shouldn't access it if it is invalid
-		if ( future.isValid() )
+		if ( !itter->second->isFinished() )
 		{
-			if ( !loaders.contains( index.row() ) )
-			{
-				auto* loader { new atlas::images::ImageLoader( index, std::move( future ) ) };
-				connect(
-					loader,
-					&atlas::images::ImageLoader::imageReady,
-					this,
-					&FilepathModel::reloadRecord,
-					Qt::SingleShotConnection );
-				loader->moveToThread( &loading_thread );
-				loaders.insert( std::make_pair( index.row(), loader ) );
-			}
-			else
-				future.cancel();
-			//Image is already loading. So cancel this one
+			//Cancel the new loader
+			loader->cancel();
 		}
 		else
 		{
-			//Even if the future is valid. It might mean that it completed before we were ready?
-			emit dataChanged( index, index );
+			//Replace the old loader
+			itter->second = std::move( loader );
 		}
 	}
-}
-
-void FilepathModel::reloadRecord( QPersistentModelIndex index )
-{
-	if ( index.isValid() )
+	else
 	{
-		emit dataChanged( index, index );
+		//Add the new loader
+		loaders.emplace( index.row(), std::move( loader ) );
 	}
-	loaders.erase( index.row() );
-}
-
-void FilepathModel::killLoaders()
-{
-	loaders.clear();
 }

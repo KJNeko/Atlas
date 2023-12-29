@@ -11,7 +11,6 @@
 
 void ImageView::setPaths( const std::vector< std::filesystem::path >& paths )
 {
-	filepathModel()->killLoaders();
 	filepathModel()->setFilepaths( paths );
 }
 

@@ -123,13 +123,17 @@ namespace atlas::images
 		[[nodiscard]] QFuture< std::filesystem::path > importImageFromURL( const QString url, const RecordID record_id )
 		{
 			return QtConcurrent::
-				run( &( globalPools().image_importers ), &atlas::images::importImageFromURL, url, record_id );
+				run( &( atlas::threading::globalPools().image_importers ),
+			         &atlas::images::importImageFromURL,
+			         url,
+			         record_id );
 		}
 
 		[[nodiscard]] QFuture< std::filesystem::path >
 			importImage( const std::filesystem::path& path, const RecordID game_id )
 		{
-			return QtConcurrent::run( &( globalPools().image_importers ), &atlas::images::importImage, path, game_id );
+			return QtConcurrent::
+				run( &( atlas::threading::globalPools().image_importers ), &atlas::images::importImage, path, game_id );
 		}
 
 	} // namespace async
