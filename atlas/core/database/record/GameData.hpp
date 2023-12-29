@@ -30,6 +30,7 @@ namespace atlas::records
 		std::vector< Version > m_versions {};
 		std::array< std::filesystem::path, BannerType::SENTINEL > m_banner_paths {};
 		std::vector< std::filesystem::path > m_preview_paths {};
+		bool m_favorite { false };
 
 		std::optional< remote::AtlasRemoteData > atlas_data { std::nullopt };
 		std::optional< remote::F95RemoteData > f95_data { std::nullopt };
