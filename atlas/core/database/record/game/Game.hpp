@@ -165,7 +165,6 @@ namespace atlas::records
 		[[nodiscard]] Version& operator[]( const QString str ) const;
 
 		//================= Favorites ==========================================
-		bool isFavorite() const;
 		void setFavorite( const bool state );
 
 	  public:
