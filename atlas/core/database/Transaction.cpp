@@ -46,7 +46,6 @@ namespace atlas::database
 	{
 		if ( !m_finished )
 		{
-			//sqlite3_exec( &Database::ref(), "COMMIT TRANSACTION;", nullptr, nullptr, nullptr );
 			*this << "COMMIT TRANSACTION";
 			m_finished = true;
 			atlas::logging::debug( "Commit called" );
@@ -61,7 +60,6 @@ namespace atlas::database
 		if ( !m_finished )
 		{
 			*this << "ROLLBACK TRANSACTION";
-			//sqlite3_exec( &Database::ref(), "ABORT TRANSACTION;", nullptr, nullptr, nullptr );
 			m_finished = true;
 			atlas::logging::debug( "Abort called" );
 		}
