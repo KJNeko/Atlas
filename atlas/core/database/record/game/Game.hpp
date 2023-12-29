@@ -142,6 +142,9 @@ namespace atlas::records
 		void addUserTag( QString str );
 		void removeUserTag( QString str );
 
+		//================= Favorites ==========================================
+		void setFavorite( const bool state );
+
 	  public:
 
 	  signals:
