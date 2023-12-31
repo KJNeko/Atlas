@@ -160,6 +160,7 @@ class RecordBannerDelegate final : public QAbstractItemDelegate
 
   signals:
 	void sizeHintChanged( const QModelIndex& index ) const;
+	void killLoaders();
 
   private:
 

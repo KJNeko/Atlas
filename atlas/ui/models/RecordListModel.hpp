@@ -41,7 +41,6 @@ class RecordListModel final : public QAbstractListModel
 
 	void refreshOnLoader( QPersistentModelIndex index, std::unique_ptr< atlas::images::ImageLoader > loader );
 	void killOutOfView( const int first, const int last );
-	void killLoaders();
 
   public slots:
 	void setRecords( std::vector< atlas::records::Game > records );
@@ -55,6 +54,8 @@ class RecordListModel final : public QAbstractListModel
 	void removeRecord( QPersistentModelIndex index );
 
 	void reloadRecord( QPersistentModelIndex index );
+
+	void killLoaders();
 
   signals:
 	void recordsChanged( std::vector< atlas::records::Game > records );

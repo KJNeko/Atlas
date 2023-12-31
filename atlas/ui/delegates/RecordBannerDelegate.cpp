@@ -604,6 +604,8 @@ void RecordBannerDelegate::reloadConfig()
 	m_updateicon_bcolor = { colorFromString( config::grid_ui::updateicon_bcolor::get() ) };
 	m_updateicon_fcolor = { colorFromString( config::grid_ui::updateicon_fcolor::get() ) };
 	m_updateicon_default = { config::grid_ui::updateicon_default::get() };
+
+	emit killLoaders();
 }
 
 RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
@@ -736,6 +738,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
 
 {
 	CONFIG_ATTACH_THIS;
+
+	connect( this, &RecordBannerDelegate::killLoaders, m_model, &RecordListModel::killLoaders );
 }
 
 QSize RecordBannerDelegate::
