@@ -120,6 +120,11 @@ void RecordListModel::
 
 void RecordListModel::killLoaders()
 {
+	for ( auto& [ index, loader ] : loaders )
+	{
+		loader->cancel();
+	}
+
 	loaders.clear();
 }
 
