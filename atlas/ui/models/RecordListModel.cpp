@@ -16,6 +16,7 @@ void RecordListModel::setRecords( std::vector< atlas::records::Game > records )
 {
 	beginResetModel();
 	m_records = std::move( records );
+	loaders.clear();
 	endResetModel();
 	emit recordsChanged( m_records );
 }

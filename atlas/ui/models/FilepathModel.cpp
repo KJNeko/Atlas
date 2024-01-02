@@ -16,6 +16,8 @@ void FilepathModel::setFilepaths( const std::vector< std::filesystem::path >& fi
 {
 	beginResetModel();
 	this->m_paths = filepaths;
+	//Nuke all loaders
+	loaders.clear();
 	endResetModel();
 }
 
