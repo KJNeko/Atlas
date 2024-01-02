@@ -98,7 +98,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSimpleImporter->setVisible( false );
 	ui->actionSingleImporter->setVisible( false );
 	ui->actionGameListImporter->setVisible( false );
-	//ui->actionDownload->setVisible( false );
+
+	//Fix scrolling
+	ui->recordView->verticalScrollBar()->setSingleStep( 25 );
 
 	connect(
 		&atlas::import::internal::getNotifier(),
@@ -386,7 +388,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 	QMessageBox msgBox( this );
 	msgBox.setWindowFlags( Qt::FramelessWindowHint | Qt::Dialog ); //Dont show title or exit button
 	msgBox.setWindowTitle( "Update Metadata/Images" );
-	msgBox.setText( tr( "Please select and update option below" ) );
+	msgBox.setText( tr( "Please select an update option below" ) );
 	QAbstractButton* pbutton1 = msgBox.addButton( tr( "All metadata" ), QMessageBox::YesRole );
 	QAbstractButton* pbutton2 = msgBox.addButton( tr( "Missing metadata" ), QMessageBox::YesRole );
 	pbutton1->setFixedSize( QSize( 150, 75 ) );
@@ -429,6 +431,7 @@ void MainWindow::on_actionUpdateMeta_triggered()
 			const F95ID f95_id { f95_data.value()->f95_id };
 
 			if ( image_url.isEmpty() ) continue; // No URL to import
+			qInfo() << "Updating Images for " << atlas_data.value()->title;
 			//Check if we should download all images or not. Check if this is a new item and update the image if not
 			if ( download_all_images || !game->atlas_data.has_value() )
 			{

@@ -31,9 +31,6 @@ namespace atlas::records
 
 		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
 		{
-			auto path_future = images::async::importImage( path, m_id );
-			path_future.waitForFinished();
-			if ( !path_future.isValid() ) throw AtlasException( "Path future invalid" );
 			path = images::async::importImage( path, m_id ).result();
 			if ( !std::filesystem::exists( path ) )
 				throw RecordException(

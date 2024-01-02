@@ -151,8 +151,8 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 	QRect m_engine_rect;
 	QRect m_status_rect;
 	QRect m_gametype_rect;
-
 	QRect m_rating_rect;
+
 	//ONLY DRAW ITEMS BELOW IF ATLAS DATA IS AVAILABLE
 	//If Record == 1 continue: base record
 	if ( record->atlas_data.has_value() || record->m_game_id == 1 )
