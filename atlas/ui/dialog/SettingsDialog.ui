@@ -2137,7 +2137,7 @@ border-right:none;
           <item row="1" column="10">
            <widget class="QComboBox" name="cb_title_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -2407,7 +2407,7 @@ border-right:none;
           <item row="3" column="10">
            <widget class="QComboBox" name="cb_version_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -2575,7 +2575,7 @@ border-right:none;
           <item row="12" column="10">
            <widget class="QComboBox" name="cb_likes_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -2607,7 +2607,7 @@ border-right:none;
           <item row="11" column="10">
            <widget class="QComboBox" name="cb_views_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -2769,7 +2769,7 @@ border-right:none;
           <item row="4" column="10">
            <widget class="QComboBox" name="cb_engine_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -3088,7 +3088,7 @@ border-right:none;
           <item row="8" column="10">
            <widget class="QComboBox" name="cb_status_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -3120,7 +3120,7 @@ border-right:none;
           <item row="10" column="10">
            <widget class="QComboBox" name="cb_rating_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -3159,7 +3159,7 @@ border-right:none;
           <item row="13" column="10">
            <widget class="QComboBox" name="cb_favorite_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -3221,7 +3221,7 @@ border-right:none;
           <item row="9" column="10">
            <widget class="QComboBox" name="cb_gametype_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -3472,7 +3472,7 @@ border-right:none;
           <item row="2" column="10">
            <widget class="QComboBox" name="cb_creator_link">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
