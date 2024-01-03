@@ -85,10 +85,10 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 			//Setup loader
 			QFuture< QPixmap > future { image_loader->future() };
 
-			QPixmap pixmap;
 			if ( future.isFinished() )
 			{
-				pixmap = future.result();
+				banner = future.result();
+				image_loader->cancel();
 			}
 			else
 			{

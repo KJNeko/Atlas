@@ -17,7 +17,7 @@ class ImageDelegate final : public QAbstractItemDelegate
 
 	FilepathModel* m_model;
 
-	std::map< QPersistentModelIndex, std::unique_ptr< atlas::images::ImageLoader > > m_image_futures;
+	std::map< QPersistentModelIndex, std::unique_ptr< atlas::images::ImageLoader > > m_image_futures {};
 
   public:
 

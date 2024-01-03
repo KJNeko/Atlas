@@ -17,6 +17,7 @@
 
 namespace atlas::images
 {
+
 	struct ImageLoader final : public QObject
 	{
 		Q_OBJECT
@@ -27,6 +28,10 @@ namespace atlas::images
 		QFutureWatcher< QPixmap > m_watcher {};
 
 		ImageLoader( const std::filesystem::path& path );
+
+		std::size_t operation_hash { 0 };
+
+		void addToCache();
 
 	  public:
 

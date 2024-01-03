@@ -120,6 +120,13 @@ namespace atlas::cache
 		std::lock_guard guard { mtx };
 		if ( auto itter = cache.find( key ); itter != cache.end() )
 		{
+			if ( itter->second.pixmap.isNull() || itter->second.pixmap.size() == QSize( 0, 0 ) )
+			{
+				//TODO: Invalidate cache
+				return std::nullopt;
+			}
+
+			atlas::logging::debug( "Found pixmap using key {} with size {}", key, itter->second.pixmap.size() );
 			itter->second();
 			return itter->second.pixmap;
 		}
