@@ -18,6 +18,8 @@ namespace atlas::cache
 
 	class ImageCache
 	{
+		using KeyT = std::uint64_t;
+
 		struct PixmapItem
 		{
 			std::chrono::time_point< std::chrono::steady_clock > last_accessed { Clock::now() };
@@ -35,7 +37,7 @@ namespace atlas::cache
 		};
 
 		std::recursive_mutex mtx {};
-		std::multimap< std::string, PixmapItem > cache {};
+		std::multimap< KeyT, PixmapItem > cache {};
 		std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
 		std::uint64_t current_size { 0 };
 
@@ -45,9 +47,9 @@ namespace atlas::cache
 		void prune();
 
 		//! Inserts a pixmap into the cache
-		void insert( const std::string& key, const QPixmap& pixmap );
+		void insert( const KeyT key, const QPixmap& pixmap );
 
-		std::optional< QPixmap > find( std::string key );
+		std::optional< QPixmap > find( KeyT key );
 	};
 
 } // namespace atlas::cache
