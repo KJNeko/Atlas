@@ -74,12 +74,13 @@ void GameWidget::reloadRecord()
 
 	//Get cover image
 	const int cover_offset = 0;
-	QFuture< QPixmap > image_future { record.requestBanner(
-		ui->coverImage->width() - cover_offset,
-		ui->coverImage->height() - cover_offset,
+	auto image_loader { atlas::images::ImageLoader::loadPixmap( record.bannerPath( BannerType::Cover ) ) };
+	image_loader->scaleTo(
+		ui->coverImage->size() - QSize( cover_offset, cover_offset ),
 		SCALE_TYPE::KEEP_ASPECT_RATIO,
-		Alignment::CENTER,
-		BannerType::Cover ) };
+		Alignment::CENTER );
+
+	QFuture< QPixmap > image_future { image_loader->future() };
 
 	if ( record->m_last_played == 0 )
 	{
@@ -204,11 +205,29 @@ void GameWidget::reloadRecord()
 		"<html>" + title + developer + engine + version + status + censored + language + os + category + release_date
 		+ "</html>" );
 
-	const QPixmap cover { image_future.result() };
+	try
+	{
+		const QPixmap cover { image_future.result() };
 
-	cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
+		cover.isNull() ? ui->coverWidget->hide() : ui->coverWidget->show(); //Hide or show based on if image is avail
 
-	ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
+		ui->coverImage->setPixmap( cover ); //Set cover. If empty then it will do nothing.
+	}
+	catch ( QUnhandledException& qt_e )
+	{
+		try
+		{
+			std::rethrow_exception( qt_e.exception() );
+		}
+		catch ( std::exception& e )
+		{
+			atlas::logging::error( "Failed to load cover image: {}", e.what() );
+		}
+		catch ( ... )
+		{
+			atlas::logging::error( "Failed to load cover image: Unknown exception" );
+		}
+	}
 
 	//Experimental Functions
 
@@ -253,61 +272,26 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 													( static_cast< int >( image_height * scale_factor ) );
 		const int logo_width = 600;
 
-		//Get Logo
-		auto logo_future { record.requestBanner(
-			logo_width, logo_height, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER, BannerType::Logo ) };
+		const auto logo_path { record.bannerPath( BannerType::Logo ) };
+		auto logo_loader { atlas::images::ImageLoader::loadPixmap( logo_path ) };
+		logo_loader->scaleTo( QSize( logo_width, logo_height ), SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER );
+
+		auto logo_future { logo_loader->future() };
 
 		//spdlog::info( "height:{} width:{}", logo_height, logo_width );
 		//spdlog::info( ui->bannerFrame->width() );
 
 		//Paint the banner
 		const QSize banner_size { ui->bannerFrame->size() };
-		auto banner_future { record
-			                     .requestBanner(
-									 banner_size.width(),
-									 image_height,
-									 SCALE_TYPE::FIT_BLUR_EXPANDING,
-									 Alignment::CENTER,
-									 BannerType::Wide )
-			                     .then(
-									 QtFuture::Launch::Async,
-									 [ &banner_size, &record ]( QPixmap banner )
-									 {
-										 // if the banner is null then we probably don't have a wide banner and should try the normal banner instead
-										 if ( banner.isNull() )
-										 {
-											 ZoneScopedN( "Load alternative image" );
-											 banner = record
-				                                          .requestBanner(
-															  banner_size.width(),
-															  image_height,
-															  SCALE_TYPE::FIT_BLUR_EXPANDING,
-															  Alignment::CENTER,
-															  BannerType::Normal )
-				                                          .result();
-											 if ( banner.isNull() ) return QPixmap();
-										 }
 
-										 {
-											 ZoneScopedN( "Blur image" );
-											 //TODO: Replace this with the new `atlas::images::blurPixmap` instead. Also resize it first then blur.
-											 return blurToSize(
-												 std::move( banner ),
-												 banner_size.width(),
-												 image_height,
-												 image_feather,
-												 image_blur,
-												 FEATHER_IMAGE );
-										 }
-									 } ) };
+		//TODO: Reimplement finding optimal banner instead of just using wide banner
+		const auto banner_path { record.bannerPath( BannerType::Wide ) };
+		auto banner_loader { atlas::images::ImageLoader::loadPixmap( banner_path ) };
+		banner_loader->scaleTo( banner_size, SCALE_TYPE::FIT_BLUR_EXPANDING, Alignment::CENTER );
+		banner_loader
+			->blurToSize( QSize( image_blur, image_blur ), image_feather, image_blur, BLUR_TYPE::FEATHER_IMAGE );
 
-		/*
-		QPixmap banner {
-			record->banners()
-				.getBanner( banner_size.width(), image_height, SCALE_TYPE::FIT_BLUR_EXPANDING, BannerType::Wide )
-		};*/
-
-		//Check if there is a wide banner, if not use normal banner
+		auto banner_future { banner_loader->future() };
 
 		QPixmap logo { logo_future.result() };
 		//Used if logo does not work

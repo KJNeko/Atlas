@@ -287,5 +287,6 @@ QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path
 {
 	ZoneScoped;
 
-	return QtConcurrent::run( &globalPools().importers, internal::importGame, std::move( data ), root, owning );
+	return QtConcurrent::
+		run( &atlas::threading::globalPools().importers, internal::importGame, std::move( data ), root, owning );
 }

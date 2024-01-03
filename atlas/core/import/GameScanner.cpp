@@ -249,7 +249,7 @@ try
 				++directories_left;
 				//The regex was a match. We can now process this directory further
 				futures.emplace_back( QtConcurrent::
-				                          run( &globalPools().pre_importers,
+				                          run( &atlas::threading::globalPools().pre_importers,
 				                               runner,
 				                               pattern,
 				                               itter->path(),
@@ -299,8 +299,13 @@ void GameScanner::start( const std::filesystem::path path, const QString regex, 
 {
 	ZoneScoped;
 
-	m_runner_future =
-		QtConcurrent::run( &globalPools().pre_importers, &GameScanner::mainRunner, this, path, regex, size_folders );
+	m_runner_future = QtConcurrent::
+		run( &atlas::threading::globalPools().pre_importers,
+	         &GameScanner::mainRunner,
+	         this,
+	         path,
+	         regex,
+	         size_folders );
 	if ( m_runner_future.isFinished() ) // Optimistic checking if we finished instantly.
 		emitComplete();
 	else

@@ -12,12 +12,18 @@
 #include <map>
 #include <mutex>
 
+#include "core/utils/literals/size_literals.hpp"
+
 namespace atlas::cache
 {
+	using namespace atlas::literals::size_literals;
+
 	using Clock = std::chrono::steady_clock;
 
 	class ImageCache
 	{
+		using KeyT = std::uint64_t;
+
 		struct PixmapItem
 		{
 			std::chrono::time_point< std::chrono::steady_clock > last_accessed { Clock::now() };
@@ -35,19 +41,23 @@ namespace atlas::cache
 		};
 
 		std::recursive_mutex mtx {};
-		std::multimap< std::string, PixmapItem > cache {};
-		std::uint64_t max_size { 1024 * 1024 * 128 }; // 128 MB
+		std::multimap< KeyT, PixmapItem > cache {};
+		std::uint64_t m_max_size;
 		std::uint64_t current_size { 0 };
 
 	  public:
+
+		explicit ImageCache( std::uint64_t max_size = 256_MiB ) : m_max_size( max_size ) {}
+
+		void setMax( std::uint64_t max_size ) { this->m_max_size = max_size; }
 
 		//! Prunes the cache. Removing the lowest scores first. Determined via ImageCache::score()
 		void prune();
 
 		//! Inserts a pixmap into the cache
-		void insert( const std::string& key, const QPixmap& pixmap );
+		void insert( const KeyT key, const QPixmap& pixmap );
 
-		std::optional< QPixmap > find( std::string key );
+		std::optional< QPixmap > find( KeyT key );
 	};
 
 } // namespace atlas::cache

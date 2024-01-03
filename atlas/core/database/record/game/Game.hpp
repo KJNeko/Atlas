@@ -113,42 +113,16 @@ namespace atlas::records
 
 		//====================Banners/Previews======================================
 
-		//! Returns a future for the preview to be loaded.
-		[[nodiscard]] QFuture< QPixmap > requestPreview( const std::uint64_t index, const bool use_thumbnail = false )
-			const;
-
+		//Previews
 		void reorderPreviews( std::vector< std::filesystem::path > paths );
 		//! If index is zero then it will place it at the highest possible postion (starting at 1)
 		void addPreview( std::filesystem::path path, std::uint64_t index = 0 );
 		void removePreview( const std::uint64_t index );
 		void removePreview( const std::filesystem::path path );
-		[[nodiscard]] QFuture< QPixmap > preview( const std::uint64_t index, const bool use_thumbnail = false );
-		[[nodiscard]] QFuture< QPixmap > scaledPreview(
-			const QSize size,
-			const SCALE_TYPE scale_type,
-			const Alignment align_type,
-			const std::uint64_t index,
-			const bool use_thumbnail = false );
 
-		void addUserTag( QString str );
-		void removeUserTag( QString str );
-
+		//Banners
 		void setBanner( std::filesystem::path path, const BannerType type );
 		const std::filesystem::path bannerPath( const BannerType type ) const;
-		[[nodiscard]] QFuture< QPixmap > requestBanner( const BannerType type, const bool use_thumbnail = false ) const;
-		[[nodiscard]] QFuture< QPixmap > requestBanner(
-			const int width,
-			const int height,
-			const SCALE_TYPE scale_type,
-			const Alignment align_type,
-			const BannerType type,
-			const bool use_thumbnail = false );
-		[[nodiscard]] QFuture< QPixmap > requestBanner(
-			const QSize size,
-			const SCALE_TYPE scale_type,
-			const Alignment align_type,
-			const BannerType type,
-			const bool use_thumbnail = false );
 		bool hasBanner( const BannerType type ) const;
 
 		//=============== Remote connection ====================================
@@ -163,6 +137,10 @@ namespace atlas::records
 
 		[[nodiscard]] bool hasVersion( const QString str ) const;
 		[[nodiscard]] Version& operator[]( const QString str ) const;
+
+		//================== Tags ==============================================
+		void addUserTag( QString str );
+		void removeUserTag( QString str );
 
 		//================= Favorites ==========================================
 		void setFavorite( const bool state );

@@ -69,54 +69,56 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	if ( record.hasBanner( Normal ) )
 	{
-		QFuture< QPixmap > banner { record.requestBanner( c_banner_size, aspect_ratio, CENTER, Normal, USE_FULLSIZE ) };
+		const std::filesystem::path banner_path { record.bannerPath( Normal ) };
+		QPixmap banner { index.data( RecordListModel::Roles::Banner ).value< QPixmap >() };
 
-		QPixmap pixmap;
-		if ( banner.isFinished() )
+		if ( banner.isNull() ) // Model didn't have a load saved for us.
 		{
-			pixmap = banner.result();
+			std::unique_ptr< atlas::images::ImageLoader > image_loader {
+				atlas::images::ImageLoader::loadPixmap( banner_path )
+			};
 
-			//Check if we need to add blur background. Draw behind original image
+			image_loader->scaleTo( c_banner_size, aspect_ratio, CENTER );
 			if ( aspect_ratio == FIT_BLUR_EXPANDING )
-			{
-				ZoneScopedN( "Blur image" );
-				pixmap = blurToSize(
-					pixmap,
-					c_banner_size.width(),
-					c_banner_size.height(),
-					m_feather_radius,
-					m_blur_radius,
-					m_blur_type );
-			}
-		}
-		else
-		{
-			//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
-			if ( m_model != nullptr ) this->m_model->refreshOnFuture( index, std::move( banner ) );
+				image_loader->blurToSize( c_banner_size, m_feather_radius, m_blur_radius, m_blur_type );
 
-			//Specific case. Do not load thumb for settings images
-			if ( record->m_game_id == 1 )
+			//Setup loader
+			QFuture< QPixmap > future { image_loader->future() };
+
+			if ( future.isFinished() )
 			{
-				pixmap = banner.result();
+				banner = future.result();
+				image_loader->cancel();
 			}
 			else
 			{
-				if ( config::experimental::use_blurhash::get() )
-					pixmap = atlas::images::getBlurhash( record.bannerPath( Normal ), c_banner_size );
+				//m_model can be nullptr in the settings menu. Since we don't have a model that is capable of doing this action. Instead we just have to wait like a good boy.
+				if ( m_model != nullptr ) m_model->refreshOnLoader( index, std::move( image_loader ) );
+
+				//Specific case. Do not load thumb for settings images
+				if ( record->m_game_id == 1 )
+				{
+					banner = future.result();
+				}
 				else
-					pixmap = {};
+				{
+					if ( config::experimental::use_blurhash::get() )
+						banner = atlas::images::getBlurhash( record.bannerPath( Normal ), c_banner_size );
+					else
+						banner = {};
+				}
 			}
 		}
 
 		//If the image needs to be centered then calculate it. because Qrect only does not take doubles, the center will not be exact.
-		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - pixmap.width() ) / 2 : 0 };
-		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - pixmap.height() ) / 2 : 0 };
+		const int x_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.width() - banner.width() ) / 2 : 0 };
+		const int y_m { aspect_ratio == KEEP_ASPECT_RATIO ? ( c_banner_size.height() - banner.height() ) / 2 : 0 };
 		//Check if overlay is on top or in-line with banner
-		const QRect pixmap_rect {
-			options_rect.x() + x_m, options_rect.y() + y_m + xtop_overlay_margin, pixmap.width(), pixmap.height()
+		const QRect banner_rect {
+			options_rect.x() + x_m, options_rect.y() + y_m + xtop_overlay_margin, banner.width(), banner.height()
 		};
 
-		painter->drawPixmap( pixmap_rect, pixmap );
+		painter->drawPixmap( banner_rect, banner );
 	}
 
 	//Reset the current brush
@@ -602,6 +604,8 @@ void RecordBannerDelegate::reloadConfig()
 	m_updateicon_bcolor = { colorFromString( config::grid_ui::updateicon_bcolor::get() ) };
 	m_updateicon_fcolor = { colorFromString( config::grid_ui::updateicon_fcolor::get() ) };
 	m_updateicon_default = { config::grid_ui::updateicon_default::get() };
+
+	emit killLoaders();
 }
 
 RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* parent ) :
@@ -734,6 +738,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
 
 {
 	CONFIG_ATTACH_THIS;
+
+	connect( this, &RecordBannerDelegate::killLoaders, m_model, &RecordListModel::killLoaders );
 }
 
 QSize RecordBannerDelegate::

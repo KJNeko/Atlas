@@ -27,13 +27,10 @@ class RecordListModel final : public QAbstractListModel
 
   public:
 
-	enum RecordListModelRoles
+	enum Roles
 	{
 		Raw = Qt::ItemDataRole::UserRole,
-		NormalBanner,
-		WideBanner,
-		LogoBanner,
-		CoverBanner,
+		Banner,
 	};
 
 	RecordListModel( QObject* parent = nullptr ) : QAbstractListModel( parent ) { loading_thread.start(); }
@@ -42,8 +39,8 @@ class RecordListModel final : public QAbstractListModel
 	int rowCount( const QModelIndex& index = QModelIndex() ) const override;
 	QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const override;
 
-	void refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > );
-	void killLoaders();
+	void refreshOnLoader( QPersistentModelIndex index, std::unique_ptr< atlas::images::ImageLoader > loader );
+	void killOutOfView( const int first, const int last );
 
   public slots:
 	void setRecords( std::vector< atlas::records::Game > records );
@@ -57,6 +54,8 @@ class RecordListModel final : public QAbstractListModel
 	void removeRecord( QPersistentModelIndex index );
 
 	void reloadRecord( QPersistentModelIndex index );
+
+	void killLoaders();
 
   signals:
 	void recordsChanged( std::vector< atlas::records::Game > records );

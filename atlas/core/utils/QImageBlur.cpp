@@ -16,94 +16,99 @@
 #include "core/config/config.hpp"
 #include "core/images/images.hpp"
 
-QPixmap blurToSize(
-	const QPixmap& pixmap,
-	const int width,
-	const int height,
-	const int image_feather_radius,
-	const int image_blur_radius,
-	const BLUR_TYPE image_blur_type )
+namespace atlas::images
 {
-	ZoneScoped;
-	if ( pixmap.isNull() ) return QPixmap();
-	auto resized { pixmap.toImage().scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation ) };
-	//const auto blurred_image { blurPixmap( pixmap, 25, false, false ) };
 
-	const auto feather_radius { ( image_feather_radius / 1000.0 ) + .001 };
-
-	const auto blur_center { pixmap.rect().center() };
-	const auto blur_size { QSize { width, height } };
-	const auto blur_x { blur_center.x() - blur_size.width() / 2 };
-	const auto blur_y { blur_center.y() - blur_size.height() / 2 };
-	QPixmap blurred_image { pixmap.copy( blur_x, blur_y, blur_size.width(), blur_size.height() ) };
-
-	const QRect total_rect { QRect { QPoint { 0, 0 }, QSize { width, height } } };
-	const QRect img_rect { total_rect.center() - QPoint { resized.width() / 2, resized.height() / 2 }, resized.size() };
-	const QRect blur_rect { total_rect.center() - QPoint { blurred_image.width() / 2, blurred_image.height() / 2 },
-		                    blurred_image.size() };
-
-	QImage dest { QPixmap( total_rect.size() ).toImage() };
-	dest.fill( Qt::black );
-
-	const QImage alpha_mask = [ & ]() -> QImage
+	QPixmap blurToSize(
+		const QPixmap& pixmap,
+		const int width,
+		const int height,
+		const int image_feather_radius,
+		const int image_blur_radius,
+		const BLUR_TYPE image_blur_type )
 	{
-		//Create an alpha mask on the left and right sides of the image
-		QImage gradient_img { dest.size(), QImage::Format_Alpha8 };
+		ZoneScoped;
+		if ( pixmap.isNull() ) return QPixmap();
+		auto resized { pixmap.toImage().scaled( width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation ) };
+		//const auto blurred_image { blurPixmap( pixmap, 25, false, false ) };
 
-		gradient_img.fill( Qt::transparent );
-		QPainter gradiant_painter { &gradient_img };
+		const auto feather_radius { ( image_feather_radius / 1000.0 ) + .001 };
 
-		if ( resized.width() <= width - 2 )
+		const auto blur_center { pixmap.rect().center() };
+		const auto blur_size { QSize { width, height } };
+		const auto blur_x { blur_center.x() - blur_size.width() / 2 };
+		const auto blur_y { blur_center.y() - blur_size.height() / 2 };
+		QPixmap blurred_image { pixmap.copy( blur_x, blur_y, blur_size.width(), blur_size.height() ) };
+
+		const QRect total_rect { QRect { QPoint { 0, 0 }, QSize { width, height } } };
+		const QRect img_rect { total_rect.center() - QPoint { resized.width() / 2, resized.height() / 2 },
+			                   resized.size() };
+		const QRect blur_rect { total_rect.center() - QPoint { blurred_image.width() / 2, blurred_image.height() / 2 },
+			                    blurred_image.size() };
+
+		QImage dest { QPixmap( total_rect.size() ).toImage() };
+		dest.fill( Qt::black );
+
+		const QImage alpha_mask = [ & ]() -> QImage
 		{
-			QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().topRight() };
-			grad.setColorAt( 0.00, Qt::transparent );
-			grad.setColorAt( feather_radius, Qt::black );
-			grad.setColorAt( 1 - feather_radius, Qt::black );
-			grad.setColorAt( 1, Qt::transparent );
-			gradiant_painter.fillRect( gradient_img.rect(), grad );
-		}
-		else if ( resized.height() <= height - 2 )
-		{
-			//Now alpha mask for top/bottom
-			QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().bottomLeft() };
-			grad.setColorAt( 0.00, Qt::transparent );
-			grad.setColorAt( feather_radius, Qt::black );
-			grad.setColorAt( 1 - feather_radius, Qt::black );
-			grad.setColorAt( 1, Qt::transparent );
-			gradiant_painter.setCompositionMode( QPainter::CompositionMode_DestinationAtop );
-			gradiant_painter.fillRect( gradient_img.rect(), grad );
-		}
-		else
-			return QImage();
+			//Create an alpha mask on the left and right sides of the image
+			QImage gradient_img { dest.size(), QImage::Format_Alpha8 };
 
-		return gradient_img;
-	}();
+			gradient_img.fill( Qt::transparent );
+			QPainter gradiant_painter { &gradient_img };
 
-	{
-		QPainter painter { &dest };
-
-		if ( !alpha_mask.isNull() )
-		{
-			painter.drawPixmap(
-				total_rect.intersected( blur_rect ),
-				atlas::images::blurPixmap( blurred_image, image_blur_radius, true, false ) );
-
-			switch ( image_blur_type )
+			if ( resized.width() <= width - 2 )
 			{
-				case FEATHER_IMAGE:
-					resized.setAlphaChannel( alpha_mask );
-					break;
-				case SQUARE: //TODO: Figure out what this should do
-					break;
-				case BACKGROUND_ONLY: // TODO: Implement
-					break;
-				default:
-					break;
+				QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().topRight() };
+				grad.setColorAt( 0.00, Qt::transparent );
+				grad.setColorAt( feather_radius, Qt::black );
+				grad.setColorAt( 1 - feather_radius, Qt::black );
+				grad.setColorAt( 1, Qt::transparent );
+				gradiant_painter.fillRect( gradient_img.rect(), grad );
 			}
+			else if ( resized.height() <= height - 2 )
+			{
+				//Now alpha mask for top/bottom
+				QLinearGradient grad { gradient_img.rect().topLeft(), gradient_img.rect().bottomLeft() };
+				grad.setColorAt( 0.00, Qt::transparent );
+				grad.setColorAt( feather_radius, Qt::black );
+				grad.setColorAt( 1 - feather_radius, Qt::black );
+				grad.setColorAt( 1, Qt::transparent );
+				gradiant_painter.setCompositionMode( QPainter::CompositionMode_DestinationAtop );
+				gradiant_painter.fillRect( gradient_img.rect(), grad );
+			}
+			else
+				return QImage();
+
+			return gradient_img;
+		}();
+
+		{
+			QPainter painter { &dest };
+
+			if ( !alpha_mask.isNull() )
+			{
+				painter.drawPixmap(
+					total_rect.intersected( blur_rect ),
+					atlas::images::blurPixmap( blurred_image, image_blur_radius, true, false ) );
+
+				switch ( image_blur_type )
+				{
+					case FEATHER_IMAGE:
+						resized.setAlphaChannel( alpha_mask );
+						break;
+					case SQUARE: //TODO: Figure out what this should do
+						break;
+					case BACKGROUND_ONLY: // TODO: Implement
+						break;
+					default:
+						break;
+				}
+			}
+
+			painter.drawImage( img_rect, std::move( resized ) );
 		}
 
-		painter.drawImage( img_rect, std::move( resized ) );
+		return QPixmap::fromImage( dest );
 	}
-
-	return QPixmap::fromImage( dest );
-}
+} // namespace atlas::images

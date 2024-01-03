@@ -39,6 +39,8 @@ class RecordListView final : public QListView
 	void wheelEvent( QWheelEvent* event ) override;
 	void scrollContentsBy( int dx, int dy ) override;
 
+	~RecordListView() noexcept;
+
   signals:
 	void openDetailedView( const atlas::records::Game record );
 

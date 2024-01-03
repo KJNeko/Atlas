@@ -32,6 +32,11 @@ RecordListView::RecordListView( QWidget* parent ) : QListView( parent )
 	CONFIG_ATTACH_THIS;
 }
 
+RecordListView::~RecordListView() noexcept
+{
+	delete QListView::itemDelegate();
+}
+
 void RecordListView::setRenderMode( const DelegateType type )
 {
 	ZoneScoped;
@@ -105,7 +110,10 @@ void RecordListView::on_customContextMenuRequested( const QPoint& pos )
 
 	auto image_menu { menu.addMenu( "Record" ) };
 
-	const auto banner { record.requestBanner( Normal ).result() };
+	const auto banner_path { record.bannerPath( Normal ) };
+	auto image_loader { atlas::images::ImageLoader::loadPixmap( banner_path ) };
+	QPixmap banner { image_loader->future().result() };
+
 	if ( banner.isNull() )
 		image_menu->addAction( "Banner not set" );
 	else

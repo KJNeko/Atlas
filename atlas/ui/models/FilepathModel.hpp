@@ -20,15 +20,14 @@ class FilepathModel final : public QAbstractListModel
 
 	std::vector< std::filesystem::path > m_paths {};
 	std::unordered_map< int, std::unique_ptr< atlas::images::ImageLoader > > loaders {};
-	QThread loading_thread {};
 
   public:
 
-	enum CustomRoles
+	enum Roles
 	{
-		StartUserRole = Qt::UserRole,
-		PixmapRole,
-		FilepathRole
+		StartUserRoles = Qt::UserRole,
+		Pixmap,
+		Filepath
 	};
 
 	FilepathModel( QObject* parent = nullptr );
@@ -49,16 +48,15 @@ class FilepathModel final : public QAbstractListModel
 		const QModelIndex& destinationParent,
 		int destinationChild ) override;
 
+	void refreshOnLoader( QPersistentModelIndex index, std::unique_ptr< atlas::images::ImageLoader > loader );
+
 	bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole ) override;
 
 	Qt::ItemFlags flags( const QModelIndex& index ) const override;
 
 	std::vector< std::filesystem::path > getFilepaths() const;
-	void refreshOnFuture( QPersistentModelIndex index, QFuture< QPixmap > future );
-	void killLoaders();
+	void setFilepaths( const std::vector< std::filesystem::path >& paths );
 
-  public slots:
-	void setFilepaths( const std::vector< std::filesystem::path >& filepaths );
 	void reloadRecord( QPersistentModelIndex index );
 
   signals:
