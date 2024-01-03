@@ -17,16 +17,36 @@ inline static atlas::cache::ImageCache scale_cache;
 namespace atlas::images
 {
 
-	const std::string
-		pixmapKey( const QSize target_size, const SCALE_TYPE scale_type, const std::filesystem::path& path )
+	auto scaledPixmapKey(
+		const QPixmap& pixmap, const QSize& size, const SCALE_TYPE& scale_type, const Alignment& align_type )
 	{
-		return format_ns::
-			format( "{}x{}:{}:{}", target_size.width(), target_size.height(), static_cast< int >( scale_type ), path );
+		const auto pixmap_key { pixmap.cacheKey() };
+
+		std::size_t seed { 0 };
+		seed ^= std::hash< std::size_t > {}( static_cast< unsigned long >( pixmap_key ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< unsigned long >( size.width() ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< unsigned long >( size.height() ) ) + 0x9e3779b9
+		      + ( seed << 6 ) + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< std::size_t >( scale_type ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< std::size_t >( align_type ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+
+		return seed;
 	}
 
 	QPixmap scalePixmap( QPixmap img, const QSize target_size, const SCALE_TYPE scale_type, const Alignment align_type )
 	{
+		const auto pixmap_key { scaledPixmapKey( img, target_size, scale_type, align_type ) };
+
 		if ( img.isNull() ) return {};
+
+		if ( auto cached = scale_cache.find( pixmap_key ); cached.has_value() )
+		{
+			return cached.value();
+		}
 
 		atlas::logging::debug(
 			"Scaling image to {}x{} from {}x{}",
@@ -53,6 +73,9 @@ namespace atlas::images
 			target_size.height(),
 			img.size().width(),
 			img.size().height() );
+
+		scale_cache.insert( pixmap_key, img );
+
 		return img;
 	}
 
