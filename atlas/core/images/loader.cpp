@@ -13,7 +13,6 @@
 #include "images.hpp"
 
 inline static atlas::cache::ImageCache scale_cache;
-inline static atlas::cache::ImageCache pixmap_cache;
 
 namespace atlas::images
 {
@@ -66,20 +65,14 @@ namespace atlas::images
 		if ( std::filesystem::file_size( path ) == 0 )
 			throw ImageLoadError( format_ns::format( "Image at path {} was empty", path ).c_str() );
 
-		if ( auto opt = pixmap_cache.find( path.string() ); opt.has_value() )
-			return opt.value();
-		else
-		{
-			QPixmap pixmap;
-			pixmap.load( QString::fromStdString( path.string() ) );
+		QPixmap pixmap;
+		pixmap.load( QString::fromStdString( path.string() ) );
 
-			if ( pixmap.isNull() || pixmap.size() == QSize( 0, 0 ) )
-				throw ImageLoadError( format_ns::format( "Failed to load pixmap for {}", path ).c_str() );
+		if ( pixmap.isNull() || pixmap.size() == QSize( 0, 0 ) )
+			throw ImageLoadError( format_ns::format( "Failed to load pixmap for {}", path ).c_str() );
 
-			pixmap_cache.insert( path.string(), pixmap );
-			atlas::logging::debug( "Loaded image: {}", path );
-			return pixmap;
-		}
+		atlas::logging::debug( "Loaded image: {}", path );
+		return pixmap;
 	}
 
 	QImage loadImage( const std::filesystem::path& path )
