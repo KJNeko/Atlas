@@ -70,7 +70,7 @@ namespace atlas::cache
 			}
 		}
 
-		if ( current_size < max_size ) return;
+		if ( current_size < m_max_size ) return;
 
 		std::vector< std::pair< KeyT, PixmapItem > > ordered { cache.begin(), cache.end() };
 		const auto timepoint { Clock::now() };
@@ -84,7 +84,7 @@ namespace atlas::cache
 		for ( const auto& itter : ordered )
 		{
 			const auto& [ key, item ] = itter;
-			if ( current_size < max_size )
+			if ( current_size < m_max_size )
 				break;
 			else
 			{
@@ -112,7 +112,7 @@ namespace atlas::cache
 
 		cache.insert( { key, std::move( item ) } );
 
-		if ( current_size > max_size ) prune();
+		if ( current_size > m_max_size ) prune();
 	}
 
 	std::optional< QPixmap > ImageCache::find( KeyT key )

@@ -9,10 +9,13 @@
 #include <QtConcurrentRun>
 
 #include "core/utils/ImageCache/ImageCache.hpp"
+#include "core/utils/literals/size_literals.hpp"
 #include "core/utils/threading/pools.hpp"
 #include "images.hpp"
 
-inline static atlas::cache::ImageCache scale_cache;
+using namespace atlas::literals::size_literals;
+
+inline static atlas::cache::ImageCache scale_cache { 256_MiB };
 
 namespace atlas::images
 {
