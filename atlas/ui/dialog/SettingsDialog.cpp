@@ -139,6 +139,16 @@ void SettingsDialog::prepareGridViewerSettings()
 	//Init Grid previewSettings
 	//Grid Capsule Settings
 
+	//QT TEST TO SIMPLIFY CODE
+	/*QList< QObject* > widgets = ui->groupBox_2->children();
+
+	for ( auto const & widget : widgets )
+	{
+		if ( dynamic_cast< const QCheckBox* >( widget ) != 0 ) return;
+
+		qInfo() << "-- Found checkbox -- " << widget->objectName();
+	}*/
+
 	//Set after delegate
 	ui->cbImageLayout->setCurrentIndex( config::grid_ui::imageLayout::get() );
 	ui->cbBlurType->setCurrentIndex( config::grid_ui::blurType::get() );

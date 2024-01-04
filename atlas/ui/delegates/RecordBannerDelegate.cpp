@@ -28,7 +28,7 @@ void RecordBannerDelegate::paint( QPainter* painter, const QStyleOptionViewItem&
 
 	//Get current record based on index
 	atlas::records::Game record { index.data().value< atlas::records::Game >() };
-	//Set all VARS prio to painting
+	//Set all VARS prior to painting
 	const auto banner_size { m_banner_size };
 	const SCALE_TYPE aspect_ratio { m_scale_type };
 	//TODO: add strip height for both top and bottom. Right now they share.
@@ -413,6 +413,8 @@ QRect RecordBannerDelegate::drawText(
 	QString pixmap_str ) const
 {
 	//Calculate rect size for text
+	if ( str == "" ) return {};
+
 	QFont font;
 	font.setPixelSize( font_size );
 	font.setFamily( font_family );
