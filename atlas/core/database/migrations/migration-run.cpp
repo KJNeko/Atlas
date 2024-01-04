@@ -28,7 +28,7 @@ namespace atlas::database::migrations
 		break;
 
 	//! Int to represent what the highest migration is at (Starting at migration 0 we run until we are N <= MIGRATIONS_VERSION)
-	inline static constexpr int MIGRATIONS_VERSION { 18 };
+	inline static constexpr int MIGRATIONS_VERSION { 19 };
 
 	/**
 	 * @brief Runs all transactions up until hitting MIGRATIONS_VERSION - 1.
@@ -57,15 +57,15 @@ namespace atlas::database::migrations
 
 		try
 		{
-			while ( current_migration <= MIGRATIONS_VERSION )
+			if ( current_migration + 1 >= MIGRATIONS_VERSION ) return;
+
+			while ( current_migration < MIGRATIONS_VERSION )
 			{
 				//Increment the migration to see if the next migration can be done
 				current_migration += 1;
-				if ( MIGRATIONS_VERSION == current_migration )
-				{
-					logging::info( "All migrations processed." );
-					return;
-				}
+
+				//Done processing
+				if ( current_migration == MIGRATIONS_VERSION ) return;
 
 				Transaction transaction;
 
@@ -91,12 +91,16 @@ namespace atlas::database::migrations
 					MIGRATE( 15 )
 					MIGRATE( 16 )
 					MIGRATE( 17 )
+					MIGRATE( 18 )
 					default:
-						logging::critical(
-							"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",
-							current_migration,
-							MIGRATIONS_VERSION );
-						return;
+						{
+							logging::critical(
+								"MIGRATION VERSION HIGHER THEN EXPECTED! Migration was {}. Highest is {}",
+								current_migration,
+								MIGRATIONS_VERSION );
+							transaction.abort();
+							return;
+						}
 				}
 
 				transaction.commit();

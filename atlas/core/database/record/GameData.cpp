@@ -61,6 +61,8 @@ namespace atlas::records
 
 		RapidTransaction() << "SELECT path FROM previews WHERE record_id = ? ORDER BY position ASC" << m_game_id >>
 			[ & ]( std::filesystem::path path ) { this->m_preview_paths.emplace_back( std::move( path ) ); };
+
+		RapidTransaction() << "SELECT EXISTS(SELECT 1 FROM favorites WHERE record_id = ?)" << m_game_id >> m_favorite;
 	}
 
 	GameData::GameData( QString title_in, QString creator_in, QString engine_in )

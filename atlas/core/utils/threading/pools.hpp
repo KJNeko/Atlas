@@ -8,18 +8,22 @@
 
 #include <QThreadPool>
 
-struct ThreadPools
+namespace atlas::threading
 {
-	QThreadPool image_loaders {};
-	QThreadPool image_importers {};
-	QThreadPool importers {};
-	QThreadPool pre_importers {};
 
-	ThreadPools() { reloadConfig(); }
+	struct ThreadPools
+	{
+		QThreadPool image_loaders {};
+		QThreadPool image_importers {};
+		QThreadPool importers {};
+		QThreadPool pre_importers {};
 
-	void reloadConfig();
-};
+		ThreadPools() { reloadConfig(); }
 
-ThreadPools& globalPools();
+		void reloadConfig();
+	};
+
+	ThreadPools& globalPools();
+} // namespace atlas::threading
 
 #endif //ATLASGAMEMANAGER_POOLS_HPP

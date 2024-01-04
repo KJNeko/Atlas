@@ -46,7 +46,7 @@ namespace atlas::network
 
 		std::unique_ptr< QNetworkAccessManager > m_access_manager {};
 
-		std::queue< std::unique_ptr< Downloader > > download_queue;
+		std::queue< std::unique_ptr< Downloader > > download_queue {};
 
 		QTimer timer {};
 

@@ -151,10 +151,10 @@ namespace atlas::remote
 
 		RapidTransaction() << query >> [ &data ]( const AtlasID atlas_id ) { data = { atlas_id }; };
 
-		if ( !data.has_value() )
+		/*if ( !data.has_value() )
 		{
 			qInfo() << QString::fromStdString( query );
-		}
+		}*/
 
 		return data;
 	}

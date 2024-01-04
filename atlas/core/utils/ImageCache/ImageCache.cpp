@@ -70,21 +70,21 @@ namespace atlas::cache
 			}
 		}
 
-		if ( current_size < max_size ) return;
+		if ( current_size < m_max_size ) return;
 
-		std::vector< std::pair< std::string, PixmapItem > > ordered { cache.begin(), cache.end() };
+		std::vector< std::pair< KeyT, PixmapItem > > ordered { cache.begin(), cache.end() };
 		const auto timepoint { Clock::now() };
 		std::sort(
 			ordered.begin(),
 			ordered.end(),
-			[ &timepoint ](
-				const std::pair< std::string, PixmapItem >& first, const std::pair< std::string, PixmapItem >& second )
+			[ &timepoint ]( const std::pair< KeyT, PixmapItem >& first, const std::pair< KeyT, PixmapItem >& second )
 			{ return first.second.score( timepoint ) > second.second.score( timepoint ); } );
 
 		//Remove the last items from the map
-		for ( const auto& [ key, item ] : ordered )
+		for ( const auto& itter : ordered )
 		{
-			if ( current_size < max_size )
+			const auto& [ key, item ] = itter;
+			if ( current_size < m_max_size )
 				break;
 			else
 			{
@@ -94,7 +94,7 @@ namespace atlas::cache
 		}
 	}
 
-	void ImageCache::insert( const std::string& key, const QPixmap& pixmap )
+	void ImageCache::insert( const KeyT key, const QPixmap& pixmap )
 	{
 		std::lock_guard guard { mtx };
 
@@ -112,14 +112,21 @@ namespace atlas::cache
 
 		cache.insert( { key, std::move( item ) } );
 
-		if ( current_size > max_size ) prune();
+		if ( current_size > m_max_size ) prune();
 	}
 
-	std::optional< QPixmap > ImageCache::find( std::string key )
+	std::optional< QPixmap > ImageCache::find( KeyT key )
 	{
 		std::lock_guard guard { mtx };
 		if ( auto itter = cache.find( key ); itter != cache.end() )
 		{
+			if ( itter->second.pixmap.isNull() || itter->second.pixmap.size() == QSize( 0, 0 ) )
+			{
+				//TODO: Invalidate cache
+				return std::nullopt;
+			}
+
+			atlas::logging::debug( "Found pixmap using key {} with size {}", key, itter->second.pixmap.size() );
 			itter->second();
 			return itter->second.pixmap;
 		}

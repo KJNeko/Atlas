@@ -12,13 +12,27 @@
 #include <tracy/Tracy.hpp>
 
 #include "core/config/config.hpp"
-#include "core/images/thumbnails.hpp"
 #include "ui/models/FilepathModel.hpp"
 
 void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, const QModelIndex& index ) const
 {
 	ZoneScoped;
-	QFuture< QPixmap > future { index.data( FilepathModel::PixmapRole ).value< QFuture< QPixmap > >() };
+	QFuture< QPixmap > future { index.data( FilepathModel::Pixmap ).value< QFuture< QPixmap > >() };
+
+	QPixmap banner { index.data( FilepathModel::Roles::Pixmap ).value< QPixmap >() };
+
+	if ( banner.isNull() )
+	{
+		//Request it be loaded from the model
+		std::unique_ptr< atlas::images::ImageLoader > image_loader {
+			atlas::images::ImageLoader::loadPixmap( index.data( FilepathModel::Roles::Filepath )
+			                                            .value< std::filesystem::path >() )
+		};
+
+		image_loader->scaleTo( item.rect.size(), SCALE_TYPE::FIT_BLUR_EXPANDING, Alignment::CENTER );
+
+		if ( m_model != nullptr ) m_model->refreshOnLoader( index, std::move( image_loader ) );
+	}
 
 	if ( item.state & QStyle::State_Selected )
 	{
@@ -41,19 +55,7 @@ void ImageDelegate::paint( QPainter* painter, const QStyleOptionViewItem& item, 
 		painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
 	}
 	else
-	{
-		m_model->refreshOnFuture( index, future );
-
-		if ( use_thumbnils )
-		{
-			// If the pixmap is not loaded, draw the thumbnail
-			const auto pixmap {
-				atlas::images::thumbnail( index.data( FilepathModel::FilepathRole ).value< std::filesystem::path >() )
-			};
-
-			painter->drawPixmap( item.rect.center() - pixmap.rect().center(), pixmap );
-		}
-	}
+	{}
 
 	painter->drawRect( item.rect );
 }

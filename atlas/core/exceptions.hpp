@@ -28,7 +28,7 @@ namespace atlas::exceptions
 		  sloc( loc ),
 		  what_text( format_ns::format( "{}: {}", sloc, std::runtime_error::what() ) )
 		{
-			atlas::logging::errorLoc( "{}", loc, msg );
+			//atlas::logging::errorLoc( "{}", loc, msg );
 		}
 
 		AtlasException( const std::string msg, const std::source_location loc = std::source_location::current() ) :

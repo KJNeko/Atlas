@@ -55,7 +55,14 @@ namespace atlas::images
 		ZoneScoped;
 		constexpr int channels { 3 };
 
-		const auto key { format_ns::format( "{}-{}x{}", hash, width, height ) };
+		std::size_t seed { 0 };
+		seed ^= std::hash< std::string > {}( hash ) + 0x9e3779b9 + ( seed << 6 ) + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< unsigned long >( width ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+		seed ^= std::hash< std::size_t > {}( static_cast< unsigned long >( height ) ) + 0x9e3779b9 + ( seed << 6 )
+		      + ( seed >> 2 );
+
+		const auto key { seed };
 
 		if ( auto image_opt = blurhash_cache.find( key ); image_opt.has_value() )
 		{

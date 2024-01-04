@@ -31,7 +31,7 @@ namespace config
 	void ConfigNotification::notify()
 	{
 		emit notification();
-		globalPools().reloadConfig();
+		atlas::threading::globalPools().reloadConfig();
 	}
 
 } // namespace config

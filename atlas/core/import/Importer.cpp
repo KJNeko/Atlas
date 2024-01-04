@@ -272,6 +272,12 @@ namespace internal
 	}
 	catch ( std::exception& e )
 	{
+		atlas::logging::error( "Runner failed. Exception msg: \"{}\"", e.what() );
+		promise.setException( std::current_exception() );
+	}
+	catch ( ... )
+	{
+		atlas::logging::error( "Exception failed with unknown exception" );
 		promise.setException( std::current_exception() );
 	}
 
@@ -281,5 +287,6 @@ QFuture< RecordID > importGame( GameImportData data, const std::filesystem::path
 {
 	ZoneScoped;
 
-	return QtConcurrent::run( &globalPools().importers, internal::importGame, std::move( data ), root, owning );
+	return QtConcurrent::
+		run( &atlas::threading::globalPools().importers, internal::importGame, std::move( data ), root, owning );
 }

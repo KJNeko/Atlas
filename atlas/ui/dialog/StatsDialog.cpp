@@ -49,6 +49,7 @@ StatsDialog::StatsDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::Sta
 	axisY->setTitleText( "Size (MB)" );
 	chart->addAxis( axisY, Qt::AlignLeft );
 	size_series->attachAxis( axisY );
+	chart->setTheme( QChart::ChartThemeDark );
 
 	ui->graphicsView->setChart( chart );
 }

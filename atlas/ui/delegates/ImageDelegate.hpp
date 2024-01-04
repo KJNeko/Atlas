@@ -17,7 +17,11 @@ class ImageDelegate final : public QAbstractItemDelegate
 
 	FilepathModel* m_model;
 
+	std::map< QPersistentModelIndex, std::unique_ptr< atlas::images::ImageLoader > > m_image_futures {};
+
   public:
+
+	void resetFutures() { m_image_futures.clear(); }
 
 	bool use_thumbnils { true };
 
