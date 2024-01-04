@@ -50,7 +50,7 @@ QVariant FilepathModel::data( const QModelIndex& index, int role ) const
 	{
 		case Roles::Pixmap:
 			{
-				const QSize size { config::grid_ui::bannerSizeX::get(), config::grid_ui::bannerSizeY::get() };
+				const QSize size { config::ui::bannerSizeX::get(), config::ui::bannerSizeY::get() };
 
 				auto future { atlas::images::ImageLoader::loadPixmap( path )
 					              ->scaleTo( size, SCALE_TYPE::KEEP_ASPECT_RATIO, Alignment::CENTER ) };

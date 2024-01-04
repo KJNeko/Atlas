@@ -30,25 +30,17 @@ class SettingsDialog final : public QDialog
 	explicit SettingsDialog( QWidget* parent = nullptr );
 	~SettingsDialog() override;
 
+	void loadSettings();
+
   private:
 
 	Ui::SettingsDialog* ui;
 
-	void prepareThemeSettings();
-	void saveApplicationSettings();
-
-	void preparePathsSettings();
-	void savePathsSettings();
-
-	void prepareThreadSettings();
-	void saveThreadSettings();
-
-	void prepareExperimentalSettings();
-	void saveExperimentalSettings();
-
 	QListView* qlv { nullptr };
 	QAbstractItemModel* gridPreviewModel { nullptr };
 	RecordBannerDelegate* gridPreviewDelegate { nullptr };
+
+	void populateSettings( std::vector< QWidget* > widgets );
 
   private slots:
 	void on_cbImageLayout_currentIndexChanged( int idx );
@@ -69,8 +61,6 @@ class SettingsDialog final : public QDialog
 	void on_sbBannerY_valueChanged( int num );
 	void reloadTheme();
 	void on_cbUseSystemTheme_stateChanged( int arg1 );
-	void prepareGridViewerSettings();
-	void saveBannerViewerSettings();
 	void on_cbLockY_stateChanged( int state );
 	void on_cbCapsuleBorder_stateChanged( int state );
 

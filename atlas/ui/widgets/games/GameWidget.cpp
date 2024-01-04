@@ -295,7 +295,7 @@ void GameWidget::paintEvent( [[maybe_unused]] QPaintEvent* event )
 
 		QPixmap logo { logo_future.result() };
 		//Used if logo does not work
-		QFont font { config::grid_ui::font::get(), 10 };
+		QFont font { config::ui::font::get(), 10 };
 		//const QString& title { record->m_title };
 		QFontMetrics fm( font );
 		painter.setFont( font );
@@ -392,7 +392,7 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
 		ui->previewList->show();
-		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		const int cols { ui->previewList->width() / config::ui::bannerSizeX::get() };
 		//If the item has not fully loaded use show event
 		if ( cols != 0 )
 		{
@@ -400,7 +400,7 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 				static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
 			};
 			//+5 padding at top and bottom of each image
-			const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
+			const int previewListHeight { ( 10 + config::ui::bannerSizeY::get() ) * rows };
 			ui->previewList->setMinimumHeight( previewListHeight );
 		}
 	}
@@ -464,12 +464,12 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 	{
 		ui->previewList->show();
 		//Calculate Rows and Columns
-		const int cols { ui->previewList->width() / config::grid_ui::bannerSizeX::get() };
+		const int cols { ui->previewList->width() / config::ui::bannerSizeX::get() };
 		const int rows {
 			static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
 		};
 		//Each preview has +5 padding at top and bottom.
-		const int previewListHeight { ( 10 + config::grid_ui::bannerSizeY::get() ) * rows };
+		const int previewListHeight { ( 10 + config::ui::bannerSizeY::get() ) * rows };
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
 	}
