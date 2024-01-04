@@ -741,7 +741,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
 {
 	CONFIG_ATTACH_THIS;
 
-	connect( this, &RecordBannerDelegate::killLoaders, m_model, &RecordListModel::killLoaders );
+	if ( m_model != nullptr )
+		connect( this, &RecordBannerDelegate::killLoaders, m_model, &RecordListModel::killLoaders );
 }
 
 QSize RecordBannerDelegate::
