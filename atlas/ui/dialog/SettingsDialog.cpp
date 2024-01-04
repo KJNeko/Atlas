@@ -1115,13 +1115,7 @@ void SettingsDialog::populateSettings( std::vector< QWidget* > widgets )
 	{
 		auto [ namespace_name, setting_name ] = splitSettingName( widget->objectName() );
 
-		std::cout << "Namespace: " << namespace_name.toStdString() << " Setting: " << setting_name.toStdString()
-				  << std::endl;
-		std::cout << "Object name: " << widget->objectName().toStdString() << std::endl;
-
 		atlas::logging::debug( "Filling settings for object: {}", widget->objectName() );
-
-		std::cout << "Object type" << widget->metaObject()->className() << std::endl;
 
 		if ( auto* ptr = qobject_cast< QCheckBox* >( widget ) )
 		{
