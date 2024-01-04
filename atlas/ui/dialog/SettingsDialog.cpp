@@ -1129,6 +1129,18 @@ void SettingsDialog::populateSettings( std::vector< QWidget* > widgets )
 			continue;
 		}
 
+		if ( auto* ptr = qobject_cast< QLabel* >( widget ) )
+		{
+			ptr->setText( config::get< QString >( namespace_name, setting_name ) );
+			continue;
+		}
+
+		if ( auto* ptr = qobject_cast< QComboBox* >( widget ) )
+		{
+			ptr->setCurrentIndex( config::get< int >( namespace_name, setting_name ) );
+			continue;
+		}
+
 		throw AtlasException( "Invalid widget type. Type: " + std::string( widget->metaObject()->className() ) );
 	}
 }
