@@ -31,12 +31,10 @@ inline QSettings getSettingsObject()
 namespace config
 {
 	template < typename T >
-	T get( const QString& namespace_name, const QString& setting_name )
+	std::optional< T > get( const QString& namespace_name, const QString& setting_name )
 	{
 		auto key { namespace_name + "/" + setting_name };
-		if ( !getSettingsObject().contains( key ) )
-			throw AtlasException(
-				"Key " + key.toStdString() + " does not exist. If expected default then define in config.hpp" );
+		if ( !getSettingsObject().contains( key ) ) return std::nullopt;
 
 		return getSettingsObject().value( key ).value< T >();
 	}

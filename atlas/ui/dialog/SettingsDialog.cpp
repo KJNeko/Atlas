@@ -1120,30 +1120,36 @@ void SettingsDialog::populateSettings( std::vector< QWidget* > widgets )
 
 		if ( auto* ptr = qobject_cast< QCheckBox* >( widget ) )
 		{
-			ptr->setChecked( config::get< bool >( namespace_name, setting_name ) );
+			auto ret { config::get< bool >( namespace_name, setting_name ) };
+			if ( ret.has_value() ) ptr->setChecked( ret.value() );
 			continue;
 		}
 
 		if ( auto* ptr = qobject_cast< QSpinBox* >( widget ) )
 		{
-			ptr->setValue( config::get< int >( namespace_name, setting_name ) );
+			auto ret { config::get< int >( namespace_name, setting_name ) };
+			if ( ret.has_value() ) ptr->setValue( ret.value() );
 			continue;
 		}
 
 		if ( auto* ptr = qobject_cast< QLabel* >( widget ) )
 		{
-			ptr->setText( config::get< QString >( namespace_name, setting_name ) );
+			auto ret { config::get< QString >( namespace_name, setting_name ) };
+			if ( ret.has_value() ) ptr->setText( ret.value() );
 			continue;
 		}
 
 		if ( auto* ptr = qobject_cast< QComboBox* >( widget ) )
 		{
-			ptr->setCurrentIndex( config::get< int >( namespace_name, setting_name ) );
+			auto ret { config::get< int >( namespace_name, setting_name ) };
+			if ( ret.has_value() ) ptr->setCurrentIndex( ret.value() );
 			continue;
 		}
+
 		if ( auto* ptr = qobject_cast< QLineEdit* >( widget ) )
 		{
-			ptr->setText( config::get< QString >( namespace_name, setting_name ) );
+			auto ret { config::get< QString >( namespace_name, setting_name ) };
+			if ( ret.has_value() ) ptr->setText( ret.value() );
 			continue;
 		}
 
