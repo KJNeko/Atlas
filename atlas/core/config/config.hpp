@@ -219,6 +219,7 @@ namespace config
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
+SETTINGS_PATH( paths, canonical, "C:/Atlas" )
 SETTINGS_FILE( paths, theme, "./themes/dark.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
@@ -235,7 +236,7 @@ SETTINGS_GEO( batch_import_dialog )
 
 SETTINGS_STATE( main_window )
 
-SETTINGS_D( ui, use_system_theme, bool, false )
+SETTINGS_D( app, use_system_theme, bool, false )
 
 enum SCALE_TYPE : int
 {
@@ -335,7 +336,7 @@ SETTINGS_D( ui, font_size, int, 11 )
 SETTINGS_D( ui, font_bold, bool, true )
 SETTINGS_D( ui, font_italic, bool, false )
 SETTINGS_D( ui, font_shadow, bool, true )
-SETTINGS_D( ui, padding, int, 4 )
+SETTINGS_D( ui, bounding_box, int, 4 )
 SETTINGS_D( ui, corner_radius, int, 2 )
 
 //FOR BANNER
@@ -480,10 +481,11 @@ SETTINGS_D( ui, centerWidgets, bool, false )
 SETTINGS_D( ui, stretch_banner_images, bool, false )
 SETTINGS_D( ui, use_simple_layout, bool, true )
 
-SETTINGS_D( application, font, QString, "" )
-SETTINGS_D( application, fontSize, int, 10 )
-SETTINGS_FILE( application, theme_folder, "./themes" )
-SETTINGS_D( application, update_channel, QString, "stable" )
+SETTINGS_D( app, font, QString, "" )
+SETTINGS_D( app, fontsize, int, 10 )
+SETTINGS_FILE( app, theme, "./themes" )
+
+SETTINGS_D( general, update_channel, QString, "stable" )
 
 SETTINGS_D( remote, allow_checks, bool, false )
 SETTINGS_D( remote, last_check, int, 0 )

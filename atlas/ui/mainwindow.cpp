@@ -52,10 +52,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Set Font
 	QFont font {};
-	font.setPointSize( config::application::fontSize::get() );
-	font.setFamily(
-		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
-												 config::application::font::get() );
+	font.setPointSize( config::app::fontsize::get() );
+	font.setFamily( config::app::font::get() == "" ? QApplication::font().defaultFamily() : config::app::font::get() );
 
 	QApplication::setFont( font );
 

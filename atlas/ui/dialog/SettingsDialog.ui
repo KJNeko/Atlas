@@ -404,7 +404,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -425,7 +425,7 @@ border-right:none;
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QCheckBox" name="settings_general_systemtray">
+           <widget class="QCheckBox" name="setting_general_systemtray">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -539,7 +539,7 @@ border-right:none;
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="settings_general_startup">
+           <widget class="QComboBox" name="setting_general_startup">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -567,7 +567,7 @@ border-right:none;
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="settings_general_close">
+           <widget class="QComboBox" name="setting_general_close">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -616,7 +616,7 @@ border-right:none;
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="settings_general_updatechannel">
+           <widget class="QComboBox" name="settings_general_update_channel">
             <item>
              <property name="text">
               <string>stable</string>
@@ -655,7 +655,7 @@ border-right:none;
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QSpinBox" name="settings_interface_fontsize"/>
+           <widget class="QSpinBox" name="settings_app_fontsize"/>
           </item>
           <item row="1" column="4">
            <widget class="QLabel" name="label_41">
@@ -678,7 +678,7 @@ border-right:none;
            </spacer>
           </item>
           <item row="1" column="2">
-           <widget class="QComboBox" name="settings_interface_font">
+           <widget class="QComboBox" name="settings_app_font">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -811,7 +811,7 @@ border-right:none;
            </spacer>
           </item>
           <item row="0" column="4">
-           <widget class="QComboBox" name="settings_interface_navbar">
+           <widget class="QComboBox" name="setting_app_navbar">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -840,7 +840,7 @@ border-right:none;
            </widget>
           </item>
           <item row="0" column="7">
-           <widget class="QComboBox" name="settings_interface_gameslist">
+           <widget class="QComboBox" name="setting_app_gameslist">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -882,7 +882,7 @@ border-right:none;
            </spacer>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="settings_interface_menubar">
+           <widget class="QComboBox" name="setting_app_menubar">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -918,7 +918,7 @@ border-right:none;
            </widget>
           </item>
           <item row="0" column="10">
-           <widget class="QComboBox" name="settings_interface_footer">
+           <widget class="QComboBox" name="setting_app_footer">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -966,7 +966,7 @@ border-right:none;
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="settings_interface_theme">
+           <widget class="QComboBox" name="theme_box">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -976,7 +976,7 @@ border-right:none;
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QCheckBox" name="settings_interface_default_theme">
+           <widget class="QCheckBox" name="settings_app_use_system_theme">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1096,7 +1096,7 @@ border-right:none;
            <number>6</number>
           </property>
           <item row="1" column="0">
-           <widget class="QComboBox" name="settings_ui_element">
+           <widget class="QComboBox" name="cb_ui_element">
             <item>
              <property name="text">
               <string>Banner View</string>
@@ -1230,7 +1230,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="0" column="4">
-                 <widget class="QSpinBox" name="settings_ui_top_overlay_h">
+                 <widget class="QSpinBox" name="settings_ui_top_overlay_height">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -1285,7 +1285,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QCheckBox" name="settings_ui_top_overlay">
+                 <widget class="QCheckBox" name="settings_ui_enable_top_overlay">
                   <property name="text">
                    <string>Overlay Top</string>
                   </property>
@@ -1351,7 +1351,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="1" column="4">
-                 <widget class="QSpinBox" name="settings_ui_bottom_overlay_h">
+                 <widget class="QSpinBox" name="settings_ui_bottom_overlay_height">
                   <property name="maximum">
                    <number>999</number>
                   </property>
@@ -1397,7 +1397,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QCheckBox" name="settings_ui_bottom_overlay">
+                 <widget class="QCheckBox" name="settings_ui_enable_bottom_overlay">
                   <property name="text">
                    <string>Overlay Bottom</string>
                   </property>
@@ -1713,7 +1713,7 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="1" column="8">
-                 <widget class="QCheckBox" name="settings_ui_text_shadow">
+                 <widget class="QCheckBox" name="settings_ui_font_shadow">
                   <property name="text">
                    <string>Text Shadow</string>
                   </property>
@@ -2195,7 +2195,7 @@ border-right:none;
            </widget>
           </item>
           <item row="14" column="10">
-           <widget class="QComboBox" name="settings_ui_updateicon_link">
+           <widget class="QComboBox" name="setting_ui_updateicon_link">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -4634,7 +4634,7 @@ padding:10x;</string>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="settings_paths_canonical">
+        <widget class="QLineEdit" name="canonicalPath">
          <property name="readOnly">
           <bool>true</bool>
          </property>
@@ -4722,7 +4722,7 @@ padding:10x;</string>
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QSpinBox" name="settings_threads_importer">
+              <widget class="QSpinBox" name="settings_threads_import_threads">
                <property name="minimumSize">
                 <size>
                  <width>50</width>
@@ -4766,7 +4766,7 @@ padding:10x;</string>
            <widget class="QWidget" name="widget_9" native="true">
             <layout class="QGridLayout" name="gridLayout_21">
              <item row="0" column="2">
-              <widget class="QSpinBox" name="settings_threads_imageimporter">
+              <widget class="QSpinBox" name="settings_threads_image_import_threads">
                <property name="minimumSize">
                 <size>
                  <width>50</width>
@@ -4833,7 +4833,7 @@ padding:10x;</string>
               </spacer>
              </item>
              <item row="0" column="2">
-              <widget class="QSpinBox" name="settings_threads_preimport">
+              <widget class="QSpinBox" name="settings_threads_import_pre_loader_threads">
                <property name="minimumSize">
                 <size>
                  <width>50</width>
@@ -4891,7 +4891,7 @@ padding:10x;</string>
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QSpinBox" name="settings_threading_imageloading">
+              <widget class="QSpinBox" name="settings_threads_image_loader_threads">
                <property name="minimumSize">
                 <size>
                  <width>50</width>

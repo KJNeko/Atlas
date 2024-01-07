@@ -48,21 +48,20 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setModel( gridPreviewModel );
 
 	//Add full list of fonts to comboBox.
-	ui->cb_font->addItems( QFontDatabase::families() );
-	ui->cbAppFont->addItems( QFontDatabase::families() );
+	ui->settings_ui_font->addItems( QFontDatabase::families() );
+	ui->settings_app_font->addItems( QFontDatabase::families() );
 
 	//Set Fonts
-	ui->sbAppFontSize->setValue( config::application::fontSize::get() );
+	ui->settings_app_fontsize->setValue( config::app::fontsize::get() );
 
-	ui->cbAppFont->setCurrentText(
-		config::application::font::get() == "" ?
-			QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
-			config::application::font::get() );
+	ui->settings_app_font->setCurrentText(
+		config::app::font::get() == "" ? QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
+										 config::app::font::get() );
 
-	ui->sb_font_size->setValue( config::ui::font_size::get() );
-	ui->cb_font->setCurrentText(
+	ui->settings_ui_font_size->setValue( config::ui::font_size::get() );
+	ui->settings_ui_font->setCurrentText(
 		config::ui::font::get() == "" ? QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
-										config::application::font::get() );
+										config::app::font::get() );
 
 	loadSettings();
 }
@@ -188,11 +187,12 @@ void SettingsDialog::reject()
 	}
 }
 
+/*
 void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 {
 	reloadTheme();
 
-	if ( ui->cbUseSystemTheme->isChecked() )
+	if ( ui->settings_app_default_theme->isChecked() )
 	{
 		atlas::logging::debug( "Using system theme" );
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
@@ -211,11 +211,11 @@ void SettingsDialog::on_themeBox_currentTextChanged( const QString& text )
 		ensurePolished();
 		return;
 	}
-}
+}*/
 
 void SettingsDialog::reloadTheme()
 {
-	if ( config::ui::use_system_theme::get() )
+	if ( config::app::use_system_theme::get() )
 	{
 		dynamic_cast< QApplication* >( QApplication::instance() )->setStyleSheet( "" );
 		ensurePolished();
@@ -250,10 +250,11 @@ void SettingsDialog::reloadTheme()
 	}
 }
 
+/*
 void SettingsDialog::on_cbUseSystemTheme_stateChanged( [[maybe_unused]] int arg1 )
 {
-	ui->themeBox->setEnabled( !ui->cbUseSystemTheme->isChecked() );
-	on_themeBox_currentTextChanged( ui->themeBox->currentText() );
+	ui->settings_app_theme->setEnabled( !ui->settings_app_default_theme->isChecked() );
+	on_themeBox_currentTextChanged( ui->settings_app_theme->currentText() );
 }
 
 //Grid Layout UI
@@ -274,9 +275,9 @@ void SettingsDialog::on_cb_bottom_overlay_stateChanged( int state )
 void SettingsDialog::on_cbImageLayout_currentIndexChanged( int idx )
 {
 	//only show these options when SCALE_TYPE is set to Blur
-	ui->cbBlurType->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
-	ui->sbBlurRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
-	ui->sbFeatherRadius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+	ui->settings_ui_blur_type->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+	ui->settings_ui_blur_strength->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
+	ui->settings_ui_feather_radius->setEnabled( idx == FIT_BLUR_EXPANDING || idx == FIT_BLUR_STRETCH );
 	qlv->repaint();
 	gridPreviewDelegate->m_scale_type = static_cast< SCALE_TYPE >( idx );
 	///config::ui::gridImageLayout::set(idx);
@@ -312,7 +313,7 @@ void SettingsDialog::on_sbBannerX_valueChanged( int num )
 	//const double w_scaled { static_cast< double >( num ) / h_ratio };
 	//printf( "num:%d ratio:%f scaled:%f\n", num, h_ratio, w_scaled );
 	//TODO: Will be implented in V2
-	if ( ui->cbLockY->checkState() )
+	if ( ui->settings_banner_locksize->checkState() )
 	{
 		//gridPreviewDelegate->m_grid_size.setHeight( static_cast< int >( w_scaled ) );
 		//ui->sbBannerY->setValue( static_cast< int >( w_scaled ) );
@@ -369,7 +370,7 @@ void SettingsDialog::on_sbCapsuleSpace_valueChanged( int num )
 
 void SettingsDialog::on_cbLockY_stateChanged( int state )
 {
-	ui->sbBannerY->setEnabled( !state );
+	ui->settings_banner_locksize->setEnabled( !state );
 }
 
 void SettingsDialog::on_cbCenterItems_stateChanged( int state )
@@ -379,16 +380,16 @@ void SettingsDialog::on_cbCenterItems_stateChanged( int state )
 
 void SettingsDialog::on_cbAppFont_currentIndexChanged( [[maybe_unused]] int idx )
 {
-	QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
-	ui->lbSampleText->setFont( font );
+	//QFont font { ui->cbAppFont->currentText(), ui->sbAppFontSize->value() };
+	//ui->lbSampleText->setFont( font );
 	//lbSampleText->
 	//dynamic_cast< QApplication* >( QApplication::instance() )->setFont( font );
 }
 
 void SettingsDialog::on_sbAppFontSize_valueChanged( [[maybe_unused]] int num )
 {
-	QFont font { ui->cbAppFont->currentText(), num };
-	ui->lbSampleText->setFont( font );
+	//QFont font { ui->cbAppFont->currentText(), num };
+	//ui->lbSampleText->setFont( font );
 }
 
 void SettingsDialog::on_cb_font_bold_stateChanged( int state )
@@ -1086,7 +1087,7 @@ void SettingsDialog::on_cb_updateicon_link_currentIndexChanged( int state )
 {
 	gridPreviewDelegate->m_updateicon_link = state;
 }
-
+*/
 std::pair< QString, QString > splitSettingName( QString str )
 {
 	if ( !str.startsWith( "settings_", Qt::CaseInsensitive ) )
@@ -1138,6 +1139,11 @@ void SettingsDialog::populateSettings( std::vector< QWidget* > widgets )
 		if ( auto* ptr = qobject_cast< QComboBox* >( widget ) )
 		{
 			ptr->setCurrentIndex( config::get< int >( namespace_name, setting_name ) );
+			continue;
+		}
+		if ( auto* ptr = qobject_cast< QLineEdit* >( widget ) )
+		{
+			ptr->setText( config::get< QString >( namespace_name, setting_name ) );
 			continue;
 		}
 

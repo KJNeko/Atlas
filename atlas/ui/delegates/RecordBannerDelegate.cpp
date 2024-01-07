@@ -513,7 +513,7 @@ void RecordBannerDelegate::reloadConfig()
 	m_font_bold = config::ui::font_bold::get();
 	m_font_italic = config::ui::font_italic::get();
 	m_font_shadow = config::ui::font_shadow::get();
-	m_padding = config::ui::padding::get();
+	m_padding = config::ui::bounding_box::get();
 	m_corner_radius = config::ui::corner_radius::get();
 	//BANNER START
 	//title
@@ -634,7 +634,7 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_font_bold { config::ui::font_bold::get() },
   m_font_italic { config::ui::font_italic::get() },
   m_font_shadow { config::ui::font_shadow::get() },
-  m_padding { config::ui::padding::get() },
+  m_padding { config::ui::bounding_box::get() },
   m_corner_radius { config::ui::corner_radius::get() },
   //START BANNER
   //title

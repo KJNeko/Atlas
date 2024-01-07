@@ -35,6 +35,9 @@
         <file>assets/dropupicon.svg</file>
         <file>assets/likes_white.svg</file>
         <file>assets/views_icon.svg</file>
+        <file>assets/fav_icon_active.svg</file>
+        <file>assets/fav_icon_normal.svg</file>
+        <file>assets/fav_icon_normal_selecteds.svg</file>
     </qresource>
     <qresource prefix="/Layouts">
         <file>assets/layouts/0000.svg</file>
