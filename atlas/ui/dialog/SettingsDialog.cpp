@@ -63,6 +63,10 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 		config::ui::font::get() == "" ? QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 										config::app::font::get() );
 
+	//Set so we know what the available space is to print the image
+	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
+	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
+
 	loadSettings();
 }
 
