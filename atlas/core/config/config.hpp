@@ -217,7 +217,6 @@ namespace config
 SETTINGS_PATH( paths, database, "./data" )
 SETTINGS_PATH( paths, images, "./data/images" )
 SETTINGS_PATH( paths, games, "./data/games" )
-SETTINGS_PATH( paths, canonical, "C:/Atlas" )
 SETTINGS_FILE( paths, theme, "./themes/dark.qss" )
 
 SETTINGS_D( importer, pathparse, QString, "{creator}/{title}/{version}" )
@@ -312,17 +311,16 @@ enum Link : int
 };
 
 //Images
-SETTINGS_DE( ui, imageLayout, SCALE_TYPE, KEEP_ASPECT_RATIO_BY_EXPANDING ) // Default is keep aspect ratio
-SETTINGS_DE( ui, blurType, BLUR_TYPE, FEATHER_IMAGE )
-SETTINGS_D( ui, blurRadius, int, 30 )
-SETTINGS_D( ui, featherRadius, int, 30 )
-SETTINGS_D( ui, bannerSizeX, int, 537 )
-SETTINGS_D( ui, bannerSizeY, int, 251 )
-SETTINGS_D( ui, bannerSpacing, int, 5 )
-SETTINGS_D( ui, selectedColor, QString, "transparent" )
-SETTINGS_D( ui, selectedOpacity, int, 50 )
-SETTINGS_D( ui, enableCapsuleBorder, bool, true )
-SETTINGS_D( ui, borderColor, QString, "transparent" )
+SETTINGS_DE( ui, image_layout, SCALE_TYPE, KEEP_ASPECT_RATIO_BY_EXPANDING ) // Default is keep aspect ratio
+SETTINGS_DE( ui, blur_type, BLUR_TYPE, FEATHER_IMAGE )
+SETTINGS_D( ui, blur_strength, int, 30 )
+SETTINGS_D( ui, feather_radius, int, 30 )
+SETTINGS_D( ui, bannersize_x, int, 537 )
+SETTINGS_D( ui, bannersize_y, int, 251 )
+SETTINGS_D( ui, banner_spacing, int, 5 )
+SETTINGS_D( ui, selected_color, QString, "transparent" )
+SETTINGS_D( ui, enable_banner_border, bool, true )
+SETTINGS_D( ui, border_color, QString, "transparent" )
 
 SETTINGS_D( ui, windowHeight, int, 780 )
 SETTINGS_D( ui, windowWidth, int, 1520 )

@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>1263</width>
     <height>892</height>
    </size>
   </property>
@@ -404,7 +404,7 @@ border-right:none;
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="settingsGeneral">
       <layout class="QGridLayout" name="gridLayout_7">
@@ -1071,10 +1071,16 @@ border-right:none;
        <item row="2" column="2">
         <widget class="QGroupBox" name="groupBox_3">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>68</height>
+          </size>
          </property>
          <property name="title">
           <string>Select UI Element to Change</string>
@@ -1130,12 +1136,6 @@ border-right:none;
        </item>
        <item row="5" column="2">
         <widget class="QFrame" name="QFrame_Bottom_Right_Sub">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>25</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -3622,6 +3622,12 @@ padding:10x;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>68</height>
+             </size>
+            </property>
             <property name="title">
              <string>Select Preset</string>
             </property>
@@ -3694,7 +3700,7 @@ padding:10x;</string>
           <item row="1" column="0">
            <widget class="QGroupBox" name="BannerSettings">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3711,6 +3717,12 @@ padding:10x;</string>
             <layout class="QGridLayout" name="gridLayout_43">
              <item row="3" column="0">
               <widget class="QFrame" name="frame_13">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -3766,7 +3778,7 @@ padding:10x;</string>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QCheckBox" name="settings_ui_banner_border">
+                 <widget class="QCheckBox" name="settings_ui_enable_banner_border">
                   <property name="text">
                    <string> Capsule Border</string>
                   </property>
@@ -3790,6 +3802,12 @@ padding:10x;</string>
              </item>
              <item row="2" column="0">
               <widget class="QFrame" name="frame_12">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -3868,6 +3886,12 @@ padding:10x;</string>
              </item>
              <item row="1" column="0">
               <widget class="QFrame" name="frame_10">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -3924,7 +3948,7 @@ padding:10x;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QSpinBox" name="settings_ui_spacing">
+                 <widget class="QSpinBox" name="settings_ui_banner_spacing">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -3973,6 +3997,12 @@ padding:10x;</string>
              </item>
              <item row="0" column="0">
               <widget class="QFrame" name="frame_9">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -4232,7 +4262,7 @@ padding:10x;</string>
                  </spacer>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QComboBox" name="settings_ui_layout">
+                 <widget class="QComboBox" name="settings_ui_image_layout">
                   <property name="minimumSize">
                    <size>
                     <width>100</width>
