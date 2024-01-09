@@ -28,3 +28,6 @@
 [submodule "dependencies/elzip"]
 	path = dependencies/elzip
 	url = https://github.com/Sygmei/11Zip.git
+[submodule "dependencies/bit7z"]
+	path = dependencies/bit7z
+	url = https://github.com/rikyoz/bit7z.git

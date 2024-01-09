@@ -25,6 +25,7 @@ class ExtractionImportDialog final : public QDialog
 
 	void parseFiles( const QString& path );
 	QStringList parseFileName( const QString& s );
+	void updateTable (std::vector<std::filesystem::directory_entry> archives);
 
   private slots:
 	void on_btnSetRoot_pressed();
