@@ -47,10 +47,43 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setItemDelegate( gridPreviewDelegate );
 	qlv->setModel( gridPreviewModel );
 
+	loadSettings();
+
+	//Any special loaders should *likely* be placed below loadSettings
 	loadFontSettings();
 
-	loadSettings();
 	loadThemeSettings();
+}
+
+void SettingsDialog::loadThemeSettings()
+{
+	atlas::logging::debug( "Preparing theme settings" );
+
+	// Set via loader
+	//ui->cbUseSystemTheme->setChecked( config::ui::use_system_theme::get() );
+
+	if ( !std::filesystem::exists( config::app::theme::getPath() ) )
+		std::filesystem::create_directories( config::app::theme::getPath() );
+	//Load all valid options.
+	for ( auto& qss_option : std::filesystem::directory_iterator( config::app::theme::getPath() ) )
+	{
+		if ( qss_option.is_regular_file() && qss_option.path().extension() == ".qss" )
+			ui->theme_box->addItem( QString::fromStdString( qss_option.path().filename().string() ) );
+	}
+
+	//Select current option
+	for ( int i = 0; i < ui->theme_box->count(); ++i )
+	{
+		if ( ui->theme_box->itemText( i ).toStdString() == config::paths::theme::getPath().filename().string() )
+		{
+			//Found
+			ui->theme_box->setCurrentIndex( i );
+			break;
+		}
+	}
+
+	ui->theme_box->setEnabled( !ui->settings_app_use_system_theme->isChecked() );
+	atlas::logging::debug( "Finished preparing Theme settings" );
 }
 
 void SettingsDialog::loadFontSettings()
