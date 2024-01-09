@@ -47,6 +47,14 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setItemDelegate( gridPreviewDelegate );
 	qlv->setModel( gridPreviewModel );
 
+	loadFontSettings();
+
+	loadSettings();
+	loadThemeSettings();
+}
+
+void SettingsDialog::loadFontSettings()
+{
 	//Add full list of fonts to comboBox.
 	ui->settings_ui_font->addItems( QFontDatabase::families() );
 	ui->settings_app_font->addItems( QFontDatabase::families() );
@@ -62,12 +70,12 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	ui->settings_ui_font->setCurrentText(
 		config::ui::font::get() == "" ? QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 										config::app::font::get() );
-
-	loadSettings();
 }
 
 SettingsDialog::~SettingsDialog()
 {
+	delete gridPreviewDelegate;
+	delete gridPreviewModel;
 	delete ui;
 }
 

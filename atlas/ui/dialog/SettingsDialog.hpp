@@ -31,6 +31,8 @@ class SettingsDialog final : public QDialog
 	~SettingsDialog() override;
 
 	void loadSettings();
+	void loadFontSettings();
+	void loadThemeSettings();
 
   private:
 
