@@ -13,6 +13,7 @@
 #include <tracy/Tracy.hpp>
 
 #include "core/database/record/game/Game.hpp"
+#include "core/database/remote/AtlasData.hpp"
 #include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
 
@@ -108,14 +109,40 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 				const QString file_path { QString::fromStdString( p.path().string() ) };
 				const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
 				//"Title", "Version", "Creator", "File", "Path","Found in DB"
-				QTableWidgetItem* const title_item { new QTableWidgetItem( qlist[ 0 ] ) };
-				QTableWidgetItem* const version_item { new QTableWidgetItem( qlist[ 1 ] ) };
+				QString game_title {qlist[0]};
+				QString game_version {qlist[1]};
+				QString game_creator {""};
+;
+				//Check if item is in the database
+				std::vector< atlas::remote::AtlasRemoteData > atlas_vector = atlas::remote::findAllMatchingAtlasData(game_title, "");
+				//Check if vector is not empty
+				if( atlas_vector.size() > 0)
+				{
+					if(atlas_vector.size() > 1){
+							qInfo() << "Found more than 1 match";
+					}
+					else{
+						std::optional <atlas::remote::AtlasRemoteData> atlas_data = atlas_vector[0];
+						if ( atlas_data.has_value() )
+						{
+							game_title = atlas_data.value()->title;
+							game_creator = atlas_data.value()->creator;
+							qInfo() << atlas_data.value()->title;
+						}
+					}
+
+				}
+
+				QTableWidgetItem* const title_item { new QTableWidgetItem( game_title) };
+				QTableWidgetItem* const version_item { new QTableWidgetItem(game_version ) };
+				QTableWidgetItem* const creator_item {new QTableWidgetItem(game_creator)};
 				QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
 				QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
 
 				ui->exGames->insertRow( row );
 				ui->exGames->setItem( row, 0, title_item );
 				ui->exGames->setItem( row, 1, version_item );
+				ui->exGames->setItem(row, 2, creator_item);
 				ui->exGames->setItem( row, 3, file_name_item );
 				ui->exGames->setItem( row, 4, file_path_item );
 				row++;
