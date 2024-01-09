@@ -47,6 +47,10 @@ SettingsDialog::SettingsDialog( QWidget* parent ) :
 	qlv->setItemDelegate( gridPreviewDelegate );
 	qlv->setModel( gridPreviewModel );
 
+	//Set so we know what the available space is to print the image
+	gridPreviewDelegate->m_grid_size.setHeight( ui->grid_preview->height() );
+	gridPreviewDelegate->m_grid_size.setWidth( ui->grid_preview->width() );
+
 	loadSettings();
 
 	//Any special loaders should *likely* be placed below loadSettings
@@ -103,6 +107,7 @@ void SettingsDialog::loadFontSettings()
 	ui->settings_ui_font->setCurrentText(
 		config::ui::font::get() == "" ? QString::fromStdString( QApplication::font().defaultFamily().toStdString() ) :
 										config::app::font::get() );
+	loadSettings();
 }
 
 SettingsDialog::~SettingsDialog()

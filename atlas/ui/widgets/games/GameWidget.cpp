@@ -392,7 +392,7 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 	if ( ui->previewList->model()->rowCount() > 0 )
 	{
 		ui->previewList->show();
-		const int cols { ui->previewList->width() / config::ui::bannerSizeX::get() };
+		const int cols { ui->previewList->width() / config::ui::bannersize_x::get() };
 		//If the item has not fully loaded use show event
 		if ( cols != 0 )
 		{
@@ -400,7 +400,7 @@ void GameWidget::resizeEvent( [[maybe_unused]] QResizeEvent* event )
 				static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
 			};
 			//+5 padding at top and bottom of each image
-			const int previewListHeight { ( 10 + config::ui::bannerSizeY::get() ) * rows };
+			const int previewListHeight { ( 10 + config::ui::bannersize_y::get() ) * rows };
 			ui->previewList->setMinimumHeight( previewListHeight );
 		}
 	}
@@ -464,12 +464,12 @@ void GameWidget::showEvent( [[maybe_unused]] QShowEvent* event )
 	{
 		ui->previewList->show();
 		//Calculate Rows and Columns
-		const int cols { ui->previewList->width() / config::ui::bannerSizeX::get() };
+		const int cols { ui->previewList->width() / config::ui::bannersize_x::get() };
 		const int rows {
 			static_cast< int >( std::ceil( ui->previewList->model()->rowCount() / static_cast< double >( cols ) ) )
 		};
 		//Each preview has +5 padding at top and bottom.
-		const int previewListHeight { ( 10 + config::ui::bannerSizeY::get() ) * rows };
+		const int previewListHeight { ( 10 + config::ui::bannersize_y::get() ) * rows };
 		//Set min height
 		ui->previewList->setMinimumHeight( previewListHeight );
 	}

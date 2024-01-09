@@ -492,11 +492,11 @@ void RecordBannerDelegate::reloadConfig()
 	ZoneScoped;
 	m_grid_size = calculateSize(
 		config::ui::itemViewWidth::get(),
-		config::ui::bannerSizeX::get(),
-		config::ui::bannerSizeY::get(),
-		config::ui::bannerSpacing::get() );
-	m_banner_size = { config::ui::bannerSizeX::get(), config::ui::bannerSizeY::get() };
-	m_scale_type = config::ui::imageLayout::get();
+		config::ui::bannersize_x::get(),
+		config::ui::bannersize_y::get(),
+		config::ui::banner_spacing::get() );
+	m_banner_size = { config::ui::bannersize_x::get(), config::ui::bannersize_y::get() };
+	m_scale_type = config::ui::image_layout::get();
 	m_top_overlay_height = config::ui::top_overlay_height::get();
 	m_bottom_overlay_height = config::ui::bottom_overlay_height::get();
 	m_enable_top_overlay = config::ui::enable_top_overlay::get();
@@ -504,10 +504,10 @@ void RecordBannerDelegate::reloadConfig()
 	m_overlay_layout = config::ui::overlay_layout::get();
 	m_top_overlay_color = config::ui::top_overlay_bcolor::get();
 	m_bottom_overlay_color = config::ui::bottom_overlay_bcolor::get();
-	m_feather_radius = config::ui::featherRadius::get();
-	m_blur_radius = config::ui::blurRadius::get();
-	m_blur_type = config::ui::blurType::get();
-	m_enable_capsule_border = config::ui::enableCapsuleBorder::get();
+	m_feather_radius = config::ui::feather_radius::get();
+	m_blur_radius = config::ui::blur_strength::get();
+	m_blur_type = config::ui::blur_type::get();
+	m_enable_capsule_border = config::ui::enable_banner_border::get();
 	m_font_size = config::ui::font_size::get();
 	m_font_family = config::ui::font::get();
 	m_font_bold = config::ui::font_bold::get();
@@ -614,10 +614,10 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   QAbstractItemDelegate( parent ),
   m_grid_size { calculateSize(
 	  config::ui::itemViewWidth::get(),
-	  config::ui::bannerSizeX::get(),
-	  config::ui::bannerSizeY::get(),
-	  config::ui::bannerSpacing::get() ) },
-  m_scale_type { config::ui::imageLayout::get() },
+	  config::ui::bannersize_x::get(),
+	  config::ui::bannersize_y::get(),
+	  config::ui::banner_spacing::get() ) },
+  m_scale_type { config::ui::image_layout::get() },
   m_top_overlay_height { config::ui::top_overlay_height::get() },
   m_bottom_overlay_height { config::ui::bottom_overlay_height::get() },
   m_enable_top_overlay { config::ui::enable_top_overlay::get() },
@@ -625,10 +625,10 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_overlay_layout { config::ui::overlay_layout::get() },
   m_top_overlay_color { config::ui::top_overlay_bcolor::get() },
   m_bottom_overlay_color { config::ui::bottom_overlay_bcolor::get() },
-  m_feather_radius { config::ui::featherRadius::get() },
-  m_blur_radius { config::ui::blurRadius::get() },
-  m_blur_type { config::ui::blurType::get() },
-  m_enable_capsule_border { config::ui::enableCapsuleBorder::get() },
+  m_feather_radius { config::ui::feather_radius::get() },
+  m_blur_radius { config::ui::blur_strength::get() },
+  m_blur_type { config::ui::blur_type::get() },
+  m_enable_capsule_border { config::ui::enable_banner_border::get() },
   m_font_size { config::ui::font_size::get() },
   m_font_family { config::ui::font::get() },
   m_font_bold { config::ui::font_bold::get() },
@@ -730,8 +730,8 @@ RecordBannerDelegate::RecordBannerDelegate( RecordListModel* model, QWidget* par
   m_updateicon_default { config::ui::updateicon_default::get() },
 
   //END BANNER
-  m_grid_spacing { config::ui::bannerSpacing::get() },
-  m_banner_size { config::ui::bannerSizeX::get(), config::ui::bannerSizeY::get() },
+  m_grid_spacing { config::ui::banner_spacing::get() },
+  m_banner_size { config::ui::bannersize_x::get(), config::ui::bannersize_y::get() },
   m_window_height { config::ui::windowHeight::get() },
   m_window_width { config::ui::windowWidth::get() },
   m_center_widgets { config::ui::centerWidgets::get() },
