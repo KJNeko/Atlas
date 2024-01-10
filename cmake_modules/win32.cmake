@@ -64,6 +64,11 @@ if (WIN32)
 				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qwebp.dll
 				${CMAKE_BINARY_DIR}/bin/imageformats/qwebp.dll
 				COMMENT "Copying pre-compiled qwebp.dll for Qt 6.4.3")
+		
+		add_custom_command(TARGET Atlas POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/7z/7za.dll
+				${CMAKE_BINARY_DIR}/bin/7za.dll
+				COMMENT "Copying pre-compiled 7zip dll")
 
 		add_custom_command(TARGET Atlas POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/3rdparty/qt.conf
