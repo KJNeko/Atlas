@@ -41,7 +41,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	//connect( ui->btnFilter, &QToolButton::clicked, this, &MainWindow::on_btnFilter_pressed );
 
 	//if ( config::geometry::main_window::hasValue() ) restoreGeometry( config::geometry::main_window::get() );
-	MainWindow::resize( QSize( config::grid_ui::windowWidth::get(), config::grid_ui::windowHeight::get() ) );
+	MainWindow::resize( QSize( config::ui::windowWidth::get(), config::ui::windowHeight::get() ) );
 
 	record_search.moveToThread( &search_thread );
 	search_thread.start();
@@ -52,16 +52,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	//Set Font
 	QFont font {};
-	font.setPointSize( config::application::fontSize::get() );
-	font.setFamily(
-		config::application::font::get() == "" ? QApplication::font().defaultFamily() :
-												 config::application::font::get() );
+	font.setPointSize( config::app::fontsize::get() );
+	font.setFamily( config::app::font::get() == "" ? QApplication::font().defaultFamily() : config::app::font::get() );
 
 	QApplication::setFont( font );
 
 	//IMPORTANT set the font for banner images here if it was never set
-	config::grid_ui::font::
-		set( config::grid_ui::font::get() == "" ? QApplication::font().defaultFamily() : config::grid_ui::font::get() );
+	config::ui::font::
+		set( config::ui::font::get() == "" ? QApplication::font().defaultFamily() : config::ui::font::get() );
 
 	//Notification Stuff
 	config::notify();
@@ -217,14 +215,14 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 	QMainWindow::resizeEvent( event );
 
 	//Store window height and width
-	config::grid_ui::windowHeight::
-		set( config::grid_ui::windowHeight::get() != MainWindow::height() ? MainWindow::height() :
-	                                                                        config::grid_ui::windowHeight::get() );
-	config::grid_ui::windowWidth::
-		set( config::grid_ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
-	                                                                      config::grid_ui::windowWidth::get() );
-	//config::grid_ui::itemViewWidth::set( ui->recordView->viewport()->width() );
-	//config::grid_ui::itemViewHeight::set( ui->recordView->viewport()->height() );
+	config::ui::windowHeight::
+		set( config::ui::windowHeight::get() != MainWindow::height() ? MainWindow::height() :
+	                                                                   config::ui::windowHeight::get() );
+	config::ui::windowWidth::
+		set( config::ui::windowWidth::get() != MainWindow::width() ? MainWindow::width() :
+	                                                                 config::ui::windowWidth::get() );
+	//config::ui::itemViewWidth::set( ui->recordView->viewport()->width() );
+	//config::ui::itemViewHeight::set( ui->recordView->viewport()->height() );
 
 	//ui->recordView->reloadConfig();
 

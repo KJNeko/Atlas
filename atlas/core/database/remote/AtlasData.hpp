@@ -66,6 +66,7 @@ namespace atlas::remote
 	};
 
 	std::optional< atlas::remote::AtlasRemoteData > findAtlasData( QString title, QString developer );
+	std::vector< atlas::remote::AtlasRemoteData > findAllMatchingAtlasData( QString title, QString creator );
 } // namespace atlas::remote
 
 #endif //ATLASGAMEMANAGER_ATLASDATA_HPP

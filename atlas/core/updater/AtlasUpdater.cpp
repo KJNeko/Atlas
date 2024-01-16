@@ -153,7 +153,7 @@ namespace atlas
 						//Set to 0 so it always downloads
 						if ( created_at > last_unix_ts )
 						{
-							if ( config::application::update_channel::get() == "nightly" )
+							if ( config::general::update_channel::get() == "nightly" )
 							{
 								//qInfo() << target_commitish;
 								//qInfo() << tag_name;
@@ -162,8 +162,7 @@ namespace atlas
 									release( tag_name, created_at, target_commitish, browser_download_url ) );
 								last_unix_ts = created_at;
 							}
-							if ( config::application::update_channel::get() == "stable"
-							     && target_commitish == "master" )
+							if ( config::general::update_channel::get() == "stable" && target_commitish == "master" )
 							{
 								//qInfo() << target_commitish;
 								//qInfo() << tag_name;
