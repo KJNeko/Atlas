@@ -26,11 +26,14 @@ class ExtractionImportDialog final : public QDialog
 	void parseFiles( const QString& path );
 	QStringList parseFileName( const QString& s );
 	void updateTable (std::vector<std::filesystem::directory_entry> archives);
+	void contextMenuRequested(const QPoint& pos);
+	void deleteTableItem(const int row);
 
   private slots:
 	void on_btnSetRoot_pressed();
 	void on_btnSetExtPath_pressed();
 	void on_btnNext_pressed();
+
 
   private:
 

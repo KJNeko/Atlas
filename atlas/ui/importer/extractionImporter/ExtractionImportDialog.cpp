@@ -8,6 +8,7 @@
 #include <QMimeDatabase>
 #include <QStringList>
 #include <QComboBox>
+#include <QMenu>
 #include <QTableWidgetItem>
 #include <QtConcurrent>
 
@@ -28,6 +29,8 @@ ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
 	ui->exGames->setColumnCount( 6 );
 	QStringList headers { "id", "Title", "Version", "Creator", "File", "Path", "Found in DB" };
 	ui->exGames->setHorizontalHeaderLabels( headers );
+	ui->exGames->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->exGames, &QTableWidget::customContextMenuRequested, this, &ExtractionImportDialog::contextMenuRequested);
 }
 
 ExtractionImportDialog::~ExtractionImportDialog()
@@ -90,7 +93,6 @@ void ExtractionImportDialog::on_btnNext_pressed()
 		ui->btnNext->setDisabled( true );
 		parseFiles( ui->rootPath->text() );
 		ui->exGames->resizeColumnsToContents();
-
 		//processFiles();
 	}
 }
@@ -312,4 +314,26 @@ QStringList ExtractionImportDialog::parseFileName( const QString& s )
 	}
 
 	return { file_data[ 0 ], file_data[ 1 ] };
+}
+
+void ExtractionImportDialog::contextMenuRequested(const QPoint& pos)
+{
+	QTableWidgetItem *item = ui->exGames->itemAt(pos);
+	const int row = item->row();
+	//qInfo() << "current row:" <<row;
+    if (item) {
+		QMenu *menu = new QMenu(this);
+		menu->addAction(new QAction("Delete Item", this));
+		//menu->addAction(new QAction("Action 2", this));
+		//menu->addAction(new QAction("Action 3", this));
+		menu->popup(ui->exGames->mapToGlobal(pos));
+		connect(menu, &QMenu::triggered, [this, row](){ExtractionImportDialog::deleteTableItem(row);});
+		//qInfo() << item.
+        // do what you want with the item.
+    }
+}
+
+void ExtractionImportDialog::deleteTableItem(const int row){
+	ui->exGames->removeRow(row);
+	//qInfo() << row;
 }
