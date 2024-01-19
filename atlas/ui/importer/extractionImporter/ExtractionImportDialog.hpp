@@ -28,6 +28,7 @@ class ExtractionImportDialog final : public QDialog
 	void updateTable (std::vector<std::filesystem::directory_entry> archives);
 	void contextMenuRequested(const QPoint& pos);
 	void deleteTableItem(const int row);
+	QStringList findExecutables(const std::string file);
 
   private slots:
 	void on_btnSetRoot_pressed();

@@ -16,8 +16,11 @@
 
 #include "core/database/record/game/Game.hpp"
 #include "core/database/remote/AtlasData.hpp"
+#include "core/database/remote/F95Data.hpp"
 #include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
+
+#include <bit7z/bitarchivereader.hpp>
 
 ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
   QDialog( parent ),
@@ -26,8 +29,8 @@ ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
 	ui->setupUi( this );
 	ui->btnBack->setHidden( true );
 
-	ui->exGames->setColumnCount( 6 );
-	QStringList headers { "id", "Title", "Version", "Creator", "File", "Path", "Found in DB" };
+	ui->exGames->setColumnCount( 7 );
+	QStringList headers { "id", "f95_id", "File", "Title", "Local Ver", "Remote Ver", "Creator" };
 	ui->exGames->setHorizontalHeaderLabels( headers );
 	ui->exGames->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->exGames, &QTableWidget::customContextMenuRequested, this, &ExtractionImportDialog::contextMenuRequested);
@@ -125,11 +128,15 @@ void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory
 		const QString file_name { QString::fromStdString( p.path().filename().string() ) };
 		const QString file_path { QString::fromStdString( p.path().string() ) };
 		const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
+		const QStringList executableList {findExecutables(p.path().stem().string() )};
 		//"Title", "Version", "Creator", "File", "Path","Found in DB"
 		QString game_title {qlist[0]};
-		QString game_version {qlist[1]};
+		QString game_version_local {qlist[1]};
+		QString game_version_remote {""};
 		QString game_creator {""};
 		QString game_id = { "" };//Atlas ID
+		QString game_f95id = {""};
+		QString game_system = {""};
 		QComboBox *title_list {new QComboBox};//init combo box
 
 		//Check if item is in the database
@@ -142,7 +149,7 @@ void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory
 				{
 					std::optional <atlas::remote::AtlasRemoteData> atlas_data = data;
 					//add id to title. Makes it easier to parse
-					title_list->addItem(QString::number(atlas_data.value()->atlas_id) + " | " + atlas_data.value()->title+ " | " + atlas_data.value()->creator);
+					title_list->addItem(atlas_data.value()->title);
 				}
 				qInfo() << "Found more than 1 match";
 			}
@@ -150,9 +157,12 @@ void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory
 				std::optional <atlas::remote::AtlasRemoteData> atlas_data = atlas_vector[0];
 				if ( atlas_data.has_value() )
 				{
+					std::optional <atlas::remote::F95RemoteData> f95_data = atlas::remote::findF95Data(QString::number(atlas_data.value()->atlas_id));
 					game_title = atlas_data.value()->title;
 					game_creator = atlas_data.value()->creator;
+					game_f95id = QString::number(f95_data.value()->f95_id);
 					game_id = QString::number(atlas_data.value()->atlas_id);
+					game_version_remote = atlas_data.value()->version;
 					qInfo() << atlas_data.value()->title;
 				}
 			}
@@ -160,33 +170,42 @@ void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory
 		}
 
 		QTableWidgetItem* const id_item { new QTableWidgetItem( game_id) };
+		QTableWidgetItem* const f95id_item { new QTableWidgetItem( game_f95id) };
 		QTableWidgetItem* const title_item { new QTableWidgetItem( game_title) };
-		QTableWidgetItem* const version_item { new QTableWidgetItem(game_version ) };
+		QTableWidgetItem* const loc_version_item { new QTableWidgetItem(game_version_local ) };
+		QTableWidgetItem* const rmt_version_item { new QTableWidgetItem(game_version_remote ) };
 		QTableWidgetItem* const creator_item {new QTableWidgetItem(game_creator)};
 		QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
 		QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
 
 		ui->exGames->insertRow( row );
 		ui->exGames->setItem( row, 0, id_item );
-		atlas_vector.size() > 1 ? ui->exGames->setCellWidget(row, 1, title_list) :
-		ui->exGames->setItem( row, 1, title_item );
-		ui->exGames->setItem( row, 2, version_item );
-		ui->exGames->setItem( row, 3, creator_item);
-		ui->exGames->setItem( row, 4, file_name_item );
-		ui->exGames->setItem( row, 5, file_path_item );
+		ui->exGames->setItem( row, 1, f95id_item );
+	    atlas_vector.size() > 1 ? ui->exGames->setCellWidget(row, 2, title_list) :
+		ui->exGames->setItem( row, 2, title_item );
+		ui->exGames->setItem( row, 3, file_name_item );
+		ui->exGames->setItem( row, 4, loc_version_item);
+		ui->exGames->setItem( row, 5, rmt_version_item );
+		ui->exGames->setItem( row, 6, creator_item );
 		row++;
 	}
 }
 
 bool checkOsNames( QString s )
 {
-	constexpr std::array< std::string_view, 6 > arr { { "pc", "win", "linux", "windows", "unc", "win64" } };
+	constexpr std::array< std::string_view, 8 > arr { { "pc", "win", "linux", "windows", "unc", "win64","pc-lin", "mac" } };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
 bool checkLanguages( QString s )
 {
 	constexpr std::array< std::string_view, 2 > arr { { "japanese", "english" } };
+	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
+}
+
+bool checkOther( QString s )
+{
+	constexpr std::array< std::string_view, 4 > arr { { "compressed", "patch", "save", "saves" } };
 	return std::find( arr.begin(), arr.end(), s.toLower().toStdString() ) != arr.end();
 }
 
@@ -335,5 +354,41 @@ void ExtractionImportDialog::contextMenuRequested(const QPoint& pos)
 
 void ExtractionImportDialog::deleteTableItem(const int row){
 	ui->exGames->removeRow(row);
-	//qInfo() << row;
+}
+
+//Find executables inside of archive
+QStringList ExtractionImportDialog::findExecutables(const std::string file)
+{
+	QStringList executables {""};
+	try { // bit7z classes can throw BitException objects
+		using namespace bit7z;
+
+		Bit7zLibrary lib{ "7za.dll" };
+		BitArchiveReader arc{ lib, file, BitFormat::Auto };
+
+		// Printing archive metadata
+		std::cout << "Archive properties\n";
+		std::cout << "  Items count: "   << arc.itemsCount() << '\n';
+		std::cout << "  Folders count: " << arc.foldersCount() << '\n';
+		std::cout << "  Files count: "   << arc.filesCount() << '\n';
+		std::cout << "  Size: "          << arc.size() <<'\n';
+		std::cout << "  Packed size: "   << arc.packSize() << "\n\n";
+
+		// Printing the metadata of the archived items
+		std::cout << "Archived items";
+		for ( const auto& item : arc ) {
+			std::cout << '\n';
+			std::cout << "  Item index: "    << item.index() << '\n';
+			std::cout << "    Name: "        << item.name() << '\n';
+			std::cout << "    Extension: "   << item.extension() << '\n';
+			std::cout << "    Path: "        << item.path() << '\n';
+			std::cout << "    IsDir: "       << item.isDir() << '\n';
+			std::cout << "    Size: "        << item.size() << '\n';
+			std::cout << "    Packed size: " << item.packSize() << '\n';
+			std::cout << "    CRC: " << std::hex << item.crc() << std::dec << '\n';
+		}
+		std::cout.flush();
+	} catch ( const bit7z::BitException& ex ) { /* Do something with ex.what()...*/ }
+
+	return executables;
 }
