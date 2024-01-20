@@ -37,9 +37,9 @@ target_precompile_headers(Atlas PUBLIC
 target_include_directories(Atlas PUBLIC ${CMAKE_SOURCE_DIR}/atlas)
 
 if (ATLAS_LINK_FMT EQUAL 1)
-	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4 BlurhashCXX)
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 fmt::fmt spdlog::spdlog TracyClient lz4 BlurhashCXX bit7z)
 else ()
-	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4 BlurhashCXX)
+	target_link_libraries(Atlas PRIVATE Qt6::Core Qt6::Widgets Qt6::Concurrent Qt6::Network Qt6::Charts SQLite::SQLite3 spdlog::spdlog TracyClient lz4 BlurhashCXX bit7z)
 endif ()
 
 set_target_properties(Atlas PROPERTIES COMPILE_FLAGS ${FGL_FLAGS})

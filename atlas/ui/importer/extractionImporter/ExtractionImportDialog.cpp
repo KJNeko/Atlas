@@ -7,12 +7,14 @@
 #include <QMessageBox>
 #include <QMimeDatabase>
 #include <QStringList>
+#include <QComboBox>
 #include <QTableWidgetItem>
 #include <QtConcurrent>
 
 #include <tracy/Tracy.hpp>
 
 #include "core/database/record/game/Game.hpp"
+#include "core/database/remote/AtlasData.hpp"
 #include "core/logging/logging.hpp"
 #include "ui_ExtractionImportDialog.h"
 
@@ -23,8 +25,8 @@ ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
 	ui->setupUi( this );
 	ui->btnBack->setHidden( true );
 
-	ui->exGames->setColumnCount( 5 );
-	QStringList headers { "Title", "Version", "Creator", "File", "Path", "Found in DB" };
+	ui->exGames->setColumnCount( 6 );
+	QStringList headers { "id", "Title", "Version", "Creator", "File", "Path", "Found in DB" };
 	ui->exGames->setHorizontalHeaderLabels( headers );
 }
 
@@ -96,7 +98,8 @@ void ExtractionImportDialog::on_btnNext_pressed()
 void ExtractionImportDialog::parseFiles( const QString& path )
 {
 	constexpr std::array< std::string_view, 3 > exts { { ".zip", ".rar", ".7z" } };
-	int row { 0 };
+	std::vector<std::filesystem::directory_entry> archives = {};//Empty Array
+
 	for ( const auto& p : std::filesystem::recursive_directory_iterator( path.toStdWString() ) )
 	{
 		const auto path_ext { p.path().extension().string() };
@@ -104,23 +107,72 @@ void ExtractionImportDialog::parseFiles( const QString& path )
 		{
 			if ( ext == path_ext )
 			{
-				const QString file_name { QString::fromStdString( p.path().filename().string() ) };
-				const QString file_path { QString::fromStdString( p.path().string() ) };
-				const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
-				//"Title", "Version", "Creator", "File", "Path","Found in DB"
-				QTableWidgetItem* const title_item { new QTableWidgetItem( qlist[ 0 ] ) };
-				QTableWidgetItem* const version_item { new QTableWidgetItem( qlist[ 1 ] ) };
-				QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
-				QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
-
-				ui->exGames->insertRow( row );
-				ui->exGames->setItem( row, 0, title_item );
-				ui->exGames->setItem( row, 1, version_item );
-				ui->exGames->setItem( row, 3, file_name_item );
-				ui->exGames->setItem( row, 4, file_path_item );
-				row++;
+				//store list of archives in a vector
+				archives.emplace_back(p);
 			}
 		}
+	}
+	updateTable(archives);
+}
+
+void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory_entry> archives)
+{	
+	int row { 0 };
+	for( auto p: archives)
+	{
+		const QString file_name { QString::fromStdString( p.path().filename().string() ) };
+		const QString file_path { QString::fromStdString( p.path().string() ) };
+		const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
+		//"Title", "Version", "Creator", "File", "Path","Found in DB"
+		QString game_title {qlist[0]};
+		QString game_version {qlist[1]};
+		QString game_creator {""};
+		QString game_id = { "" };//Atlas ID
+		QComboBox *title_list {new QComboBox};//init combo box
+
+		//Check if item is in the database
+		std::vector< atlas::remote::AtlasRemoteData > atlas_vector = atlas::remote::findAllMatchingAtlasData(game_title, "");
+		//Check if vector is not empty
+		if( atlas_vector.size() > 0)
+		{
+			if(atlas_vector.size() > 1){
+				for(auto data : atlas_vector) 
+				{
+					std::optional <atlas::remote::AtlasRemoteData> atlas_data = data;
+					//add id to title. Makes it easier to parse
+					title_list->addItem(QString::number(atlas_data.value()->atlas_id) + " | " + atlas_data.value()->title+ " | " + atlas_data.value()->creator);
+				}
+				qInfo() << "Found more than 1 match";
+			}
+			else{
+				std::optional <atlas::remote::AtlasRemoteData> atlas_data = atlas_vector[0];
+				if ( atlas_data.has_value() )
+				{
+					game_title = atlas_data.value()->title;
+					game_creator = atlas_data.value()->creator;
+					game_id = QString::number(atlas_data.value()->atlas_id);
+					qInfo() << atlas_data.value()->title;
+				}
+			}
+
+		}
+
+		QTableWidgetItem* const id_item { new QTableWidgetItem( game_id) };
+		QTableWidgetItem* const title_item { new QTableWidgetItem( game_title) };
+		QTableWidgetItem* const version_item { new QTableWidgetItem(game_version ) };
+		QTableWidgetItem* const creator_item {new QTableWidgetItem(game_creator)};
+		QTableWidgetItem* const file_name_item { new QTableWidgetItem( file_name ) };
+		QTableWidgetItem* const file_path_item { new QTableWidgetItem( file_path ) };
+
+		ui->exGames->insertRow( row );
+		ui->exGames->setItem( row, 0, id_item );
+		atlas_vector.size() > 1 ? ui->exGames->setCellWidget(row, 1, title_list) :
+		ui->exGames->setItem( row, 1, title_item );
+		ui->exGames->setItem( row, 2, version_item );
+		ui->exGames->setItem( row, 3, creator_item);
+		ui->exGames->setItem( row, 4, file_name_item );
+		ui->exGames->setItem( row, 5, file_path_item );
+		row++;
 	}
 }
 

@@ -124,11 +124,11 @@ int main( int argc, char** argv )
 
 	qDebug() << QApplication::libraryPaths();
 
-	if ( !config::ui::use_system_theme::get() )
+	if ( !config::app::use_system_theme::get() )
 	{
 		QFile style_sheet_file { config::paths::theme::get() };
 
-		if ( !style_sheet_file.exists() && !config::ui::use_system_theme::get() )
+		if ( !style_sheet_file.exists() && !config::app::use_system_theme::get() )
 		{
 			config::paths::theme::setDefault();
 			QFile default_sheet { config::paths::theme::get() };

@@ -1,0 +1,1 @@
+add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/bit7z) # Path to the 11zip
