@@ -128,7 +128,7 @@ void ExtractionImportDialog::updateTable (std::vector<std::filesystem::directory
 		const QString file_name { QString::fromStdString( p.path().filename().string() ) };
 		const QString file_path { QString::fromStdString( p.path().string() ) };
 		const QStringList qlist { parseFileName( QString::fromStdString( p.path().stem().string() ) ) };
-		const QStringList executableList {findExecutables(p.path().stem().string() )};
+		const QStringList executableList {findExecutables(p.path().string() )};
 		//"Title", "Version", "Creator", "File", "Path","Found in DB"
 		QString game_title {qlist[0]};
 		QString game_version_local {qlist[1]};
@@ -359,36 +359,27 @@ void ExtractionImportDialog::deleteTableItem(const int row){
 //Find executables inside of archive
 QStringList ExtractionImportDialog::findExecutables(const std::string file)
 {
+	qInfo() << "Looking for executables " << QString::fromStdString(file);
 	QStringList executables {""};
+
 	try { // bit7z classes can throw BitException objects
 		using namespace bit7z;
 
-		Bit7zLibrary lib{ "7za.dll" };
+		//load dll from folder root
+		Bit7zLibrary lib{ "7z.dll" };
 		BitArchiveReader arc{ lib, file, BitFormat::Auto };
-
-		// Printing archive metadata
-		std::cout << "Archive properties\n";
-		std::cout << "  Items count: "   << arc.itemsCount() << '\n';
-		std::cout << "  Folders count: " << arc.foldersCount() << '\n';
-		std::cout << "  Files count: "   << arc.filesCount() << '\n';
-		std::cout << "  Size: "          << arc.size() <<'\n';
-		std::cout << "  Packed size: "   << arc.packSize() << "\n\n";
 
 		// Printing the metadata of the archived items
 		std::cout << "Archived items";
 		for ( const auto& item : arc ) {
-			std::cout << '\n';
-			std::cout << "  Item index: "    << item.index() << '\n';
-			std::cout << "    Name: "        << item.name() << '\n';
-			std::cout << "    Extension: "   << item.extension() << '\n';
-			std::cout << "    Path: "        << item.path() << '\n';
-			std::cout << "    IsDir: "       << item.isDir() << '\n';
-			std::cout << "    Size: "        << item.size() << '\n';
-			std::cout << "    Packed size: " << item.packSize() << '\n';
-			std::cout << "    CRC: " << std::hex << item.crc() << std::dec << '\n';
+			//Only get items in root dir, skip all folders.			
+			if (!item.isDir() && QString::fromStdString(item.path()).count(QLatin1Char('\\')) == 1){
+				std::cout << '\n';
+				std::cout << "    Name: "        << item.name() << '\n';
+			}
 		}
 		std::cout.flush();
-	} catch ( const bit7z::BitException& ex ) { /* Do something with ex.what()...*/ }
+	} catch ( const bit7z::BitException& ex ) { qInfo() << "ERROR " <<QString::fromStdString(ex.what()); }
 
 	return executables;
 }
