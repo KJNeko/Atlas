@@ -47,6 +47,7 @@ enum Engine : int
 //! Function to be specialized for each Engine to return true if the engine is valid.
 template < Engine engine >
 bool isEngineT( atlas::utils::FileScanner& scanner );
+bool isArchiveExecutable( std::string ext );
 
 bool checkEngineType( std::string engine, atlas::utils::FileScanner& scanner );
 //! String name of the engine.

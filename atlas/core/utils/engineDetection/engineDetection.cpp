@@ -70,12 +70,27 @@ bool isBlacklist( const std::string& name )
 	return std::apply( func, blacklist_execs );
 }
 
+bool isArchiveExecutable( std::string ext )
+{
+	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
+	if ( std::find( extensions.begin(), extensions.end(), QString::fromStdString( ext ).toLower().toStdString() )
+	     != extensions.end() )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//If passing path from archive, use bool option to prevent crash
 std::vector< std::filesystem::path > detectExecutables( atlas::utils::FileScanner& scanner )
 {
 	ZoneScoped;
 	std::vector< std::filesystem::path > potential_executables;
-	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
 
+	std::vector< std::string > extensions { ".exe", ".html", ".sh", ".swf", ".flv", ".jar", ".qsp", ".bat", ".rag" };
 	//Check for a valid game executable in the folder
 	for ( const auto& [ filename, ext, path, size, depth, relative ] : scanner )
 	{
