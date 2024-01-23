@@ -81,7 +81,22 @@ void ExtractionImportDialog::on_btnNext_pressed()
 		std::filesystem::path executable = "";
 
 		AtlasID atlas_id = INVALID_ATLAS_ID;
-		std::vector< GameImportData > m_data {};
+		GameImportData game_data { 
+			folder,
+			title,
+			creator,
+			"",
+			version,
+			{},
+			{},
+			{},
+			executable,
+			{},
+			{},
+			{},
+			{},
+			atlas_id
+		};
 
 		bool import = false;
 		//itterate though table and make sure all entires are filled that need to be
@@ -92,9 +107,8 @@ void ExtractionImportDialog::on_btnNext_pressed()
 		{
 			for ( int j = 0; j < col_count; j++ )
 			{
-				import = ui->exGames->item( i, 2 )->text().isNull() && ui->exGames->item( i, 3 )->text().isNull()
-				      && ui->exGames->item( i, 4 )->text().isNull() && ui->exGames->item( i, 6 )->text().isNull()
-				      && ui->exGames->item( i, 7 )->text().isNull();
+				//	QStringList headers { "id", "f95_id", "Title", "File", "Local Ver", "Remote Ver", "Creator", "Executable", "Path" };
+				//m_data
 			}
 		}
 
