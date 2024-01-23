@@ -81,21 +81,8 @@ void ExtractionImportDialog::on_btnNext_pressed()
 		std::filesystem::path executable = "";
 
 		AtlasID atlas_id = INVALID_ATLAS_ID;
-		GameImportData game_data { 
-			folder,
-			title,
-			creator,
-			"",
-			version,
-			{},
-			{},
-			{},
-			executable,
-			{},
-			{},
-			{},
-			{},
-			atlas_id
+		GameImportData game_data {
+			folder, title, creator, "", version, {}, {}, {}, executable, {}, {}, {}, {}, atlas_id
 		};
 
 		bool import = false;
