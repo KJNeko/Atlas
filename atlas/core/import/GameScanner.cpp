@@ -185,22 +185,21 @@ try
 	}
 
 	if ( promise.isCanceled() ) return;
-	GameImportData data {
-		std::move( folder ),
-		std::move( title ),
-		std::move( creator ),
-		std::move( engine ),
-		version.isEmpty() ? "0.0" : std::move( version ),
-		file_size,
-		file_count,
-		potential_executables,
-		potential_executables.at( 0 ),
-		std::move( banners ),
-		std::move( previews ),
-		std::move( gl_info ),
-		game_id,
-		atlas_id,
-	};
+	GameImportData data { std::move( folder ),
+		                  std::move( title ),
+		                  std::move( creator ),
+		                  std::move( engine ),
+		                  version.isEmpty() ? "0.0" : std::move( version ),
+		                  file_size,
+		                  file_count,
+		                  potential_executables,
+		                  potential_executables.at( 0 ),
+		                  std::move( banners ),
+		                  std::move( previews ),
+		                  std::move( gl_info ),
+		                  game_id,
+		                  atlas_id,
+		                  {} };
 
 	promise.addResult( std::move( data ) );
 }

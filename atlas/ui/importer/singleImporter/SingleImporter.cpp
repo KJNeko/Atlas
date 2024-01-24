@@ -227,7 +227,8 @@ void SingleImporter::triggerImport()
 		                       ui->previews->pathsQString(),
 		                       gl::parse( root_path / "GL_Infos.ini" ),
 		                       INVALID_RECORD_ID,
-		                       INVALID_ATLAS_ID
+		                       INVALID_ATLAS_ID,
+		                       {}
 
 	};
 

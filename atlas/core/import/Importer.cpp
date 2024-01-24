@@ -44,7 +44,8 @@ namespace internal
 		      gl_infos,
 		      game_id,
 		      atlas_id,
-		      has_version_conflict ] = std::move( data );
+		      has_version_conflict,
+		      archive_path ] = std::move( data );
 
 		ProgressSignaler signaler { QString( "Importing game %1" ).arg( title ) };
 

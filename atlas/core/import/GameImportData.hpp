@@ -39,6 +39,9 @@ struct GameImportData
 	AtlasID atlas_id;
 	bool conflicting_version;
 
+	//Archive Path Absolute
+	[[maybe_unused]] QString archive_path;
+
 	GameImportData(
 		std::filesystem::path path_in,
 		QString title_in,
@@ -53,7 +56,8 @@ struct GameImportData
 		std::vector< QString > previews_in,
 		gl::GameListInfos gl_info_in,
 		RecordID record_id_in,
-		AtlasID atlas_id_in ) :
+		AtlasID atlas_id_in,
+		QString archive_in ) :
 	  relative_path( std::move( path_in ) ),
 	  title( std::move( title_in ) ),
 	  creator( std::move( creator_in ) ),
@@ -68,6 +72,7 @@ struct GameImportData
 	  infos( gl_info_in ),
 	  game_id( record_id_in ),
 	  atlas_id( atlas_id_in ),
+	  archive_path( archive_in ),
 	  conflicting_version( game_id != INVALID_RECORD_ID && atlas::records::Game( game_id ).hasVersion( version ) )
 	{}
 

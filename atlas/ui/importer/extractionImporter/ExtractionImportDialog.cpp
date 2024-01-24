@@ -13,15 +13,18 @@
 #include <QtConcurrent>
 
 #include <bit7z/bitarchivereader.hpp>
+#include <bit7z/bitfileextractor.hpp>
 #include <tracy/Tracy.hpp>
 
 #include "core/database/record/game/Game.hpp"
 #include "core/database/remote/AtlasData.hpp"
 #include "core/database/remote/F95Data.hpp"
 #include "core/import/GameImportData.hpp"
+#include "core/import/Importer.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/FileScanner.hpp"
 #include "core/utils/engineDetection/engineDetection.hpp"
+#include "core/utils/extraction/extractor.hpp"
 #include "ui_ExtractionImportDialog.h"
 
 ExtractionImportDialog::ExtractionImportDialog( QWidget* parent ) :
@@ -74,16 +77,15 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 	if ( ui->btnNext->text() == "Import" )
 	{
-		std::filesystem::path folder = "";
+		QString folder = "";
 		QString title = "";
 		QString creator = "";
 		QString version = "";
-		std::filesystem::path executable = "";
+		QString executable = "";
+		QString archive_path = "";
 
 		AtlasID atlas_id = INVALID_ATLAS_ID;
-		GameImportData game_data {
-			folder, title, creator, "", version, {}, {}, {}, executable, {}, {}, {}, {}, atlas_id
-		};
+		std::vector< GameImportData > games {};
 
 		bool import = false;
 		//itterate though table and make sure all entires are filled that need to be
@@ -94,36 +96,56 @@ void ExtractionImportDialog::on_btnNext_pressed()
 		{
 			for ( int j = 0; j < col_count; j++ )
 			{
-				//	QStringList headers { "id", "f95_id", "Title", "File", "Local Ver", "Remote Ver", "Creator", "Executable", "Path" };
-				//m_data
+				atlas_id = ui->exGames->item( i, 0 )->text().toInt();
+				title = ui->exGames->item( i, 2 )->text().trimmed();
+				version = ui->exGames->item( i, 4 )->text().trimmed();
+				creator = ui->exGames->item( i, 6 )->text().trimmed();
+				folder = creator + "/" + title + "/" + version + "/";
+				folder = ui->extractionPath->text() + "/"
+				       + folder.replace( QRegularExpression( "[\\#%&{}<>*?$!':@|=]+" ), "" );
+				//qInfo() << folder;
+				archive_path = ui->exGames->item( i, 8 )->text();
+
+				QWidget* widget = ui->exGames->cellWidget( i, 7 );
+				if ( QComboBox* cb = qobject_cast< QComboBox* >( widget ) )
+				{
+					executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
+					           + cb->currentText();
+				}
+				else
+				{
+					executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
+					           + ui->exGames->item( i, 7 )->text();
+				}
+				import = version != "" && title != "" && creator != "" && executable != "";
 			}
+			//Make a new game import data item
+			GameImportData game { folder.toStdString(),     title, creator, "", version, {},       {},          {},
+				                  executable.toStdString(), {},    {},      {}, {},      atlas_id, archive_path };
+			games.emplace_back( game ); //add game to vector
+			//qInfo() << executable;
 		}
 
 		if ( import )
 		{
 			const bool owning { false };
 
-			for ( int i = 0; i < row_count; i++ )
-			{
-				for ( int j = 0; j < col_count; j++ )
-				{
-					qInfo() << "Extraction Path"
-							<< "";
-				}
-			}
+			const std::filesystem::path root { ui->extractionPath->text().toStdString() };
 
-			//const std::filesystem::path root { ui->tbPath->text().toStdString() };
+			//Extract file first
 
-			/*(void)QtConcurrent::run(
+			(void)QtConcurrent::run(
 				[ games, owning, root ]()
 				{
 					atlas::logging::debug( "Starting to fill import queue" );
 					for ( auto game : games )
 					{
-						(void)importGame( std::move( game ), root, owning );
+						atlas::utils::Extractor extractor {};
+						extractor.extractArchive( game );
+						//(void)importGame( std::move( game ), root, owning );
 					}
 					atlas::logging::debug( "Finished queueing imports" );
-				} );*/
+				} );
 		}
 		else
 		{
@@ -453,7 +475,7 @@ QStringList ExtractionImportDialog::findExecutables( const std::string file )
 		for ( const auto& item : arc )
 		{
 			//Only get items in root dir, skip all folders.
-			if ( !item.isDir() && QString::fromStdString( item.path() ).count( QLatin1Char( '\\' ) ) == 1 )
+			if ( !item.isDir() && QString::fromStdString( item.path() ).count( QLatin1Char( '\\' ) ) <= 1 )
 			{
 				//Check for executable
 				//add . so executable is found
