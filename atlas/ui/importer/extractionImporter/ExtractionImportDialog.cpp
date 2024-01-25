@@ -469,8 +469,10 @@ QStringList ExtractionImportDialog::findExecutables( const std::string file )
 		using namespace bit7z;
 
 		//load dll from folder root
-		Bit7zLibrary lib { "7z.dll" };
+		Bit7zLibrary lib {};
 		BitArchiveReader arc { lib, file, BitFormat::Auto };
+
+		arc.test();
 
 		for ( const auto& item : arc )
 		{
