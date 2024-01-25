@@ -94,31 +94,29 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 		for ( int i = 0; i < row_count; i++ )
 		{
-			for ( int j = 0; j < col_count; j++ )
-			{
-				atlas_id = ui->exGames->item( i, 0 )->text().toInt();
-				title = ui->exGames->item( i, 2 )->text().trimmed();
-				version = ui->exGames->item( i, 4 )->text().trimmed();
-				creator = ui->exGames->item( i, 6 )->text().trimmed();
-				folder = creator + "/" + title + "/" + version + "/";
-				folder = ui->extractionPath->text() + "/"
-				       + folder.replace( QRegularExpression( "[\\#%&{}<>*?$!':@|=]+" ), "" );
-				//qInfo() << folder;
-				archive_path = ui->exGames->item( i, 8 )->text();
+			atlas_id = ui->exGames->item( i, 0 )->text().toInt();
+			title = ui->exGames->item( i, 2 )->text().trimmed();
+			version = ui->exGames->item( i, 4 )->text().trimmed();
+			creator = ui->exGames->item( i, 6 )->text().trimmed();
+			folder = creator + "/" + title + "/" + version + "/";
+			folder =
+				ui->extractionPath->text() + "/" + folder.replace( QRegularExpression( "[\\#%&{}<>*?$!':@|=]+" ), "" );
+			//qInfo() << folder;
+			archive_path = ui->exGames->item( i, 8 )->text();
 
-				QWidget* widget = ui->exGames->cellWidget( i, 7 );
-				if ( QComboBox* cb = qobject_cast< QComboBox* >( widget ) )
-				{
-					executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
-					           + cb->currentText();
-				}
-				else
-				{
-					executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
-					           + ui->exGames->item( i, 7 )->text();
-				}
-				import = version != "" && title != "" && creator != "" && executable != "";
+			QWidget* widget = ui->exGames->cellWidget( i, 7 );
+			if ( QComboBox* cb = qobject_cast< QComboBox* >( widget ) )
+			{
+				executable =
+					ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/" + cb->currentText();
 			}
+			else
+			{
+				executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
+				           + ui->exGames->item( i, 7 )->text();
+			}
+			import = version != "" && title != "" && creator != "" && executable != "";
+
 			//Make a new game import data item
 			GameImportData game { folder.toStdString(),     title, creator, "", version, {},       {},          {},
 				                  executable.toStdString(), {},    {},      {}, {},      atlas_id, archive_path };

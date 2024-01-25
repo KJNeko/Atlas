@@ -14,7 +14,7 @@ namespace atlas::utils
 	{
 		m_signaler = std::make_unique< ProgressSignaler >();
 		m_signaler->setMessage( "Extracting: " + game.title );
-		m_signaler->setSubMessage( "test" );
+		m_signaler->setSubMessage( "" );
 		m_signaler->setProgress( 0 );
 		m_signaler->setMax( 0 );
 
@@ -35,7 +35,6 @@ namespace atlas::utils
 				{
 					auto progress = static_cast< int >( ( 100.0 * processed_size ) / data_size );
 					extractionProgress( progress, 100 );
-					std::cout << progress << std::endl;
 					return true;
 				} );
 			extractor.setFileCallback( [ this ]( std::string file_path ) { fileProgress( file_path ); } );
@@ -49,14 +48,6 @@ namespace atlas::utils
 				//Extract files
 				extractor.extract( game.archive_path.toStdString(), game.relative_path.string() );
 				//Check if there is a single folder in dir. If there is, move all files one folder up
-				std::string folder_name = game.archive_path.split( "/" )[ game.archive_path.split( "/" ).count() ]
-				                              .split( "." )[ 0 ]
-				                              .toStdString();
-
-				if ( std::filesystem::exists( game.relative_path / folder_name ) )
-				{
-					qInfo() << QString::fromStdString( folder_name );
-				}
 			}
 			else
 			{
@@ -76,7 +67,7 @@ namespace atlas::utils
 	void Extractor::extractionProgress( qint64 bytesReceived, qint64 bytesTotal )
 	{
 		m_signaler->setProgress( bytesReceived );
-		m_signaler->setMax( bytesTotal );
+		m_signaler->setMax( static_cast< int >( bytesTotal ) );
 	}
 
 	void Extractor::fileProgress( std::string file )

@@ -37,10 +37,9 @@ struct GameImportData
 	//Remote information
 	RecordID game_id;
 	AtlasID atlas_id;
-	bool conflicting_version;
-
 	//Archive Path Absolute
-	[[maybe_unused]] QString archive_path;
+	QString archive_path;
+	bool conflicting_version;
 
 	GameImportData(
 		std::filesystem::path path_in,

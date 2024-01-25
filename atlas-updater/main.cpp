@@ -18,7 +18,7 @@ int main( int argc, char** argv )
 {
 	//std::cout << argc << '\n';
 
-	if ( argc <= 1 )
+	if ( argc <= 1 || argv[ 0 ] == "test" )
 	{
 		int msgboxID = MessageBox(
 			NULL,
