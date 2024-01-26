@@ -43,15 +43,31 @@ namespace atlas::utils
 			qInfo() << "Archive Path: " << game.archive_path
 					<< "\nRelative Path: " << QString::fromStdString( game.relative_path.string() );
 			//CREATE DIR FIRST
-			if ( std::filesystem::create_directories( game.relative_path ) )
+			if ( !std::filesystem::create_directories( game.relative_path ) )
 			{
-				//Extract files
-				extractor.extract( game.archive_path.toStdString(), game.relative_path.string() );
-				//Check if there is a single folder in dir. If there is, move all files one folder up
+				qInfo() << "Path Already Exist ";
 			}
-			else
+			//Extract files
+			extractor.extract( game.archive_path.toStdString(), game.relative_path.string() );
+			//Check if there is a single folder in dir. If there is, move all files one folder up
+			qInfo() << "Checking folder: " << QString::fromStdString( game.relative_path.string() );
+			int file_count { 0 };
+			std::string folder_path { "" };
+
+			for ( const auto& file : std::filesystem::directory_iterator( game.relative_path.string() ) )
 			{
-				qInfo() << "Unable to create path ";
+				file_count++;
+				folder_path = file.path().string();
+			}
+			//if there is one dir then we need to move the files one dir up
+			if ( file_count == 1 )
+			{
+				for ( std::filesystem::path p : std::filesystem::directory_iterator( folder_path ) )
+				{
+					std::filesystem::rename( p, game.relative_path / p.filename() );
+				}
+				//Delete the old folder
+				std::filesystem::remove( folder_path );
 			}
 			this->deleteLater();
 			return true;

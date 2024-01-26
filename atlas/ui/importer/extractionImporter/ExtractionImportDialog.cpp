@@ -89,7 +89,6 @@ void ExtractionImportDialog::on_btnNext_pressed()
 
 		bool import = false;
 		//itterate though table and make sure all entires are filled that need to be
-		const int col_count { ui->exGames->columnCount() };
 		const int row_count { ui->exGames->rowCount() };
 
 		for ( int i = 0; i < row_count; i++ )
@@ -107,13 +106,11 @@ void ExtractionImportDialog::on_btnNext_pressed()
 			QWidget* widget = ui->exGames->cellWidget( i, 7 );
 			if ( QComboBox* cb = qobject_cast< QComboBox* >( widget ) )
 			{
-				executable =
-					ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/" + cb->currentText();
+				executable = folder + cb->currentText();
 			}
 			else
 			{
-				executable = ui->extractionPath->text() + "/" + creator + "/" + title + "/" + version + "/"
-				           + ui->exGames->item( i, 7 )->text();
+				executable = folder + ui->exGames->item( i, 7 )->text();
 			}
 			import = version != "" && title != "" && creator != "" && executable != "";
 
@@ -140,7 +137,7 @@ void ExtractionImportDialog::on_btnNext_pressed()
 					{
 						atlas::utils::Extractor extractor {};
 						extractor.extractArchive( game );
-						//(void)importGame( std::move( game ), root, owning );
+						(void)importGame( std::move( game ), root, owning );
 					}
 					atlas::logging::debug( "Finished queueing imports" );
 				} );
