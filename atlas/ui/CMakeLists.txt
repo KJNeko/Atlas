@@ -8,7 +8,7 @@ set(ATLAS_DESIGNER_FILES "")
 
 message(STATUS "Atlas Designer files: ${ATLAS_DESIGNER_FILES}")
 
-set(ATLAS_UI_LIBS Qt6::Core Qt6::Gui Qt6::Concurrent Qt6::Network Qt6::Widgets Qt6::Charts)
+set(ATLAS_UI_LIBS Qt6::Core Qt6::Gui Qt6::Concurrent Qt6::Network Qt6::Widgets Qt6::Charts Qt6::UiPlugin TracyClient)
 
 # Filter out designer files
 list(FILTER ATLAS_UI_SRC EXCLUDE REGEX ".*Designer.*")

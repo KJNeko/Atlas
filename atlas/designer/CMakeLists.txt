@@ -11,4 +11,8 @@ set_target_properties(AtlasDesigner PROPERTIES AUTOMOC ON)
 set_target_properties(AtlasDesigner PROPERTIES AUTOUIC ON)
 set_target_properties(AtlasDesigner PROPERTIES AUTORCC ON)
 
+target_include_directories(AtlasDesigner PRIVATE ${CMAKE_SOURCE_DIR}/atlas)
 
+
+#Set output directory
+set_target_properties(AtlasDesigner PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/atlas/designer)

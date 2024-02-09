@@ -11,12 +11,12 @@ QT_BEGIN_NAMESPACE
 
 namespace Ui
 {
-	class OverlaySettingWidget;
+	class OverlaySettingsWidget;
 }
 
 QT_END_NAMESPACE
 
-class OverlaySettingWidget : public QWidget, public QDesignerCustomWidgetInterface
+class OverlaySettingsWidget : public QWidget, public QDesignerCustomWidgetInterface
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA( IID "org.qt-project.Qt.QDesignerCustomWidgetInterface" )
@@ -24,10 +24,10 @@ class OverlaySettingWidget : public QWidget, public QDesignerCustomWidgetInterfa
 
   public:
 
-	explicit OverlaySettingWidget( QWidget* parent = nullptr );
-	~OverlaySettingWidget() override;
+	explicit OverlaySettingsWidget( QWidget* parent = nullptr );
+	~OverlaySettingsWidget() override;
 
-	QString name() const override { return "Overlay Settings Widget"; }
+	QString name() const override { return "OverlaySettingsWidget"; }
 
 	QString group() const override { return "Atlas Widgets"; }
 
@@ -35,20 +35,20 @@ class OverlaySettingWidget : public QWidget, public QDesignerCustomWidgetInterfa
 
 	QString whatsThis() const override { return "Widget for setting overlay settings"; }
 
-	QString includeFile() const override { return "designer/OverlaySettingWidget.hpp"; }
+	QString includeFile() const override { return "designer/OverlaySettingsWidget.hpp"; }
 
 	QIcon icon() const override { return QIcon(); }
 
 	bool isContainer() const override { return false; }
 
-	QWidget* createWidget( QWidget* parent ) override { return new OverlaySettingWidget( parent ); }
+	QWidget* createWidget( QWidget* parent ) override { return new OverlaySettingsWidget( parent ); }
 
 	//xml
 	QString domXml() const override
 	{
 		return R"(
 			<ui language="c++">
-				<widget class="OverlaySettingWidget" name="Overlay Settings Widget">
+				<widget class="OverlaySettingsWidget">
 					<property name="geometry">
 						<rect>
 							<x>0</x>
@@ -64,5 +64,5 @@ class OverlaySettingWidget : public QWidget, public QDesignerCustomWidgetInterfa
 
   private:
 
-	Ui::OverlaySettingWidget* ui;
+	Ui::OverlaySettingsWidget* ui;
 };

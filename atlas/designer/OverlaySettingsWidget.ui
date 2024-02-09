@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>OverlaySettingWidget</class>
- <widget class="QWidget" name="Form">
+ <class>OverlaySettingsWidget</class>
+ <widget class="QWidget" name="OverlaySettingsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1146</width>
+    <width>714</width>
     <height>49</height>
    </rect>
   </property>
@@ -47,14 +47,14 @@
    <item>
     <widget class="QPushButton" name="pbBackground">
      <property name="text">
-      <string>Background</string>
+      <string>bgc</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="pbForeground">
      <property name="text">
-      <string>Foreground</string>
+      <string>fgc</string>
      </property>
     </widget>
    </item>
