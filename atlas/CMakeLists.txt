@@ -32,6 +32,8 @@ target_include_directories(Atlas PUBLIC ${CMAKE_SOURCE_DIR}/atlas)
 
 SetVersionInfo()
 
+set(CMAKE_AUTORCC ON)
+
 add_subdirectory(core)
 add_subdirectory(ui)
 add_subdirectory(designer)
@@ -55,6 +57,9 @@ endif ()
 if (DEFINED ATLAS_EMBED_FULL_SOURCE_LOCATION)
 	target_compile_definitions(Atlas PRIVATE ATLAS_EMBED_FULL_SOURCE_LOCATION=1)
 endif ()
+
+#Make Atlas depend on AtlasDesigner
+add_dependencies(Atlas AtlasDesigner)
 
 add_custom_command(TARGET Atlas POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/atlas/ui/qss ${CMAKE_BINARY_DIR}/bin/themes COMMENT " Copying data from ${CMAKE_SOURCE_DIR}/atlas/ui/qss to ${CMAKE_BINARY_DIR}/bin/themes")
 
