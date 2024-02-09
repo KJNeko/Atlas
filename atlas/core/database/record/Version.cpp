@@ -4,6 +4,8 @@
 
 #include "Version.hpp"
 
+#include <tracy/Tracy.hpp>
+
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/database/record/GameData.hpp"

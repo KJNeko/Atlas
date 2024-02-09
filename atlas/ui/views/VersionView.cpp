@@ -13,6 +13,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/Transaction.hpp"
 #include "ui_VersionView.h"
 

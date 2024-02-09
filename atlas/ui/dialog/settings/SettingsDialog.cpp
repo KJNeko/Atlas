@@ -6,17 +6,16 @@
 
 #include "SettingsDialog.hpp"
 
-#include <moc_SettingsDialog.cpp>
-
 #include <QFile>
 #include <QMessageBox>
 #include <QStandardItemModel>
 
-#include "ProgressBarDialog.hpp"
 #include "core/config/config.hpp"
 #include "core/database/RapidTransaction.hpp"
 #include "core/logging/logging.hpp"
 #include "core/utils/foldersize.hpp"
+#include "moc_SettingsDialog.cpp"
+#include "ui/dialog/ProgressBarDialog.hpp"
 #include "ui_SettingsDialog.h"
 
 class DummyRecordModel : public QAbstractListModel

@@ -4,6 +4,8 @@
 
 #include <QJsonArray>
 
+#include <tracy/Tracy.hpp>
+
 #include "core/database/Transaction.hpp"
 #include "core/database/record/tags.hpp"
 #include "core/notifications/notifications.hpp"

@@ -13,7 +13,7 @@ set(CMAKE_MESSAGE_LOG_LEVEL DEBUG CACHE STRING "CMake messaging level")
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/data)
 
-option(BUILD_SHARED_LIBS "Build shared library" ON) 
+option(BUILD_SHARED_LIBS "Build shared library" ON)
 
 #Enable cmake_modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -28,6 +28,9 @@ message("-- FGL_FLAGS: ${FGL_FLAGS}")
 
 include(dependencies)
 
+#Build everything with PIC
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 find_package(SQLite3 3.31.1 REQUIRED)
 message("-- include = ${SQLite3_INCLUDE_DIR}")
 message("-- lib = ${SQLite3_LIBRARY}")
@@ -37,8 +40,8 @@ message("-- FGL_FLAGS: ${FGL_FLAGS}")
 add_subdirectory(atlas)
 
 if (WIN32)
-    add_subdirectory(atlas-updater)
-endif()
+	add_subdirectory(atlas-updater)
+endif ()
 
 
 SetVersionInfo()

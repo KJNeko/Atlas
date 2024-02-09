@@ -6,8 +6,6 @@
 #ifndef ATLASGAMEMANAGER_TRANSACTION_HPP
 #define ATLASGAMEMANAGER_TRANSACTION_HPP
 
-#include <tracy/Tracy.hpp>
-
 #include <exception>
 #include <mutex>
 #include <string>

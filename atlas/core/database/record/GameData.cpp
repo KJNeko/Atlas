@@ -6,6 +6,8 @@
 
 #include <QPixmapCache>
 
+#include <tracy/Tracy.hpp>
+
 #include <iostream>
 
 #include "Version.hpp"

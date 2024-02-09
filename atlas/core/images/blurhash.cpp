@@ -4,6 +4,8 @@
 
 #include "core/images/blurhash.hpp"
 
+#include <tracy/Tracy.hpp>
+
 #include <blurhash-cxx.hpp>
 
 #include "core/database/RapidTransaction.hpp"

@@ -1,5 +1,7 @@
 #include "UpdateDialog.h"
 
+#include <moc_UpdateDialog.cpp>
+
 #include "ui_UpdateDialog.h"
 
 UpdateDialog::UpdateDialog( QWidget* parent ) : QDialog( parent ), ui( new Ui::UpdateDialog )

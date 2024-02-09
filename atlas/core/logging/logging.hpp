@@ -26,11 +26,6 @@ namespace atlas::logging
 
 	void setFormat();
 
-	//! Loads the GUI hooks required for some warnings to display to the user
-	void initGUIHooks();
-
-	std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg );
-
 	//Everything in this namespace is defined in `spdlogHelpers.cpp`
 	namespace internal
 	{
@@ -52,13 +47,13 @@ namespace atlas::logging
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
 				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				const std::string full_message { formatSourceLocation( source_location, user_message ) };
+				const std::string full_message { format_ns::format( "{}:{}", source_location, user_message ) };
 
 				internal::logDebug( full_message );
 			}
 			else
 			{
-				const std::string full_message { formatSourceLocation( source_location, format_string.get() ) };
+				const std::string full_message { format_ns::format( "{}:{}", source_location, format_string.get() ) };
 
 				internal::logDebug( full_message );
 			}
@@ -77,7 +72,7 @@ namespace atlas::logging
 			[[maybe_unused]] const std::source_location& source_location = std::source_location::current() )
 		{
 			const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-			const std::string full_message { formatSourceLocation( source_location, user_message ) };
+			const std::string full_message { format_ns::format( "{}:{}", source_location, user_message ) };
 
 			internal::logInfo( full_message );
 
@@ -100,7 +95,7 @@ namespace atlas::logging
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
 				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				const std::string full_message { formatSourceLocation( source_location, user_message ) };
+				const std::string full_message { format_ns::format( "{}:{}", source_location, user_message ) };
 
 				internal::logWarn( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -111,7 +106,7 @@ namespace atlas::logging
 			}
 			else
 			{
-				const std::string full_message { formatSourceLocation( source_location, format_string.get() ) };
+				const std::string full_message { format_ns::format( "{}:{}", source_location, format_string.get() ) };
 
 				internal::logWarn( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -135,7 +130,7 @@ namespace atlas::logging
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
 				const std::string user_message { format_ns::format( body, std::forward< Ts >( ts )... ) };
-				const std::string full_message { formatSourceLocation( loc, user_message ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, user_message ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -146,7 +141,7 @@ namespace atlas::logging
 			}
 			else
 			{
-				const std::string full_message { formatSourceLocation( loc, body.get() ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, body.get() ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -166,7 +161,7 @@ namespace atlas::logging
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
 				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				const std::string full_message { formatSourceLocation( loc, user_message ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, user_message ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -177,7 +172,7 @@ namespace atlas::logging
 			}
 			else
 			{
-				const std::string full_message { formatSourceLocation( loc, format_string.get() ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, format_string.get() ) };
 
 				internal::logError( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -200,7 +195,7 @@ namespace atlas::logging
 			if constexpr ( sizeof...( Ts ) > 0 )
 			{
 				const std::string user_message { format_ns::format( format_string, std::forward< Ts >( ts )... ) };
-				const std::string full_message { formatSourceLocation( loc, user_message ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, user_message ) };
 
 				internal::logCritical( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -211,7 +206,7 @@ namespace atlas::logging
 			}
 			else
 			{
-				const std::string full_message { formatSourceLocation( loc, format_string.get() ) };
+				const std::string full_message { format_ns::format( "{}:{}", loc, format_string.get() ) };
 
 				internal::logCritical( full_message );
 				if ( notifications::isNotificationsReady() )
@@ -223,7 +218,6 @@ namespace atlas::logging
 
 	template < typename... Ts >
 	critical( format_ns::format_string< Ts... >, Ts&&... ) -> critical< Ts... >;
-
 
 } // namespace atlas::logging
 

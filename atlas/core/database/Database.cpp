@@ -6,6 +6,8 @@
 
 #include <QImage>
 
+#include <tracy/Tracy.hpp>
+
 #include <sqlite3.h>
 
 #include "RapidTransaction.hpp"

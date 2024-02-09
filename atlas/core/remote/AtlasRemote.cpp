@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include <tracy/Tracy.hpp>
 #include <tracy/TracyC.h>
 
 #include <fstream>
@@ -299,7 +300,6 @@ namespace atlas
 	void AtlasRemote::processUpdateFile( const std::uint64_t update_time )
 	{
 		ZoneScoped;
-		atlas::logging::info( "Processing update for time {}", update_time );
 		//Check if the file exists
 		const std::filesystem::path local_update_archive_path {
 			format_ns::format( "./data/updates/{}.update", update_time )
@@ -339,9 +339,12 @@ namespace atlas
 
 		if ( update_time != next_update )
 		{
+			atlas::logging::debug( "Update was out of order. Skipping update" );
 			//We are about to update out of order. Abort.
 			return;
 		}
+
+		atlas::logging::info( "Processing update for time {}", update_time );
 
 		atlas::logging::debug( "Processing file {:ce}", local_update_archive_path );
 		try
@@ -395,13 +398,13 @@ namespace atlas
 
 	void AtlasRemote::markComplete( const std::uint64_t update_time, const bool yes )
 	{
-		RapidTransaction()
-			<< "UPDATE updates SET processed_time = ? WHERE update_time = ?"
-			<< ( yes ? std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::steady_clock::now()
-		                                                                            .time_since_epoch() )
-		                   .count() :
-		               0 )
-			<< update_time;
+		RapidTransaction() << "UPDATE updates SET processed_time = ? WHERE update_time = ?"
+						   << ( yes ?
+		                            std::chrono::duration_cast< std::chrono::seconds >( std::chrono::system_clock::now()
+		                                                                                    .time_since_epoch() )
+		                                .count() :
+		                            0 )
+						   << update_time;
 
 		atlas::logging::info( "Processed update for time {}", update_time );
 	}

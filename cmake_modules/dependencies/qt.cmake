@@ -6,11 +6,7 @@ if (DEFINED QT_PATH)
 	#message("-- QT_PATH not defined.")
 endif ()
 
-find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Concurrent Network Test Charts UiPlugin REQUIRED)
 
 #Echo Qt version
 message("-- Qt version: ${Qt6_VERSION}")
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)

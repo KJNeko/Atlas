@@ -13,6 +13,8 @@
 #include <QPainter>
 #include <QPixmap>
 
+#include <tracy/Tracy.hpp>
+
 #include <fstream>
 
 #include "core/config/config.hpp"

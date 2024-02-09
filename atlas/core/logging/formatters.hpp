@@ -6,7 +6,12 @@
 #ifndef ATLASGAMEMANAGER_FORMATTERS_HPP
 #define ATLASGAMEMANAGER_FORMATTERS_HPP
 
+#include <QSize>
 #include <QString>
+#include <QUrl>
+
+#include <filesystem>
+#include <source_location>
 
 // clang-format:off
 
@@ -81,15 +86,23 @@ struct format_ns::formatter< std::source_location >
 {
 	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
 
-	format_context::iterator format( const std::source_location& loc, format_context& ctx ) const;
-};
+	format_context::iterator format( const std::source_location& loc, format_context& ctx ) const
+	{
+#ifndef ATLAS_EMBED_FULL_SOURCE_LOCATION
 
-template <>
-struct format_ns::formatter< format_ns::format_string<> >
-{
-	constexpr format_parse_context::iterator parse( format_parse_context& ctx ) { return ctx.begin(); }
+#ifndef ATLAS_CMAKE_SOURCE_LOCATION
+#error "ATLAS_CMAKE_SOURCE_LOCATION must be defined to use ATLAS_EMBED_FULL_SOURCE_LOCATION"
+#endif
 
-	format_context::iterator format( const format_ns::format_string<>& str, format_context& ctx ) const;
+		//ATLAS_SANITIZE_SOURCE_LOC will be a string that is the source path.
+		constexpr std::size_t sanitize_offset { std::char_traits< char >::length( ATLAS_CMAKE_SOURCE_LOCATION ) };
+
+		return format_ns::format_to( ctx.out(), "{}:{}", loc.file_name() + sanitize_offset, loc.line() );
+#else
+		return format_ns::
+			format_to( ctx.out(), "File: {}:{}\n\tFunction: {}\n\t", loc.file_name(), loc.line(), loc.function_name() );
+#endif
+	}
 };
 
 template <>

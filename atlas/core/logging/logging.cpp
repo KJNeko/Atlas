@@ -78,9 +78,4 @@ namespace atlas::logging
 		spdlog::set_pattern( "[%H:%M:%S] [%^%l%$] [thread %t]:\n\t%v" );
 	}
 
-	std::string formatSourceLocation( const std::source_location loc, const format_ns::string_view msg )
-	{
-		return format_ns::format( "{}Message: {}", loc, msg );
-	}
-
 } // namespace atlas::logging

@@ -4,6 +4,8 @@
 
 #include "NetworkManager.hpp"
 
+#include <moc_NetworkManager.cpp>
+
 #include <QFuture>
 #include <QNetworkReply>
 #include <QThread>
