@@ -6,6 +6,8 @@ else ()
 	add_executable(Atlas ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc ${APP_ICON_RESOURCE_WINDOWS})
 endif ()
 
+set_target_properties(Atlas PROPERTIES AUTORCC ON)
+
 target_precompile_headers(Atlas PUBLIC
 		<memory>
 		<iostream>
