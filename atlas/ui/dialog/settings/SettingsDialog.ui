@@ -3012,7 +3012,14 @@ padding:10x;</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="OverlaySettingsWidget" name="overlaySettingsWidget"/>
+               <widget class="OverlaySettingsWidget" name="overlaySettingsWidget">
+                <property name="m_settings_namespace" stdset="0">
+                 <string>test</string>
+                </property>
+                <property name="m_settings_key" stdset="0">
+                 <string>two</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

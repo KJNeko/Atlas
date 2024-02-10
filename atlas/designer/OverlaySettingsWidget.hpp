@@ -7,6 +7,8 @@
 #include <QDesignerCustomWidgetInterface>
 #include <QWidget>
 
+#include <iostream>
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -16,51 +18,86 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class OverlaySettingsWidget : public QWidget, public QDesignerCustomWidgetInterface
+class OverlaySettingsWidget : public QWidget
 {
 	Q_OBJECT
-	Q_PLUGIN_METADATA( IID "org.qt-project.Qt.QDesignerCustomWidgetInterface" )
-	Q_INTERFACES( QDesignerCustomWidgetInterface )
+
+	QString m_settings_namespace {};
+	QString m_settings_key {};
+
+	QString m_uservisible_name { "Name" };
+
+	bool m_enabled { false };
+	QSize m_pos { 0, 0 };
+	int m_allignment { 0 };
+	bool m_default_color { false };
+	QString m_fg_color {};
+	QString m_bg_color {};
+	int m_link { 0 };
 
   public:
+
+	Q_PROPERTY( QString m_settings_namespace READ settingsNamespace WRITE setSettingsNamespace )
+	Q_PROPERTY( QString m_settings_key READ settingsKey WRITE setSettingsKey )
+
+	//Internal
+	Q_PROPERTY( QString m_uservisible_name READ userVisibleName WRITE setUserVisibleName )
+
+	Q_PROPERTY( bool m_enabled READ settingsEnabled WRITE setSettingsEnabled )
+	Q_PROPERTY( int m_xaxis READ xAxis WRITE setXAxis )
+	Q_PROPERTY( int m_yaxis READ yAxis WRITE setYAxis )
+	Q_PROPERTY( int m_allignment READ allignment WRITE setAllignment )
+	Q_PROPERTY( bool m_default_color READ isDefaultColor WRITE setUsesDefaultColor )
+	Q_PROPERTY( QString m_fg_color READ foregroundColor WRITE setForegroundColor )
+	Q_PROPERTY( QString m_bg_font READ backgroundColor WRITE setBackgroundColor )
+	Q_PROPERTY( int m_link READ link WRITE setLink )
 
 	explicit OverlaySettingsWidget( QWidget* parent = nullptr );
 	~OverlaySettingsWidget() override;
 
-	QString name() const override { return "OverlaySettingsWidget"; }
+	void setSettingsNamespace( const QString& settingsNamespace ) { m_settings_namespace = settingsNamespace; }
 
-	QString group() const override { return "Atlas Widgets"; }
+	QString settingsNamespace() const { return m_settings_namespace; }
 
-	QString toolTip() const override { return "Widget for setting overlay settings"; }
+	void setSettingsKey( const QString& settingsKey ) { m_settings_key = settingsKey; }
 
-	QString whatsThis() const override { return "Widget for setting overlay settings"; }
+	QString settingsKey() const { return m_settings_key; }
 
-	QString includeFile() const override { return "designer/OverlaySettingsWidget.hpp"; }
+	void setUserVisibleName( const QString& uservisibleName ) { m_uservisible_name = uservisibleName; }
 
-	QIcon icon() const override { return QIcon(); }
+	QString userVisibleName() const { return m_uservisible_name; }
 
-	bool isContainer() const override { return false; }
+	void setSettingsEnabled( bool enabled ) { m_enabled = enabled; }
 
-	QWidget* createWidget( QWidget* parent ) override { return new OverlaySettingsWidget( parent ); }
+	bool settingsEnabled() const { return m_enabled; }
 
-	//xml
-	QString domXml() const override
-	{
-		return R"(
-			<ui language="c++">
-				<widget class="OverlaySettingsWidget">
-					<property name="geometry">
-						<rect>
-							<x>0</x>
-							<y>0</y>
-							<width>100</width>
-							<height>100</height>
-						</rect>
-					</property>
-				</widget>
-			</ui>
-		)";
-	}
+	void setXAxis( int xaxis ) { m_pos.setWidth( xaxis ); }
+
+	int xAxis() const { return m_pos.width(); }
+
+	void setYAxis( int yaxis ) { m_pos.setHeight( yaxis ); }
+
+	int yAxis() const { return m_pos.height(); }
+
+	void setAllignment( int allignment ) { m_allignment = allignment; }
+
+	int allignment() const { return m_allignment; }
+
+	void setUsesDefaultColor( bool defaultColor ) { m_default_color = defaultColor; }
+
+	bool isDefaultColor() const { return m_default_color; }
+
+	void setForegroundColor( const QString& fgColor ) { m_fg_color = fgColor; }
+
+	QString foregroundColor() const { return m_fg_color; }
+
+	void setBackgroundColor( const QString& bgColor ) { m_bg_color = bgColor; }
+
+	QString backgroundColor() const { return m_bg_color; }
+
+	void setLink( int link ) { m_link = link; }
+
+	int link() const { return m_link; }
 
   private:
 
