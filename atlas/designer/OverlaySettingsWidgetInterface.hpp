@@ -6,10 +6,11 @@
 
 #include <QDesignerCustomWidgetInterface>
 #include <QWidget>
+#include <QtUiPlugin/QDesignerExportWidget>
 
 #include "OverlaySettingsWidget.hpp"
 
-class OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWidgetInterface
+class QDESIGNER_WIDGET_EXPORT OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWidgetInterface
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA( IID "org.qt-project.Qt.QDesignerCustomWidgetInterface" )

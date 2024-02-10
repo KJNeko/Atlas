@@ -22,18 +22,12 @@ class OverlaySettingsWidget : public QWidget
 {
 	Q_OBJECT
 
+	//Internal values for setting saving/unloading
 	QString m_settings_namespace {};
 	QString m_settings_key {};
 
-	QString m_uservisible_name { "Name" };
-
-	bool m_enabled { false };
-	QSize m_pos { 0, 0 };
-	int m_allignment { 0 };
-	bool m_default_color { false };
 	QString m_fg_color {};
 	QString m_bg_color {};
-	int m_link { 0 };
 
   public:
 
@@ -63,41 +57,41 @@ class OverlaySettingsWidget : public QWidget
 
 	QString settingsKey() const { return m_settings_key; }
 
-	void setUserVisibleName( const QString& uservisibleName ) { m_uservisible_name = uservisibleName; }
+	void setUserVisibleName( const QString& uservisibleName );
 
-	QString userVisibleName() const { return m_uservisible_name; }
+	QString userVisibleName() const;
 
-	void setSettingsEnabled( bool enabled ) { m_enabled = enabled; }
+	void setSettingsEnabled( bool enabled );
 
-	bool settingsEnabled() const { return m_enabled; }
+	bool settingsEnabled() const;
 
-	void setXAxis( int xaxis ) { m_pos.setWidth( xaxis ); }
+	void setXAxis( int xaxis );
 
-	int xAxis() const { return m_pos.width(); }
+	int xAxis() const;
 
-	void setYAxis( int yaxis ) { m_pos.setHeight( yaxis ); }
+	void setYAxis( int yaxis );
 
-	int yAxis() const { return m_pos.height(); }
+	int yAxis() const;
 
-	void setAllignment( int allignment ) { m_allignment = allignment; }
+	void setAllignment( int allignment );
 
-	int allignment() const { return m_allignment; }
+	int allignment() const;
 
-	void setUsesDefaultColor( bool defaultColor ) { m_default_color = defaultColor; }
+	void setUsesDefaultColor( bool defaultColor );
 
-	bool isDefaultColor() const { return m_default_color; }
+	bool isDefaultColor() const;
 
-	void setForegroundColor( const QString& fgColor ) { m_fg_color = fgColor; }
+	void setForegroundColor( const QString& fgColor );
 
-	QString foregroundColor() const { return m_fg_color; }
+	QString foregroundColor() const;
 
-	void setBackgroundColor( const QString& bgColor ) { m_bg_color = bgColor; }
+	void setBackgroundColor( const QString& bgColor );
 
-	QString backgroundColor() const { return m_bg_color; }
+	QString backgroundColor() const;
 
-	void setLink( int link ) { m_link = link; }
+	void setLink( int link );
 
-	int link() const { return m_link; }
+	int link() const;
 
   private:
 
