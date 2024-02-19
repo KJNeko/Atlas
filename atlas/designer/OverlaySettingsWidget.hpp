@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#include "designer/defines.hpp"
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui
@@ -22,17 +24,12 @@ class OverlaySettingsWidget : public QWidget
 {
 	Q_OBJECT
 
-	//Internal values for setting saving/unloading
-	QString m_settings_namespace {};
-	QString m_settings_key {};
-
-	QString m_fg_color {};
-	QString m_bg_color {};
+	QColor m_fg_color {};
+	QColor m_bg_color {};
 
   public:
 
-	Q_PROPERTY( QString m_settings_namespace READ settingsNamespace WRITE setSettingsNamespace )
-	Q_PROPERTY( QString m_settings_key READ settingsKey WRITE setSettingsKey )
+	ATLAS_PROPERTY_SETTINGS
 
 	//Internal
 	Q_PROPERTY( QString m_uservisible_name READ userVisibleName WRITE setUserVisibleName )
@@ -42,20 +39,12 @@ class OverlaySettingsWidget : public QWidget
 	Q_PROPERTY( int m_yaxis READ yAxis WRITE setYAxis )
 	Q_PROPERTY( int m_allignment READ allignment WRITE setAllignment )
 	Q_PROPERTY( bool m_default_color READ isDefaultColor WRITE setUsesDefaultColor )
-	Q_PROPERTY( QString m_fg_color READ foregroundColor WRITE setForegroundColor )
-	Q_PROPERTY( QString m_bg_font READ backgroundColor WRITE setBackgroundColor )
+	Q_PROPERTY( QColor m_fg_color READ foregroundColor WRITE setForegroundColor )
+	Q_PROPERTY( QColor m_bg_font READ backgroundColor WRITE setBackgroundColor )
 	Q_PROPERTY( int m_link READ link WRITE setLink )
 
 	explicit OverlaySettingsWidget( QWidget* parent = nullptr );
 	~OverlaySettingsWidget() override;
-
-	void setSettingsNamespace( const QString& settingsNamespace ) { m_settings_namespace = settingsNamespace; }
-
-	QString settingsNamespace() const { return m_settings_namespace; }
-
-	void setSettingsKey( const QString& settingsKey ) { m_settings_key = settingsKey; }
-
-	QString settingsKey() const { return m_settings_key; }
 
 	void setUserVisibleName( const QString& uservisibleName );
 
@@ -81,13 +70,13 @@ class OverlaySettingsWidget : public QWidget
 
 	bool isDefaultColor() const;
 
-	void setForegroundColor( const QString& fgColor );
+	void setForegroundColor( const QColor& fgColor );
 
-	QString foregroundColor() const;
+	QColor foregroundColor() const;
 
-	void setBackgroundColor( const QString& bgColor );
+	void setBackgroundColor( const QColor& bgColor );
 
-	QString backgroundColor() const;
+	QColor backgroundColor() const;
 
 	void setLink( int link );
 

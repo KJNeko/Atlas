@@ -1,16 +1,18 @@
 //
-// Created by kj16609 on 2/10/24.
+// Created by kj16609 on 2/18/24.
 //
 
 #pragma once
-
+#include <QCheckBox>
+#include <QDesignerCustomWidgetCollectionInterface>
 #include <QDesignerCustomWidgetInterface>
 #include <QWidget>
 #include <QtUiPlugin/QDesignerExportWidget>
 
-#include "OverlaySettingsWidget.hpp"
+#include "SettingsToggle.hpp"
+#include "designer/defines.hpp"
 
-class OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWidgetInterface
+class SettingsToggleInterface : public QWidget, public QDesignerCustomWidgetInterface
 {
 	Q_OBJECT
 	//Q_PLUGIN_METADATA( IID "org.qt-project.Qt.QDesignerCustomWidgetInterface" )
@@ -20,23 +22,23 @@ class OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWid
 
   public:
 
-	explicit OverlaySettingsWidgetInterface( QWidget* parent = nullptr ) : QWidget( parent ) {}
+	explicit SettingsToggleInterface( QWidget* parent = nullptr ) : QWidget( parent ) {}
 
-	QString name() const override { return "OverlaySettingsWidget"; }
+	QString name() const override { return "SettingsToggle"; }
 
 	QString group() const override { return "Atlas Widgets"; }
 
-	QString toolTip() const override { return "Widget for setting overlay settings"; }
+	QString toolTip() const override { return "Widget for setting toggle settings"; }
 
-	QString whatsThis() const override { return "Widget for setting overlay settings"; }
+	QString whatsThis() const override { return "Widget for setting toggle settings"; }
 
-	QString includeFile() const override { return "designer/OverlaySettingsWidget.hpp"; }
+	QString includeFile() const override { return "designer/primitives/toggle/SettingsToggle.hpp"; }
 
 	QIcon icon() const override { return QIcon(); }
 
 	bool isContainer() const override { return false; }
 
-	QWidget* createWidget( QWidget* parent ) override { return new OverlaySettingsWidget( parent ); }
+	QWidget* createWidget( QWidget* parent ) override { return new SettingsToggle( parent ); }
 
 	void initialize( [[maybe_unused]] QDesignerFormEditorInterface* core ) override
 	{
@@ -51,11 +53,12 @@ class OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWid
 	bool isInitialized() const override { return initalized; }
 
 	//xml
+
 	QString domXml() const override
 	{
 		return R"(
 			<ui language="c++">
-				<widget class="OverlaySettingsWidget">
+				<widget class="SettingsToggle">
 					<property name="geometry">
 						<rect>
 							<x>0</x>
@@ -67,9 +70,9 @@ class OverlaySettingsWidgetInterface : public QWidget, public QDesignerCustomWid
 				</widget>
 				<customwidgets>
 					<customwidget>
-						<class>OverlaySettingsWidget</class>
+						<class>SettingsToggle</class>
 						<extends>QWidget</extends>
-						<header>designer/OverlaySettingsWidget.hpp</header>
+						<header>designer/primitives/SettingsToggle.hpp</header>
 					</customwidget>
 				</customwidgets>
 			</ui>

@@ -78,22 +78,22 @@ bool OverlaySettingsWidget::isDefaultColor() const
 	return ui->cbColorDefault->isChecked();
 }
 
-void OverlaySettingsWidget::setForegroundColor( const QString& fgColor )
+void OverlaySettingsWidget::setForegroundColor( const QColor& fgColor )
 {
 	m_fg_color = fgColor;
 }
 
-QString OverlaySettingsWidget::foregroundColor() const
+QColor OverlaySettingsWidget::foregroundColor() const
 {
 	return m_fg_color;
 }
 
-void OverlaySettingsWidget::setBackgroundColor( const QString& bgColor )
+void OverlaySettingsWidget::setBackgroundColor( const QColor& bgColor )
 {
 	m_bg_color = bgColor;
 }
 
-QString OverlaySettingsWidget::backgroundColor() const
+QColor OverlaySettingsWidget::backgroundColor() const
 {
 	return m_bg_color;
 }
