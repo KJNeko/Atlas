@@ -11,4 +11,4 @@
 
 ATLAS_SETTINGS_WRAPPER( SettingsToggle, QCheckBox );
 
-ATLAS_SETTINGS_INTERFACE( SettingsToggle, SettingsToggleInterface );
+ATLAS_SETTINGS_INTERFACE( SettingsToggle, SettingsToggleInterface, QCheckBox );

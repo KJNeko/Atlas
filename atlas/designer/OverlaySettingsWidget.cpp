@@ -107,3 +107,9 @@ int OverlaySettingsWidget::link() const
 {
 	return ui->cbLink->currentIndex();
 }
+
+void OverlaySettingsWidget::saveSettings( QSettings& settings )
+{}
+
+void OverlaySettingsWidget::loadSettings( QSettings& settings )
+{}

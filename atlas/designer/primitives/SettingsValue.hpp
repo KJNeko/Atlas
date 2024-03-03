@@ -11,4 +11,4 @@
 
 ATLAS_SETTINGS_WRAPPER( SettingsValue, QSpinBox );
 
-ATLAS_SETTINGS_INTERFACE( SettingsValue, SettingsValueInterface );
+ATLAS_SETTINGS_INTERFACE( SettingsValue, SettingsValueInterface, QSpinBox );

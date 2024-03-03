@@ -38,6 +38,8 @@ void clear_lock()
 
 int main( int argc, char** argv )
 {
+	atlas::config::init();
+
 	//Set format for any logging done before the sinks are ready.
 	atlas::logging::setFormat();
 

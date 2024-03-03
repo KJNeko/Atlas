@@ -498,6 +498,14 @@ SETTINGS_D( experimental, loading_preview, bool, false )
 SETTINGS_D( experimental, loading_preview_blur, int, 90 )
 SETTINGS_D( experimental, use_blurhash, bool, false )
 
+namespace atlas::config
+{
+	using namespace ::config;
+
+	void init();
+	QSettings getConfigObject();
+} // namespace atlas::config
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif

@@ -1153,66 +1153,19 @@ std::pair< QString, QString > splitSettingName( QString str )
 	return { namespace_name, setting_name };
 }
 
-void SettingsDialog::populateSettings( std::vector< QWidget* > widgets )
-{
-	//All widgets passed into this function must follow the format of `settings_namespacename_settingsname` naming
-
-	for ( QWidget* widget : widgets )
-	{
-		auto [ namespace_name, setting_name ] = splitSettingName( widget->objectName() );
-
-		atlas::logging::debug( "Filling settings for object: {}", widget->objectName() );
-
-		if ( auto* ptr = qobject_cast< QCheckBox* >( widget ) )
-		{
-			auto ret { config::get< bool >( namespace_name, setting_name ) };
-			if ( ret.has_value() ) ptr->setChecked( ret.value() );
-			continue;
-		}
-
-		if ( auto* ptr = qobject_cast< QSpinBox* >( widget ) )
-		{
-			auto ret { config::get< int >( namespace_name, setting_name ) };
-			if ( ret.has_value() ) ptr->setValue( ret.value() );
-			continue;
-		}
-
-		if ( auto* ptr = qobject_cast< QLabel* >( widget ) )
-		{
-			auto ret { config::get< QString >( namespace_name, setting_name ) };
-			if ( ret.has_value() ) ptr->setText( ret.value() );
-			continue;
-		}
-
-		if ( auto* ptr = qobject_cast< QComboBox* >( widget ) )
-		{
-			auto ret { config::get< int >( namespace_name, setting_name ) };
-			if ( ret.has_value() ) ptr->setCurrentIndex( ret.value() );
-			continue;
-		}
-
-		if ( auto* ptr = qobject_cast< QLineEdit* >( widget ) )
-		{
-			auto ret { config::get< QString >( namespace_name, setting_name ) };
-			if ( ret.has_value() ) ptr->setText( ret.value() );
-			continue;
-		}
-
-		throw AtlasException( "Invalid widget type. Type: " + std::string( widget->metaObject()->className() ) );
-	}
-}
-
 void SettingsDialog::loadSettings()
 {
 	std::vector< QWidget* > widgets;
 
+	auto config_loader { atlas::config::getConfigObject() };
+
 	for ( QWidget* child : ui->stackedWidget->findChildren< QWidget* >() )
 	{
-		if ( child->objectName().startsWith( "settings_", Qt::CaseInsensitive ) )
+		if ( child->inherits( "AtlasSettingsInterfaceC" ) )
 		{
-			widgets.push_back( child );
+			//Have them load the settings
+			AtlasSettingsInterfaceC* interface { dynamic_cast< AtlasSettingsInterfaceC* >( child ) };
+			interface->loadSettings( config_loader );
 		}
 	}
-
-	populateSettings( widgets );
 }

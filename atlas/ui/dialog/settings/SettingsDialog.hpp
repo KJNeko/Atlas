@@ -42,8 +42,6 @@ class SettingsDialog final : public QDialog
 	QAbstractItemModel* gridPreviewModel { nullptr };
 	RecordBannerDelegate* gridPreviewDelegate { nullptr };
 
-	void populateSettings( std::vector< QWidget* > widgets );
-
   private slots:
 	void on_btnGeneral_pressed();
 	void on_btnInterface_pressed();

@@ -24,7 +24,7 @@
 	{                                                                                                                  \
 		m_settings_namespace = settingsNamespace;                                                                      \
 	}                                                                                                                  \
-	QString settingsNamespace() const                                                                                  \
+	QString settingsNamespace() const override                                                                         \
 	{                                                                                                                  \
 		return m_settings_namespace;                                                                                   \
 	}                                                                                                                  \
@@ -32,11 +32,11 @@
 	{                                                                                                                  \
 		m_settings_key = settingsKey;                                                                                  \
 	}                                                                                                                  \
-	QString settingsKey() const                                                                                        \
+	QString settingsKey() const override                                                                               \
 	{                                                                                                                  \
 		return m_settings_key;                                                                                         \
 	}                                                                                                                  \
-	QString fullSettingsKey() const                                                                                    \
+	QString fullSettingsKey() const override                                                                           \
 	{                                                                                                                  \
 		return m_settings_namespace + "/" + m_settings_key;                                                            \
 	}
@@ -53,9 +53,18 @@
                                                                                                                        \
 		ATLAS_PROPERTY_SETTINGS                                                                                        \
                                                                                                                        \
+		void saveSettings( QSettings& settings ) override;                                                             \
+		void loadSettings( QSettings& settings ) override;                                                             \
+                                                                                                                       \
 	  public slots:                                                                                                    \
-		void saveSettings( QSettings& settings );                                                                      \
-		void loadSettings( QSettings& settings );                                                                      \
+		void saveSettingsSlot( QSettings& settings )                                                                   \
+		{                                                                                                              \
+			saveSettings( settings );                                                                                  \
+		}                                                                                                              \
+		void loadSettingsSlot( QSettings& settings )                                                                   \
+		{                                                                                                              \
+			loadSettings( settings );                                                                                  \
+		}                                                                                                              \
 	}
 
 #define XML_BEGIN( name ) "<" #name ">"
@@ -83,7 +92,7 @@
 #define XML_END_CUSTOM_WIDGET XML_END( customwidget )
 #define XML_END_CUSTOM_WIDGETS XML_END( customwidgets )
 
-#define XML_WIDGET( class_name )                                                                                       \
+#define XML_WIDGET( class_name, ExpandedType )                                                                         \
 	XML_CPP_LANGUAGE                                                                                                   \
 	XML_WIDGET_CLASS( class_name )                                                                                     \
 	XML_PROPERTY_GEOMETRY                                                                                              \
@@ -98,13 +107,13 @@
 	XML_CUSTOM_WIDGETS                                                                                                 \
 	XML_CUSTOM_WIDGET                                                                                                  \
 	XML_CLASS( class_name )                                                                                            \
-	XML_EXTENDS( QWidget )                                                                                             \
+	XML_EXTENDS( ExpandedType )                                                                                        \
 	XML_HEADER( "designer/primitives/" #class_name ".hpp" )                                                            \
 	XML_END_CUSTOM_WIDGET                                                                                              \
 	XML_END_CUSTOM_WIDGETS                                                                                             \
 	XML_END( ui )
 
-#define ATLAS_SETTINGS_INTERFACE( Name, InterfaceName )                                                                \
+#define ATLAS_SETTINGS_INTERFACE( Name, InterfaceName, ExpandedType )                                                  \
 	class InterfaceName : public QWidget, public QDesignerCustomWidgetInterface                                        \
 	{                                                                                                                  \
 		Q_OBJECT                                                                                                       \
@@ -174,6 +183,6 @@
                                                                                                                        \
 		QString domXml() const override                                                                                \
 		{                                                                                                              \
-			return XML_WIDGET( Name );                                                                                 \
+			return XML_WIDGET( Name, ExpandedType );                                                                   \
 		}                                                                                                              \
 	}

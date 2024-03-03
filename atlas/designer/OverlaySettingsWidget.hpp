@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+#include "AtlasSettingsInterface.hpp"
 #include "designer/defines.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +21,7 @@ namespace Ui
 
 QT_END_NAMESPACE
 
-class OverlaySettingsWidget : public QWidget
+class OverlaySettingsWidget : public QWidget, public AtlasSettingsInterfaceC
 {
 	Q_OBJECT
 
@@ -45,6 +46,9 @@ class OverlaySettingsWidget : public QWidget
 
 	explicit OverlaySettingsWidget( QWidget* parent = nullptr );
 	~OverlaySettingsWidget() override;
+
+	void saveSettings( QSettings& settings ) override;
+	void loadSettings( QSettings& settings ) override;
 
 	void setUserVisibleName( const QString& uservisibleName );
 

@@ -5,3 +5,9 @@
 #include "SettingsToggle.hpp"
 
 #include "moc_SettingsToggle.cpp"
+
+void SettingsToggle::loadSettings( QSettings& settings )
+{}
+
+void SettingsToggle::saveSettings( QSettings& settings )
+{}
