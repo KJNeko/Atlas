@@ -4,8 +4,9 @@ file(GLOB_RECURSE SOURCES "*.cpp")
 
 qt_add_plugin(AtlasDesigner)
 target_sources(AtlasDesigner PRIVATE ${SOURCES})
+set_property(TARGET AtlasDesigner PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-target_link_libraries(AtlasDesigner PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui Qt6::UiPlugin)
+target_link_libraries(AtlasDesigner PRIVATE Qt6::Core Qt6::Core Qt6::Gui Qt6::UiPlugin)
 
 set_target_properties(AtlasDesigner PROPERTIES AUTOMOC ON)
 set_target_properties(AtlasDesigner PROPERTIES AUTOUIC ON)

@@ -4,17 +4,21 @@
 
 #pragma once
 
-#include "OverlaySettingsWidgetInterface.hpp"
-#include "primitives/toggle/SettingsToggleInterface.hpp"
+#include <QtUiPlugin/QDesignerExportWidget>
 
-class AtlasWidgetsCollection : public QObject, public QDesignerCustomWidgetCollectionInterface
+#include "OverlaySettingsWidgetInterface.hpp"
+#include "designer/primitives/SettingsToggle.hpp"
+#include "designer/primitives/SettingsValue.hpp"
+
+class QDESIGNER_WIDGET_EXPORT AtlasWidgetsCollection : public QObject, public QDesignerCustomWidgetCollectionInterface
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA( IID "org.qt-project.Qt.QDesignerCustomWidgetCollectionInterface" )
 	Q_INTERFACES( QDesignerCustomWidgetCollectionInterface )
 
 	QList< QDesignerCustomWidgetInterface* > widgets { new OverlaySettingsWidgetInterface(),
-		                                               new SettingsToggleInterface() };
+		                                               new SettingsToggleInterface(),
+		                                               new SettingsValueInterface() };
 
   public:
 

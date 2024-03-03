@@ -2325,59 +2325,7 @@ padding:10x;</string>
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <item row="0" column="6">
-                 <widget class="QPushButton" name="pb_top_overlay_bcolor">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Background Color</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <spacer name="horizontalSpacer_50">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="4">
-                 <widget class="QSpinBox" name="settings_ui_top_overlay_height">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximum">
-                   <number>999</number>
-                  </property>
-                  <property name="value">
-                   <number>0</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="label_24">
-                  <property name="text">
-                   <string>Height:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="5">
+                <item row="1" column="5">
                  <spacer name="horizontalSpacer_67">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -2393,7 +2341,43 @@ padding:10x;</string>
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="3">
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_24">
+                  <property name="text">
+                   <string>Height:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QSpinBox" name="settings_ui_top_overlay_height">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>999</number>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="6">
+                 <widget class="QPushButton" name="pb_top_overlay_bcolor">
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Background Color</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
                  <spacer name="horizontalSpacer_65">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -2409,14 +2393,7 @@ padding:10x;</string>
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QCheckBox" name="settings_ui_enable_top_overlay">
-                  <property name="text">
-                   <string>Overlay Top</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="7">
+                <item row="1" column="7">
                  <spacer name="horizontalSpacer_26">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -2431,6 +2408,44 @@ padding:10x;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item row="1" column="1">
+                 <spacer name="horizontalSpacer_50">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Expanding</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="0">
+                 <widget class="SettingsToggle" name="cbEnableTopOverlay">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="text">
+                   <string>Overlay Top</string>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>enable_top_overlay</string>
+                  </property>
+                  <property name="m_default_enabled" stdset="0">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>
@@ -3006,7 +3021,7 @@ padding:10x;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>710</width>
+               <width>775</width>
                <height>235</height>
               </rect>
              </property>
@@ -3677,6 +3692,11 @@ padding:10x;</string>
    <class>OverlaySettingsWidget</class>
    <extends>QWidget</extends>
    <header>designer/OverlaySettingsWidget.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>SettingsToggle</class>
+   <extends>QWidget</extends>
+   <header>designer/primitives/SettingsToggle.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>
