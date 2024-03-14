@@ -315,7 +315,6 @@ SETTINGS_D( ui, font_shadow, bool, true )
 SETTINGS_D( ui, bounding_box, int, 4 )
 SETTINGS_D( ui, corner_radius, int, 2 )
 
-/*
 //FOR BANNER
 //Overlay
 SETTINGS_D( ui, enable_top_overlay, bool, true )
@@ -425,7 +424,6 @@ SETTINGS_DSTR( ui, updateicon_bcolor, QString, "transparent" )
 SETTINGS_DSTR( ui, updateicon_fcolor, QString, "#d2d2d2" )
 SETTINGS_D( ui, updateicon_default, bool, true )
 SETTINGS_D( ui, updateicon_link, int, DISABLED )
-*/
 
 enum LOCATION : int
 {

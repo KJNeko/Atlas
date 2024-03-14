@@ -137,7 +137,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::testFirstBoot()
 {
-	if ( !config::general::first_boost::get() ) return;
+	if ( !config::general::first_boot::get() ) return;
 
 	config::general::first_boot::set( false );
 }

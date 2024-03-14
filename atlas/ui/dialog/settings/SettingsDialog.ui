@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1485</width>
-    <height>891</height>
+    <width>1666</width>
+    <height>989</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1587,7 +1587,20 @@ border-right:none;
                   </property>
                  </spacer>
                 </item>
-                <item row="1" column="2">
+                <item row="1" column="4">
+                 <spacer name="horizontalSpacer_45">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="3">
                  <widget class="QPushButton" name="pb_border_color">
                   <property name="enabled">
                    <bool>false</bool>
@@ -1603,25 +1616,18 @@ border-right:none;
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
-                 <widget class="QCheckBox" name="settings_ui_enable_banner_border">
+                <item row="1" column="2">
+                 <widget class="SettingsToggle" name="cbEnableCapsuleBorder">
                   <property name="text">
-                   <string> Capsule Border</string>
+                   <string>Capsule Border</string>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>enable_banner_border</string>
                   </property>
                  </widget>
-                </item>
-                <item row="1" column="3">
-                 <spacer name="horizontalSpacer_45">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1672,22 +1678,6 @@ border-right:none;
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_34">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>10</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
                 <item row="0" column="1">
                  <widget class="SettingsValue" name="spBannerSpacing">
                   <property name="maximum">
@@ -1701,22 +1691,6 @@ border-right:none;
                   </property>
                   <property name="m_settings_key" stdset="0">
                    <string>banner_spacing</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="4">
-                 <widget class="SettingsToggle" name="settingsToggle">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Center items</string>
-                  </property>
-                  <property name="m_settings_namespace" stdset="0">
-                   <string>ui</string>
-                  </property>
-                  <property name="m_settings_key" stdset="0">
-                   <string>centeritems</string>
                   </property>
                  </widget>
                 </item>
@@ -1739,6 +1713,38 @@ border-right:none;
                    <string>Spacing (Not Shown)</string>
                   </property>
                  </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="SettingsToggle" name="settingsToggle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Center items</string>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>centeritems</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_34">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1941,6 +1947,42 @@ border-right:none;
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="2">
+                 <widget class="SettingsValue" name="sbBlurStrength">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                  <property name="value">
+                   <number>2</number>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>blur_strength</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_21">
+                  <property name="text">
+                   <string>Blur Stregnth</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="7">
+                 <spacer name="horizontalSpacer_36">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item row="0" column="5">
                  <spacer name="horizontalSpacer_64">
                   <property name="orientation">
@@ -1958,18 +2000,18 @@ border-right:none;
                  </spacer>
                 </item>
                 <item row="0" column="6">
-                 <widget class="QSpinBox" name="settings_ui_feather_radius">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                 <widget class="SettingsValue" name="sbFeatherRadius">
                   <property name="maximum">
                    <number>100</number>
                   </property>
                   <property name="value">
                    <number>2</number>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>feather_radius</string>
                   </property>
                  </widget>
                 </item>
@@ -1989,29 +2031,6 @@ border-right:none;
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QSpinBox" name="settings_ui_blur_strength">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                  <property name="value">
-                   <number>2</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_21">
-                  <property name="text">
-                   <string>Blur Stregnth</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="0" column="1">
                  <spacer name="horizontalSpacer_63">
                   <property name="orientation">
@@ -2023,19 +2042,6 @@ border-right:none;
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>10</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="7">
-                 <spacer name="horizontalSpacer_36">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -2206,6 +2212,35 @@ padding:10x;</string>
                 <property name="spacing">
                  <number>0</number>
                 </property>
+                <item row="1" column="1">
+                 <spacer name="horizontalSpacer_51">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Expanding</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="6">
+                 <widget class="QPushButton" name="pb_bottom_overlay_bcolor">
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Background Color</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="1" column="5">
                  <spacer name="horizontalSpacer_66">
                   <property name="orientation">
@@ -2245,49 +2280,6 @@ padding:10x;</string>
                   </property>
                  </spacer>
                 </item>
-                <item row="1" column="2">
-                 <widget class="QLabel" name="label_27">
-                  <property name="text">
-                   <string>Height:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <spacer name="horizontalSpacer_51">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QCheckBox" name="settings_ui_enable_bottom_overlay">
-                  <property name="text">
-                   <string>Overlay Bottom</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="6">
-                 <widget class="QPushButton" name="pb_bottom_overlay_bcolor">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Background Color</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="7">
                  <spacer name="horizontalSpacer_52">
                   <property name="orientation">
@@ -2303,6 +2295,26 @@ padding:10x;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item row="1" column="0">
+                 <widget class="SettingsToggle" name="settingsToggle_2">
+                  <property name="text">
+                   <string>Overlay Bottom</string>
+                  </property>
+                  <property name="m_settings_namespace" stdset="0">
+                   <string>ui</string>
+                  </property>
+                  <property name="m_settings_key" stdset="0">
+                   <string>enable_bottom_overlay</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_27">
+                  <property name="text">
+                   <string>Height:</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>
@@ -3027,22 +3039,11 @@ padding:10x;</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>789</width>
-               <height>235</height>
+               <width>716</width>
+               <height>243</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <widget class="OverlaySettingsWidget" name="overlaySettingsWidget">
-                <property name="m_settings_namespace" stdset="0">
-                 <string>test</string>
-                </property>
-                <property name="m_settings_key" stdset="0">
-                 <string>two</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <layout class="QVBoxLayout" name="verticalLayout_3"/>
             </widget>
            </widget>
           </item>
@@ -3695,18 +3696,13 @@ padding:10x;</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>OverlaySettingsWidget</class>
-   <extends>QWidget</extends>
-   <header>designer/OverlaySettingsWidget.hpp</header>
-  </customwidget>
-  <customwidget>
    <class>SettingsToggle</class>
-   <extends>QWidget</extends>
+   <extends>QCheckBox</extends>
    <header>designer/primitives/SettingsToggle.hpp</header>
   </customwidget>
   <customwidget>
    <class>SettingsValue</class>
-   <extends>QWidget</extends>
+   <extends>QSpinBox</extends>
    <header>designer/primitives/SettingsValue.hpp</header>
   </customwidget>
  </customwidgets>
