@@ -15,8 +15,22 @@ Binder::Binder( const std::string_view sql )
 	};
 
 	if ( unused != nullptr && strlen( unused ) > 0 )
-		throw DatabaseException( format_ns::
-		                             format( "Query had unused portions of the input. Unused: \"{}\"", unused ) );
+	{
+		//Check if the string is just empty (\n or \t)
+		const std::string_view leftovers { unused };
+		auto itter { leftovers.begin() };
+		while ( itter != leftovers.end() )
+		{
+			if ( *itter == '\n' || *itter == '\t' )
+			{
+				++itter;
+				continue;
+			}
+			else
+				throw DatabaseException(
+					format_ns::format( "Query had unused portions of the input. Unused: \"{}\"", unused ) );
+		}
+	}
 
 	if ( stmt == nullptr )
 		throw DatabaseException( format_ns::
