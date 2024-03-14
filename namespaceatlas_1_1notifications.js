@@ -6,7 +6,7 @@ var namespaceatlas_1_1notifications =
     [ "NotificationSignaler", "classatlas_1_1notifications_1_1NotificationSignaler.html", "classatlas_1_1notifications_1_1NotificationSignaler" ],
     [ "has_get_signaler", "conceptatlas_1_1notifications_1_1has__get__signaler.html", null ],
     [ "has_valid_signaler", "conceptatlas_1_1notifications_1_1has__valid__signaler.html", null ],
-    [ "Signaler", "namespaceatlas_1_1notifications.html#a2a776935d37a1615ced1ab47094ab587", null ],
+    [ "Signaler", "namespaceatlas_1_1notifications.html#ae8ee1744fc75e9ba88943d03bd6f9a9f", null ],
     [ "createMessage", "namespaceatlas_1_1notifications.html#a993edefe9901a63f9aa9fbb8ba7db994", null ],
     [ "createMessage", "namespaceatlas_1_1notifications.html#a8927fddfdf43f180604d12645ded17bb", null ],
     [ "createUserMessage", "namespaceatlas_1_1notifications.html#ae14c665f0ef3c5ebf1d847e6e23e5251", null ],

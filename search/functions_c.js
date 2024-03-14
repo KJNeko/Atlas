@@ -5,10 +5,11 @@ var searchData=
   ['networkmanager_2',['NetworkManager',['../classatlas_1_1network_1_1NetworkManager.html#a1f05b4cfdfdb91436342590c6f95e2ee',1,'atlas::network::NetworkManager']]],
   ['node_3',['Node',['../structNode.html#acf7f52c7f211daaf50f9555d63999c9d',1,'Node']]],
   ['noexecutablesfound_4',['NoExecutablesFound',['../structatlas_1_1exceptions_1_1NoExecutablesFound.html#a0b137a54f34440743236ed96b9cedfe2',1,'atlas::exceptions::NoExecutablesFound']]],
-  ['notification_5',['notification',['../classNotification.html#a392e85474c2fda67f20bd477703d110a',1,'Notification::Notification()'],['../classconfig_1_1ConfigNotification.html#a5b6842822c71a86426ab15e0f20e7260',1,'config::ConfigNotification::notification()'],['../classatlas_1_1import_1_1ImportNotifier.html#a6378d5122dd4ae81adce30b6c46a672e',1,'atlas::import::ImportNotifier::notification()']]],
-  ['notificationmanagerui_6',['NotificationManagerUI',['../classNotificationManagerUI.html#a9d14c1684bccfff2a4bb3e556ab9ca20',1,'NotificationManagerUI']]],
-  ['notifications_7',['notifications',['../classNotificationManagerUI.html#a5d623cd41dab2a497c2cbe364de2b6e1',1,'NotificationManagerUI']]],
-  ['notificationsignaler_8',['NotificationSignaler',['../classatlas_1_1notifications_1_1NotificationSignaler.html#a5b4a77da61d791a3d0d84fdb1697d451',1,'atlas::notifications::NotificationSignaler']]],
-  ['notify_9',['notify',['../classconfig_1_1ConfigNotification.html#ae0502ce6346d0ead009388be9a3fc725',1,'config::ConfigNotification::notify()'],['../classatlas_1_1import_1_1ImportNotifier.html#a7e8dfff3a1b4bf4643e04796f3a9c54f',1,'atlas::import::ImportNotifier::notify()'],['../namespaceconfig.html#a651559374e81ce101f1bf6927e9e0b69',1,'config::notify()']]],
-  ['notifyimportcomplete_10',['notifyImportComplete',['../namespaceatlas_1_1import.html#a32be4f6ca0a8566233a23c773f37220a',1,'atlas::import']]]
+  ['notification_5',['Notification',['../classNotification.html#a392e85474c2fda67f20bd477703d110a',1,'Notification']]],
+  ['notification_6',['notification',['../classconfig_1_1ConfigNotification.html#a5b6842822c71a86426ab15e0f20e7260',1,'config::ConfigNotification::notification()'],['../classatlas_1_1import_1_1ImportNotifier.html#a6378d5122dd4ae81adce30b6c46a672e',1,'atlas::import::ImportNotifier::notification()']]],
+  ['notificationmanagerui_7',['NotificationManagerUI',['../classNotificationManagerUI.html#a9d14c1684bccfff2a4bb3e556ab9ca20',1,'NotificationManagerUI']]],
+  ['notifications_8',['notifications',['../classNotificationManagerUI.html#a5d623cd41dab2a497c2cbe364de2b6e1',1,'NotificationManagerUI']]],
+  ['notificationsignaler_9',['NotificationSignaler',['../classatlas_1_1notifications_1_1NotificationSignaler.html#a5b4a77da61d791a3d0d84fdb1697d451',1,'atlas::notifications::NotificationSignaler']]],
+  ['notify_10',['notify',['../classconfig_1_1ConfigNotification.html#ae0502ce6346d0ead009388be9a3fc725',1,'config::ConfigNotification::notify()'],['../classatlas_1_1import_1_1ImportNotifier.html#a7e8dfff3a1b4bf4643e04796f3a9c54f',1,'atlas::import::ImportNotifier::notify()'],['../namespaceconfig.html#a651559374e81ce101f1bf6927e9e0b69',1,'config::notify()']]],
+  ['notifyimportcomplete_11',['notifyImportComplete',['../namespaceatlas_1_1import.html#a32be4f6ca0a8566233a23c773f37220a',1,'atlas::import']]]
 ];

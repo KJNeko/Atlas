@@ -34,7 +34,7 @@ var searchData=
   ['modelreordered_31',['modelReordered',['../classImageView.html#aeac9e85066921d2afd8a341093bfe7cd',1,'ImageView']]],
   ['mousedoubleclickevent_32',['mouseDoubleClickEvent',['../classRecordListView.html#a080b9895a67bbad2859c73c36bde45d1',1,'RecordListView']]],
   ['mousepressevent_33',['mousePressEvent',['../classNotification.html#ab5a69c8d73bdfb25be95f38df5276563',1,'Notification']]],
-  ['moveevent_34',['moveevent',['../classNotificationManagerUI.html#ae2396f47229dd3d2fe27cdeb871feda6',1,'NotificationManagerUI::moveEvent()'],['../classMainWindow.html#a1eb64c97dd4b744e0bbfbc0d5285e7ac',1,'MainWindow::moveEvent(QMoveEvent *event) override']]],
+  ['moveevent_34',['moveEvent',['../classMainWindow.html#a1eb64c97dd4b744e0bbfbc0d5285e7ac',1,'MainWindow::moveEvent()'],['../classNotificationManagerUI.html#ae2396f47229dd3d2fe27cdeb871feda6',1,'NotificationManagerUI::moveEvent()']]],
   ['movepopup_35',['movePopup',['../classMainWindow.html#a04675d194f323070ddc176249c74b4dc',1,'MainWindow']]],
   ['moverows_36',['moveRows',['../classFilepathModel.html#acc3287f13e1646cd5a4a653a469db915',1,'FilepathModel']]]
 ];

@@ -2,7 +2,7 @@ var searchData=
 [
   ['f95data_0',['F95Data',['../structatlas_1_1remote_1_1internal_1_1F95Data.html',1,'atlas::remote::internal']]],
   ['f95remotedata_1',['F95RemoteData',['../classatlas_1_1remote_1_1F95RemoteData.html',1,'atlas::remote']]],
-  ['fileinfo_2',['fileinfo',['../structatlas_1_1utils_1_1FileInfo.html',1,'atlas::utils::FileInfo'],['../structFileInfo.html',1,'FileInfo']]],
+  ['fileinfo_2',['FileInfo',['../structatlas_1_1utils_1_1FileInfo.html',1,'atlas::utils::FileInfo'],['../structFileInfo.html',1,'FileInfo']]],
   ['filepathmodel_3',['FilepathModel',['../classFilepathModel.html',1,'']]],
   ['filescanner_4',['FileScanner',['../classatlas_1_1utils_1_1FileScanner.html',1,'atlas::utils']]],
   ['filescannergenerator_5',['FileScannerGenerator',['../structatlas_1_1utils_1_1FileScannerGenerator.html',1,'atlas::utils']]],

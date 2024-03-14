@@ -33,7 +33,7 @@ var namespaceatlas_1_1database =
       [ "update_query", "namespaceatlas_1_1database_1_1utility.html#a61121dd7f3c71ab372e0964f2c65b538", null ]
     ] ],
     [ "TransactionBase", "structatlas_1_1database_1_1TransactionBase.html", "structatlas_1_1database_1_1TransactionBase" ],
-    [ "RapidTransaction", "namespaceatlas_1_1database.html#acd379ae3effa0fc889bbbb0a9438521d", null ],
+    [ "RapidTransaction", "namespaceatlas_1_1database.html#a3cad2aeba5db25b5d0c7e72fd0cd6764", null ],
     [ "getLock", "namespaceatlas_1_1database.html#ab12079ff47c661df525a4b1bd92a3522", null ],
     [ "last_locked", "namespaceatlas_1_1database.html#a2c94605338a2d106730d047e6b41fe84", null ],
     [ "trans_lock", "namespaceatlas_1_1database.html#ab4a5b5b4f104adc7e08d02c14a417ceb", null ]

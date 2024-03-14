@@ -11,7 +11,7 @@ var searchData=
   ['self_5fmtx_8',['self_mtx',['../structatlas_1_1database_1_1TransactionBase.html#af1d17adee626ae4f8cd9a54d94a4b193',1,'atlas::database::TransactionBase']]],
   ['short_5fname_9',['short_name',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a5a63a42eb9da79c59689e353cf922f52',1,'atlas::remote::internal::AtlasData']]],
   ['site_5furl_10',['site_url',['../structatlas_1_1remote_1_1internal_1_1F95Data.html#a7dc35417f74557a077958d1ca13ccc0e',1,'atlas::remote::internal::F95Data']]],
-  ['size_11',['size',['../structatlas_1_1utils_1_1FileInfo.html#afe559ee1834eced8d2ecab79582c2a53',1,'atlas::utils::FileInfo::size'],['../structGameImportData.html#a5d5a3cb597a95a6a54247bc36d936b51',1,'GameImportData::size']]],
+  ['size_11',['size',['../structGameImportData.html#a5d5a3cb597a95a6a54247bc36d936b51',1,'GameImportData::size'],['../structatlas_1_1utils_1_1FileInfo.html#afe559ee1834eced8d2ecab79582c2a53',1,'atlas::utils::FileInfo::size']]],
   ['sloc_12',['sloc',['../structatlas_1_1exceptions_1_1AtlasException.html#ad529257c166f4758d54c819cefb80c12',1,'atlas::exceptions::AtlasException']]],
   ['status_13',['status',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#abf337b8d3ed5c73d3ff1c959e6cd79f2',1,'atlas::remote::internal::AtlasData']]],
   ['stmt_14',['stmt',['../classBinder.html#a123262bc2289ecc95f5940bafc735d81',1,'Binder']]],

@@ -77,7 +77,7 @@ var NAVTREEINDEX =
 "classatlas_1_1records_1_1Game.html#a560e30d8373cd8ddb02b0f7d37918902",
 "dir_48b60028f9adc20050148e548c7fb266.html",
 "globals_e.html",
-"namespaceatlas_1_1notifications.html#a993edefe9901a63f9aa9fbb8ba7db994",
+"namespaceatlas_1_1notifications.html#ae14c665f0ef3c5ebf1d847e6e23e5251",
 "structImageSaveError.html",
 "structatlas_1_1records_1_1GameData.html#a0779bfca41588c4558c7bc61ad2ec27c",
 "structatlas_1_1utils_1_1FileScannerGenerator_1_1promise__type.html#a27295879b8419e227d5a486ecebf9ca3"
