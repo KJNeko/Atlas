@@ -70,7 +70,7 @@ namespace atlas::records
 		if ( isInPlace() )
 			return { path.toStdWString() };
 		else
-			return config::paths::games::getPath() / path;
+			return config::paths::games::get() / path;
 	}
 
 	std::filesystem::path Version::getRelativeExecPath() const

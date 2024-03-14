@@ -109,6 +109,11 @@ namespace atlas::exceptions
 		SettingsException( const char* const msg, const std::source_location loc = std::source_location::current() ) :
 		  AtlasException( msg, loc )
 		{}
+
+		SettingsException(
+			const std::string_view msg, const std::source_location loc = std::source_location::current() ) :
+		  AtlasException( msg.data(), loc )
+		{}
 	};
 
 } // namespace atlas::exceptions

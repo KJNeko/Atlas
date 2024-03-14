@@ -38,6 +38,8 @@ class MainWindow final : public QMainWindow
 	std::unique_ptr< Console > console { std::make_unique< Console >() };
 	~MainWindow();
 
+	void testFirstBoot();
+
   private:
 
 	Ui::MainWindow* ui;

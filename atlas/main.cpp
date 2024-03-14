@@ -128,12 +128,12 @@ int main( int argc, char** argv )
 
 	if ( !config::app::use_system_theme::get() )
 	{
-		QFile style_sheet_file { config::paths::theme::get() };
+		QFile style_sheet_file { config::paths::theme::getPath() };
 
 		if ( !style_sheet_file.exists() && !config::app::use_system_theme::get() )
 		{
 			config::paths::theme::setDefault();
-			QFile default_sheet { config::paths::theme::get() };
+			QFile default_sheet { config::paths::theme::getPath() };
 			default_sheet.open( QFile::ReadOnly );
 
 			app.setStyleSheet( default_sheet.readAll() );
@@ -159,6 +159,9 @@ int main( int argc, char** argv )
 	MainWindow window;
 	window.show();
 	splash.finish( &window );
+
+	window.testFirstBoot();
+
 	const int code { app.exec() };
 	Database::deinit();
 	clear_lock();

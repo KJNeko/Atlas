@@ -29,13 +29,14 @@ namespace atlas::images
 		//Grab all images from the database
 		RapidTransaction transaction {};
 
-		for ( const auto& path : std::filesystem::directory_iterator( config::paths::images::getPath() ) )
+		for ( const auto& path : std::filesystem::directory_iterator( config::paths::images::get() ) )
 		{
 			if ( !path.is_regular_file() ) continue;
 
 			bool found { false };
 			transaction << "SELECT count(*) FROM images WHERE path = ?"
-						<< std::filesystem::relative( path, config::paths::images::getPath() ).u8string()
+						<< std::filesystem::relative( path, std::filesystem::path( config::paths::images::get() ) )
+							   .u8string()
 				>> [ & ]( [[maybe_unused]] int count ) noexcept { found = true; };
 
 			if ( !found ) std::filesystem::remove( path );

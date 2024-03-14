@@ -78,11 +78,18 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	emit triggerSearch( "" ); //, SortOrder::Name, true );
 
-	//Init remote system
-	atlas::initRemoteHandler();
-
 	atlas::notifications::createUserMessage( QString( "Welcome to atlas! Version: %1" )
 	                                             .arg( utils::version_string_qt() ) );
+
+	if ( config::remote::allow_checks::get() )
+	{
+		//Init remote system
+		atlas::initRemoteHandler();
+	}
+	else
+	{
+		atlas::notifications::createUserMessage( "Remote info disabled" );
+	}
 
 	//Make sure mouse tracking is enabled for view
 	ui->recordView->setMouseTracking( true );
@@ -105,6 +112,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 		&atlas::import::ImportNotifier::notification,
 		this,
 		&MainWindow::setBottomGameCounter );
+
 	connect(
 		&atlas::import::internal::getNotifier(),
 		&atlas::import::ImportNotifier::notification,
@@ -127,6 +135,13 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::testFirstBoot()
+{
+	if ( !config::general::first_boost::get() ) return;
+
+	config::general::first_boot::set( false );
+}
+
 void MainWindow::closeEvent( QCloseEvent* event )
 {
 	config::geometry::main_window::set( saveGeometry() );
@@ -136,8 +151,10 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
 void MainWindow::readSettings()
 {
-	restoreGeometry( config::geometry::main_window::get() );
-	restoreState( config::state::main_window::get() );
+	if ( auto opt = config::geometry::main_window::getOptValue() )
+	{
+		restoreGeometry( opt.value() );
+	}
 }
 
 void MainWindow::on_actionSimpleImporter_triggered()

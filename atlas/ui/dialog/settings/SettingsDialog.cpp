@@ -268,7 +268,7 @@ void SettingsDialog::reloadTheme()
 	}
 	else
 	{
-		QFile file { config::paths::theme::get() };
+		QFile file { config::paths::theme::getPath() };
 
 		if ( !file.exists() )
 		{

@@ -38,7 +38,7 @@ namespace atlas::records
 		if ( !std::filesystem::exists( path ) )
 			throw RecordException( format_ns::format( "Invalid path {} given to addPreview.", path ).c_str() );
 
-		if ( !path.string().starts_with( config::paths::images::getPath().string() ) )
+		if ( !path.string().starts_with( config::paths::images::get() ) )
 		{
 			try
 			{

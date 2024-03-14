@@ -29,7 +29,7 @@ namespace atlas::records
 			return;
 		}
 
-		if ( std::filesystem::relative( path, config::paths::images::getPath() ) == "" )
+		if ( std::filesystem::relative( path, config::paths::images::get() ) == "" )
 		{
 			path = images::async::importImage( path, m_id ).result();
 			if ( !std::filesystem::exists( path ) )
