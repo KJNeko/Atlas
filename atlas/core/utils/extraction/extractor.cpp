@@ -4,6 +4,8 @@
 
 #include "extractor.hpp"
 
+#include <moc_extractor.cpp>
+
 #include <bit7z/bitarchivereader.hpp>
 #include <bit7z/bitfileextractor.hpp>
 
