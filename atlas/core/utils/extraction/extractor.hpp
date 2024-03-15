@@ -6,8 +6,6 @@
 #ifndef ATLAS_EXTRACTOR_HPP
 #define ATLAS_EXTRACTOR_HPP
 
-#include <filesystem>
-
 #include "core/import/GameImportData.hpp"
 #include "ui/notifications/ProgressNotification.hpp"
 

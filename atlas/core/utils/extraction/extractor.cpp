@@ -4,6 +4,8 @@
 
 #include "extractor.hpp"
 
+#include <moc_extractor.cpp>
+
 #include <bit7z/bitarchivereader.hpp>
 #include <bit7z/bitfileextractor.hpp>
 
@@ -22,7 +24,7 @@ namespace atlas::utils
 		{ // bit7z classes can throw BitException objects
 			using namespace bit7z;
 
-			Bit7zLibrary lib { "7z.dll" };
+			Bit7zLibrary lib {};
 			BitFileExtractor extractor { lib, BitFormat::Auto };
 			uint64_t data_size {};
 
