@@ -61,7 +61,7 @@ namespace atlas::utils
 
 			std::suspend_always final_suspend() noexcept { return {}; }
 
-			void unhandled_exception() { std::rethrow_exception( exception ); }
+			void unhandled_exception() { atlas::logging::critical( "Unhandled exception!" ); }
 
 			void return_value( FileInfo&& from )
 			{
@@ -69,6 +69,12 @@ namespace atlas::utils
 					throw AtlasException( "FileScannerGenerator: return value had no filename!" );
 
 				value = std::move( from );
+			}
+
+			void return_value( std::exception_ptr&& from )
+			{
+				exception = from;
+				atlas::logging::error( "Exception thrown in file scanner coroutine!" );
 			}
 
 			std::suspend_always yield_value( FileInfo from )
