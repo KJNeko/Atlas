@@ -24,6 +24,8 @@ if (UNIX)
 		# No. We don't need to do the fix
 		option(BIT7Z_USE_LEGACY_IUNKNOWN "Use legacy IUNKNOWN" OFF)
 	endif ()
+
+	option(BIT7Z_AUTO_FORMAT ON)
 endif ()
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/bit7z) # Path to the 11zip
