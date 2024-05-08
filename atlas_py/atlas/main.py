@@ -2,7 +2,8 @@ import sys
 #IMPORT QRC FILE
 import rc_resources
 from ui import mainwindow
-from core.logging.logger import *
+from core.logger import *
+from core.settings import *
 
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
@@ -20,7 +21,8 @@ except ImportError:
     pass
 
 
-def main():
+def main():    
+    logger.info("Booting into Atlas")
     app = QApplication(sys.argv)
     splashscreen = QPixmap(":/images/assets/Atlas_logo_v2.svg")
     pixmap = splashscreen.scaled(200,200, Qt.AspectRatioMode.KeepAspectRatio)
@@ -28,12 +30,16 @@ def main():
     splash.show()
     app.processEvents()
 
-    logger.info("Booting into Atlas")
+    logger.debug("Checking config file")
+    settings.load()
 
     window = mainwindow.MainWindow()
     window.show()
     splash.finish(window)
     sys.exit(app.exec())
+
+#def create_directories():
+#    os.mkdir(settings.config['PATHS'][''])
 
 main()
 

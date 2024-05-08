@@ -15,9 +15,13 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        #FOR FUTURE: HIDE FOR NOW
+        self.ui.NavTop.hide()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = MainWindow()
+    widget
     widget.show()
     sys.exit(app.exec())

@@ -1,0 +1,468 @@
+/*
+color1 - rgb(0, 0, 0): Background Color. This will be the darkest
+color2 - rgb(25, 25, 28): Default color for all Widgets
+color3 - rgb(30, 31, 34):
+color4 - rgb(35, 36, 40): 
+color5 - rgb(43, 45, 49): Tree Widget, Button Main
+color6 - rgb(49, 51, 56): ListView
+color7 - rgb(56, 58, 64): Selected item color
+color8 - rgb(64, 66, 73): Button Selected
+color9 - rgb(81, 83, 90): Button Border
+colorA - rgb(97, 99, 105):
+colorB - TBD
+colorC - rgb(210,210,210): Default text color
+colorD - rgb(255, 255, 255): Selected text color
+*/
+
+/* BASE WIDGETS !!DO NOT ADD QFRAME*/
+QWidget {
+    background-color: rgb(25, 25, 28);
+    border: none;
+    color: rgb(210, 210, 210);
+}
+
+QStackedWidget,
+RecordListView,
+QStackedWidget>QWidget,
+QStackedWidget>QWidget>QWidget,
+QStackedWidget>QWidget>QFrame>QFrame,
+#bannerDetailFrame {
+    background-color: rgb(49, 51, 56);
+    border: none;
+}
+
+QStackedWidget>QWidget>QGroupBox>QFrame,
+QStackedWidget>QWidget>QFrame>QGroupBox>QFrame {
+    background-color: none;
+}
+
+/*QTreeView*/
+QTreeView,
+QListWidget,
+#SettingsMenu,
+#settingsButtons,
+#InfoPanel,
+#InfoPanel>QWidget,
+#InfoPanel>QWidget>QWidget,
+#previewList {
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    selection-color: white;
+    /* Used on Mac */
+    show-decoration-selected: 1;
+    border: none;
+}
+
+QTreeView::item {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+QTreeView::item:hover {
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
+}
+
+QTreeView::item:selected {
+    background-color: rgb(64, 66, 73);
+    /* Used on Windows */
+    color: rgb(64, 66, 73)
+}
+
+QHeaderView::section {
+    background-color: rgb(35, 36, 40);
+    background: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    border: 1px solid black;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+}
+
+/* MENU BAR*/
+QMenuBar,
+QStatusBar,
+QMenu {
+    background-color: rgb(25, 25, 28);
+    color: rgb(210, 210, 210);
+    border-style: outset;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+QMenuBar::item:selected,
+QMenu::item:selected {
+    background-color: rgb(54, 55, 61);
+    color: rgb(210, 210, 210);
+}
+
+QSizeGrip {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/sizegrip.svg);
+    width: 24;
+    height: 24;
+}
+
+/* Buttons */
+QPushButton,
+#settingsPaths>QPushButton {
+    background-color: rgb(35, 36, 40);
+    color: rgb(210, 210, 210);
+    border: 1px solid;
+    border-color: rgb(81, 83, 90);
+    width: 75px;
+    height: 24px;
+    border-radius: 5px;
+}
+
+QPushButton:disabled,
+#settingsPaths>QPushButton:disabled {
+    background-color: rgba(43, 45, 49, 50);
+    color: rgba(210, 210, 210, 50);
+    border: 1px solid rgba(210, 210, 210, 50);
+}
+
+QPushButton:hover,
+#settingsPaths>QPushButton:hover {
+    background-color: rgb(64, 66, 73);
+}
+
+QPushButton:hover:pressed,
+#settingsPaths>QPushButton:pressed {
+    background-color: rgb(64, 66, 73);
+}
+
+/*QComboBox*/
+QComboBox,
+QSpinBox {
+    background-color: rgb(81, 83, 90);
+    border: 1px solid rgba(64, 66, 73, 50);
+    color: rgb(210, 210, 210);
+    padding: 1px;
+    border-radius: 2px;
+}
+
+QComboBox::drop-down,
+QSpinBox::down-button,
+QSpinBox::up-button {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::down-arrow,
+QSpinBox::down-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropdownicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::up-arrow {
+    background-color: transparent;
+    border: none;
+    image: url(:/images/assets/dropupicon.svg);
+    width: 8;
+    height: 8;
+    padding-top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+QSpinBox::down-arrow:hover,
+QSpinBox::up-arrow:hover {
+    background-color: rgb(64, 66, 73);
+}
+
+QComboBox QAbstractItemView {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QComboBox::item {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox::item:selected {
+    background-color: rgb(81, 83, 90);
+}
+
+QComboBox:disabled {
+    color: rgba(210, 210, 210, 50);
+}
+
+QLabel,
+QCheckBox,
+#ThreadingWidget>QWidget {
+    border: none;
+    background-color: none;
+    color: rgb(210, 210, 210);
+}
+
+QCheckBox:disabled,
+QLabel:disabled,
+QComboBox:disabled,
+QLineEdit:disabled {
+    color: rgba(210, 210, 210, 50);
+}
+
+/*SCROLL VERTICLE*/
+QScrollBar:vertical {
+    border-style: none;
+    background-color: rgb(30, 31, 34);
+    width: 15px;
+}
+
+QScrollBar:horizontal {
+    border-style: none;
+    background-color: rgb(30, 31, 34);
+    height: 15px;
+}
+
+QScrollBar::sub-page:vertical,
+QScrollBar::sub-page:horizontal {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::add-page:horizontal {
+    background: rgb(30, 31, 34);
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgb(81, 83, 90);
+    min-height: 100px;
+    width: 5px;
+    max-width: 5px;
+    border-radius: 7px;
+    border: 7px solid;
+    border-color: transparent;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: rgb(81, 83, 90);
+    min-width: 100px;
+    height: 5px;
+    max-height: 5px;
+    border-radius: 7px;
+    border: 7px solid;
+    border-color: transparent;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::add-line:horizontal {
+    width: 0px;
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical,
+QScrollBar::sub-line:horizontal {
+    width: 0px;
+    height: 0px;
+}
+
+QTabBar::tab {
+    background-color: rgb(81, 83, 90);
+    color: rgb(210, 210, 210);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:selected:hover {
+    background-color: rgb(49, 51, 56);
+}
+
+QTabBar::tab:hover {
+    background-color: rgb(64, 66, 73)
+}
+
+QTabWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+QTabWidget::pane {
+    border: none
+}
+
+QTabWidget>QWidget {
+    background-color: rgb(81, 83, 90);
+    border: 0px solid black;
+}
+
+#gameText,
+#versionList,
+#processedTagsList,
+#userTagsList,
+#tagEdit {
+    color: rgb(210, 210, 210);
+    background-color: rgb(81, 83, 90);
+    border-radius: 5px;
+}
+
+QLineEdit,
+#settingsPaths>QLineEdit {
+    background-color: rgb(81, 83, 90);
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    color: rgb(95, 172, 255);
+}
+
+/*
+QCheckBox::indicator:checked {
+    background-color: #70ff88;
+    border-radius: 2px;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(210, 210, 210);
+    border-radius: 2px;
+}
+
+QCheckBox::indicator {
+    color: rgb(210, 210, 210);
+    background-color: rgb(210, 210, 210);
+}
+*/
+QStackedWidget>QWidget>QGroupBox,
+QStackedWidget>QWidget>QFrame>QGroupBox {
+    background-color: none;
+    border: 1px solid rgb(81, 83, 90);
+    border-radius: 10px;
+    margin-top: 2ex;
+}
+
+QStackedWidget>QWidget>QGroupBox>QLabel,
+QStackedWidget>QWidget>QFrame>QGroupBox>QLabel {
+    background-color: none;
+}
+
+QStackedWidget>QWidget>QGroupBox::title,
+QStackedWidget>QWidget>QFrame>QGroupBox::title {
+    subcontrol-origin: margin;
+    color: rgb(255, 255, 255);
+    left: 7px;
+    padding: 0px 5px 0px 5px;
+}
+
+QTableView::item:alternate {
+    background-color: rgb(64, 66, 73);
+}
+
+QTableCornerButton::section {
+    background-color: rgb(35, 36, 40);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
+}
+
+QProgressBar {
+    border-radius: 5px;
+    background-color: rgb(64, 66, 73);
+    color: rgb(210, 210, 210);
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(95, 172, 255);
+    border-radius: 5px;
+}
+
+/*UI SPECIFIC*/
+
+#NavFrame,
+#HomeFrame {
+    background-color: rgb(43, 45, 49);
+}
+
+#StatusFrame {
+    border-style: outset;
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+/*This is so the wide banner will show up in game view.*/
+#bannerFrame {
+    background-color: transparent;
+}
+
+#settingsButtons>QPushButton,
+#swImportGames,
+#exImportGames {
+    background-color: none;
+    border: none;
+    border-radius: 0px;
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
+}
+
+#settingsButtons>QPushButton:focus,
+#settingsButtons>QPushButton:hover,
+#settingsButtons>QPushButton:focus:active,
+#settingsButtons>QPushButton:checked {
+    background-color: rgb(64, 66, 73);
+}
+
+#settingsButtons>QPushButton:hover {
+    background-color: rgba(64, 66, 73, 90);
+}
+
+QStackedWidget,
+#Header {
+    background-color: rgb(49, 51, 56);
+    border-left: 2px solid rgb(0, 0, 0);
+}
+
+#lblSettingsHeader {
+    border-bottom: 1px solid rgba(120, 120, 120, 100);
+    border-style: outset;
+    padding-bottom: 5px;
+}
+
+/*Search Box*/
+#SearchIcon {
+    background-color: rgb(56, 58, 64);
+    border: none;
+    margin-left: 4px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#SearchBox {
+    background-color: rgb(56, 58, 64);
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    margin-right: 0px;
+    color: rgb(210, 210, 210);
+}
+
+#gamesTree {
+    border: none;
+    border-top-right-radius: 10px;
+}
+
+#NotificationManagerUI {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+#NotificationFrame {
+    border-top: 1px solid rgb(49, 51, 56);
+    padding-top: 4px;
+}
+
+#grid_preview {
+    border-radius: 10px;
+}

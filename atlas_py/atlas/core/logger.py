@@ -1,6 +1,6 @@
 import os
-from ..utilities.multicast import *
-from ..utilities.console import*
+from .utilities.multicast import *
+from .utilities.console import*
 
 class logger(object):
 
