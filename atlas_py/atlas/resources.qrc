@@ -1,0 +1,86 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>assets/addgame.svg</file>
+        <file>assets/search.svg</file>
+        <file>assets/sizegrip.svg</file>
+        <file>assets/dropdownicon.svg</file>
+        <file>assets/treeview_downarrow_N.svg</file>
+        <file>assets/treeview_downarrow_S.svg</file>
+        <file>assets/treeview_rightarrow_N.svg</file>
+        <file>assets/treeview_rightarrow_S.svg</file>
+        <file>assets/Grid_Capsule_Default.webp</file>
+        <file>assets/engine/unity_icon.svg</file>
+        <file>assets/rating_icon_blank.svg</file>
+        <file>assets/fav_icon_red.svg</file>
+        <file>assets/download_icon.svg</file>
+        <file>assets/fav_icon.svg</file>
+        <file>assets/game_icon.svg</file>
+        <file>assets/rating_icon.svg</file>
+        <file>assets/down_arrow_wide.svg</file>
+        <file>assets/play_normal.svg</file>
+        <file>assets/play_selected.svg</file>
+        <file>assets/Qt_logo.svg</file>
+        <file>assets/info.svg</file>
+        <file>assets/settings.svg</file>
+        <file>assets/Atlas_logo_v1.svg</file>
+        <file>assets/Atlas_logo_v2.svg</file>
+        <file>assets/down_arrorw_small.svg</file>
+        <file>assets/up_arrorw_small.svg</file>
+        <file>assets/feather_background.svg</file>
+        <file>assets/setting_filter.svg</file>
+        <file>assets/stop_selected.svg</file>
+        <file>assets/gamelist.svg</file>
+        <file>assets/versionico.svg</file>
+        <file>assets/warnico.svg</file>
+        <file>assets/dropupicon.svg</file>
+        <file>assets/likes_white.svg</file>
+        <file>assets/views_icon.svg</file>
+        <file>assets/fav_icon_active.svg</file>
+        <file>assets/fav_icon_normal.svg</file>
+        <file>assets/fav_icon_normal_selecteds.svg</file>
+    </qresource>
+    <qresource prefix="/Layouts">
+        <file>assets/layouts/0000.svg</file>
+    </qresource>
+    <qresource prefix="/test">
+        <file>assets/testfiles/test1.png</file>
+        <file>assets/testfiles/test2.png</file>
+    </qresource>
+    <qresource prefix="/notifications">
+        <file>assets/pause_n.svg</file>
+        <file>assets/pause_s.svg</file>
+        <file>assets/play_n.svg</file>
+        <file>assets/play_s.svg</file>
+        <file>assets/stop_n.svg</file>
+        <file>assets/stop_s.svg</file>
+    </qresource>
+    <qresource prefix="/engines">
+        <file>assets/engine/3dsmax_icon.svg</file>
+        <file>assets/engine/3dsmax-text_icon.svg</file>
+        <file>assets/engine/blender_icon.svg</file>
+        <file>assets/engine/blender-text_icon.svg</file>
+        <file>assets/engine/daz3d-head_icon.svg</file>
+        <file>assets/engine/daz3d-text_icon.svg</file>
+        <file>assets/engine/flash_icon.svg</file>
+        <file>assets/engine/gamemaker_icon.svg</file>
+        <file>assets/engine/godot_icon.svg</file>
+        <file>assets/engine/html5_icon.svg</file>
+        <file>assets/engine/java_icon.svg</file>
+        <file>assets/engine/kirikiri_icon.svg</file>
+        <file>assets/engine/maya_icon.svg</file>
+        <file>assets/engine/maya-2017_icon.svg</file>
+        <file>assets/engine/nscripter_icon.svg</file>
+        <file>assets/engine/pyscript__icon.svg</file>
+        <file>assets/engine/qsp_icon.svg</file>
+        <file>assets/engine/renpy_icon.svg</file>
+        <file>assets/engine/rpgm_text_icon.svg</file>
+        <file>assets/engine/steam_icon.svg</file>
+        <file>assets/engine/steam-classic_icon.svg</file>
+        <file>assets/engine/steam-text_icon.svg</file>
+        <file>assets/engine/unity_icon.svg</file>
+        <file>assets/engine/unreal_engine_icon.svg</file>
+        <file>assets/engine/vnmaker_icon.svg</file>
+        <file>assets/engine/webgl_icon.svg</file>
+        <file>assets/engine/zbrush-text_icon.svg</file>
+    </qresource>
+</RCC>

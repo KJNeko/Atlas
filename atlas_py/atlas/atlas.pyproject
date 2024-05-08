@@ -1,7 +1,12 @@
 {
     "files": [
+        "resources.qrc",
         "main.py",
         "mainwindow.py",
-        "ui/mainwindow.ui"
+        "ui/mainwindow.ui",
+        "core/logger/logger.py",
+        "core/utilities/multicast.py",
+        "core/utilities/console.py",
+        "debug_console.py"
     ]
 }
