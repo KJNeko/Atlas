@@ -6,7 +6,7 @@
 #define ATLASGAMEMANAGER_F95DATA_HPP
 
 #include <QString>
-
+#include <QStringList>
 #include <memory>
 
 #include "core/Types.hpp"
@@ -27,9 +27,9 @@ namespace atlas::remote
 			QString last_record_update {};
 			QString views {};
 			QString likes {};
-			std::vector< QString > tags {};
+			QStringList tags {};
 			QString rating {};
-			std::vector< QString > screens {};
+			QStringList screens {};
 			QString replies {};
 
 			F95Data( const F95ID id );

@@ -19,7 +19,7 @@ namespace atlas::remote
 		{
 			const auto main_query {
 				"SELECT f95_id, atlas_id, banner_url, site_url, last_thread_comment, thread_publish_date, "
-				"last_record_update, views, likes, rating, replies FROM f95_zone_data WHERE f95_id = ?"
+				"last_record_update, views, likes, tags, rating, screens, replies FROM f95_zone_data WHERE f95_id = ?"
 			};
 
 			RapidTransaction() << main_query << id >> [ this ](
@@ -32,7 +32,9 @@ namespace atlas::remote
 														  const QString last_record_update_in,
 														  const QString views_in,
 														  const QString likes_in,
+														  const QString tags_in,
 														  const QString rating_in,
+														  const QString screens_in,
 														  const QString replies_in ) noexcept
 			{
 				f95_id = f95_id_in;
@@ -44,7 +46,9 @@ namespace atlas::remote
 				last_record_update = last_record_update_in;
 				views = views_in;
 				likes = likes_in;
+				tags = tags_in.split(",");
 				rating = rating_in;
+				screens = screens_in.split(",");
 				replies = replies_in;
 			};
 		}

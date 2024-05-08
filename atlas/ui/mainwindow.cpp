@@ -430,28 +430,58 @@ void MainWindow::on_actionUpdateMeta_triggered()
 
 			if ( image_url.isEmpty() ) continue; // No URL to import
 			qInfo() << "Updating Images for " << atlas_data.value()->title;
-			//Check if we should download all images or not. Check if this is a new item and update the image if not
-			if ( download_all_images || !game->atlas_data.has_value() )
+			
+			//Store data if this is a new entry
+			if ( !game->atlas_data.has_value() )
 			{
-				//Store data if this is a new entry
-				if ( !game->atlas_data.has_value() )
+				game.connectAtlasData( atlas_id );
+				game.connectF95Data( f95_id );
+			}
+
+			const atlas::records::Game game_r { record_id };
+
+			if (download_all_images || game_r->m_banner_paths.empty())
+			{
+			atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
+				.then(
+					[ record_id ]( std::filesystem::path path )
+					{
+						atlas::records::Game game { record_id };
+						//Check if we should download all images or not. Check if this is a new item and update the image if not
+						
+						if ( !path.empty() )
+						{
+							game.setBanner( path.string(), Normal );
+						}
+					
+					}
+
+				);
+			}
+
+			//Try to get previews
+			if(game_r->m_preview_count <= 0)
+			{
+				QStringList previews = f95_data.value()->screens;
+				//qInfo() << "v " <<previews<< " size: " << previews.size();
+				for (auto& preview : previews)
 				{
-					game.connectAtlasData( atlas_id );
-					game.connectF95Data( f95_id );
-				}
-				atlas::images::async::importImageFromURL( image_url.toString(), game.id() )
+					atlas::images::async::importImageFromURL( preview, game.id() )
 					.then(
 						[ record_id ]( std::filesystem::path path )
 						{
-							atlas::records::Game game_r { record_id };
-							if ( !path.empty() )
-							{
-								game_r.setBanner( path.string(), Normal );
-							}
+							atlas::records::Game game { record_id };
+							//Check if we should download all images or not. Check if this is a new item and update the image if not
+							
+							game.addPreview( path.string());
+						
 						}
 
 					);
+					//qInfo() <<preview;
+				}
 			}
+			
 		}
 		else
 		{
