@@ -712,7 +712,7 @@ margin-right:5px;</string>
              <number>0</number>
             </property>
             <item row="0" column="0">
-             <widget class="Ui_GameWidget" name="detailedRecordView" native="true"/>
+             <widget class="QWidget" name="detailedRecordView" native="true"/>
             </item>
            </layout>
           </widget>
@@ -905,14 +905,6 @@ margin-right:5px;</string>
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Ui_GameWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/widgets/games/ui_GameWidget</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../resources.qrc"/>
  </resources>

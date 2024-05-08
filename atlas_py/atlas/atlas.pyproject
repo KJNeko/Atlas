@@ -4,11 +4,12 @@
         "main.py",
         "mainwindow.py",
         "ui/mainwindow.ui",
-        "ui/widgets/games/GameWidget.ui",
+        "ui/widgets/games/tGameWidget.ui",
         "core/logger/logger.py",
         "core/utilities/multicast.py",
         "core/utilities/console.py",
         "debug_console.py",
-        "core/config.py"
+        "core/config.py",
+        "ui/widgets/games/gamewidget.ui"
     ]
 }

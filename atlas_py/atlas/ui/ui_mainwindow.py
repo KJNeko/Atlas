@@ -22,8 +22,6 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLay
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
     QStackedWidget, QStatusBar, QToolButton, QTreeView,
     QWidget)
-
-from ui.widgets.games.ui_GameWidget import Ui_GameWidget
 import rc_resources
 
 class Ui_MainWindow(object):
@@ -370,7 +368,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.gridLayout_3.setHorizontalSpacing(0)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.detailedRecordView = Ui_GameWidget(self.scrollAreaWidgetContents)
+        self.detailedRecordView = QWidget(self.scrollAreaWidgetContents)
         self.detailedRecordView.setObjectName(u"detailedRecordView")
 
         self.gridLayout_3.addWidget(self.detailedRecordView, 0, 0, 1, 1)
