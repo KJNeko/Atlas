@@ -46,7 +46,9 @@ x64/
 
 
 
-#
+#python
+.pyc
+.pyrc
 
 /dependencies/zlib/zconf.h.included
 /dependencies/zlib/zconf.h
