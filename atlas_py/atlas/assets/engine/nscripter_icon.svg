@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.707107,0.707107,-1.10636,1.10636,32.0262,0)">
+        <rect x="0" y="0" width="32" height="32" style="fill:rgb(0,0,160);"/>
+    </g>
+    <g transform="matrix(0.707107,0.707107,-1.10636,1.10636,9.37258,-22.6244)">
+        <rect x="0" y="0" width="32" height="32" style="fill:rgb(164,164,255);"/>
+    </g>
+    <g transform="matrix(1,0,0,1.00161,0.445794,0.327979)">
+        <clipPath id="_clip1">
+            <rect x="1" y="1.105" width="29.108" height="29.085"/>
+        </clipPath>
+        <g clip-path="url(#_clip1)">
+            <g transform="matrix(1,-0,-0,0.998393,-0.445794,-0.327452)">
+                <use xlink:href="#_Image2" x="1.49" y="1.478" width="29.108px" height="29.132px" transform="matrix(0.970267,0,0,0.971061,0,0)"/>
+            </g>
+        </g>
+    </g>
+    <g transform="matrix(1,0,0,1,-1,-1)">
+        <path d="M6,16L14.873,16L19.756,6.058L11.141,6.058L6,16Z" style="fill:rgb(0,0,160);"/>
+    </g>
+    <path d="M6,16L14.873,16L19.756,6.058L11.141,6.058L6,16Z" style="fill:rgb(70,70,255);"/>
+    <g transform="matrix(1,0,0,1,5.87793,10.8779)">
+        <path d="M6,16L14.873,16L19.756,6.058L11.141,6.058L6,16Z" style="fill:rgb(0,0,160);"/>
+    </g>
+    <g transform="matrix(1,0,0,1,6.87793,11.8779)">
+        <path d="M6,16L14.873,16L19.756,6.058L11.141,6.058L6,16Z" style="fill:rgb(70,70,255);"/>
+    </g>
+    <defs>
+        <image id="_Image2" width="30px" height="30px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAlklEQVRIicWUQQ6AMAgEgYf2/7+oBz0Yg02hsHswMcV0kllWHWNOVRGz+8m+h+cUqIkYB/qA0dAj1afzlOqaOQUaVF05X6pW7YEuVbeboEA91bjMgxeV9bjuh9DQ4xb9FKi3XLjMWzZ241sK1FONy7wQGsm8rMdxExToz3IhMj/ucT7zRujWckGhnmpc5kDoO3NYj79nF2DSDl51uTWEAAAAAElFTkSuQmCC"/>
+    </defs>
+</svg>
