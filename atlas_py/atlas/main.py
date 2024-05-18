@@ -33,6 +33,9 @@ def main():
     logger.debug("Checking config file")
     settings.load()
 
+    logger.debug("Loading stylesheet")
+    
+
     window = mainwindow.MainWindow()
     window.show()
     splash.finish(window)

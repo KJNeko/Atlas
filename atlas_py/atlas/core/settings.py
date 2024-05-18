@@ -26,7 +26,7 @@ class settings(object):
             }
 
         cfg['ATLAS'] = {
-            'default_theme' : 'dark.qss'
+            'use_default_theme' : 'dark.qss'
         }
 
 
