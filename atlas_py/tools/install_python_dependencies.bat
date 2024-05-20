@@ -7,5 +7,6 @@ pip install urllib3
 pip install python-lsp-server
 pip install colorama
 pip install -U pyinstaller
+pip install jinja2
 
 PAUSE

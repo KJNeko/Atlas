@@ -1,11 +1,11 @@
 #Used in conjunction with the server. Will listen on port 5555 for console output.
 
 import socket
-import os
+from os import system
 from  core.utilities.console import *
 
 #Clear screen to clear all garbage. This also fixes bug in CMD
-os.system('cls')
+system('cls')
 
 def udp():
         multicast_group = "127.0.0.1"

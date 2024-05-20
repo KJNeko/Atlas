@@ -1,4 +1,4 @@
-import os
+from os import system
 from .utilities.multicast import *
 from .utilities.console import*
 
@@ -11,7 +11,7 @@ class logger(object):
     is_enabled = True #Disable output. For Terminal Program
 
     def init():
-        os.system('cls')
+        system('cls')
 
     def info(_str):
         message = "info||" + str(_str)

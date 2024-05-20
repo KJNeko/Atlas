@@ -1,4 +1,4 @@
-import os
+from os import path
 from ..logger import *
 from .record.gamedata import*
 from .record.version import *
@@ -9,7 +9,7 @@ from PySide6.QtGui import (QImage)
 class database(object):
 
     def initialize(database_path: str) -> str:
-        if not os.path.exists(database_path):
+        if not path.exists(database_path):
             logger.debug("Creating Database")
             #Create database file
             f = open(database_path, "a")

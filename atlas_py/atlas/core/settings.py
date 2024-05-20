@@ -1,11 +1,11 @@
-import configparser
-import os
+from configparser import ConfigParser
+from os import path
 from enum import Enum
 
 #This will be treated like a static class
 class settings(object):
 
-    config = configparser.ConfigParser()
+    config = ConfigParser()
     #Iinit all vars here
     #PATHS
     database_path = 'data'
@@ -56,7 +56,7 @@ class settings(object):
 
     def load():
         file_path = 'config.ini'
-        if(os.path.exists(file_path)):            
+        if(path.exists(file_path)):            
             settings.config.sections()   
             settings.config.read(file_path)
         else:
@@ -65,7 +65,7 @@ class settings(object):
     def save():
         settings.update_config()
         file_path = 'config.ini'
-        if(os.path.exists(file_path)):            
+        if(path.exists(file_path)):            
             settings.config.sections()   
             settings.config.write(file_path,)
 
