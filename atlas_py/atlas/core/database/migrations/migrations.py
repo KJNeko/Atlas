@@ -7,7 +7,7 @@ from ...logger import *
 
 class migrations(object):
 
-    def run_up(database_path):
+    def run_up(database_path: str) -> str:
         logger.info("Running database migrations")
        
         con = sqlite3.connect(database_path)
@@ -16,7 +16,6 @@ class migrations(object):
         #print(__tables)
         for table in __tables:
             logger.info(f'Running migration for {table}')
-            print(table)
             cur.execute(__tables[table][0])
             con.commit()
         con.close()

@@ -34,6 +34,7 @@ def main():
     app.processEvents()
 
     logger.debug("Checking config file")
+    #Load settings from ini file.
     settings.load()
     #Now that the settings are loaded. Save to add any new config items that were not in the older config file.
 

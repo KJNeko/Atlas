@@ -68,9 +68,7 @@ class settings(object):
         if(os.path.exists(file_path)):            
             settings.config.sections()   
             settings.config.write(file_path,)
-    
-    #These will be empty until we call create config. Need one for each config entry. 
-    #Paths
+
 
 class banner_type(Enum):
 	error = -1,

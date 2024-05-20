@@ -8,7 +8,7 @@ from PySide6.QtGui import (QImage)
 
 class database(object):
 
-    def initialize(database_path):
+    def initialize(database_path: str) -> str:
         if not os.path.exists(database_path):
             logger.debug("Creating Database")
             #Create database file
