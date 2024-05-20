@@ -2,7 +2,7 @@
 
 import socket
 import os
-from utilities.console import *
+from  core.utilities.console import *
 
 #Clear screen to clear all garbage. This also fixes bug in CMD
 os.system('cls')

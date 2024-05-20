@@ -201,7 +201,7 @@ class tables(object):
 			)],
             "17-blurhash":
             [str(
-                """CREATE TABLE image_blurhash
+                """CREATE TABLE IF NOT EXISTS image_blurhash
 				(
 					image_sha256 BLOB UNIQUE PRIMARY KEY NOT NULL,
 					blurhash TEXT NOT NULL,
@@ -211,7 +211,7 @@ class tables(object):
 			)],
             "18-favorites":
             [str(
-                """CREATE TABLE favorites (record_id INTEGER REFERENCES games(record_id))"""
+                """CREATE TABLE IF NOT EXISTS favorites (record_id INTEGER REFERENCES games(record_id))"""
             )]
         }
         return DataFrame(data)
