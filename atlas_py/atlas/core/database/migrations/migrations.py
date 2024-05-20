@@ -16,6 +16,9 @@ class migrations(object):
         #print(__tables)
         for table in __tables:
             logger.info(f'Running migration for {table}')
-            cur.execute(__tables[table][0])
-            con.commit()
+            try:
+                cur.execute(__tables[table][0])
+                con.commit()
+            except Exception as e:
+                logger.error(e)
         con.close()

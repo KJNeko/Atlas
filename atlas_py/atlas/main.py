@@ -22,7 +22,8 @@ from PySide6.QtGui import (QPixmap)
 #    pass
 
 
-def main():    
+def main():  
+    #Before doing anything, make sure this is not another instance running.   
     logger.is_console = True
     logger.is_enabled = True
     logger.info("Booting into Atlas")
@@ -36,16 +37,13 @@ def main():
     logger.debug("Checking config file")
     #Load settings from ini file.
     settings.load()
-    #Now that the settings are loaded. Save to add any new config items that were not in the older config file.
 
     logger.debug("Loading stylesheet")
-
+    #Load dark.qss or system them. By default it will use dark.qss
     if settings.use_system_theme == False :
         if len(settings.current_theme) > 0:
             try:
-                logger.info(os.path.join(os.getcwd(), settings.themes_path,settings.current_theme))
                 style_sheet_file = os.path.join(os.getcwd(), settings.themes_path,settings.current_theme)
-
                 if os.path.exists(style_sheet_file):
                     with open(style_sheet_file,"r") as fh:
                         app.setStyleSheet(fh.read())
@@ -56,6 +54,7 @@ def main():
     settings.database_abs_path = os.path.join(settings.database_path, "atlas.db")
     database.initialize(settings.database_abs_path)
 
+    #Show main window
     window = mainwindow.MainWindow()
     window.show()
     splash.finish(window)
