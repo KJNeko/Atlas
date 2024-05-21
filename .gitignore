@@ -53,6 +53,7 @@ dist
 #python
 *.pyc
 *.pyrc
+.qtcreator
 
 /dependencies/zlib/zconf.h.included
 /dependencies/zlib/zconf.h

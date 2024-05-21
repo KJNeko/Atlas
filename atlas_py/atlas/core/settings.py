@@ -8,6 +8,7 @@ class settings(object):
     config = ConfigParser()
     #Iinit all vars here
     #PATHS
+    root_path = 'data'
     database_path = 'data'
     database_abs_path = ''
     images_path = 'data/images'
@@ -34,6 +35,7 @@ class settings(object):
     
     def update_config():        
         settings.config['PATHS'] = {
+            'root':settings.root_path,
             'database':settings.database_path, 
             'images':settings.images_path,
             'games':settings.games_path,
