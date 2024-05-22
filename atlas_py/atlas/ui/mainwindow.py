@@ -4,7 +4,8 @@ import sys
 #from atlas.core.logger import *
 from PySide6.QtCore import (Qt)
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
-from ui.importer.batchImporter import batchimporter
+from ui.importer.batchImporter.batchimporter import BatchImporter
+from ui.dialog.aboutatlas import AboutAtlas
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -21,6 +22,7 @@ class MainWindow(QMainWindow):
         #FOR FUTURE: HIDE FOR NOW
         self.ui.NavTop.hide()
         self.ui.actionBulkImporter.triggered.connect(self.on_actionBulkImporter_triggered)
+        self.ui.actionAboutAtlas.triggered.connect(self.on_actionAboutAtlas_triggered)
         #Need code for setting application font
         #Notification window
 
@@ -28,10 +30,13 @@ class MainWindow(QMainWindow):
 
     def on_actionBulkImporter_triggered(self):
         print("button pressed")
-        window = batchimporter.BatchImporter(self)
+        window = BatchImporter(self)
         window.show()
-        #window.show(self)
-        #window.exec(self)
+
+    def on_actionAboutAtlas_triggered(self):
+        print("button pressed")
+        window = AboutAtlas(self)
+        window.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
