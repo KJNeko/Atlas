@@ -1,44 +1,46 @@
 {
-"files": [
-"atlas/core/database/database.py,"
-"atlas/core/database/migrations/migrations.py,"
-"atlas/core/database/migrations/tables.py,"
-"atlas/core/database/record/game/banners.py,"
-"atlas/core/database/record/game/game.py,"
-"atlas/core/database/record/gamedata.py,"
-"atlas/core/database/record/tags.py,"
-"atlas/core/database/record/version.py,"
-"atlas/core/logger.py,"
-"atlas/core/settings.py,"
-"atlas/core/utilities/console.py,"
-"atlas/core/utilities/multicast.py,"
-"atlas/debug_console.py,"
-"atlas/main.py,"
-"atlas/rc_resources.py,"
-"atlas/resources.qrc,"
-"atlas/resources_rc.py,"
-"atlas/ui/dialog/AboutAtlas.ui,"
-"atlas/ui/dialog/aboutqtdialog.ui,"
-"atlas/ui/dialog/AddGameDialog.ui,"
-"atlas/ui/dialog/console/Console.ui,"
-"atlas/ui/dialog/ProgressBarDialog.ui,"
-"atlas/ui/dialog/RecordEditor.ui,"
-"atlas/ui/dialog/SettingsDialog.ui,"
-"atlas/ui/dialog/StatsDialog.ui,"
-"atlas/ui/dialog/UpdateDialog.ui,"
-"atlas/ui/importer/batchImporter/BatchImportDialog.ui,"
-"atlas/ui/importer/extractionImporter/ExtractionImportDialog.ui,"
-"atlas/ui/importer/simpleImporter/SimpleImporter.ui,"
-"atlas/ui/importer/singleImporter/SingleImporter.ui,"
-"atlas/ui/mainwindow.py,"
-"atlas/ui/mainwindow.ui,"
-"atlas/ui/notifications/DevNotification.ui,"
-"atlas/ui/notifications/MessageNotification.ui,"
-"atlas/ui/notifications/NotificationManagerUI.ui,"
-"atlas/ui/notifications/ProgressNotification.ui,"
-"atlas/ui/ui_mainwindow.py,"
-"atlas/ui/views/VersionView.ui,"
-"atlas/ui/widgets/FilterWidget.ui,"
-"atlas/ui/widgets/games/gamewidget.ui,"
-]
+    "files": [
+        "./atlas/core/database/database.py",
+        "./atlas/core/database/migrations/migrations.py",
+        "./atlas/core/database/migrations/tables.py",
+        "./atlas/core/database/record/game/banners.py",
+        "./atlas/core/database/record/game/game.py",
+        "./atlas/core/database/record/gamedata.py",
+        "./atlas/core/database/record/tags.py",
+        "./atlas/core/database/record/version.py",
+        "./atlas/core/logger.py",
+        "./atlas/core/settings.py",
+        "./atlas/core/utilities/console.py",
+        "./atlas/core/utilities/multicast.py",
+        "./atlas/debug_console.py",
+        "./atlas/main.py",
+        "./atlas/resources.qrc",
+        "./atlas/ui/dialog/AboutAtlas.ui",
+        "./atlas/ui/dialog/aboutqtdialog.ui",
+        "./atlas/ui/dialog/AddGameDialog.ui",
+        "./atlas/ui/dialog/console/Console.ui",
+        "./atlas/ui/dialog/ProgressBarDialog.ui",
+        "./atlas/ui/dialog/RecordEditor.ui",
+        "./atlas/ui/dialog/SettingsDialog.ui",
+        "./atlas/ui/dialog/StatsDialog.ui",
+        "./atlas/ui/dialog/UpdateDialog.ui",
+        "./atlas/ui/importer/batchImporter/BatchImportDialog.ui",
+        "./atlas/ui/importer/extractionImporter/ExtractionImportDialog.ui",
+        "./atlas/ui/importer/simpleImporter/SimpleImporter.ui",
+        "./atlas/ui/importer/singleImporter/SingleImporter.ui",
+        "./atlas/ui/mainwindow.py",
+        "./atlas/ui/mainwindow.ui",
+        "./atlas/ui/notifications/DevNotification.ui",
+        "./atlas/ui/notifications/MessageNotification.ui",
+        "./atlas/ui/notifications/NotificationManagerUI.ui",
+        "./atlas/ui/notifications/ProgressNotification.ui",
+        "./atlas/ui/ui_mainwindow.py",
+        "./atlas/ui/views/VersionView.ui",
+        "./atlas/ui/widgets/FilterWidget.ui",
+        "./atlas/ui/widgets/games/gamewidget.ui",
+        "./atlas.pyproject",
+        "./atlas.pyproject.user",
+        "./config.ini",
+        "./create_pyproject.py"
+    ]
 }

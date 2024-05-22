@@ -1,4 +1,4 @@
-from sys import exit, argv
+import sys
 from shutil import copyfile
 from os import path, mkdir, listdir, getcwd
 #IMPORT QRC FILE
@@ -20,13 +20,11 @@ from PySide6.QtGui import (QPixmap)
 #except ImportError:
 #    pass
 
-
-  
 #Before doing anything, make sure this is not another instance running.   
 logger.is_console = True
 logger.is_enabled = True
 logger.info("Booting into Atlas")
-app = QApplication(argv)
+app = QApplication(sys.argv)
 splashscreen = QPixmap(":/images/assets/Atlas_logo_v2.svg")
 pixmap = splashscreen.scaled(200,200, Qt.AspectRatioMode.KeepAspectRatio)
 splash = QSplashScreen(pixmap)
@@ -74,10 +72,6 @@ database.initialize(settings.database_abs_path)
 
 #Show main window
 window = mainwindow.MainWindow()
+splash.close()
 window.show()
-splash.finish(window)
-exit(app.exec())
-
-#def create_directories():
-#    os.mkdir(settings.config['PATHS'][''])
-
+sys.exit(app.exec())
