@@ -24,7 +24,6 @@
         "./atlas/ui/dialog/SettingsDialog.ui",
         "./atlas/ui/dialog/StatsDialog.ui",
         "./atlas/ui/dialog/UpdateDialog.ui",
-        "./atlas/ui/importer/batchImporter/BatchImportDialog.ui",
         "./atlas/ui/importer/extractionImporter/ExtractionImportDialog.ui",
         "./atlas/ui/importer/simpleImporter/SimpleImporter.ui",
         "./atlas/ui/importer/singleImporter/SingleImporter.ui",
@@ -41,6 +40,8 @@
         "./atlas.pyproject",
         "./atlas.pyproject.user",
         "./config.ini",
-        "./create_pyproject.py"
+        "app.py",
+        "atlas/ui/importer/BatchImportDialog.ui",
+        "atlas/ui/importer/BatchImporter.py"
     ]
 }

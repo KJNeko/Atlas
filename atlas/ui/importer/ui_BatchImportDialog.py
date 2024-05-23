@@ -103,10 +103,10 @@ class Ui_BatchImportDialog(object):
 
         self.horizontalLayout_2.addWidget(self.tbFormat)
 
-        self.useRegex = QCheckBox(self.frame_3)
-        self.useRegex.setObjectName(u"useRegex")
+        self.cbSkipRegex = QCheckBox(self.frame_3)
+        self.cbSkipRegex.setObjectName(u"cbSkipRegex")
 
-        self.horizontalLayout_2.addWidget(self.useRegex)
+        self.horizontalLayout_2.addWidget(self.cbSkipRegex)
 
 
         self.verticalLayout_5.addWidget(self.frame_3)
@@ -271,13 +271,13 @@ class Ui_BatchImportDialog(object):
         self.btnSetFolder.setText(QCoreApplication.translate("BatchImportDialog", u"Set Folder", None))
         self.label.setText(QCoreApplication.translate("BatchImportDialog", u"Autofill from path:", None))
         self.tbFormat.setText(QCoreApplication.translate("BatchImportDialog", u"{creator}/{title}/{version}", None))
-        self.useRegex.setText(QCoreApplication.translate("BatchImportDialog", u"Skip regexify", None))
+        self.cbSkipRegex.setText(QCoreApplication.translate("BatchImportDialog", u"Auto Mode", None))
         self.label_4.setText(QCoreApplication.translate("BatchImportDialog", u"Valid options: title, creator, version. All must be surrounded with braces. Example {title}", None))
         self.label_7.setText(QCoreApplication.translate("BatchImportDialog", u"You can use various characters to indicate a directory. You can see examples below or more advanced ones in the docs (LINK HERE)", None))
         self.label_8.setText(QCoreApplication.translate("BatchImportDialog", u"Examples:\n"
 "somecreator/somegame-v1.0: {creator}/{title}-{version}\n"
 "somecreator/somegame/v1.0: {creator}/{title}/{version}", None))
-        self.label_6.setText(QCoreApplication.translate("BatchImportDialog", u"Note that you can also use raw regex (Read the docs for more information about this)", None))
+        self.label_6.setText(QCoreApplication.translate("BatchImportDialog", u"Note that you can also use Auto Mode. It will attempt to find games based on engine structure", None))
         self.cbCheckDownloadImages.setText(QCoreApplication.translate("BatchImportDialog", u"Download Images if match found in Atlas Database (recommended)", None))
         self.cbMoveImported.setText(QCoreApplication.translate("BatchImportDialog", u"Move to game folder (Will delete after!)", None))
         self.cbScanFilesize.setText(QCoreApplication.translate("BatchImportDialog", u"Scan filesize during import", None))
