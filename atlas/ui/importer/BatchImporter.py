@@ -4,6 +4,7 @@ import os
 from PySide6.QtCore import QFile
 from PySide6.QtWidgets import QDialog, QFileDialog
 from atlas.core.logger import *
+from atlas.core.scanner.game_scanner import *
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -21,6 +22,10 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.btnBack.hide()
         self.ui.cbMoveImported.hide()
         self.ui.cbScanFilesize.hide()
+
+        #Custom Code
+        self.ui.tbPath.setText("F:/Games")
+        self.ui.cbSkipRegex.setChecked(True)
         
         self.ui.cbSkipRegex.checkStateChanged.connect(self.on_cbSkipRegex_state_changed)
         self.ui.btnSetFolder.pressed.connect(self.on_btnSetFolder_pressed)
@@ -75,6 +80,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         ui.btnBack.setHidden( False )
         if ui.cbSkipRegex.isChecked() == True:
             logger.debug("Running in Auto Mode")
+            game_scanner.start(path, "", False)
         else:
             logger.debug("Running in Parse Mode")
 

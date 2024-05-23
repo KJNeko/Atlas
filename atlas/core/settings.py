@@ -27,6 +27,9 @@ class settings(object):
     use_system_theme = False
     current_theme = 'dark.qss'
 
+    #THESE VARS NOT IN CONFIG
+    os = ""
+
 
     def create_config():
         settings.update_config()

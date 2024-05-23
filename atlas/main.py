@@ -1,4 +1,5 @@
 import sys
+import platform
 from shutil import copyfile
 from os import path, mkdir, listdir, getcwd
 #IMPORT QRC FILE
@@ -14,6 +15,8 @@ from PySide6.QtGui import (QPixmap)
 
 #Before doing anything, make sure this is not another instance running.   
 def init():
+    #Get the operating system
+    settings.os = platform.system
     logger.is_console = True
     logger.is_enabled = True
     logger.info("Booting into Atlas")
