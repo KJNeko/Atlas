@@ -4,14 +4,14 @@ import sys
 #from atlas.core.logger import *
 from PySide6.QtCore import (Qt)
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
-from ui.importer.BatchImporter import BatchImporter
-from ui.dialog.AboutAtlas import AboutAtlas
+from atlas.ui.importer.BatchImporter import BatchImporter
+from atlas.ui.dialog.AboutAtlas import AboutAtlas
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
-from ui.ui_mainwindow import Ui_MainWindow
+from atlas.ui.ui_mainwindow import Ui_MainWindow
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):

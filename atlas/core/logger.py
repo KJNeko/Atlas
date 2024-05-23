@@ -1,6 +1,6 @@
 from os import system
-from .utilities.multicast import *
-from .utilities.console import*
+from atlas.core.utilities.multicast import *
+from atlas.core.utilities.console import*
 
 class logger(object):
     #This class allows for outputing to a console window or via UDP over port 5555. This will be enabled initally. 

@@ -58,3 +58,6 @@ __pycache__
 
 /dependencies/zlib/zconf.h.included
 /dependencies/zlib/zconf.h
+config.ini
+data/atlas.db
+/data

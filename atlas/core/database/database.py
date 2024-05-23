@@ -1,9 +1,9 @@
 from os import path
-from ..logger import *
-from .record.gamedata import*
-from .record.version import *
-from .migrations.migrations import *
-from ..settings import *
+from atlas.core.logger import *
+from atlas.core.database.record.gamedata import*
+from atlas.core.database.record.version import *
+from atlas.core.database.migrations.migrations import *
+from atlas.core.settings import *
 from PySide6.QtGui import (QImage)
 
 class database(object):

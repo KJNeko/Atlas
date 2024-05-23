@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLay
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
     QStackedWidget, QStatusBar, QToolButton, QTreeView,
     QWidget)
-import rc_resources
+import atlas.rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

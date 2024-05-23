@@ -1,6 +1,6 @@
 from sqlite3 import connect
-from .tables import *
-from ...logger import *
+from atlas.core.database.migrations.tables import *
+from atlas.core.logger import *
 
 
 class migrations(object):
