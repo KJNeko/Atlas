@@ -66,6 +66,13 @@ class game_scanner(object):
                         #logger.error(f'{attr} in {en}')
                         if attr.strip() in en:
                             logger.info(engine)
+                            break
+                    else:
+                        continue
+                    break
+                else:
+                    continue
+                break
                         
                         
                         
