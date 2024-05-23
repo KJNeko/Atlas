@@ -54,6 +54,7 @@ dist
 *.pyc
 *.pyrc
 .qtcreator
+__pycache__
 
 /dependencies/zlib/zconf.h.included
 /dependencies/zlib/zconf.h
