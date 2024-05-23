@@ -1,3 +1,0 @@
-zmusic.dll
-gzdoom.pk3
-gzdoom.sf2

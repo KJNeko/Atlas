@@ -1,2 +1,0 @@
-.asr
-Fonts/Fonts.asr

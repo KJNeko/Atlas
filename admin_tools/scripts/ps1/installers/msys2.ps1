@@ -1,1 +1,0 @@
-winget install -e --id MSYS2.MSYS2
