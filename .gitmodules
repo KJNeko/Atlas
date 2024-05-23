@@ -1,30 +1,6 @@
 [submodule "docs/doxygen-awesome-css"]
 	path = docs/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
-[submodule "3rdparty/qtimageformats"]
-	path = 3rdparty/qtimageformats
-	url = https://github.com/qt/qtimageformats.git
-[submodule "dependencies/fmt"]
-	path = dependencies/fmt
-	url = https://github.com/fmtlib/fmt.git
-[submodule "dependencies/spdlog"]
-	path = dependencies/spdlog
-	url = https://github.com/gabime/spdlog.git
 [submodule "dependencies/sqlite_modern_cpp"]
 	path = dependencies/sqlite_modern_cpp
 	url = https://github.com/SqliteModernCpp/sqlite_modern_cpp.git
-[submodule "dependencies/tracy"]
-	path = dependencies/tracy
-	url = https://github.com/wolfpld/tracy.git
-[submodule "dependencies/catch2"]
-	path = dependencies/catch2
-	url = https://github.com/catchorg/Catch2.git
-[submodule "dependencies/lz4"]
-	path = dependencies/lz4
-	url = https://github.com/lz4/lz4.git
-[submodule "dependencies/blurhash"]
-	path = dependencies/blurhash
-	url = https://github.com/KJNeko/blurhash-cxx.git
-[submodule "dependencies/elzip"]
-	path = dependencies/elzip
-	url = https://github.com/Sygmei/11Zip.git
