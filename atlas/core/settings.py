@@ -14,6 +14,7 @@ class settings(object):
     images_path = 'data/images'
     games_path = 'data/games'
     themes_path = 'data/themes'
+    engines_path = 'data/engines/types'
 
     #IMPORTER
     pathparse = '{creator}/{title}/{version}'

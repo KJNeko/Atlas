@@ -1,7 +1,7 @@
 import sys
 import platform
 from shutil import copyfile
-from os import path, mkdir, listdir, getcwd
+from os import path, mkdir, listdir, getcwd, makedirs
 #IMPORT QRC FILE
 import atlas.rc_resources
 from atlas.ui import mainwindow
@@ -16,7 +16,8 @@ from PySide6.QtGui import (QPixmap)
 #Before doing anything, make sure this is not another instance running.   
 def init():
     #Get the operating system
-    settings.os = platform.system
+    settings.os = platform.system()
+    print(platform.system())
     logger.is_console = True
     logger.is_enabled = True
     logger.info("Booting into Atlas")
@@ -35,22 +36,25 @@ def init():
             mkdir(settings.themes_path)
         if not path.exists(settings.images_path):
             mkdir(settings.images_path)
+        if not path.exists(settings.engines_path):
+            makedirs(settings.engines_path)
 
     #Copy over themes
     logger.debug("Checking themes files")
     #This will only work once the executable has been created
-    interal_path = "_internal/Resources/themes"
-    if path.exists(interal_path):
-        for file in listdir(interal_path):
-            #Copy themes files if the are not in the folder.
-            if not path.isfile(path.join("data/themes", file)):
-                copyfile(path.join(interal_path, file), path.join("data/themes", file) )
-                #shutil.copyfile('./demo.py', './demo1.py')
+    internal_theme_path = "_internal/Resources/themes"
+    internal_engine_path = "_internal/Resources/engines/types"
+
+
+    if path.exists(internal_theme_path):
+        copy_all_files(internal_theme_path, settings.themes_path )       
     else:
-        for file in listdir("atlas/assets/themes"):
-            #Copy themes files if the are not in the folder.
-            if not path.isfile(path.join("data/themes", file)):
-                copyfile(path.join("atlas/assets/themes", file), path.join("data/themes", file) )
+        copy_all_files("atlas/assets/themes", settings.themes_path )      
+    
+    if path.exists(internal_theme_path):
+        copy_all_files(internal_engine_path, settings.engines_path )       
+    else:
+        copy_all_files("atlas/assets/engines/types", settings.engines_path )      
 
     logger.debug("Checking config file")
     #Load settings from ini file.
@@ -77,3 +81,9 @@ def init():
     splash.close()
     window.show()
     sys.exit(app.exec())
+
+#move this method
+def copy_all_files(from_path, to_path):
+    for file in listdir(from_path):
+        if not path.isfile(path.join(to_path, file)):
+            copyfile(path.join(from_path, file), path.join(to_path, file) )

@@ -1,2 +1,1 @@
 tyrano.js
-/tyrano.js

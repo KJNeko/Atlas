@@ -8,17 +8,31 @@ class game_scanner(object):
         exe_type = game_scanner.get_executable_type()
 
         if format == "":
+            logger.debug(f'os:{settings.os} exe:{exe_type}')
             logger.debug(f'Path: {path}')
             for subdir, dirs, files in os.walk(path):
-                for file in files:
-                    logger.info(os.path.join(subdir, file))
+                #logger.warn(dirs)
+                if len(files) > 0:
+                    #logger.error(files)
+                    for file in files:
+                        #Verify file array has files                      
+                        logger.error(file)
+                        if exe_type in file:
+                            #Add both lists together so we can verify engine type
+                            list = files + dirs
+                            logger.debug(list)
+                            return
+                #    logger.info(os.path.join(subdir, file))
             #We are in automode, try to guess the game based on the engine. 
-            return
+
 
         
     def get_executable_type() -> str:
         if settings.os == "Windows":
-            return "exe"
+            return ".exe"
         if(settings.os == "Linux"):
-            return "sh"
+            return ".sh"
+        
+    #def find_engine(file_list):
+
         
