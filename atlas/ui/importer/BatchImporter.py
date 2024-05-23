@@ -24,7 +24,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.cbScanFilesize.hide()
 
         #Custom Code
-        self.ui.tbPath.setText("C:\\Users\\tower\\Downloads\\Games")
+        self.ui.tbPath.setText("F:/Games")
         self.ui.cbSkipRegex.setChecked(True)
         
         self.ui.cbSkipRegex.checkStateChanged.connect(self.on_cbSkipRegex_state_changed)

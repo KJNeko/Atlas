@@ -24,3 +24,4 @@ rgss202e.dll
 rgss301.dll
 rpg_rt.exe
 rpt_rt.exe
+nw_elf.dll

@@ -17,7 +17,6 @@ from PySide6.QtGui import (QPixmap)
 def init():
     #Get the operating system
     settings.os = platform.system()
-    print(platform.system())
     logger.is_console = True
     logger.is_enabled = True
     logger.info("Booting into Atlas")

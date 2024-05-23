@@ -1,1 +1,3 @@
 .qsp
+FastQSP.ini
+Qgen
