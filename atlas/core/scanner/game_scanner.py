@@ -30,7 +30,7 @@ class game_scanner(object):
                                         list = files + dirs
                                         logger.warn(subdir)
                                         game_scanner.find_engine(list)
-                                        logger.debug(list)
+                                        logger.debug(file)
                                         root_path = subdir
                                         break
                             else:
@@ -47,10 +47,14 @@ class game_scanner(object):
 
         
     def get_executable_type() -> str:
+        lin = ['.sh']
+        win = ['.exe']
+        osx = ['.dmg']
+        ex = [ '.swf', '.flv', '.f4v' 'html']
         if settings.os == "Windows":
-            return ['.exe']
+            return win + ex
         if(settings.os == "Linux"):
-            return ['.sh']
+            return lin + ex
         
     def find_engine(file_list):
         #get a list of files in the engine dir
