@@ -1,3 +1,4 @@
+Engine
 /Binaries/Win32/
 /Binaries/Win64/
 /Engine/Binaries/ThirdParty/

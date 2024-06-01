@@ -3,7 +3,8 @@ from atlas.core.settings import *
 from atlas.core.logger import *
 class game_scanner(object):
 
-    skip_list = ['UnityCrashHandler64.exe', '-32.exe']
+    #skip list shoudld all be uppercase
+    skip_list = ['UnityCrashHandler64.exe','UnityCrashHandler32.exe', 'README.html','manual.htm','unins000.exe','credits.html']
     def start(path: str, format: str, size_folders: bool ):        
         #We need to run this in a QThread Make Qrunnable
         #set executable type
@@ -19,8 +20,6 @@ class game_scanner(object):
                     #logger.debug(root_path)
                     if len(files) > 0:
                         for file in files:
-                            #logger.warn(subdir)
-                            #logger.error(file)
                             #Verify file array has files 
                             for executable in executable_list:
                                 if executable in file:
@@ -29,15 +28,16 @@ class game_scanner(object):
                                         #Add both lists together so we can verify engine type
                                         list = files + dirs
                                         logger.warn(subdir)
-                                        game_scanner.find_engine(list)
+                                        engine = game_scanner.find_engine(list)
+                                        logger.info(engine)
+                                        logger.debug(files)
+                                        logger.debug(dirs)
                                         logger.debug(file)
                                         root_path = subdir
                                         break
                             else:
                                 continue
-                        else:
-                            continue
-                        break
+
                         
                         
 
@@ -50,33 +50,31 @@ class game_scanner(object):
         lin = ['.sh']
         win = ['.exe']
         osx = ['.dmg']
-        ex = [ '.swf', '.flv', '.f4v' 'html']
+        ex = [ '.swf', '.flv', '.f4v', '.rag', 'html']
         if settings.os == "Windows":
             return win + ex
         if(settings.os == "Linux"):
             return lin + ex
         
     def find_engine(file_list):
-        #get a list of files in the engine dir
+        engine = "Others"
+        #get a list of files in the engine dir and iterate through all of the possible engine types
         for file in os.listdir(settings.engines_path):
-            engine = file.split('.')[1]
-            #logger.warn(engine)
             engine_path = os.path.join(settings.engines_path, file)
-            #print(engine_path)
+            #open each file and read contents
             with open(engine_path) as f:
                 attrs = f.readlines()
                 for attr in attrs:
                     for en in file_list:
                         #logger.error(f'{attr} in {en}')
-                        if attr.strip() in en:
-                            logger.info(engine)
-                            break
-                    else:
-                        continue
-                    break
-                else:
-                    continue
-                break
+                        if attr.strip() in en:     
+                            #Because html files can be in each folder we need to skip it before returning
+                            #return first engine found
+                            engine = file.split('.')[1]
+                            if attr.strip() != ".html":
+                                return engine
+        #This will return HTML if found, if not, it will return OTHERS
+        return engine
                         
                         
                         
