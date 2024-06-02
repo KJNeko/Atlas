@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.ui.NavTop.hide()
         self.ui.actionBulkImporter.triggered.connect(self.on_actionBulkImporter_triggered)
         self.ui.actionAboutAtlas.triggered.connect(self.on_actionAboutAtlas_triggered)
-        self.ui.actionAboutQt.triggered.connect(self.on_actionAboutQtDialog_triggered)
+        #self.ui.actionAboutQt.triggered.connect(self.on_actionAboutQtDialog_triggered)
         #Need code for setting application font
         #Notification window
 
@@ -37,9 +37,9 @@ class MainWindow(QMainWindow):
         window = AboutAtlas(self)
         window.show()
 
-    def on_actionAboutQtDialog_triggered(self):
-        window = AboutQt(self)
-        window.show()
+    #def on_actionAboutQtDialog_triggered(self):
+    #    window = AboutQt(self)
+    #    window.show()
         
 
 if __name__ == "__main__":

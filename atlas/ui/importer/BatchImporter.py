@@ -5,6 +5,7 @@ from PySide6.QtCore import QFile
 from PySide6.QtWidgets import QDialog, QFileDialog
 from atlas.core.logger import *
 from atlas.core.scanner.game_scanner import *
+from atlas.core.utilities.threading import *
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -30,6 +31,10 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.cbSkipRegex.checkStateChanged.connect(self.on_cbSkipRegex_state_changed)
         self.ui.btnSetFolder.pressed.connect(self.on_btnSetFolder_pressed)
         self.ui.btnNext.pressed.connect(self.on_btnNext_pressed)
+
+        #Set up table
+        self.ui.twGames.setColumnCount(6)
+        self.ui.twGames.setHorizontalHeaderLabels(["Title", "Creator", "Engine", "Version", "Executable", "Folder"])
 
         #TODO update items from config
 
@@ -80,7 +85,9 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         ui.btnBack.setHidden( False )
         if ui.cbSkipRegex.isChecked() == True:
             logger.debug("Running in Auto Mode")
-            game_scanner.start(path, "", False)
+            gs = game_scanner(ui, path, "", False)
+            gs.run()
+            #game_scanner.start(ui, path, "", False)
         else:
             logger.debug("Running in Parse Mode")
 
