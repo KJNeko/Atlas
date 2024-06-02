@@ -5,6 +5,7 @@ from atlas.core.logger import *
 from atlas.core.utilities.threading import *
 from atlas.ui.importer.ui_BatchImportDialog import Ui_BatchImportDialog
 from pandas import DataFrame
+import re
 
 from PySide6.QtCore import QTimer, QRunnable, Slot, Signal, QObject, QThreadPool
 from PySide6.QtWidgets import QTableWidgetItem, QComboBox
@@ -61,8 +62,8 @@ class game_scanner():
                     progress_callback.emit(index)
                     index+=1
                     folder_size = 0
-                    if root_path != "":
-                        folder_size = self.get_folder_size(subdir)
+                    #if root_path != "":
+                    #    folder_size = self.get_folder_size(subdir)
                         #logger.debug(subdir) 
                       
       
@@ -80,6 +81,8 @@ class game_scanner():
                                         list = files + dirs
                                         #logger.warn(subdir)
                                         engine = self.find_engine(list)
+                                        title = ""
+                                        version = ""
                                         #logger.info(engine)
                                         #logger.debug(files)
                                         #logger.debug(dirs)
@@ -87,16 +90,20 @@ class game_scanner():
                                         game_path = subdir
                                         #Check if we are skipping 32bit file types
                                         #if self.skip_x86 and '-32' not in file:
-                                        game_data = self.parse_data(subdir.replace(self.path, ""))
+                                        game_data = self.parse_data(subdir.replace(self.path + "\\", ""))#Make sure to remove \ following path
+                                        if len(game_data) > 0:
+                                            title = game_data[0]
+                                            version = game_data[1]
+
                                         if self.skip_x86 and "-32" in file:
                                             break
-                                        line = f'data row: {row}, Title: test, Creator: test, Engine: {engine}, Version: 0.0, Executable: {file}, Folder: {game_path}, FolderSize": {folder_size}'
+                                        line = f'data row: {row}, Title: {title}, Creator: test, Engine: {engine}, Version: {version}, Executable: {file}, Folder: {game_path}, FolderSize": {folder_size}'
                                         logger.debug(line)                
                                         executables.append(file)                                        
                                         break
                 #Try to add item to ui
                         if len(executables) > 0:
-                            data = {'title': 'test', 'creator' : 'test', 'engine' : engine, 'version' : '0.0', 'executables' : executables, 'folder' : game_path, 'row' : row, 'folder_size': folder_size}
+                            data = {'title': title, 'creator' : 'test', 'engine' : engine, 'version' : version, 'executables' : executables, 'folder' : game_path, 'row' : row, 'folder_size': folder_size}
                             data_callback.emit(data)                       
                             row+=1 #increase table row  
 
@@ -160,12 +167,18 @@ class game_scanner():
         self.ui.progressBar.setMaximum(s)
     
     def parse_data(self, folder: str) -> dict:
+        #Check len of the arry of itsm in the folder string
+        text = folder.split('\\')
+        data = {}
+        if len(text) == 1:
+            data = self.parse_single_filename(text[0])
+
         #Try to use regex to parse data. We are assuming the following layouts
         # Title/Version
         # Creator/Title/Version
         # 
-        #print(folder)
-        return
+        logger.info(text)
+        return data
     
     def get_folder_size(self, folder: str) -> str:
         total_size = 0
@@ -175,4 +188,77 @@ class game_scanner():
                 fp = os.path.join(path, f)
                 total_size += os.path.getsize(fp)                
         return str(round(total_size/1048576,1)) + "MB"
-        
+    
+    def parse_single_filename(self, s: str):
+        #Set Defaults
+        file_data = {} #dict
+        if '-' in s:
+            file_data = self.parse_string_by_delimeter( s, "-" )
+        else:
+            if '_' in s:
+                file_data = self.parse_string_by_delimeter( s, "_" ) 
+            else: 
+                if " " in s:                
+                    file_data = self.parse_string_by_delimeter( s, " " )
+                else:
+                    #If we have made it here then we are asuming its just the game title with nothing else.
+                    file_data = [self.add_spaces( s ), ""]
+
+        return file_data
+
+    def parse_string_by_delimeter(self, s:str, delimiter:str):
+        title = ""
+        version = ""
+        slist = s.split(delimiter)
+        is_version = False
+        for index in range(len(slist)):        
+            item = slist[ index ]
+            #Assume first item will always be a part of the title.
+            #Check if it has a number or has an OS name
+            if not self.check_os_names( item ) and not self.check_languages( item ):
+                  
+                if not ( index > 0 and self.is_digit( item ) ) and is_version == False:
+                
+                    #Check if string contains a version type
+                    version_result = self.find_version_type( item )
+
+                    title += version_result[ 0 ]
+                    version += version_result[ 1 ]
+                    #Check for version chapter or season                    
+                else:                    
+                    is_version = True
+                    version += item
+                    #Add Spaces between Capital Letters before returning the title
+        return [ self.add_spaces( title ), version ]
+
+    def check_os_names(self, s:str) -> bool:
+        os_arr = {"pc", "win", "linux", "windows", "unc", "win64"}
+        if s in os_arr:
+            return True
+        else:
+            return False
+    
+    def check_languages(self, s:str) -> bool:
+        os_arr = {"japanese", "english"}
+        if s in os_arr:
+            return True
+        else:
+            return False
+    
+    def is_digit(self, s:str) -> bool:
+        return any(chr.isdigit() for chr in s)
+    
+    def add_spaces(self, s: str ):
+        return re.sub(r"(\w)([A-Z])", r"\1 \2", s)
+
+    def find_version_type(self, s: str):
+        title = ""
+        version = ""
+        delimiters = {"Final", "Episode", "Chapter", "Version", "Season"}
+        for item in delimiters:
+            if item in s:
+                version = s
+            else:
+                title = s        
+        return [title, version]
+                        
