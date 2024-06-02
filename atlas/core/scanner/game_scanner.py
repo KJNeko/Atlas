@@ -56,10 +56,15 @@ class game_scanner():
                 executables = [] # This has to reset every time we change folders     
                 #logger.warn(f'{t_root} not in {subdir}') 
                 if root_path.replace(self.path, "") not in subdir or root_path == "":
-                    #logger.debug(subdir)  
+                     
                     root_path = subdir.replace(self.path, "")
                     progress_callback.emit(index)
                     index+=1
+                    folder_size = 0
+                    if root_path != "":
+                        folder_size = self.get_folder_size(subdir)
+                        #logger.debug(subdir) 
+                      
       
 
                 if game_path not in subdir or game_path == "":
@@ -82,11 +87,16 @@ class game_scanner():
                                         game_path = subdir
                                         #Check if we are skipping 32bit file types
                                         #if self.skip_x86 and '-32' not in file:
+                                        game_data = self.parse_data(subdir.replace(self.path, ""))
+                                        if self.skip_x86 and "-32" in file:
+                                            break
+                                        line = f'data row: {row}, Title: test, Creator: test, Engine: {engine}, Version: 0.0, Executable: {file}, Folder: {game_path}, FolderSize": {folder_size}'
+                                        logger.debug(line)                
                                         executables.append(file)                                        
                                         break
                 #Try to add item to ui
                         if len(executables) > 0:
-                            data = {'title': 'test', 'creator' : 'test', 'engine' : engine, 'version' : '0.0', 'executables' : executables, 'folder' : game_path, 'row' : row}
+                            data = {'title': 'test', 'creator' : 'test', 'engine' : engine, 'version' : '0.0', 'executables' : executables, 'folder' : game_path, 'row' : row, 'folder_size': folder_size}
                             data_callback.emit(data)                       
                             row+=1 #increase table row  
 
@@ -120,8 +130,7 @@ class game_scanner():
     def update_table(self, s: dict):
         #Verify we have valid data
         if s.get('row') != None:
-            table = self.ui.twGames
-            logger.error(f'Adding table row: {s.get('row')} for Title: {s.get('title')}')
+            table = self.ui.twGames           
             row = s.get('row')
             table.insertRow(row)
             cbExecutables = QComboBox()
@@ -135,7 +144,8 @@ class game_scanner():
                 table.setItem(row, 4, QTableWidgetItem(s.get('executables')[0]))
             else:
                 table.setCellWidget(row, 4, cbExecutables)
-            table.setItem(row, 5, QTableWidgetItem(s.get('folder')))
+            table.setItem(row, 5, QTableWidgetItem(s.get('folder_size')))
+            table.setItem(row, 6, QTableWidgetItem(s.get('folder')))
         
 
     def thread_complete(self):
@@ -148,4 +158,21 @@ class game_scanner():
     def set_progress_max(self, s: int):
         #print(f'progress bar max set {s}')
         self.ui.progressBar.setMaximum(s)
+    
+    def parse_data(self, folder: str) -> dict:
+        #Try to use regex to parse data. We are assuming the following layouts
+        # Title/Version
+        # Creator/Title/Version
+        # 
+        #print(folder)
+        return
+    
+    def get_folder_size(self, folder: str) -> str:
+        total_size = 0
+        start_path = folder # To get size of current directory
+        for path, dirs, files in os.walk(start_path):
+            for f in files:
+                fp = os.path.join(path, f)
+                total_size += os.path.getsize(fp)                
+        return str(round(total_size/1048576,1)) + "MB"
         

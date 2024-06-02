@@ -25,7 +25,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.cbScanFilesize.hide()
 
         #Custom Code
-        #self.ui.tbPath.setText("F:/Games")
+        self.ui.tbPath.setText("F:/Games")
         self.ui.cbSkipRegex.setChecked(True)
         
         self.ui.cbSkipRegex.checkStateChanged.connect(self.on_cbSkipRegex_state_changed)
@@ -33,8 +33,8 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.btnNext.pressed.connect(self.on_btnNext_pressed)
 
         #Set up table
-        self.ui.twGames.setColumnCount(6)
-        self.ui.twGames.setHorizontalHeaderLabels(["Title", "Creator", "Engine", "Version", "Executable", "Folder"])
+        self.ui.twGames.setColumnCount(7)
+        self.ui.twGames.setHorizontalHeaderLabels(["Title", "Creator", "Engine", "Version", "Executable", "Folder Size", "Folder"])
 
         #TODO update items from config
 
