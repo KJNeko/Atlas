@@ -1,4 +1,4 @@
-import os
+import sys, os, csv
 from atlas.core.settings import *
 from atlas.core.logger import *
 from atlas.core.logger import *
@@ -153,6 +153,9 @@ class game_scanner():
 
     def thread_complete(self):
         self.ui.twGames.resizeColumnsToContents()
+        self.ui.progressBar.hide()
+        self.ui.statusLabel.setText(f'Finished Processing all games (Found {self.ui.twGames.model().rowCount()} games)')
+        self.table_to_csv()
         logger.debug("THREAD COMPLETE!")
     
     def update_progress(self, s: int):
@@ -273,3 +276,19 @@ class game_scanner():
     
     def check_for_similar_strings(self, s1:str, s2:str):
         return SequenceMatcher(None, s1, s2).ratio()
+    
+    def table_to_csv(self):
+        columns = range(self.ui.twGames.columnCount())
+        header = [self.ui.twGames.horizontalHeaderItem(column).text()
+                    for column in columns]
+        with open("games_list.csv", 'w') as csvfile:
+            writer = csv.writer(
+                csvfile, dialect='excel', lineterminator='\n')
+            writer.writerow(header)
+            for row in range(self.ui.twGames.rowCount()):
+                try:
+                    writer.writerow(
+                        self.ui.twGames.item(row, column).text()
+                        for column in columns)
+                except Exception as e:
+                    logger.error(e)
