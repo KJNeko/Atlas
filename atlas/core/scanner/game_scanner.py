@@ -35,9 +35,10 @@ class game_scanner():
         worker.signals.data.connect(self.update_table)
         worker.signals.progress.connect(self.update_progress)
         worker.signals.initprogress.connect(self.set_progress_max)
+        worker.signals.complete.connect(self.scanner_complete)
         self.threadpool.start(worker)
             
-    def start(self, initprogress_callback: WorkerSignals,  data_callback: WorkerSignals, progress_callback: WorkerSignals):        
+    def start(self, initprogress_callback: WorkerSignals,  data_callback: WorkerSignals, progress_callback: WorkerSignals, complete_callback: WorkerSignals):        
         #We need to run this in a QThread Make Qrunnable
         row = 0 
         executable_list = self.get_executable_type()
@@ -103,7 +104,7 @@ class game_scanner():
                             data_callback.emit(data)                       
                             row+=1 #increase table row  
 
-            self.thread_complete()
+            complete_callback.emit()
 
     def get_executable_type(self) -> str:
         if settings.os == "Windows":
@@ -151,11 +152,13 @@ class game_scanner():
             table.setItem(row, 6, QTableWidgetItem(s.get('folder')))
         
 
-    def thread_complete(self):
+    def scanner_complete(self):
         self.ui.twGames.resizeColumnsToContents()
         self.ui.progressBar.hide()
         self.ui.statusLabel.setText(f'Finished Processing all games (Found {self.ui.twGames.model().rowCount()} games)')
         self.table_to_csv()
+        #enable import button
+        self.ui.btnNext.setEnabled(True)
         logger.debug("THREAD COMPLETE!")
     
     def update_progress(self, s: int):

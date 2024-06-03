@@ -24,7 +24,7 @@ class WorkerSignals(QObject):
         int indicating % progress
 
     '''
-    finished = Signal()
+    complete = Signal()
     error = Signal(tuple)
     result = Signal(object)
     progress = Signal(int)#this needs to stay as a dict 
@@ -58,6 +58,7 @@ class Worker(QRunnable):
         self.kwargs['progress_callback'] = self.signals.progress
         self.kwargs['data_callback'] = self.signals.data
         self.kwargs['initprogress_callback'] = self.signals.initprogress
+        self.kwargs['complete_callback'] = self.signals.complete
 
     @Slot()
     def run(self):
