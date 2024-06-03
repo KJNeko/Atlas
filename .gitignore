@@ -47,6 +47,7 @@ _internal
 *.spec
 build
 dist
+venv
 
 
 

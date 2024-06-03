@@ -23,9 +23,10 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         self.ui.btnBack.hide()
         self.ui.cbMoveImported.hide()
         self.ui.cbScanFilesize.hide()
+        self.ui.tbFormat.setEnabled(False)
 
-        #Custom Code
-        self.ui.tbPath.setText("F:/Games")
+        #Custom Code For Testing
+        #self.ui.tbPath.setText("F:/Games")
         self.ui.cbSkipRegex.setChecked(True)
         
         self.ui.cbSkipRegex.checkStateChanged.connect(self.on_cbSkipRegex_state_changed)
@@ -92,5 +93,3 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
             logger.debug("Running in Parse Mode")
 
     
-    def check_engine(self):
-        return
