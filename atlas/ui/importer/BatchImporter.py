@@ -51,7 +51,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
     
     def on_btnNext_pressed(self):
         ui = self.ui
-        if ui.btnNext.text == "Import":
+        if ui.btnNext.text() == "Import":
             self.import_files()
         else:            
             path = ui.tbPath.text()
