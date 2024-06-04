@@ -21,6 +21,16 @@ class MainWindow(QMainWindow):
 
         #FOR FUTURE: HIDE FOR NOW
         self.ui.NavTop.hide()
+        self.ui.actionOptions.setVisible(False)
+        self.ui.actionManage.setVisible(False)
+        self.ui.menuView.setEnabled(False)
+        self.ui.menuHelp.setEnabled(False)
+        self.ui.menuDownload.setEnabled(False)
+        self.ui.actionGameListImporter.setVisible(False)
+        self.ui.actionSimpleImporter.setVisible(False)
+        self.ui.actionSingleImporter.setVisible(False)
+        self.ui.actionExtractionImporter.setVisible(False)
+        self.ui.actionShowConsole.setVisible(False)
         self.ui.actionBulkImporter.triggered.connect(self.on_actionBulkImporter_triggered)
         self.ui.actionAboutAtlas.triggered.connect(self.on_actionAboutAtlas_triggered)
         self.ui.actionExit.triggered.connect(QCoreApplication.quit)
