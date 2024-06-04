@@ -1,3 +1,4 @@
+#This should work for amost any case where you need to run somthing in a different thread. 
 from PySide6.QtWidgets import QVBoxLayout, QLabel, QPushButton, QWidget, QMainWindow, QApplication
 from PySide6.QtCore import QTimer, QRunnable, Slot, Signal, QObject, QThreadPool
 
@@ -24,6 +25,7 @@ class WorkerSignals(QObject):
         int indicating % progress
 
     '''
+    finished = Signal()
     complete = Signal()
     error = Signal(tuple)
     result = Signal(object)
