@@ -18,7 +18,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
         QDialog.__init__(self, parent)
         self.ui = Ui_BatchImportDialog()
         self.ui.setupUi(self)      
-        
+        self.worker = Worker(self.import_files)
         self.ui.progressBar.hide()
         self.ui.btnBack.hide()
         self.ui.cbMoveImported.hide()
@@ -52,7 +52,7 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
     def on_btnNext_pressed(self):
         ui = self.ui
         if ui.btnNext.text() == "Import":
-            self.import_files()
+            ThreadPools.importers.start(self.worker)
         else:            
             path = ui.tbPath.text()
             if len(path) < 0 or not QFile.exists(path):
@@ -75,8 +75,20 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
             #add check for file size
             self.process_files()
 
-    def import_files(self):
-        return
+    def import_files(self, initprogress_callback: WorkerSignals,  data_callback: WorkerSignals, progress_callback: WorkerSignals, complete_callback: WorkerSignals):
+        initprogress_callback.emit(self.ui.twGames.rowCount())   
+        index = 0
+        #This will need to run in a thread
+        for row in range(self.ui.twGames.rowCount()):
+            for column in  range(self.ui.twGames.columnCount()): 
+                try:                
+                    logger.info(self.ui.twGames.item(row, column).text())         
+                    progress_callback.emit(index)        
+                    #Create GameImportData
+                    #Import and create database entry
+                except Exception as e:
+                    logger.error(e)
+            index +=1  
     
     def process_files(self):
         ui = self.ui
@@ -91,5 +103,8 @@ class BatchImporter(QDialog, Ui_BatchImportDialog):
             #game_scanner.start(ui, path, "", False)
         else:
             logger.debug("Running in Parse Mode")
+    
+    def update_progress(self, s:int):
+        self.ui.pro
 
     

@@ -3,7 +3,7 @@ import sys
 
 #from atlas.core.logger import *
 from PySide6.QtCore import QCoreApplication
-from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
+from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QProgressBar, QLabel
 from atlas.ui.importer.BatchImporter import BatchImporter
 from atlas.ui.dialog.AboutAtlas import AboutAtlas
 
@@ -37,17 +37,35 @@ class MainWindow(QMainWindow):
         #self.ui.actionAboutQt.triggered.connect(self.on_actionAboutQtDialog_triggered)
         #Need code for setting application font
         #Notification window
-
         #self.ui.recordView.model().setHeaderData(0, "Horizontal", "Games",2)
+
+        #Setup StatusBar
+        self.progress_bar = QProgressBar()
+        self.status_text = QLabel()
+        self.status_text.setMinimumWidth(100)
+        self.ui.statusBar.addWidget(self.status_text, 1)
+        #self.status_text.setText("This is a test")
+        self.ui.statusBar.addWidget(self.progress_bar, 2)
+        self.progress_bar.setGeometry(0, 0, 50, 5)
+        self.progress_bar.setValue(0)
+        self.progress_bar.hide()
 
     def on_actionBulkImporter_triggered(self):
         window = BatchImporter(self)
+        window.worker.signals.initprogress.connect(self.set_progress_max)
+        window.worker.signals.progress.connect(self.update_progress)
         window.show()
 
     def on_actionAboutAtlas_triggered(self):
         window = AboutAtlas(self)
         window.show()
-
+    
+    def set_progress_max(self, s:int):
+        self.progress_bar.show()
+        self.progress_bar.setMaximum(s)
+    
+    def update_progress(self, s: int):
+        self.progress_bar.setValue(s)
     #def on_actionAboutQtDialog_triggered(self):
     #    window = AboutQt(self)
     #    window.show()

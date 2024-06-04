@@ -98,6 +98,10 @@ QMenu::item:selected {
     color: rgb(210, 210, 210);
 }
 
+QStatusBar::item{
+    border:none
+}
+
 QSizeGrip {
     background-color: transparent;
     border: none;

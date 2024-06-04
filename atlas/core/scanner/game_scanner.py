@@ -26,7 +26,6 @@ class game_scanner():
         self.threadpool = ThreadPools.pre_importers
         self.worker = Worker(self.start)
         #Set up signals/slots
-
         self.worker.signals.data.connect(self.update_table)
         self.worker.signals.progress.connect(self.update_progress)
         self.worker.signals.initprogress.connect(self.set_progress_max)
