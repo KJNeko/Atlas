@@ -2,7 +2,7 @@
 import sys
 
 #from atlas.core.logger import *
-from PySide6.QtCore import (Qt)
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 from atlas.ui.importer.BatchImporter import BatchImporter
 from atlas.ui.dialog.AboutAtlas import AboutAtlas
@@ -23,6 +23,7 @@ class MainWindow(QMainWindow):
         self.ui.NavTop.hide()
         self.ui.actionBulkImporter.triggered.connect(self.on_actionBulkImporter_triggered)
         self.ui.actionAboutAtlas.triggered.connect(self.on_actionAboutAtlas_triggered)
+        self.ui.actionExit.triggered.connect(QCoreApplication.quit)
         #self.ui.actionAboutQt.triggered.connect(self.on_actionAboutQtDialog_triggered)
         #Need code for setting application font
         #Notification window

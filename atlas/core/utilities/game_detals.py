@@ -27,7 +27,8 @@ class executable(object):
                  'UEPrereqSetup_x64.exe',
                  'credits.html',
                  'LICENSES.chromium.html',
-                 'Uninstall.exe']
+                 'Uninstall.exe',
+                 'CONFIG_dl.exe']
     lin_exe = ['.sh']
     win_exe = ['.exe']
     osx_exe = ['.dmg']
@@ -41,19 +42,9 @@ class executable(object):
                 if extension.lower().strip() in file.lower().strip():
                     # Verify file is not in skip list
                     if file not in executable.blacklist:
-                        #Add both lists together so we can verify engine type
-                        #list = files + dirs
-                        #engine = self.find_engine(list)
-                        #if index > 0:
-                        #    game_path = subdir
-                        #Check if we are skipping 32bit file types
-                        #if self.skip_x86 and '-32' not in file:
-                       
 
                         if executable.skip_x86 and "-32" in file:
-                            break
-                        #line = f'data row: {row}, Title: {title}, Creator: {creator}, Engine: {engine}, Version: {version}, Executable: {file}, Folder: {game_path}, FolderSize": {folder_size}'
-                        #logger.debug(line)                
+                            break           
                         potential_executables.append(file) 
                         break   
         #!!!NOTE Now that we have all executables, check if there is an exe. If there is, remove everything else !!!

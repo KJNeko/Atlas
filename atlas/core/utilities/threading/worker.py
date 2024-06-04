@@ -26,10 +26,10 @@ class WorkerSignals(QObject):
 
     '''
     finished = Signal()
-    complete = Signal()
+    complete = Signal(int)# 0 or 1
     error = Signal(tuple)
     result = Signal(object)
-    progress = Signal(int)#this needs to stay as a dict 
+    progress = Signal(int)
     initprogress = Signal(int)
     data = Signal(dict)
 

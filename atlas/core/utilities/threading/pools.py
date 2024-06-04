@@ -21,4 +21,4 @@ class ThreadPools(object):
         ThreadPools.image_loaders.setMaxThreadCount(20)
         ThreadPools.image_importers.setMaxThreadCount(20)
         ThreadPools.importers.setMaxThreadCount(20)
-        ThreadPools.pre_importers.setMaxThreadCount(50)
+        ThreadPools.pre_importers.setMaxThreadCount(20)

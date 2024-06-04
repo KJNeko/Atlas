@@ -23,19 +23,22 @@ class game_scanner():
     def run(self):        
         logger.debug("Multithreading with maximum %d threads" % ThreadPools.pre_importers.maxThreadCount())
         self.ui.progressBar.show()
-        worker = Worker(self.start)
+        self.threadpool = ThreadPools.pre_importers
+        self.worker = Worker(self.start)
         #Set up signals/slots
-        worker.signals.data.connect(self.update_table)
-        worker.signals.progress.connect(self.update_progress)
-        worker.signals.initprogress.connect(self.set_progress_max)
-        worker.signals.complete.connect(self.scanner_complete)
-        ThreadPools.pre_importers.start(worker)
+
+        self.worker.signals.data.connect(self.update_table)
+        self.worker.signals.progress.connect(self.update_progress)
+        self.worker.signals.initprogress.connect(self.set_progress_max)
+        self.worker.signals.complete.connect(self.scanner_complete)
+        ThreadPools.pre_importers.start(self.worker)
             
     def start(self, initprogress_callback: WorkerSignals,  data_callback: WorkerSignals, progress_callback: WorkerSignals, complete_callback: WorkerSignals):   
         try:   
             row = 0 #Table Row
             #Get number of folders in root and set progress bar max to this number.
-            initprogress_callback.emit(len(next(os.walk(self.path))[1]))
+            folder_num = len(next(os.walk(self.path))[1])
+            initprogress_callback.emit(folder_num)
 
             #This is for auto mode
             if self.format == "":
@@ -51,8 +54,8 @@ class game_scanner():
                     #Store the root dir for each folder that contains an executable
                     if root_path.replace(self.path, "") not in subdir or root_path == "":                     
                         root_path = subdir.replace(self.path, "")
-                        progress_callback.emit(index)
-                        index+=1                    
+                        progress_callback.emit(index)   
+                        index +=1    
         
                     #game_path contains the path to the executable.
                     if game_path not in subdir or game_path == "" and game_path.replace(self.path, "") != root_path:
@@ -78,9 +81,9 @@ class game_scanner():
                                 logger.debug(data)
                                 data_callback.emit(data)                       
                                 row+=1 #increase table row  
-                #When all files are done, Exit
                 logger.info("Finished Parsing Games")
-                complete_callback.emit()
+                complete_callback.emit(0)      
+                #When all files are done, Exit
         except Exception as e:
             logger.warn(e)
                 
@@ -112,7 +115,7 @@ class game_scanner():
             #self.table_to_csv()
             #enable import button
             self.ui.btnNext.setEnabled(True)
-            logger.debug("THREAD COMPLETE!")
+            logger.debug("Pre-Import Tasks Complete")
         except Exception as e:
             logger.warn(e)
     
