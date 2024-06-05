@@ -23,7 +23,7 @@ class database(object):
         test_creator = "Atlas Games"
         test_engine = "Unity"
 
-        if not gamedata.record_exist(test_name, test_creator, test_engine):
+        if not GameData.record_exist(test_name, test_creator, test_engine):
             record_id = version.add_version("Chapter: 1""C:/Atlas Games/Galaxy Crossing First Conquest","Galaxy Crossing First Conquest.exe",0,True )
             banner_image = QImage(":/images/assets/Grid_Capsule_Default.webp")
             #if not banner_image.isNull():      

@@ -2,10 +2,12 @@
 import sys
 
 #from atlas.core.logger import *
-from PySide6.QtCore import QCoreApplication
+from PySide6.QtCore import QCoreApplication, QAbstractItemModel
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QProgressBar, QLabel
 from atlas.ui.importer.BatchImporter import BatchImporter
 from atlas.ui.dialog.AboutAtlas import AboutAtlas
+from atlas.ui.delegates.record_banner_delegate import *
+from atlas.ui.models.record_list_model import *
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -50,6 +52,11 @@ class MainWindow(QMainWindow):
         self.progress_bar.setValue(0)
         self.progress_bar.hide()
 
+        #Setup QListView with model
+        model = RecordListModel()
+        self.ui.recordView.setItemDelegate(RecordBannerDelegate())
+        self.ui.recordView.setModel(model)
+
     def on_actionBulkImporter_triggered(self):
         window = BatchImporter(self)
         window.worker.signals.initprogress.connect(self.set_progress_max)
@@ -66,6 +73,7 @@ class MainWindow(QMainWindow):
     
     def update_progress(self, s: int):
         self.progress_bar.setValue(s)
+        
     #def on_actionAboutQtDialog_triggered(self):
     #    window = AboutQt(self)
     #    window.show()
