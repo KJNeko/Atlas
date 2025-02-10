@@ -18,6 +18,10 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/KJNeko/Atlas/total)
 </div>
 
+
+# Project has been discontinued in favor of another developer and language.
+You can find the continuation [here](https://github.com/towerwatchman/Atlas)
+
 #
 Atlas is an open source game manager and launcher for Windows and Linux with a modern interface for viewing, finding, and easily installing 3rd party games and visual novels.
 We currently support adding games from [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/) and plan on adding more sources as the project progresses (See features below).
