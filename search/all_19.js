@@ -67,9 +67,10 @@ var searchData=
   ['progressnotification_64',['ProgressNotification',['../classProgressNotification.html',1,'ProgressNotification'],['../classProgressNotification.html#a32aa565b913d7e71fcf08ca531258cd0',1,'ProgressNotification::ProgressNotification()']]],
   ['progressnotification_2ecpp_65',['ProgressNotification.cpp',['../ProgressNotification_8cpp.html',1,'']]],
   ['progressnotification_2ehpp_66',['ProgressNotification.hpp',['../ProgressNotification_8hpp.html',1,'']]],
-  ['progresssignaler_67',['ProgressSignaler',['../classProgressSignaler.html',1,'ProgressSignaler'],['../classProgressNotification.html#a08119a739a17d76d9d8cc2650f6a7340',1,'ProgressNotification::ProgressSignaler'],['../classProgressSignaler.html#a19e03ed1c373bf085428fe9bd7b3bde6',1,'ProgressSignaler::ProgressSignaler()'],['../classProgressSignaler.html#a63d3efd175d2c8991d2694537df7527e',1,'ProgressSignaler::ProgressSignaler(QString str)']]],
-  ['promise_68',['promise',['../classatlas_1_1network_1_1Downloader.html#a7f2cf534c74ff869a40b62473bdd93c1',1,'atlas::network::Downloader']]],
-  ['promise_5ftype_69',['promise_type',['../structatlas_1_1utils_1_1FileScannerGenerator_1_1promise__type.html',1,'atlas::utils::FileScannerGenerator']]],
-  ['prune_70',['prune',['../classatlas_1_1cache_1_1ImageCache.html#a048ba496da3a2ad7fc23a6e10f18fe9c',1,'atlas::cache::ImageCache']]],
-  ['ptr_71',['ptr',['../classatlas_1_1records_1_1Game.html#a358275c3171492e68fe44354065d2af1',1,'atlas::records::Game']]]
+  ['progresssignaler_67',['ProgressSignaler',['../classProgressSignaler.html',1,'ProgressSignaler'],['../classProgressNotification.html#a08119a739a17d76d9d8cc2650f6a7340',1,'ProgressNotification::ProgressSignaler()'],['../classProgressSignaler.html#a19e03ed1c373bf085428fe9bd7b3bde6',1,'ProgressSignaler::ProgressSignaler()'],['../classProgressSignaler.html#a63d3efd175d2c8991d2694537df7527e',1,'ProgressSignaler::ProgressSignaler(QString str)']]],
+  ['project_20has_20been_20discontinued_20in_20favor_20of_20another_20developer_20and_20language_68',['Project has been discontinued in favor of another developer and language.',['../md_README.html#autotoc_md0',1,'']]],
+  ['promise_69',['promise',['../classatlas_1_1network_1_1Downloader.html#a7f2cf534c74ff869a40b62473bdd93c1',1,'atlas::network::Downloader']]],
+  ['promise_5ftype_70',['promise_type',['../structatlas_1_1utils_1_1FileScannerGenerator_1_1promise__type.html',1,'atlas::utils::FileScannerGenerator']]],
+  ['prune_71',['prune',['../classatlas_1_1cache_1_1ImageCache.html#a048ba496da3a2ad7fc23a6e10f18fe9c',1,'atlas::cache::ImageCache']]],
+  ['ptr_72',['ptr',['../classatlas_1_1records_1_1Game.html#a358275c3171492e68fe44354065d2af1',1,'atlas::records::Game']]]
 ];

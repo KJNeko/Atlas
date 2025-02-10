@@ -98,7 +98,7 @@ var searchData=
   ['max_5fsize_95',['max_size',['../classatlas_1_1cache_1_1ImageCache.html#a897318b0bff4a7fc7fb294486d33bbbb',1,'atlas::cache::ImageCache']]],
   ['maxchanged_96',['maxChanged',['../classProgressSignaler.html#a99954a42bac3ce9e002f2f1fc6d341eb',1,'ProgressSignaler']]],
   ['messagechanged_97',['messageChanged',['../classProgressSignaler.html#ab5dec29c3895537e8e20df9c44f7e261',1,'ProgressSignaler']]],
-  ['messagelevel_98',['MessageLevel',['../MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dc',1,'MessageNotification.hpp']]],
+  ['messagelevel_98',['MessageLevel',['../MessageNotification_8hpp.html#aaf5eea9687ad679dc3e504d373e959dc',1,'MessageLevel:&#160;MessageNotification.hpp'],['../namespaceatlas_1_1logging_1_1internal.html#aaf5eea9687ad679dc3e504d373e959dc',1,'atlas::logging::internal::MessageLevel']]],
   ['messagenotification_99',['MessageNotification',['../classMessageNotification.html',1,'MessageNotification'],['../classMessageNotification.html#ac8a403cd043bca540faa6768e0a8b1db',1,'MessageNotification::MessageNotification()']]],
   ['messagenotification_2ecpp_100',['MessageNotification.cpp',['../MessageNotification_8cpp.html',1,'']]],
   ['messagenotification_2ehpp_101',['MessageNotification.hpp',['../MessageNotification_8hpp.html',1,'']]],

@@ -25,7 +25,16 @@
 var NAVTREE =
 [
   [ "Atlas Game Manager", "index.html", [
-    [ "README", "md_README.html", null ],
+    [ "README", "md_README.html", [
+      [ "Project has been discontinued in favor of another developer and language.", "md_README.html#autotoc_md0", [
+        [ "Features:", "md_README.html#autotoc_md1", [
+          [ "F95Zone integration Issue #2", "md_README.html#autotoc_md2", null ],
+          [ "DLSite integration Issue #3", "md_README.html#autotoc_md3", null ],
+          [ "Steam/SteamCMD integration Issue #4", "md_README.html#autotoc_md4", null ],
+          [ "General integration", "md_README.html#autotoc_md5", null ]
+        ] ]
+      ] ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -70,18 +79,17 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "0-games_8cpp.html",
-"Importer_8cpp.html",
-"classBatchImportDelegate.html#a02603b34e5a8c7a428e9f28e87b4f4fb",
-"classMainWindow.html#ad28b2518d695c9f7d5c0ab0464001c0d",
-"classSimpleImporter.html#aed0ffb117df252bdde535c5c63dc5209",
-"classatlas_1_1records_1_1Game.html#a560e30d8373cd8ddb02b0f7d37918902",
-"dir_48b60028f9adc20050148e548c7fb266.html",
-"globals_e.html",
-"namespaceatlas_1_1notifications.html#ae14c665f0ef3c5ebf1d847e6e23e5251",
-"structImageSaveError.html",
-"structatlas_1_1records_1_1GameData.html#a0779bfca41588c4558c7bc61ad2ec27c",
-"structatlas_1_1utils_1_1FileScannerGenerator_1_1promise__type.html#a27295879b8419e227d5a486ecebf9ca3"
+"QueryBuilder_8hpp.html#aa11e679e1d1a99e925b03a0b97df0118",
+"classExtractionImportDialog.html#abb4738aba63790b6ee2351598647ff42",
+"classRecordEditor.html#a2fb86176aac28d2739599ac8e4b6303f",
+"classatlas_1_1AtlasUpdater.html#a7a3007595670f5c647ae3d0b2f3c2593",
+"classatlas_1_1remote_1_1AtlasRemoteData.html#a41620d16323258ac097a2a03946eb03d",
+"engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7acf2914f9bd6c3578d3de0b6b66c7d66b",
+"namespaceatlas_1_1images.html#a10e4d50b51199b989900b157bb6b54e2",
+"structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html#a870e4d1511718452cdf386a8ffea8ead",
+"structatlas_1_1images_1_1ImageLoader.html#a0fc69701312af81588f3f23eadf232f4",
+"structatlas_1_1remote_1_1internal_1_1F95Data.html#ab8775fd8797486a5e0beb3524eaf0c91"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

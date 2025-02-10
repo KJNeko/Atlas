@@ -2,6 +2,14 @@ var namespaces_dup =
 [
     [ "atlas", "namespaceatlas.html", "namespaceatlas" ],
     [ "config", "namespaceconfig.html", "namespaceconfig" ],
+    [ "format_ns", null, [
+      [ "formatter< format_ns::format_string<> >", "structformat__ns_1_1formatter_3_01format__ns_1_1format__string_3_4_01_4.html", "structformat__ns_1_1formatter_3_01format__ns_1_1format__string_3_4_01_4" ],
+      [ "formatter< QSize >", "structformat__ns_1_1formatter_3_01QSize_01_4.html", "structformat__ns_1_1formatter_3_01QSize_01_4" ],
+      [ "formatter< QString >", "structformat__ns_1_1formatter_3_01QString_01_4.html", "structformat__ns_1_1formatter_3_01QString_01_4" ],
+      [ "formatter< QUrl >", "structformat__ns_1_1formatter_3_01QUrl_01_4.html", "structformat__ns_1_1formatter_3_01QUrl_01_4" ],
+      [ "formatter< std::filesystem::path >", "structformat__ns_1_1formatter_3_01std_1_1filesystem_1_1path_01_4.html", "structformat__ns_1_1formatter_3_01std_1_1filesystem_1_1path_01_4" ],
+      [ "formatter< std::source_location >", "structformat__ns_1_1formatter_3_01std_1_1source__location_01_4.html", "structformat__ns_1_1formatter_3_01std_1_1source__location_01_4" ]
+    ] ],
     [ "gl", "namespacegl.html", "namespacegl" ],
     [ "internal", "namespaceinternal.html", [
       [ "LockGuardType", "namespaceinternal.html#ae4fb6fad3731813ffe78804654b1cdc7", null ],
@@ -13,6 +21,9 @@ var namespaces_dup =
     ] ],
     [ "regex", "namespaceregex.html", "namespaceregex" ],
     [ "remote", "namespaceremote.html", "namespaceremote" ],
+    [ "std", null, [
+      [ "hash< atlas::records::VersionKey >", "structstd_1_1hash_3_01atlas_1_1records_1_1VersionKey_01_4.html", "structstd_1_1hash_3_01atlas_1_1records_1_1VersionKey_01_4" ]
+    ] ],
     [ "sys", "namespacesys.html", [
       [ "is_linux", "namespacesys.html#aa2ac265b71333afb5ee36da4910b0765", null ],
       [ "is_windows", "namespacesys.html#a5797826512ac565d31d1a6111e75f19e", null ]

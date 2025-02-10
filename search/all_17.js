@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['name_0',['name',['../structgl_1_1GameListInfos.html#ac466561f911c71226cf9e947d0c50e2b',1,'gl::GameListInfos::name'],['../structNode.html#ac40f16db9ad108a3d8a029802899104c',1,'Node::name()']]],
-  ['name_1',['Name',['../QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472a923b92502c8f8beef4a620fee49b89ae',1,'QueryBuilder.hpp']]],
+  ['name_0',['Name',['../QueryBuilder_8hpp.html#ad9be72f666a31b4318bbc8e8a16a9472a923b92502c8f8beef4a620fee49b89ae',1,'QueryBuilder.hpp']]],
+  ['name_1',['name',['../structgl_1_1GameListInfos.html#ac466561f911c71226cf9e947d0c50e2b',1,'gl::GameListInfos::name'],['../structNode.html#ac40f16db9ad108a3d8a029802899104c',1,'Node::name()']]],
   ['namespace_5fend_2',['NAMESPACE_END',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbeaf1a3024ea0396c73bf93ac9bf98cac99',1,'QueryBuilder.cpp']]],
   ['namespaces_3',['Namespaces',['../QueryBuilder_8cpp.html#adec0afb7463393ec7fbbf38fe634dcbe',1,'QueryBuilder.cpp']]],
   ['namespaces_4',['namespaces',['../QueryBuilder_8cpp.html#a452217633b3e97c64209a2793906593c',1,'QueryBuilder.cpp']]],

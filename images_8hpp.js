@@ -5,7 +5,7 @@ var images_8hpp =
     [ "ImageSaveError", "structImageSaveError.html", "structImageSaveError" ],
     [ "ImageLoadError", "structImageLoadError.html", "structImageLoadError" ],
     [ "ATLAS_IMAGEMANAGER_HPP", "images_8hpp.html#a69974bc0a0d51583bd3b8e743a3a2b05", null ],
-    [ "blurImage", "images_8hpp.html#a669d9af9492cfb355d6a3cbe367f8a10", null ],
-    [ "blurPixmap", "images_8hpp.html#a8a4e4c9851546cd85cde8aee9f63db56", null ],
-    [ "cleanOrphans", "images_8hpp.html#ac39bc0aa2e817690c7c7bd5c39d6dcb2", null ]
+    [ "atlas::images::blurImage", "namespaceatlas_1_1images.html#a669d9af9492cfb355d6a3cbe367f8a10", null ],
+    [ "atlas::images::blurPixmap", "namespaceatlas_1_1images.html#a8a4e4c9851546cd85cde8aee9f63db56", null ],
+    [ "atlas::images::cleanOrphans", "namespaceatlas_1_1images.html#ac39bc0aa2e817690c7c7bd5c39d6dcb2", null ]
 ];

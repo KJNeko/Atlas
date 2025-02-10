@@ -5,5 +5,6 @@ var searchData=
   ['recordeditor_2',['RecordEditor',['../classRecordEditor.html',1,'']]],
   ['recordexception_3',['RecordException',['../structatlas_1_1exceptions_1_1RecordException.html',1,'atlas::exceptions::RecordException'],['../structatlas_1_1records_1_1RecordException.html',1,'atlas::records::RecordException']]],
   ['recordlistmodel_4',['RecordListModel',['../classRecordListModel.html',1,'']]],
-  ['recordlistview_5',['RecordListView',['../classRecordListView.html',1,'']]]
+  ['recordlistview_5',['RecordListView',['../classRecordListView.html',1,'']]],
+  ['resulttype_6',['ResultType',['../structFunctionDecomp.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['language_0',['language',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a9f3111d402d4afb87f8c90d9b46af25c',1,'atlas::remote::internal::AtlasData']]],
+  ['language_0',['language',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a9f3111d402d4afb87f8c90d9b46af25c',1,'atlas::remote::internal::AtlasData::language'],['../md_README.html#autotoc_md0',1,'Project has been discontinued in favor of another developer and language.']]],
   ['last_5faccessed_1',['last_accessed',['../structatlas_1_1cache_1_1ImageCache_1_1PixmapItem.html#aa0c8c144645f057e5ca430da572b62b0',1,'atlas::cache::ImageCache::PixmapItem']]],
   ['last_5fdb_5fupdate_2',['last_db_update',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#a2c54a15252a51f33204d3f5dd0b43a53',1,'atlas::remote::internal::AtlasData']]],
   ['last_5flocked_3',['last_locked',['../namespaceatlas_1_1database.html#a2c94605338a2d106730d047e6b41fe84',1,'atlas::database']]],
@@ -33,8 +33,8 @@ var searchData=
   ['logging_2ecpp_30',['logging.cpp',['../logging_8cpp.html',1,'']]],
   ['logging_2ehpp_31',['logging.hpp',['../logging_8hpp.html',1,'']]],
   ['loginfo_32',['logInfo',['../namespaceatlas_1_1logging_1_1internal.html#a2186ff828affd9945e9dd7085175f863',1,'atlas::logging::internal']]],
-  ['logo_33',['logo',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#aca58795387c8e9395207e6ed224f2285',1,'atlas::remote::internal::AtlasData']]],
-  ['logo_34',['Logo',['../config_8hpp.html#a73bbc90ea0914f179933a80fa5744df7a3ca5025459a3c13fc75abe2f30828453',1,'config.hpp']]],
+  ['logo_33',['Logo',['../config_8hpp.html#a73bbc90ea0914f179933a80fa5744df7a3ca5025459a3c13fc75abe2f30828453',1,'config.hpp']]],
+  ['logo_34',['logo',['../structatlas_1_1remote_1_1internal_1_1AtlasData.html#aca58795387c8e9395207e6ed224f2285',1,'atlas::remote::internal::AtlasData']]],
   ['logobanner_35',['LogoBanner',['../classRecordListModel.html#a8eb1a0b383f30b36384aaa1e1da1b4e9a634702a08870321635a571a676f7a272',1,'RecordListModel']]],
   ['logwarn_36',['logWarn',['../namespaceatlas_1_1logging_1_1internal.html#ad4d62198db82accc7184f601d9dac630',1,'atlas::logging::internal']]]
 ];

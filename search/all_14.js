@@ -7,7 +7,7 @@ var searchData=
   ['keypressevent_4',['keyPressEvent',['../classBatchImportDialog.html#aed645650142c3c58a734599bbecec0a0',1,'BatchImportDialog::keyPressEvent()'],['../classMainWindow.html#a55ae3e0d4303334ccabae0a5050cfd88',1,'MainWindow::keyPressEvent()']]],
   ['killloaders_5',['killLoaders',['../classFilepathModel.html#a4024b61abb5265c5f8ac4be59f589d5e',1,'FilepathModel::killLoaders()'],['../classRecordListModel.html#a8a7448c18772c0e5bd9ae11dc223a73b',1,'RecordListModel::killLoaders()']]],
   ['kirikiri_6',['KiriKiri',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7a57f8bd61306ba88448f96f5488722468',1,'engineDetection.hpp']]],
-  ['kjneko_20atlas_20issues_202_20issue_202_20a_7',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md1',1,'']]],
-  ['kjneko_20atlas_20issues_203_20issue_203_20a_8',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
-  ['kjneko_20atlas_20issues_204_20issue_204_20a_9',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]]
+  ['kjneko_20atlas_20issues_202_20issue_202_20a_7',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
+  ['kjneko_20atlas_20issues_203_20issue_203_20a_8',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
+  ['kjneko_20atlas_20issues_204_20issue_204_20a_9',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md4',1,'']]]
 ];

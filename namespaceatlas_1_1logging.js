@@ -1,6 +1,7 @@
 var namespaceatlas_1_1logging =
 [
     [ "internal", "namespaceatlas_1_1logging_1_1internal.html", [
+      [ "MessageLevel", "namespaceatlas_1_1logging_1_1internal.html#aaf5eea9687ad679dc3e504d373e959dc", null ],
       [ "logCritical", "namespaceatlas_1_1logging_1_1internal.html#acaed872857c4345e562a86cc9847d688", null ],
       [ "logDebug", "namespaceatlas_1_1logging_1_1internal.html#ae3137b59dbf5c428bfe0891483e47b1e", null ],
       [ "logError", "namespaceatlas_1_1logging_1_1internal.html#a1a5737c806c36873efa200ee541f1e61", null ],

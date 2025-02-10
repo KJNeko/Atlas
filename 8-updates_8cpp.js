@@ -1,4 +1,4 @@
 var 8_updates_8cpp =
 [
-    [ "migration< 8 >", "8-updates_8cpp.html#ab09b3675fa783387c32b84f41ea376c0", null ]
+    [ "atlas::database::migrations::migration< 8 >", "namespaceatlas_1_1database_1_1migrations.html#ab09b3675fa783387c32b84f41ea376c0", null ]
 ];

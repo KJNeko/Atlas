@@ -3,6 +3,8 @@ var hierarchy =
     [ "atlas::remote::internal::AtlasData", "structatlas_1_1remote_1_1internal_1_1AtlasData.html", null ],
     [ "atlas::remote::AtlasRemoteData", "classatlas_1_1remote_1_1AtlasRemoteData.html", null ],
     [ "spdlog::sinks::base_sink", null, [
+      [ "atlas::logging::ConsoleSink< std::mutex >", "classatlas_1_1logging_1_1ConsoleSink.html", null ],
+      [ "atlas::logging::ConsoleSink< spdlog::details::null_mutex >", "classatlas_1_1logging_1_1ConsoleSink.html", null ],
       [ "atlas::logging::ConsoleSink< Mutex >", "classatlas_1_1logging_1_1ConsoleSink.html", null ]
     ] ],
     [ "Binder", "classBinder.html", null ],
@@ -107,8 +109,6 @@ var hierarchy =
     [ "QFuture< T >", "classQFuture.html", [
       [ "FutureWatcherSignaler< T >", "classFutureWatcherSignaler.html", null ]
     ] ],
-    [ "QFuture< QPixmap >", "classQFuture.html", null ],
-    [ "QFuture< void >", "classQFuture.html", null ],
     [ "QLabel", null, [
       [ "ImageWidget", "classImageWidget.html", null ]
     ] ],
