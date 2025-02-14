@@ -24,7 +24,7 @@ You can find the continuation [here](https://github.com/towerwatchman/Atlas)
 
 #
 Atlas is an open source game manager and launcher for Windows and Linux with a modern interface for viewing, finding, and easily installing 3rd party games and visual novels.
-We currently support adding games from [F95Zone](https://f95zone.to/) and [DLSite](https://www.dlsite.com/) and plan on adding more sources as the project progresses (See features below).
+We currently support adding games from [DLSite](https://www.dlsite.com/) and plan on adding more sources as the project progresses (See features below).
 It's meant to replace [Game-List](https://www.game-list.org) ([Github](https://github.com/game-list/game-list)) but also expand on it's feature set.
 
 Atlas is for the user that wants ease of use, quality of life and have the software do the heavy lifting for you.
@@ -44,11 +44,6 @@ For discussion about future releases and new features please visit our [Discord 
 - Compresses all banner and preview images to smaller webp files for storage optimization.
 
 ![image](https://github.com/KJNeko/Atlas/assets/36950324/4063b991-4e36-43dc-b695-6bf85b782770)
-
-### F95Zone integration [Issue #2](https://github.com/KJNeko/Atlas/issues/2)
-- [ ] Scrape Metadata (titles, tags, description, version and image urls)
-- [ ] Downloads Banner images and preview images automatically.
-- [ ] Update/release checker/notifier.
 
 ### DLSite integration [Issue #3](https://github.com/KJNeko/Atlas/issues/3)
 - [ ] Scrape Metadata (titles, tags, description, version and image urls)
