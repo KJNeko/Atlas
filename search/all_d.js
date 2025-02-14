@@ -33,7 +33,7 @@ var searchData=
   ['dirpage_30',['DirPage',['../SimpleImporter_8cpp.html#a61ae34cf7f76dc3071c3248ac2a03517a49b33e78a19aff72262e708ad65c8600',1,'SimpleImporter.cpp']]],
   ['dirview_5fitemselectionchanged_31',['dirView_itemSelectionChanged',['../classSimpleImporter.html#a0c0d847adb6725e59672fc7ff8ed4d65',1,'SimpleImporter']]],
   ['discontinued_20in_20favor_20of_20another_20developer_20and_20language_32',['Project has been discontinued in favor of another developer and language.',['../md_README.html#autotoc_md0',1,'']]],
-  ['dlsite_20integration_20a_20href_20https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_33',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
+  ['dlsite_20integration_20a_20href_20https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_33',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
   ['download_5fqueue_34',['download_queue',['../classatlas_1_1network_1_1NetworkManager.html#af086b7ae8761b936543cd715ec3e7ecd',1,'atlas::network::NetworkManager']]],
   ['downloader_35',['Downloader',['../classatlas_1_1network_1_1Downloader.html',1,'atlas::network::Downloader'],['../classatlas_1_1network_1_1Downloader.html#abd00242d1bab08cc24405909f74917ce',1,'atlas::network::Downloader::Downloader()=default']]],
   ['downloadfinished_36',['downloadFinished',['../classatlas_1_1network_1_1Downloader.html#a4b6baa6a44e2e7aa1c4d6622d313dfe0',1,'atlas::network::Downloader']]],

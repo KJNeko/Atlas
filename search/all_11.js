@@ -21,11 +21,9 @@ var searchData=
   ['hasversion_18',['hasVersion',['../classatlas_1_1records_1_1Game.html#aae9fe3e0db2c6e4a089c8b5cc3ae4556',1,'atlas::records::Game']]],
   ['headerdata_19',['headerData',['../classBatchImportModel.html#a47b5017b28e284531c37b09389daf7fd',1,'BatchImportModel::headerData()'],['../classRecordListModel.html#aea0b9fbedb6631f6dec5085804ec840c',1,'RecordListModel::headerData()']]],
   ['hooksignaler_20',['hookSignaler',['../classProgressSignaler.html#a62dd8d466ca891d688d254d49259540f',1,'ProgressSignaler']]],
-  ['href_20https_3a_20github_20com_20kjneko_20atlas_20issues_202_20issue_202_20a_21',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
-  ['href_20https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_22',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
-  ['href_20https_3a_20github_20com_20kjneko_20atlas_20issues_204_20issue_204_20a_23',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md4',1,'']]],
-  ['html_24',['HTML',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7acf2914f9bd6c3578d3de0b6b66c7d66b',1,'engineDetection.hpp']]],
-  ['https_3a_20github_20com_20kjneko_20atlas_20issues_202_20issue_202_20a_25',['F95Zone integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/2&quot; &gt;Issue #2&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
-  ['https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_26',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
-  ['https_3a_20github_20com_20kjneko_20atlas_20issues_204_20issue_204_20a_27',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md4',1,'']]]
+  ['href_20https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_21',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
+  ['href_20https_3a_20github_20com_20kjneko_20atlas_20issues_204_20issue_204_20a_22',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]],
+  ['html_23',['HTML',['../engineDetection_8hpp.html#a7d4793a9fb0ef783c8625122ac5a89b7acf2914f9bd6c3578d3de0b6b66c7d66b',1,'engineDetection.hpp']]],
+  ['https_3a_20github_20com_20kjneko_20atlas_20issues_203_20issue_203_20a_24',['DLSite integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/3&quot; &gt;Issue #3&lt;/a&gt;',['../md_README.html#autotoc_md2',1,'']]],
+  ['https_3a_20github_20com_20kjneko_20atlas_20issues_204_20issue_204_20a_25',['Steam/SteamCMD integration &lt;a href=&quot;https://github.com/KJNeko/Atlas/issues/4&quot; &gt;Issue #4&lt;/a&gt;',['../md_README.html#autotoc_md3',1,'']]]
 ];

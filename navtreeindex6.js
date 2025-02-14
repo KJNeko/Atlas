@@ -193,7 +193,6 @@ var NAVTREEINDEX6 =
 "md_README.html#autotoc_md2":[0,0,0,0],
 "md_README.html#autotoc_md3":[0,0,0,1],
 "md_README.html#autotoc_md4":[0,0,0,2],
-"md_README.html#autotoc_md5":[0,0,0,3],
 "migration-run_8cpp.html":[4,0,0,0,1,0,18],
 "migration-run_8cpp.html#acf4f0d8ff82825da24f97e90447648cf":[4,0,0,0,1,0,18,0],
 "namespaceUi.html":[1,0,9],
@@ -249,5 +248,6 @@ var NAVTREEINDEX6 =
 "namespaceatlas_1_1database_1_1utility.html#add28f71b9c8c520e569a5cda57666647":[1,0,0,2,1,2],
 "namespaceatlas_1_1exceptions.html":[1,0,0,3],
 "namespaceatlas_1_1images.html":[1,0,0,4],
-"namespaceatlas_1_1images.html#a104c802491404cb66917472a364e336f":[1,0,0,4,7]
+"namespaceatlas_1_1images.html#a104c802491404cb66917472a364e336f":[1,0,0,4,7],
+"namespaceatlas_1_1images.html#a10e4d50b51199b989900b157bb6b54e2":[1,0,0,4,15]
 };

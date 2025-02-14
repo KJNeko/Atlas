@@ -1,6 +1,5 @@
 var NAVTREEINDEX7 =
 {
-"namespaceatlas_1_1images.html#a10e4d50b51199b989900b157bb6b54e2":[1,0,0,4,15],
 "namespaceatlas_1_1images.html#a113fb18f823a967fa47da9c009db0979":[1,0,0,4,16],
 "namespaceatlas_1_1images.html#a187f2bddf6636acead8128367ff8dd35":[1,0,0,4,9],
 "namespaceatlas_1_1images.html#a26a65021cffac8be9691c7bc120e511e":[1,0,0,4,26],
@@ -249,5 +248,6 @@ var NAVTREEINDEX7 =
 "structFunctionDecomp_3_01ReturnType_07ClassType_1_1_5_08_07Args_8_8_8_08_01noexcept_01_4.html#a979103693893fcfc1aaf2ab8ddea0fe6":[3,0,27,2],
 "structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html":[3,0,23],
 "structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html#a20299a3db759e4d8e544e223d62f04c0":[3,0,23,1],
-"structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html#a4438c1d04189e3142f5d4dd9502db553":[3,0,23,0]
+"structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html#a4438c1d04189e3142f5d4dd9502db553":[3,0,23,0],
+"structFunctionDecomp_3_01ReturnType_07_5_08_07Args_8_8_8_08_01_4.html#a870e4d1511718452cdf386a8ffea8ead":[3,0,23,3]
 };
